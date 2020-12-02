@@ -9,8 +9,16 @@
 	<meta name="viewport" content="width=device-width" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!-- PACE.js -->
-<!-- 2020.12.02 Firefoxで働かないので、無効にした。
-	<script src="pace.js"></script>
+	<script>
+		var userAgent = window.navigator.userAgent.toLowerCase;
+		if (userAgent.indexOf('firefox') != -1 ||
+			userAgent.indexOf('waterfox') != -1)
+		{
+			// Firefox と Waterfox では pace.js は使わない。
+		} else {
+			document.write('<scr' + 'ipt src="pace.js" />');
+		}
+	</script>
 	<link type="text/css" rel="stylesheet" href="pace-theme-loading-bar.css" />
 	<style>
 		/* pace.jsによる読み込み時設定。 */
@@ -21,6 +29,7 @@
 			background-color: lightcyan;
 		}
 	</style>
+<!--
 	<script>
 		// NOTE: Firefox hangs in using pace.js. This code will do workaround.
 		// See: https://stackoverflow.com/questions/43887415/pace-js-never-reaches-100
