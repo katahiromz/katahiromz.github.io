@@ -1,0 +1,370 @@
+body {
+	margin: 0;
+	font-size: 11pt;
+}
+h1 {
+	font-size: 16pt;
+	font-weight: bold;
+	margin: 0px;
+}
+h2 {
+	font-size: 14pt;
+	font-weight: bold;
+}
+h3 {
+	font-size: 12pt;
+	font-weight: bold;
+}
+textarea {
+	width: 95%;
+	height: 250px;
+	border: solid 1px black;
+}
+textarea:disabled {
+	border: solid 1px lightgray;
+}
+textarea.低く {
+	height: 120px;
+}
+input[type="text"] {
+	border: solid 1px black;
+}
+input[type="text"]:disabled {
+	border: solid 1px lightgray;
+}
+.実寸大 {
+	text-align: center;
+}
+.縮小版 {
+	vertical-align: bottom;
+	width: 24px;
+	height: 24px;
+}
+.反転 {
+	background-color: black;
+	color: white;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+.表タイトル {
+	text-align: center;
+}
+.太字 {
+	font-weight: bold;
+}
+.黒字 {
+	color: black;
+}
+.赤字 {
+	color: #FF0000;
+}
+.細かい説明 {
+	font-size: 85%;
+	color: red;
+}
+.折り返しなし {
+	white-space: nowrap;
+}
+.幅広 {
+	min-width: 250px;
+	display: inline-block;
+}
+.幅中くらい {
+	min-width: 100px;
+	display: inline-block;
+}
+.数値 {
+	width: 4em;
+	text-align: right;
+}
+.単位 {
+	width: 4em;
+}
+.行を広く {
+	line-height: 30pt;
+}
+.幅そろえ {
+	min-width: 150px;
+	display: inline-block;
+}
+.パネル {
+	border-left: 4px lightgray solid;
+	border-top: 4px lightgray solid;
+	border-right: 4px darkgray solid;
+	border-bottom: 4px darkgray solid;
+	padding: 8px;
+}
+.表パネル {
+	border-left: 4px lightgray solid;
+	border-top: 4px lightgray solid;
+	border-right: 4px darkgray solid;
+	border-bottom: 4px darkgray solid;
+	padding: 8px;
+}
+.ダイアログ {
+	display: none;
+	font-size: 12pt;
+}
+.周りに余白を追加 {
+	margin: 6px;
+}
+@media (min-width: 600px) {
+	.二段組 {
+		float: left;
+		width: 50%;
+		display: block;
+	}
+}
+@media (max-width: 599px) {
+	.二段組 {
+		display: block;
+	}
+}
+.段組終わり {
+	clear: both;
+}
+.実績パネル {
+	border: 4px outset;
+	padding: 4px;
+}
+.比較項目 {
+	border: 2px outset;
+	padding: 2px;
+}
+.コストタイプ項目 {
+	border: 2px outset;
+	padding: 1px;
+	width: 300px;
+	font-size: 9pt;
+	background-color: lightcyan;
+}
+.件数 {
+	width: 4em;
+	text-align: right;
+}
+.列数行数 {
+	width: 2.5em;
+	text-align: right;
+}
+.中央そろえ {
+	text-align: center;
+}
+/* 表の罫線を黒くする。 */
+.jsgrid-table tr {
+	border: 1px solid black !important;
+}
+.jsgrid-table td {
+	border: 1px solid black !important;
+}
+.jsgrid-table th {
+	border: 1px solid black !important;
+}
+/* ヘッダを灰色に。 */
+.jsgrid th.jsgrid-header-cell {
+	background: linear-gradient(white, lightgray) !important;
+	background-color: #dddddd !important;
+	font-weight: bold;
+}
+/* 右そろえを灰色と太字に。*/
+.jsgrid td.jsgrid-align-center {
+	background: linear-gradient(white, lightgray) !important;
+	background-color: #dddddd !important;
+	font-size: 11pt !important;
+}
+/* ヘッダを灰色に。太字解除。 */
+.表計算.jsgrid th.jsgrid-header-cell {
+	font-weight: normal;
+}
+/* 表計算の太字解除。 */
+.表計算.jsgrid td.jsgrid-align-center {
+	font-weight: normal;
+}
+/* 表計算のフォントサイズを指定。 */
+.表計算.jsgrid .jsgrid-cell {
+	font-size: 8.5pt;
+}
+/* 表計算の編集中の行を黄色に。 */
+.表計算.jsgrid tr.jsgrid-edit-row td.jsgrid-cell {
+	background-color: yellow;
+}
+.非表示 {
+	display: none;
+}
+.大きな文字 {
+	font-size: 14pt;
+}
+.赤い太枠 {
+	border: 4px solid red;
+	width: 400px;
+	padding: 8px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: yellow;
+}
+.表タイトル {
+	text-align: center;
+}
+.印刷プレビュー表 {
+	width: 100%;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 8pt;
+}
+.印刷プレビュー表 td {
+	background-color: white;
+	text-align: left;
+	border: 3px gray solid;
+}
+.印刷プレビュー表 th {
+	background-color: #FFFF99;
+	text-align: center;
+	font-weight: bold;
+	border: 3px gray solid;
+}
+.印刷プレビュー表内部表 {
+	width: 95%;
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+}
+.印刷プレビュー表内部表 th {
+	font-weight: normal;
+}
+.インラインブロック {
+	display: inline-block;
+}
+/* 印刷 */
+.非印刷部分 {
+	display: block;
+}
+.印刷部分 {
+	display: none;
+}
+@media print{
+	.非印刷部分 {
+		display: none;
+	}
+	.印刷部分 {
+		display: block;
+	}
+}
+.印刷内容 {
+	width: 100%;
+}
+.左そろえ {
+	text-align: left;
+}
+.右そろえ {
+	text-align: right;
+}
+.印刷プレビュー表 th.左そろえ {
+	text-align: left;
+}
+#メインパネル {
+	border: 4px dotted black;
+	padding: 6px;
+}
+.画像パネル {
+	border: 4px dotted black;
+	padding: 8px;
+}
+/* IE対応。*/
+.IEのみ { display: none; }
+@media all and (-ms-high-contrast:none) {
+	.IEのみ {
+		display: block;
+	}
+	*::-ms-backdrop, .IEのみ {
+		display: block;
+	}
+}
+/* 表の選択を表示する。 */
+/* See https://stackoverflow.com/questions/51189719/highlight-selected-jsgrid-row/51190169 */
+.手動表.jsgrid tr.highlight td.jsgrid-cell {
+	background-color: yellow;
+}
+/* 表の文字を小さくする。 */
+.手動表 .jsgrid-cell {
+	font-size: 8.5pt;
+}
+.取り込みボタン {
+	display: none;
+}
+.ui-state-active {
+	font-weight: bold !important;
+}
+/* ボタン類 */
+input[type="button"]:not(.jsgrid-button), button, .取り込みボタンラッパー, .ui-tabs-tab {
+	display: inline-block;
+	line-height: 14pt;
+	padding: 6px;
+	padding-left: 8px;
+	padding-right: 8px;
+	border: 1px black solid;
+	border-radius: 3px;
+	background: linear-gradient(white, lightgray);
+	font-size: 10pt;
+	font-family: "ＭＳ Ｐゴシック", Osaka, ui-sans-serif, sans-serif, system-ui;
+}
+input[type="button"]:not(.jsgrid-button):hover, button:hover, .取り込みボタンラッパー:hover, .ui-tabs-tab:hover {
+	background: linear-gradient(white, #ccccff);
+	font-weight: bold;
+}
+input[type="button"]:not(.jsgrid-button):disabled, button:disabled, .取り込みボタンラッパー:disabled, .ui-tabs-tab:disabled {
+	border-color: #cccccc;
+}
+input[type="button"]:not(.jsgrid-button):active, button:active, .取り込みボタンラッパー:active, .ui-tabs-tab:active {
+	transform: translateY(2px);
+	background: linear-gradient(white, #fee);
+	font-weight: bold;
+}
+.スクロール固定 {
+	position: -webkit-sticky; /* Safari用 */
+	position:sticky; /* 要素をスクロールに応じて固定 */
+	top:0; /* 縦スクロールに追従 */
+	z-index: 100; /* z-indexで最前面に持ってくる */
+	background-color: #ffffde;
+}
+.技術名称ヘッダ:before {
+	content: "技術名称：";
+}
+.技術名称ヘッダ:empty:before {
+	content: "";
+}
+.タブの中身 {
+	overflow-x: auto;
+}
+.A4用紙イメージスクロール可能 {
+	max-width: 595.28pt; /* A4 210mm */
+	border: 1px solid black;
+}
+@media only screen and (max-device-width: 480px) {
+	.A4用紙イメージスクロール可能 {
+		/* スマホ用のCSS */
+		width: 595.28pt; /* A4 210mm */
+		overflow-x: scroll;
+	}
+}
+div.tabulator-cell {
+	font-size: 8.5pt;
+}
+div.tabulator-col-content {
+	text-align: center;
+	background: linear-gradient(white, lightgray) !important;
+	font-size: 10pt;
+	font-weight: bold;
+}
+div.tabulator-cell {
+}
+div.tabulator-cell:first-child {
+	text-align: center;
+	background: linear-gradient(white, lightgray) !important;
+	border-bottom: 1px solid gray;
+	font-size: 10pt;
+	font-weight: bold;
+}
+.セル見出し {
+	background-color: lightgreen !important;
+	border-bottom: 1px solid gray;
+}

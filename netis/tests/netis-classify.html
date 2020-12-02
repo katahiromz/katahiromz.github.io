@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<script src="netis-classify.js"></script>
+	<script>
+    function parseData(json) {
+        let dict = {};
+        for (let i in json) {
+            let item = json[i];
+            if (item[0] == '') continue;
+            if (!(item[0] in dict)) {
+                dict[item[0]] = {};
+            }
+            if (item[1] == '') continue;
+            if (!(item[1] in dict[item[0]])) {
+                dict[item[0]][item[1]] = {};
+            }
+            if (item[2] == '') continue;
+            if (!(item[2] in dict[item[0]][item[1]])) {
+                dict[item[0]][item[1]][item[2]] = {};
+            }
+            if (item[3] == '') continue;
+            if (!(item[3] in dict[item[0]][item[1]][item[2]])) {
+                dict[item[0]][item[1]][item[2]][item[3]] = {};
+            }
+        }
+        return dict;
+    }
+	$(function() {
+		$.getJSON("港湾分類.json", (data) => {
+			let str = JSON.stringify(parseData(data));
+			document.querySelector('#classify1').setAttribute("data", str);
+			document.querySelector('#classify2').setAttribute("data", str);
+		});
+	});
+	</script>
+</head>
+<body>
+
+<netis-classify id="classify1">
+</netis-classify>
+
+<netis-classify id="classify2">
+</netis-classify>
+
+</body>
+</html>

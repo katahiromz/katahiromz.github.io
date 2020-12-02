@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- jaは日本語。 -->
+<head>
+	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+	<!-- HTMLヘッダ部 -->
+	<meta charset="UTF-8">
+	<title>checkbox.html</title>
+	<meta name="robots" content="noindex,nofollow" />
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<!-- main style -->
+	<style>
+		.改行なし {
+			white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+
+<div>キーワード：
+	<span class="改行なし">
+		<input type="checkbox" id="安全・安心" value="安全・安心" name="キーワード" />
+		<label for="安全・安心">安全・安心</label>
+	</span>
+	<span class="改行なし">
+		<input type="checkbox" id="環境" value="環境" name="キーワード" />
+		<label for="環境">環境</label>
+	</span>
+	<span class="改行なし">
+		<input type="checkbox" id="情報化" value="情報化" name="キーワード" />
+		<label for="情報化">情報化</label>
+	</span>
+	<span class="改行なし">
+		<input type="checkbox" id="コスト縮減・生産性の向上" value="コスト縮減・生産性の向上" name="キーワード" />
+		<label for="コスト縮減・生産性の向上">コスト縮減・生産性の向上</label>
+	</span>
+	<span class="改行なし">
+		<input type="checkbox" id="公共工事の品質確保・向上" value="公共工事の品質確保・向上" name="キーワード" />
+		<label for="公共工事の品質確保・向上">公共工事の品質確保・向上</label>
+	</span>
+	<span class="改行なし">
+		<input type="checkbox" id="景観" value="景観" name="キーワード" />
+		<label for="景観">景観</label>
+	</span>
+	<span class="改行なし">
+		<input type="checkbox" id="伝統・歴史・文化" value="伝統・歴史・文化" name="キーワード" />
+		<label for="伝統・歴史・文化">伝統・歴史・文化</label>
+	</span>
+	<span class="改行なし">
+		<input type="checkbox" id="リサイクル" value="リサイクル" name="キーワード" />
+		<label for="リサイクル">リサイクル</label>
+	</span>
+</div>
+
+<div>
+	<div>
+		<input type="button" id="取得" value="取得" />
+	</div>
+	<div>
+		設定内容：<input type="text" id="設定内容" />
+		<input type="button" id="設定" value="設定" />
+	</div>
+	<script>
+		$("#取得").click(function() {
+			let values = [];
+			$('input[name="キーワード"]:checked').map(function() {
+				values.push($(this).val());
+			});
+			alert(JSON.stringify(values));
+			$('#設定内容').val(JSON.stringify(values));
+		});
+		$("#設定").click(function() {
+			let values = JSON.parse($('#設定内容').val());
+			alert(JSON.stringify(values));
+			$('input[name="キーワード"]:checked').prop('checked', false);
+			for (let id in values) {
+				$('input[id=' + values[id] + ']').prop('checked', true);
+			}
+		});
+	</script>
+</div>
+
+</body></html>

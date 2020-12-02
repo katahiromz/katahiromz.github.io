@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>myplugin.html</title>
+	<meta name="robots" content="noindex,nofollow" />
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!-- jquery.category_chooser.js -->
+	<script src="jquery.category_chooser.js"></script>
+	<link rel="stylesheet" href="category_chooser.css">
+</head>
+<body>
+	<div id="category_chooser_1" class="category_chooser"></div>
+	<div id="category_chooser_2" class="category_chooser"></div>
+	<script>
+		$("#category_chooser_1").category_chooser();
+		$("#category_chooser_2").category_chooser({
+			change: function(e, cap) { alert("change: " + e.type); }
+		});
+		$("#category_chooser_1").category_chooser('level1', "空港土木");
+		$("#category_chooser_2").category_chooser('values', "港湾・港湾海岸・空港\t浚渫工\tポンプ浚渫工\t");
+		alert($("#category_chooser_1").category_chooser('level1'));
+		alert(JSON.stringify($("#category_chooser_2").category_chooser('values')));
+	</script>
+</body></html>

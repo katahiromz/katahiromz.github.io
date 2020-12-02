@@ -1,0 +1,24 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>plugin.html</title>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<!-- plugin.js -->
+	<script src="./plugin.js"></script>
+</head>
+<body>
+
+<div id="my_plugin"></div>
+<script>
+	$(function() {
+		var my_plugin = $("#my_plugin").myplugin({});
+		my_plugin.myplugin2('hello', 'world');
+		alert("OK-");
+	});
+</script>
+
+</body></html>

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>sheet.html</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- polyfill -->
+	<script src="polyfill.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+	<!-- Tabulator -->
+	<link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet">
+	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.1.4/dist/js/tabulator.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.1.4/dist/js/jquery_wrapper.min.js"></script>
+	<!-- main script -->
+	<script>
+		function 表計算初期化データ() {
+			return [
+				{"#":"1", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+				{"#":"2", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+				{"#":"3", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+				{"#":"4", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+				{"#":"5", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+				{"#":"6", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+				{"#":"7", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+				{"#":"8", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+			];
+		}
+		function 表計算初期化フィールド群() {
+			return [
+				{title:"#", field:"#", formatter:"rownum", hozAlign:"right", resizable:false, headerSort:false },
+				{title:"A", field:"A", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+				{title:"B", field:"B", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+				{title:"C", field:"C", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+				{title:"D", field:"D", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+				{title:"E", field:"E", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+				{title:"F", field:"F", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+				{title:"G", field:"G", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+				{title:"H", field:"H", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false },
+			];
+		}
+		function HTMLの特殊文字を変換(テキスト) {
+			return テキスト.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;");
+		}
+
+		var 表データ = 表計算初期化データ();
+		function 表IDから表データを取得(表ID) {
+			return 表データ;
+		}
+
+		function 見出し列数行数更新(表ID) {
+			$("#" + 表ID + " div.tabulator-cell").removeClass("セル見出し");
+			let 列数 = +$("#" + 表ID + "_見出し列数").val();
+			let 行数 = +$("#" + 表ID + "_見出し行数").val();
+			$("#" + 表ID + " div.tabulator-row:lt(" + 行数 + ") div.tabulator-cell").addClass("セル見出し");
+			$("#" + 表ID + " div.tabulator-row").each(function() {
+				$(this).children("div.tabulator-cell:lt(" + (列数 + 1) + ")").addClass("セル見出し");
+			});
+			表計算出力更新(表ID);
+		}
+		function 見出し列数行数(表ID) {
+			let 表データ = 表IDから表データを取得(表ID);
+			$("#" + 表ID + "_見出し列数").bind('keyup mouseup change', function(){
+				見出し列数行数更新(表ID);
+			});
+			$("#" + 表ID + "_見出し行数").bind('keyup mouseup change', function(){
+				見出し列数行数更新(表ID);
+			});
+		}
+
+		function 表計算出力更新(表ID) {
+			let 表データ = 表IDから表データを取得(表ID);
+
+			if (!表データ || !表データ.length)
+				return;
+
+			let 見出し列数 = $("#" + 表ID + "_見出し列数").val();
+			let 見出し行数 = $("#" + 表ID + "_見出し行数").val();
+
+			let 最大列数 = 0, 最大行数 = 0;
+			let x, y;
+			x = y = 0;
+			for (var i in 表データ) {
+				x = 0;
+				for (var k in 表データ[i]) {
+					if (x >= 1 && 表データ[i][k] && 表データ[i][k].trim() != "") {
+						最大列数 = Math.max(x, 最大列数);
+						最大行数 = Math.max(y, 最大行数);
+					}
+					x += 1;
+				}
+				y += 1;
+			}
+
+			let html = '<table class="印刷プレビュー表内部表"><tbody>';
+			x = y = 0;
+			for (var i in 表データ) {
+				if (y > 最大行数)
+					break;
+				html += '<tr>';
+				x = 0;
+				for (var k in 表データ[i]) {
+					if (x >= 1 && x <= 最大列数 && y <= 最大行数) {
+						if (x <= 見出し列数 || y < 見出し行数) {
+							html += '<th>' + HTMLの特殊文字を変換(表データ[i][k]) + '</th>';
+						} else {
+							html += '<td>' + HTMLの特殊文字を変換(表データ[i][k]) + '</td>';
+						}
+					}
+					x += 1;
+				}
+				html += '</tr>';
+				y += 1;
+			}
+			html += '</tbody></table>';
+
+			$("." + 表ID + "_出力").html(html);
+		}
+	</script>
+	<!-- main style -->
+	<style>
+		div.tabulator-cell {
+			font-size: 8.5pt;
+		}
+		div.tabulator-col-content {
+			text-align: center;
+			background: linear-gradient(white, lightgray) !important;
+			font-size: 10pt;
+			font-weight: bold;
+		}
+		div.tabulator-cell {
+		}
+		div.tabulator-cell:first-child {
+			text-align: center;
+			background: linear-gradient(white, lightgray) !important;
+			border-bottom: 1px solid gray;
+			font-size: 10pt;
+			font-weight: bold;
+		}
+		.セル見出し {
+			background-color: lightgreen !important;
+			border-bottom: 1px solid gray;
+		}
+		td {
+			border: 1px solid black;
+			background-color: white;
+		}
+		th {
+			border: 1px solid black;
+			background-color: #FFFF00;
+			font-weight: bold;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+
+<div id="メインタブ切り替え">
+	<!-- メインタブリスト。-->
+	<ul id="メインタブリスト">
+		<!-- ここのhrefは半角でなければならない(多分) -->
+		<li><a href="#tab-1">タブ1</a></li>
+		<li><a href="#tab-2">タブ2</a></li>
+	</ul>
+
+	<div id="tab-1" class="タブの中身">
+		<div class="実験等実施状況表_出力"></div>
+	</div>
+
+	<div id="tab-2" class="タブの中身">
+		<div class="中央そろえ">
+			<label for="実験等実施状況表_タイトル">表タイトル：</label>
+			<input type="text" id="実験等実施状況表_タイトル" />
+		</div>
+		<div id="実験等実施状況表" class="表計算"></div>
+		<div>
+			<span class="折り返しなし">
+				見出し 列数：
+				<input type="number" id="実験等実施状況表_見出し列数" class="列数行数" value="0" min="0" max="16" />　　
+			</span>
+			<span class="折り返しなし">
+				見出し 行数：
+				<input type="number" id="実験等実施状況表_見出し行数" class="列数行数" value="0" min="0" max="16" />
+			</span>
+		</div>
+	</div>
+
+	<script>
+		$(function() {
+			$("#メインタブ切り替え").tabs({
+				activate: function(event, ui) {
+					let active = $("#メインタブ切り替え").tabs('option', 'active');
+					if (active == 1) {
+						if (!table) {
+							var table = new Tabulator("#実験等実施状況表", {
+								height: "200px",
+								headerSort: false,
+								columns: 表計算初期化フィールド群(),
+								cellEdited:function(){
+									見出し列数行数更新("実験等実施状況表");
+									表計算出力更新("実験等実施状況表");
+								},
+								dataLoaded:function(){
+									見出し列数行数更新("実験等実施状況表");
+									表計算出力更新("実験等実施状況表");
+								},
+								data:表データ,
+							});
+						}
+					}
+				},
+			});
+
+			// 実験等実施状況表の処理。
+			$(function() {
+				//値データ同期("実験等実施状況表_タイトル");
+				見出し列数行数("実験等実施状況表");
+				表計算出力更新("実験等実施状況表");
+			});
+		});
+	</script>
+</body></html>

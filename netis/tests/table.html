@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>table.html</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<!-- jsGrid -->
+	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+	<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+	<!-- main style -->
+	<!-- See https://stackoverflow.com/questions/51189719/highlight-selected-jsgrid-row/51190169 -->
+	<style>
+		tr.highlight td.jsgrid-cell {
+			background-color: yellow;
+		}
+	</style>
+	<!-- main script -->
+	<script>
+	var clients = [
+		{ "名前": "蟻人間1", "年齢": 999, "性別": "男" },
+		{ "名前": "蟻人間2", "年齢": 1, "性別": "男" },
+		{ "名前": "蟻人間3", "年齢": 10000, "性別": "男" },
+	];
+
+	// See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
+	$.extend($.ui.dialog.prototype.options, {
+		create: function() {
+			var $this = $(this);
+			// focus first button and bind enter to it
+			$this.parent().find('.ui-dialog-buttonpane button:first').focus();
+			$this.keypress(function(e) {
+				if( e.keyCode == $.ui.keyCode.ENTER ) {
+					$this.parent().find('.ui-dialog-buttonpane button:first').click();
+					return false;
+				}
+			});
+		}
+	});
+
+	$(function() {
+		$("#追加ボタン").click(function() {
+			// 空にする。
+			$("#名前追加").val();
+			$("#年齢追加").val();
+			$("#性別追加").val();
+
+			$("#追加ダイアログ").dialog({
+				modal: true,
+				title: "追加",
+				buttons: {
+					"OK": function() {
+						// 項目を追加する。
+						let name = $("#名前追加").val().trim();
+						let age = +$("#年齢追加").val().trim();
+						let gender = $("#性別追加").val().trim();
+						let data = {"名前":name, "年齢":age, "性別":gender};
+						$("#my-table").jsGrid("insertItem", data);
+
+						// 選択を切り替える
+						// See https://stackoverflow.com/questions/51189719/highlight-selected-jsgrid-row/51190169
+						let row = $("#my-table").find('table tr.highlight');
+						if (row.length) {
+							row.toggleClass('highlight');
+						};
+						row = $("#my-table").find('table tr:last');
+						row.toggleClass("highlight");
+
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+					"キャンセル": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					}
+				}
+			});
+		});
+		$("#編集ボタン").click(function() {
+			let selectedRow = $("#my-table").find('table tr.highlight');
+			if (selectedRow && selectedRow.length > 0) {
+				let rowIndex = selectedRow[0].rowIndex;
+				let name = clients[rowIndex]["名前"];
+				let age = clients[rowIndex]["年齢"];
+				let gender = clients[rowIndex]["性別"];
+
+				$("#名前編集").val(name);
+				$("#年齢編集").val(age);
+				$("#性別編集").val(gender);
+
+				$("#編集ダイアログ").dialog({
+					modal: true,
+					title: "編集",
+					buttons: {
+						"OK": function() {
+							// データを更新する。
+							name = $("#名前編集").val().trim();
+							age = +$("#年齢編集").val().trim();
+							gender = $("#性別編集").val().trim();
+							let data = {"名前":name, "年齢":age, "性別":gender};
+							$("#my-table").jsGrid("updateItem", selectedRow[0], data);
+
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						},
+						"キャンセル": function() {
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						}
+					}
+				});
+			}
+		});
+		$("#削除ボタン").click(function() {
+			let selectedRow = $("#my-table").find('table tr.highlight');
+			if (selectedRow && selectedRow.length > 0) {
+				$("#削除ダイアログ").dialog({
+					modal: true,
+					title: "削除",
+					buttons: {
+						"OK": function() {
+							// 削除する。
+							$("#my-table").jsGrid("deleteItem", selectedRow);
+
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						},
+						"キャンセル": function() {
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						}
+					}
+				});
+			}
+		});
+
+		$("#my-table").jsGrid({
+			width: "100%",
+			height: "auto",
+			confirmDeleting: false,
+
+			inserting: false,
+			editing: false,
+			sorting: false,
+			paging: false,
+			data: clients,
+
+			noDataContent: "データが空です",
+
+			// See https://stackoverflow.com/questions/51189719/highlight-selected-jsgrid-row/51190169
+			rowClick: function(args) {
+				var $row = this.rowByItem(args.item);
+				var selectedRow = $("#my-table").find('table tr.highlight');
+				if (selectedRow.length) {
+					selectedRow.toggleClass('highlight');
+				};
+				$row.toggleClass("highlight");
+			},
+
+			fields: [
+				{ name: "名前", type: "text", width: 150, validate: "required" },
+				{ name: "年齢", type: "number", width: 50 },
+				{ name: "性別", type: "select", width: 50, items: ["男", "女"], valueType: "string", valueField: "0", },
+			]
+		});
+	});
+	</script>
+</head>
+<body>
+
+<div id="my-table"></div>
+
+<input type="button" value="追加" id="追加ボタン" />
+<input type="button" value="編集" id="編集ボタン" />
+<input type="button" value="削除" id="削除ボタン" />
+
+<div id="追加ダイアログ" style="display:none;">
+	<p>名前：<input type="text" id="名前追加" /></p>
+	<p>年齢：<input type="text" id="年齢追加" /></p>
+	<p>性別：
+		<select id="性別追加"/>
+			<option>男</option>
+			<option>女</option>
+		</select>
+	</p>
+</div>
+<div id="編集ダイアログ" style="display:none;">
+	<p>名前：<input type="text" id="名前編集" /></p>
+	<p>年齢：<input type="text" id="年齢編集" /></p>
+	<p>性別：
+		<select id="性別編集"/>
+			<option>男</option>
+			<option>女</option>
+		</select>
+	</p>
+</div>
+<div id="削除ダイアログ" style="display:none;">
+	<p>この項目を削除しますか？</p>
+	<p id="削除項目"></p>
+</div>
+
+</body>
+</html>

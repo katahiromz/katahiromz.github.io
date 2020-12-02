@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>image.html</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<!-- main style -->
+	<style>
+		.折り返しなし {
+			white-space: nowrap;
+		}
+		.画像パネル {
+			border: 4px dotted black;
+			padding: 8px;
+		}
+		.中央そろえ {
+			text-align: center;
+		}
+		.アップロードボタン {
+			display: none;
+		}
+		/* ボタン類 */
+		input[type="button"]:not(.jsgrid-button), button, .アップロードボタンラッパー, .ui-tabs-tab {
+			display: inline-block;
+			line-height: 14pt;
+			padding: 6px;
+			padding-left: 8px;
+			padding-right: 8px;
+			border: 1px black solid;
+			border-radius: 3px;
+			background: linear-gradient(white, lightgray);
+			font-size: 10pt;
+			font-family: "ＭＳ Ｐゴシック", Osaka, ui-sans-serif, sans-serif, system-ui;
+		}
+		input[type="button"]:not(.jsgrid-button):hover, button:hover, .アップロードボタンラッパー:hover, .ui-tabs-tab:hover {
+			background: linear-gradient(white, #ccccff);
+			font-weight: bold;
+		}
+		input[type="button"]:not(.jsgrid-button):disabled, button:disabled, .アップロードボタンラッパー:disabled, .ui-tabs-tab:disabled {
+			border-color: #cccccc;
+		}
+		input[type="button"]:not(.jsgrid-button):active, button:active, .アップロードボタンラッパー:active, .ui-tabs-tab:active {
+            transform: translateY(2px);
+			background: linear-gradient(white, #fee);
+			font-weight: bold;
+		}
+	</style>
+	<!-- main script -->
+	<script>
+		const 画像ファイル最大サイズ = 189440;
+		const 画像最大横幅 = 600;
+		const 画像最大高さ = 10000;
+
+		function 写真設定(写真ID, file = null, result = null) {
+			if (!result)
+				return;
+
+			let image = new Image();
+			image.src = result;
+			if (image.naturalWidth > 画像最大横幅) {
+				alert("画像の横幅は" + 画像最大横幅 + "ピクセルまでです。");
+				return;
+			}
+			if (image.naturalHeight > 画像最大高さ) {
+				alert("画像の高さは" + 画像最大高さ + "ピクセルまでです。");
+				return;
+			}
+
+			// 縮小版
+			let 縮小版 = $('.' + 写真ID + '_縮小版');
+			縮小版.attr('src', result);
+			縮小版.width(32);
+			縮小版.height(32);
+			縮小版.css("vertical-align", "bottom");
+
+			// 実寸大
+			let 実寸大 = $('.' + 写真ID + '_実寸大');
+			実寸大.attr('src', result);
+			実寸大.css('text-align', "center");
+
+			if (file) {
+				// 拡張子
+				let 拡張子 = "";
+				let i = file.name.lastIndexOf('.');
+				if (i >= 0) {
+					拡張子 = file.name.slice(i);
+				}
+
+				// ファイル名
+				$('#' + 写真ID + "_ファイル名").val("ファイル名" + 拡張子);
+				$('.' + 写真ID + "_ファイル名").html("ファイル名" + 拡張子);
+			} else {
+				$('#' + 写真ID + "_ファイル名").val("");
+				$('.' + 写真ID + "_ファイル名").html("");
+			}
+		}
+		function 写真ファイル設定(写真ID, file) {
+			if (file.size >= 画像ファイル最大サイズ) {
+				写真設定(写真ID, null, null);
+				alert("ファイルサイズが大きすぎます。");
+				return;
+			}
+
+			// 画像以外は処理を停止
+			switch (file.type) {
+			case 'image/jpeg':
+			case 'image/png':
+			case 'image/gif':
+				break;
+			default:
+				写真設定(写真ID, null, null);
+				alert("画像ファイルはJPEG/PNG/GIFのいずれかでなければいけません。");
+				return;
+			}
+
+			// 画像表示
+			let reader = new FileReader();
+			reader.onload = function() {
+				写真設定(写真ID, file, reader.result);
+			}
+			reader.readAsDataURL(file);
+		}
+		function 写真同期(写真ID) {
+			$('#' + 写真ID).change(function() {
+				let file = $(this).prop('files')[0];
+				写真ファイル設定(写真ID, file);
+			});
+			let パネル = $('#' + 写真ID + "_パネル");
+			if (パネル) {
+				パネル.on('dragenter dragover', function(e) {
+					e.stopPropagation();
+					e.preventDefault();
+					$(this).css("border", "4px dotted #f66");
+				});
+				パネル.on('dragleave', function(e) {
+					e.stopPropagation();
+					e.preventDefault();
+					$(this).css("border", "4px dotted black");
+				});
+				パネル.on('drop', function(e) {
+					$(this).css("border", "4px dotted black");
+					file = e.originalEvent.dataTransfer.files[0];
+					写真ファイル設定(写真ID, file);
+					e.preventDefault();
+					e.stopPropagation();
+				});
+			}
+		}
+		$(function() {
+			写真同期("マイ写真");
+		});
+	</script>
+</head>
+<body>
+
+<div class="画像パネル" id="マイ写真_パネル">
+	<div>
+		<label for="マイ写真" class="アップロードボタンラッパー" >
+			画像をアップロード
+			<input type="file" id="マイ写真" accept="image/*" class="アップロードボタン" />
+		</label>
+		<img class="マイ写真_縮小版" />
+	</div>
+	<span class="折り返しなし">
+		マイ写真タイトル：<input type="text" id="マイ写真_タイトル" />
+	</span>　　
+	<span class="折り返しなし">
+		マイ写真ファイル名：<input type="text" id="マイ写真_ファイル名" />
+	</span>
+	<hr />
+	<div class="マイ写真_タイトル 中央そろえ"></div>
+	<div class="中央そろえ">
+		<img class="マイ写真_実寸大" />
+	</div>
+	<script>
+		$(function() {
+			$("#マイ写真_タイトル").change(function(){
+				$(".マイ写真_タイトル").html($("#マイ写真_タイトル").val());
+			});
+		});
+	</script>
+</div>
+
+</body></html>

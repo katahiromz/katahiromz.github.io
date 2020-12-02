@@ -1,0 +1,19 @@
+.category {
+	display: inline-block;
+	border-left: 2px lightgray solid;
+	border-top: 2px lightgray solid;
+	border-right: 2px darkgray solid;
+	border-bottom: 2px darkgray solid;
+	margin: 0;
+	padding: 8px;
+}
+.category_level {
+	display: inline-block;
+	width: 200px;
+}
+.category_select {
+	width: 190px;
+}
+.level_label {
+	font-size: 75%;
+}

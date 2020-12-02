@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja"> <!-- jaは日本語。 -->
+<head>
+	<!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+	<!-- HTMLヘッダ部 -->
+	<meta charset="UTF-8">
+	<title>radio.html</title>
+	<meta name="robots" content="noindex,nofollow" />
+	<meta name="viewport" content="width=device-width" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+
+<div>情報提供の範囲：
+	<span class="改行なし">
+		<input name="情報提供の範囲" type="radio" id="国土交通省のみ情報提供" value="国土交通省のみ情報提供" />
+		<label for="国土交通省のみ情報提供">国土交通省のみ</label>
+	</span>
+	<span class="改行なし">
+		<input name="情報提供の範囲" type="radio" id="国土交通省以外の公的機関に情報提供" value="国土交通省以外の公的機関に情報提供" />
+		<label for="国土交通省以外の公的機関に情報提供">国土交通省以外の公的機関</label>
+	</span>
+	<span class="改行なし">
+		<input name="情報提供の範囲" type="radio" id="一般に情報提供" value="一般に情報提供" />
+		<label for="一般に情報提供">一般に情報提供</label>
+	</span>
+</div>
+
+<div>
+	<div>
+		<input type="button" id="取得" value="取得" />
+	</div>
+	<div>
+		設定内容：<input type="text" id="設定内容" />
+		<input type="button" id="設定" value="設定" />
+	</div>
+	<script>
+		$("#取得").click(function() {
+			let value = $('input[name="情報提供の範囲"]:checked').val();
+			alert(value);
+			$('#設定内容').val(value);
+		});
+		$("#設定").click(function() {
+			let value = $('#設定内容').val();
+			$("#" + value).prop('checked', true);
+		});
+	</script>
+</div>
+
+</body></html>
