@@ -9,27 +9,7 @@
 	<meta name="viewport" content="width=device-width" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!-- PACE.js -->
-	<script>
-		var userAgent = window.navigator.userAgent.toLowerCase();
-		if (userAgent.indexOf('firefox') != -1 ||
-			userAgent.indexOf('waterfox') != -1)
-		{
-			// Firefox と Waterfox では pace.js は使わない。
-		} else {
-			document.write('<scr' + 'ipt src="pace.js" />');
-		}
-	</script>
-	<link type="text/css" rel="stylesheet" href="pace-theme-loading-bar.css" />
-	<style>
-		/* pace.jsによる読み込み時設定。 */
-		.pace-running .読み込み時非表示 {
-			display: none;
-		}
-		.pace-running {
-			background-color: lightcyan;
-		}
-	</style>
-<!--
+	<script src="pace.js" />
 	<script>
 		// NOTE: Firefox hangs in using pace.js. This code will do workaround.
 		// See: https://stackoverflow.com/questions/43887415/pace-js-never-reaches-100
@@ -51,7 +31,16 @@
 		}
 		initDestroyTimeOutPace();
 	</script>
--->
+	<link type="text/css" rel="stylesheet" href="pace-theme-loading-bar.css" />
+	<style>
+		/* pace.jsによる読み込み時設定。 */
+		.pace-running .読み込み時非表示 {
+			display: none;
+		}
+		.pace-running {
+			background-color: lightcyan;
+		}
+	</style>
 	<!-- TODO: ここで読み込むJavascriptプログラムはきちんとテストされた最新のものでなければならない。-->
 	<!-- TODO: 時々バージョン番号を確認し、古くなっていたらテスト後に更新しないといけない。 -->
 	<!-- polyfill -->
