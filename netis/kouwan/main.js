@@ -903,9 +903,17 @@ function ラジオ値設定(name, value) {
 function _分類値設定内部(id, value) {
 	if (!value) {
 		$("#" + id).category_chooser('values', "\t\t\t");
+		$("." + id + "レベル1").text("");
+		$("." + id + "レベル2").text("");
+		$("." + id + "レベル3").text("");
+		$("." + id + "レベル4").text("");
 		return;
 	}
 	$("#" + id).category_chooser('values', value);
+	$("." + id + "レベル1").text($("#" + id).category_chooser('level1'));
+	$("." + id + "レベル2").text($("#" + id).category_chooser('level2'));
+	$("." + id + "レベル3").text($("#" + id).category_chooser('level3'));
+	$("." + id + "レベル4").text($("#" + id).category_chooser('level4'));
 }
 function 分類値設定(id, value) {
 	_分類値設定内部(id, value);
