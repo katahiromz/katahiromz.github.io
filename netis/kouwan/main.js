@@ -964,7 +964,6 @@ function _分類値設定内部(id, value) {
 }
 
 function 分類値設定(id, value) {
-	_分類値設定内部(id, value);
 	$(function(){
 		$(function(){
 			_分類値設定内部(id, value);
