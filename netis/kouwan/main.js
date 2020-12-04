@@ -1289,8 +1289,7 @@ function 数値か(text, 空でもいいか) {
 	if (空でもいいか && text == '') {
 		return true;
 	}
-	// https://webllica.com/javascript-number-check-function/
-	return /^[+,-]?\d(\.\d+)?$/.test(text);
+	return /^[+,-]?\d+(\.\d*)?$/.test(text);
 }
 
 function 符号なし数値か(text, 空でもいいか) {
@@ -1298,8 +1297,7 @@ function 符号なし数値か(text, 空でもいいか) {
 	if (空でもいいか && text == '') {
 		return true;
 	}
-	// https://webllica.com/javascript-number-check-function/
-	return /^\d(\.\d+)?$/.test(text);
+	return /^\d+(\.\d*)?$/.test(text);
 }
 
 function 西暦年か(text, 空でもいいか) {
