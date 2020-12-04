@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////////////
+// 拡張
+
 // ダイアログでEnterキーを有効にする。
 // See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
 $(function() {
@@ -15,6 +18,9 @@ $(function() {
 		}
 	});
 });
+
+//////////////////////////////////////////////////////////////////////////////
+// グローバル変数
 
 const 製品名 = "新技術情報入力システム(港湾版)";
 $(function() {
@@ -59,6 +65,21 @@ function 表IDから表データを取得(表ID) {
 	return "";
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// データ関連
+
+function 小数第3位で四捨五入(value) {
+	return Number(value).toFixed(2);
+}
+
+function HTMLの特殊文字を変換(テキスト) {
+	return テキスト.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;");
+}
+
+function 改行をBRタグに変換(テキスト) {
+	return テキスト.replace(/\n/g, "<br />");
+}
+
 function 今日の日付() {
 	var d = new Date();
 	var yyyy = d.getFullYear();
@@ -67,10 +88,94 @@ function 今日の日付() {
 	var result = yyyy + "." + mm + "." + dd;
 	return result;
 }
+
 function 無効な画像データ() {
 	// img/invalid.gif
 	return "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
 }
+
+function コストタイプ詳細(タイプ) {
+	switch (タイプ) {
+	case "A(I)型": return "損益分岐点型：A(I)";
+	case "A(II)型": return "損益分岐点型：A(II)";
+	case "B(+)型": return "平行型：B(+)";
+	case "B(-)型": return "平行型：B(-)";
+	case "C(+)型": return "発散型：C(+)";
+	case "C(-)型": return "発散型：C(-)";
+	case "D(I)型": return "サイクルコスト型：D(I)";
+	case "D(II)型": return "サイクルコスト型：D(II)";
+	}
+	return "";
+}
+
+function 表計算初期化データ() {
+	return [
+		{"id":"1", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"2", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"3", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"4", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"5", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"6", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"7", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"8", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+	];
+}
+
+function 表計算初期化フィールド群() {
+	let formatter = function(cell, params, onRendered) {
+		onRendered(function(){
+			let table = cell.getTable();
+			let options = table.options;
+			let table_name = options.table_name;
+			if (table_name) {
+				let row = cell.getRow();
+				let rowIndex = row.getIndex();
+				let 見出し列数 = $("#" + table_name + "_見出し列数").val();
+				let field = cell.getField();
+				if (field.charCodeAt(0) - 'A'.charCodeAt(0) < 見出し列数) {
+					$(cell.getElement()).addClass("セル見出し");
+					return;
+				}
+				let 見出し行数 = $("#" + table_name + "_見出し行数").val();
+				if (rowIndex <= 見出し行数) {
+					let cells = row.getCells();
+					for (let i in cells) {
+						$(cells[i].getElement()).addClass("セル見出し");
+					}
+				}
+			}
+		});
+		return cell.getValue();
+	};
+	return [
+		{title:"", field:"id", formatter:"rownum", hozAlign:"center", width:20, resizable:false, headerSort:false },
+		{title:"A", field:"A", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+		{title:"B", field:"B", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+		{title:"C", field:"C", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+		{title:"D", field:"D", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+		{title:"E", field:"E", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+		{title:"F", field:"F", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+		{title:"G", field:"G", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+		{title:"H", field:"H", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
+	];
+}
+
+function 費用内訳書表初期化データ() {
+	return [
+		{"id":"1", "A":"工種", "B":"(事例)", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"2", "A":"材料費", "B":"〇〇", "C":"～", "D":"〇〇", "E":"", "F":"", "G":"", "H":""},
+		{"id":"3", "A":"施工費", "B":"〇〇", "C":"～", "D":"〇〇", "E":"", "F":"", "G":"", "H":""},
+		{"id":"4", "A":"合計", "B":"〇〇", "C":"～", "D":"〇〇", "E":"", "F":"", "G":"", "H":""},
+		{"id":"5", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"6", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"7", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+		{"id":"8", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
+	];
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// DOM操作
+
 function 写真クリア(写真ID) {
 	$('#' + 写真ID + '_縮小版').prop('src', 無効な画像データ());
 	$('.' + 写真ID + '_縮小版').prop('src', 無効な画像データ());
@@ -80,6 +185,7 @@ function 写真クリア(写真ID) {
 	$('.' + 写真ID + "_タイトル").html("");
 	$('.' + 写真ID + '_実寸大').prop('src', 無効な画像データ());
 }
+
 function 写真設定(写真ID, file, result) {
 	if (!result) {
 		return;
@@ -128,6 +234,7 @@ function 写真設定(写真ID, file, result) {
 		$('.' + 写真ID + "_タイトル").html("");
 	}
 }
+
 function 写真ファイル設定(写真ID, file) {
 	if (file.size >= 画像ファイル最大サイズ) {
 		写真クリア(写真ID);
@@ -154,6 +261,7 @@ function 写真ファイル設定(写真ID, file) {
 	}
 	reader.readAsDataURL(file);
 }
+
 function 写真同期(写真ID) {
 	$('#' + 写真ID + "_ボタン").on("change", function() {
 		let file = $(this).prop('files')[0];
@@ -184,12 +292,6 @@ function 写真同期(写真ID) {
 function HTMLデータ同期(id) {
 	let html = $("#" + id).html();
 	$("." + id).html(html);
-}
-function HTMLの特殊文字を変換(テキスト) {
-	return テキスト.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;");
-}
-function 改行をBRタグに変換(テキスト) {
-	return テキスト.replace(/\n/g, "<br />");
 }
 
 function JSONファイル取り込み(file) {
@@ -303,83 +405,6 @@ function 印刷する() {
 	}
 }
 
-function 表計算初期化データ() {
-	return [
-		{"id":"1", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"2", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"3", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"4", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"5", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"6", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"7", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"8", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-	];
-}
-function 表計算初期化フィールド群() {
-	let formatter = function(cell, params, onRendered) {
-		onRendered(function(){
-			let table = cell.getTable();
-			let options = table.options;
-			let table_name = options.table_name;
-			if (table_name) {
-				let row = cell.getRow();
-				let rowIndex = row.getIndex();
-				let 見出し列数 = $("#" + table_name + "_見出し列数").val();
-				let field = cell.getField();
-				if (field.charCodeAt(0) - 'A'.charCodeAt(0) < 見出し列数) {
-					$(cell.getElement()).addClass("セル見出し");
-					return;
-				}
-				let 見出し行数 = $("#" + table_name + "_見出し行数").val();
-				if (rowIndex <= 見出し行数) {
-					let cells = row.getCells();
-					for (let i in cells) {
-						$(cells[i].getElement()).addClass("セル見出し");
-					}
-				}
-			}
-		});
-		return cell.getValue();
-	};
-	return [
-		{title:"", field:"id", formatter:"rownum", hozAlign:"center", width:20, resizable:false, headerSort:false },
-		{title:"A", field:"A", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-		{title:"B", field:"B", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-		{title:"C", field:"C", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-		{title:"D", field:"D", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-		{title:"E", field:"E", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-		{title:"F", field:"F", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-		{title:"G", field:"G", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-		{title:"H", field:"H", hozAlign:"left", editor:"input", width:150, resizable:false, headerSort:false, formatter:formatter },
-	];
-}
-function 費用内訳書表初期化データ() {
-	return [
-		{"id":"1", "A":"工種", "B":"(事例)", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"2", "A":"材料費", "B":"〇〇", "C":"～", "D":"〇〇", "E":"", "F":"", "G":"", "H":""},
-		{"id":"3", "A":"施工費", "B":"〇〇", "C":"～", "D":"〇〇", "E":"", "F":"", "G":"", "H":""},
-		{"id":"4", "A":"合計", "B":"〇〇", "C":"～", "D":"〇〇", "E":"", "F":"", "G":"", "H":""},
-		{"id":"5", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"6", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"7", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-		{"id":"8", "A":"", "B":"", "C":"", "D":"", "E":"", "F":"", "G":"", "H":""},
-	];
-}
-
-function コストタイプ詳細(タイプ) {
-	switch (タイプ) {
-	case "A(I)型": return "損益分岐点型：A(I)";
-	case "A(II)型": return "損益分岐点型：A(II)";
-	case "B(+)型": return "平行型：B(+)";
-	case "B(-)型": return "平行型：B(-)";
-	case "C(+)型": return "発散型：C(+)";
-	case "C(-)型": return "発散型：C(-)";
-	case "D(I)型": return "サイクルコスト型：D(I)";
-	case "D(II)型": return "サイクルコスト型：D(II)";
-	}
-	return "";
-}
-
 function サイクルコスト更新() {
 	let タイプ = ラジオ値取得("コストタイプ");
 	$(".コストタイプ詳細").text(コストタイプ詳細(タイプ));
@@ -481,6 +506,7 @@ function 見出し列数行数更新(表ID) {
 	});
 	表計算出力更新(表ID);
 }
+
 function 見出し列数行数(表ID) {
 	let 表データ = 表IDから表データを取得(表ID);
 	$("#" + 表ID + "_見出し列数").bind('keyup mouseup change', function(){
@@ -543,6 +569,7 @@ function 新技術内訳表更新() {
 	html += '</tbody></table>';
 	$(".新技術内訳表_出力").html(html);
 }
+
 function 従来技術内訳表更新() {
 	if ($("#従来技術内訳表").jsGrid("option", "data") !== 従来技術内訳表_データ) {
 		従来技術内訳表_データ = $("#従来技術内訳表").jsGrid("option", "data");
@@ -578,6 +605,7 @@ function 従来技術内訳表更新() {
 	html += '</tbody></table>';
 	$(".従来技術内訳表_出力").html(html);
 }
+
 function 問合せその他表更新() {
 	if (!問合せその他表_データ || !問合せその他表_データ.length) {
 		$(".問合せその他表_出力").html("問合せその他はありません。");
@@ -628,6 +656,7 @@ function 国土交通省の実績追加の事務所更新() {
 		}
 	}
 }
+
 function 国土交通省の実績編集の事務所更新() {
 	let 整備局名 = $("#国土交通省の実績編集の整備局名").val();
 	let 事務所名 = $('#国土交通省の実績編集の事務所名');
@@ -642,6 +671,7 @@ function 国土交通省の実績編集の事務所更新() {
 		}
 	}
 }
+
 function 整備局事務所データ同期() {
 	let 整備局名;
 
@@ -666,10 +696,12 @@ function 整備局事務所データ同期() {
 	国土交通省の実績追加の事務所更新();
 	国土交通省の実績編集の事務所更新();
 }
+
 function _値データ同期内部(id) {
 	let 値 = $("#" + id).val();
 	$("." + id).html(改行をBRタグに変換(HTMLの特殊文字を変換((値))));
 }
+
 function 値データ同期(id) {
 	$("#" + id).on("input keyup blur change", function() {
 		_値データ同期内部(id);
@@ -681,6 +713,7 @@ function 値データ同期(id) {
 		});
 	});
 }
+
 function 証明項目表更新() {
 	if (!証明項目表_データ || !証明項目表_データ.length) {
 		let html = '<div class="印刷プレビュー表">証明項目はありません。</div>';
@@ -706,6 +739,7 @@ function 証明項目表更新() {
 	html += '</tbody></table>';
 	$(".証明項目表_出力").html(html);
 }
+
 function 国土交通省実績表更新() {
 	if (!国土交通省実績表_データ || !国土交通省実績表_データ.length) {
 		let html = '<div class="印刷プレビュー表内部表">国土交通省における実績はありません。</div>';
@@ -742,6 +776,7 @@ function 国土交通省実績表更新() {
 	html += '</tbody></table>';
 	$(".国土交通省実績表_出力").html(html);
 }
+
 function 国土交通省以外実績表更新() {
 	if (!国土交通省以外実績表_データ || !国土交通省以外実績表_データ.length) {
 		let html = '<div class="印刷プレビュー表内部表">国土交通省以外の実績はありません。</div>';
@@ -776,6 +811,7 @@ function 国土交通省以外実績表更新() {
 	html += '</tbody></table>';
 	$(".国土交通省以外実績表_出力").html(html);
 }
+
 function 分類データ同期(id) {
 	$("#" + id).category_chooser({
 		change: function(e, cap) {
@@ -790,6 +826,7 @@ function 分類データ同期(id) {
 		},
 	});
 }
+
 function _チェックデータ同期内部(値, 名前) {
 	if ($("#" + 値).prop('checked')) {
 		$("." + 値).html('*');
@@ -797,6 +834,7 @@ function _チェックデータ同期内部(値, 名前) {
 		$("." + 値).html('&nbsp;');
 	}
 }
+
 function チェックデータ同期(値, 名前) {
 	if (名前) {
 		$("[name=" + 名前 + "]").click(function() {
@@ -814,6 +852,7 @@ function チェックデータ同期(値, 名前) {
 		});
 	});
 }
+
 // ４個の文字列配列の配列で格納されたNETIS分類データをそれを多重連想配列に変換する。
 function NETIS分類データ解析(json) {
 	let dict = {};
@@ -838,6 +877,7 @@ function NETIS分類データ解析(json) {
 	}
 	return dict;
 }
+
 // ２個の文字列配列の配列で格納されたNETIS分類データをそれを多重連想配列に変換する。
 function NETIS整備局事務所データ解析(json) {
 	let dict = {};
@@ -854,6 +894,7 @@ function NETIS整備局事務所データ解析(json) {
 	}
 	return dict;
 }
+
 function チェックボックス値配列取得(name) {
 	let values = [];
 	$("input[name=\"" + name + "\"]:checked").map(function() {
@@ -861,12 +902,14 @@ function チェックボックス値配列取得(name) {
 	});
 	return values;
 }
+
 function _チェックボックス値配列設定内部(name, values) {
 	$("input[name=\"" + name + "\"]:checked").prop('checked', false);
 	for (let i in values) {
 		$("input[value=\"" + values[i] + "\"]").prop('checked', true);
 	}
 }
+
 function チェックボックス値配列設定(name, values) {
 	_チェックボックス値配列設定内部(name, values);
 	$(function() {
@@ -875,6 +918,7 @@ function チェックボックス値配列設定(name, values) {
 		});
 	});
 }
+
 function ラジオ値取得(name) {
 	let value = $("input[name='" + name + "']:checked").prop('id');
 	if (!value) {
@@ -885,6 +929,7 @@ function ラジオ値取得(name) {
 	}
 	return value;
 }
+
 function _ラジオ値設定内部(name, value) {
 	if (!value) {
 		$("input[name='" + name + "']").prop('checked', false);
@@ -892,6 +937,7 @@ function _ラジオ値設定内部(name, value) {
 	}
 	$("input:radio[name=\"" + name + "\"]").val([value]);
 }
+
 function ラジオ値設定(name, value) {
 	_ラジオ値設定内部(name, value);
 	$(function() {
@@ -900,6 +946,7 @@ function ラジオ値設定(name, value) {
 		});
 	});
 }
+
 function _分類値設定内部(id, value) {
 	if (!value) {
 		$("#" + id).category_chooser('values', "\t\t\t");
@@ -915,6 +962,7 @@ function _分類値設定内部(id, value) {
 	$("." + id + "レベル3").text($("#" + id).category_chooser('level3'));
 	$("." + id + "レベル4").text($("#" + id).category_chooser('level4'));
 }
+
 function 分類値設定(id, value) {
 	_分類値設定内部(id, value);
 	$(function(){
@@ -923,6 +971,7 @@ function 分類値設定(id, value) {
 		});
 	});
 }
+
 function _出願中マーク同期内部(id, name) {
 	if (ラジオ値取得(name) == id) {
 		$("." + id + "マーク").text("【出願中】");
@@ -930,6 +979,7 @@ function _出願中マーク同期内部(id, name) {
 		$("." + id + "マーク").text("");
 	}
 }
+
 function 出願中マーク同期(id, name) {
 	if (name) {
 		$("[name=" + name + "]").click(function() {
@@ -947,9 +997,7 @@ function 出願中マーク同期(id, name) {
 		});
 	});
 }
-function 小数第3位で四捨五入(value) {
-	return Number(value).toFixed(2);
-}
+
 function 技術比較合計金額(表データ) {
 	let 合計金額 = 0;
 	for (let i in 表データ) {
@@ -960,6 +1008,7 @@ function 技術比較合計金額(表データ) {
 	}
 	return 合計金額;
 }
+
 function 技術比較再計算() {
 	let 基準とする数量 = Number($("#基準とする数量").val());
 	let 基準とする単位 = $("#基準とする単位").val();
@@ -1049,4 +1098,329 @@ function 技術比較再計算() {
 		$(".工程短縮百分率").text("");
 		$(".工程増加百分率").text("");
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// 正規化とバリデーション
+
+function 半角カナを全角に(text) {
+	// https://www.yoheim.net/blog.php?q=20191101
+	var kanaMap = {
+		'ｶﾞ': 'ガ', 'ｷﾞ': 'ギ', 'ｸﾞ': 'グ', 'ｹﾞ': 'ゲ', 'ｺﾞ': 'ゴ',
+		'ｻﾞ': 'ザ', 'ｼﾞ': 'ジ', 'ｽﾞ': 'ズ', 'ｾﾞ': 'ゼ', 'ｿﾞ': 'ゾ',
+		'ﾀﾞ': 'ダ', 'ﾁﾞ': 'ヂ', 'ﾂﾞ': 'ヅ', 'ﾃﾞ': 'デ', 'ﾄﾞ': 'ド',
+		'ﾊﾞ': 'バ', 'ﾋﾞ': 'ビ', 'ﾌﾞ': 'ブ', 'ﾍﾞ': 'ベ', 'ﾎﾞ': 'ボ',
+		'ﾊﾟ': 'パ', 'ﾋﾟ': 'ピ', 'ﾌﾟ': 'プ', 'ﾍﾟ': 'ペ', 'ﾎﾟ': 'ポ',
+		'ｳﾞ': 'ヴ', 'ﾜﾞ': 'ヷ', 'ｦﾞ': 'ヺ',
+		'ｱ': 'ア', 'ｲ': 'イ', 'ｳ': 'ウ', 'ｴ': 'エ', 'ｵ': 'オ',
+		'ｶ': 'カ', 'ｷ': 'キ', 'ｸ': 'ク', 'ｹ': 'ケ', 'ｺ': 'コ',
+		'ｻ': 'サ', 'ｼ': 'シ', 'ｽ': 'ス', 'ｾ': 'セ', 'ｿ': 'ソ',
+		'ﾀ': 'タ', 'ﾁ': 'チ', 'ﾂ': 'ツ', 'ﾃ': 'テ', 'ﾄ': 'ト',
+		'ﾅ': 'ナ', 'ﾆ': 'ニ', 'ﾇ': 'ヌ', 'ﾈ': 'ネ', 'ﾉ': 'ノ',
+		'ﾊ': 'ハ', 'ﾋ': 'ヒ', 'ﾌ': 'フ', 'ﾍ': 'ヘ', 'ﾎ': 'ホ',
+		'ﾏ': 'マ', 'ﾐ': 'ミ', 'ﾑ': 'ム', 'ﾒ': 'メ', 'ﾓ': 'モ',
+		'ﾔ': 'ヤ', 'ﾕ': 'ユ', 'ﾖ': 'ヨ',
+		'ﾗ': 'ラ', 'ﾘ': 'リ', 'ﾙ': 'ル', 'ﾚ': 'レ', 'ﾛ': 'ロ',
+		'ﾜ': 'ワ', 'ｦ': 'ヲ', 'ﾝ': 'ン',
+		'ｧ': 'ァ', 'ｨ': 'ィ', 'ｩ': 'ゥ', 'ｪ': 'ェ', 'ｫ': 'ォ',
+		'ｯ': 'ッ', 'ｬ': 'ャ', 'ｭ': 'ュ', 'ｮ': 'ョ',
+		'｡': '。', '､': '、', 'ｰ': 'ー', '｢': '「', '｣': '」', '･': '・'
+	};
+	var reg = new RegExp('(' + Object.keys(kanaMap).join('|') + ')', 'g');
+	return text.replace(reg, function (match) {
+		return kanaMap[match];
+	}).replace(/ﾞ/g, '゛').replace(/ﾟ/g, '゜');
+}
+
+function 半角文字のみか(text) {
+	// https://javascript.programmer-reference.com/js-check-hankaku-ascii/
+	return text.match(/^[\x20-\x7e]*$/);
+}
+
+function 半角カナを含むか(text) {
+	return text.match(/[ｦ-ﾟ]/);
+}
+
+function 連続するスペースを含むか(text) {
+	return text.match(/( |\t)( |\t)+/);
+}
+
+function 全角英数字を半角に(text) {
+	// https://webllica.com/change-double-byte-to-half-width/
+	return text.replace(/[！-～]/g, function(tmp) {
+		return String.fromCharCode(tmp.charCodeAt(0) - 0xFEE0);
+	});
+}
+
+function 数値正規化(text) {
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	text = text.replace(/,/g, ""); // カンマ区切りを削除。
+	text = text.replace(/(ー|ｰ)/g, '-'); // 長音をハイフンに変換。
+	return text;
+}
+
+function 整数正規化(text) {
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	text = text.replace(/,/g, ""); // カンマ区切りを削除。
+	text = text.replace(/(ー|ｰ)/g, '-'); // 長音をハイフンに変換。
+	return text;
+}
+
+function 郵便番号正規化(text) {
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	text = text.replace(/(ー|ｰ)/g, '-'); // 長音をハイフンに変換。
+	// 必要ならハイフンを入れる。
+	if (/^[0-9]{7}$/.test(text)) {
+		text = text.slice(0, 3) + "-" + text.slice(3);
+	}
+	return text;
+}
+
+function 年月日正規化(text) {
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	text = text.replace(/(ー|ｰ)/g, '-'); // 長音をハイフンに変換。
+	text = text.replace(/-/g, '/'); // ハイフンをスラッシュに変換。
+	text = text.replace(/\./g, '/'); // ドットをスラッシュに変換。
+	let ary = text.split('/');
+	if (ary.length == 3) {
+		text = ary[0] + '/' + ('0' + ary[1]).slice(-2) + '/' + ary[2];
+	}
+	return text;
+}
+
+function 電話番号正規化(text) {
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	text = text.replace(/(ー|ｰ)/g, '-'); // 長音をハイフンに変換。
+	text = text.replace(/[\(\)]/g, '-'); // 丸カッコをハイフンに変換。
+	text = text.replace(/\-\-+/g, '-'); // ハイフンの連続を一つのハイフンに変換。
+	text = text.replace(/^\-+/g, ''); // 先頭のハイフンを削除。
+	return text;
+}
+
+function FAX番号正規化(text) {
+	return 電話番号正規化(text);
+}
+
+function メールアドレス正規化(text) {
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	text = text.replace(/(ー|ｰ)/g, '-'); // 長音をハイフンに変換。
+	return text;
+}
+
+function URL正規化(text) {
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	return text;
+}
+
+function 表タイトル正規化(text) {
+	text = text.trim();
+	return text;
+}
+
+function 写真タイトル正規化(text) {
+	text = text.trim();
+	return text;
+}
+
+function 建設技術番号正規化(text) {
+	// TODO:
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	return text;
+}
+
+function CORINS登録番号正規化(text) {
+	// TODO:
+	text = text.trim();
+	text = 全角英数字を半角に(text);
+	return text;
+}
+
+function 文章正規化(text) {
+	text = text.trim();
+	text = 半角カナを全角に(text);
+	// 全角スペースを2個の半角スペースに。
+	text = text.replace(/　/g, '  ');
+	// 連続するスペースを１つのスペースにする。
+	text = text.replace(/  +/g, ' ');
+	// 連続する改行を２つの改行にする。
+	text = text.replace(/(\r?\n)([ \t]*\r?\n)+/g, "\r\n\r\n");
+	return text;
+}
+
+function 整数か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	return /^(\+|-)?[0-9,]+$/.test(text);
+}
+
+function 符号なし整数か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	return /^[0-9,]+$/.test(text);
+}
+
+function 郵便番号か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	return /^[0-9]{3}-?[0-9]{4}$/.test(text);
+}
+
+function 数値か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	// https://webllica.com/javascript-number-check-function/
+	return /^[+,-]?\d(\.\d+)?$/.test(text);
+}
+
+function 符号なし数値か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	// https://webllica.com/javascript-number-check-function/
+	return /^\d(\.\d+)?$/.test(text);
+}
+
+function 西暦年か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	return /^\d{4}$/.test(text);
+}
+
+function 年月日か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	text = text.replace(/-/g, '/');
+	text = text.replace(/\./g, '/');
+	if (!/^\d{4}\/\d{1,2}\/\d{1,2}$/.test(text))
+		return false;
+	let ary = text.split('/');
+	if (ary.length != 3)
+		return false;
+	let y = ary[0], m = ary[1] - 1, d = ary[2];
+	let date = new Date(y, m, d);
+	if (date.getFullYear() != y || date.getMonth() != m || date.getDate() != d)
+		return false;
+	return true;
+}
+
+function 電話番号か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	return /^[\d\-\+]+$/.test(text);
+}
+
+function FAX番号か(text, 空でもいいか) {
+	return 電話番号か(text, 空でもいいか);
+}
+
+function メールアドレスか(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	text = text.trim();
+	// https://techacademy.jp/magazine/33601
+	var reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+	return reg.test(text);
+}
+
+function URLか(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	text = text.trim();
+	// https://www.it-swarm-ja.tech/ja/javascript/javascript%E3%81%AE%E6%96%87%E5%AD%97%E5%88%97%E3%81%8Curl%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E3%82%92%E7%A2%BA%E8%AA%8D/971354377/
+	var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+		'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+		'((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+		'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+		'(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+		'(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+	return !!pattern.test(text);
+}
+
+function 表タイトルか(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	// TODO:
+	return true;
+}
+
+function 写真タイトルか(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	// TODO:
+	return true;
+}
+
+function 建設技術番号か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	// TODO:
+	text = 全角英数字を半角に(text);
+	return 半角文字のみか(text);
+}
+
+function CORINS登録番号か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	// TODO:
+	text = 全角英数字を半角に(text);
+	return 半角文字のみか(text);
+}
+
+function 正しい文章か(text, 空でもいいか) {
+	if (空でもいいか && text.trim() == "") {
+		return true;
+	}
+	if (半角カナを含むか(text))
+		return false;
+	if (連続するスペースを含むか(text))
+		return false;
+	return true;
+}
+
+function 文章が長すぎるか(text) {
+	return text.length > 1000;
+}
+
+function テキストが長すぎるか(text) {
+	return text.length > 64;
+}
+
+function テキスト正規化(text) {
+	text = 半角カナを全角に(text);
+	text = text.replace(/\s\s+/g, " ");
+	return text;
+}
+
+function 会社名正規化(text) {
+	text = 半角カナを全角に(text);
+	text = text.replace(/　/g, " ");
+	text = text.replace(/㈱/g, "(株)");
+	text = text.replace(/株式会社/g, "(株)");
+	text = text.replace(/㈲/g, "(有)");
+	text = text.replace(/有限会社/g, "(有)");
+	text = text.replace(/\s*\(株\)\s*/g, "(株)");
+	text = text.replace(/\s*\(有\)\s*/g, "(有)");
+	text = text.replace(/\s\s+/g, " ");
+	return text;
 }
