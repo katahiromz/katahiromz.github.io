@@ -5623,13 +5623,13 @@
 				<script>
 					$(function() {
 						$("#新技術内訳項目追加の数量").on('input keyup blur change', function(){
-							let 数量 = Number($("#新技術内訳項目追加の数量").val());
-							let 単価 = Number($("#新技術内訳項目追加の単価").val());
+							let 数量 = Number(数値正規化($("#新技術内訳項目追加の数量").val()));
+							let 単価 = Number(数値正規化($("#新技術内訳項目追加の単価").val()));
 							$("#新技術内訳項目追加の金額").val(数量 * 単価);
 						});
 						$("#新技術内訳項目追加の単価").on('input keyup blur change', function(){
-							let 数量 = Number($("#新技術内訳項目追加の数量").val());
-							let 単価 = Number($("#新技術内訳項目追加の単価").val());
+							let 数量 = Number(数値正規化($("#新技術内訳項目追加の数量").val()));
+							let 単価 = Number(数値正規化($("#新技術内訳項目追加の単価").val()));
 							$("#新技術内訳項目追加の金額").val(数量 * 単価);
 						});
 					});
@@ -5762,13 +5762,13 @@
 				<script>
 					$(function() {
 						$("#新技術内訳項目編集の数量").on('input keyup blur change', function(){
-							let 数量 = Number($("#新技術内訳項目編集の数量").val());
-							let 単価 = Number($("#新技術内訳項目編集の単価").val());
+							let 数量 = Number(数値正規化($("#新技術内訳項目編集の数量").val()));
+							let 単価 = Number(数値正規化($("#新技術内訳項目編集の単価").val()));
 							$("#新技術内訳項目編集の金額").val(数量 * 単価);
 						});
 						$("#新技術内訳項目編集の単価").on('input keyup blur change', function(){
-							let 数量 = Number($("#新技術内訳項目編集の数量").val());
-							let 単価 = Number($("#新技術内訳項目編集の単価").val());
+							let 数量 = Number(数値正規化($("#新技術内訳項目編集の数量").val()));
+							let 単価 = Number(数値正規化($("#新技術内訳項目編集の単価").val()));
 							$("#新技術内訳項目編集の金額").val(数量 * 単価);
 						});
 					});
@@ -5943,13 +5943,13 @@
 				<script>
 					$(function() {
 						$("#従来技術内訳項目追加の数量").on('input keyup blur change', function(){
-							let 数量 = Number($("#従来技術内訳項目追加の数量").val());
-							let 単価 = Number($("#従来技術内訳項目追加の単価").val());
+							let 数量 = Number(数値正規化($("#従来技術内訳項目追加の数量").val()));
+							let 単価 = Number(数値正規化($("#従来技術内訳項目追加の単価").val()));
 							$("#従来技術内訳項目追加の金額").val(数量 * 単価);
 						});
 						$("#従来技術内訳項目追加の単価").on('input keyup blur change', function(){
-							let 数量 = Number($("#従来技術内訳項目追加の数量").val());
-							let 単価 = Number($("#従来技術内訳項目追加の単価").val());
+							let 数量 = Number(数値正規化($("#従来技術内訳項目追加の数量").val()));
+							let 単価 = Number(数値正規化($("#従来技術内訳項目追加の単価").val()));
 							$("#従来技術内訳項目追加の金額").val(数量 * 単価);
 						});
 					});
@@ -6081,13 +6081,13 @@
 				<script>
 					$(function() {
 						$("#従来技術内訳項目編集の数量").on('input keyup blur change', function(){
-							let 数量 = Number($("#従来技術内訳項目編集の数量").val());
-							let 単価 = Number($("#従来技術内訳項目編集の単価").val());
+							let 数量 = Number(数値正規化($("#従来技術内訳項目編集の数量").val()));
+							let 単価 = Number(数値正規化($("#従来技術内訳項目編集の単価").val()));
 							$("#従来技術内訳項目編集の金額").val(数量 * 単価);
 						});
 						$("#従来技術内訳項目編集の単価").on('input keyup blur change', function(){
-							let 数量 = Number($("#従来技術内訳項目編集の数量").val());
-							let 単価 = Number($("#従来技術内訳項目編集の単価").val());
+							let 数量 = Number(数値正規化($("#従来技術内訳項目編集の数量").val()));
+							let 単価 = Number(数値正規化($("#従来技術内訳項目編集の単価").val()));
 							$("#従来技術内訳項目編集の金額").val(数量 * 単価);
 						});
 					});
