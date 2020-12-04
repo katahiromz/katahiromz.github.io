@@ -1261,28 +1261,32 @@ function 文章正規化(text) {
 }
 
 function 整数か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	return /^(\+|-)?[0-9,]+$/.test(text);
 }
 
 function 符号なし整数か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	return /^[0-9,]+$/.test(text);
 }
 
 function 郵便番号か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	return /^[0-9]{3}-?[0-9]{4}$/.test(text);
 }
 
 function 数値か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	// https://webllica.com/javascript-number-check-function/
@@ -1290,7 +1294,8 @@ function 数値か(text, 空でもいいか) {
 }
 
 function 符号なし数値か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	// https://webllica.com/javascript-number-check-function/
@@ -1298,14 +1303,16 @@ function 符号なし数値か(text, 空でもいいか) {
 }
 
 function 西暦年か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	return /^\d{4}$/.test(text);
 }
 
 function 年月日か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	text = text.replace(/-/g, '/');
@@ -1323,7 +1330,8 @@ function 年月日か(text, 空でもいいか) {
 }
 
 function 電話番号か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	return /^[\d\-\+]+$/.test(text);
@@ -1334,7 +1342,8 @@ function FAX番号か(text, 空でもいいか) {
 }
 
 function メールアドレスか(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	text = text.trim();
@@ -1344,7 +1353,8 @@ function メールアドレスか(text, 空でもいいか) {
 }
 
 function URLか(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	text = text.trim();
@@ -1359,7 +1369,8 @@ function URLか(text, 空でもいいか) {
 }
 
 function 表タイトルか(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	// TODO:
@@ -1367,7 +1378,8 @@ function 表タイトルか(text, 空でもいいか) {
 }
 
 function 写真タイトルか(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	// TODO:
@@ -1375,7 +1387,8 @@ function 写真タイトルか(text, 空でもいいか) {
 }
 
 function 建設技術番号か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	// TODO:
@@ -1384,7 +1397,8 @@ function 建設技術番号か(text, 空でもいいか) {
 }
 
 function CORINS登録番号か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	// TODO:
@@ -1393,7 +1407,8 @@ function CORINS登録番号か(text, 空でもいいか) {
 }
 
 function 正しい文章か(text, 空でもいいか) {
-	if (空でもいいか && text.trim() == "") {
+	text = text.trim();
+	if (空でもいいか && text == '') {
 		return true;
 	}
 	if (半角カナを含むか(text))
