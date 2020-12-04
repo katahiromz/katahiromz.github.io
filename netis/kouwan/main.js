@@ -2017,27 +2017,37 @@ function NETIS技術データ設定(data) {
 		alert("データ読み込みに失敗しました。");
 		return false;
 	}
-	if (!data['製品名'] || 製品名 != data['製品名']) {
-		alert("データの種類が異なります。'" + 製品名 + "' != '" + data['製品名']+ "'");
-		return false;
+	try {
+		do {
+			if (!data['製品名'] || 製品名 != data['製品名']) {
+				alert("データの種類が異なります。'" + 製品名 + "' != '" + data['製品名']+ "'");
+				break;
+			}
+			if (!NETIS名称分類等設定(data['NETIS名称分類等'])) {
+				alert("名称分類等設定が読み込めません。");
+				break;
+			}
+			if (!NETIS技術概要等設定(data['NETIS技術概要等'])) {
+				alert("技術概要等設定が読み込めません。");
+				break;
+			}
+			if (!NETIS従来技術との比較設定(data['NETIS従来技術との比較'])) {
+				alert("従来技術との比較設定が読み込めません。");
+				break;
+			}
+			if (!NETIS施工実績等設定(data['NETIS施工実績等'])) {
+				alert("施工実績等設定が読み込めません。");
+				break;
+			}
+			return true;
+		} while (0);
+	} catch (e) {
+		;
 	}
-	if (!NETIS名称分類等設定(data['NETIS名称分類等'])) {
-		alert("名称分類等設定が読み込めません。");
-		return false;
-	}
-	if (!NETIS技術概要等設定(data['NETIS技術概要等'])) {
-		alert("技術概要等設定が読み込めません。");
-		return false;
-	}
-	if (!NETIS従来技術との比較設定(data['NETIS従来技術との比較'])) {
-		alert("従来技術との比較設定が読み込めません。");
-		return false;
-	}
-	if (!NETIS施工実績等設定(data['NETIS施工実績等'])) {
-		alert("施工実績等設定が読み込めません。");
-		return false;
-	}
-	return true;
+	alert("読み込みに失敗しました。リセットして再起動します。");
+	localStorage.removeItem(ローカルストレージ名);
+	location.reload();
+	return false;
 }
 
 function NETIS技術データ取得() {
