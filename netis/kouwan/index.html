@@ -137,8 +137,12 @@
 
 					$("#保存ボタン").click(function () {
 						let NETIS技術データ = NETIS技術データ取得();
-						localStorage.setItem(ローカルストレージ名, JSON.stringify(NETIS技術データ));
-						alert("保存しました。");
+						if (NETIS技術データ) {
+							localStorage.setItem(ローカルストレージ名, JSON.stringify(NETIS技術データ));
+							alert("保存しました。");
+						} else {
+							alert("保存できませんでした。");
+						}
 					});
 
 					$("#リセットボタン").click(function() {
@@ -3219,16 +3223,22 @@
 			<div id="de-ta-kansa" class="タブの中身">
 				<div>
 					次のボタンをクリックすると、入力内容を検査します。
+					<input type="button" id="データ検査ボタン" value="データを検査する" />
 				</div>
-				<div>
-					<input type="button" id="データチェックボタン" value="データをチェックする" />
-				</div>
-				<textarea id="データチェック結果">(未実装です)</textarea>
+				<textarea id="データチェック結果"></textarea>
 				<script>
 					$(function() {
-						$("#データチェックボタン").click(function() {
-							// TODO: 未実装
-							alert("未実装");
+						$("#データ検査ボタン").click(function() {
+							let NETIS技術データ = NETIS技術データ取得();
+							if (!NETIS技術データ) {
+								alert("取得データが異常です。管理者に問い合わせ下さい");
+								return;
+							}
+							localStorage.setItem(ローカルストレージ名, JSON.stringify(NETIS技術データ));
+							NETIS技術データ設定(NETIS技術データ);
+							let 監査結果 = [監査成功, ""];
+							監査結果 = NETIS技術データ監査(NETIS技術データ, 監査結果);
+							$("#データチェック結果").val(監査結果[1]);
 						});
 					});
 				</script>
