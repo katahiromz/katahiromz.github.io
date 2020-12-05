@@ -33,10 +33,10 @@
 	<script>
 		// NOTE: Firefox hangs in using pace.js. This code will do workaround.
 		// See: https://stackoverflow.com/questions/43887415/pace-js-never-reaches-100
-		var initDestroyTimeOutPace = function() {
-			var counter = 0;
-			var refreshIntervalId = setInterval( function(){
-				var progress;
+		let initDestroyTimeOutPace = function() {
+			let counter = 0;
+			let refreshIntervalId = setInterval( function(){
+				let progress;
 				if( typeof $( '.pace-progress' ).attr( 'data-progress-text' ) !== 'undefined' ) {
 					progress = Number( $( '.pace-progress' ).attr( 'data-progress-text' ).replace("%" ,'') );
 				}
@@ -128,7 +128,11 @@
 					// 起動時に読み込む。
 					let NETIS技術データ = JSON.parse(localStorage.getItem(ローカルストレージ名));
 					if (NETIS技術データ) {
-						NETIS技術データ設定(NETIS技術データ);
+						if (!NETIS技術データ設定(NETIS技術データ)) {
+							alert("データの読み込みに失敗しました。リセットして読み込みします。");
+							localStorage.removeItem(ローカルストレージ名);
+							location.reload();
+						}
 					}
 
 					$("#保存ボタン").click(function () {

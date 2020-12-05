@@ -83,11 +83,11 @@ function 改行をBRタグに変換(テキスト) {
 }
 
 function 今日の日付() {
-	var d = new Date();
-	var yyyy = d.getFullYear();
-	var mm = ("00" + (d.getMonth() + 1)).slice(-2);
-	var dd = ("00" + d.getDate()).slice(-2);
-	var result = yyyy + "." + mm + "." + dd;
+	let d = new Date();
+	let yyyy = d.getFullYear();
+	let mm = ("00" + (d.getMonth() + 1)).slice(-2);
+	let dd = ("00" + d.getDate()).slice(-2);
+	let result = yyyy + "." + mm + "." + dd;
 	return result;
 }
 
@@ -461,9 +461,9 @@ function 表計算出力更新(表ID) {
 	let 最大列数 = 0, 最大行数 = 0;
 	let x, y;
 	x = y = 0;
-	for (var i in 表データ) {
+	for (let i in 表データ) {
 		x = 0;
-		for (var k in 表データ[i]) {
+		for (let k in 表データ[i]) {
 			if (x >= 1 && 表データ[i][k] && 表データ[i][k].trim() != "") {
 				最大列数 = Math.max(x, 最大列数);
 				最大行数 = Math.max(y, 最大行数);
@@ -475,12 +475,12 @@ function 表計算出力更新(表ID) {
 
 	let html = '<table class="印刷プレビュー表内部表"><tbody>';
 	x = y = 0;
-	for (var i in 表データ) {
+	for (let i in 表データ) {
 		if (y > 最大行数)
 			break;
 		html += '<tr>';
 		x = 0;
-		for (var k in 表データ[i]) {
+		for (let k in 表データ[i]) {
 			if (x >= 1 && x <= 最大列数 && y <= 最大行数) {
 				if (x <= 見出し列数 || y < 見出し行数) {
 					html += '<th>' + HTMLの特殊文字を変換(表データ[i][k]) + '</th>';
@@ -627,7 +627,7 @@ function 問合せその他表更新() {
 	html += '            <th>E-Mail</th>';
 	html += '            <th>URL</th>';
 	html += '        </tr>';
-	for (var i in 問合せその他表_データ) {
+	for (let i in 問合せその他表_データ) {
 		let item = 問合せその他表_データ[i];
 		html += '<tr>';
 		html += '    <td>' + HTMLの特殊文字を変換(item["会社"]) + '</td>';
@@ -1106,7 +1106,7 @@ function 技術比較再計算() {
 
 function 半角カナを全角に(text) {
 	// https://www.yoheim.net/blog.php?q=20191101
-	var kanaMap = {
+	let kanaMap = {
 		'ｶﾞ': 'ガ', 'ｷﾞ': 'ギ', 'ｸﾞ': 'グ', 'ｹﾞ': 'ゲ', 'ｺﾞ': 'ゴ',
 		'ｻﾞ': 'ザ', 'ｼﾞ': 'ジ', 'ｽﾞ': 'ズ', 'ｾﾞ': 'ゼ', 'ｿﾞ': 'ゾ',
 		'ﾀﾞ': 'ダ', 'ﾁﾞ': 'ヂ', 'ﾂﾞ': 'ヅ', 'ﾃﾞ': 'デ', 'ﾄﾞ': 'ド',
@@ -1127,7 +1127,7 @@ function 半角カナを全角に(text) {
 		'ｯ': 'ッ', 'ｬ': 'ャ', 'ｭ': 'ュ', 'ｮ': 'ョ',
 		'｡': '。', '､': '、', 'ｰ': 'ー', '｢': '「', '｣': '」', '･': '・'
 	};
-	var reg = new RegExp('(' + Object.keys(kanaMap).join('|') + ')', 'g');
+	let reg = new RegExp('(' + Object.keys(kanaMap).join('|') + ')', 'g');
 	return text.replace(reg, function (match) {
 		return kanaMap[match];
 	}).replace(/ﾞ/g, '゛').replace(/ﾟ/g, '゜');
@@ -1353,7 +1353,7 @@ function メールアドレスか(text, 空でもいいか) {
 	}
 	text = text.trim();
 	// https://techacademy.jp/magazine/33601
-	var reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+	let reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
 	return reg.test(text);
 }
 
@@ -1364,7 +1364,7 @@ function URLか(text, 空でもいいか) {
 	}
 	text = text.trim();
 	// https://www.it-swarm-ja.tech/ja/javascript/javascript%E3%81%AE%E6%96%87%E5%AD%97%E5%88%97%E3%81%8Curl%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E3%82%92%E7%A2%BA%E8%AA%8D/971354377/
-	var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+	let pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
 		'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
 		'((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
 		'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
@@ -2019,40 +2019,33 @@ function NETIS施工実績等取得() {
 }
 
 function NETIS技術データ設定(data) {
-	if (!data) {
-		alert("データ読み込みに失敗しました。");
-		return false;
-	}
 	try {
 		do {
 			if (!data['製品名'] || 製品名 != data['製品名']) {
-				alert("データの種類が異なります。'" + 製品名 + "' != '" + data['製品名']+ "'");
+				console.error("データの種類が異なります。'" + 製品名 + "' != '" + data['製品名']+ "'");
 				break;
 			}
 			if (!NETIS名称分類等設定(data['NETIS名称分類等'])) {
-				alert("名称分類等設定が読み込めません。");
+				console.error("名称分類等設定が読み込めません。");
 				break;
 			}
 			if (!NETIS技術概要等設定(data['NETIS技術概要等'])) {
-				alert("技術概要等設定が読み込めません。");
+				console.error("技術概要等設定が読み込めません。");
 				break;
 			}
 			if (!NETIS従来技術との比較設定(data['NETIS従来技術との比較'])) {
-				alert("従来技術との比較設定が読み込めません。");
+				console.error("従来技術との比較設定が読み込めません。");
 				break;
 			}
 			if (!NETIS施工実績等設定(data['NETIS施工実績等'])) {
-				alert("施工実績等設定が読み込めません。");
+				console.error("施工実績等設定が読み込めません。");
 				break;
 			}
 			return true;
 		} while (0);
 	} catch (e) {
-		;
+		console.error("データ読み込み中に例外が発生しました。");
 	}
-	alert("読み込みに失敗しました。リセットして再起動します。");
-	localStorage.removeItem(ローカルストレージ名);
-	location.reload();
 	return false;
 }
 
