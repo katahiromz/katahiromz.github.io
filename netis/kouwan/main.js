@@ -847,7 +847,6 @@ function チェックデータ同期(値, 名前) {
 			_チェックデータ同期内部(値, 名前);
 		});
 	}
-	_チェックデータ同期内部(値, 名前);
 	$(function() {
 		$(function() {
 			_チェックデータ同期内部(値, 名前);
@@ -899,8 +898,10 @@ function NETIS整備局事務所データ解析(json) {
 
 function チェックボックス値配列取得(name) {
 	let values = [];
-	$("input[name=\"" + name + "\"]:checked").map(function() {
-		values.push($(this).val());
+	$("input[name=\"" + name + "\"]").each(function() {
+		if ($(this).prop('checked')) {
+			values.push($(this).prop('id'));
+		}
 	});
 	return values;
 }
@@ -908,12 +909,11 @@ function チェックボックス値配列取得(name) {
 function _チェックボックス値配列設定内部(name, values) {
 	$("input[name=\"" + name + "\"]:checked").prop('checked', false);
 	for (let i in values) {
-		$("input[value=\"" + values[i] + "\"]").prop('checked', true);
+		$("input[id=\"" + values[i] + "\"]").prop('checked', true);
 	}
 }
 
 function チェックボックス値配列設定(name, values) {
-	_チェックボックス値配列設定内部(name, values);
 	$(function() {
 		$(function() {
 			_チェックボックス値配列設定内部(name, values);
