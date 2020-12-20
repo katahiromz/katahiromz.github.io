@@ -306,8 +306,8 @@
 				}
 			}
 			let across = [];
-			for (let x = 0; x < cx; ++x) {
-				for (let y = 0; y < cy; ++y) {
+			for (let y = 0; y < cy; ++y) {
+				for (let x = 0; x < cx; ++x) {
 					if (this.cell_needs_number_x(x, y)) {
 						let word = '';
 						for (let k = x; k < cx; ++k) {

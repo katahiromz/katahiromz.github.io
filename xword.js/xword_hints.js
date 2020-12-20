@@ -58,7 +58,7 @@
 					let text = down[i][4];
 					html += '<div>';
 					html += '<label for="' + self._get_id('down', number) + '">【タテ' + number + '】</label>';
-					html += '<input type="text" id="' + self._get_id('down', number) + '" value="' + text + '"/>';
+					html += '<input type="text" id="' + self._get_id('down', number) + '" value="' + text + '" />';
 					html += '</div>';
 				}
 				html += '<p>☆☆☆ ヨコのカギ ☆☆☆</p>';
@@ -70,7 +70,7 @@
 					let text = across[i][4];
 					html += '<div>';
 					html += '<label for="' + self._get_id('across', number) + '">【ヨコ' + number + '】';
-					html += '<input type="text" id="' + self._get_id('across', number) + '" value="' + text + '"/>';
+					html += '<input type="text" id="' + self._get_id('across', number) + '" value="' + text + ' "/>';
 					html += '</div>';
 				}
 			}
