@@ -56,13 +56,13 @@
 }
 .xword_board-small-text-number {
 	font-family: arial;
-	font-size: 9px;
+	font-size: 10px;
 	z-index: 2;
 	position: absolute;
 }
 .xword_board-small-text-mark {
 	font-family: arial;
-	font-size: 9px;
+	font-size: 10px;
 	z-index: 2;
 	position: absolute;
 	right: 1px;
