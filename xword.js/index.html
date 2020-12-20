@@ -9,14 +9,15 @@
 	<script>window.Promise || document.write('<script src="//www.promisejs.org/polyfills/promise-7.0.4.min.js"><\/script>');</script>
 	<!-- Promise.any polyfill -->
 	<script>
-	if (!Promise.any) {
-		Promise.any = function(promises) {
-			var errors = [];
-			return Promise.race(promises.map(function(p) {
-				return p.catch(function(e) { errors.push(e); if (errors.length >= promises.length) throw errors; });
-			}));
-		};
-	}
+		// SEE ALSO: https://esdiscuss.org/topic/promise-any
+		if (!Promise.any) {
+			Promise.any = function(promises) {
+				var errors = [];
+				return Promise.race(promises.map(function(p) {
+					return p.catch(function(e) { errors.push(e); if (errors.length >= promises.length) throw errors; });
+				}));
+			};
+		}
 	</script>
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
