@@ -132,7 +132,7 @@
 		$(function(){
 			$("#show_answer").click(function(){
 				$("#xword_board_1").xword_board('show_answer', true);
-				$("#show_answer").addClass('invisible');
+				$("#show_answer").prop('disabled', true);
 			});
 			$("#show_next").click(function(){
 				location.reload();
