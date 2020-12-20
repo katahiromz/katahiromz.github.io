@@ -272,7 +272,7 @@
 			}
 			return false;
 		},
-		do_numbering: function() {
+		do_numbering: function(dict) {
 			let data = this.options.data;
 			let cx = this.options.cx, cy = this.options.cy;
 			let number = 1;
@@ -284,6 +284,58 @@
 					}
 				}
 			}
+			let down = [];
+			for (let y = 0; y < cy; ++y) {
+				for (let x = 0; x < cx; ++x) {
+					if (this.cell_needs_number_y(x, y)) {
+						let word = '';
+						for (let k = y; k < cy; ++k) {
+							word += this.cell(x, y);
+						}
+						word = this.文字正規化(word);
+						number = this.number(x, y);
+						let text = '';
+						for (let i = 0; i < dict.length; ++i) {
+							if (this.文字正規化(dict[i][0]) == word) {
+								text = dict[i][1];
+								break;
+							}
+						}
+						down.push([number, x, y, word, text]);
+					}
+				}
+			}
+			let across = [];
+			for (let x = 0; x < cx; ++x) {
+				for (let y = 0; y < cy; ++y) {
+					if (this.cell_needs_number_x(x, y)) {
+						let word = '';
+						for (let k = x; k < cx; ++k) {
+							word += this.cell(x, y);
+						}
+						word = this.文字正規化(word);
+						number = this.number(x, y);
+						let text = '';
+						for (let i = 0; i < dict.length; ++i) {
+							if (this.文字正規化(dict[i][0]) == word) {
+								text = dict[i][1];
+								break;
+							}
+						}
+						across.push([number, x, y, word, text]);
+					}
+				}
+			}
+			if (down && across) {
+				this.options.down = down;
+				this.options.across = across;
+			}
+		},
+		down: function(){
+			return this.options.down;
+		},
+		across: function(){
+			return this.options.across;
 		},
 		show_answer: function(newValue) {
 			if (newValue == undefined) {

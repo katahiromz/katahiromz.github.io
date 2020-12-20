@@ -15,6 +15,8 @@
 	<script src="japanese.js"></script>
 	<!-- xword_board.js -->
 	<script src="xword_board.js"></script>
+	<!-- xword_hints.js -->
+	<script src="xword_hints.js"></script>
 	<link rel="stylesheet" href="xword_board.css" />
 	<style>
 		.invisible {
@@ -90,7 +92,13 @@
 					}
 					$("#xword_board_1").xword_board();
 					$("#xword_board_1").xword_board('data', data);
-					$("#xword_board_1").xword_board('do_numbering');
+					$("#xword_board_1").xword_board('do_numbering', dict);
+					let down = $("#xword_board_1").xword_board('down');
+					let across = $("#xword_board_1").xword_board('across');
+					if (down && across) {
+						$("#xword_hints_1").xword_hints();
+						$("#xword_hints_1").xword_hints('hints', down, across);
+					}
 					$("#show_answer").removeClass('invisible');
 				});
 			};
@@ -105,22 +113,13 @@
 		Javascriptでクロスワード。これは新しい！
 	</p>
 	<div id="xword_board_1" class="xword_board">(計算中...)</div>
+	<div id="xword_hints_1" class="xword_hints"></div>
 	<button id="show_answer" class="invisible">show_answer</button>
 	<script>
 		$(function(){
 			$("#show_answer").click(function(){
 				$("#xword_board_1").xword_board('show_answer', true);
 				$("#show_answer").addClass('invisible');
-			});
-			$(window).unload(function(){
-				if (workers && workers.length == MAX_WORKERS) {
-					for (let k = 0; k < MAX_WORKERS; ++k) {
-						if (workers[k]) {
-							workers[k].terminate();
-							workers[k] = null;
-						}
-					}
-				}
 			});
 		});
 	</script>
