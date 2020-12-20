@@ -2,9 +2,16 @@
 	padding: 0;
 	border-collapse: separate;
 	border-spacing: 0;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+	border-right: none;
+	border-bottom: none;
 }
 .xword_board-table td {
-	border: solid 3px black;
+	border-left: none;
+	border-right: 1px solid black;
+	border-top: none;
+	border-bottom: 1px solid black;
 }
 .xword_board-cell {
 	width: 40px;
