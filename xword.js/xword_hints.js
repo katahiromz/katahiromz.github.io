@@ -15,7 +15,7 @@
 				this._build();
 			}
 		},
-		hints: function(down, across) {
+		hints: function(down, across){
 			this.options.down = down;
 			this.options.across = across;
 			this._build();

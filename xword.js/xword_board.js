@@ -39,10 +39,10 @@
 		},
 		文字正規化: function(str){
 			let text = '';
-			for (let i = 0; i < str.length; ++i) {
-				if (str[i] == '#' || str[i] == '■') {
+			for (let i = 0; i < str.length; ++i){
+				if (str[i] == '#' || str[i] == '■'){
 					text += '■';
-				} else if (str[i] == ' ' || str[i] == '　') {
+				} else if (str[i] == ' ' || str[i] == '　'){
 					text += '　';
 				} else {
 					text += str[i];
@@ -56,7 +56,7 @@
 			return text;
 		},
 		normalizeData: function(value){
-			if (value == undefined) {
+			if (value == undefined){
 				value = this.options.data;
 			}
 			let ary = value.concat();
@@ -108,7 +108,7 @@
 			{
 				if (ch == undefined){
 					ch = $("#" + this._get_id(x, y) + " input").val();
-					if (ch == '' || ch == ' ' || ch == '　') {
+					if (ch == '' || ch == ' ' || ch == '　'){
 						ch = '　';
 					}
 					return ch;
@@ -126,7 +126,7 @@
 						$("#" + this._get_id(x, y)).removeClass('xword_board-cell-black');
 						$("#" + this._get_id(x, y)).removeClass('xword_board-cell-red');
 						$("#" + this._get_id(x, y)).removeClass('xword_board-cell-yellow');
-						if (ch == '' || ch == ' ' || ch == '　') {
+						if (ch == '' || ch == ' ' || ch == '　'){
 							$("#" + this._get_id(x, y) + " input").val('');
 						} else {
 							$("#" + this._get_id(x, y) + " input").val(ch);
@@ -188,7 +188,7 @@
 						html += '<div class="xword_board-small-text-mark"></div>';
 						if (ch == '■' || ch == '#'){
 							html += '<input type="text" class="xword_board-textbox" value="■" maxlength="1" />';
-						} else if (ch == '' || ch == '　' || ch == ' ' || !this.options.show_answer) {
+						} else if (ch == '' || ch == '　' || ch == ' ' || !this.options.show_answer){
 							html += '<input type="text" class="xword_board-textbox" value="" maxlength="1" />';
 						} else {
 							html += '<input type="text" class="xword_board-textbox" value="' + ch + '" maxlength="1" />';
@@ -211,12 +211,12 @@
 				let text = '';
 				for(let x = 0; x < cx; ++x){
 					let ch = $("#" + this._get_id(x, y) + " input").val();
-					if (ch == '') {
+					if (ch == ''){
 						ch = '　';
 					}
 					ch = this.文字正規化(ch);
 					text += ch;
-					if (ch == '' || ch == ' ' || ch == '　') {
+					if (ch == '' || ch == ' ' || ch == '　'){
 						$("#" + this._get_id(x, y) + " input").val('');
 					} else {
 						$("#" + this._get_id(x, y) + " input").val(ch);
@@ -231,16 +231,16 @@
 		cell_needs_number: function(x, y){
 			let data = this.options.data;
 			let cx = this.options.cx, cy = this.options.cy;
-			if (data[y][x] == '■') {
+			if (data[y][x] == '■'){
 				return false;
 			}
-			if (x == 0 || data[y][x - 1] == '■') {
-				if (x + 1 < cx && data[y][x + 1] != '■') {
+			if (x == 0 || data[y][x - 1] == '■'){
+				if (x + 1 < cx && data[y][x + 1] != '■'){
 					return true;
 				}
 			}
-			if (y == 0 || data[y - 1][x] == '■') {
-				if (y + 1 < cy && data[y + 1][x] != '■') {
+			if (y == 0 || data[y - 1][x] == '■'){
+				if (y + 1 < cy && data[y + 1][x] != '■'){
 					return true;
 				}
 			}
@@ -249,11 +249,11 @@
 		cell_needs_number_x: function(x, y){
 			let data = this.options.data;
 			let cx = this.options.cx;
-			if (data[y][x] == '■') {
+			if (data[y][x] == '■'){
 				return false;
 			}
-			if (x == 0 || data[y][x - 1] == '■') {
-				if (x + 1 < cx && data[y][x + 1] != '■') {
+			if (x == 0 || data[y][x - 1] == '■'){
+				if (x + 1 < cx && data[y][x + 1] != '■'){
 					return true;
 				}
 			}
@@ -262,34 +262,34 @@
 		cell_needs_number_y: function(x, y){
 			let data = this.options.data;
 			let cy = this.options.cy;
-			if (data[y][x] == '■') {
+			if (data[y][x] == '■'){
 				return false;
 			}
-			if (y == 0 || data[y - 1][x] == '■') {
-				if (y + 1 < cy && data[y + 1][x] != '■') {
+			if (y == 0 || data[y - 1][x] == '■'){
+				if (y + 1 < cy && data[y + 1][x] != '■'){
 					return true;
 				}
 			}
 			return false;
 		},
-		do_numbering: function(dict) {
+		do_numbering: function(dict){
 			let data = this.options.data;
 			let cx = this.options.cx, cy = this.options.cy;
 			let number = 1;
-			for (let y = 0; y < cy; ++y) {
-				for (let x = 0; x < cx; ++x) {
-					if (this.cell_needs_number(x, y)) {
+			for (let y = 0; y < cy; ++y){
+				for (let x = 0; x < cx; ++x){
+					if (this.cell_needs_number(x, y)){
 						this.number(x, y, number);
 						number += 1;
 					}
 				}
 			}
 			let down = [];
-			for (let y = 0; y < cy; ++y) {
-				for (let x = 0; x < cx; ++x) {
-					if (this.cell_needs_number_y(x, y)) {
+			for (let y = 0; y < cy; ++y){
+				for (let x = 0; x < cx; ++x){
+					if (this.cell_needs_number_y(x, y)){
 						let word = '';
-						for (let k = y; k < cy; ++k) {
+						for (let k = y; k < cy; ++k){
 							let ch = data[k][x];
 							if (ch == '■')
 								break;
@@ -298,8 +298,8 @@
 						word = this.文字正規化(word);
 						number = this.number(x, y);
 						let text = '';
-						for (let i = 0; i < dict.length; ++i) {
-							if (this.文字正規化(dict[i][0]) == word) {
+						for (let i = 0; i < dict.length; ++i){
+							if (this.文字正規化(dict[i][0]) == word){
 								text = dict[i][1];
 								break;
 							}
@@ -309,11 +309,11 @@
 				}
 			}
 			let across = [];
-			for (let y = 0; y < cy; ++y) {
-				for (let x = 0; x < cx; ++x) {
-					if (this.cell_needs_number_x(x, y)) {
+			for (let y = 0; y < cy; ++y){
+				for (let x = 0; x < cx; ++x){
+					if (this.cell_needs_number_x(x, y)){
 						let word = '';
-						for (let k = x; k < cx; ++k) {
+						for (let k = x; k < cx; ++k){
 							let ch = data[y][k];
 							if (ch == '■')
 								break;
@@ -322,8 +322,8 @@
 						word = this.文字正規化(word);
 						number = this.number(x, y);
 						let text = '';
-						for (let i = 0; i < dict.length; ++i) {
-							if (this.文字正規化(dict[i][0]) == word) {
+						for (let i = 0; i < dict.length; ++i){
+							if (this.文字正規化(dict[i][0]) == word){
 								text = dict[i][1];
 								break;
 							}
@@ -332,7 +332,7 @@
 					}
 				}
 			}
-			if (down && across) {
+			if (down && across){
 				this.options.down = down;
 				this.options.across = across;
 			}
@@ -343,25 +343,25 @@
 		across: function(){
 			return this.options.across;
 		},
-		show_answer: function(newValue) {
-			if (newValue == undefined) {
+		show_answer: function(newValue){
+			if (newValue == undefined){
 				return this.options.show_answer;
 			} else {
 				this.options.show_answer = newValue;
 				let data = this.options.data;
 				let cx = this.options.cx, cy = this.options.cy;
-				if (newValue) {
-					for (let y = 0; y < cy; ++y) {
-						for (let x = 0; x < cx; ++x) {
+				if (newValue){
+					for (let y = 0; y < cy; ++y){
+						for (let x = 0; x < cx; ++x){
 							let ch = this.cell(x, y);
 							ch = this.文字正規化(ch);
 							let wrong = (data[y][x] != ch);
-							if (wrong) {
+							if (wrong){
 								this.cell(x, y, data[y][x]);
 								$("#" + this._get_id(x, y)).addClass('xword_board-cell-red');
 								$("#" + this._get_id(x, y)).removeClass('xword_board-cell-white');
 								$("#" + this._get_id(x, y)).removeClass('xword_board-cell-black');
-							} else if (data[y][x] != '■') {
+							} else if (data[y][x] != '■'){
 								$("#" + this._get_id(x, y)).addClass('xword_board-cell-yellow');
 								$("#" + this._get_id(x, y)).removeClass('xword_board-cell-white');
 								$("#" + this._get_id(x, y)).removeClass('xword_board-cell-black');
@@ -370,9 +370,9 @@
 						}
 					}
 				} else {
-					for (let y = 0; y < cy; ++y) {
-						for (let x = 0; x < cx; ++x) {
-							if (data[y][x] != '■') {
+					for (let y = 0; y < cy; ++y){
+						for (let x = 0; x < cx; ++x){
+							if (data[y][x] != '■'){
 								this.cell(x, y, '');
 							}
 						}

@@ -10,11 +10,14 @@
 	<!-- Promise.any polyfill -->
 	<script>
 		// SEE ALSO: https://esdiscuss.org/topic/promise-any
-		if (!Promise.any) {
-			Promise.any = function(promises) {
+		if (!Promise.any){
+			Promise.any = function(promises){
 				var errors = [];
-				return Promise.race(promises.map(function(p) {
-					return p.catch(function(e) { errors.push(e); if (errors.length >= promises.length) throw errors; });
+				return Promise.race(promises.map(function(p){
+					return p.catch(function(e){
+						errors.push(e);
+						if (errors.length >= promises.length) throw errors;
+					});
 				}));
 			};
 		}
@@ -46,8 +49,8 @@
 	</style>
 	<script>
 		// SEE ALSO: https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-		function getParamFromURL(name, url) {
-			if (!url) {
+		function getParamFromURL(name, url){
+			if (!url){
 				url = window.location.href;
 			}
 			name = name.replace(/[\[\]]/g, '\\$&');
@@ -59,10 +62,10 @@
 		}
 		function 文字正規化(str){
 			let text = '';
-			for (let i = 0; i < str.length; ++i) {
-				if (str[i] == '#' || str[i] == '■') {
+			for (let i = 0; i < str.length; ++i){
+				if (str[i] == '#' || str[i] == '■'){
 					text += '■';
-				} else if (str[i] == ' ' || str[i] == '　') {
+				} else if (str[i] == ' ' || str[i] == '　'){
 					text += '　';
 				} else {
 					text += str[i];
@@ -76,7 +79,7 @@
 			return text;
 		}
 		function 辞書を正規化(dict){
-			for (let i = 0; i < dict.length; ++i) {
+			for (let i = 0; i < dict.length; ++i){
 				dict[i][0] = 文字正規化(dict[i][0]);
 			}
 			return dict;
@@ -89,13 +92,13 @@
 			dict = 辞書を正規化(data);
 			var retry = function(){
 				console.log("retry");
-				if (workers.length) {
-					for (let k = 0; k < MAX_WORKERS; ++k) {
+				if (workers.length){
+					for (let k = 0; k < MAX_WORKERS; ++k){
 						workers[k].terminate();
 					}
 				}
 				workers = [];
-				for(let i = 0; i < MAX_WORKERS; i++) {
+				for(let i = 0; i < MAX_WORKERS; i++){
 					let worker = new Worker('xword.js');
 					worker.onerror = function(message, filename, lineno){
 						console.log(filename + " (" + lineno + "): " + message);
@@ -103,8 +106,8 @@
 					workers.push(worker);
 				}
 				let promises = [];
-				for(let i = 0; i < MAX_WORKERS; i++) {
-					let promise = new Promise(function(resolve, reject) {
+				for(let i = 0; i < MAX_WORKERS; i++){
+					let promise = new Promise(function(resolve, reject){
 						workers[i].addEventListener('message', function(e){
 							console.log(i);
 							resolve(e.data);
@@ -114,20 +117,20 @@
 				}
 				let cx = getParamFromURL('cx');
 				let cy = getParamFromURL('cy');
-				if (!cx) {
+				if (!cx){
 					cx = 8;
 				}
-				if (!cy) {
+				if (!cy){
 					cy = 8;
 				}
-				for(let i = 0; i < MAX_WORKERS; i++) {
+				for(let i = 0; i < MAX_WORKERS; i++){
 					workers[i].postMessage({dict:dict, data:data, cx:cx, cy:cy});
 				}
 				Promise.any(promises).then(function(data){
-					if (timer) {
+					if (timer){
 						clearTimeout(timer);
 					}
-					for (let k = 0; k < MAX_WORKERS; ++k) {
+					for (let k = 0; k < MAX_WORKERS; ++k){
 						workers[k].terminate();
 						workers[k] = null;
 					}
@@ -136,7 +139,7 @@
 					$("#xword_board_1").xword_board('do_numbering', dict);
 					let down = $("#xword_board_1").xword_board('down');
 					let across = $("#xword_board_1").xword_board('across');
-					if (down && across) {
+					if (down && across){
 						$("#xword_hints_1").xword_hints();
 						$("#xword_hints_1").xword_hints('hints', down, across);
 					}
