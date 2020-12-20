@@ -49,6 +49,7 @@
 			let across = self.options.across;
 			let down = self.options.down;
 			if (across && down){
+				html += '<section>';
 				html += '<p>☆☆☆ タテのカギ ☆☆☆</p>';
 				for (let i = 0; i < down.length; ++i){
 					let number = down[i][0];
@@ -61,6 +62,7 @@
 					html += '<span id="' + self._get_id('down', number) + '">'+ HTMLの特殊文字を変換(text) + '</span>';
 					html += '</div>';
 				}
+				html += '</section><section>';
 				html += '<p>☆☆☆ ヨコのカギ ☆☆☆</p>';
 				for (let i = 0; i < across.length; ++i){
 					let number = across[i][0];
@@ -73,6 +75,7 @@
 					html += '<span id="' + self._get_id('across', number) + '">'+ HTMLの特殊文字を変換(text) + '</span>';
 					html += '</div>';
 				}
+				html += '</section>';
 			}
 			self.element.html(html);
 		},
