@@ -290,7 +290,10 @@
 					if (this.cell_needs_number_y(x, y)) {
 						let word = '';
 						for (let k = y; k < cy; ++k) {
-							word += this.cell(x, y);
+							let ch = this.cell(x, y);
+							if (ch == '■')
+								break;
+							word += ch;
 						}
 						word = this.文字正規化(word);
 						number = this.number(x, y);
@@ -311,7 +314,10 @@
 					if (this.cell_needs_number_x(x, y)) {
 						let word = '';
 						for (let k = x; k < cx; ++k) {
-							word += this.cell(x, y);
+							let ch = this.cell(x, y);
+							if (ch == '■')
+								break;
+							word += ch;
 						}
 						word = this.文字正規化(word);
 						number = this.number(x, y);
