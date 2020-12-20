@@ -57,7 +57,7 @@
 					let y = down[i][2];
 					let word = 文字正規化(down[i][3]);
 					let text = down[i][4];
-					html += '<div>';
+					html += '<div class="xword-hint-key">';
 					html += '<label for="' + self._get_id('down', number) + '">【タテ' + number + '】</label>';
 					html += '<span id="' + self._get_id('down', number) + '">'+ HTMLの特殊文字を変換(text) + '</span>';
 					html += '</div>';
@@ -70,7 +70,7 @@
 					let y = across[i][2];
 					let word = 文字正規化(across[i][3]);
 					let text = across[i][4];
-					html += '<div>';
+					html += '<div class="xword-hint-key">';
 					html += '<label for="' + self._get_id('across', number) + '">【ヨコ' + number + '】';
 					html += '<span id="' + self._get_id('across', number) + '">'+ HTMLの特殊文字を変換(text) + '</span>';
 					html += '</div>';

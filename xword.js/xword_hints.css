@@ -1,3 +1,6 @@
 .xword_hints {
 	width: 92%;
 }
+.xword-hint-key {
+	font-size: 80%;
+}
