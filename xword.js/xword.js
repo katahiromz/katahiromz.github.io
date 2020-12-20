@@ -210,7 +210,7 @@ function any_candidate(dict, pattern){
 			continue;
 		let k;
 		for (k = 0; k < wordlen; ++k){
-			if (pattern[k] != '　' && pattern[k] != word[k]) {
+			if (pattern[k] != '　' && pattern[k] != word[k]){
 				k = wordlen + 1;
 				break;
 			}
@@ -225,9 +225,7 @@ function detect_no_candidates(dict, data, cx, cy){
 	for (let y = 0; y < cy; ++y){
 		for (let x = 0; x < cx - 1; ++x){
 			let ch1 = data[y][x], ch2 = data[y][x + 1];
-			if ((ch1 == '　' && ch2 != '■' && ch2 != '　') ||
-			    (ch1 != '　' && ch1 != '■' && ch2 == '　'))
-			{
+			if (ch1 != '■' && ch2 != '■'){
 				let lo, hi;
 				lo = hi = x;
 				while (lo > 0){
@@ -244,17 +242,17 @@ function detect_no_candidates(dict, data, cx, cy){
 				for (let k = lo; k <= hi; ++k){
 					pattern += data[y][k];
 				}
-				if (!any_candidate(dict, pattern))
+				if (!any_candidate(dict, pattern)){
 					return true;
+				}
+				x = hi;
 			}
 		}
 	}
 	for (let x = 0; x < cx; ++x){
 		for (let y = 0; y < cy - 1; ++y){
 			let ch1 = data[y][x], ch2 = data[y + 1][x];
-			if ((ch1 == '　' && ch2 != '■' && ch2 != '　') ||
-			    (ch1 != '　' && ch1 != '■' && ch2 == '　'))
-			{
+			if (ch1 != '■' && ch2 != '■'){
 				let lo, hi;
 				lo = hi = y;
 				while (lo > 0){
@@ -271,8 +269,10 @@ function detect_no_candidates(dict, data, cx, cy){
 				for (let k = lo; k <= hi; ++k){
 					pattern += data[k][x];
 				}
-				if (!any_candidate(dict, pattern))
+				if (!any_candidate(dict, pattern)){
 					return true;
+				}
+				y = hi;
 			}
 		}
 	}
