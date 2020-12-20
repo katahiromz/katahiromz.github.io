@@ -46,6 +46,11 @@
 			margin: 2px;
 			padding: 2px;
 		}
+		.board {
+			width: 80vw;
+			height: 80vh;
+			overflow: scroll;
+		}
 	</style>
 	<script>
 		// SEE ALSO: https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
@@ -159,7 +164,9 @@
 			JavaScriptでクロスワード。これは新しい！
 		</p>
 	</header>
-	<div id="xword_board_1" class="xword_board"><img src="wait.gif" alt="" style="vertical-align: middle;"/> (計算中...)</div>
+	<section class="board">
+		<div id="xword_board_1" class="xword_board"><img src="wait.gif" alt="" style="vertical-align: middle;"/> (計算中...)</div>
+	</section>
 	<nav>
 		<button id="show_answer" class="invisible">答えを表示</button>
 		<button id="show_next" class="invisible">次の問題</button>
