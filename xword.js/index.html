@@ -101,6 +101,7 @@
 						$("#xword_hints_1").xword_hints('hints', down, across);
 					}
 					$("#show_answer").removeClass('invisible');
+					$("#show_next").removeClass('invisible');
 				});
 			};
 			retry();
@@ -117,12 +118,16 @@
 	</header>
 	<div id="xword_board_1" class="xword_board">(計算中...)</div>
 	<button id="show_answer" class="invisible">答えを表示</button>
+	<button id="show_next" class="invisible">次の問題</button>
 	<div id="xword_hints_1" class="xword_hints"></div>
 	<script>
 		$(function(){
 			$("#show_answer").click(function(){
 				$("#xword_board_1").xword_board('show_answer', true);
 				$("#show_answer").addClass('invisible');
+			});
+			$("#show_next").click(function(){
+				location.reload();
 			});
 		});
 	</script>
