@@ -43,7 +43,7 @@
 			text = 小文字を大文字に(text);
 			return text;
 		}
-		function parse_dict(dict){
+		function 辞書を正規化(dict){
 			for (let i = 0; i < dict.length; ++i) {
 				dict[i][0] = 文字正規化(dict[i][0]);
 			}
@@ -54,7 +54,7 @@
 		var workers = [];
 		var timer = null;
 		$.getJSON('dict.json', function(data){
-			dict = parse_dict(data);
+			dict = 辞書を正規化(data);
 			var retry = function(){
 				console.log("retry");
 				if (workers.length) {
@@ -109,10 +109,12 @@
 	</script>
 </head>
 <body>
-	<h1>xword.js</h1>
-	<p>
-		Javascriptでクロスワード。これは新しい！
-	</p>
+	<header>
+		<h1>xword.js by 片山博文MZ</h1>
+		<p>
+			Javascriptでクロスワード。これは新しい！
+		</p>
+	</header>
 	<div id="xword_board_1" class="xword_board">(計算中...)</div>
 	<button id="show_answer" class="invisible">答えを表示</button>
 	<div id="xword_hints_1" class="xword_hints"></div>
@@ -124,4 +126,8 @@
 			});
 		});
 	</script>
+	<footer>
+		<hr />
+		<p>Copyright (C) 2020 katahiromz. All Rights Reserved.</p>
+	</footer>
 </body></html>
