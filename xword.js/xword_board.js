@@ -290,7 +290,7 @@
 					if (this.cell_needs_number_y(x, y)) {
 						let word = '';
 						for (let k = y; k < cy; ++k) {
-							let ch = this.cell(x, k);
+							let ch = data[k][x];
 							if (ch == '■')
 								break;
 							word += ch;
@@ -315,7 +315,7 @@
 					if (this.cell_needs_number_x(x, y)) {
 						let word = '';
 						for (let k = x; k < cx; ++k) {
-							let ch = this.cell(k, y);
+							let ch = data[y][k];
 							if (ch == '■')
 								break;
 							word += ch;
