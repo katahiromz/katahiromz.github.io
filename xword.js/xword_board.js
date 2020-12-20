@@ -52,7 +52,7 @@
 			text = 半角カナを全角に(text);
 			text = ひらがなをカタカナに(text);
 			text = 半角英数字を全角に(text);
-			text = 小文字を大文字に(text);
+			text = かな小文字を大文字に(text);
 			return text;
 		},
 		normalizeData: function(value){
