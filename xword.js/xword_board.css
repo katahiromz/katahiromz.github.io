@@ -1,0 +1,60 @@
+.xword_board-cell {
+	width: 40px;
+	height: 40px;
+	font-size: 18px;
+	padding: 0;
+	border: solid 3px black;
+	text-align: center;
+	position: relative;
+}
+.xword_board-table {
+	border-collapse: collapse;
+	padding: 0;
+	border-spacing: 0px;
+}
+.xword_board-cell-black {
+	background-color: black;
+}
+.xword_board-cell-black input {
+	display: none;
+}
+.xword_board-cell-white {
+	background-color: white;
+}
+.xword_board-cell-white input {
+	background-color: white;
+}
+.xword_board-cell-red {
+	background-color: #ffcccc;
+}
+.xword_board-cell-red input {
+	background-color: #ffcccc;
+}
+.xword_board-cell-yellow {
+	background-color: #ffffcc;
+}
+.xword_board-cell-yellow input {
+	background-color: #ffffcc;
+}
+.xword_board-textbox {
+	text-align: center;
+	width: 40px;
+	height: 40px;
+	border: 0;
+	margin: 0;
+	font-size: 20px;
+}
+.xword_board-small-text-number {
+	font-family: arial;
+	font-size: 9px;
+	z-index: 2;
+	position: absolute;
+}
+.xword_board-small-text-mark {
+	font-family: arial;
+	font-size: 9px;
+	z-index: 2;
+	position: absolute;
+	right: 1px;
+	bottom: -1px;
+}
