@@ -7,6 +7,7 @@
 	border-top: 2px solid black;
 	border-right: none;
 	border-bottom: none;
+	overflow-x: scroll;
 }
 .xword_board-table td {
 	border-left: none;
