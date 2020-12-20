@@ -58,3 +58,7 @@
 	right: 1px;
 	bottom: -1px;
 }
+html:not([lang*=""]) .xword_board-table {
+	/* workaround for Firefox */
+	border-collapse: separate;
+}
