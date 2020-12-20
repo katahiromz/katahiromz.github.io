@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>xword.html</title>
+	<title>xword.js</title>
 	<meta name="robots" content="noindex,nofollow" />
 	<meta name="viewport" content="width=device-width" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -86,6 +86,7 @@
 					}
 					for (let k = 0; k < MAX_WORKERS; ++k) {
 						workers[k].terminate();
+						workers[k] = null;
 					}
 					$("#xword_board_1").xword_board();
 					$("#xword_board_1").xword_board('data', data);
@@ -110,6 +111,16 @@
 			$("#show_answer").click(function(){
 				$("#xword_board_1").xword_board('show_answer', true);
 				$("#show_answer").addClass('invisible');
+			});
+			$(window).unload(function(){
+				if (workers && workers.length == MAX_WORKERS) {
+					for (let k = 0; k < MAX_WORKERS; ++k) {
+						if (workers[k]) {
+							workers[k].terminate();
+							workers[k] = null;
+						}
+					}
+				}
 			});
 		});
 	</script>
