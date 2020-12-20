@@ -295,7 +295,6 @@
 								break;
 							word += ch;
 						}
-						alert(word);
 						word = this.文字正規化(word);
 						number = this.number(x, y);
 						let text = '';
