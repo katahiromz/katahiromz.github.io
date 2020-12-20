@@ -57,8 +57,8 @@
 					let word = 文字正規化(down[i][3]);
 					let text = down[i][4];
 					html += '<div>';
-					html += '<label for="' + self._get_id('down', number) + '" />';
-					html += '<input type="text" id="' + self._get_id('down', number) + '" />';
+					html += '<label for="' + self._get_id('down', number) + '">【タテ' + number + '】</label>';
+					html += '<input type="text" id="' + self._get_id('down', number) + '" value="' + text + '"/>';
 					html += '</div>';
 				}
 				html += '<p>☆☆☆ ヨコのカギ ☆☆☆</p>';
@@ -69,8 +69,8 @@
 					let word = 文字正規化(across[i][3]);
 					let text = across[i][4];
 					html += '<div>';
-					html += '<label for="' + self._get_id('across', number) + '" />';
-					html += '<input type="text" id="' + self._get_id('across', number) + '" />';
+					html += '<label for="' + self._get_id('across', number) + '">【ヨコ' + number + '】';
+					html += '<input type="text" id="' + self._get_id('across', number) + '" value="' + text + '"/>';
 					html += '</div>';
 				}
 			}
