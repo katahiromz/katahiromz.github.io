@@ -31,6 +31,18 @@
 		}
 	</style>
 	<script>
+		// SEE ALSO: https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+		function getParamFromURL(name, url) {
+			if (!url) {
+				url = window.location.href;
+			}
+			name = name.replace(/[\[\]]/g, '\\$&');
+			var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+			var results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, ' '));
+		}
 		function 文字正規化(str){
 			let text = '';
 			for (let i = 0; i < str.length; ++i) {
@@ -86,8 +98,16 @@
 					});
 					promises.push(promise);
 				}
+				let cx = getParamFromURL('cx');
+				let cy = getParamFromURL('cy');
+				if (!cx) {
+					cx = 8;
+				}
+				if (!cy) {
+					cy = 8;
+				}
 				for(let i = 0; i < MAX_WORKERS; i++) {
-					workers[i].postMessage({dict:dict, data:data, cx:8, cy:8});
+					workers[i].postMessage({dict:dict, data:data, cx:cx, cy:cy});
 				}
 				Promise.any(promises).then(function(data){
 					if (timer) {
