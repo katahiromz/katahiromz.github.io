@@ -8,6 +8,9 @@
 	border-right: none;
 	border-bottom: none;
 	overflow-x: scroll;
+	overflow-y: scroll;
+	height: 80vh;
+	width: 90vw;
 }
 .xword_board-table td {
 	border-left: none;
