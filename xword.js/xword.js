@@ -278,6 +278,72 @@ function detect_no_candidates(dict, data, cx, cy){
 	}
 	return false;
 }
+function doubled_word(data, cx, cy){
+	let words = {};
+	for (let y = 0; y < cy; ++y){
+		for (let x = 0; x < cx - 1; ++x){
+			let ch1 = data[y][x], ch2 = data[y][x + 1];
+			if (ch1 != '■' && ch2 != '■'){
+				let lo, hi;
+				lo = hi = x;
+				while (lo > 0){
+					if (data[y][lo - 1] == '■')
+						break;
+					lo--;
+				}
+				while (hi + 1 < cx){
+					if (data[y][hi + 1] == '■')
+						break;
+					hi++;
+				}
+				let pattern = '';
+				for (let k = lo; k <= hi; ++k){
+					pattern += data[y][k];
+				}
+				x = hi;
+				if (pattern.indexOf('　') != -1){
+					continue;
+				}
+				if (words[pattern]){
+					return true;
+				}
+				words[pattern] = true;
+			}
+		}
+	}
+	for (let x = 0; x < cx; ++x){
+		for (let y = 0; y < cy - 1; ++y){
+			let ch1 = data[y][x], ch2 = data[y + 1][x];
+			if (ch1 != '■' && ch2 != '■'){
+				let lo, hi;
+				lo = hi = y;
+				while (lo > 0){
+					if (data[lo - 1][x] == '■')
+						break;
+					lo--;
+				}
+				while (hi + 1 < cy){
+					if (data[hi + 1][x] == '■')
+						break;
+					hi++;
+				}
+				let pattern = '';
+				for (let k = lo; k <= hi; ++k){
+					pattern += data[k][x];
+				}
+				y = hi;
+				if (pattern.indexOf('　') != -1){
+					continue;
+				}
+				if (words[pattern]){
+					return true;
+				}
+				words[pattern] = true;
+			}
+		}
+	}
+	return false;
+}
 function is_solution(dict, data, cx, cy){
 	if (corner_black(data, cx, cy))
 		return false;
@@ -288,6 +354,8 @@ function is_solution(dict, data, cx, cy){
 	if (divided_by_black(data, cx, cy))
 		return false;
 	if (detect_no_candidates(dict, data, cx, cy))
+		return false;
+	if (doubled_word(data, cx, cy))
 		return false;
 	for (let y = 0; y < cy; ++y){
 		for (let x = 0; x < cx; ++x){
@@ -311,6 +379,9 @@ function solve_board_recurse(dict, data, cx, cy){
 		return null;
 	}
 	if (detect_no_candidates(dict, data, cx, cy)){
+		return null;
+	}
+	if (doubled_word(data, cx, cy)){
 		return null;
 	}
 	for (let y = 0; y < cy; ++y){
