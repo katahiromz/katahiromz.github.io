@@ -46,12 +46,15 @@
 			margin: 2px;
 			padding: 2px;
 		}
-		.board {
-			overflow-x: scroll;
-			overflow-y: scroll;
-			height: 75vh;
-			width: 95vw;
-			white-space: nowrap;
+		@media only screen and (max-device-width: 480px) {
+			/* smartphone only */
+			.board {
+				overflow-x: scroll;
+				overflow-y: scroll;
+				height: 75vh;
+				width: 95vw;
+				white-space: nowrap;
+			}
 		}
 	</style>
 	<script>
