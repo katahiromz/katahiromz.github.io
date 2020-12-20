@@ -7,6 +7,19 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!-- Promise polyfill -->
 	<script>window.Promise || document.write('<script src="//www.promisejs.org/polyfills/promise-7.0.4.min.js"><\/script>');</script>
+	<!-- Promise.any polyfill -->
+	<script>
+		var any = (Promise.any || function ($) {
+			return new Promise(function (D, E, A, L) {
+				A = [];
+				L = $.map(function ($, i) {
+					return Promise.resolve($).then(D, function (O) {
+						return ((A[i] = O), --L) || E({errors: A});
+					});
+				}).length;
+			});
+		}).bind(Promise);
+	</script>
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<!-- jQuery UI -->
