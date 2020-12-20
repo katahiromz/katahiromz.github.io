@@ -75,7 +75,7 @@ function 小数第3位で四捨五入(value) {
 }
 
 function HTMLの特殊文字を変換(テキスト) {
-	return テキスト.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/&/g, "&amp;");
+	return テキスト.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 function 改行をBRタグに変換(テキスト) {

@@ -54,3 +54,6 @@ function かな小文字を大文字に(str){
 	}
 	return text;
 }
+function HTMLの特殊文字を変換(テキスト) {
+	return テキスト.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}

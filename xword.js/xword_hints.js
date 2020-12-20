@@ -58,7 +58,7 @@
 					let text = down[i][4];
 					html += '<div>';
 					html += '<label for="' + self._get_id('down', number) + '">【タテ' + number + '】</label>';
-					html += '<input type="text" class="xword_hints" id="' + self._get_id('down', number) + '" value="' + text + '" />';
+					html += '<span id="' + self._get_id('down', number) + '">'+ HTMLの特殊文字を変換(text) + '</span>';
 					html += '</div>';
 				}
 				html += '<p>☆☆☆ ヨコのカギ ☆☆☆</p>';
@@ -70,7 +70,7 @@
 					let text = across[i][4];
 					html += '<div>';
 					html += '<label for="' + self._get_id('across', number) + '">【ヨコ' + number + '】';
-					html += '<input type="text" class="xword_hints" id="' + self._get_id('across', number) + '" value="' + text + ' "/>';
+					html += '<span id="' + self._get_id('across', number) + '">'+ HTMLの特殊文字を変換(text) + '</span>';
 					html += '</div>';
 				}
 			}
