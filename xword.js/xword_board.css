@@ -1,3 +1,11 @@
+.xword_board-table {
+	padding: 0;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+.xword_board-table td {
+	border: solid 3px black;
+}
 .xword_board-cell {
 	width: 40px;
 	height: 40px;
@@ -6,11 +14,6 @@
 	border: solid 3px black;
 	text-align: center;
 	position: relative;
-}
-.xword_board-table {
-	padding: 0;
-	border-collapse: separate;
-	border-spacing: 0;
 }
 .xword_board-cell-black {
 	background-color: black;
