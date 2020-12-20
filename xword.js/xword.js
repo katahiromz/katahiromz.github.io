@@ -278,7 +278,7 @@ function detect_no_candidates(dict, data, cx, cy){
 	}
 	return false;
 }
-function is_solution(data, cx, cy){
+function is_solution(dict, data, cx, cy){
 	if (corner_black(data, cx, cy))
 		return false;
 	if (double_black(data, cx, cy))
@@ -286,6 +286,8 @@ function is_solution(data, cx, cy){
 	if (tri_black_around(data, cx, cy))
 		return false;
 	if (divided_by_black(data, cx, cy))
+		return false;
+	if (detect_no_candidates(dict, data, cx, cy))
 		return false;
 	for (let y = 0; y < cy; ++y){
 		for (let x = 0; x < cx; ++x){
@@ -393,7 +395,7 @@ function solve_board_recurse(dict, data, cx, cy){
 			}
 		}
 	}
-	if (is_solution(data, cx, cy)){
+	if (is_solution(dict, data, cx, cy)){
 		return data;
 	}
 	return null;
