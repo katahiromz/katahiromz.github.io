@@ -8,9 +8,9 @@
 	position: relative;
 }
 .xword_board-table {
-	border-collapse: collapse;
 	padding: 0;
-	border-spacing: 0px;
+	border-collapse: separate;
+	border-spacing: 0;
 }
 .xword_board-cell-black {
 	background-color: black;
@@ -57,8 +57,4 @@
 	position: absolute;
 	right: 1px;
 	bottom: -1px;
-}
-html:not([lang*=""]) .xword_board-table {
-	/* workaround for Firefox */
-	border-collapse: separate;
 }
