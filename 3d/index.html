@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My three.js app</title>
+        <style>
+            body { margin: 0; }
+            canvas { display: block; }
+        </style>
+    </head>
+    <body>
+        <!-- Please download file "three.min.js" from https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js -->
+        <script src="./three.min.js"></script>
+        <!-- Please download file "OrbitControls.js" from https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js -->
+        <script src="./OrbitControls.js"></script>
+        <!-- 三次元タートルグラフィックス -->
+        <script src="./Turtle3D.js"></script>
+        <script>
+            // グローバル変数。
+            var scene, renderer, camera, controls, turtle;
+            var red_blood, blue_blood, white_balls, yellow_pipes;
+            var light1, light2, light3;
+
+            // 全体の初期化処理。
+            function init() {
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+                camera.position.set(0, 0, 100);
+                camera.lookAt(0, 0, 0);
+
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.25;
+                controls.enableZoom = true;
+                controls.autoRotate = false;
+
+                light1 = new THREE.DirectionalLight(0xffffff, 1);
+                light1.position.set(0, 100, 30);
+
+                light2 = new THREE.DirectionalLight(0xffffff, 1);
+                light2.position.set(100, -100, 30);
+
+                light3 = new THREE.DirectionalLight(0xffffff, 1);
+                light3.position.set(-100, -50, -30);
+
+                red_blood = new THREE.Geometry();
+                blue_blood = new THREE.Geometry();
+                white_balls = new THREE.Geometry();
+                yellow_pipes = new THREE.Geometry();
+
+                scene = new THREE.Scene();
+                scene.add(new THREE.AxisHelper(50));
+                scene.add(light1);
+                scene.add(light2);
+                scene.add(light3);
+
+                turtle = new Turtle3D(scene);
+            }
+
+            // 三脚のように三方向に分かれる木構造を描画する。
+            function tree3(size, depth, angle) {
+                if (depth == 0) {
+                    // 白い球体
+                    turtle.geometry = white_balls;
+                    turtle.add_sphere(size * 0.5, turtle.get_pos(), 0xFFFFFF);
+                    return;
+                }
+
+                var width1 = size * 0.2;    // 気管支の幅。
+                var width2 = size * 0.05;   // 血管の幅。
+                var v0, v1, v2, curve;
+
+                // 3回再帰して三脚のような枝分かれを描画する。
+                var pg = turtle.get_pg(); // 位置と向きを保存。
+                turtle.geometry = yellow_pipes;
+                turtle.line_width = width1;
+                turtle.walk(size);
+                turtle.add_sphere(width1);
+                var pg3 = turtle.get_pg(); // 位置と向きを保存。
+                turtle.pitch(angle);
+                tree3(size * 0.75, depth - 1, angle);
+                turtle.pitch(-angle);
+                turtle.spin(120);
+                turtle.pitch(angle);
+                tree3(size * 0.75, depth - 1, angle);
+                turtle.pitch(-angle);
+                turtle.spin(-240);
+                turtle.pitch(angle);
+                tree3(size * 0.75, depth - 1, angle);
+                turtle.set_pg(pg); // 位置と向きを復元。
+
+                // 青色の血管をまっすぐ描画する。
+                turtle.geometry = blue_blood;
+                turtle.line_width = width2;
+                turtle.pitch(90);
+                turtle.walk(-(width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(width2 / 2, false);
+                turtle.walk(size - width2 / 2);
+                turtle.add_sphere(width2);
+
+                // 三脚の分岐点の上部まで青色の血管を描画する。
+                v0 = turtle.get_pos();
+                turtle.set_pg(pg);
+                turtle.walk(size + width1 / Math.sin(turtle.deg2rad(angle)), false);
+                v2 = turtle.get_pos();
+                turtle.position = v0.clone();
+                turtle.pitch(angle * 0.25);
+                turtle.walk((width1 + width2) / Math.sin(turtle.deg2rad(angle)), false);
+                v1 = turtle.get_pos();
+                curve = new THREE.QuadraticBezierCurve3(v0, v1, v2);
+                turtle.add_curve(curve);
+                turtle.add_sphere(width2, v2);
+                turtle.set_pg(pg); // 位置と向きを復元。
+
+                // 赤色の血管をまっすぐ描画する。
+                turtle.geometry = red_blood;
+                turtle.line_width = width2;
+                turtle.pitch(90);
+                turtle.walk((width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(width2 / 2, false);
+                turtle.walk(size - width2 / 2);
+                turtle.walk(-width2 * 2, false);
+                turtle.add_sphere(width2);
+                var pg2 = turtle.get_pg(); // 位置と向きを保存。
+
+                var size2 = size * 0.1;
+                var angle3 = -28;
+
+                // 赤色の血管の左側のう回路を描画する。
+                v0 = turtle.get_pos();
+                turtle.turn(90);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                v1 = turtle.get_pos();
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                v2 = turtle.get_pos();
+                curve = new THREE.CatmullRomCurve3([v0, v1, v2]);
+                turtle.add_curve(curve);
+                turtle.add_sphere(width2, v2);
+                turtle.set_pg(pg2); // 位置と向きを復元。
+                
+                // 赤色の血管の右側のう回路を描画する。
+                v0 = turtle.get_pos();
+                turtle.turn(-90);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                v1 = turtle.get_pos();
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                turtle.pitch(angle3);
+                turtle.walk(size2, false);
+                v2 = turtle.get_pos();
+                curve = new THREE.CatmullRomCurve3([v0, v1, v2]);
+                turtle.add_curve(curve);
+                turtle.add_sphere(width2, v2);
+                turtle.set_pg(pg); // 位置と向きを復元。
+            }
+
+            // 肺臓を描画する関数。
+            function lung(size, depth, angle) {
+                var width1 = size * 0.2;    // 気管支の幅。
+                var width2 = size * 0.05;   // 血管の幅。
+                var angle2 = angle * 1.2;
+                var v0, v1, v2, curve;
+
+                // 2回再帰して二股の枝分かれを描画する。
+                var pg = turtle.get_pg(); // 位置と向きを保存する。
+                turtle.geometry = yellow_pipes;
+                turtle.line_width = width1;
+                turtle.spin(90);
+                turtle.walk(size);
+                turtle.add_sphere(width1);
+                var pg3 = turtle.get_pg(); // 位置と向きを保存。
+                turtle.pitch(angle2);
+                tree3(size * 0.75, depth - 1, angle);
+                turtle.pitch(-angle2);
+                turtle.spin(180);
+                turtle.pitch(angle2);
+                tree3(size * 0.75, depth - 1, angle);
+                turtle.set_pg(pg); // 位置と向きを復元する。
+
+                // 青色の血管をまっすぐ描画する。
+                turtle.geometry = blue_blood;
+                turtle.line_width = width2;
+                turtle.pitch(90);
+                turtle.walk(-(width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(width2 / 2, false);
+                turtle.walk(size - width2 / 2);
+                turtle.add_sphere(width2);
+
+                // 二股の分岐点の上部まで青色の血管を描画する。
+                v0 = turtle.get_pos();
+                turtle.set_pg(pg);
+                turtle.walk(size + width1 / Math.sin(turtle.deg2rad(angle2)), false);
+                v2 = turtle.get_pos();
+                turtle.position = v0.clone();
+                turtle.pitch(angle * 0.25);
+                turtle.walk((width1 + width2) / Math.sin(turtle.deg2rad(angle)), false);
+                v1 = turtle.get_pos();
+                curve = new THREE.QuadraticBezierCurve3(v0, v1, v2);
+                turtle.add_curve(curve);
+                turtle.add_sphere(width2, v2);
+                turtle.set_pg(pg); // 位置と向きを復元。
+
+                // 赤色の血管をまっすぐ描画する。
+                turtle.geometry = red_blood;
+                turtle.line_width = width2;
+                turtle.pitch(90);
+                turtle.walk((width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(size - width1);
+                turtle.add_sphere(width2);
+                var pg2 = turtle.get_pg(); // 位置と向きを保存する。
+
+                var size2 = size * 0.15;
+
+                // 赤色の血管の左側のう回路を描画する。
+                v0 = turtle.get_pos();
+                turtle.set_pg(pg); // 位置と向きを復元する。
+                turtle.spin(100);
+                turtle.pitch(90);
+                turtle.walk((width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(size - width2 * 2, false);
+                v2 = turtle.get_pos();
+                turtle.set_pg(pg); // 位置と向きを復元する。
+                turtle.spin(50);
+                turtle.pitch(90);
+                turtle.walk((width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(size - width2, false);
+                v1 = turtle.get_pos();
+                curve = new THREE.QuadraticBezierCurve3(v0, v1, v2);
+                turtle.add_curve(curve);
+                turtle.set_pg(pg2); // 位置と向きを復元。
+
+                // 赤色の血管の右側のう回路を描画する。
+                v0 = turtle.get_pos();
+                turtle.set_pg(pg); // 位置と向きを復元する。
+                turtle.spin(-100);
+                turtle.pitch(90);
+                turtle.walk((width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(size - width2 * 2, false);
+                v2 = turtle.get_pos();
+                turtle.set_pg(pg); // 位置と向きを復元する。
+                turtle.spin(-50);
+                turtle.pitch(90);
+                turtle.walk((width1 + width2), false);
+                turtle.pitch(-90);
+                turtle.walk(size - width2, false);
+                v1 = turtle.get_pos();
+                curve = new THREE.QuadraticBezierCurve3(v0, v1, v2);
+                turtle.add_curve(curve);
+                turtle.set_pg(pg2); // 位置と向きを復元。
+            }
+
+            // 全体の描画処理。
+            function draw() {
+                turtle.reset();
+                turtle.look_y();
+                lung(10, 8, 60);
+                //tree3(10, 2, 50 * 1.2);
+                
+                var material, mesh, wf = false;
+
+                material = new THREE.MeshLambertMaterial({color: 0xFF0000, wireframe: wf});
+                mesh = new THREE.Mesh(red_blood, material);
+                scene.add(mesh);
+
+                material = new THREE.MeshLambertMaterial({color: 0x0000FF, wireframe: wf});
+                mesh = new THREE.Mesh(blue_blood, material);
+                scene.add(mesh);
+
+                material = new THREE.MeshLambertMaterial({color: 0xFFFFFF, wireframe: wf});
+                mesh = new THREE.Mesh(white_balls, material);
+                scene.add(mesh);
+
+                material = new THREE.MeshLambertMaterial({color: 0xFFCC00, wireframe: wf});
+                mesh = new THREE.Mesh(yellow_pipes, material);
+                scene.add(mesh);
+            }
+
+            // 全体のアニメーション処理。
+            function animate() {
+                controls.update();
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+
+            init();
+            draw();
+            animate();
+        </script>
+    </body>
+</html>
