@@ -94,21 +94,24 @@
 			}
 			return dict;
 		}
-		var dict = null;
-		const MAX_WORKERS = 4;
-		var workers = [];
-		var timer = null;
+		let dict = null;
+		let num_workers = navigator.hardwareConcurrency;
+		if (!num_workers || num_workers < 2){
+			num_workers = 2;
+		}
+		let workers = [];
+		let timer = null;
 		$.getJSON('dict.json', function(data){
 			dict = 辞書を正規化(data);
 			var retry = function(){
 				console.log("retry");
 				if (workers.length){
-					for (let k = 0; k < MAX_WORKERS; ++k){
+					for (let k = 0; k < num_workers; ++k){
 						workers[k].terminate();
 					}
 				}
 				workers = [];
-				for(let i = 0; i < MAX_WORKERS; i++){
+				for(let i = 0; i < num_workers; i++){
 					let worker = new Worker('xword.js');
 					worker.onerror = function(message, filename, lineno){
 						console.log(filename + " (" + lineno + "): " + message);
@@ -116,7 +119,7 @@
 					workers.push(worker);
 				}
 				let promises = [];
-				for(let i = 0; i < MAX_WORKERS; i++){
+				for(let i = 0; i < num_workers; i++){
 					let promise = new Promise(function(resolve, reject){
 						workers[i].addEventListener('message', function(e){
 							console.log(i);
@@ -133,14 +136,14 @@
 				if (!cy){
 					cy = 8;
 				}
-				for(let i = 0; i < MAX_WORKERS; i++){
+				for(let i = 0; i < num_workers; i++){
 					workers[i].postMessage({dict:dict, data:data, cx:cx, cy:cy});
 				}
 				Promise.any(promises).then(function(data){
 					if (timer){
 						clearTimeout(timer);
 					}
-					for (let k = 0; k < MAX_WORKERS; ++k){
+					for (let k = 0; k < num_workers; ++k){
 						workers[k].terminate();
 						workers[k] = null;
 					}
