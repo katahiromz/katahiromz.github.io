@@ -37,6 +37,7 @@ let KP_character = '';
 					}
 				}
 			}
+			alert(location.href.slice(-2));
 			if (mode != KP_MODE_INITIAL || location.href.slice(-1) != '\/') {
 				location.href = "#mode_" + mode + "_ref";
 			}
