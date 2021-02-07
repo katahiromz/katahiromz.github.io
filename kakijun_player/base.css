@@ -1,0 +1,59 @@
+body {
+	margin: 0;
+	padding: 0;
+	color: black;
+	background-color: white;
+}
+h1 {
+	margin: 4px;
+	paddding: 4px;
+	font-size: 120%;
+}
+footer {
+	font-size: 75%;
+}
+.invisible {
+	display: none;
+}
+.larger {
+	font-size: 125%;
+}
+.smaller {
+	font-size: 80%;
+}
+.no_break {
+	white-space: nowrap;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+.canvas {
+	width: 200px;
+	height: 200px;
+}
+.frame {
+	width: 200px;
+	height: 200px;
+	border: 4px solid black;
+	padding: 6px;
+	margin: 8px;
+}
+.frame_center {
+	margin-left: auto;
+	margin-right: auto;
+}
+.border {
+	border: 4px solid black;
+	padding: 8px;
+	margin: 0px;
+}
+.droppable {
+}
+#character_textbox {
+	width: 3em;
+}
+#movie_name_textbox {
+	width: 10em;
+}
