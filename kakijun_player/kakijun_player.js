@@ -3,6 +3,9 @@
 
 let KP_debugging = true;
 
+const KP_CANVAS_WIDTH = 200;
+const KP_CANVAS_HEIGHT = 200;
+
 const KP_MODE_INITIAL = 1;
 const KP_MODE_NAME = 2;
 const KP_MODE_SET_CHARACTER = 3;
@@ -20,6 +23,9 @@ let KP_movie_name = KP_MOVIE_INITIAL_NAME;
 
 let KP_character = '';
 let KP_font = '';
+let KP_is_drawing_line = 0;
+let KP_line_width = 8;
+let KP_line_color = "255, 0, 0, 1";
 
 (function($){
 	$(function(){
@@ -58,9 +64,11 @@ let KP_font = '';
 				break;
 			case KP_MODE_FILL_LINE:
 				$("#mode_5_next_button").focus();
+				$("#stroke_index_span").text("1");
 				break;
 			case KP_MODE_LINE_INFO:
 				$("#animation_list").focus();
+				$("#stroke_index_span").text("1");
 				break;
 			case KP_MODE_GENERATING:
 				break;
@@ -95,6 +103,20 @@ let KP_font = '';
 			ctx.fillStyle = 'white';
 			ctx.fillRect(0, 0, width, height);
 			KP_fill_text(ctx, x, y, text, cxy + "px '" + font + "'");
+		};
+		let KP_draw_line = function(canvas, x, y) {
+			let ctx = canvas.getContext('2d');
+			ctx.lineCap = ctx.lineJoin = "round";
+			ctx.lineWidth = KP_line_width;
+			ctx.strokeStyle = "rgba(" + KP_line_color + ")";
+			if (KP_is_drawing_line == 1) {
+				KP_is_drawing_line = 2;
+				ctx.beginPath();
+				ctx.moveTo(x, y);
+			} else {
+				ctx.lineTo(x, y);
+			}
+			ctx.stroke();
 		};
 		let KP_main = function() {
 			// KP_MODE_INITIAL
@@ -181,6 +203,24 @@ let KP_font = '';
 			});
 			$("#mode_5_done_button").click(function(){
 				KP_set_mode(KP_MODE_LINE_INFO);
+			});
+			$("#mode_5_drawing_canvas").mousedown(function(){
+				KP_is_drawing_line = 1;
+			}).mouseup(function(){
+				KP_is_drawing_line = 0;
+			}).mousemove(function(e){
+				if (!KP_is_drawing_line)
+					return false;
+				let canvas = $("#mode_5_drawing_canvas")[0];
+				KP_draw_line(canvas, e.offsetX, e.offsetY);
+			});
+			$(".mode_5_bold a").click(function(){
+				KP_line_width = $(this).data("bold");
+				return false;
+			});
+			$(".mode_5_color a").click(function(){
+				KP_line_color = $(this).data("color");
+				return false;
 			});
 
 			// KP_MODE_LINE_INFO

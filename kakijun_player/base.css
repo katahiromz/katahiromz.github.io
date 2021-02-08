@@ -57,3 +57,17 @@ footer {
 #movie_name_textbox {
 	width: 10em;
 }
+.black {
+	background-color: black;
+}
+.red {
+	background-color: red;
+}
+.blue {
+	background-color: blue;
+}
+.mode_5_color > a {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+}
