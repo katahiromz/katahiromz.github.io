@@ -72,9 +72,16 @@ footer {
 	display: inline-block;
 	width: 25px;
 	height: 25px;
+	text-align: center;
 }
 .mode_5_color > a {
 	display: inline-block;
 	width: 25px;
 	height: 25px;
+	text-align: center;
+}
+.focus_box {
+	border: 2px dotted blue;
+	padding: 2px;
+	margin: 2px;
 }

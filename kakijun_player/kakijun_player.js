@@ -192,11 +192,63 @@ let KP_line_color = "255, 0, 0, 1";
 			});
 
 			// KP_MODE_FILL_LINE
+			let KP_set_line_width = function(name, width) {
+				switch (name) {
+				case "small":
+					$("#mode_5_small").addClass("focus_box");
+					$("#mode_5_middle").removeClass("focus_box");
+					$("#mode_5_large").removeClass("focus_box");
+					break;
+				case "middle":
+					$("#mode_5_small").removeClass("focus_box");
+					$("#mode_5_middle").addClass("focus_box");
+					$("#mode_5_large").removeClass("focus_box");
+					break;
+				case "large":
+					$("#mode_5_small").removeClass("focus_box");
+					$("#mode_5_middle").removeClass("focus_box");
+					$("#mode_5_large").addClass("focus_box");
+					break;
+				}
+				KP_line_width = width;
+			};
+			let KP_set_line_color = function(name, color) {
+				switch (name) {
+				case "black":
+					$("#mode_5_black").addClass("focus_box");
+					$("#mode_5_red").removeClass("focus_box");
+					$("#mode_5_blue").removeClass("focus_box");
+					$("#mode_5_green").removeClass("focus_box");
+					break;
+				case "red":
+					$("#mode_5_black").removeClass("focus_box");
+					$("#mode_5_red").addClass("focus_box");
+					$("#mode_5_blue").removeClass("focus_box");
+					$("#mode_5_green").removeClass("focus_box");
+					break;
+				case "blue":
+					$("#mode_5_black").removeClass("focus_box");
+					$("#mode_5_red").removeClass("focus_box");
+					$("#mode_5_blue").addClass("focus_box");
+					$("#mode_5_green").removeClass("focus_box");
+					break;
+				case "green":
+					$("#mode_5_black").removeClass("focus_box");
+					$("#mode_5_red").removeClass("focus_box");
+					$("#mode_5_blue").removeClass("focus_box");
+					$("#mode_5_green").addClass("focus_box");
+					break;
+				}
+				KP_line_color = color;
+			};
 			$("#mode_5_back_button").click(function(){
 				KP_set_mode(KP_MODE_EXPLANATION);
 			});
 			$("#mode_5_clear_button").click(function(){
-				;
+				let canvas = $("#mode_5_drawing_canvas")[0];
+				let ctx = canvas.getContext("2d");
+				ctx.fillStyle = 'white';
+				ctx.fillRect(0, 0, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
 			});
 			$("#mode_5_next_button").click(function(){
 				;
@@ -215,13 +267,15 @@ let KP_line_color = "255, 0, 0, 1";
 				KP_draw_line(canvas, e.offsetX, e.offsetY);
 			});
 			$(".mode_5_bold a").click(function(){
-				KP_line_width = $(this).data("bold");
+				KP_set_line_width($(this).data("name"), $(this).data("bold"));
 				return false;
 			});
+			KP_set_line_width("middle", 8);
 			$(".mode_5_color a").click(function(){
-				KP_line_color = $(this).data("color");
+				KP_set_line_color($(this).data("name"), $(this).data("color"));
 				return false;
 			});
+			KP_set_line_color("red", "255, 0, 0, 1");
 
 			// KP_MODE_LINE_INFO
 			$("#mode_6_back_button").click(function(){
