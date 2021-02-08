@@ -68,6 +68,11 @@ footer {
 .green {
 	background-color: darkgreen;
 }
+.mode_5_bold > a {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+}
 .mode_5_color > a {
 	display: inline-block;
 	width: 25px;
