@@ -19,22 +19,22 @@
 			<form name="mode_1_form" id="mode_1_form" onsubmit="return false;">
 				<p class="center">
 					「書き順プレイヤー」は書き順の動画を作成または再生するウェブアプリです。
-				</p>
+				</div>
 				<div class="frame frame_center">
 					<canvas id="play_canvas" class="canvas" width="200" height="200"></canvas>
 				</div>
 				<p class="center invisible">
 					<button type="button" id="play_button">Play</button>
 					<button type="button" id="stop_button">Stop</button>
-				</p>
+				</div>
 				<p class="center">
 					ここに再生したいJSONファイルをドロップするか、次のボタンをクリックして下さい。
-				</p>
+				</div>
 				<p class="center">
 					<button type="button" id="mode_1_upload_json_button">JSONを読み込む</button>
 					<button type="button" id="mode_1_movie_list_button">動画一覧</button>
 					<button type="submit" id="mode_1_next_button">動画を制作する</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -51,18 +51,18 @@
 		</header>
 		<nav>
 			<form name="mode_2_form" id="mode_2_form" onsubmit="return false;">
-				<p>
+				<div>
 					動画の名前を指定して、「次へ」ボタンをクリックして下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<label for="movie_name_textbox" class="larger">動画名：</label>
 					<input type="text" id="movie_name_textbox" name="movie_name_textbox" maxlength="8" class="larger" />
 					<span class="smaller no_break">(8文字まで)</span>
-				</p>
-				<p>
+				</div>
+				<div>
 					<button type="button" id="mode_2_back_button">戻る</button>
 					<button type="submit" id="mode_2_next_button">次へ</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -81,15 +81,15 @@
 			<form name="mode_3_form" id="mode_3_form" onsubmit="return false;">
 				<p class="smaller">
 					動画名: <span class="movie_name_span"></span>
-				</p>
-				<p>
+				</div>
+				<div>
 					書き順を作成したい1文字とフォントを入力してから、「次へ」ボタンをクリックして下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<label for="character_textbox" class="larger">１文字：</label>
 					<input type="text" id="character_textbox" name="character_textbox" maxlength="1" class="larger" />
-				</p>
-				<p>
+				</div>
+				<div>
 					<label for="font_selectbox" class="larger">フォント：</label>
 					<select id="font_selectbox" name="font_selectbox" class="larger">
 						<option value="ＭＳ ゴシック">ＭＳ ゴシック (Windows)</option>
@@ -118,17 +118,17 @@
 						<option value="Noto Serif JP">Noto Serif JP (Android)</option>
 					</select>
 					<span class="smaller">(字体)</span>
-				</p>
+				</div>
 				<div class="frame">
 					<canvas id="base_canvas" class="canvas" width="200" height="200"></canvas>
 				</div>
 				<p class="smaller">
 					※ フォントのインストール状況と文字の種類により、表示は異なります。
-				</p>
-				<p>
+				</div>
+				<div>
 					<button type="button" id="mode_3_back_button">戻る</button>
 					<button type="submit" id="mode_3_next_button">次へ</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -147,23 +147,23 @@
 			<form name="mode_4_form" id="mode_4_form" onsubmit="return false;">
 				<p class="smaller">
 					動画名: <span class="movie_name_span"></span>
-				</p>
-				<p>
+				</div>
+				<div>
 					書き順プレイヤーでは、画ではなく「線」で書き順を指定します。
-				</p>
-				<p>
+				</div>
+				<div>
 					線は、直線的に塗りつぶされます。線の塗りつぶしの方向は後で指定できます。
-				</p>
-				<p>
+				</div>
+				<div>
 					大きく曲がった画は、一度に塗りつぶしできないので、いくつかの線に分解する必要があります。
-				</p>
-				<p>
+				</div>
+				<div>
 					「次へ」ボタンをクリックして下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<button type="button" id="mode_4_back_button">戻る</button>
 					<button type="submit" id="mode_4_next_button">次へ</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -182,28 +182,28 @@
 			<form name="mode_5_form" id="mode_5_form" onsubmit="return false;">
 				<p class="smaller">
 					動画名: <span class="movie_name_span"></span>
-				</p>
-				<p>
+				</div>
+				<div>
 					下のキャンバスの上をドラッグして<span class="stroke_index_span">1</span>線目の領域を全部塗りつぶした後、「次へ」ボタンをクリックして下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<span class="stroke_index_span">1</span>線目がない場合は「完了」ボタンをクリックして下さい。
-				</p>
+				</div>
 				<div class="frame">
 					<canvas id="fill_canvas" class="canvas" width="200" height="200"></canvas>
 				</div>
-				<p>
+				<div>
 					太さ： <a href="#" id="line_width_thick">大</a> <a href="#" id="line_width_middle">中</a> <a href="#" id="line_width_thin">小</a>
-				</p>
-				<p>
+				</div>
+				<div>
 					塗り直す場合は「クリア」ボタンをクリックして下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<button type="button" id="mode_5_back_button">戻る</button>
 					<button type="button" id="mode_5_clear_button">クリア</button>
 					<button type="submit" id="mode_5_next_button">次へ</button>
 					<button type="button" id="mode_5_done_button">完了</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -222,11 +222,11 @@
 			<form name="mode_6_form" id="mode_6_form" onsubmit="return false;">
 				<p class="smaller">
 					動画名: <span class="movie_name_span"></span>
-				</p>
-				<p>
+				</div>
+				<div>
 					<span class="stroke_index_span">1</span>線目のアニメーションを選択して下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<label for="animation_list">アニメーション：</label>
 					<select id="animation_list">
 						<option value="なし">なし</option>
@@ -239,26 +239,26 @@
 						<option value="左下から右上へ">左下から右上へ</option>
 						<option value="右下から左上へ">右下から左上へ</option>
 					</select>
-				</p>
+				</div>
 				<div class="frame">
 					<canvas id="animation_canvas" class="canvas" width="200" height="200"></canvas>
 				</div>
-				<p>
+				<div>
 					この線が画の始まりであれば、次のチェックボックスにチェックを入れて下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<input type="checkbox" id="stroke_start_checkbox" name="stroke_start_checkbox" />
 					<label for="stroke_start_checkbox">
 						画の始まり
 					</label>
-				</p>
-				<p>
+				</div>
+				<div>
 					よろしければ「次へ」ボタンをクリックして下さい。
-				</p>
-				<p>
+				</div>
+				<div>
 					<button type="button" id="mode_6_back_button">戻る</button>
 					<button type="submit" id="mode_6_next_button">次へ</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -277,16 +277,16 @@
 			<form name="mode_7_form" id="mode_7_form" onsubmit="return false;">
 				<p class="smaller">
 					動画名: <span class="movie_name_span"></span>
-				</p>
-				<p>
+				</div>
+				<div>
 					動画作成中です。しばらくお待ちください。
-				</p>
+				</div>
 				<div class="frame">
 					<canvas id="creating_canvas" class="canvas" width="200" height="200"></canvas>
 				</div>
-				<p>
+				<div>
 					<button type="button" id="mode_7_back_button">戻る</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -305,18 +305,18 @@
 			<form name="mode_8_form" id="mode_8_form" onsubmit="return false;">
 				<p class="smaller">
 					動画名: <span class="movie_name_span"></span>
-				</p>
-				<p>
+				</div>
+				<div>
 					動画が完成しました。ボタンをクリックしてファイルをダウンロードして下さい。
-				</p>
+				</div>
 				<div class="frame">
 					<canvas id="done_canvas" class="canvas" width="200" height="200"></canvas>
 				</div>
-				<p>
+				<div>
 					<button type="button" id="mode_8_apng_button">APNGダウンロード</button>
 					<button type="button" id="mode_8_json_button">JSONダウンロード</button>
 					<button type="button" id="mode_8_go_top_button">最初に戻る</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
@@ -333,9 +333,9 @@
 		</header>
 		<nav>
 			<form name="mode_9_form" id="mode_9_form" onsubmit="return false;">
-				<p>
+				<div>
 					以下のような動画があります。
-				</p>
+				</div>
 				<ul>
 					<li><a href="?ch=あ">「あ」</a></li>
 					<li><a href="?ch=い">「い」</a></li>
@@ -343,9 +343,9 @@
 					<li><a href="?ch=え">「え」</a></li>
 					<li><a href="?ch=お">「お」</a></li>
 				</ul>
-				<p>
+				<div>
 					<button type="button" id="mode_9_go_top_button">最初に戻る</button>
-				</p>
+				</div>
 			</form>
 		</nav>
 		<footer>
