@@ -261,37 +261,44 @@ let KP_last_pos = [0, 0];
 				ctx.lineTo(pos[0], pos[1]);
 				ctx.stroke();
 				KP_last_pos = pos;
+				return false;
 			};
 			let KP_mode_5_down = function(pos){
 				KP_is_drawing_line = 1;
 				KP_last_pos = pos;
+				return false;
 			};
 			let KP_mode_5_up = function(pos){
 				KP_mode_5_move(pos);
 				KP_is_drawing_line = 0;
+				return false;
 			};
 			$("#mode_5_drawing_canvas").mousedown(function(e){
-				KP_mode_5_down(KP_pos(e));
+				return KP_mode_5_down(KP_pos(e));
 			}).mouseup(function(e){
-				KP_mode_5_up(KP_pos(e));
+				return KP_mode_5_up(KP_pos(e));
 			}).mousemove(function(e){
-				KP_mode_5_move(KP_pos(e));
+				return KP_mode_5_move(KP_pos(e));
 			}).on('touchstart', function(e){
 				e = e.originalEvent || e;
 				if (e.changedTouches.length == 1) {
+					alert("OK");
 					KP_mode_5_down(KP_pos(e.changedTouches[0]));
 				}
+				return false;
 			}).on('touchmove', function(e){
 				e = e.originalEvent || e;
 				e.preventDefault();
 				if (e.changedTouches.length == 1) {
 					KP_mode_5_move(KP_pos(e.changedTouches[0]));
 				}
+				return false;
 			}).on('touchend', function(e){
 				e = e.originalEvent || e;
 				if (e.changedTouches.length == 1) {
 					KP_mode_5_up(KP_pos(e.changedTouches[0]));
 				}
+				return false;
 			});
 			$(".mode_5_bold a").click(function(){
 				KP_set_line_width($(this).data("name"), $(this).data("bold"));
