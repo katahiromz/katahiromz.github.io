@@ -280,6 +280,7 @@ let KP_last_pos = [0, 0];
 					KP_mode_5_down(KP_pos(e.changedTouches[0]));
 				}
 			}).on('touchmove', function(e){
+				e = e.originalEvent || e;
 				e.preventDefault();
 				if (e.changedTouches.length == 1) {
 					KP_mode_5_move(KP_pos(e.changedTouches[0]));
