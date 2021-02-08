@@ -66,6 +66,9 @@ footer {
 .blue {
 	background-color: blue;
 }
+.green {
+	background-color: darkgreen;
+}
 .mode_5_color > a {
 	display: inline-block;
 	width: 25px;
