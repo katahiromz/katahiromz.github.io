@@ -86,14 +86,14 @@ let KP_character = '';
 			ctx.lineWidth = 3;
 			ctx.strokeText(text, x, y);
 		}
-		let KP_update_character_canvas = function(text, canvas){
+		let KP_update_character_canvas = function(text, canvas, font){
 			let ctx = canvas.getContext("2d");
 			let width = canvas.width, height = canvas.height;
 			let x = Math.floor(width / 2), y = Math.floor(height / 2);
 			let cxy = Math.min(width, height);
 			ctx.fillStyle = 'white';
 			ctx.fillRect(0, 0, width, height);
-			KP_fill_text(ctx, x, y, text, cxy + "px 'HG教科書体'");
+			KP_fill_text(ctx, x, y, text, cxy + "px '" + font + "'");
 		};
 		let KP_main = function() {
 			// KP_MODE_INITIAL
@@ -127,12 +127,12 @@ let KP_character = '';
 			$("#mode_3_back_button").click(function(){
 				KP_set_mode(KP_MODE_NAME);
 			});
-			let KP_mode_3_set_text = function(text) {
+			let KP_mode_3_set_text = function(text, font) {
 				if (text.length >= 2) {
 					text = text.substr(0, 1);
 				}
 				if (text.length == 1) {
-					KP_update_character_canvas(text, $("#base_canvas")[0]);
+					KP_update_character_canvas(text, $("#base_canvas")[0], font);
 				}
 				return text;
 			};
@@ -143,13 +143,20 @@ let KP_character = '';
 					alert("文字を入力して下さい。");
 					return;
 				}
-				text = KP_mode_3_set_text(text);
+				let font = $("#font_selectbox").val().trim();
+				text = KP_mode_3_set_text(text, font);
 				KP_character = text;
 				KP_set_mode(KP_MODE_EXPLANATION);
 			});
 			$("#character_textbox").on('keyup change', function(){
 				let text = $("#character_textbox").val().trim();
-				text = KP_mode_3_set_text(text);
+				let font = $("#font_selectbox").val().trim();
+				text = KP_mode_3_set_text(text, font);
+			});
+			$("#font_selectbox").on('change', function(){
+				let text = $("#character_textbox").val().trim();
+				let font = $("#font_selectbox").val().trim();
+				text = KP_mode_3_set_text(text, font);
 			});
 
 			// KP_MODE_EXPLANATION
