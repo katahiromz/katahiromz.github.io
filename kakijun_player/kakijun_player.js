@@ -256,6 +256,7 @@ let KP_last_pos = [0, 0];
 				ctx.lineCap = ctx.lineJoin = "round";
 				ctx.lineWidth = KP_line_width;
 				ctx.strokeStyle = KP_line_color;
+				ctx.beginPath();
 				ctx.moveTo(KP_last_pos[0], KP_last_pos[1]);
 				ctx.lineTo(pos[0], pos[1]);
 				ctx.stroke();
