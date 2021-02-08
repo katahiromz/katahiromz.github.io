@@ -282,7 +282,6 @@ let KP_last_pos = [0, 0];
 			}).on('touchstart', function(e){
 				e = e.originalEvent || e;
 				if (e.changedTouches.length == 1) {
-					alert("OK");
 					KP_mode_5_down(KP_pos(e.changedTouches[0]));
 				}
 				return false;
