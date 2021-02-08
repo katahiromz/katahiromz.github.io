@@ -108,7 +108,7 @@ let KP_line_color = "255, 0, 0, 1";
 			let ctx = canvas.getContext('2d');
 			ctx.lineCap = ctx.lineJoin = "round";
 			ctx.lineWidth = KP_line_width;
-			ctx.strokeStyle = "rgba(" + KP_line_color + ")";
+			ctx.strokeStyle = KP_line_color;
 			if (KP_is_drawing_line == 1) {
 				KP_is_drawing_line = 2;
 				ctx.beginPath();
@@ -275,7 +275,7 @@ let KP_line_color = "255, 0, 0, 1";
 				KP_set_line_color($(this).data("name"), $(this).data("color"));
 				return false;
 			});
-			KP_set_line_color("red", "255, 0, 0, 1");
+			KP_set_line_color("red", "red");
 
 			// KP_MODE_LINE_INFO
 			$("#mode_6_back_button").click(function(){
