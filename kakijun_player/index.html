@@ -83,47 +83,58 @@
 					動画名: <span class="movie_name_span"></span>
 				</div>
 				<div>
-					書き順を作成したい1文字とフォントを入力してから、「次へ」ボタンをクリックして下さい。
+					書き順を作成したい1文字とフォントを指定して「次へ」ボタンをクリックして下さい。
 				</div>
 				<div>
 					<label for="character_textbox" class="larger">１文字：</label>
 					<input type="text" id="character_textbox" name="character_textbox" maxlength="1" class="larger" />
 				</div>
 				<div>
-					<label for="font_selectbox" class="larger">フォント：</label>
+					<label for="font_selectbox" class="larger">フォント <span class="smaller">(字体)</span> ：</label>
 					<select id="font_selectbox" name="font_selectbox" class="larger">
+						<option value="san-serif">(無指定)</option>
 						<option value="ＭＳ ゴシック">ＭＳ ゴシック (Windows)</option>
 						<option value="ＭＳ Ｐゴシック">ＭＳ Ｐゴシック (Windows)</option>
-						<option value="BIZ UDゴシック" selected>BIZ UDゴシック (Windows)</option>
-						<option value="游ゴシック">游ゴシック (Windows)</option>
-						<option value="メイリオ">メイリオ (Windows)</option>
+						<option value="ＭＳ 明朝">ＭＳ 明朝 (Windows)</option>
+						<option value="ＭＳ Ｐ明朝">ＭＳ Ｐ明朝 (Windows)</option>
+						<option value="BIZ UDゴシック">BIZ UDゴシック (Windows)</option>
+						<option value="BIZ UD明朝">BIZ UD明朝 (Windows)</option>
 						<option value="HG教科書体">HG教科書体</option>
 						<option value="HG丸ｺﾞｼｯｸM-PRO">HG丸ｺﾞｼｯｸM-PRO</option>
 						<option value="HGS創英角ﾎﾟｯﾌﾟ体">HGS創英角ﾎﾟｯﾌﾟ体</option>
 						<option value="Arial">Arial</option>
-						<option value="Georgia">Georgia</option>
-						<option value="Helvetica">Helvetica</option>
-						<option value="Symbol">Symbol</option>
-						<option value="Times New Roman">Times New Roman</option>
-						<option value="Trebuchet MS">Trebuchet MS</option>
 						<option value="Verdana">Verdana</option>
-						<option value="Comic Sans MS">Comic Sans MS (Windows)</option>
-						<option value="Hiragino Sans">Hiragino Sans (Mac / iOS)</option>
-						<option value="ヒラギノ角ゴシック">ヒラギノ角ゴシック (Mac / iOS)</option>
-						<option value="ヒラギノ角ゴ ProN W3">ヒラギノ角ゴ ProN W3 (Mac / iOS)</option>
+						<option value="Helvetica">Helvetica</option>
+						<option value="Tahoma">Tahoma</option>
+						<option value="Trebuchet MS">Trebuchet MS</option>
+						<option value="Times New Roman">Times New Roman</option>
+						<option value="Georgia">Georgia</option>
+						<option value="Courier New">Courier New</option>
 						<option value="Droid Sans">Droid Sans (Android)</option>
-						<option value="Droid Sans Mono">Droid Sans Mono (Android)</option>
 						<option value="Roboto">Roboto (Android)</option>
-						<option value="Noto Sans JP">Noto Sans JP (Android)</option>
-						<option value="Noto Serif JP">Noto Serif JP (Android)</option>
+						<option value="Osaka">Osaka (Mac)</option>
+						<option value="Osaka-Mono">Osaka-Mono (Mac)</option>
+						<option value="Hiragino Sans">Hiragino Sans (Mac)</option>
+						<option value="Hiragino Kaku Gothic StdN">Hiragino Kaku Gothic StdN (Mac)</option>
+						<option value="Hiragino Maru Gothic ProN">Hiragino Maru Gothic ProN (Mac)</option>
+						<option value="Hiragino Mincho ProN">Hiragino Mincho ProN (Mac)</option>
+						<option value="HiraKakuProN-W3">HiraKakuProN-W3 (Mac / iOS)</option>
+						<option value="HiraKakuProN-W6">HiraKakuProN-W6 (Mac / iOS)</option>
+						<option value="HiraMaruProN-W4">HiraMaruProN-W4 (Mac / iOS)</option>
+						<option value="HiraMinProN-W3">HiraMinProN-W3 (Mac / iOS)</option>
+						<option value="HiraMinProN-W6">HiraMinProN-W6 (Mac / iOS)</option>
+						<option value="Yu Gothic">Yu Gothic (Windows)</option>
+						<option value="Yu Mincho">Yu Mincho (Windows)</option>
+						<option value="YuGothic">YuGothic (Mac)</option>
+						<option value="YuMincho">YuMincho (Mac)</option>
 					</select>
-					<span class="smaller">(字体)</span>
 				</div>
 				<div class="frame">
 					<canvas id="base_canvas" class="canvas" width="200" height="200"></canvas>
 				</div>
 				<p class="smaller">
-					※ フォントのインストール状況と文字の種類により、表示は異なります。
+					※ お使いのシステムにおけるフォントの有無により、表示は異なります。<br />
+					※ 商用の場合は、フォントの使用許諾の範囲にご注意下さい。
 				</div>
 				<div>
 					<button type="button" id="mode_3_back_button">戻る</button>

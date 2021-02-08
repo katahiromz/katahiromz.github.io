@@ -19,6 +19,7 @@ const KP_MOVIE_INITIAL_NAME = "無題";
 let KP_movie_name = KP_MOVIE_INITIAL_NAME;
 
 let KP_character = '';
+let KP_font = '';
 
 (function($){
 	$(function(){
@@ -146,6 +147,7 @@ let KP_character = '';
 				let font = $("#font_selectbox").val().trim();
 				text = KP_mode_3_set_text(text, font);
 				KP_character = text;
+				KP_font = font;
 				KP_set_mode(KP_MODE_EXPLANATION);
 			});
 			$("#character_textbox").on('keyup change', function(){
