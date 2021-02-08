@@ -26,6 +26,7 @@ let KP_font = '';
 let KP_is_drawing_line = 0;
 let KP_line_width = 8;
 let KP_line_color = "255, 0, 0, 1";
+let KP_last_pos = [0, 0];
 
 (function($){
 	$(function(){
@@ -104,20 +105,6 @@ let KP_line_color = "255, 0, 0, 1";
 			ctx.fillRect(0, 0, width, height);
 			KP_fill_text(ctx, x, y, text, cxy + "px '" + font + "'");
 		};
-		let KP_draw_line = function(canvas, x, y) {
-			let ctx = canvas.getContext('2d');
-			ctx.lineCap = ctx.lineJoin = "round";
-			ctx.lineWidth = KP_line_width;
-			ctx.strokeStyle = KP_line_color;
-			if (KP_is_drawing_line == 1) {
-				KP_is_drawing_line = 2;
-				ctx.beginPath();
-				ctx.moveTo(x, y);
-			} else {
-				ctx.lineTo(x, y);
-			}
-			ctx.stroke();
-		};
 		let KP_main = function() {
 			// KP_MODE_INITIAL
 			$("#mode_1_upload_json_button").click(function(){
@@ -192,6 +179,7 @@ let KP_line_color = "255, 0, 0, 1";
 			});
 
 			// KP_MODE_FILL_LINE
+			let KP_mode_5_canvas = $("#mode_5_drawing_canvas")[0];
 			let KP_set_line_width = function(name, width) {
 				switch (name) {
 				case "small":
@@ -245,8 +233,7 @@ let KP_line_color = "255, 0, 0, 1";
 				KP_set_mode(KP_MODE_EXPLANATION);
 			});
 			$("#mode_5_clear_button").click(function(){
-				let canvas = $("#mode_5_drawing_canvas")[0];
-				let ctx = canvas.getContext("2d");
+				let ctx = KP_mode_5_canvas.getContext("2d");
 				ctx.fillStyle = 'white';
 				ctx.fillRect(0, 0, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
 			});
@@ -256,15 +243,51 @@ let KP_line_color = "255, 0, 0, 1";
 			$("#mode_5_done_button").click(function(){
 				KP_set_mode(KP_MODE_LINE_INFO);
 			});
-			$("#mode_5_drawing_canvas").mousedown(function(){
-				KP_is_drawing_line = 1;
-			}).mouseup(function(){
-				KP_is_drawing_line = 0;
-			}).mousemove(function(e){
+			let KP_pos = function(e){
+				e = e.originalEvent || e;
+				let x = e.clientX - KP_mode_5_canvas.getBoundingClientRect().left;
+				let y = e.clientY - KP_mode_5_canvas.getBoundingClientRect().top;
+				return [x, y];
+			};
+			let KP_mode_5_move = function(pos){
 				if (!KP_is_drawing_line)
 					return false;
-				let canvas = $("#mode_5_drawing_canvas")[0];
-				KP_draw_line(canvas, e.offsetX, e.offsetY);
+				let ctx = KP_mode_5_canvas.getContext("2d");
+				ctx.lineCap = ctx.lineJoin = "round";
+				ctx.lineWidth = KP_line_width;
+				ctx.strokeStyle = KP_line_color;
+				ctx.moveTo(KP_last_pos[0], KP_last_pos[1]);
+				ctx.lineTo(pos[0], pos[1]);
+				ctx.stroke();
+				KP_last_pos = pos;
+			};
+			let KP_mode_5_down = function(pos){
+				KP_is_drawing_line = 1;
+				KP_last_pos = pos;
+			};
+			let KP_mode_5_up = function(pos){
+				KP_mode_5_move(pos);
+				KP_is_drawing_line = 0;
+			};
+			$("#mode_5_drawing_canvas").mousedown(function(e){
+				KP_mode_5_down(KP_pos(e));
+			}).mouseup(function(e){
+				KP_mode_5_up(KP_pos(e));
+			}).mousemove(function(e){
+				KP_mode_5_move(KP_pos(e));
+			}).on('touchstart', function(e){
+				if (e.changedTouches.length == 1) {
+					KP_mode_5_down(KP_pos(e.changedTouches[0]));
+				}
+			}).on('touchmove', function(e){
+				e.preventDefault();
+				if (e.changedTouches.length == 1) {
+					KP_mode_5_move(KP_pos(e.changedTouches[0]));
+				}
+			}).on('touchend', function(e){
+				if (e.changedTouches.length == 1) {
+					KP_mode_5_up(KP_pos(e.changedTouches[0]));
+				}
 			});
 			$(".mode_5_bold a").click(function(){
 				KP_set_line_width($(this).data("name"), $(this).data("bold"));
