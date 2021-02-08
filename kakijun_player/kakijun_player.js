@@ -276,6 +276,7 @@ let KP_last_pos = [0, 0];
 			}).mousemove(function(e){
 				KP_mode_5_move(KP_pos(e));
 			}).on('touchstart', function(e){
+				e = e.originalEvent || e;
 				if (e.changedTouches.length == 1) {
 					KP_mode_5_down(KP_pos(e.changedTouches[0]));
 				}
@@ -286,6 +287,7 @@ let KP_last_pos = [0, 0];
 					KP_mode_5_move(KP_pos(e.changedTouches[0]));
 				}
 			}).on('touchend', function(e){
+				e = e.originalEvent || e;
 				if (e.changedTouches.length == 1) {
 					KP_mode_5_up(KP_pos(e.changedTouches[0]));
 				}
