@@ -23,14 +23,15 @@ let KP_movie_name = KP_MOVIE_INITIAL_NAME;
 
 let KP_character = '';
 let KP_font = '';
-let KP_is_drawing_line = 0;
+let KP_is_dragging = 0;
 let KP_line_width = 8;
 let KP_line_color = "red";
 let KP_last_pos = [0, 0]; // [x, y]
-let KP_line_index = 0;
+let KP_line_index = 0, KP_line_count = 0;
 let KP_base_image = null; // new Image()
 let KP_line_images = []; // new Image()[]
 let KP_current_tool = "brush";
+let KP_written_flags = [];
 
 (function($){
 	$(function(){
@@ -110,20 +111,41 @@ let KP_current_tool = "brush";
 			KP_base_image = new Image();
 			KP_base_image.src = canvas.toDataURL();
 		};
-		let KP_next_line = function(index, do_add = true) {
-			let canvas = $("#mode_5_drawing_canvas")[0];
-			if (index >= 1) {
-				let img = new Image();
-				img.src = canvas.toDataURL();
-				if (do_add) {
-					KP_line_images.push(img);
-				} else {
-					KP_line_images[index - 1] = img;
-				}
+		let KP_save_line_image = function(index = -1) {
+			if (!KP_written_flags[KP_line_index]) {
+				return;
 			}
-			$("#stroke_index_span").text(index + 1);
+			let canvas = $("#mode_5_drawing_canvas")[0];
+			let img = new Image();
+			img.src = canvas.toDataURL();
+			if ($("#image-" + index).length == 0) {
+				$("#images").append('<img id="image-' + index + '" width="100" height="100" />');
+				KP_line_count = index + 1;
+			}
+			if (index == -1) {
+				KP_line_images.push(img);
+			} else {
+				KP_line_images[index] = img;
+			}
+			$("#image-" + index).prop('src', img.src);
+		};
+		let KP_set_line_index = function(index = -1) {
+			let canvas = $("#mode_5_drawing_canvas")[0];
 			let ctx = canvas.getContext('2d');
-			ctx.drawImage(KP_base_image, 0, 0);
+			if (index == -1) {
+				index = KP_line_images.length - 1;
+			}
+			if (index < KP_line_images.length && KP_line_images[index]) {
+				ctx.drawImage(KP_line_images[index], 0, 0);
+				KP_line_index = index;
+			} else {
+				let image = new Image();
+				image.src = KP_base_image.src;
+				KP_line_images[index] = image;
+				ctx.drawImage(image, 0, 0);
+				KP_line_index = index;
+			}
+			$(".stroke_index_span").text(KP_line_index + 1);
 		};
 		let KP_set_mode = function(mode, go_back = false) {
 			if (!KP_debugging) {
@@ -154,17 +176,19 @@ let KP_current_tool = "brush";
 				$("#mode_4_next_button").focus();
 				break;
 			case KP_MODE_FILL_LINE:
-				if (go_back) {
-					KP_line_index = KP_line_images.length - 1;
-				} else {
-					KP_line_index = 0;
+				if (KP_line_count != 0) {
+					KP_save_line_image(KP_line_index);
 				}
-				KP_next_line(KP_line_index, !go_back);
+				if (go_back) {
+					KP_set_line_index(KP_line_count - 1);
+				} else {
+					KP_set_line_index(0);
+				}
 				$("#mode_5_next_button").focus();
 				break;
 			case KP_MODE_LINE_INFO:
 				if (go_back) {
-					KP_line_index = KP_line_images.length - 1;
+					KP_line_index = KP_line_count - 1;
 				} else {
 					KP_line_index = 0;
 				}
@@ -220,20 +244,20 @@ let KP_current_tool = "brush";
 				//	alert("文字を入力して下さい。");
 				//	return;
 				//}
-				let font = $("#font_selectbox").val().trim();
-				text = KP_draw_character($("#base_canvas")[0], text, font);
+				let font = $("#font_selectbox").val();
+				KP_draw_character($("#base_canvas")[0], text, font);
 				KP_character = text;
 				KP_font = font;
 				KP_set_mode(KP_MODE_EXPLANATION);
 			});
 			$("#character_textbox").on('keyup change', function(){
 				let text = $("#character_textbox").val().trim();
-				let font = $("#font_selectbox").val().trim();
+				let font = $("#font_selectbox").val();
 				text = KP_draw_character($("#base_canvas")[0], text, font);
 			});
 			$("#font_selectbox").on('change', function(){
 				let text = $("#character_textbox").val().trim();
-				let font = $("#font_selectbox").val().trim();
+				let font = $("#font_selectbox").val();
 				text = KP_draw_character($("#base_canvas")[0], text, font);
 			});
 
@@ -326,14 +350,31 @@ let KP_current_tool = "brush";
 				KP_line_color = color;
 			};
 			$("#mode_5_back_button").click(function(){
-				KP_set_mode(KP_MODE_EXPLANATION, true);
+				KP_is_dragging = 0;
+				if (!KP_written_flags[KP_line_index] && KP_line_index < KP_line_count) {
+					alert("線が描画されてません。");
+					return;
+				}
+				if (KP_line_index == 0) {
+					KP_set_mode(KP_MODE_EXPLANATION, true);
+					return;
+				}
+				KP_save_line_image(KP_line_index);
+				KP_set_line_index(KP_line_index - 1);
 			});
 			$("#mode_5_clear_button").click(function(){
+				KP_is_dragging = 0;
 				KP_draw_character($("#mode_5_drawing_canvas")[0], KP_character, KP_font);
-				KP_is_drawing_line = 0;
+				KP_written_flags[KP_line_index] = false;
 			});
 			$("#mode_5_next_button").click(function(){
-				;
+				KP_is_dragging = 0;
+				if (!KP_written_flags[KP_line_index]) {
+					alert("線が描画されてません。");
+					return;
+				}
+				KP_save_line_image(KP_line_index);
+				KP_set_line_index(KP_line_index + 1);
 			});
 			$("#mode_5_done_button").click(function(){
 				KP_set_mode(KP_MODE_LINE_INFO);
@@ -345,7 +386,7 @@ let KP_current_tool = "brush";
 				return [x, y];
 			};
 			let KP_mode_5_move = function(pos){
-				if (!KP_is_drawing_line)
+				if (!KP_is_dragging)
 					return false;
 				let ctx = KP_mode_5_canvas.getContext("2d");
 				ctx.lineCap = ctx.lineJoin = "round";
@@ -356,6 +397,7 @@ let KP_current_tool = "brush";
 				ctx.lineTo(pos[0], pos[1]);
 				ctx.stroke();
 				KP_last_pos = pos;
+				KP_written_flags[KP_line_index] = true;
 				return false;
 			};
 			let KP_mode_5_down = function(pos){
@@ -363,13 +405,13 @@ let KP_current_tool = "brush";
 					KP_flood_fill($("#mode_5_drawing_canvas")[0], pos[0], pos[1]);
 					return false;
 				}
-				KP_is_drawing_line = 1;
+				KP_is_dragging = 1;
 				KP_last_pos = pos;
 				return false;
 			};
 			let KP_mode_5_up = function(pos){
 				KP_mode_5_move(pos);
-				KP_is_drawing_line = 0;
+				KP_is_dragging = 0;
 				return false;
 			};
 			$("#mode_5_drawing_canvas").mousedown(function(e){
