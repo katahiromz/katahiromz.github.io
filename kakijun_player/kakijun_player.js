@@ -5,6 +5,8 @@ let KP_debugging = true;
 
 const KP_CANVAS_WIDTH = 200;
 const KP_CANVAS_HEIGHT = 200;
+const KP_THUMBNAIL_WIDTH = KP_CANVAS_WIDTH / 2;
+const KP_THUMBNAIL_HEIGHT = KP_CANVAS_HEIGHT / 2;
 
 const KP_MODE_INITIAL = 1;
 const KP_MODE_NAME = 2;
@@ -133,9 +135,8 @@ let KP_is_eraser = false;
 			}
 			let canvas = $("#mode_5_drawing_canvas")[0];
 			let img = new Image();
-			img.src = canvas.toDataURL();
 			if ($("#image-" + index).length == 0) {
-				$("#images").append('<img id="image-' + index + '" width="100" height="100" />');
+				$("#images").append('<img id="image-' + index + '" width="' + KP_THUMBNAIL_WIDTH + '" height="' + KP_THUMBNAIL_HEIGHT + '" />');
 				KP_line_count = index + 1;
 			}
 			if (index == -1) {
@@ -143,7 +144,7 @@ let KP_is_eraser = false;
 			} else {
 				KP_line_images[index] = img;
 			}
-			$("#image-" + index).prop('src', img.src);
+			$("#image-" + index)[0].src = canvas.toDataURL();
 		};
 		let KP_set_line_index = function(index = -1) {
 			let canvas = $("#mode_5_drawing_canvas")[0];
@@ -156,15 +157,11 @@ let KP_is_eraser = false;
 			if (index < KP_line_images.length && KP_line_images[index]) {
 				ctx.drawImage(KP_line_images[index], 0, 0);
 				ctx2.drawImage(KP_line_images[index], 0, 0);
-				KP_line_index = index;
 			} else {
-				let image = new Image();
-				image.src = KP_base_image.src;
-				KP_line_images[index] = image;
-				ctx.drawImage(image, 0, 0);
-				ctx2.drawImage(image, 0, 0);
-				KP_line_index = index;
+				ctx.drawImage(KP_base_image, 0, 0);
+				ctx2.drawImage(KP_base_image, 0, 0);
 			}
+			KP_line_index = index;
 			$(".stroke_index_span").text(KP_line_index + 1);
 
 			$("#mode_5_eraser").prop('checked', false);
@@ -516,8 +513,15 @@ let KP_is_eraser = false;
 			let KP_mode_5_move = function(pos){
 				if (!KP_is_dragging)
 					return false;
-				let canvas_A = $("#base_canvas")[0];
-				let ctx_A = canvas_A.getContext("2d");
+				let canvas_A, ctx_A;
+				if (KP_line_images[KP_line_index]) {
+					canvas_A = document.createElement('canvas');
+					ctx_A = canvas_A.getContext("2d");
+					ctx_A.drawImage(KP_line_images[KP_line_index], 0, 0);
+				} else {
+					canvas_A = $("#base_canvas")[0];
+					ctx_A = canvas_A.getContext("2d");
+				}
 				let canvas_B = $("#mode_5_back_canvas")[0];
 				let ctx_B = canvas_B.getContext("2d");
 				let canvas_C = $("#mode_5_back2_canvas")[0];
