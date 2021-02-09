@@ -175,7 +175,7 @@ let KP_is_eraser = false;
 			}
 		};
 		let KP_save_line_info = function(index = -1) {
-			if (!KP_written_flags[KP_line_index]) {
+			if (!KP_written_flags[index]) {
 				return;
 			}
 			let animation = $("#animation_selectbox").val();
@@ -202,8 +202,8 @@ let KP_is_eraser = false;
 			}
 			$("#animation_selectbox").val(animation);
 			$("#stroke_start_checkbox").prop('checked', is_start);
-			$(".info_index_spans").text(index + 1);
-			KP_line_index = index;
+			$(".info_index_span").text(index + 1);
+			KP_info_index = index;
 		};
 		let KP_set_mode = function(mode, go_back = false) {
 			if (!KP_debugging) {
@@ -249,12 +249,12 @@ let KP_is_eraser = false;
 					KP_save_line_info(KP_info_index);
 				}
 				if (go_back) {
-					KP_set_info_index(KP_info_index - 1);
+					KP_set_info_index(KP_info_count - 1);
 				} else {
 					KP_set_info_index(0);
 				}
 				$("#animation_selectbox").focus();
-				$("#stroke_index_span").text(KP_line_index);
+				$("#stroke_index_span").text(KP_line_index + 1);
 				break;
 			case KP_MODE_GENERATING:
 				break;
@@ -608,10 +608,19 @@ let KP_is_eraser = false;
 
 			// KP_MODE_LINE_INFO
 			$("#mode_6_back_button").click(function(){
-				KP_set_mode(KP_MODE_FILL_LINE, true);
+				if (KP_info_index == 0) {
+					KP_set_mode(KP_MODE_FILL_LINE, true);
+					return;
+				}
+				KP_set_info_index(KP_info_index - 1);
 			});
 			$("#mode_6_next_button").click(function(){
-				KP_set_mode(KP_MODE_GENERATING);
+				KP_save_line_info(KP_info_index);
+				if (KP_info_index + 1 < KP_line_count) {
+					KP_set_info_index(KP_info_index + 1);
+				} else {
+					KP_set_mode(KP_MODE_GENERATING);
+				}
 			});
 
 			// KP_MODE_GENERATING
