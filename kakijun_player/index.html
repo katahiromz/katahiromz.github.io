@@ -206,15 +206,18 @@
 					<a href="" id="mode_5_small" data-tool="2" data-name="small">細</a>
 					<a href="" id="mode_5_middle" data-tool="8" data-name="middle">中</a>
 					<a href="" id="mode_5_large" data-tool="15" data-name="large">太</a>
-					<a href="" id="mode_5_eraser" data-tool="-1" data-name="eraser">消</a>
 					<a href="" id="mode_5_auto" data-tool="-2" data-name="auto">AUTO</a>
+				</div>
+				<div>
+					<input type="checkbox" id="mode_5_eraser" />
+					<label for="mode_5_eraser">消す</label>
 				</div>
 				<div class="mode_5_color">
 					色：
-					<a href="" id="mode_5_black" class="black" data-color="black" data-name="black"></a>
-					<a href="" id="mode_5_red" class="red" data-color="red" data-name="red"></a>
-					<a href="" id="mode_5_blue" class="blue" data-color="blue" data-name="blue"></a>
-					<a href="" id="mode_5_green" class="green" data-color="darkgreen" data-name="green"></a>
+					<a href="" id="mode_5_black" class="black" data-color="0, 0, 0" data-name="black"></a>
+					<a href="" id="mode_5_red" class="red" data-color="255, 0, 0" data-name="red"></a>
+					<a href="" id="mode_5_blue" class="blue" data-color="0, 0, 255" data-name="blue"></a>
+					<a href="" id="mode_5_green" class="green" data-color="0, 100, 0" data-name="green"></a>
 				</div>
 				<div>
 					塗り直す場合は「クリア」ボタンをクリックして下さい。
@@ -227,6 +230,7 @@
 				</div>
 			</form>
 			<div id="images">
+				<canvas id="mode_5_back_canvas" class="canvas invisible" width="200" height="200"></canvas>
 				<!-- <img id="image-0" width="100" height="100" /> -->
 			</div>
 		</nav>

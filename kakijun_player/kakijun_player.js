@@ -25,13 +25,14 @@ let KP_character = '';
 let KP_font = '';
 let KP_is_dragging = 0;
 let KP_line_width = 8;
-let KP_line_color = "red";
+let KP_line_color = "255,0,0";
 let KP_last_pos = [0, 0]; // [x, y]
 let KP_line_index = 0, KP_line_count = 0;
 let KP_base_image = null; // new Image()
 let KP_line_images = []; // new Image()[]
 let KP_current_tool = "brush";
 let KP_written_flags = [];
+let KP_is_eraser = false;
 
 (function($){
 	$(function(){
@@ -104,10 +105,19 @@ let KP_written_flags = [];
 			let cxy = Math.min(width, height);
 			ctx.fillStyle = 'white';
 			ctx.fillRect(0, 0, width, height);
-			KP_fill_text(ctx, x, y, text, cxy + "px '" + font + "'", color);
+			KP_fill_text(ctx, x, y, text, cxy + "px '" + font + "'", "rgb(211,211,211)");
 			if (color2) {
-				KP_stroke_text(ctx, x, y, text, cxy + "px '" + font + "'", color2);
+				KP_stroke_text(ctx, x, y, text, cxy + "px '" + font + "'", "rgb(126,126,126)");
 			}
+			let imageData = ctx.getImageData(0, 0, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
+			let data = imageData.data;
+			for (let i = 0; i < KP_CANVAS_WIDTH * KP_CANVAS_HEIGHT; ++i) {
+				let offset = 4 * i;
+				if (data[offset] != 211 && data[offset] != 126) {
+					data[offset] = data[offset + 1] = data[offset + 2] = data[offset + 3] = 255;
+				}
+			}
+			ctx.putImageData(imageData, 0, 0);
 			KP_base_image = new Image();
 			KP_base_image.src = canvas.toDataURL();
 		};
@@ -131,18 +141,22 @@ let KP_written_flags = [];
 		};
 		let KP_set_line_index = function(index = -1) {
 			let canvas = $("#mode_5_drawing_canvas")[0];
+			let canvas2 = $("#mode_5_back_canvas")[0];
 			let ctx = canvas.getContext('2d');
+			let ctx2 = canvas2.getContext('2d');
 			if (index == -1) {
 				index = KP_line_images.length - 1;
 			}
 			if (index < KP_line_images.length && KP_line_images[index]) {
 				ctx.drawImage(KP_line_images[index], 0, 0);
+				ctx2.drawImage(KP_line_images[index], 0, 0);
 				KP_line_index = index;
 			} else {
 				let image = new Image();
 				image.src = KP_base_image.src;
 				KP_line_images[index] = image;
 				ctx.drawImage(image, 0, 0);
+				ctx2.drawImage(image, 0, 0);
 				KP_line_index = index;
 			}
 			$(".stroke_index_span").text(KP_line_index + 1);
@@ -277,7 +291,6 @@ let KP_written_flags = [];
 					$("#mode_5_small").addClass("focus_box");
 					$("#mode_5_middle").removeClass("focus_box");
 					$("#mode_5_large").removeClass("focus_box");
-					$("#mode_5_eraser").removeClass("focus_box");
 					$("#mode_5_auto").removeClass("focus_box");
 					KP_line_width = width;
 					KP_current_tool = "brush";
@@ -286,7 +299,6 @@ let KP_written_flags = [];
 					$("#mode_5_small").removeClass("focus_box");
 					$("#mode_5_middle").addClass("focus_box");
 					$("#mode_5_large").removeClass("focus_box");
-					$("#mode_5_eraser").removeClass("focus_box");
 					$("#mode_5_auto").removeClass("focus_box");
 					KP_line_width = width;
 					KP_current_tool = "brush";
@@ -295,31 +307,23 @@ let KP_written_flags = [];
 					$("#mode_5_small").removeClass("focus_box");
 					$("#mode_5_middle").removeClass("focus_box");
 					$("#mode_5_large").addClass("focus_box");
-					$("#mode_5_eraser").removeClass("focus_box");
 					$("#mode_5_auto").removeClass("focus_box");
 					KP_line_width = width;
 					KP_current_tool = "brush";
-					break;
-				case "eraser":
-					$("#mode_5_small").removeClass("focus_box");
-					$("#mode_5_middle").removeClass("focus_box");
-					$("#mode_5_large").removeClass("focus_box");
-					$("#mode_5_eraser").addClass("focus_box");
-					$("#mode_5_auto").removeClass("focus_box");
-					KP_line_width = 8;
-					KP_current_tool = "eraser";
 					break;
 				case "auto":
 					$("#mode_5_small").removeClass("focus_box");
 					$("#mode_5_middle").removeClass("focus_box");
 					$("#mode_5_large").removeClass("focus_box");
-					$("#mode_5_eraser").removeClass("focus_box");
 					$("#mode_5_auto").addClass("focus_box");
 					KP_line_width = 8;
 					KP_current_tool = "auto";
 					break;
 				}
 			};
+			$("#mode_5_eraser").click(function() {
+				KP_is_eraser = $("#mode_5_eraser").val();
+			});
 			let KP_set_line_color = function(name, color) {
 				switch (name) {
 				case "black":
@@ -365,6 +369,7 @@ let KP_written_flags = [];
 			$("#mode_5_clear_button").click(function(){
 				KP_is_dragging = 0;
 				KP_draw_character($("#mode_5_drawing_canvas")[0], KP_character, KP_font);
+				KP_draw_character($("#mode_5_back_canvas")[0], KP_character, KP_font);
 				KP_written_flags[KP_line_index] = false;
 			});
 			$("#mode_5_next_button").click(function(){
@@ -385,28 +390,64 @@ let KP_written_flags = [];
 				let y = e.clientY - KP_mode_5_canvas.getBoundingClientRect().top;
 				return [x, y];
 			};
+			let maskPixels = function(ctx_A, ctx_B, ctxOut, width, height) {
+				let img_A = ctx_A.getImageData(0, 0, width, height);
+				let img_B = ctx_B.getImageData(0, 0, width, height);
+				let img = ctxOut.getImageData(0, 0, width, height);
+				for (let i = 0; i < img_A.width * img_A.height; ++i) {
+					let k = 4 * i;
+					let value;
+					if (img_A.data[k] == 255) {
+						value = 255;
+						img.data[k] = img.data[k + 1] = img.data[k + 2] = value;
+					} else if (img_B.data[k] == 0) {
+						let values = KP_line_color.split(",");
+						img.data[k] = values[0].trim();
+						img.data[k + 1] = values[1].trim();
+						img.data[k + 2] = values[2].trim();
+					} else {
+						value = 192;
+						img.data[k] = img.data[k + 1] = img.data[k + 2] = value;
+					}
+					img.data[k + 3] = 255;
+				}
+				ctxOut.putImageData(img, 0, 0);
+			}
 			let KP_mode_5_move = function(pos){
 				if (!KP_is_dragging)
 					return false;
-				let ctx = KP_mode_5_canvas.getContext("2d");
-				ctx.lineCap = ctx.lineJoin = "round";
-				ctx.lineWidth = KP_line_width;
-				ctx.strokeStyle = KP_line_color;
-				ctx.beginPath();
-				ctx.moveTo(KP_last_pos[0], KP_last_pos[1]);
-				ctx.lineTo(pos[0], pos[1]);
-				ctx.stroke();
+				let canvas_A = $("#base_canvas")[0];
+				let ctx_A = canvas_A.getContext("2d");
+				let canvas_B = $("#mode_5_back_canvas")[0];
+				let ctx_B = canvas_B.getContext("2d");
+				ctx_B.lineCap = ctx_B.lineJoin = "round";
+				ctx_B.lineWidth = KP_line_width;
+				ctx_B.strokeStyle = "black";
+				ctx_B.beginPath();
+				ctx_B.moveTo(KP_last_pos[0], KP_last_pos[1]);
+				ctx_B.lineTo(pos[0], pos[1]);
+				ctx_B.stroke();
+				let ctxOut = KP_mode_5_canvas.getContext("2d");
+				maskPixels(ctx_A, ctx_B, ctxOut, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
 				KP_last_pos = pos;
 				KP_written_flags[KP_line_index] = true;
 				return false;
 			};
 			let KP_mode_5_down = function(pos){
+				KP_last_pos = pos;
 				if (KP_current_tool == "auto") {
-					KP_flood_fill($("#mode_5_drawing_canvas")[0], pos[0], pos[1]);
+					let canvas_A = KP_mode_5_canvas;
+					let ctx_A = canvas_A.getContext("2d");
+					let canvas_B = $("#mode_5_back_canvas")[0];
+					let ctx_B = canvas_B.getContext("2d");
+					ctx_B.drawImage(canvas_A, 0, 0);
+					let ctxOut = KP_mode_5_canvas.getContext("2d");
+					KP_flood_fill(canvas_B, pos[0], pos[1], (KP_line_color.split(",").push(255)));
+					maskPixels(ctx_A, ctx_B, ctxOut, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
+					KP_written_flags[KP_line_index] = true;
 					return false;
 				}
 				KP_is_dragging = 1;
-				KP_last_pos = pos;
 				return false;
 			};
 			let KP_mode_5_up = function(pos){
@@ -449,7 +490,7 @@ let KP_written_flags = [];
 				KP_set_line_color($(this).data("name"), $(this).data("color"));
 				return false;
 			});
-			KP_set_line_color("red", "red");
+			KP_set_line_color("red", "255,0,0");
 
 			// KP_MODE_LINE_INFO
 			$("#mode_6_back_button").click(function(){
