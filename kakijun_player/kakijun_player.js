@@ -129,38 +129,35 @@ let KP_is_eraser = false;
 			KP_base_image = new Image();
 			KP_base_image.src = canvas.toDataURL();
 		};
-		let KP_save_line_image = function(index = -1) {
-			if (!KP_written_flags[KP_line_index]) {
+		let KP_save_line_image = function(index) {
+			if (!KP_written_flags[index]) {
 				return;
 			}
 			let canvas = $("#mode_5_drawing_canvas")[0];
 			let img = new Image();
 			if ($("#image-" + index).length == 0) {
-				$("#images").append('<img id="image-' + index + '" width="' + KP_THUMBNAIL_WIDTH + '" height="' + KP_THUMBNAIL_HEIGHT + '" />');
+				let text = '<img id="image-' + index + '" width="' + KP_THUMBNAIL_WIDTH + '" height="' + KP_THUMBNAIL_HEIGHT + '" />';
+				$("#images").append(text);
 				KP_line_count = index + 1;
 			}
-			if (index == -1) {
-				KP_line_images.push(img);
-			} else {
-				KP_line_images[index] = img;
-			}
-			$("#image-" + index)[0].src = canvas.toDataURL();
+			img.src = canvas.toDataURL();
+			KP_line_images[index] = img;
+			$("#image-" + index).prop('src', img.src);
 		};
-		let KP_set_line_index = function(index = -1) {
+		let KP_set_line_index = function(index) {
 			let canvas = $("#mode_5_drawing_canvas")[0];
 			let canvas2 = $("#mode_5_back_canvas")[0];
 			let ctx = canvas.getContext('2d');
 			let ctx2 = canvas2.getContext('2d');
-			if (index == -1) {
-				index = KP_line_images.length - 1;
-			}
-			if (index < KP_line_images.length && KP_line_images[index]) {
+
+			if (KP_line_images[index]) {
 				ctx.drawImage(KP_line_images[index], 0, 0);
 				ctx2.drawImage(KP_line_images[index], 0, 0);
 			} else {
 				ctx.drawImage(KP_base_image, 0, 0);
 				ctx2.drawImage(KP_base_image, 0, 0);
 			}
+
 			KP_line_index = index;
 			$(".stroke_index_span").text(KP_line_index + 1);
 
@@ -171,17 +168,13 @@ let KP_is_eraser = false;
 				$("#mode_5_middle").click();
 			}
 		};
-		let KP_save_line_info = function(index = -1) {
+		let KP_save_line_info = function(index) {
 			if (!KP_written_flags[index]) {
 				return;
 			}
 			let animation = $("#animation_selectbox").val();
 			let is_start = $("#stroke_start_checkbox").prop('checked');
-			if (index == -1) {
-				KP_line_infos.push([animation, is_start]);
-			} else {
-				KP_line_infos[index] = [animation, is_start];
-			}
+			KP_line_infos[index] = [animation, is_start];
 			if (KP_info_count <= index) {
 				KP_info_count = index + 1;
 			}
@@ -407,11 +400,11 @@ let KP_is_eraser = false;
 					alert("線が描画されてません。");
 					return;
 				}
+				KP_save_line_image(KP_line_index);
 				if (KP_line_index == 0) {
 					KP_set_mode(KP_MODE_EXPLANATION, true);
 					return;
 				}
-				KP_save_line_image(KP_line_index);
 				KP_set_line_index(KP_line_index - 1);
 			});
 			$("#mode_5_clear_button").click(function(){
