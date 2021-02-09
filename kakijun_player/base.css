@@ -68,9 +68,9 @@ footer {
 .green {
 	background-color: darkgreen;
 }
-.mode_5_bold > a {
+.mode_5_tool > a {
 	display: inline-block;
-	width: 25px;
+	padding: 8px;
 	height: 25px;
 	text-align: center;
 }
