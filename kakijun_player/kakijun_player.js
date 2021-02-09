@@ -26,6 +26,7 @@ let KP_font = '';
 let KP_is_dragging = 0;
 let KP_line_width = 8;
 let KP_line_color = "255,0,0";
+let KP_shadow_color = "192,192,192";
 let KP_last_pos = [0, 0]; // [x, y]
 let KP_line_index = 0, KP_line_count = 0;
 let KP_base_image = null; // new Image()
@@ -51,7 +52,7 @@ let KP_is_eraser = false;
 			ctx.lineWidth = 1;
 			ctx.strokeText(text, x, y);
 		}
-		let KP_flood_fill = function(canvas, x, y, fillColor = [0, 0, 0, 255]) {
+		let KP_flood_fill = function(canvas, x, y, fillColor = [0, 0, 0]) {
 			x = Math.floor(x);
 			y = Math.floor(y);
 			// https://stackoverflow.com/questions/53077955/how-do-i-do-flood-fill-on-the-html-canvas-in-javascript
@@ -71,10 +72,10 @@ let KP_is_eraser = false;
 				imageData.data[offset + 0] = fillColor[0];
 				imageData.data[offset + 1] = fillColor[1];
 				imageData.data[offset + 2] = fillColor[2];
-				imageData.data[offset + 3] = fillColor[3];
+				imageData.data[offset + 3] = 255;
 			};
 			let colorMatch = function(a, b) {
-				return a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3];
+				return a[0] == b[0] && a[1] == b[1] && a[2] == b[2];
 			};
 			let targetColor = getPixel(x, y);
 			let fillPixel = function(x, y) {
@@ -91,33 +92,36 @@ let KP_is_eraser = false;
 			};
 			if (!colorMatch(targetColor, fillColor)) {
 				try {
-					fillPixel(x, y);
-					ctx.putImageData(imageData, 0, 0);
+					let pixel = getPixel(x, y);
+					if (pixel[0] != 255 || pixel[1] != 255 || pixel[2] != 255) {
+						fillPixel(x, y);
+						ctx.putImageData(imageData, 0, 0);
+					}
 				} catch (e) {
 					;
 				}
 			}
 		};
-		let KP_draw_character = function(canvas, text, font, color = "lightgray", color2 = null){
+		let KP_draw_character = function(canvas, text, font){
 			let ctx = canvas.getContext("2d");
 			let width = canvas.width, height = canvas.height;
 			let x = Math.floor(width / 2), y = Math.floor(height / 2);
-			let cxy = Math.min(width, height);
 			ctx.fillStyle = 'white';
 			ctx.fillRect(0, 0, width, height);
+			let cxy = Math.min(width, height);
 			KP_fill_text(ctx, x, y, text, cxy + "px '" + font + "'", "rgb(211,211,211)");
-			if (color2) {
-				KP_stroke_text(ctx, x, y, text, cxy + "px '" + font + "'", "rgb(126,126,126)");
-			}
+
+			// binarize
 			let imageData = ctx.getImageData(0, 0, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
 			let data = imageData.data;
 			for (let i = 0; i < KP_CANVAS_WIDTH * KP_CANVAS_HEIGHT; ++i) {
 				let offset = 4 * i;
-				if (data[offset] != 211 && data[offset] != 126) {
+				if (data[offset] != 211) {
 					data[offset] = data[offset + 1] = data[offset + 2] = data[offset + 3] = 255;
 				}
 			}
 			ctx.putImageData(imageData, 0, 0);
+
 			KP_base_image = new Image();
 			KP_base_image.src = canvas.toDataURL();
 		};
@@ -160,6 +164,13 @@ let KP_is_eraser = false;
 				KP_line_index = index;
 			}
 			$(".stroke_index_span").text(KP_line_index + 1);
+
+			$("#mode_5_eraser").prop('checked', false);
+			KP_is_eraser = false;
+
+			if (KP_current_tool == "auto") {
+				$("#mode_5_middle").click();
+			}
 		};
 		let KP_set_mode = function(mode, go_back = false) {
 			if (!KP_debugging) {
@@ -318,11 +329,12 @@ let KP_is_eraser = false;
 					$("#mode_5_auto").addClass("focus_box");
 					KP_line_width = 8;
 					KP_current_tool = "auto";
+					KP_is_dragging = 0;
 					break;
 				}
 			};
-			$("#mode_5_eraser").click(function() {
-				KP_is_eraser = $("#mode_5_eraser").val();
+			$("#mode_5_eraser").change(function() {
+				KP_is_eraser = $("#mode_5_eraser").prop('checked');
 			});
 			let KP_set_line_color = function(name, color) {
 				switch (name) {
@@ -390,29 +402,78 @@ let KP_is_eraser = false;
 				let y = e.clientY - KP_mode_5_canvas.getBoundingClientRect().top;
 				return [x, y];
 			};
-			let maskPixels = function(ctx_A, ctx_B, ctxOut, width, height) {
+			let change_color = function(ctx_A, ctxOut, width, height, color1, color2) {
+				let img_A = ctx_A.getImageData(0, 0, width, height);
+				let img = ctxOut.getImageData(0, 0, width, height);
+				color1 = color1.split(",");
+				color2 = color2.split(",");
+				for (let i = 0; i < img_A.width * img_A.height; ++i) {
+					let k = 4 * i;
+					if (img_A.data[k] == color1[0] && img_A.data[k + 1] == color1[1] && img_A.data[k + 2] == color1[2]) {
+						img.data[k] = color2[0];
+						img.data[k + 1] = color2[1];
+						img.data[k + 2] = color2[2];
+					}
+				}
+				ctxOut.putImageData(img, 0, 0);
+			}
+			let mask_pixels = function(ctx_A, ctx_B, ctxOut, width, height, fill_color = KP_line_color) {
+				let img_A = ctx_A.getImageData(0, 0, width, height);
+				let img_B = ctx_B.getImageData(0, 0, width, height);
+				let img = ctxOut.getImageData(0, 0, width, height);
+				let shadow = KP_shadow_color.split(",");
+				let values = fill_color.split(",");
+				for (let i = 0; i < img_A.width * img_A.height; ++i) {
+					let k = 4 * i;
+					if (img_A.data[k] == 255 && img_A.data[k + 1] == 255 && img_A.data[k + 2] == 255) {
+						let value = 255;
+						img.data[k] = img.data[k + 1] = img.data[k + 2] = value;
+					} else if (img_B.data[k] == 0 && img_B.data[k + 1] == 0 && img_B.data[k + 2] == 0) {
+						img.data[k] = values[0];
+						img.data[k + 1] = values[1];
+						img.data[k + 2] = values[2];
+					} else {
+						img.data[k] = shadow[0];
+						img.data[k + 1] = shadow[1];
+						img.data[k + 2] = shadow[2];
+					}
+					img.data[k + 3] = 255;
+				}
+				ctxOut.putImageData(img, 0, 0);
+			};
+			let erase_pixels = function(ctx_A, ctx_B, ctxOut, width, height) {
+				let img_A = ctx_A.getImageData(0, 0, width, height);
+				let img_B = ctx_B.getImageData(0, 0, width, height);
+				let img = ctxOut.getImageData(0, 0, width, height);
+				let shadow = KP_shadow_color.split(",");
+				for (let i = 0; i < img_A.width * img_A.height; ++i) {
+					let k = 4 * i;
+					if (img_B.data[k] == 0 && img_B.data[k + 1] == 0 && img_B.data[k + 2] == 0) {
+						img.data[k] = 255;
+						img.data[k + 1] = 255;
+						img.data[k + 2] = 255;
+					}
+					img.data[k + 3] = 255;
+				}
+				ctxOut.putImageData(img, 0, 0);
+			};
+			let or_pixels = function(ctx_A, ctx_B, ctxOut, width, height) {
 				let img_A = ctx_A.getImageData(0, 0, width, height);
 				let img_B = ctx_B.getImageData(0, 0, width, height);
 				let img = ctxOut.getImageData(0, 0, width, height);
 				for (let i = 0; i < img_A.width * img_A.height; ++i) {
 					let k = 4 * i;
-					let value;
-					if (img_A.data[k] == 255) {
-						value = 255;
-						img.data[k] = img.data[k + 1] = img.data[k + 2] = value;
-					} else if (img_B.data[k] == 0) {
-						let values = KP_line_color.split(",");
-						img.data[k] = values[0].trim();
-						img.data[k + 1] = values[1].trim();
-						img.data[k + 2] = values[2].trim();
+					if ((img_A.data[k] == 0 && img_A.data[k + 1] == 0 && img_A.data[k + 2] == 0) ||
+					    (img_B.data[k] == 0 && img_B.data[k + 1] == 0 && img_B.data[k + 2] == 0))
+					{
+						img.data[k] = img.data[k + 1] = img.data[k + 2] = 0;
 					} else {
-						value = 192;
-						img.data[k] = img.data[k + 1] = img.data[k + 2] = value;
+						img.data[k] = img.data[k + 1] = img.data[k + 2] = 255;
 					}
 					img.data[k + 3] = 255;
 				}
 				ctxOut.putImageData(img, 0, 0);
-			}
+			};
 			let KP_mode_5_move = function(pos){
 				if (!KP_is_dragging)
 					return false;
@@ -420,15 +481,24 @@ let KP_is_eraser = false;
 				let ctx_A = canvas_A.getContext("2d");
 				let canvas_B = $("#mode_5_back_canvas")[0];
 				let ctx_B = canvas_B.getContext("2d");
-				ctx_B.lineCap = ctx_B.lineJoin = "round";
-				ctx_B.lineWidth = KP_line_width;
-				ctx_B.strokeStyle = "black";
-				ctx_B.beginPath();
-				ctx_B.moveTo(KP_last_pos[0], KP_last_pos[1]);
-				ctx_B.lineTo(pos[0], pos[1]);
-				ctx_B.stroke();
+				let canvas_C = $("#mode_5_back2_canvas")[0];
+				let ctx_C = canvas_C.getContext("2d");
+				ctx_C.fillStyle = 'white';
+				ctx_C.fillRect(0, 0, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
+				ctx_C.lineCap = ctx_B.lineJoin = "round";
+				ctx_C.lineWidth = KP_line_width;
+				ctx_C.strokeStyle = "black";
+				ctx_C.beginPath();
+				ctx_C.moveTo(KP_last_pos[0], KP_last_pos[1]);
+				ctx_C.lineTo(pos[0], pos[1]);
+				ctx_C.stroke();
 				let ctxOut = KP_mode_5_canvas.getContext("2d");
-				maskPixels(ctx_A, ctx_B, ctxOut, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
+				if (KP_is_eraser) {
+					erase_pixels(ctx_B, ctx_C, ctx_B, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
+				} else {
+					or_pixels(ctx_B, ctx_C, ctx_B, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
+				}
+				mask_pixels(ctx_A, ctx_B, ctxOut, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
 				KP_last_pos = pos;
 				KP_written_flags[KP_line_index] = true;
 				return false;
@@ -442,8 +512,14 @@ let KP_is_eraser = false;
 					let ctx_B = canvas_B.getContext("2d");
 					ctx_B.drawImage(canvas_A, 0, 0);
 					let ctxOut = KP_mode_5_canvas.getContext("2d");
-					KP_flood_fill(canvas_B, pos[0], pos[1], (KP_line_color.split(",").push(255)));
-					maskPixels(ctx_A, ctx_B, ctxOut, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
+					if (KP_is_eraser) {
+						KP_flood_fill(canvas_B, pos[0], pos[1], [255, 255, 255]);
+					} else {
+						KP_flood_fill(canvas_B, pos[0], pos[1], [0, 0, 0]);
+					}
+					change_color(ctx_B, ctx_B, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT, KP_line_color, "0,0,0");
+					change_color(ctx_B, ctxOut, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT, "0,0,0", KP_line_color);
+					mask_pixels(ctx_A, ctx_B, ctxOut, KP_CANVAS_WIDTH, KP_CANVAS_HEIGHT);
 					KP_written_flags[KP_line_index] = true;
 					return false;
 				}
@@ -451,6 +527,8 @@ let KP_is_eraser = false;
 				return false;
 			};
 			let KP_mode_5_up = function(pos){
+				if (!KP_is_dragging)
+					return false;
 				KP_mode_5_move(pos);
 				KP_is_dragging = 0;
 				return false;
