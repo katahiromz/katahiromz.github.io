@@ -29,8 +29,10 @@ let KP_line_color = "255,0,0";
 let KP_shadow_color = "192,192,192";
 let KP_last_pos = [0, 0]; // [x, y]
 let KP_line_index = 0, KP_line_count = 0;
+let KP_info_index = 0, KP_info_count = 0;
 let KP_base_image = null; // new Image()
 let KP_line_images = []; // new Image()[]
+let KP_line_infos = []; // [[animation, is_start], ...]
 let KP_current_tool = "brush";
 let KP_written_flags = [];
 let KP_is_eraser = false;
@@ -172,6 +174,37 @@ let KP_is_eraser = false;
 				$("#mode_5_middle").click();
 			}
 		};
+		let KP_save_line_info = function(index = -1) {
+			if (!KP_written_flags[KP_line_index]) {
+				return;
+			}
+			let animation = $("#animation_selectbox").val();
+			let is_start = $("#stroke_start_checkbox").prop('checked');
+			if (index == -1) {
+				KP_line_infos.push([animation, is_start]);
+			} else {
+				KP_line_infos[index] = [animation, is_start];
+			}
+			if (KP_info_count <= index) {
+				KP_info_count = index + 1;
+			}
+		};
+		let KP_set_info_index = function(index = -1) {
+			if (!KP_line_infos) {
+				KP_line_infos = [];
+				KP_line_infos.length = KP_line_count;
+			}
+			let animation = 0;
+			let is_start = false;
+			if (KP_line_infos[index]) {
+				animation = KP_line_infos[index][0];
+				is_start = KP_line_infos[index][1];
+			}
+			$("#animation_selectbox").val(animation);
+			$("#stroke_start_checkbox").prop('checked', is_start);
+			$(".info_index_spans").text(index + 1);
+			KP_line_index = index;
+		};
 		let KP_set_mode = function(mode, go_back = false) {
 			if (!KP_debugging) {
 				for (let i = KP_MODE_INITIAL; i <= KP_MODE_MAX; ++i) {
@@ -212,12 +245,15 @@ let KP_is_eraser = false;
 				$("#mode_5_next_button").focus();
 				break;
 			case KP_MODE_LINE_INFO:
-				if (go_back) {
-					KP_line_index = KP_line_count - 1;
-				} else {
-					KP_line_index = 0;
+				if (KP_info_count != 0) {
+					KP_save_line_info(KP_info_index);
 				}
-				$("#animation_list").focus();
+				if (go_back) {
+					KP_set_info_index(KP_info_index - 1);
+				} else {
+					KP_set_info_index(0);
+				}
+				$("#animation_selectbox").focus();
 				$("#stroke_index_span").text(KP_line_index);
 				break;
 			case KP_MODE_GENERATING:
@@ -580,7 +616,7 @@ let KP_is_eraser = false;
 
 			// KP_MODE_GENERATING
 			$("#mode_7_back_button").click(function(){
-				KP_set_mode(KP_MODE_FILL_LINE, true);
+				KP_set_mode(KP_MODE_LINE_INFO, true);
 			});
 
 			// KP_MODE_DONE
