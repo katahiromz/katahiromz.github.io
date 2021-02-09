@@ -254,7 +254,6 @@ let KP_is_eraser = false;
 					KP_set_info_index(0);
 				}
 				$("#animation_selectbox").focus();
-				$("#stroke_index_span").text(KP_line_index + 1);
 				break;
 			case KP_MODE_GENERATING:
 				break;
@@ -363,14 +362,18 @@ let KP_is_eraser = false;
 					$("#mode_5_middle").removeClass("focus_box");
 					$("#mode_5_large").removeClass("focus_box");
 					$("#mode_5_auto").addClass("focus_box");
-					KP_line_width = 8;
 					KP_current_tool = "auto";
 					KP_is_dragging = 0;
+					KP_is_eraser = false;
+					$("#mode_5_eraser").prop('checked', false);
 					break;
 				}
 			};
 			$("#mode_5_eraser").change(function() {
 				KP_is_eraser = $("#mode_5_eraser").prop('checked');
+				if (KP_is_eraser && KP_current_tool == "auto") {
+					KP_set_tool("middle", 8);
+				}
 			});
 			let KP_set_line_color = function(name, color) {
 				switch (name) {

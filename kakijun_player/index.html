@@ -198,26 +198,30 @@
 				<div>
 					<span class="stroke_index_span">1</span>線目がない場合は「完了」ボタンをクリックして下さい。
 				</div>
+				<div>
+					ツール：
+					<span class="mode_5_tool no_break">
+						<a href="" id="mode_5_small" data-tool="2" data-name="small">細</a>
+						<a href="" id="mode_5_middle" data-tool="8" data-name="middle">中</a>
+						<a href="" id="mode_5_large" data-tool="15" data-name="large">太</a>
+						<a href="" id="mode_5_auto" data-tool="-2" data-name="auto">AUTO</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</span>
+					<span class="no_break">
+						<input type="checkbox" id	="mode_5_eraser" />
+						<label for="mode_5_eraser">消しゴム</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</span>
+					<span class="mode_5_color no_break">
+						色：
+						<a href="" id="mode_5_black" class="black" data-color="0, 0, 0" data-name="black"></a>
+						<a href="" id="mode_5_red" class="red" data-color="255, 0, 0" data-name="red"></a>
+						<a href="" id="mode_5_blue" class="blue" data-color="0, 0, 255" data-name="blue"></a>
+						<a href="" id="mode_5_green" class="green" data-color="0, 100, 0" data-name="green"></a>
+					</span>
+				</div>
 				<div class="frame">
 					<canvas id="mode_5_drawing_canvas" class="canvas" width="200" height="200"></canvas>
-				</div>
-				<div class="mode_5_tool">
-					ツール：
-					<a href="" id="mode_5_small" data-tool="2" data-name="small">細</a>
-					<a href="" id="mode_5_middle" data-tool="8" data-name="middle">中</a>
-					<a href="" id="mode_5_large" data-tool="15" data-name="large">太</a>
-					<a href="" id="mode_5_auto" data-tool="-2" data-name="auto">AUTO</a>
-				</div>
-				<div>
-					<input type="checkbox" id="mode_5_eraser" />
-					<label for="mode_5_eraser">消す</label>
-				</div>
-				<div class="mode_5_color">
-					色：
-					<a href="" id="mode_5_black" class="black" data-color="0, 0, 0" data-name="black"></a>
-					<a href="" id="mode_5_red" class="red" data-color="255, 0, 0" data-name="red"></a>
-					<a href="" id="mode_5_blue" class="blue" data-color="0, 0, 255" data-name="blue"></a>
-					<a href="" id="mode_5_green" class="green" data-color="0, 100, 0" data-name="green"></a>
 				</div>
 				<div>
 					塗り直す場合は「クリア」ボタンをクリックして下さい。
@@ -276,10 +280,12 @@
 					この線が画の始まりであれば、次のチェックボックスにチェックを入れて下さい。
 				</div>
 				<div>
-					<input type="checkbox" id="stroke_start_checkbox" name="stroke_start_checkbox" />
-					<label for="stroke_start_checkbox">
-						画の始まり
-					</label>
+					<span class="no_break">
+						<input type="checkbox" id="stroke_start_checkbox" name="stroke_start_checkbox" />
+						<label for="stroke_start_checkbox">
+							画の始まり
+						</label>
+					</span>
 				</div>
 				<div>
 					よろしければ「次へ」ボタンをクリックして下さい。
