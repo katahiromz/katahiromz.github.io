@@ -1124,32 +1124,60 @@ $(function(){
 
 	// 更新履歴ボタン。
 	$("#history-button").click(function(){
-		$("#history-dialog").dialog({
-			modal: true,
-			title: "更新履歴",
-			width: (isSmartPhone() ? "250px" : "500px"),
-			buttons: {
-				"OK": function() {
-					// ダイアログを閉じる。
-					$(this).dialog("close");
-				},
-			}
-		});
+		if (isSmartPhone()) {
+			$("#history-dialog").dialog({
+				modal: true,
+				title: "更新履歴",
+				width: "250px",
+				buttons: {
+					"OK": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+				}
+			});
+		} else {
+			$("#history-dialog").dialog({
+				modal: true,
+				title: "更新履歴",
+				width: "500px",
+				buttons: {
+					"OK": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+				}
+			});
+		}
 	});
 
 	// 設定ボタン。
 	$("#about-button").click(function(){
-		$("#about-dialog").dialog({
-			modal: true,
-			title: "バージョン情報",
-			width: (isSmartPhone() ? "250px" : "500px"),
-			buttons: {
-				"OK": function() {
-					// ダイアログを閉じる。
-					$(this).dialog("close");
-				},
-			}
-		});
+		if (isSmartPhone()) {
+			$("#about-dialog").dialog({
+				modal: true,
+				title: "バージョン情報",
+				width: "250px",
+				buttons: {
+					"OK": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+				}
+			});
+		} else {
+			$("#about-dialog").dialog({
+				modal: true,
+				title: "バージョン情報",
+				width: "500px",
+				buttons: {
+					"OK": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+				}
+			});
+		}
 	});
 
 	// モードを初期化。
