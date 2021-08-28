@@ -744,6 +744,7 @@ $(function(){
 		}
 	});
 
+	// タッチデバイスでタッチした。
 	$('#image-screen').on('touchstart', function(e){
 		console.log("touchstart");
 		touchMoved = false;
@@ -845,6 +846,7 @@ $(function(){
 		}
 	};
 
+	// タッチデバイスでタッチ移動した。
 	$('#image-screen').on('touchmove', function(e){
 		console.log("touchmove");
 		e.preventDefault();
@@ -858,9 +860,11 @@ $(function(){
 			var distance = Math.sqrt(Math.pow(x1 - x0) + Math.pow(y1 - y0));
 			if (pinchDistance != 0) {
 				var scale = distance / pinchDistance;
+				pinchDistance = distance;
 				doSetZoom(theZoom * scale);
 				doRefresh();
 			}
+			return;
 		}
 		if (theHandleOn == -1) {
 			if (!theCanDraw || !thePenOn || !theLineOn)
