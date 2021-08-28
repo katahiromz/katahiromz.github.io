@@ -554,7 +554,6 @@ $(function(){
 		} else {
 			theIsRadian = false;
 		}
-		$(".mode3-is-radian").prop('checked'), theIsRadian);
 	});
 	// モード４：基準線分。
 	$(".mode4-back").on('click', function(){
