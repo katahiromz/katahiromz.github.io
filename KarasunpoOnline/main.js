@@ -205,6 +205,7 @@
 		},
 		// PDFページを取得した。
 		gotPage: function(page, canvas, ctx){
+			console.log(this.theZoom);
 			if (!this.cxImage || !this.cyImage) {
 				var viewport = page.getViewport({
 					scale: 1.0
