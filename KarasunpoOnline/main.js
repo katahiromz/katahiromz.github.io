@@ -473,16 +473,20 @@ $(function(){
 			break;
 		case 3: // モード３：測定タイプ。
 			theLineOn = theCanDraw = false;
+			theCanMove = true;
 			break;
 		case 4: // モード４：基準線分。
 			theLineOn = theCanDraw = true;
+			theCanMove = true;
 			break;
 		case 5: // モード５：基準線分の長さ。
 			theLineOn = true;
 			theCanDraw = false;
+			theCanMove = true;
 			break;
 		case 6: // モード６：測定。
 			theLineOn = theCanDraw = true;
+			theCanMove = true;
 			break;
 		}
 		theMode = mode;
