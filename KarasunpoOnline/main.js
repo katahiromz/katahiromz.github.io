@@ -151,24 +151,29 @@ $(function(){
 			return;
 		}
 		thePDF.getPage(thePDFPageNumber).then(function(page){
-			if (theImageWidth == 0 && theImageHeight) {
+			if (theImageWidth <= 0 && theImageHeight <= 0) {
 				var viewport = page.getViewport({
 					scale: 1.0,
 				});
 				theImageWidth = viewport.width;
 				theImageHeight = viewport.height;
 			}
+			// ズームしたサイズ。
 			var zoomedWidth = theImageWidth * theZoom / 100.0;
 			var zoomedHeight = theImageHeight * theZoom / 100.0;
+			// 描画位置（物理座標）。
 			var px = (theCanvasWidth - zoomedWidth) / 2;
 			var py = (theCanvasHeight - zoomedHeight) / 2;
+			// PDFのレンダリングで余白が描画されないことがあるのでここで白く塗りつぶす。
 			ctx.fillStyle = "rgb(255, 255, 255)";
 			ctx.fillRect(px, py, zoomedWidth, zoomedHeight);
+			// ビューポートを取得。
 			thePDFViewport = page.getViewport({
 				scale: theZoom / 100.0,
 				offsetX: px + deltax,
 				offsetY: py + deltay
 			});
+			// PDFレンダリング開始。
 			var renderContext = {
 				canvasContext: ctx,
 				viewport: thePDFViewport,
@@ -177,6 +182,7 @@ $(function(){
 			thePDFIsDrawing = true;
 			var renderTask = page.render(renderContext);
 			renderTask.promise.then(function(){
+				// PDFレンダリング完了。
 				thePDFIsDrawing = false;
 				finish(ctx);
 			});
