@@ -2,6 +2,8 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
+'use strict';
+
 $(function(){
 	var KARASUNPO_VERSION = "0.7"; // カラスンポOnlineのバージョン番号。
 
@@ -34,8 +36,8 @@ $(function(){
 	var theFitMode = 0; // 画面モード（0：自動、1：横方向に合わせる、2：縦方向に合わせる）。
 	var theZoom = 100.0; // ズーム率（百分率）。
 	var theCanDraw = false; // 描画できるか？
-	var theCanMove = false; // 画像を動かせるか？
-	var theCanZoom = false; // ズームできるか？
+	var theCanMove = true; // 画像を動かせるか？
+	var theIsDrawing = false; // 描画中か？
 	var thePenOn = false; // ペンはキャンバス上にあるか？
 	var theLineOn = false; // 線分をキャンバスに表示するか？
 	var theMoveOn = false; // 画像を動かしているか？
@@ -55,6 +57,7 @@ $(function(){
 	var thePDFViewport = null; // PDFビューポート。
 	var theStdNominalLength = 0; // 基準線分の長さ（名目）。
 	var theLengthUnit = ""; // 長さの単位。
+	var theFileName = ""; // ファイル名。
 
 	// スマートフォンか？
 	var isSmartPhone = function(){
@@ -383,7 +386,7 @@ $(function(){
 	};
 
 	// 描画の終わり。
-	var doRefreshFinish = function(ctx){
+	var doRedrawFinish = function(ctx){
 		if (theLineOn) { // 線分を描画するか？
 			if (px0 != px1 || py0 != py1) {
 				doDrawLine(ctx, px0, py0, px1, py1, true);
@@ -407,32 +410,33 @@ $(function(){
 			$(".mode2-filename").removeClass("error");
 			$(".mode2-next").prop('disabled', false);
 		}
+		theIsDrawing = false;
 	};
 
 	// 画面を再描画する。
-	var doRefresh = function(){
-		var canvas = $("#offscreen");
-		var ctx = canvas[0].getContext('2d');
-		if (!thePDFIsDrawing) {
-			// 背景を描画する。
-			if (theBackgroundImage) {
-				// 以前保存したものを使用する。
-				ctx.putImageData(theBackgroundImage, 0, 0);
-			} else {
-				var cxCanvas = parseInt(canvas.attr('width'));
-				var cyCanvas = parseInt(canvas.attr('height'));
-				drawBackground(ctx, cxCanvas, cyCanvas);
-			}
-		} else {
+	var doRedraw = function(){
+		if (thePDFIsDrawing || theIsDrawing) {
 			setTimeout(function(){
-				doRefresh();
+				doRedraw();
 			}, 2000);
 			return;
 		}
-		if (theIsPDF) {
-			putPDF(canvas, ctx, doRefreshFinish);
+		theIsDrawing = true;
+		var canvas = $("#offscreen");
+		var ctx = canvas[0].getContext('2d');
+		// 背景を描画する。
+		if (theBackgroundImage) {
+			// 以前保存したものを使用する。
+			ctx.putImageData(theBackgroundImage, 0, 0);
 		} else {
-			putImage(canvas, ctx, doRefreshFinish);
+			var cxCanvas = parseInt(canvas.attr('width'));
+			var cyCanvas = parseInt(canvas.attr('height'));
+			drawBackground(ctx, cxCanvas, cyCanvas);
+		}
+		if (theIsPDF) {
+			putPDF(canvas, ctx, doRedrawFinish);
+		} else {
+			putImage(canvas, ctx, doRedrawFinish);
 		}
 	};
 
@@ -452,7 +456,7 @@ $(function(){
 		$("#offscreen").attr('height', theCanvasHeight + "px");
 		theBackgroundImage = null;
 		doFitImage();
-		doRefresh();
+		doRedraw();
 	};
 	$(window).on('resize', onWindowResize);
 
@@ -463,37 +467,41 @@ $(function(){
 
 		switch (mode) {
 		case 1: // モード１：初期画面。
-			theLineOn = theCanDraw = false;
+			theLineOn = false;
+			theCanDraw = false;
+			theCanMove = false;
 			// 画面サイズに関する初期化。
 			onWindowResize();
-			theCanMove = false;
-			theCanZoom = false;
 			break;
 		case 2: // モード２：ファイルを開く。
-			theLineOn = theCanDraw = false;
-			theCanMove = theCanZoom = true;
+			theLineOn = false;
+			theCanDraw = false;
+			theCanMove = true;
 			break;
 		case 3: // モード３：測定タイプ。
-			theLineOn = theCanDraw = false;
-			theCanMove = theCanZoom = true;
+			theLineOn = true;
+			theCanDraw = false;
+			theCanMove = true;
 			break;
 		case 4: // モード４：基準線分。
-			theLineOn = theCanDraw = true;
-			theCanMove = theCanZoom = true;
+			theLineOn = true;
+			theCanDraw = true;
+			theCanMove = true;
 			break;
 		case 5: // モード５：基準線分の長さ。
 			theLineOn = true;
 			theCanDraw = false;
-			theCanMove = theCanZoom = true;
+			theCanMove = true;
 			break;
 		case 6: // モード６：測定。
-			theLineOn = theCanDraw = true;
-			theCanMove = theCanZoom = true;
+			theLineOn = true;
+			theCanDraw = true;
+			theCanMove = true;
 			break;
 		}
 		theMode = mode;
 
-		doRefresh();
+		doRedraw();
 	};
 
 	// ファイルを処理する。
@@ -514,7 +522,7 @@ $(function(){
 					thePDF = pdf;
 					thePDFPageNumber = 1;
 					doFitImage();
-					doRefresh();
+					doRedraw();
 				});
 			} else {
 				var img1 = new Image();
@@ -528,7 +536,7 @@ $(function(){
 					theImageWidth = parseInt(theImage.width);
 					theImageHeight = parseInt(theImage.height);
 					doFitImage();
-					doRefresh();
+					doRedraw();
 				};
 			}
 		};
@@ -536,8 +544,7 @@ $(function(){
 			reader.readAsArrayBuffer(file);
 		else
 			reader.readAsDataURL(file);
-		$(".mode").hide();
-		$("#mode2").show();
+		setMode(2);
 	};
 
 	// モード１：初期画面。
@@ -628,7 +635,7 @@ $(function(){
 	$(".mode4-draw-circle").on('click', function(){
 		theDrawCircle = $(".mode4-draw-circle").prop('checked');
 		$(".mode6-draw-circle").prop('checked', theDrawCircle);
-		doRefresh();
+		doRedraw();
 	});
 
 	// モード５：基準線分の長さ。
@@ -683,7 +690,7 @@ $(function(){
 	$(".mode6-draw-circle").on('click', function(){
 		theDrawCircle = $(".mode6-draw-circle").prop('checked');
 		$(".mode4-draw-circle").prop('checked', theDrawCircle);
-		doRefresh();
+		doRedraw();
 	});
 	function doCopyText(text) {
 		try {
@@ -775,23 +782,24 @@ $(function(){
 			if (theMode == 6) {
 				$(".mode6-measure-results").val("");
 			}
-			doRefresh();
+			doRedraw();
 			break;
 		case VK_MBUTTON:
 			console.log("mousedown.VK_MBUTTON");
 			e.preventDefault();
-			if (!theCanMove)
+			if (!theCanMove) {
 				return;
+			}
 			mx0 = e.offsetX;
 			my0 = e.offsetY;
 			theMoveOn = true;
-			doRefresh();
+			doRedraw();
 			break;
 		}
 	});
 
 	// タッチデバイスでタッチした。
-	$('#image-screen').on('touchstart', function(e){
+	document.getElementById("image-screen").addEventListener('touchstart', function(e){
 		console.log("touchstart");
 		touchMoved = false;
 		pinchDistance = 0;
@@ -810,8 +818,8 @@ $(function(){
 		if (theMode == 6) {
 			$(".mode6-measure-results").val("");
 		}
-		doRefresh();
-	});
+		doRedraw();
+	}, {passive: false});
 
 	// 測定。
 	var doMeasure = function(){
@@ -893,7 +901,7 @@ $(function(){
 	};
 
 	// タッチデバイスでタッチ移動した。
-	$('#image-screen').on('touchmove', function(e){
+	document.getElementById("image-screen").addEventListener('touchmove', function(e){
 		console.log("touchmove");
 		e.preventDefault();
 		var touch = event.changedTouches;
@@ -908,7 +916,7 @@ $(function(){
 				var scale = distance / pinchDistance;
 				pinchDistance = distance;
 				doSetZoom(theZoom * scale);
-				doRefresh();
+				doRedraw();
 			}
 			return;
 		}
@@ -935,50 +943,50 @@ $(function(){
 		if (theMode == 6) {
 			doMeasure();
 		}
-		doRefresh();
-	});
+		doRedraw();
+	}, {passive: false});
 
 	$('#image-screen').on('mousemove', function(e){
-		switch (e.button) {
-		case VK_LBUTTON:
-			console.log("mousemove.VK_LBUTTON");
-			e.preventDefault();
-			if (theHandleOn == -1) {
-				if (!theCanDraw || !thePenOn || !theLineOn)
+		console.log("mousemove");
+		e.preventDefault();
+		if (theHandleOn == -1) {
+			if (thePenOn) {
+				if (!theCanDraw || !theLineOn)
 					return;
-			}
-			var x = e.offsetX, y = e.offsetY;
-			var LP = DPtoLP(x, y);
-			if (theHandleOn != -1) {
-				if (theHandleOn == 0) {
-					px0 = LP[0];
-					py0 = LP[1];
-				} else {
-					px1 = LP[0];
-					py1 = LP[1];
-				}
+			} else if (theCanMove) {
+				if (!theMoveOn)
+					return;
 			} else {
-				var LP = DPtoLP(x, y);
+				return;
+			}
+		}
+		var x = e.offsetX, y = e.offsetY;
+		var LP = DPtoLP(x, y);
+		if (theHandleOn != -1) {
+			if (theHandleOn == 0) {
+				px0 = LP[0];
+				py0 = LP[1];
+			} else {
 				px1 = LP[0];
 				py1 = LP[1];
 			}
 			if (theMode == 6) {
 				doMeasure();
 			}
-			doRefresh();
-			break;
-		case VK_MBUTTON:
-			console.log("mousemove.VK_MBUTTON");
-			e.preventDefault();
-			if (!theCanMove || !theMoveOn)
-				return;
-			deltax += e.offsetX - mx0;
-			deltay += e.offsetY - my0;
-			mx0 = e.offsetX;
-			my0 = e.offsetY;
-			doRefresh();
-			break;
+		} else if (thePenOn) {
+			var LP = DPtoLP(x, y);
+			px1 = LP[0];
+			py1 = LP[1];
+			if (theMode == 6) {
+				doMeasure();
+			}
+		} else if (theMoveOn) {
+			deltax += x - mx0;
+			deltay += y - my0;
+			mx0 = x;
+			my0 = y;
 		}
+		doRedraw();
 	});
 
 	$('#image-screen').on('touchend', function(e){
@@ -1017,7 +1025,7 @@ $(function(){
 		if (theMode == 6) {
 			doMeasure();
 		}
-		doRefresh();
+		doRedraw();
 	});
 
 	$('#image-screen').on('mouseup', function(e){
@@ -1055,7 +1063,7 @@ $(function(){
 			if (theMode == 6) {
 				doMeasure();
 			}
-			doRefresh();
+			doRedraw();
 			break;
 		case VK_MBUTTON:
 			console.log("mouseup.VK_MBUTTON");
@@ -1068,7 +1076,7 @@ $(function(){
 			my0 = e.offsetY;
 			theMoveOn = false;
 			theHandleOn = -1;
-			doRefresh();
+			doRedraw();
 			break;
 		}
 	});
@@ -1084,20 +1092,18 @@ $(function(){
 			delta = oe.deltaY * -1;
 		}
 		if (oe.ctrlKey) { // Ctrlキーが押されている？
-			if (theCanZoom) {
-				// ズームする。
-				var CC = getCanvasCenter();
-				var LP = DPtoLP(CC[0], CC[1]);
-				var DP0 = LPtoDP(LP[0], LP[1]);
-				if (delta > 0) {
-					doSetZoom(theZoom * 1.25);
-				} else {
-					doSetZoom(theZoom / 1.25);
-				}
-				var DP1 = LPtoDP(LP[0], LP[1]);
-				deltax -= DP1[0] - DP0[0];
-				deltay -= DP1[1] - DP0[1];
+			// ズームする。
+			var CC = getCanvasCenter();
+			var LP = DPtoLP(CC[0], CC[1]);
+			var DP0 = LPtoDP(LP[0], LP[1]);
+			if (delta > 0) {
+				doSetZoom(theZoom * 1.25);
+			} else {
+				doSetZoom(theZoom / 1.25);
 			}
+			var DP1 = LPtoDP(LP[0], LP[1]);
+			deltax -= DP1[0] - DP0[0];
+			deltay -= DP1[1] - DP0[1];
 		} else {
 			// ずらす。
 			if (oe.shiftKey) { // Shiftキーが押されている？
@@ -1117,7 +1123,7 @@ $(function(){
 			}
 		}
 		// 再描画。
-		doRefresh();
+		doRedraw();
 	};
 	document.getElementById("fullscreen").addEventListener('wheel', onWheel, {passive: false});
 	document.getElementById("fullscreen").addEventListener('mousewheel', onWheel, {passive: false});
@@ -1175,7 +1181,7 @@ $(function(){
 						theBackgroundImage = null;
 						break;
 					}
-					doRefresh();
+					doRedraw();
 					// ダイアログを閉じる。
 					$(this).dialog("close");
 				},
