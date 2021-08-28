@@ -974,6 +974,73 @@
 				break;
 			}
 		},
+		// 設定。
+		Config: function(){
+			var Karasunpo = this;
+			// 「設定」ダイアログを初期化。
+			$("#config-dialog-zoom").val("");
+			$("#config-dialog-line-color").val("");
+			$("#config-dialog-background").val("");
+			// 「設定」ダイアログを開く。
+			$("#config-dialog").dialog({
+				modal: true,
+				title: "設定ダイアログ",
+				width: "300px",
+				buttons: {
+					"OK": function() {
+						var zoom = $("#config-dialog-zoom").val();
+						switch (zoom) {
+						case "-1":
+							break;
+						case "0":
+						case "1":
+						case "2":
+							Karasunpo.theFitMode = parseInt(zoom);
+							Karasunpo.doFitImage();
+							break;
+						default:
+							zoom = parseInt(zoom);
+							Karasunpo.doSetZoom(zoom);
+							break;
+						}
+						var color = $("#config-dialog-line-color").val();
+						switch (color) {
+						case "red":
+							Karasunpo.theLineStyle = 'rgb(255, 0, 0)';
+							break;
+						case "blue":
+							Karasunpo.theLineStyle = 'rgb(0, 0, 255)';
+							break;
+						case "green":
+							Karasunpo.theLineStyle = 'rgb(0, 255, 0)';
+							break;
+						}
+						var back = $("#config-dialog-background").val();
+						switch (back) {
+						case "-2":
+						case "0":
+						case "1":
+						case "2":
+						case "3":
+						case "4":
+						case "5":
+							Karasunpo.backgroundMode = parseInt(back);
+							Karasunpo.backgroundImage = null;
+							break;
+						}
+						// 再描画。
+						var binded = Karasunpo.doRedraw.bind(Karasunpo);
+						binded();
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+					"キャンセル": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					}
+				}
+			});
+		},
 	};
 
 	// 初期化。
@@ -1204,67 +1271,8 @@
 
 		// 設定ボタン。
 		$("#config-button").click(function(){
-			// 「設定」ダイアログを初期化。
-			$("#config-dialog-zoom").val("");
-			$("#config-dialog-line-color").val("");
-			$("#config-dialog-background").val("");
-			// 「設定」ダイアログを開く。
-			$("#config-dialog").dialog({
-				modal: true,
-				title: "設定ダイアログ",
-				width: "300px",
-				buttons: {
-					"OK": function() {
-						var zoom = $("#config-dialog-zoom").val();
-						switch (zoom) {
-						case "-1":
-							break;
-						case "0":
-						case "1":
-						case "2":
-							Karasunpo.theFitMode = parseInt(zoom);
-							Karasunpo.doFitImage();
-							break;
-						default:
-							zoom = parseInt(zoom);
-							Karasunpo.doSetZoom(zoom);
-							break;
-						}
-						var color = $("#config-dialog-line-color").val();
-						switch (color) {
-						case "red":
-							Karasunpo.theLineStyle = 'rgb(255, 0, 0)';
-							break;
-						case "blue":
-							Karasunpo.theLineStyle = 'rgb(0, 0, 255)';
-							break;
-						case "green":
-							Karasunpo.theLineStyle = 'rgb(0, 255, 0)';
-							break;
-						}
-						var back = $("#config-dialog-background").val();
-						switch (back) {
-						case "-2":
-						case "0":
-						case "1":
-						case "2":
-						case "3":
-						case "4":
-						case "5":
-							Karasunpo.backgroundMode = parseInt(back);
-							Karasunpo.backgroundImage = null;
-							break;
-						}
-						Karasunpo.doRedraw();
-						// ダイアログを閉じる。
-						$(this).dialog("close");
-					},
-					"キャンセル": function() {
-						// ダイアログを閉じる。
-						$(this).dialog("close");
-					}
-				}
-			});
+			var binded = Karasunpo.Config.bind(Karasunpo);
+			binded();
 		});
 
 		// 更新履歴ボタン。
