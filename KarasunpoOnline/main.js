@@ -162,6 +162,8 @@ $(function(){
 			var zoomedHeight = theImageHeight * theZoom / 100.0;
 			var px = (theCanvasWidth - zoomedWidth) / 2;
 			var py = (theCanvasHeight - zoomedHeight) / 2;
+			ctx.fillStyle = "rgb(255, 255, 255)";
+			ctx.fillRect(px, py, zoomedWidth, zoomedHeight);
 			thePDFViewport = page.getViewport({
 				scale: theZoom / 100.0,
 				offsetX: px + deltax,
