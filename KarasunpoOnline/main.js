@@ -31,15 +31,16 @@ $(function(){
 	var theCanvasWidth = 0, theCanvasHeight = 0; // キャンバスのピクセルサイズ。
 	var theMeasureType = "length"; // 測定タイプ。
 	var theMode = 1; // モード。
-	var theFitMode = 0; // 画面モード。
+	var theFitMode = 0; // 画面モード（0：自動、1：横方向に合わせる、2：縦方向に合わせる）。
 	var theZoom = 100.0; // ズーム率（百分率）。
 	var theCanDraw = false; // 描画できるか？
-	var theCanMove = true; // 画像を動かせるか？
+	var theCanMove = false; // 画像を動かせるか？
 	var thePenOn = false; // ペンはキャンバス上にあるか？
 	var theLineOn = false; // 線分をキャンバスに表示するか？
 	var theMoveOn = false; // 画像を動かしているか？
 	var theHandleOn = -1; // ハンドルを動かしているか？
-	var theBackground = null; // 背景イメージ。
+	var theBackgroundImage = null; // 背景イメージ。
+	var theBackgroundMode = -2; // 背景モード（-2：市松模様、0：黒、1：白、2：緑、3：青、4：マゼンタ、5：赤）。
 	var theIsRadian = false; // ラジアンか？
 	var deltax = 0, deltay = 0; // 画面中央からのずれ（ピクセル単位）。
 	var px0 = 0, py0 = 0, px1 = 0, py1 = 0; // 線分の位置。
@@ -125,22 +126,49 @@ $(function(){
 
 	// 背景を描画する。
 	var drawBackground = function(ctx, cx, cy) {
-		// 市松模様。
-		var i = 0, j = 0, size = 16;
-		for (var y = 0; y < cy + size; y += size) {
-			i = (j % 2 == 0) ? 1 : 0;
-			for (var x = 0; x < cx + size; x += size) {
-				if (i % 2 == 0)
-					ctx.fillStyle = "rgb(90, 90, 90)";
-				else
-					ctx.fillStyle = "rgb(191, 191, 191)";
-				ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(cx), Math.floor(cy));
-				++i;
+		switch (theBackgroundMode) {
+		case -2: // 市松模様。
+			var i = 0, j = 0, size = 16;
+			for (var y = 0; y < cy + size; y += size) {
+				i = (j % 2 == 0) ? 1 : 0;
+				for (var x = 0; x < cx + size; x += size) {
+					if (i % 2 == 0)
+						ctx.fillStyle = "rgb(90, 90, 90)";
+					else
+						ctx.fillStyle = "rgb(191, 191, 191)";
+					ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(cx), Math.floor(cy));
+					++i;
+				}
+				++j;
 			}
-			++j;
+			break;
+		case 0: // 黒。
+			ctx.fillStyle = "rgb(0, 0, 0)";
+			ctx.fillRect(0, 0, cx, cy);
+			break;
+		case 1: // 白。
+			ctx.fillStyle = "rgb(255, 255, 255)";
+			ctx.fillRect(0, 0, cx, cy);
+			break;
+		case 2: // 緑。
+			ctx.fillStyle = "rgb(0, 192, 0)";
+			ctx.fillRect(0, 0, cx, cy);
+			break;
+		case 3: // 青。
+			ctx.fillStyle = "rgb(0, 0, 255)";
+			ctx.fillRect(0, 0, cx, cy);
+			break;
+		case 4: // マゼンタ。
+			ctx.fillStyle = "rgb(255, 0, 255)";
+			ctx.fillRect(0, 0, cx, cy);
+			break;
+		case 5: // 赤。
+			ctx.fillStyle = "rgb(255, 0, 0)";
+			ctx.fillRect(0, 0, cx, cy);
+			break;
 		}
 		// 高速化のためにイメージデータを保存する。
-		theBackground = ctx.getImageData(0, 0, theCanvasWidth, theCanvasHeight);
+		theBackgroundImage = ctx.getImageData(0, 0, theCanvasWidth, theCanvasHeight);
 	};
 
 	// PDFを表示する。
@@ -257,7 +285,7 @@ $(function(){
 				doSetZoom(theCanvasWidth / width * 100);
 			}
 			break;
-		case 1: // 横方向に合わせる
+		case 1: // 横方向に合わせる。
 			doSetZoom(theCanvasWidth / width * 100);
 			break;
 		case 2: // 縦方向に合わせる。
@@ -377,10 +405,6 @@ $(function(){
 			$(".mode2-filename").text(htmlspecialchars(theFileName));
 			$(".mode2-filename").removeClass("error");
 			$(".mode2-next").prop('disabled', false);
-		} else {
-			$(".mode2-filename").text("読み込み失敗。残念。");
-			$(".mode2-filename").removeClass("error");
-			$(".mode2-next").prop('disabled', true);
 		}
 	};
 
@@ -390,9 +414,9 @@ $(function(){
 		var ctx = canvas[0].getContext('2d');
 		if (!thePDFIsDrawing) {
 			// 背景を描画する。
-			if (theBackground) {
+			if (theBackgroundImage) {
 				// 以前保存したものを使用する。
-				ctx.putImageData(theBackground, 0, 0);
+				ctx.putImageData(theBackgroundImage, 0, 0);
 			} else {
 				var cxCanvas = parseInt(canvas.attr('width'));
 				var cyCanvas = parseInt(canvas.attr('height'));
@@ -425,7 +449,7 @@ $(function(){
 		canvas.attr('height', theCanvasHeight + "px");
 		$("#offscreen").attr('width', theCanvasWidth + "px");
 		$("#offscreen").attr('height', theCanvasHeight + "px");
-		theBackground = null;
+		theBackgroundImage = null;
 		doFitImage();
 		doRefresh();
 	};
@@ -441,9 +465,11 @@ $(function(){
 			theLineOn = theCanDraw = false;
 			// 画面サイズに関する初期化。
 			onWindowResize();
+			theCanMove = false;
 			break;
 		case 2: // モード２：ファイルを開く。
 			theLineOn = theCanDraw = false;
+			theCanMove = true;
 			break;
 		case 3: // モード３：測定タイプ。
 			theLineOn = theCanDraw = false;
@@ -1085,6 +1111,11 @@ $(function(){
 
 	// 設定ボタン。
 	$("#config-button").click(function(){
+		// 「設定」ダイアログを初期化。
+		$("#config-dialog-zoom").val("");
+		$("#config-dialog-line-color").val("");
+		$("#config-dialog-background").val("");
+		// 「設定」ダイアログを開く。
 		$("#config-dialog").dialog({
 			modal: true,
 			title: "設定ダイアログ",
@@ -1096,15 +1127,9 @@ $(function(){
 					case "-1":
 						break;
 					case "0":
-						theFitMode = 0;
-						doFitImage();
-						break;
 					case "1":
-						theFitMode = 1;
-						doFitImage();
-						break;
 					case "2":
-						theFitMode = 2;
+						theFitMode = parseInt(zoom);
 						doFitImage();
 						break;
 					default:
@@ -1122,6 +1147,19 @@ $(function(){
 						break;
 					case "green":
 						theLineStyle = 'rgb(0, 255, 0)';
+						break;
+					}
+					var back = $("#config-dialog-background").val();
+					switch (back) {
+					case "-2":
+					case "0":
+					case "1":
+					case "2":
+					case "3":
+					case "4":
+					case "5":
+						theBackgroundMode = parseInt(back);
+						theBackgroundImage = null;
 						break;
 					}
 					doRefresh();
@@ -1165,7 +1203,7 @@ $(function(){
 		}
 	});
 
-	// 設定ボタン。
+	// バージョン情報ボタン。
 	$("#about-button").click(function(){
 		$("#about-dialog-version").text(KARASUNPO_VERSION);
 		if (isSmartPhone()) {
