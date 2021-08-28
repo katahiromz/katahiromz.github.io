@@ -35,6 +35,7 @@ $(function(){
 	var theZoom = 100.0; // ズーム率（百分率）。
 	var theCanDraw = false; // 描画できるか？
 	var theCanMove = false; // 画像を動かせるか？
+	var theCanZoom = false; // ズームできるか？
 	var thePenOn = false; // ペンはキャンバス上にあるか？
 	var theLineOn = false; // 線分をキャンバスに表示するか？
 	var theMoveOn = false; // 画像を動かしているか？
@@ -466,27 +467,28 @@ $(function(){
 			// 画面サイズに関する初期化。
 			onWindowResize();
 			theCanMove = false;
+			theCanZoom = false;
 			break;
 		case 2: // モード２：ファイルを開く。
 			theLineOn = theCanDraw = false;
-			theCanMove = true;
+			theCanMove = theCanZoom = true;
 			break;
 		case 3: // モード３：測定タイプ。
 			theLineOn = theCanDraw = false;
-			theCanMove = true;
+			theCanMove = theCanZoom = true;
 			break;
 		case 4: // モード４：基準線分。
 			theLineOn = theCanDraw = true;
-			theCanMove = true;
+			theCanMove = theCanZoom = true;
 			break;
 		case 5: // モード５：基準線分の長さ。
 			theLineOn = true;
 			theCanDraw = false;
-			theCanMove = true;
+			theCanMove = theCanZoom = true;
 			break;
 		case 6: // モード６：測定。
 			theLineOn = theCanDraw = true;
-			theCanMove = true;
+			theCanMove = theCanZoom = true;
 			break;
 		}
 		theMode = mode;
@@ -1081,26 +1083,32 @@ $(function(){
 		} else {
 			delta = oe.deltaY * -1;
 		}
-		if (oe.ctrlKey) {
-			var CC = getCanvasCenter();
-			var LP = DPtoLP(CC[0], CC[1]);
-			var DP0 = LPtoDP(LP[0], LP[1]);
-			if (delta > 0) {
-				doSetZoom(theZoom * 1.25);
-			} else {
-				doSetZoom(theZoom / 1.25);
+		if (oe.ctrlKey) { // Ctrlキーが押されている？
+			if (theCanZoom) {
+				// ズームする。
+				var CC = getCanvasCenter();
+				var LP = DPtoLP(CC[0], CC[1]);
+				var DP0 = LPtoDP(LP[0], LP[1]);
+				if (delta > 0) {
+					doSetZoom(theZoom * 1.25);
+				} else {
+					doSetZoom(theZoom / 1.25);
+				}
+				var DP1 = LPtoDP(LP[0], LP[1]);
+				deltax -= DP1[0] - DP0[0];
+				deltay -= DP1[1] - DP0[1];
 			}
-			var DP1 = LPtoDP(LP[0], LP[1]);
-			deltax -= DP1[0] - DP0[0];
-			deltay -= DP1[1] - DP0[1];
 		} else {
-			if (oe.shiftKey) {
+			// ずらす。
+			if (oe.shiftKey) { // Shiftキーが押されている？
+				// 横にずらす。
 				if (delta > 0) {
 					deltax -= 50;
 				} else {
 					deltax += 50;
 				}
 			} else {
+				// 縦にずらす。
 				if (delta > 0) {
 					deltay += 50;
 				} else {
@@ -1108,6 +1116,7 @@ $(function(){
 				}
 			}
 		}
+		// 再描画。
 		doRefresh();
 	};
 	document.getElementById("fullscreen").addEventListener('wheel', onWheel, {passive: false});
