@@ -166,7 +166,7 @@ $(function(){
 			var py = (theCanvasHeight - zoomedHeight) / 2;
 			// PDFのレンダリングで余白が描画されないことがあるのでここで白く塗りつぶす。
 			ctx.fillStyle = "rgb(255, 255, 255)";
-			ctx.fillRect(px, py, zoomedWidth, zoomedHeight);
+			ctx.fillRect(px + deltax, py + deltay, zoomedWidth, zoomedHeight);
 			// ビューポートを取得。
 			thePDFViewport = page.getViewport({
 				scale: theZoom / 100.0,
@@ -373,6 +373,15 @@ $(function(){
 		var canvas = $("#image-screen");
 		var data = ctx.getImageData(0, 0, theCanvasWidth, theCanvasHeight);
 		canvas[0].getContext('2d').putImageData(data, 0, 0);
+		if (theImage || thePDF) {
+			$(".mode2-filename").text(htmlspecialchars(theFileName));
+			$(".mode2-filename").removeClass("error");
+			$(".mode2-next").prop('disabled', false);
+		} else {
+			$(".mode2-filename").text("読み込み失敗。残念。");
+			$(".mode2-filename").removeClass("error");
+			$(".mode2-next").prop('disabled', true);
+		}
 	};
 
 	// 画面を再描画する。
@@ -461,6 +470,7 @@ $(function(){
 		var reader = new FileReader();
 		reader.onload = function(e){
 			onWindowResize();
+			$(".mode2-filename").text("読み込み中...");
 			if (theIsPDF) {
 				var ary = new Uint8Array(e.target.result);
 				var loadingTask = pdfjsLib.getDocument(ary);
@@ -468,10 +478,7 @@ $(function(){
 					var text = file.name;
 					if (text.length > 16)
 						text = text.slice(0, 16) + "...";
-					$(".filename").text(htmlspecialchars(text));
-					$(".filename").removeClass("error");
-					$(".mode2-next").prop('disabled', false);
-
+					theFileName = text;
 					thePDF = pdf;
 					thePDFPageNumber = 1;
 					doFitImage();
@@ -484,10 +491,7 @@ $(function(){
 					var text = file.name;
 					if (text.length > 16)
 						text = text.slice(0, 16) + "...";
-					$(".filename").text(htmlspecialchars(text));
-					$(".filename").removeClass("error");
-					$(".mode2-next").prop('disabled', false);
-
+					theFileName = text;
 					theImage = img1;
 					theImageWidth = parseInt(theImage.width);
 					theImageHeight = parseInt(theImage.height);
