@@ -280,6 +280,8 @@ $(function(){
 		var xy0 = LPtoDP(px0, py0);
 		var xy1 = LPtoDP(px1, py1);
 		var handleSize = getHandleSize();
+		if (isSmartPhone())
+			handleSize *= 2;
 		if (xy0[0] - handleSize <= x && x <= xy0[0] + handleSize &&
 			xy0[1] - handleSize <= y && y <= xy0[1] + handleSize)
 		{
