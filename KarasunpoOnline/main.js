@@ -437,7 +437,8 @@
 			var Karasunpo = this;
 			if (this.thePDFIsDrawing || this.theIsDrawing) {
 				setTimeout(function(){
-					Karasunpo.doRedraw();
+					var binded = Karasunpo.doRedraw.bind(Karasunpo);
+					binded();
 				}, 2000);
 				return;
 			}
