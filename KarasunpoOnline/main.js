@@ -2,10 +2,15 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-'use strict';
+;var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 
-$(function(){
-	var KARASUNPO_VERSION = "0.7"; // カラスンポOnlineのバージョン番号。
+(function($){
+	// 厳密に。
+	'use strict';
+
+	var VK_LBUTTON = 0; // マウスの左ボタン。
+	var VK_MBUTTON = 1; // マウスの中央ボタン。
+	var VK_RBUTTON = 2; // マウスの右ボタン。
 
 	// ダイアログでEnterキーを有効にする。
 	// See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
@@ -23,1235 +28,1301 @@ $(function(){
 		}
 	});
 
-	// HTMLの特殊文字を変換。
-	var htmlspecialchars = function(str){
-		return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-	};
-
-	var theImage = null; // 画像。
-	var theImageWidth = 0, theImageHeight = 0; // 画像のピクセルサイズ。
-	var theCanvasWidth = 0, theCanvasHeight = 0; // キャンバスのピクセルサイズ。
-	var theMeasureType = "length"; // 測定タイプ。
-	var theMode = 1; // モード。
-	var theFitMode = 0; // 画面モード（0：自動、1：横方向に合わせる、2：縦方向に合わせる）。
-	var theZoom = 100.0; // ズーム率（百分率）。
-	var theCanDraw = false; // 描画できるか？
-	var theCanMove = true; // 画像を動かせるか？
-	var theIsDrawing = false; // 描画中か？
-	var thePenOn = false; // ペンはキャンバス上にあるか？
-	var theLineOn = false; // 線分をキャンバスに表示するか？
-	var theMoveOn = false; // 画像を動かしているか？
-	var theHandleOn = -1; // ハンドルを動かしているか？
-	var theBackgroundImage = null; // 背景イメージ。
-	var theBackgroundMode = -2; // 背景モード（-2：市松模様、0：黒、1：白、2：緑、3：青、4：マゼンタ、5：赤）。
-	var theIsRadian = false; // ラジアンか？
-	var deltax = 0, deltay = 0; // 画面中央からのずれ（ピクセル単位）。
-	var px0 = 0, py0 = 0, px1 = 0, py1 = 0; // 線分の位置。
-	var sx0 = 0, sy0 = 0, sx1 = 0, sy1 = 0; // 基準線分の位置。
-	var mx0 = 0, my0 = 0; // 中央ボタンでドラッグしている位置。
-	var theLineStyle = 'rgb(255, 0, 0)'; // 線分の色。
-	var theDrawCircle = false; // 補助円を描くか？
-	var theIsPDF = false; // PDFファイルか？
-	var thePDF = null; // PDFオブジェクト。
-	var thePDFPageNumber = 1; // PDFのページ番号。
-	var thePDFViewport = null; // PDFビューポート。
-	var theStdNominalLength = 0; // 基準線分の長さ（名目）。
-	var theLengthUnit = ""; // 長さの単位。
-	var theFileName = ""; // ファイル名。
-
-	// スマートフォンか？
-	var isSmartPhone = function(){
-		return (window.innerWidth < 750); // この値はCSSのmain.cssと合わせる必要がある。
-	}
-
-	// ハンドルのサイズを取得する。
-	var getHandleSize = function() {
-		if (isSmartPhone)
-			return 10;
-		return 5;
-	}
-
-	// 画像の中央座標を取得する。
-	var getImageCenter = function(){
-		if (theIsPDF) {
-			if (thePDF == null)
-				return [0, 0];
-		} else {
-			if (theImage == null)
-				return [0, 0];
-		}
-		return [theImageWidth / 2, theImageHeight / 2];
-	};
-
-	// キャンバスの中央座標を取得する。
-	var getCanvasCenter = function(){
-		if (theIsPDF) {
-			if (thePDF == null)
-				return [0, 0];
-		} else {
-			if (theImage == null)
-				return [0, 0];
-		}
-		return [theCanvasWidth / 2, theCanvasHeight / 2];
-	};
-
-	// 論理座標は、画像上の座標で、画像の中心を原点とする。
-	// 物理座標は、キャンバス上の実際の座標とする。
-
-	// 論理座標から物理座標へ。
-	var LPtoDP = function(x, y) {
-		var IC = getImageCenter();
-		x += IC[0];
-		y += IC[1];
-		x *= theZoom / 100.0;
-		y *= theZoom / 100.0;
-		var CC = getCanvasCenter();
-		x += CC[0];
-		y += CC[1];
-		x += deltax;
-		y += deltay;
-		return [x, y];
-	};
-
-	// 物理座標から論理座標へ。
-	var DPtoLP = function(x, y) {
-		x -= deltax;
-		y -= deltay;
-		var CC = getCanvasCenter();
-		x -= CC[0];
-		y -= CC[1];
-		x /= theZoom / 100.0;
-		y /= theZoom / 100.0;
-		var IC = getImageCenter();
-		x -= IC[0];
-		y -= IC[1];
-		return [x, y];
-	};
-
-	// 背景を描画する。
-	var drawBackground = function(ctx, cx, cy) {
-		switch (theBackgroundMode) {
-		case -2: // 市松模様。
-			var i = 0, j = 0, size = 16;
-			for (var y = 0; y < cy + size; y += size) {
-				i = (j % 2 == 0) ? 1 : 0;
-				for (var x = 0; x < cx + size; x += size) {
-					if (i % 2 == 0)
-						ctx.fillStyle = "rgb(90, 90, 90)";
-					else
-						ctx.fillStyle = "rgb(191, 191, 191)";
-					ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(cx), Math.floor(cy));
-					++i;
-				}
-				++j;
+	// We use module-pattern.
+	var Karasunpo = {
+		theImage: null, // 画像。
+		cxImage: 0, // 画像の幅（ピクセル単位）。
+		cyImage: 0, // 画像の高さ（ピクセル単位）。
+		cxCanvas: 0, // キャンバスの幅（ピクセル単位）。
+		cyCanvas: 0, // キャンバスの高さ（ピクセル単位）。
+		theMeasureType: "length", // 測定タイプ。
+		theMode: 1, // モード。
+		theFitMode: 0, // 画面モード（0：自動、1：横方向に合わせる、2：縦方向に合わせる）。
+		theZoom: 100.0, // ズーム率（百分率）。
+		theCanDraw: false, // 描画できるか？
+		theCanMove: true, // 画像を動かせるか？
+		theIsDrawing: false, // 描画中か？
+		thePenOn: false, // ペンはキャンバス上にあるか？
+		theLineOn: false, // 線分をキャンバスに表示するか？
+		theMoveOn: false, // 画像を動かしているか？
+		theHandleOn: -1, // ハンドルを動かしているか？
+		thePDFIsDrawing: false, // PDF描画中？
+		backgroundImage: null, // 背景イメージ。
+		backgroundMode: -2, // 背景モード（-2：市松模様、0：黒、1：白、2：緑、3：青、4：マゼンタ、5：赤）。
+		theIsRadian: false, // ラジアンか？
+		theDeltaX: 0, // 画面中央からのずれ（ピクセル単位）。
+		theDeltaY: 0, // 画面中央からのずれ（ピクセル単位）。
+		px0: 0, // 線分の位置。
+		py0: 0, // 線分の位置。
+		px1: 0, // 線分の位置。
+		py1: 0, // 線分の位置。
+		sx0: 0, // 基準線分の位置。
+		sy0: 0, // 基準線分の位置。
+		sx1: 0, // 基準線分の位置。
+		sy1: 0, // 基準線分の位置。
+		mx0: 0, // 中央ボタンでドラッグしている位置。
+		my0: 0, // 中央ボタンでドラッグしている位置。
+		theLineStyle: 'rgb(255, 0, 0)', // 線分の色。
+		theDrawCircle: false, // 補助円を描くか？
+		theIsPDF: false, // PDFファイルか？
+		thePDF: null, // PDFオブジェクト。
+		thePDFPageNumber: 1, // PDFのページ番号。
+		theStdNominalLength: 0, // 基準線分の長さ（名目）。
+		theLengthUnit: "", // 長さの単位。
+		theFileName: "", // ファイル名。
+		touchMoved: false, // タッチを移動したか？
+		pinchDistance: 0, // ピンチの距離。
+		// HTMLの特殊文字を変換。
+		htmlspecialchars: function(str){
+			return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+		},
+		// タップ位置を取得する為の関数群
+		touchGetPos: function(e) {
+			var rect = $("#image-screen")[0].getBoundingClientRect();
+			var touch = e.touches[0] || e.changedTouches[0];
+			return {
+				x : touch.clientX - rect.left,
+				y : touch.clientY - rect.top
+			};
+		},
+		// スマートフォンか？
+		isSmartPhone: function(){
+			return (window.innerWidth < 750); // この値はCSSのmain.cssと合わせる必要がある。
+		},
+		// ハンドルのサイズを取得する。
+		getHandleSize: function() {
+			if (this.isSmartPhone())
+				return 10;
+			return 5;
+		},
+		// 画像の中央座標を取得する。
+		getImageCenter: function(){
+			if (this.theIsPDF) {
+				if (this.thePDF == null)
+					return [0, 0];
+			} else {
+				if (this.theImage == null)
+					return [0, 0];
 			}
-			break;
-		case 0: // 黒。
-			ctx.fillStyle = "rgb(0, 0, 0)";
-			ctx.fillRect(0, 0, cx, cy);
-			break;
-		case 1: // 白。
-			ctx.fillStyle = "rgb(255, 255, 255)";
-			ctx.fillRect(0, 0, cx, cy);
-			break;
-		case 2: // 緑。
-			ctx.fillStyle = "rgb(0, 192, 0)";
-			ctx.fillRect(0, 0, cx, cy);
-			break;
-		case 3: // 青。
-			ctx.fillStyle = "rgb(0, 0, 255)";
-			ctx.fillRect(0, 0, cx, cy);
-			break;
-		case 4: // マゼンタ。
-			ctx.fillStyle = "rgb(255, 0, 255)";
-			ctx.fillRect(0, 0, cx, cy);
-			break;
-		case 5: // 赤。
-			ctx.fillStyle = "rgb(255, 0, 0)";
-			ctx.fillRect(0, 0, cx, cy);
-			break;
-		}
-		// 高速化のためにイメージデータを保存する。
-		theBackgroundImage = ctx.getImageData(0, 0, theCanvasWidth, theCanvasHeight);
-	};
-
-	// PDFを表示する。
-	var thePDFIsDrawing = false;
-	var putPDF = function(canvas, ctx, finish) {
-		if (!theIsPDF || !thePDF) {
-			finish(ctx);
-			return;
-		}
-		thePDF.getPage(thePDFPageNumber).then(function(page){
-			if (theImageWidth <= 0 && theImageHeight <= 0) {
+			return [this.cxImage / 2, this.cyImage / 2];
+		},
+		// キャンバスの中央座標を取得する。
+		getCanvasCenter: function(){
+			if (this.theIsPDF) {
+				if (this.thePDF == null)
+					return [0, 0];
+			} else {
+				if (this.theImage == null)
+					return [0, 0];
+			}
+			return [this.cxCanvas / 2, this.cyCanvas / 2];
+		},
+		// 論理座標は、画像上の座標で、画像の中心を原点とする。
+		// 物理座標は、キャンバス上の実際の座標とする。
+		// 論理座標から物理座標へ。
+		LPtoDP: function(x, y) {
+			var IC = this.getImageCenter();
+			x += IC[0];
+			y += IC[1];
+			x *= this.theZoom / 100.0;
+			y *= this.theZoom / 100.0;
+			var CC = this.getCanvasCenter();
+			x += CC[0];
+			y += CC[1];
+			x += this.theDeltaX;
+			y += this.theDeltaY;
+			return [x, y];
+		},
+		// 物理座標から論理座標へ。
+		DPtoLP: function(x, y) {
+			x -= this.theDeltaX;
+			y -= this.theDeltaY;
+			var CC = this.getCanvasCenter();
+			x -= CC[0];
+			y -= CC[1];
+			x /= this.theZoom / 100.0;
+			y /= this.theZoom / 100.0;
+			var IC = this.getImageCenter();
+			x -= IC[0];
+			y -= IC[1];
+			return [x, y];
+		},
+		// 背景を描画する。
+		drawBackground: function(ctx, cx, cy) {
+			switch (this.backgroundMode) {
+			case -2: // 市松模様。
+				var i = 0, j = 0, size = 16;
+				for (var y = 0; y < cy + size; y += size) {
+					i = (j % 2 == 0) ? 1 : 0;
+					for (var x = 0; x < cx + size; x += size) {
+						if (i % 2 == 0)
+							ctx.fillStyle = "rgb(90, 90, 90)";
+						else
+							ctx.fillStyle = "rgb(191, 191, 191)";
+						ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(cx), Math.floor(cy));
+						++i;
+					}
+					++j;
+				}
+				break;
+			case 0: // 黒。
+				ctx.fillStyle = "rgb(0, 0, 0)";
+				ctx.fillRect(0, 0, cx, cy);
+				break;
+			case 1: // 白。
+				ctx.fillStyle = "rgb(255, 255, 255)";
+				ctx.fillRect(0, 0, cx, cy);
+				break;
+			case 2: // 緑。
+				ctx.fillStyle = "rgb(0, 192, 0)";
+				ctx.fillRect(0, 0, cx, cy);
+				break;
+			case 3: // 青。
+				ctx.fillStyle = "rgb(0, 0, 255)";
+				ctx.fillRect(0, 0, cx, cy);
+				break;
+			case 4: // マゼンタ。
+				ctx.fillStyle = "rgb(255, 0, 255)";
+				ctx.fillRect(0, 0, cx, cy);
+				break;
+			case 5: // 赤。
+				ctx.fillStyle = "rgb(255, 0, 0)";
+				ctx.fillRect(0, 0, cx, cy);
+				break;
+			}
+			// 高速化のためにイメージデータを保存する。
+			this.backgroundImage = ctx.getImageData(0, 0, this.cxCanvas, this.cyCanvas);
+		},
+		// レンダリング完了。
+		gotRendered: function(ctx){
+			this.thePDFIsDrawing = false;
+			this.doRedrawFinish(ctx, true);
+		},
+		// レンダリング失敗。
+		failedToRender: function(ctx){
+			this.thePDFIsDrawing = false;
+			this.doRedrawFinish(ctx, false);
+		},
+		// PDFページを取得した。
+		gotPage: function(page, canvas, ctx){
+			if (!this.cxImage || !this.cyImage) {
 				var viewport = page.getViewport({
-					scale: 1.0,
+					scale: 1.0
 				});
-				theImageWidth = viewport.width;
-				theImageHeight = viewport.height;
+				if (viewport.width && viewport.height) {
+					this.cxImage = viewport.width;
+					this.cyImage = viewport.height;
+				} else {
+					this.doRedrawFinish(ctx, false);
+				}
 			}
 			// ズームしたサイズ。
-			var zoomedWidth = theImageWidth * theZoom / 100.0;
-			var zoomedHeight = theImageHeight * theZoom / 100.0;
+			var zoomedWidth = this.cxImage * this.theZoom / 100.0;
+			var zoomedHeight = this.cyImage * this.theZoom / 100.0;
 			// 描画位置（物理座標）。
-			var px = (theCanvasWidth - zoomedWidth) / 2;
-			var py = (theCanvasHeight - zoomedHeight) / 2;
+			var px = (this.cxCanvas - zoomedWidth) / 2;
+			var py = (this.cyCanvas - zoomedHeight) / 2;
 			// PDFのレンダリングで余白が描画されないことがあるのでここで白く塗りつぶす。
 			ctx.fillStyle = "rgb(255, 255, 255)";
-			ctx.fillRect(px + deltax, py + deltay, zoomedWidth, zoomedHeight);
+			ctx.fillRect(px + this.theDeltaX, py + this.theDeltaY, zoomedWidth, zoomedHeight);
 			// ビューポートを取得。
-			thePDFViewport = page.getViewport({
-				scale: theZoom / 100.0,
-				offsetX: px + deltax,
-				offsetY: py + deltay
+			var viewport = page.getViewport({
+				scale: this.theZoom / 100.0,
+				offsetX: px + this.theDeltaX,
+				offsetY: py + this.theDeltaY
 			});
+			console.log(viewport);
 			// PDFレンダリング開始。
 			var renderContext = {
 				canvasContext: ctx,
-				viewport: thePDFViewport,
+				viewport: viewport,
 				background: "rgba(255, 255, 255, 0)"
 			};
-			thePDFIsDrawing = true;
+			this.thePDFIsDrawing = true;
 			var renderTask = page.render(renderContext);
 			renderTask.promise.then(function(){
 				// PDFレンダリング完了。
-				thePDFIsDrawing = false;
-				finish(ctx);
+				var binded = Karasunpo.gotRendered.bind(Karasunpo);
+				binded(ctx);
+			}, function(reason){
+				// PDFレンダリング失敗。
+				var binded = Karasunpo.failedToRender.bind(Karasunpo);
+				binded(ctx);
 			});
-		});
-	};
-
-	// 画像を表示する。
-	var putImage = function(canvas, ctx, finish) {
-		if (theIsPDF || !theImage) {
-			finish(ctx);
-			return;
-		}
-		var zoomedWidth = theImageWidth * theZoom / 100.0;
-		var zoomedHeight = theImageHeight * theZoom / 100.0;
-		var px = (theCanvasWidth - zoomedWidth) / 2;
-		var py = (theCanvasHeight - zoomedHeight) / 2;
-		// 小さい画像のときは、アンチエイジングを無効にする。
-		if (theImageWidth < 100 && theImageHeight < 100) {
-			ctx.mozImageSmoothingEnabled = false;
-			ctx.webkitImageSmoothingEnabled = false;
-			ctx.msImageSmoothingEnabled = false;
-			ctx.imageSmoothingEnabled = false;
-		} else {
-			ctx.mozImageSmoothingEnabled = true;
-			ctx.webkitImageSmoothingEnabled = true;
-			ctx.msImageSmoothingEnabled = true;
-			ctx.imageSmoothingEnabled = true;
-		}
-		// 画像を描画。
-		ctx.drawImage(theImage, px + deltax, py + deltay, zoomedWidth, zoomedHeight);
-		finish(ctx);
-	};
-
-	// ズームするときのサイズの制限。
-	var minWidth = 50, minHeight = 50;
-	var maxWidth = 10000, maxHeight = 10000;
-
-	// ズーム率を設定する。
-	var doSetZoom = function(percents) {
-		if (theIsPDF) {
-			if (thePDF == null)
+		},
+		// PDFを表示する。
+		putPDF: function(canvas, ctx) {
+			if (!this.theIsPDF || !this.thePDF) {
+				this.doRedrawFinish(ctx, false);
 				return;
-		} else {
-			if (theImage == null)
+			}
+			var Karasunpo = this;
+			this.thePDF.getPage(this.thePDFPageNumber).then(function(page){
+				var binded = Karasunpo.gotPage.bind(Karasunpo);
+				binded(page, canvas, ctx);
+			}, function(reason){
+				// PDFレンダリング失敗。
+				this.thePDFIsDrawing = false;
+				this.doRedrawFinish(ctx, false);
+			});
+		},
+		// 画像を表示する。
+		putImage: function(canvas, ctx) {
+			if (this.theIsPDF || !this.theImage) {
+				this.doRedrawFinish(ctx, false);
 				return;
-		}
-
-		// ズーム率を制限する。
-		if (percents * theImageWidth / 100.0 < minWidth) {
-			percents = minWidth * 100.0 / theImageWidth;
-		}
-		if (percents * theImageHeight / 100.0 < minHeight) {
-			percents = minHeight * 100.0 / theImageHeight;
-		}
-		if (percents * theImageWidth / 100.0 > maxWidth) {
-			percents = maxWidth * 100.0 / theImageWidth;
-		}
-		if (percents * theImageHeight / 100.0 > maxHeight) {
-			percents = maxHeight * 100.0 / theImageHeight;
-		}
-
-		theZoom = percents;
-	}
-
-	// 画像を画面のサイズに合わせる。
-	var doFit0 = function(width, height) {
-		switch (theFitMode) {
-		case 0: // 自動
-			if (theCanvasWidth / theCanvasHeight > width / height) {
-				doSetZoom(theCanvasHeight / height * 100);
+			}
+			var zoomedWidth = cxImage * theZoom / 100.0;
+			var zoomedHeight = cyImage * theZoom / 100.0;
+			var px = (this.cxCanvas - zoomedWidth) / 2;
+			var py = (this.cyCanvas - zoomedHeight) / 2;
+			// 小さい画像のときは、アンチエイジングを無効にする。
+			if (this.cxImage < 100 && this.cyImage < 100) {
+				ctx.mozImageSmoothingEnabled = false;
+				ctx.webkitImageSmoothingEnabled = false;
+				ctx.msImageSmoothingEnabled = false;
+				ctx.imageSmoothingEnabled = false;
 			} else {
-				doSetZoom(theCanvasWidth / width * 100);
+				ctx.mozImageSmoothingEnabled = true;
+				ctx.webkitImageSmoothingEnabled = true;
+				ctx.msImageSmoothingEnabled = true;
+				ctx.imageSmoothingEnabled = true;
 			}
-			break;
-		case 1: // 横方向に合わせる。
-			doSetZoom(theCanvasWidth / width * 100);
-			break;
-		case 2: // 縦方向に合わせる。
-			doSetZoom(theCanvasHeight / height * 100);
-			break;
-		}
-	};
-
-	// 画像を画面のサイズに合わせる。
-	var doFitImage = function() {
-		deltax = deltay = 0;
-		if (theIsPDF) {
-			if (thePDF) {
-				thePDF.getPage(thePDFPageNumber).then(function(page){
-					var viewport = page.getViewport({
-						scale: 1.0,
-					});
-					theImageWidth = viewport.width;
-					theImageHeight = viewport.height;
-					doFit0(theImageWidth, theImageHeight);
-				});
+			// 画像を描画。
+			ctx.drawImage(this.theImage, px + this.theDeltaX, py + this.theDeltaY, zoomedWidth, zoomedHeight);
+			this.doRedrawFinish(ctx, true);
+		},
+		// ズーム率を設定する。
+		doSetZoom: function(percents) {
+			if (this.theIsPDF) {
+				if (this.thePDF == null)
+					return;
+			} else {
+				if (this.theImage == null)
+					return;
 			}
-		} else if (theImage) {
-			doFit0(theImageWidth, theImageHeight);
-		}
-	};
 
-	// ハンドル上にあるか？
-	var isOnHandle = function(x, y){
-		var xy0 = LPtoDP(px0, py0);
-		var xy1 = LPtoDP(px1, py1);
-		var handleSize = getHandleSize();
-		if (isSmartPhone())
-			handleSize *= 3;
-		if (xy0[0] - handleSize <= x && x <= xy0[0] + handleSize &&
-			xy0[1] - handleSize <= y && y <= xy0[1] + handleSize)
-		{
-			return 0;
-		}
-		if (xy1[0] - handleSize <= x && x <= xy1[0] + handleSize &&
-			xy1[1] - handleSize <= y && y <= xy1[1] + handleSize)
-		{
-			return 1;
-		}
-		return -1;
-	};
+			if (!this.cxImage || !this.cyImage)
+				return;
 
-	// 線を描く。
-	var doDrawLine = function(ctx, x0, y0, x1, y1, flag = true){
-		ctx.save();
-		ctx.lineCap = 'round';
-		if (flag) {
-			ctx.lineWidth = 2;
-		} else {
-			ctx.lineWidth = 1;
-		}
-		ctx.strokeStyle = theLineStyle;
-		ctx.beginPath();
-		var xy0 = LPtoDP(x0, y0);
-		var xy1 = LPtoDP(x1, y1);
-		ctx.moveTo(xy0[0], xy0[1]);
-		ctx.lineTo(xy1[0], xy1[1]);
-		ctx.stroke();
-		ctx.fillStyle = theLineStyle;
-		ctx.beginPath();
-		var handleSize = getHandleSize();
-		if (flag) {
-			ctx.arc(xy0[0], xy0[1], handleSize, 0, 2 * Math.PI, false);
-			ctx.arc(xy1[0], xy1[1], handleSize, 0, 2 * Math.PI, false);
-		} else {
-			ctx.arc(xy0[0], xy0[1], handleSize / 2, 0, 2 * Math.PI, false);
-			ctx.arc(xy1[0], xy1[1], handleSize / 2, 0, 2 * Math.PI, false);
-		}
-		ctx.fill();
-		ctx.restore();
-	};
+			// ズームするときのサイズの制限。
+			var minWidth = 50, minHeight = 50;
+			var maxWidth = 10000, maxHeight = 10000;
 
-	// 補助円を描画する。
-	var doDrawCircle = function(ctx, x0, y0, x1, y1){
-		var dx = (x1 - x0), dy = y1 - y0;
-		var r = Math.sqrt(dx * dx + dy * dy) / 2;
-		var cx = (x0 + x1) / 2;
-		var cy = (y0 + y1) / 2;
-		ctx.save();
-		ctx.lineCap = 'round';
-		ctx.lineWidth = 2;
-		ctx.strokeStyle = theLineStyle;
-		var xy0 = LPtoDP(cx, cy);
-		var r0 = r * theZoom / 100.0;
-		ctx.beginPath();
-		ctx.arc(xy0[0], xy0[1], r0, 0, 2 * Math.PI, false);
-		ctx.stroke();
-		ctx.restore();
-	};
+			// ズーム率を制限する。
+			if (percents * this.cxImage / 100.0 < minWidth) {
+				percents = minWidth * 100.0 / this.cxImage;
+			}
+			if (percents * this.cyImage / 100.0 < minHeight) {
+				percents = minHeight * 100.0 / this.cyImage;
+			}
+			if (percents * this.cxImage / 100.0 > maxWidth) {
+				percents = maxWidth * 100.0 / this.cxImage;
+			}
+			if (percents * this.cyImage / 100.0 > maxHeight) {
+				percents = maxHeight * 100.0 / this.cyImage;
+			}
 
-	// 描画の終わり。
-	var doRedrawFinish = function(ctx){
-		if (theLineOn) { // 線分を描画するか？
-			if (px0 != px1 || py0 != py1) {
-				doDrawLine(ctx, px0, py0, px1, py1, true);
-				if (theDrawCircle) {
-					doDrawCircle(ctx, px0, py0, px1, py1);
+			this.theZoom = percents;
+		},
+		// 画像を画面のサイズに合わせる。
+		doFit0: function(width, height) {
+			this.cxImage = width;
+			this.cyImage = height;
+			switch (this.theFitMode) {
+			case 0: // 自動
+				if (this.cxCanvas / this.cyCanvas > width / height) {
+					this.doSetZoom(this.cyCanvas / height * 100);
+				} else {
+					this.doSetZoom(this.cxCanvas / width * 100);
 				}
+				break;
+			case 1: // 横方向に合わせる。
+				this.doSetZoom(this.cxCanvas / width * 100);
+				break;
+			case 2: // 縦方向に合わせる。
+				this.doSetZoom(this.cyCanvas / height * 100);
+				break;
 			}
-			if (theMode == 6) {
-				if (theMeasureType == 'length' || theMeasureType == 'angle') {
-					if (sx0 != sx1 || sy0 != sy1) {
-						doDrawLine(ctx, sx0, sy0, sx1, sy1, false);
+		},
+		// 画像を画面のサイズに合わせる。
+		doFitImage: function() {
+			this.theDeltaX = this.theDeltaY = 0;
+			if (this.theIsPDF) {
+				if (this.thePDF) {
+					this.thePDF.getPage(this.thePDFPageNumber).then(
+						function(page){
+							var viewport = page.getViewport({
+								scale: 1.0,
+							});
+							if (viewport.width && viewport.height) {
+								Karasunpo.doFit0(viewport.width, viewport.height);
+							}
+						}
+					);
+				}
+			} else if (this.theImage) {
+				this.doFit0(this.cxImage, this.cyImage);
+			}
+		},
+		// ハンドル上にあるか？
+		isOnHandle: function(x, y){
+			var xy0 = this.LPtoDP(this.px0, this.py0);
+			var xy1 = this.LPtoDP(this.px1, this.py1);
+			var handleSize = this.getHandleSize();
+			if (this.isSmartPhone())
+				handleSize *= 3;
+			if (xy0[0] - handleSize <= x && x <= xy0[0] + handleSize &&
+				xy0[1] - handleSize <= y && y <= xy0[1] + handleSize)
+			{
+				return 0;
+			}
+			if (xy1[0] - handleSize <= x && x <= xy1[0] + handleSize &&
+				xy1[1] - handleSize <= y && y <= xy1[1] + handleSize)
+			{
+				return 1;
+			}
+			return -1;
+		},
+		// 線を描く。
+		doDrawLine: function(ctx, x0, y0, x1, y1, flag = true){
+			ctx.save();
+			ctx.lineCap = 'round';
+			if (flag) {
+				ctx.lineWidth = 2;
+			} else {
+				ctx.lineWidth = 1;
+			}
+			ctx.strokeStyle = this.theLineStyle;
+			ctx.beginPath();
+			var xy0 = this.LPtoDP(x0, y0);
+			var xy1 = this.LPtoDP(x1, y1);
+			ctx.moveTo(xy0[0], xy0[1]);
+			ctx.lineTo(xy1[0], xy1[1]);
+			ctx.stroke();
+			ctx.fillStyle = this.theLineStyle;
+			ctx.beginPath();
+			var handleSize = this.getHandleSize();
+			if (flag) {
+				ctx.arc(xy0[0], xy0[1], handleSize, 0, 2 * Math.PI, false);
+				ctx.arc(xy1[0], xy1[1], handleSize, 0, 2 * Math.PI, false);
+			} else {
+				ctx.arc(xy0[0], xy0[1], handleSize / 2, 0, 2 * Math.PI, false);
+				ctx.arc(xy1[0], xy1[1], handleSize / 2, 0, 2 * Math.PI, false);
+			}
+			ctx.fill();
+			ctx.restore();
+		},
+		// 補助円を描画する。
+		doDrawCircle: function(ctx, x0, y0, x1, y1){
+			var dx = (x1 - x0), dy = y1 - y0;
+			var r = Math.sqrt(dx * dx + dy * dy) / 2;
+			var cx = (x0 + x1) / 2;
+			var cy = (y0 + y1) / 2;
+			ctx.save();
+			ctx.lineCap = 'round';
+			ctx.lineWidth = 2;
+			ctx.strokeStyle = theLineStyle;
+			var xy0 = this.LPtoDP(cx, cy);
+			var r0 = r * this.theZoom / 100.0;
+			ctx.beginPath();
+			ctx.arc(xy0[0], xy0[1], r0, 0, 2 * Math.PI, false);
+			ctx.stroke();
+			ctx.restore();
+		},
+		// 画面を再描画する。
+		doRedraw: function(){
+			var Karasunpo = this;
+			if (this.thePDFIsDrawing || this.theIsDrawing) {
+				setTimeout(function(){
+					Karasunpo.doRedraw();
+				}, 2000);
+				return;
+			}
+			this.theIsDrawing = true;
+			var canvas = $("#offscreen");
+			var ctx = canvas[0].getContext('2d');
+			// 背景を描画する。
+			if (this.backgroundImage) {
+				// 以前保存したものを使用する。
+				ctx.putImageData(this.backgroundImage, 0, 0);
+			} else {
+				this.cxCanvas = parseInt(canvas.attr('width'));
+				this.cyCanvas = parseInt(canvas.attr('height'));
+				this.drawBackground(ctx, this.cxCanvas, this.cyCanvas);
+			}
+			if (this.theIsPDF) {
+				this.putPDF(canvas, ctx);
+			} else {
+				this.putImage(canvas, ctx);
+			}
+		},
+		// 画面のサイズが変わった。
+		onWindowResize: function(){
+			var canvas = $("#image-screen");
+			if (this.isSmartPhone()) {
+				this.cxCanvas = parseInt(window.innerWidth);
+				this.cyCanvas = parseInt(window.innerHeight * 0.74);
+			} else {
+				this.cxCanvas = parseInt(window.innerWidth * 0.69);
+				this.cyCanvas = parseInt(window.innerHeight);
+			}
+			canvas.attr('width', this.cxCanvas + "px");
+			canvas.attr('height', this.cyCanvas + "px");
+			$("#offscreen").attr('width', this.cxCanvas + "px");
+			$("#offscreen").attr('height', this.cyCanvas + "px");
+			this.backgroundImage = null;
+			this.doFitImage();
+			this.doRedraw();
+		},
+		// モードを設定する。
+		setMode: function(mode) {
+			$(".mode").hide();
+			$("#mode" + mode).show();
+
+			switch (mode) {
+			case 1: // モード１：初期画面。
+				this.theLineOn = false;
+				this.theCanDraw = false;
+				this.theCanMove = false;
+				// 画面サイズに関する初期化。
+				this.onWindowResize();
+				break;
+			case 2: // モード２：ファイルを開く。
+				this.theLineOn = false;
+				this.theCanDraw = false;
+				this.theCanMove = true;
+				break;
+			case 3: // モード３：測定タイプ。
+				this.theLineOn = true;
+				this.theCanDraw = false;
+				this.theCanMove = true;
+				break;
+			case 4: // モード４：基準線分。
+				this.theLineOn = true;
+				this.theCanDraw = true;
+				this.theCanMove = true;
+				break;
+			case 5: // モード５：基準線分の長さ。
+				this.theLineOn = true;
+				this.theCanDraw = false;
+				this.theCanMove = true;
+				break;
+			case 6: // モード６：測定。
+				this.theLineOn = true;
+				this.theCanDraw = true;
+				this.theCanMove = true;
+				break;
+			}
+			this.theMode = mode;
+			this.doRedraw();
+		},
+		// ファイルを処理する。
+		doFile: function(file){
+			this.theIsPDF = (file.name.indexOf(".pdf") != -1 || file.name.indexOf(".PDF") != -1);
+			var reader = new FileReader();
+			if (this.theIsPDF) {
+				reader.onload = function(e){
+					console.log(this);
+					Karasunpo.onWindowResize();
+					$(".mode2-filename").text("読み込み中...");
+					var ary = new Uint8Array(e.target.result);
+					var loadingTask = pdfjsLib.getDocument(ary);
+					loadingTask.promise.then(function(pdf){
+						var text = file.name;
+						if (text.length > 16)
+							text = text.slice(0, 16) + "...";
+						Karasunpo.theFileName = text;
+						Karasunpo.thePDF = pdf;
+						Karasunpo.thePDFPageNumber = 1;
+						Karasunpo.doFitImage();
+						Karasunpo.doRedraw();
+					});
+				};
+			} else {
+				reader.onload = function(e){
+					console.log(this);
+					Karasunpo.onWindowResize();
+					$(".mode2-filename").text("読み込み中...");
+					var img1 = new Image();
+					img1.src = e.target.result;
+					img1.onload = function(){
+						var text = file.name;
+						if (text.length > 16)
+							text = text.slice(0, 16) + "...";
+						Karasunpo.theFileName = text;
+						Karasunpo.theImage = img1;
+						Karasunpo.cxImage = parseInt(Karasunpo.theImage.width);
+						Karasunpo.cyImage = parseInt(Karasunpo.theImage.height);
+						Karasunpo.doFitImage();
+						Karasunpo.doRedraw();
+					};
+				};
+			}
+			if (this.theIsPDF)
+				reader.readAsArrayBuffer(file);
+			else
+				reader.readAsDataURL(file);
+			this.setMode(2);
+		},
+		// クリップボードにテキストをコピー。
+		doCopyText: function(text) {
+			try {
+				var clipboard = $('<textarea></textarea>');
+				clipboard.text(text);
+				$('body').append(clipboard);
+				clipboard.select();
+				var ret = document.execCommand('copy');
+				clipboard.remove();
+				return ret;
+			} catch (e) {
+				return false;
+			}
+		},
+		// 測定。
+		doMeasure: function(){
+			switch (this.theMeasureType) {
+			case "length":
+				console.log("doMeasure.length");
+				// 基準線分のベクトル。
+				var sdx = this.sx1 - this.sx0, sdy = this.sy1 - this.sy0;
+				// 基準線分の長さ（ピクセル単位）。
+				var stdPixelLength = Math.sqrt(sdx * sdx + sdy * sdy);
+				// 線分の長さを求める。
+				var dx = this.px1 - this.px0, dy = this.py1 - this.py0;
+				var pixelLength = Math.sqrt(dx * dx + dy * dy);
+				// 名目上の長さを求める。
+				var value = parseFloat(this.theStdNominalLength) * parseFloat(this.pixelLength) / parseFloat(this.stdPixelLength);
+				// 四捨五入。
+				value *= 10000.0;
+				value = Math.round(value);
+				value /= 10000.0;
+				// テキストボックスに格納。
+				var text = value.toString() + this.theLengthUnit;
+				$(".mode6-measure-results").val(this.htmlspecialchars(text));
+				break;
+			case 'inclination':
+				console.log("doMeasure.inclination");
+				// 線分の傾きを求める。
+				var dx = this.px1 - this.px0, dy = this.py1 - this.py0;
+				var value = Math.atan2(-dy, dx);
+				// 必要なら度に直す。
+				if (!this.theIsRadian)
+					value = value * 180.0 / Math.PI;
+				// 四捨五入。
+				value *= 10000.0;
+				value = Math.round(value);
+				value /= 10000.0;
+				// テキストボックスに格納。
+				var text;
+				if (this.theIsRadian)
+					text = value.toString() + "rad";
+				else
+					text = value.toString() + "度";
+				$(".mode6-measure-results").val(this.htmlspecialchars(text));
+				break;
+			case 'angle':
+				console.log("doMeasure.angle");
+				// ２線分のベクトル。
+				var dx0 = this.sx1 - this.sx0, dy0 = this.sy1 - this.sy0;
+				var dx1 = this.px1 - this.px0, dy1 = this.py1 - this.py0;
+				// ２線分の傾き。
+				var value0 = Math.atan2(-dy0, dx0);
+				var value1 = Math.atan2(-dy1, dx1);
+				// 傾きの差。
+				var value = value1 - value0;
+				// 角度を標準化。
+				while (value >= 2 * Math.PI)
+					value -= 2 * Math.PI;
+				while (value < -2 * Math.PI)
+					value += 2 * Math.PI;
+				if (value < -Math.PI)
+					value += 2 * Math.PI;
+				if (value > Math.PI)
+					value -= 2 * Math.PI;
+				// 必要なら度に直す。
+				if (!this.theIsRadian)
+					value = value * 180.0 / Math.PI;
+				// 四捨五入。
+				value *= 10000.0;
+				value = Math.round(value);
+				value /= 10000.0;
+				// テキストボックスに格納。
+				var text;
+				if (this.theIsRadian)
+					text = value.toString() + "rad";
+				else
+					text = value.toString() + "度";
+				$(".mode6-measure-results").val(this.htmlspecialchars(text));
+				break;
+			}
+		},
+		// フルスクリーンでマウスホイール操作があった。
+		onWheel: function(e){
+			e.preventDefault();
+			var delta;
+			var oe = e; //var oe = e.originalEvent;
+			if (oe.wheelDelta !== undefined) {
+				delta = oe.wheelDelta;
+			} else {
+				delta = oe.deltaY * -1;
+			}
+			if (oe.ctrlKey) { // Ctrlキーが押されている？
+				// ズームする。
+				var CC = this.getCanvasCenter();
+				var LP = this.DPtoLP(CC[0], CC[1]);
+				var DP0 = this.LPtoDP(LP[0], LP[1]);
+				if (delta > 0) {
+					this.doSetZoom(this.theZoom * 1.25);
+				} else {
+					this.doSetZoom(this.theZoom / 1.25);
+				}
+				var DP1 = this.LPtoDP(LP[0], LP[1]);
+				this.theDeltaX -= DP1[0] - DP0[0];
+				this.theDeltaY -= DP1[1] - DP0[1];
+			} else {
+				// ずらす。
+				if (oe.shiftKey) { // Shiftキーが押されている？
+					// 横にずらす。
+					if (delta > 0) {
+						this.theDeltaX -= 50;
+					} else {
+						this.theDeltaX += 50;
+					}
+				} else {
+					// 縦にずらす。
+					if (delta > 0) {
+						this.theDeltaY += 50;
+					} else {
+						this.theDeltaY -= 50;
 					}
 				}
 			}
-		}
-		var canvas = $("#image-screen");
-		var data = ctx.getImageData(0, 0, theCanvasWidth, theCanvasHeight);
-		canvas[0].getContext('2d').putImageData(data, 0, 0);
-		if (theImage || thePDF) {
-			$(".mode2-filename").text(htmlspecialchars(theFileName));
-			$(".mode2-filename").removeClass("error");
-			$(".mode2-next").prop('disabled', false);
-		}
-		theIsDrawing = false;
-	};
-
-	// 画面を再描画する。
-	var doRedraw = function(){
-		if (thePDFIsDrawing || theIsDrawing) {
-			setTimeout(function(){
-				doRedraw();
-			}, 2000);
-			return;
-		}
-		theIsDrawing = true;
-		var canvas = $("#offscreen");
-		var ctx = canvas[0].getContext('2d');
-		// 背景を描画する。
-		if (theBackgroundImage) {
-			// 以前保存したものを使用する。
-			ctx.putImageData(theBackgroundImage, 0, 0);
-		} else {
-			var cxCanvas = parseInt(canvas.attr('width'));
-			var cyCanvas = parseInt(canvas.attr('height'));
-			drawBackground(ctx, cxCanvas, cyCanvas);
-		}
-		if (theIsPDF) {
-			putPDF(canvas, ctx, doRedrawFinish);
-		} else {
-			putImage(canvas, ctx, doRedrawFinish);
-		}
-	};
-
-	// 画面のサイズが変わった。
-	var onWindowResize = function(){
-		var canvas = $("#image-screen");
-		if (isSmartPhone()) {
-			theCanvasWidth = parseInt(window.innerWidth);
-			theCanvasHeight = parseInt(window.innerHeight * 0.74);
-		} else {
-			theCanvasWidth = parseInt(window.innerWidth * 0.69);
-			theCanvasHeight = parseInt(window.innerHeight);
-		}
-		canvas.attr('width', theCanvasWidth + "px");
-		canvas.attr('height', theCanvasHeight + "px");
-		$("#offscreen").attr('width', theCanvasWidth + "px");
-		$("#offscreen").attr('height', theCanvasHeight + "px");
-		theBackgroundImage = null;
-		doFitImage();
-		doRedraw();
-	};
-	$(window).on('resize', onWindowResize);
-
-	// モードを設定する。
-	var setMode = function(mode) {
-		$(".mode").hide();
-		$("#mode" + mode).show();
-
-		switch (mode) {
-		case 1: // モード１：初期画面。
-			theLineOn = false;
-			theCanDraw = false;
-			theCanMove = false;
-			// 画面サイズに関する初期化。
-			onWindowResize();
-			break;
-		case 2: // モード２：ファイルを開く。
-			theLineOn = false;
-			theCanDraw = false;
-			theCanMove = true;
-			break;
-		case 3: // モード３：測定タイプ。
-			theLineOn = true;
-			theCanDraw = false;
-			theCanMove = true;
-			break;
-		case 4: // モード４：基準線分。
-			theLineOn = true;
-			theCanDraw = true;
-			theCanMove = true;
-			break;
-		case 5: // モード５：基準線分の長さ。
-			theLineOn = true;
-			theCanDraw = false;
-			theCanMove = true;
-			break;
-		case 6: // モード６：測定。
-			theLineOn = true;
-			theCanDraw = true;
-			theCanMove = true;
-			break;
-		}
-		theMode = mode;
-
-		doRedraw();
-	};
-
-	// ファイルを処理する。
-	var doFile = function(file){
-		theIsPDF = (file.name.indexOf(".pdf") != -1 || file.name.indexOf(".PDF") != -1);
-		var reader = new FileReader();
-		reader.onload = function(e){
-			onWindowResize();
-			$(".mode2-filename").text("読み込み中...");
-			if (theIsPDF) {
-				var ary = new Uint8Array(e.target.result);
-				var loadingTask = pdfjsLib.getDocument(ary);
-				loadingTask.promise.then(function(pdf){
-					var text = file.name;
-					if (text.length > 16)
-						text = text.slice(0, 16) + "...";
-					theFileName = text;
-					thePDF = pdf;
-					thePDFPageNumber = 1;
-					doFitImage();
-					doRedraw();
-				});
-			} else {
-				var img1 = new Image();
-				img1.src = e.target.result;
-				img1.onload = function(){
-					var text = file.name;
-					if (text.length > 16)
-						text = text.slice(0, 16) + "...";
-					theFileName = text;
-					theImage = img1;
-					theImageWidth = parseInt(theImage.width);
-					theImageHeight = parseInt(theImage.height);
-					doFitImage();
-					doRedraw();
-				};
+			// 再描画。
+			this.doRedraw();
+		},
+		// 描画の終わり。
+		doRedrawFinish: function(ctx, succeeded){
+			if (this.theLineOn) { // 線分を描画するか？
+				if (this.px0 != this.px1 || this.py0 != this.py1) {
+					this.doDrawLine(ctx, this.px0, this.py0, this.px1, this.py1, true);
+					if (this.theDrawCircle) {
+						doDrawCircle(ctx, this.px0, this.py0, this.px1, this.py1);
+					}
+				}
+				if (this.theMode == 6) {
+					if (this.theMeasureType == 'length' ||
+						this.theMeasureType == 'angle')
+					{
+						if (this.sx0 != this.sx1 || this.sy0 != this.sy1) {
+							this.doDrawLine(ctx, this.sx0, this.sy0, this.sx1, this.sy1, false);
+						}
+					}
+				}
 			}
-		};
-		if (theIsPDF)
-			reader.readAsArrayBuffer(file);
-		else
-			reader.readAsDataURL(file);
-		setMode(2);
-	};
-
-	// モード１：初期画面。
-	$(".mode1-next").on('click', function(){
-		setMode(2);
-	});
-
-	// モード２：ファイルを開く。
-	$(".mode2-back").on('click', function(){
-		setMode(1);
-	});
-	$(".mode2-next").on('click', function(){
-		setMode(3);
-	});
-	$(".mode2-choose-image").on('click', function(){
-		$(".mode2-upload-file").first().click();
-	});
-	$(".mode2-upload-file").change(function(){
-		var file = $(this).prop('files')[0];
-		doFile(file);
-	});
-	$(".mode2-next").prop('disabled', true);
-
-	// モード３：測定タイプ。
-	$(".mode3-back").on('click', function(){
-		setMode(2);
-	});
-	$(".mode3-next").on('click', function(){
-		if (theMeasureType == 'inclination') {
-			$(".mode6-measure-results").val("");
-			setMode(6);
-		} else {
-			sx0 = sy0 = sx1 = sy1 = 0;
-			px0 = py0 = px1 = py1 = 0;
-			$(".mode4-next").prop('disabled', true);
-			setMode(4);
-		}
-	});
-	$(".mode3-measure-type-length").on('click', function(){
-		$(".mode6-measure-type-text").text("長さ：");
-		theMeasureType = "length";
-		$("#mode3-measure-type-length-1").prop('checked', true);
-		$("#mode3-measure-type-length-2").prop('checked', true);
-	});
-	$(".mode3-measure-type-inclination").on('click', function(){
-		$(".mode6-measure-type-text").text("傾き：");
-		theMeasureType = "inclination";
-		$("#mode3-measure-type-inclination-1").prop('checked', true);
-		$("#mode3-measure-type-inclination-2").prop('checked', true);
-	});
-	$(".mode3-measure-type-angle").on('click', function(){
-		$(".mode6-measure-type-text").text("角度：");
-		theMeasureType = "angle";
-		$("#mode3-measure-type-angle-1").prop('checked', true);
-		$("#mode3-measure-type-angle-2").prop('checked', true);
-	});
-	$(".mode3-is-radian").on('click', function(){
-		if ($(".mode3-is-radian").prop('checked')) {
-			theIsRadian = true;
-		} else {
-			theIsRadian = false;
-		}
-	});
-	// モード４：基準線分。
-	$(".mode4-back").on('click', function(){
-		setMode(3);
-	});
-	$(".mode4-next").on('click', function(){
-		if (theMeasureType == 'angle') {
-			sx0 = px0;
-			sy0 = py0;
-			sx1 = px1;
-			sy1 = py1;
-			px0 = py0 = px1 = py1 = 0;
-			$(".mode6-measure-results").val("");
-			setMode(6);
-		} else {
-			sx0 = px0;
-			sy0 = py0;
-			sx1 = px1;
-			sy1 = py1;
-			px0 = py0 = px1 = py1 = 0;
-			$(".mode5-numeric-text").text("");
-			$(".mode5-unit-text").text("");
-			setMode(5);
-		}
-	});
-	$(".mode4-draw-circle").on('click', function(){
-		theDrawCircle = $(".mode4-draw-circle").prop('checked');
-		$(".mode6-draw-circle").prop('checked', theDrawCircle);
-		doRedraw();
-	});
-
-	// モード５：基準線分の長さ。
-	$(".mode5-back").on('click', function(){
-		px0 = sx0;
-		py0 = sy0;
-		px1 = sx1;
-		py1 = sy1;
-		if (px0 != px1 || py0 != py1) {
-			$(".mode4-next").prop('disabled', false);
-		} else {
-			$(".mode4-next").prop('disabled', true);
-		}
-		setMode(4);
-	});
-	$(".mode5-next").on('click', function(){
-		$(".mode6-measure-results").val("");
-		setMode(6);
-	});
-	$(".mode5-next").prop('disabled', true);
-	$(".mode5-numeric-text").on('change input', function(){
-		// 基準線分の長さ（名目）。
-		theStdNominalLength = $(this).val();
-		if (!isNaN(theStdNominalLength) && isFinite(theStdNominalLength) && theStdNominalLength > 0) {
-			$(".mode5-next").prop('disabled', false);
-		} else {
-			$(".mode5-next").prop('disabled', true);
-		}
-	});
-	$(".mode5-unit-text").on('change input', function(){
-		// 長さの単位。
-		theLengthUnit = $(this).val();
-	});
-
-	// モード６：測定。
-	$(".mode6-back").on('click', function(){
-		if (theMeasureType == 'inclination') {
-			setMode(3);
-		} else if (theMeasureType == 'angle') {
-			setMode(4);
-		} else {
-			px0 = sx0;
-			py0 = sy0;
-			px1 = sx1;
-			py1 = sy1;
-			setMode(5);
-		}
-	});
-	$(".mode6-finish").on('click', function(){
-		location.reload();
-	});
-	$(".mode6-draw-circle").on('click', function(){
-		theDrawCircle = $(".mode6-draw-circle").prop('checked');
-		$(".mode4-draw-circle").prop('checked', theDrawCircle);
-		doRedraw();
-	});
-	function doCopyText(text) {
-		try {
-			var clipboard = $('<textarea></textarea>');
-			clipboard.text(text);
-			$('body').append(clipboard);
-			clipboard.select();
-			var ret = document.execCommand('copy');
-			clipboard.remove();
-			return ret;
-		} catch (e) {
-			return false;
-		}
-	}
-	$(".mode6-copy-text").on('click', function(){
-		var text = $(".mode6-measure-results").val();
-		if (doCopyText(text)) {
-			alert('コピーしました！');
-		} else {
-			alert('残念、コピーに失敗しました。');
-		}
-	});
-
-	// ドロップ領域。
-	$(".drop-area").on('dragenter dragover', function(e){
-		e.stopPropagation();
-		e.preventDefault();
-		if (theMode != 1 && theMode != 2)
-			return;
-		$('.drop-area-navi').addClass('dragging-over');
-	});
-	$('.drop-area').on('dragleave', function(e){
-		e.preventDefault();
-		if (theMode != 1 && theMode != 2)
-			return;
-		$('.drop-area-navi').removeClass('dragging-over');
-	});
-	$('.drop-area').on('drop', function(e){
-		e.preventDefault();
-		if (theMode != 1 && theMode != 2)
-			return;
-		var file = e.originalEvent.dataTransfer.files[0];
-		$('.drop-area-navi').removeClass('dragging-over');
-		doFile(file);
-	});
-
-	var VK_LBUTTON = 0; // マウスの左ボタン。
-	var VK_MBUTTON = 1; // マウスの中央ボタン。
-	var VK_RBUTTON = 2; // マウスの右ボタン。
-
-	// イメージスクリーン。
-
-	// タップ位置を取得する為の関数群
-	var toucnScrollX = function(){
-		return document.documentElement.scrollLeft || document.body.scrollLeft;
-	};
-	var toucnScrollY = function(){
-		return document.documentElement.scrollTop || document.body.scrollTop;
-	};
-	var touchGetPos = function(e) {
-		var rect = $("#image-screen")[0].getBoundingClientRect();
-		var touch = e.touches[0] || e.changedTouches[0];
-		return {
-			x : touch.clientX - rect.left,
-			y : touch.clientY - rect.top
-		};
-	};
-
-	var touchMoved = false;
-	var pinchDistance = 0;
-
-	$('#image-screen').on('mousedown', function(e){
-		touchMoved = false;
-		pinchDistance = 0;
-		switch (e.button) {
-		case VK_LBUTTON:
+			var canvas = $("#image-screen");
+			var data = ctx.getImageData(0, 0, this.cxCanvas, this.cyCanvas);
+			canvas[0].getContext('2d').putImageData(data, 0, 0);
+			if (succeeded) {
+				if (this.theImage || this.thePDF) {
+					$(".mode2-filename").text(this.htmlspecialchars(this.theFileName));
+					$(".mode2-filename").removeClass("error");
+					$(".mode2-next").prop('disabled', false);
+				}
+			} else {
+				$(".mode2-filename").text("読み込み失敗");
+				$(".mode2-filename").addClass("error");
+				$(".mode2-next").prop('disabled', true);
+			}
+			this.theIsDrawing = false;
+		},
+		// マウスの左ボタンが押された。
+		onLButtonDown: function(e){
 			console.log("mousedown.VK_LBUTTON");
 			e.preventDefault();
-			if (!theCanDraw)
+			if (!this.theCanDraw)
 				return;
 			var x = e.offsetX, y = e.offsetY;
-			theHandleOn = isOnHandle(x, y);
-			var LP = DPtoLP(x, y);
-			if (theHandleOn == -1) {
-				px0 = px1 = LP[0];
-				py0 = py1 = LP[1];
-				thePenOn = true;
+			this.theHandleOn = this.isOnHandle(x, y);
+			var LP = this.DPtoLP(x, y);
+			if (this.theHandleOn == -1) {
+				this.px0 = this.px1 = LP[0];
+				this.py0 = this.py1 = LP[1];
+				this.thePenOn = true;
 			}
-			if (theMode == 6) {
+			if (this.theMode == 6) {
 				$(".mode6-measure-results").val("");
 			}
-			doRedraw();
-			break;
-		case VK_MBUTTON:
+			this.doRedraw();
+		},
+		// マウスの中央ボタンが押された。
+		onMButtonDown: function(e){
 			console.log("mousedown.VK_MBUTTON");
 			e.preventDefault();
-			if (!theCanMove) {
+			if (!this.theCanMove) {
 				return;
 			}
-			mx0 = e.offsetX;
-			my0 = e.offsetY;
-			theMoveOn = true;
-			doRedraw();
-			break;
-		}
-	});
-
-	// タッチデバイスでタッチした。
-	document.getElementById("image-screen").addEventListener('touchstart', function(e){
-		console.log("touchstart");
-		touchMoved = false;
-		pinchDistance = 0;
-		e.preventDefault();
-		if (!theCanDraw)
-			return;
-		var pos = touchGetPos(e);
-		var x = pos.x, y = pos.y;
-		theHandleOn = isOnHandle(x, y);
-		var LP = DPtoLP(x, y);
-		if (theHandleOn == -1) {
-			px0 = px1 = LP[0];
-			py0 = py1 = LP[1];
-			thePenOn = true;
-		}
-		if (theMode == 6) {
-			$(".mode6-measure-results").val("");
-		}
-		doRedraw();
-	}, {passive: false});
-
-	// 測定。
-	var doMeasure = function(){
-		switch (theMeasureType) {
-		case "length":
-			console.log("doMeasure.length");
-			// 基準線分のベクトル。
-			var sdx = sx1 - sx0, sdy = sy1 - sy0;
-			// 基準線分の長さ（ピクセル単位）。
-			var stdPixelLength = Math.sqrt(sdx * sdx + sdy * sdy);
-			// 線分の長さを求める。
-			var dx = px1 - px0, dy = py1 - py0;
-			var pixelLength = Math.sqrt(dx * dx + dy * dy);
-			// 名目上の長さを求める。
-			var value = parseFloat(theStdNominalLength) * parseFloat(pixelLength) / parseFloat(stdPixelLength);
-			// 四捨五入。
-			value *= 10000.0;
-			value = Math.round(value);
-			value /= 10000.0;
-			// テキストボックスに格納。
-			var text = value.toString() + theLengthUnit;
-			$(".mode6-measure-results").val(htmlspecialchars(text));
-			break;
-		case 'inclination':
-			console.log("doMeasure.inclination");
-			// 線分の傾きを求める。
-			var dx = px1 - px0, dy = py1 - py0;
-			var value = Math.atan2(-dy, dx);
-			// 必要なら度に直す。
-			if (!theIsRadian)
-				value = value * 180.0 / Math.PI;
-			// 四捨五入。
-			value *= 10000.0;
-			value = Math.round(value);
-			value /= 10000.0;
-			// テキストボックスに格納。
-			var text;
-			if (theIsRadian)
-				text = value.toString() + "rad";
-			else
-				text = value.toString() + "度";
-			$(".mode6-measure-results").val(htmlspecialchars(text));
-			break;
-		case 'angle':
-			console.log("doMeasure.angle");
-			// ２線分のベクトル。
-			var dx0 = sx1 - sx0, dy0 = sy1 - sy0;
-			var dx1 = px1 - px0, dy1 = py1 - py0;
-			// ２線分の傾き。
-			var value0 = Math.atan2(-dy0, dx0);
-			var value1 = Math.atan2(-dy1, dx1);
-			// 傾きの差。
-			var value = value1 - value0;
-			// 角度を標準化。
-			while (value >= 2 * Math.PI)
-				value -= 2 * Math.PI;
-			while (value < -2 * Math.PI)
-				value += 2 * Math.PI;
-			if (value < -Math.PI)
-				value += 2 * Math.PI;
-			if (value > Math.PI)
-				value -= 2 * Math.PI;
-			// 必要なら度に直す。
-			if (!theIsRadian)
-				value = value * 180.0 / Math.PI;
-			// 四捨五入。
-			value *= 10000.0;
-			value = Math.round(value);
-			value /= 10000.0;
-			// テキストボックスに格納。
-			var text;
-			if (theIsRadian)
-				text = value.toString() + "rad";
-			else
-				text = value.toString() + "度";
-			$(".mode6-measure-results").val(htmlspecialchars(text));
-			break;
-		}
-	};
-
-	// タッチデバイスでタッチ移動した。
-	document.getElementById("image-screen").addEventListener('touchmove', function(e){
-		console.log("touchmove");
-		e.preventDefault();
-		var touch = event.changedTouches;
-		if (touch.length > 1) {
-			touchMoved = true;
-			var x0 = touch[0].pageX;
-			var y0 = touch[0].pageY;
-			var x1 = touch[1].pageX;
-			var y1 = touch[1].pageY;
-			var distance = Math.sqrt(Math.pow(x1 - x0) + Math.pow(y1 - y0));
-			if (pinchDistance != 0) {
-				var scale = distance / pinchDistance;
-				pinchDistance = distance;
-				doSetZoom(theZoom * scale);
-				doRedraw();
+			this.mx0 = e.offsetX;
+			this.my0 = e.offsetY;
+			this.theMoveOn = true;
+			this.doRedraw();
+		},
+		// マウスのボタンが押された。
+		onMouseDown: function(e){
+			switch (e.button) {
+			case VK_LBUTTON:
+				this.onLButtonDown(e);
+				break;
+			case VK_MBUTTON:
+				this.onMButtonDown(e);
+				break;
 			}
-			return;
-		}
-		if (theHandleOn == -1) {
-			if (!theCanDraw || !thePenOn || !theLineOn)
-				return;
-		}
-		var pos = touchGetPos(e);
-		var x = pos.x, y = pos.y;
-		var LP = DPtoLP(x, y);
-		if (theHandleOn != -1) {
-			if (theHandleOn == 0) {
-				px0 = LP[0];
-				py0 = LP[1];
-			} else {
-				px1 = LP[0];
-				py1 = LP[1];
-			}
-		} else {
-			var LP = DPtoLP(x, y);
-			px1 = LP[0];
-			py1 = LP[1];
-		}
-		if (theMode == 6) {
-			doMeasure();
-		}
-		doRedraw();
-	}, {passive: false});
-
-	$('#image-screen').on('mousemove', function(e){
-		console.log("mousemove");
-		e.preventDefault();
-		if (theHandleOn == -1) {
-			if (thePenOn) {
-				if (!theCanDraw || !theLineOn)
-					return;
-			} else if (theCanMove) {
-				if (!theMoveOn)
-					return;
-			} else {
-				return;
-			}
-		}
-		var x = e.offsetX, y = e.offsetY;
-		var LP = DPtoLP(x, y);
-		if (theHandleOn != -1) {
-			if (theHandleOn == 0) {
-				px0 = LP[0];
-				py0 = LP[1];
-			} else {
-				px1 = LP[0];
-				py1 = LP[1];
-			}
-			if (theMode == 6) {
-				doMeasure();
-			}
-		} else if (thePenOn) {
-			var LP = DPtoLP(x, y);
-			px1 = LP[0];
-			py1 = LP[1];
-			if (theMode == 6) {
-				doMeasure();
-			}
-		} else if (theMoveOn) {
-			deltax += x - mx0;
-			deltay += y - my0;
-			mx0 = x;
-			my0 = y;
-		}
-		doRedraw();
-	});
-
-	$('#image-screen').on('touchend', function(e){
-		console.log("touchend");
-		e.preventDefault();
-		if (touchMoved)
-			return;
-		if (theHandleOn == -1) {
-			if (!theCanDraw)
-				return;
-		}
-		var pos = touchGetPos(e);
-		var x = pos.x, y = pos.y;
-		var LP = DPtoLP(x, y);
-		if (theHandleOn != -1) {
-			if (theHandleOn == 0) {
-				px0 = LP[0];
-				py0 = LP[1];
-			} else {
-				px1 = LP[0];
-				py1 = LP[1];
-			}
-			theHandleOn = -1;
-		} else {
-			px1 = LP[0];
-			py1 = LP[1];
-			thePenOn = false;
-		}
-		if (theMode == 4) {
-			if (px0 != px1 || py0 != py1) {
-				$(".mode4-next").prop('disabled', false);
-			} else {
-				$(".mode4-next").prop('disabled', true);
-			}
-		}
-		if (theMode == 6) {
-			doMeasure();
-		}
-		doRedraw();
-	});
-
-	$('#image-screen').on('mouseup', function(e){
-		switch (e.button) {
-		case VK_LBUTTON:
-			console.log("mouseup.VK_LBUTTON");
+		},
+		// タッチデバイスでタッチが始まった。
+		onTouchStart: function(e){
+			console.log("touchstart");
+			this.touchMoved = false;
+			this.pinchDistance = 0;
 			e.preventDefault();
-			if (theHandleOn == -1) {
-				if (!theCanDraw)
+			if (!this.theCanDraw)
+				return;
+			var pos = this.touchGetPos(e);
+			var x = pos.x, y = pos.y;
+			this.theHandleOn = this.isOnHandle(x, y);
+			var LP = this.DPtoLP(x, y);
+			if (this.theHandleOn == -1) {
+				this.px0 = this.px1 = LP[0];
+				this.py0 = this.py1 = LP[1];
+				this.thePenOn = true;
+			}
+			if (this.theMode == 6) {
+				$(".mode6-measure-results").val("");
+			}
+			this.doRedraw();
+		},
+		// タッチデバイスでタッチ移動した。
+		onTouchMove: function(e){
+			console.log("touchmove");
+			e.preventDefault();
+			if (this.theHandleOn == -1) {
+				if (!this.theCanDraw || !this.thePenOn || !this.theLineOn)
 					return;
+			}
+			var pos = this.touchGetPos(e);
+			var x = pos.x, y = pos.y;
+			var LP = this.DPtoLP(x, y);
+			if (this.theHandleOn != -1) {
+				if (this.theHandleOn == 0) {
+					this.px0 = LP[0];
+					this.py0 = LP[1];
+				} else {
+					this.px1 = LP[0];
+					this.py1 = LP[1];
+				}
+			} else {
+				var LP = this.DPtoLP(x, y);
+				this.px1 = LP[0];
+				this.py1 = LP[1];
+			}
+			if (this.theMode == 6) {
+				this.doMeasure();
+			}
+			this.doRedraw();
+		},
+		// マウスが移動した。
+		onMouseMove: function(e){
+			console.log("mousemove");
+			e.preventDefault();
+			if (this.theHandleOn == -1) {
+				if (this.thePenOn) {
+					if (!this.theCanDraw || !this.theLineOn)
+						return;
+				} else if (this.theCanMove) {
+					if (!this.theMoveOn)
+						return;
+				} else {
+					return;
+				}
 			}
 			var x = e.offsetX, y = e.offsetY;
-			var LP = DPtoLP(x, y);
-			if (theHandleOn != -1) {
-				if (theHandleOn == 0) {
-					px0 = LP[0];
-					py0 = LP[1];
+			var LP = this.DPtoLP(x, y);
+			if (this.theHandleOn != -1) {
+				if (this.theHandleOn == 0) {
+					this.px0 = LP[0];
+					this.py0 = LP[1];
 				} else {
-					px1 = LP[0];
-					py1 = LP[1];
+					this.px1 = LP[0];
+					this.py1 = LP[1];
 				}
-				theHandleOn = -1;
-			} else {
-				px1 = LP[0];
-				py1 = LP[1];
-				thePenOn = false;
+				if (this.theMode == 6) {
+					this.doMeasure();
+				}
+			} else if (this.thePenOn) {
+				var LP = this.DPtoLP(x, y);
+				this.px1 = LP[0];
+				this.py1 = LP[1];
+				if (this.theMode == 6) {
+					this.doMeasure();
+				}
+			} else if (this.theMoveOn) {
+				this.theDeltaX += x - this.mx0;
+				this.theDeltaY += y - this.my0;
+				this.mx0 = x;
+				this.my0 = y;
 			}
-			if (theMode == 4) {
-				if (px0 != px1 || py0 != py1) {
+			this.doRedraw();
+		},
+		// タッチデバイスでタッチが終了した。
+		onTouchEnd: function(e){
+			console.log("touchend");
+			e.preventDefault();
+			if (this.theHandleOn == -1) {
+				if (!this.theCanDraw)
+					return;
+			}
+			var pos = this.touchGetPos(e);
+			var x = pos.x, y = pos.y;
+			var LP = this.DPtoLP(x, y);
+			if (this.theHandleOn != -1) {
+				if (this.theHandleOn == 0) {
+					this.px0 = LP[0];
+					this.py0 = LP[1];
+				} else {
+					this.px1 = LP[0];
+					this.py1 = LP[1];
+				}
+				this.theHandleOn = -1;
+			} else {
+				this.px1 = LP[0];
+				this.py1 = LP[1];
+				this.thePenOn = false;
+			}
+			if (this.theMode == 4) {
+				if (this.px0 != this.px1 || this.py0 != this.py1) {
 					$(".mode4-next").prop('disabled', false);
 				} else {
 					$(".mode4-next").prop('disabled', true);
 				}
 			}
-			if (theMode == 6) {
-				doMeasure();
+			if (this.theMode == 6) {
+				this.doMeasure();
 			}
-			doRedraw();
-			break;
-		case VK_MBUTTON:
+			this.doRedraw();
+		},
+		// マウスの左ボタンが解放された。
+		onLButtonUp: function(e){
+			console.log("mouseup.VK_LBUTTON");
+			e.preventDefault();
+			if (this.theHandleOn == -1) {
+				if (!this.theCanDraw)
+					return;
+			}
+			var x = e.offsetX, y = e.offsetY;
+			var LP = this.DPtoLP(x, y);
+			if (this.theHandleOn != -1) {
+				if (this.theHandleOn == 0) {
+					this.px0 = LP[0];
+					this.py0 = LP[1];
+				} else {
+					this.px1 = LP[0];
+					this.py1 = LP[1];
+				}
+				this.theHandleOn = -1;
+			} else {
+				this.px1 = LP[0];
+				this.py1 = LP[1];
+				this.thePenOn = false;
+			}
+			if (this.theMode == 4) {
+				if (this.px0 != this.px1 || this.py0 != this.py1) {
+					$(".mode4-next").prop('disabled', false);
+				} else {
+					$(".mode4-next").prop('disabled', true);
+				}
+			}
+			if (this.theMode == 6) {
+				this.doMeasure();
+			}
+			this.doRedraw();
+		},
+		// マウスの中央ボタンが解放された。
+		onMButtonUp: function(e){
 			console.log("mouseup.VK_MBUTTON");
 			e.preventDefault();
-			if (!theCanMove || !theMoveOn)
+			if (!this.theCanMove || !this.theMoveOn)
 				return;
-			deltax += e.offsetX - mx0;
-			deltay += e.offsetY - my0;
-			mx0 = e.offsetX;
-			my0 = e.offsetY;
-			theMoveOn = false;
-			theHandleOn = -1;
-			doRedraw();
-			break;
-		}
-	});
-
-	// フルスクリーンでマウスホイール操作があった。
-	var onWheel = function(e){
-		e.preventDefault();
-		var delta;
-		var oe = e; //var oe = e.originalEvent;
-		if (oe.wheelDelta !== undefined) {
-			delta = oe.wheelDelta;
-		} else {
-			delta = oe.deltaY * -1;
-		}
-		if (oe.ctrlKey) { // Ctrlキーが押されている？
-			// ズームする。
-			var CC = getCanvasCenter();
-			var LP = DPtoLP(CC[0], CC[1]);
-			var DP0 = LPtoDP(LP[0], LP[1]);
-			if (delta > 0) {
-				doSetZoom(theZoom * 1.25);
-			} else {
-				doSetZoom(theZoom / 1.25);
+			this.theDeltaX += e.offsetX - this.mx0;
+			this.theDeltaY += e.offsetY - this.my0;
+			this.mx0 = e.offsetX;
+			this.my0 = e.offsetY;
+			this.theMoveOn = false;
+			this.theHandleOn = -1;
+			this.doRedraw();
+		},
+		// マウスのボタンが解放された。
+		onMouseUp: function(e){
+			switch (e.button) {
+			case VK_LBUTTON:
+				this.onLButtonUp(e);
+				break;
+			case VK_MBUTTON:
+				this.onMButtonUp(e);
+				break;
 			}
-			var DP1 = LPtoDP(LP[0], LP[1]);
-			deltax -= DP1[0] - DP0[0];
-			deltay -= DP1[1] - DP0[1];
-		} else {
-			// ずらす。
-			if (oe.shiftKey) { // Shiftキーが押されている？
-				// 横にずらす。
-				if (delta > 0) {
-					deltax -= 50;
-				} else {
-					deltax += 50;
-				}
-			} else {
-				// 縦にずらす。
-				if (delta > 0) {
-					deltay += 50;
-				} else {
-					deltay -= 50;
-				}
-			}
-		}
-		// 再描画。
-		doRedraw();
+		},
 	};
-	document.getElementById("fullscreen").addEventListener('wheel', onWheel, {passive: false});
-	document.getElementById("fullscreen").addEventListener('mousewheel', onWheel, {passive: false});
 
-	// 設定ボタン。
-	$("#config-button").click(function(){
-		// 「設定」ダイアログを初期化。
-		$("#config-dialog-zoom").val("");
-		$("#config-dialog-line-color").val("");
-		$("#config-dialog-background").val("");
-		// 「設定」ダイアログを開く。
-		$("#config-dialog").dialog({
-			modal: true,
-			title: "設定ダイアログ",
-			width: "300px",
-			buttons: {
-				"OK": function() {
-					var zoom = $("#config-dialog-zoom").val();
-					switch (zoom) {
-					case "-1":
-						break;
-					case "0":
-					case "1":
-					case "2":
-						theFitMode = parseInt(zoom);
-						doFitImage();
-						break;
-					default:
-						zoom = parseInt(zoom);
-						doSetZoom(zoom);
-						break;
-					}
-					var color = $("#config-dialog-line-color").val();
-					switch (color) {
-					case "red":
-						theLineStyle = 'rgb(255, 0, 0)';
-						break;
-					case "blue":
-						theLineStyle = 'rgb(0, 0, 255)';
-						break;
-					case "green":
-						theLineStyle = 'rgb(0, 255, 0)';
-						break;
-					}
-					var back = $("#config-dialog-background").val();
-					switch (back) {
-					case "-2":
-					case "0":
-					case "1":
-					case "2":
-					case "3":
-					case "4":
-					case "5":
-						theBackgroundMode = parseInt(back);
-						theBackgroundImage = null;
-						break;
-					}
-					doRedraw();
-					// ダイアログを閉じる。
-					$(this).dialog("close");
-				},
-				"キャンセル": function() {
-					// ダイアログを閉じる。
-					$(this).dialog("close");
-				}
+	// 初期化。
+	$(function(){
+		$(window).on('resize', function(){
+			Karasunpo.onWindowResize.call();
+		});
+
+		// モード１：初期画面。
+		$(".mode1-next").on('click', function(){
+			Karasunpo.setMode(2);
+		});
+		// モード２：ファイルを開く。
+		$(".mode2-back").on('click', function(){
+			Karasunpo.setMode(1);
+		});
+		$(".mode2-next").on('click', function(){
+			Karasunpo.setMode(3);
+		});
+		$(".mode2-choose-image").on('click', function(){
+			$(".mode2-upload-file").first().click();
+		});
+		$(".mode2-upload-file").change(function(){
+			var file = $(this).prop('files')[0];
+			Karasunpo.doFile(file);
+		});
+		$(".mode2-next").prop('disabled', true);
+
+		// モード３：測定タイプ。
+		$(".mode3-back").on('click', function(){
+			Karasunpo.setMode(2);
+		});
+		$(".mode3-next").on('click', function(){
+			if (Karasunpo.theMeasureType == 'inclination') {
+				$(".mode6-measure-results").val("");
+				Karasunpo.setMode(6);
+			} else {
+				Karasunpo.sx0 = Karasunpo.sy0 = Karasunpo.sx1 = Karasunpo.sy1 = 0;
+				Karasunpo.px0 = Karasunpo.py0 = Karasunpo.px1 = Karasunpo.py1 = 0;
+				$(".mode4-next").prop('disabled', true);
+				Karasunpo.setMode(4);
 			}
 		});
-	});
+		$(".mode3-measure-type-length").on('click', function(){
+			$(".mode6-measure-type-text").text("長さ：");
+			Karasunpo.theMeasureType = "length";
+			$("#mode3-measure-type-length-1").prop('checked', true);
+			$("#mode3-measure-type-length-2").prop('checked', true);
+		});
+		$(".mode3-measure-type-inclination").on('click', function(){
+			$(".mode6-measure-type-text").text("傾き：");
+			Karasunpo.theMeasureType = "inclination";
+			$("#mode3-measure-type-inclination-1").prop('checked', true);
+			$("#mode3-measure-type-inclination-2").prop('checked', true);
+		});
+		$(".mode3-measure-type-angle").on('click', function(){
+			$(".mode6-measure-type-text").text("角度：");
+			Karasunpo.theMeasureType = "angle";
+			$("#mode3-measure-type-angle-1").prop('checked', true);
+			$("#mode3-measure-type-angle-2").prop('checked', true);
+		});
+		$(".mode3-is-radian").on('click', function(){
+			if ($(".mode3-is-radian").prop('checked')) {
+				Karasunpo.theIsRadian = true;
+			} else {
+				Karasunpo.theIsRadian = false;
+			}
+		});
+		// モード４：基準線分。
+		$(".mode4-back").on('click', function(){
+			Karasunpo.setMode(3);
+		});
+		$(".mode4-next").on('click', function(){
+			if (Karasunpo.theMeasureType == 'angle') {
+				Karasunpo.sx0 = Karasunpo.px0;
+				Karasunpo.sy0 = Karasunpo.py0;
+				Karasunpo.sx1 = Karasunpo.px1;
+				Karasunpo.sy1 = Karasunpo.py1;
+				Karasunpo.px0 = Karasunpo.py0 = Karasunpo.px1 = Karasunpo.py1 = 0;
+				$(".mode6-measure-results").val("");
+				Karasunpo.setMode(6);
+			} else {
+				Karasunpo.sx0 = Karasunpo.px0;
+				Karasunpo.sy0 = Karasunpo.py0;
+				Karasunpo.sx1 = Karasunpo.px1;
+				Karasunpo.sy1 = Karasunpo.py1;
+				Karasunpo.px0 = Karasunpo.py0 = Karasunpo.px1 = Karasunpo.py1 = 0;
+				$(".mode5-numeric-text").text("");
+				$(".mode5-unit-text").text("");
+				Karasunpo.setMode(5);
+			}
+		});
+		$(".mode4-draw-circle").on('click', function(){
+			Karasunpo.theDrawCircle = $(".mode4-draw-circle").prop('checked');
+			$(".mode6-draw-circle").prop('checked', Karasunpo.theDrawCircle);
+			Karasunpo.doRedraw();
+		});
 
-	// 更新履歴ボタン。
-	$("#history-button").click(function(){
-		if (isSmartPhone()) {
-			$("#history-dialog").dialog({
-				modal: true,
-				title: "更新履歴",
-				width: "250px",
-				buttons: {
-					"OK": function() {
-						// ダイアログを閉じる。
-						$(this).dialog("close");
-					},
-				}
-			});
-		} else {
-			$("#history-dialog").dialog({
-				modal: true,
-				title: "更新履歴",
-				width: "500px",
-				buttons: {
-					"OK": function() {
-						// ダイアログを閉じる。
-						$(this).dialog("close");
-					},
-				}
-			});
-		}
-	});
+		// モード５：基準線分の長さ。
+		$(".mode5-back").on('click', function(){
+			Karasunpo.px0 = Karasunpo.sx0;
+			Karasunpo.py0 = Karasunpo.sy0;
+			Karasunpo.px1 = Karasunpo.sx1;
+			Karasunpo.py1 = Karasunpo.sy1;
+			if (Karasunpo.px0 != Karasunpo.px1 || Karasunpo.py0 != Karasunpo.py1) {
+				$(".mode4-next").prop('disabled', false);
+			} else {
+				$(".mode4-next").prop('disabled', true);
+			}
+			Karasunpo.setMode(4);
+		});
+		$(".mode5-next").on('click', function(){
+			$(".mode6-measure-results").val("");
+			Karasunpo.setMode(6);
+		});
+		$(".mode5-next").prop('disabled', true);
+		$(".mode5-numeric-text").on('change input', function(){
+			// 基準線分の長さ（名目）。
+			Karasunpo.theStdNominalLength = $(this).val();
+			if (!isNaN(Karasunpo.theStdNominalLength) &&
+				isFinite(Karasunpo.theStdNominalLength) &&
+				Karasunpo.theStdNominalLength > 0)
+			{
+				$(".mode5-next").prop('disabled', false);
+			} else {
+				$(".mode5-next").prop('disabled', true);
+			}
+		});
+		$(".mode5-unit-text").on('change input', function(){
+			// 長さの単位。
+			Karasunpo.theLengthUnit = $(this).val();
+		});
 
-	// バージョン情報ボタン。
-	$("#about-button").click(function(){
-		$("#about-dialog-version").text(KARASUNPO_VERSION);
-		if (isSmartPhone()) {
-			$("#about-dialog").dialog({
-				modal: true,
-				title: "バージョン情報",
-				width: "250px",
-				buttons: {
-					"OK": function() {
-						// ダイアログを閉じる。
-						$(this).dialog("close");
-					},
-				}
-			});
-		} else {
-			$("#about-dialog").dialog({
-				modal: true,
-				title: "バージョン情報",
-				width: "500px",
-				buttons: {
-					"OK": function() {
-						// ダイアログを閉じる。
-						$(this).dialog("close");
-					},
-				}
-			});
-		}
-	});
+		// モード６：測定。
+		$(".mode6-back").on('click', function(){
+			if (Karasunpo.theMeasureType == 'inclination') {
+				Karasunpo.setMode(3);
+			} else if (Karasunpo.theMeasureType == 'angle') {
+				Karasunpo.setMode(4);
+			} else {
+				Karasunpo.px0 = Karasunpo.sx0;
+				Karasunpo.py0 = Karasunpo.sy0;
+				Karasunpo.px1 = Karasunpo.sx1;
+				Karasunpo.py1 = Karasunpo.sy1;
+				Karasunpo.setMode(5);
+			}
+		});
+		$(".mode6-finish").on('click', function(){
+			location.reload();
+		});
+		$(".mode6-draw-circle").on('click', function(){
+			Karasunpo.theDrawCircle = $(".mode6-draw-circle").prop('checked');
+			$(".mode4-draw-circle").prop('checked', theDrawCircle);
+			Karasunpo.doRedraw();
+		});
+		$(".mode6-copy-text").on('click', function(){
+			var text = $(".mode6-measure-results").val();
+			if (Karasunpo.doCopyText(text)) {
+				alert('コピーしました！');
+			} else {
+				alert('残念、コピーに失敗しました。');
+			}
+		});
 
-	// モードを初期化。
-	setMode(1);
-});
+		// ドロップ領域。
+		$(".drop-area").on('dragenter dragover', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			if (Karasunpo.theMode != 1 && Karasunpo.theMode != 2)
+				return;
+			$('.drop-area-navi').addClass('dragging-over');
+		});
+		$('.drop-area').on('dragleave', function(e){
+			e.preventDefault();
+			if (Karasunpo.theMode != 1 && Karasunpo.theMode != 2)
+				return;
+			$('.drop-area-navi').removeClass('dragging-over');
+		});
+		$('.drop-area').on('drop', function(e){
+			e.preventDefault();
+			if (Karasunpo.theMode != 1 && Karasunpo.theMode != 2)
+				return;
+			var file = e.originalEvent.dataTransfer.files[0];
+			$('.drop-area-navi').removeClass('dragging-over');
+			Karasunpo.doFile(file);
+		});
+
+		$('#image-screen').on('mousedown', function(e){
+			var binded = Karasunpo.onMouseDown.bind(Karasunpo);
+			binded(e);
+		});
+
+		// タッチデバイスでタッチした。
+		document.getElementById("image-screen").addEventListener('touchstart', function(e){
+			var binded = Karasunpo.onTouchStart.bind(Karasunpo);
+			binded(e);
+		}, {passive: false});
+
+		// タッチデバイスでタッチ移動した。
+		document.getElementById("image-screen").addEventListener('touchmove', function(e){
+			var binded = Karasunpo.onTouchMove.bind(Karasunpo);
+			binded(e);
+		}, {passive: false});
+
+		$('#image-screen').on('mousemove', function(e){
+			var binded = Karasunpo.onMouseMove.bind(Karasunpo);
+			binded(e);
+		});
+
+		$('#image-screen').on('touchend', function(e){
+			var binded = Karasunpo.onTouchEnd.bind(Karasunpo);
+			binded(e);
+		});
+
+		$('#image-screen').on('mouseup', function(e){
+			var binded = Karasunpo.onMouseUp.bind(Karasunpo);
+			binded(e);
+		});
+
+		document.getElementById("fullscreen").addEventListener('wheel', function(e){
+			var onWheelBinded = Karasunpo.onWheel.bind(Karasunpo);
+			onWheelBinded(e);
+		}, {passive: false});
+		document.getElementById("fullscreen").addEventListener('mousewheel', function(e){
+			var onWheelBinded = Karasunpo.onWheel.bind(Karasunpo);
+			onWheelBinded(e);
+		}, {passive: false});
+
+		// 設定ボタン。
+		$("#config-button").click(function(){
+			// 「設定」ダイアログを初期化。
+			$("#config-dialog-zoom").val("");
+			$("#config-dialog-line-color").val("");
+			$("#config-dialog-background").val("");
+			// 「設定」ダイアログを開く。
+			$("#config-dialog").dialog({
+				modal: true,
+				title: "設定ダイアログ",
+				width: "300px",
+				buttons: {
+					"OK": function() {
+						var zoom = $("#config-dialog-zoom").val();
+						switch (zoom) {
+						case "-1":
+							break;
+						case "0":
+						case "1":
+						case "2":
+							Karasunpo.theFitMode = parseInt(zoom);
+							Karasunpo.doFitImage();
+							break;
+						default:
+							zoom = parseInt(zoom);
+							Karasunpo.doSetZoom(zoom);
+							break;
+						}
+						var color = $("#config-dialog-line-color").val();
+						switch (color) {
+						case "red":
+							Karasunpo.theLineStyle = 'rgb(255, 0, 0)';
+							break;
+						case "blue":
+							Karasunpo.theLineStyle = 'rgb(0, 0, 255)';
+							break;
+						case "green":
+							Karasunpo.theLineStyle = 'rgb(0, 255, 0)';
+							break;
+						}
+						var back = $("#config-dialog-background").val();
+						switch (back) {
+						case "-2":
+						case "0":
+						case "1":
+						case "2":
+						case "3":
+						case "4":
+						case "5":
+							Karasunpo.backgroundMode = parseInt(back);
+							Karasunpo.backgroundImage = null;
+							break;
+						}
+						Karasunpo.doRedraw();
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+					"キャンセル": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					}
+				}
+			});
+		});
+
+		// 更新履歴ボタン。
+		$("#history-button").click(function(){
+			if (Karasunpo.isSmartPhone()) {
+				$("#history-dialog").dialog({
+					modal: true,
+					title: "更新履歴",
+					width: "250px",
+					buttons: {
+						"OK": function() {
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						},
+					}
+				});
+			} else {
+				$("#history-dialog").dialog({
+					modal: true,
+					title: "更新履歴",
+					width: "500px",
+					buttons: {
+						"OK": function() {
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						},
+					}
+				});
+			}
+		});
+
+		// バージョン情報ボタン。
+		$("#about-button").click(function(){
+			$("#about-dialog-version").text(KARASUNPO_VERSION);
+			if (Karasunpo.isSmartPhone()) {
+				$("#about-dialog").dialog({
+					modal: true,
+					title: "バージョン情報",
+					width: "250px",
+					buttons: {
+						"OK": function() {
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						},
+					}
+				});
+			} else {
+				$("#about-dialog").dialog({
+					modal: true,
+					title: "バージョン情報",
+					width: "500px",
+					buttons: {
+						"OK": function() {
+							// ダイアログを閉じる。
+							$(this).dialog("close");
+						},
+					}
+				});
+			}
+		});
+
+		// モードを初期化。
+		Karasunpo.setMode(1);
+	});
+})(jQuery);
