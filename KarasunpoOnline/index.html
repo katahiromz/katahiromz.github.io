@@ -19,11 +19,15 @@
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<!-- PDF.js -->
 	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
-	<!-- main -->
+	<!-- main.css -->
 	<link rel="stylesheet" href="main.css">
 	<script src="main.js?p=(new Date()).getTime()"></script>
 </head>
 <body>
+	<!-- main.js -->
+	<script type="text/javascript">
+	document.write('<script src="main.js?'+Math.random()+'"></script>');
+	</script>
 	<section id="fullscreen" class="drop-area">
 		<section id="navigation">
 			<nav id="mode1" class="mode">
