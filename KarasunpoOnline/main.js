@@ -3,6 +3,8 @@
 // License: MIT
 
 $(function(){
+	var KARASUNPO_VERSION = "0.6"; // カラスンポOnlineのバージョン番号。
+
 	// ダイアログでEnterキーを有効にする。
 	// See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
 	$.extend($.ui.dialog.prototype.options, {
@@ -1153,6 +1155,7 @@ $(function(){
 
 	// 設定ボタン。
 	$("#about-button").click(function(){
+		$("#about-dialog-version").text(KARASUNPO_VERSION);
 		if (isSmartPhone()) {
 			$("#about-dialog").dialog({
 				modal: true,
