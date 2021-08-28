@@ -1127,7 +1127,7 @@ $(function(){
 		$("#history-dialog").dialog({
 			modal: true,
 			title: "更新履歴",
-			width: "500px",
+			width: (isSmartPhone() ? "250px" : "500px"),
 			buttons: {
 				"OK": function() {
 					// ダイアログを閉じる。
@@ -1142,7 +1142,7 @@ $(function(){
 		$("#about-dialog").dialog({
 			modal: true,
 			title: "バージョン情報",
-			width: "500px",
+			width: (isSmartPhone() ? "250px" : "500px"),
 			buttons: {
 				"OK": function() {
 					// ダイアログを閉じる。
