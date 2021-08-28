@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="ja"><head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Cache-control" content="public" />
+	<title>カラスンポOnline</title>
+	<!-- TODO: ここで読み込むJavascriptプログラムはきちんとテストされた最新のものでなければならない。-->
+	<!-- TODO: 時々バージョン番号を確認し、古くなっていたらテスト後に更新しないといけない。 -->
+	<!-- polyfill -->
+	<script src="polyfill.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<!-- PDF.js -->
+	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<!-- main -->
+	<link rel="stylesheet" href="main.css">
+	<script src="main.js"></script>
+</head>
+<body>
+	<section id="fullscreen" class="drop-area">
+		<section id="navigation">
+			<nav id="mode1" class="mode">
+				<div class="drop-area-navi">
+					<header>
+						<h1 class="center">☆ カラスンポOnline ☆</h1>
+						<hr />
+					</header>
+					<form onsubmit="return false;">
+						<p class="smartphone-visible">
+							「カラスンポOnline」は、画像ファイルのイメージ上の２点間の名目の距離や角度を測定できます。
+							※ パソコンとホイールマウスの使用を推奨します。
+							「次へ」ボタンをクリックして下さい。
+						</p>
+						<div class="smartphone-invisible">
+							<p>
+								「カラスンポOnline」は、画像ファイルのイメージ上の２点間の名目の距離や角度を測定できます。
+							</p>
+							<p>
+								※ パソコンとホイールマウスの使用を推奨します。
+							</p>
+							<p>
+								「次へ」ボタンをクリックして下さい。
+							</p>
+						</div>
+						<p class="center">
+							<button class="mode1-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+						</p>
+					</form>
+				</div>
+			</nav>
+			<nav id="mode2" class="mode invisible">
+				<div class="drop-area-navi">
+					<header>
+						<h1 class="center">☆ ファイルを開く ☆</h1>
+						<hr />
+					</header>
+					<form onsubmit="return false;">
+						<div class="smartphone-visible">
+							<p>
+								画像ファイルを選んで「次へ」をクリックして下さい。
+							</p>
+							<p>
+								<label for="mode2-upload-file">
+									<span class="center invisible">
+										<input type="file" class="mode2-upload-file" name="mode2-upload-file" accept="image/jpeg, image/png, image/gif, image/tiff, image/bmp, application/pdf" />
+									</span>
+									<span class="center">
+										<button class="mode2-choose-image"><img class="icon" src="img/picture-1.png" alt="" /> 画像を選ぶ</button>
+										<span class="error filename nobreak">
+											※画像が未指定です。
+										</span>
+									</span>
+								</label>
+								<span class="nobreak">
+									<button class="mode2-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+									<button class="mode2-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+								</span>
+							</p>
+						</div>
+						<div class="smartphone-invisible">
+							<p>
+								画像ファイルをここにドロップして「次へ」をクリックして下さい。
+							</p>
+							<p class="center invisible">
+								<input type="file" class="mode2-upload-file" name="mode2-upload-file" accept="image/jpeg, image/png, image/gif, image/tiff, image/bmp, application/pdf" />
+							</p>
+							<p class="center">
+								<button class="mode2-choose-image"><img class="icon" src="img/picture-1.png" alt="" /> 画像を選ぶ</button>
+							</p>
+							<p class="center">
+								<span class="error filename nobreak">
+									※画像が未指定です。
+								</span>
+							</p>
+							<p class="center">
+								<button class="mode2-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+								<button class="mode2-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+							</p>
+						</div>
+					</form>
+				</div>
+			</nav>
+			<nav id="mode3" class="mode invisible">
+				<header>
+					<h1 class="center">☆ 測定タイプ ☆</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<div class="smartphone-visible">
+						<p>
+							<span class="smartphone-invisible">
+								測定タイプを選んで下さい。
+							</span>
+							<span class="nobreak">
+								<input type="radio" name="mode3-measure-type-radio-1" class="mode3-measure-type-length" id="mode3-measure-type-length-1" value="length" checked="checked" /> <label for="mode3-measure-type-length-1">線分の長さ</label>
+								　
+							</span>
+							<span class="nobreak">
+								<input type="radio" name="mode3-measure-type-radio-1" class="mode3-measure-type-inclination" id="mode3-measure-type-inclination-1" value="inclination" /> <label for="mode3-measure-type-inclination-1">1線分の傾き</label>
+								　
+							</span>
+							<span class="nobreak">
+								<input type="radio" name="mode3-measure-type-radio-1" class="mode3-measure-type-angle" id="mode3-measure-type-angle-1" value="angle" /> <label for="mode3-measure-type-angle-1">2線分のなす角度</label>
+								　
+							</span>
+							<span class="nobreak">
+								<input type="checkbox" class="mode3-is-radian" name="mode3-is-radian"> <label for="mode3-is-radian">ラジアン</label>
+								　
+							</span>
+							<span class="nobreak">
+								<button class="mode3-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+								<button class="mode3-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+							</span>
+						</p>
+					</div>
+					<div class="smartphone-invisible">
+						<p>
+							測定タイプを選んで下さい。
+						</p>
+						<p class="nobreak">
+							<input type="radio" name="mode3-measure-type-radio-2" class="mode3-measure-type-length" id="mode3-measure-type-length-2" value="length" checked="checked" /> <label for="mode3-measure-type-length-2">線分の長さ</label>
+							　
+						</p>
+						<p class="nobreak">
+							<input type="radio" name="mode3-measure-type-radio-2" class="mode3-measure-type-inclination" id="mode3-measure-type-inclination-2" value="inclination" /> <label for="mode3-measure-type-inclination-2">1線分の傾き</label>
+							　
+						</p>
+						<p class="nobreak">
+							<input type="radio" name="mode3-measure-type-radio-2" class="mode3-measure-type-angle" id="mode3-measure-type-angle-2" value="angle" /> <label for="mode3-measure-type-angle-2">2線分のなす角度</label>
+						</p>
+						<p class="center">
+							<input type="checkbox" class="mode3-is-radian" name="mode3-is-radian"> <label for="mode3-is-radian">ラジアン</label>
+						</p>
+						<p class="center">
+							<button class="mode3-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+							<button class="mode3-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+						</p>
+					</div>
+				</form>
+			</nav>
+			<nav id="mode4" class="mode invisible">
+				<header>
+					<h1 class="center">☆ 基準線分 ☆</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<div class="smartphone-visible">
+						<p>
+							イメージ上をドラッグして基準線分を入力して下さい。
+							※ 基準線分は、イメージ上の名目上の長さや角度の基準となります。
+							<span>
+								<input type="checkbox" class="mode4-draw-circle" name="mode4-draw-circle"> <label for="mode4-draw-circle">補助円を描く</label>
+							</span>
+						</p>
+						<p class="center">
+							<button class="mode4-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+							<button class="mode4-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+						</p>
+					</div>
+					<div class="smartphone-invisible">
+						<p>
+							イメージ上をドラッグして基準線分を入力して下さい。
+						</p>
+						<p>
+							※ 基準線分は、イメージ上の名目上の長さや角度の基準となります。
+						</p>
+						<p>
+							※ 基準線分は長いほど精度が高くなります。
+						</p>
+						<p>
+							※イメージはCtrl+ホイールで拡大・縮小できます。
+						</p>
+						<p class="center">
+							<span class="nobreak">
+								<input type="checkbox" class="mode4-draw-circle" name="mode4-draw-circle"> <label for="mode4-draw-circle">補助円を描く</label>
+							</span>
+						</p>
+						<p class="center">
+							<button class="mode4-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+							<button class="mode4-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+						</p>
+					</div>
+				</form>
+			</nav>
+			<nav id="mode5" class="mode invisible">
+				<header>
+					<h1 class="center">☆ 基準線分の長さ ☆</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<p>
+						基準線分の名目上の長さを入力して下さい。
+					</p>
+					<div class="smartphone-visible">
+						<p>
+							<span class="nobreak">
+								基準線分の長さ:
+							</span>
+							<span class="center">
+								<input type="text" class="mode5-numeric-text" size="5" class="length" placeholder="数値" />
+								<input list="mode5-unit-list" size="3" class="mode5-unit-text" name="unit" placeholder="単位" />
+								<datalist class="mode5-unit-list">
+									<option value="mm" />
+									<option value="cm" />
+									<option value="m" />
+									<option value="km" />
+									<option value="inch" />
+									<option value="pt" />
+									<option value="px" />
+									<option value="feet" />
+									<option value="yards" />
+									<option value="AU" />
+									<option value="miles" />
+								</datalist>
+							</span>
+							<span class="nobreak">
+								<button class="mode5-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+								<button class="mode5-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+							</span>
+						</p>
+					</div>
+					<div class="smartphone-invisible">
+						<p class="center">
+							基準線分の長さ:
+						</p>
+						<p class="center">
+							<input type="text" class="mode5-numeric-text" size="5" class="length" placeholder="数値" />
+							<input list="mode5-unit-list" size="3" class="mode5-unit-text" name="unit" placeholder="単位" />
+							<datalist class="mode5-unit-list">
+								<option value="mm" />
+								<option value="cm" />
+								<option value="m" />
+								<option value="km" />
+								<option value="inch" />
+								<option value="pt" />
+								<option value="px" />
+								<option value="feet" />
+								<option value="yards" />
+								<option value="AU" />
+								<option value="miles" />
+							</datalist>
+						</p>
+						<p class="center">
+							<button class="mode5-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+							<button class="mode5-next"><img class="icon" src="img/right-arrow.png" alt="" />次へ</button>
+						</p>
+					</div>
+				</form>
+			</nav>
+			<nav id="mode6" class="mode invisible">
+				<header>
+					<h1 class="center">☆ 測定 ☆</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<div class="smartphone-visible">
+						<p>
+							イメージ上をドラッグして、測定したい線分を入力して下さい。
+						</p>
+						<p class="center">
+							<span class="nobreak">
+								<span class="mode6-measure-type-text">長さ：</span>
+								<input class="mode6-measure-results" type="text" size="15" disabled="disabled" />
+							</span>
+							<button class="mode6-copy-text">コピー</button>　
+							<span class="nobreak">
+								<input type="checkbox" class="mode6-draw-circle" name="mode6-draw-circle"> <label for="mode6-draw-circle">補助円を描く</label>
+								　
+							</span>
+							<span class="nobreak">
+								<button class="mode6-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+								<button class="mode6-finish"><img class="icon" src="img/up-arrow.png" alt="" />終了</button>
+							</span>
+						</p>
+					</div>
+					<div class="smartphone-invisible">
+						<p>
+							イメージ上をドラッグして、測定したい線分を入力して下さい。
+						</p>
+						<p class="center">
+							<span class="mode6-measure-type-text">長さ：</span>
+							<input class="mode6-measure-results" type="text" size="15" disabled="disabled" />
+						</p>
+						<p class="center">
+							<button class="mode6-copy-text" class="big-button">クリップボードにコピー</button>
+						</p>
+						<p class="center">
+							<input type="checkbox" class="mode6-draw-circle" name="mode6-draw-circle"> <label for="mode6-draw-circle">補助円を描く</label>
+						</p>
+						<p class="center">
+							<button class="mode6-back"><img class="icon" src="img/left-arrow.png" alt="" />戻る</button>
+							<button class="mode6-finish"><img class="icon" src="img/up-arrow.png" alt="" />終了</button>
+						</p>
+					</div>
+				</form>
+			</nav>
+			<footer>
+				<button id="config-button"><img class="icon" src="img/hamburger.png" alt="" />設定</button>
+				<button id="history-button"><img class="icon" src="img/history.png" alt="" />更新履歴</button>
+				<button id="about-button"><img class="icon" src="img/tag.png" alt="" />バージョン情報</button>
+				<div id="config-dialog" class="invisible">
+					<p>
+						ズーム：
+						<select id="config-dialog-zoom">
+							<option value="-1" selected="selected"></option>
+							<option value="0">全体を表示する</option>
+							<option value="1">横幅に合わせる</option>
+							<option value="2">縦幅に合わせる</option>
+							<option value="10">10%</option>
+							<option value="25">25%</option>
+							<option value="50">50%</option>
+							<option value="75">75%</option>
+							<option value="100">100%</option>
+							<option value="125">125%</option>
+							<option value="150">150%</option>
+							<option value="200">200%</option>
+							<option value="300">300%</option>
+						</select>
+					</p>
+					<p>
+						線分の色：
+						<select id="config-dialog-line-color">
+							<option value="red" selected="selected">赤</option>
+							<option value="green">緑</option>
+							<option value="blue">青</option>
+						</select>
+					</p>
+				</div>
+				<div id="history-dialog" class="invisible">
+					<p class="smaller">
+						2021.08.28 初公開。
+					</p>
+				</div>
+				<div id="about-dialog" class="invisible">
+					<p>
+						カラスンポOnline Version 0.5
+					</p>
+					<p class="smaller">
+						Copyright &copy; 2021 Katayama Hirofumi MZ.
+					</p>
+					<p class="smaller">
+						License: MIT
+					</p>
+					<hr />
+					<p class="smaller">
+						カラスンポOnlineは利用者のファイルを勝手に使用したりしません。
+					</p>
+					<p class="smaller">
+						<a href="view-source:.">ソースを確認</a>
+					</p>
+				</div>
+				<hr />
+				<div class="smaller">&copy; 2021 katahiromz</div>
+			</footer>
+		</section>
+		<canvas id="image-screen" class="drop-area"></canvas>
+		<canvas id="offscreen" class="invisible"></canvas>
+	</section>
+</body>
+</html>

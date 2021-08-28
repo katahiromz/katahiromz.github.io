@@ -1,0 +1,173 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	color: black;
+	background-color: white;
+	height: 100vh;
+}
+h1 {
+	margin: 4px;
+	paddding: 4px;
+	font-size: 120%;
+}
+p {
+	margin: 8px;
+}
+input, button {
+	padding: 2px 8px;
+}
+footer {
+	font-size: 75%;
+}
+.invisible {
+	display: none;
+}
+.larger {
+	font-size: 125%;
+}
+.smaller {
+	font-size: 75%;
+}
+.no_break {
+	white-space: nowrap;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+.canvas {
+	width: 200px;
+	height: 200px;
+}
+.frame {
+	width: 200px;
+	height: 200px;
+	border: 4px solid black;
+	margin: 8px;
+}
+.frame_center {
+	margin-left: auto;
+	margin-right: auto;
+}
+.border {
+	border: 4px solid black;
+	padding: 8px;
+	margin: 0px;
+}
+.drop-area-navi {
+	border: 5px dotted darkgreen;
+}
+.dragging-over {
+	border: 5px solid yellow;
+}
+.black {
+	background-color: black;
+}
+.red {
+	background-color: red;
+}
+.blue {
+	background-color: blue;
+}
+.green {
+	background-color: darkgreen;
+}
+.focus_box {
+	border: 2px dotted blue;
+	padding: 2px;
+	margin: 2px;
+}
+.icon {
+	vertical-align: -50%;
+}
+#fullscreen {
+	width: 100vw;
+	height: 100vh;
+	background-size: 100% 100%;
+}
+#navigation {
+	width: 30%;
+	height: 100vh;
+	background-size: auto 100%;
+	border-right: 2px solid black;
+	float: left;
+	background-color: lightyellow;
+}
+#image-screen {
+	width: 69%;
+	height: 100vh;
+	background-size: auto 100%;
+	float: left;
+	cursor: crosshair;
+}
+.smartphone-visible {
+	display: none;
+}
+@media (max-width: 750px) {
+	.smartphone-visible {
+		display: block;
+	}
+	.smartphone-invisible {
+		display: none;
+	}
+	h1 {
+		font-size: 75%;
+	}
+	p {
+		font-size: 50%;
+	}
+	button {
+		font-size: 50%;
+		padding: 0;
+	}
+	.smaller {
+		font-size: 40%;
+	}
+	#navigation {
+		width: 100%;
+		height: 25%;
+		background-size: 100% auto;
+		border-right: 2px solid black;
+		float: none;
+		background-color: lightyellow;
+	}
+	#image-screen {
+		width: 100%;
+		height: 74%;
+		background-size: 100% auto;
+		float: none;
+		cursor: crosshair;
+	}
+	.drop-area-navi {
+		border: none;
+	}
+}
+footer {
+	position: absolute;
+	bottom: 0;
+}
+.big-button {
+	padding: 5px 30px;
+}
+ul {
+	margin: 8px;
+}
+li {
+	margin: 4px;
+}
+.indented {
+	margin-left: 8px;
+}
+.error {
+	color: red;
+	font-weight: bold;
+}
+.length {
+	text-align: right;
+}
+.nobreak {
+	white-space: nowrap;
+}
