@@ -232,7 +232,7 @@
 				offsetY: py + this.theDeltaY
 			});
 			console.log(viewport);
-			if (!this.theZoom)
+			if (isNaN(viewport.scale))
 				console.trace();
 			// PDFレンダリング開始。
 			var renderContext = {
