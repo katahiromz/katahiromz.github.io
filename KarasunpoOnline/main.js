@@ -232,6 +232,8 @@
 				offsetY: py + this.theDeltaY
 			});
 			console.log(viewport);
+			if (!this.theZoom)
+				console.trace();
 			// PDFレンダリング開始。
 			var renderContext = {
 				canvasContext: ctx,
