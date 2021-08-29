@@ -1191,7 +1191,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 		});
 		$(".mode6-draw-circle").on('click', function(){
 			Karasunpo.theDrawCircle = $(".mode6-draw-circle").prop('checked');
-			$(".mode4-draw-circle").prop('checked', theDrawCircle);
+			$(".mode4-draw-circle").prop('checked', this.theDrawCircle);
 			Karasunpo.doRedraw();
 		});
 		$(".mode6-copy-text").on('click', function(){
