@@ -157,18 +157,20 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 市松模様を描画する。
 		drawChecker: function(ctx, cx, cy) {
-			var i = 0, j = 0, size = 16;
-			for (var y = 0; y < cy + size; y += size) {
+			// 背景をライトグレーで塗りつぶす。
+			ctx.fillStyle = "rgb(191, 191, 191)";
+			ctx.fillRect(0, 0, Math.floor(cx), Math.floor(cy));
+			// ダークグレーで正方形を連続で描く。
+			ctx.fillStyle = "rgb(90, 90, 90)";
+			var i, j, size = 16;
+			j = 0;
+			for (var y = 0; y < cy + size; (y += size), ++j) {
 				i = (j % 2 == 0) ? 1 : 0;
-				for (var x = 0; x < cx + size; x += size) {
-					if (i % 2 == 0)
-						ctx.fillStyle = "rgb(90, 90, 90)";
-					else
-						ctx.fillStyle = "rgb(191, 191, 191)";
-					ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(cx), Math.floor(cy));
-					++i;
+				for (var x = 0; x < cx + size; (x += size), ++i) {
+					if (i % 2 == 0) {
+						ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(size), Math.floor(size));
+					}
 				}
-				++j;
 			}
 		},
 		// 背景を描画する。
