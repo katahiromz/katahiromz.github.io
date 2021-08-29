@@ -11,10 +11,10 @@
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
+<body id="body">
 <h1>pinch-test.html</h1>
 <hr />
-<canvas id="image-screen" width="300" height="300" style="border: 3px solid black"></canvas>
+<canvas id="image-screen" width="500" height="500" style="border: 3px solid black"></canvas>
 <script>
 $(function(){
 	var pinchDistance = 0;
@@ -24,12 +24,11 @@ $(function(){
 		var canvas = $("#image-screen");
 		var ctx = canvas[0].getContext('2d');
 		ctx.strokeStyle = "black";
-		ctx.strokeRect(150 - 100 * scale, 150 - 100 * scale, 2 * 100 * scale, 2 * 100 * scale);
+		ctx.strokeRect(250 - 500 * scale / 2, 250 - 500 * scale / 2, 500 * scale, 500 * scale);
 	}
 	// タッチデバイスでタッチ移動した。
 	document.getElementById("image-screen").addEventListener('touchmove', function(e){
 		e.preventDefault();
-		alert("OK");
 		var t = e.changedTouches;
 		if (touches > 1) {
 			var x0 = t[0].pageX;
