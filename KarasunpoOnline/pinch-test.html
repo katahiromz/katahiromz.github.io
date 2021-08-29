@@ -20,11 +20,15 @@ $(function(){
 	var pinchDistance = 0;
 	var scale = 1.0;
 	var timerID;
+	var tx0, ty0;
+	var dx = 0, dy = 0;
 	function redraw() {
 		var canvas = $("#image-screen");
 		var ctx = canvas[0].getContext('2d');
+		ctx.fillStyle = "white";
+		ctx.fillRect(0, 0, 400, 400);
 		ctx.strokeStyle = "black";
-		ctx.strokeRect(200 - 70 * scale / 2, 200 - 70 * scale / 2, 70 * scale, 70 * scale);
+		ctx.strokeRect(200 - 70 * scale / 2 + dx, 200 - 70 * scale / 2 + dy, 70 * scale, 70 * scale);
 	}
 	// タッチデバイスでタッチ移動した。
 	document.getElementById("image-screen").addEventListener('touchmove', function(e){
@@ -37,6 +41,15 @@ $(function(){
 			var y1 = t[1].pageY;
 			var dx = x1 - x0, dy = y1 - y0;
 			var distance = Math.sqrt(dx * dx + dy * dy);
+			var ptx0 = (x0 + x1) / 2;
+			var pty0 = (y0 + y1) / 2;
+			if (tx0 === undefined || ty0 === undefined) {
+				tx0 = ptx0;
+				ty0 = pty0;
+			} else {
+				dx += ptx0 - tx0;
+				dy += pty0 - ty0;
+			}
 			clearTimeout(timerID);
 			if (pinchDistance != 0) {
 				scale = distance / pinchDistance;
