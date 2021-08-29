@@ -412,7 +412,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			ctx.save();
 			ctx.lineCap = 'round';
 			ctx.lineWidth = 2;
-			ctx.strokeStyle = theLineColor;
+			ctx.strokeStyle = this.theLineColor;
 			var xy0 = this.LPtoDP(cx, cy);
 			var r0 = r * this.theZoom / 100.0;
 			ctx.beginPath();
