@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.878"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.879"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -912,9 +912,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (this.touchTimer) {
 				clearTimeout(this.touchTimer);
 				var Karasunpo = this;
-				setTimeout(function(){
+				this.touchTimer = setTimeout(function(){
 					Karasunpo.touchX = null;
-					Karasunpo.touchY == null;
+					Karasunpo.touchY = null;
 				}, 800);
 			}
 			if (this.savepx0 === null) {
