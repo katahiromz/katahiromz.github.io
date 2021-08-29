@@ -495,7 +495,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.theCanMove = true;
 				break;
 			case 3: // モード３：測定タイプ。
-				this.theLineOn = true;
+				this.theLineOn = false;
 				this.theCanDraw = false;
 				this.theCanMove = true;
 				break;
