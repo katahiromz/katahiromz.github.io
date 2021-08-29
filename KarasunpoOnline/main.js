@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.84"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.85"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -75,7 +75,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		savey0: null, // 保存用。
 		savex1: null, // 保存用。
 		savey1: null, // 保存用。
-		touchTime: null, // タッチした時刻。
 		theLineColor: 'red', // 線分の色。
 		theDrawCircle: false, // 補助円を描くか？
 		theIsPDF: false, // PDFファイルか？
@@ -84,7 +83,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		theStdNominalLength: 0, // 基準線分の長さ（名目）。
 		theLengthUnit: "", // 長さの単位。
 		theFileName: "", // ファイル名。
-		touching: false, // タッチ中か？
+		touchMoving: false, // タッチ移動中か？
 		touchX: null, // タッチ位置。
 		touchY: null, // タッチ位置。
 		touchDistance: null, // 二本指のタッチ距離。
@@ -846,8 +845,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.doTouchMove(t);
 				return;
 			}
-			if (this.touching) {
-				this.doTouchMove(t);
+			if (this.touchMoving) {
 				return;
 			}
 			if (!this.theCanDraw)
@@ -873,15 +871,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.savey0 = this.py0;
 				this.savex1 = this.px1;
 				this.savey1 = this.py1;
-				this.touchTime = new Date().getTime();
 			}
 			this.thePenOn = false; // ペンをオフにする。
 			var x0 = t[0].pageX, y0 = t[0].pageY;
 			var x1 = t[1].pageX, y1 = t[1].pageY;
 			var dx = x1 - x0, dy = y1 - y0;
-			if (!this.touching) {
+			if (!this.touchMoving) {
 				// タッチを開始した。
-				this.touching = true; // タッチ開始。
+				this.touchMoving = true; // タッチ開始。
 				this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 			} else {
 				// タッチ操作の続き。
@@ -921,7 +918,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.doTouchMove(t);
 				return;
 			} else {
-				if (this.touching)
+				if (this.touchMoving)
 					return;
 				if (this.theHandleOn == -1) {
 					if (!this.theCanDraw || !this.thePenOn || !this.theLineOn)
@@ -989,11 +986,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			console.log("touchend");
 			$(".info").text("touchend");
 			e.preventDefault();
-			if (this.touchTime != null &&
-				new Date().getTime() - this.touchTime < 100)
-			{
-				this.touchTime = null;
-				this.touching = false; // タッチを終了。
+			if (this.touchMoving) {
+				this.touchMoving = false; // タッチを終了。
 				if (this.savex0 !== null) {
 					// 線分の位置を復元する。
 					this.setSegment(this.savex0, this.savey0, this.savex1, this.savey1);
@@ -1001,9 +995,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.savex0 = this.savey0 = this.savex1 = this.savey1 = null;
 				return;
 			}
-			this.touchTime = null;
-			if (this.touching) { // タッチ中か？
-				this.touching = false; // タッチを終了。
+			if (this.touchMoving) { // タッチ中か？
+				this.touchMoving = false; // タッチを終了。
 				if (this.savex0 !== null) {
 					// 線分の位置を復元する。
 					this.setSegment(this.savex0, this.savey0, this.savex1, this.savey1);
