@@ -89,6 +89,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		touchX: null, // タッチ位置。
 		touchY: null, // タッチ位置。
 		touchDistance: null, // 二本指のタッチ距離。
+		// 線分を変更する。
+		setSegment: function(x0, y0, x1, y1) {
+			this.px0 = x0;
+			this.py0 = y0;
+			this.px1 = x1;
+			this.py1 = y1;
+		},
 		// HTMLの特殊文字を変換。
 		htmlspecialchars: function(str){
 			return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -807,8 +814,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.theHandleOn = this.isOnHandle(x, y);
 			var LP = this.DPtoLP(x, y);
 			if (this.theHandleOn == -1) {
-				this.px0 = this.px1 = LP[0];
-				this.py0 = this.py1 = LP[1];
+				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
 				this.thePenOn = true;
 			}
 			if (this.theMode == 6) {
@@ -857,8 +863,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.theHandleOn = this.isOnHandle(x, y);
 			var LP = this.DPtoLP(x, y);
 			if (this.theHandleOn == -1) {
-				this.px0 = this.px1 = LP[0];
-				this.py0 = this.py1 = LP[1];
+				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
 				this.thePenOn = true;
 			}
 			if (this.theMode == 6) {
@@ -936,11 +941,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var LP = this.DPtoLP(x, y);
 			if (this.theHandleOn != -1) {
 				if (this.theHandleOn == 0) {
-					this.px0 = LP[0];
-					this.py0 = LP[1];
+					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
-					this.px1 = LP[0];
-					this.py1 = LP[1];
+					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
 			} else {
 				var LP = this.DPtoLP(x, y);
@@ -972,11 +975,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var LP = this.DPtoLP(x, y);
 			if (this.theHandleOn != -1) {
 				if (this.theHandleOn == 0) {
-					this.px0 = LP[0];
-					this.py0 = LP[1];
+					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
-					this.px1 = LP[0];
-					this.py1 = LP[1];
+					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
 				if (this.theMode == 6) {
 					this.doMeasure();
@@ -1008,10 +1009,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.touching = false; // タッチを終了。
 				if (this.savex0 !== null) {
 					// 線分の位置を復元する。
-					this.px0 = this.savex0;
-					this.py0 = this.savey0;
-					this.px1 = this.savex1;
-					this.py1 = this.savey1;
+					this.setSegment(this.savex0, this.savey0, this.savex1, this.savey1);
 				}
 				this.savex0 = this.savey0 = this.savex1 = this.savey1 = null;
 				return;
@@ -1021,10 +1019,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.touching = false; // タッチを終了。
 				if (this.savex0 !== null) {
 					// 線分の位置を復元する。
-					this.px0 = this.savex0;
-					this.py0 = this.savey0;
-					this.px1 = this.savex1;
-					this.py1 = this.savey1;
+					this.setSegment(this.savex0, this.savey0, this.savex1, this.savey1);
 				}
 				this.savex0 = this.savey0 = this.savex1 = this.savey1 = null;
 				if (this.touchDistance !== null ||
@@ -1044,11 +1039,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var LP = this.DPtoLP(x, y);
 			if (this.theHandleOn != -1) {
 				if (this.theHandleOn == 0) {
-					this.px0 = LP[0];
-					this.py0 = LP[1];
+					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
-					this.px1 = LP[0];
-					this.py1 = LP[1];
+					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
 				this.theHandleOn = -1;
 			} else {
@@ -1081,11 +1074,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var LP = this.DPtoLP(x, y);
 			if (this.theHandleOn != -1) {
 				if (this.theHandleOn == 0) {
-					this.px0 = LP[0];
-					this.py0 = LP[1];
+					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
-					this.px1 = LP[0];
-					this.py1 = LP[1];
+					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
 				this.theHandleOn = -1;
 			} else {
@@ -1241,7 +1232,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				Karasunpo.setMode(6);
 			} else {
 				Karasunpo.sx0 = Karasunpo.sy0 = Karasunpo.sx1 = Karasunpo.sy1 = 0;
-				Karasunpo.px0 = Karasunpo.py0 = Karasunpo.px1 = Karasunpo.py1 = 0;
+				Karasunpo.setSegment(0, 0, 0, 0);
 				$(".mode4-next").prop('disabled', true);
 				Karasunpo.setMode(4);
 			}
@@ -1281,7 +1272,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				Karasunpo.sy0 = Karasunpo.py0;
 				Karasunpo.sx1 = Karasunpo.px1;
 				Karasunpo.sy1 = Karasunpo.py1;
-				Karasunpo.px0 = Karasunpo.py0 = Karasunpo.px1 = Karasunpo.py1 = 0;
+				Karasunpo.setSegment(0, 0, 0, 0);
 				$(".mode6-measure-results").val("");
 				Karasunpo.setMode(6);
 			} else {
@@ -1303,10 +1294,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 
 		// モード５：基準線分の長さ。
 		$(".mode5-back").on('click', function(){
-			Karasunpo.px0 = Karasunpo.sx0;
-			Karasunpo.py0 = Karasunpo.sy0;
-			Karasunpo.px1 = Karasunpo.sx1;
-			Karasunpo.py1 = Karasunpo.sy1;
+			Karasunpo.setSegment(Karasunpo.sx0, Karasunpo.sy0, Karasunpo.sx1, Karasunpo.sy1);
 			if (Karasunpo.px0 != Karasunpo.px1 || Karasunpo.py0 != Karasunpo.py1) {
 				$(".mode4-next").prop('disabled', false);
 			} else {
@@ -1345,10 +1333,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			} else if (Karasunpo.theMeasureType == 'angle') {
 				Karasunpo.setMode(4);
 			} else {
-				Karasunpo.px0 = Karasunpo.sx0;
-				Karasunpo.py0 = Karasunpo.sy0;
-				Karasunpo.px1 = Karasunpo.sx1;
-				Karasunpo.py1 = Karasunpo.sy1;
+				Karasunpo.setSegment(Karasunpo.sx0, Karasunpo.sy0, Karasunpo.sx1, Karasunpo.sy1);
 				Karasunpo.setMode(5);
 			}
 		});
