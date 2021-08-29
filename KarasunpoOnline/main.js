@@ -1104,7 +1104,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			$("#mode3-measure-type-angle-2").prop('checked', true);
 		});
 		$(".mode3-is-radian").on('click', function(){
-			if ($(".mode3-is-radian").prop('checked')) {
+			if ($(this).prop('checked')) {
 				Karasunpo.theIsRadian = true;
 			} else {
 				Karasunpo.theIsRadian = false;
