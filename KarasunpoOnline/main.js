@@ -798,6 +798,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの左ボタンが押された。
 		onLButtonDown: function(e){
 			console.log("mousedown.VK_LBUTTON");
+			$(".info").text("LBUTTONDOWN");
 			e.preventDefault();
 			if (!this.theCanDraw)
 				return;
@@ -817,6 +818,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの中央ボタンが押された。
 		onMButtonDown: function(e){
 			console.log("mousedown.VK_MBUTTON");
+			$(".info").text("MBUTTONDOWN");
 			e.preventDefault();
 			if (!this.theCanMove) {
 				return;
@@ -840,7 +842,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチが始まった。
 		onTouchStart: function(e){
 			console.log("touchstart");
-			$("#info").text("touchstart");
+			$(".info").text("touchstart");
 			e.preventDefault();
 			if (!this.theCanDraw)
 				return;
@@ -911,7 +913,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチ移動した。
 		onTouchMove: function(e){
 			console.log("touchmove");
-			$("#info").text("touchmove");
+			$(".info").text("touchmove");
 			e.preventDefault();
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
@@ -949,6 +951,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスが移動した。
 		onMouseMove: function(e){
 			console.log("mousemove");
+			$(".info").text("mousemove");
 			e.preventDefault();
 			if (this.theHandleOn == -1) {
 				if (this.thePenOn) {
@@ -992,7 +995,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチが終了した。
 		onTouchEnd: function(e){
 			console.log("touchend");
-			$("#info").text("touchend");
+			$(".info").text("touchend");
 			e.preventDefault();
 			if (this.touching) { // タッチ中か？
 				this.touching = false; // タッチを終了。
@@ -1046,6 +1049,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの左ボタンが解放された。
 		onLButtonUp: function(e){
 			console.log("mouseup.VK_LBUTTON");
+			$(".info").text("LBUTTONUP");
 			e.preventDefault();
 			if (this.theHandleOn == -1) {
 				if (!this.theCanDraw)
@@ -1082,6 +1086,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの中央ボタンが解放された。
 		onMButtonUp: function(e){
 			console.log("mouseup.VK_MBUTTON");
+			$(".info").text("MBUTTONUP");
 			e.preventDefault();
 			if (!this.theCanMove || !this.theMoveOn)
 				return;
