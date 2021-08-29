@@ -50,7 +50,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		theFitMode: 0, // 画面モード（0：自動、1：横方向に合わせる、2：縦方向に合わせる）。
 		theZoom: 100.0, // ズーム率（百分率）。
 		theCanDraw: false, // 描画できるか？
-		theCanMove: true, // 画像を動かせるか？
 		theIsDrawing: false, // 描画中か？
 		thePenOn: false, // ペンはキャンバス上にあるか？
 		theLineOn: false, // 線分をキャンバスに表示するか？
@@ -530,34 +529,28 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			case 1: // モード１：初期画面。
 				this.theLineOn = false;
 				this.theCanDraw = false;
-				this.theCanMove = false;
 				// 画面サイズに関する初期化。
 				this.onWindowResize();
 				break;
 			case 2: // モード２：ファイルを開く。
 				this.theLineOn = false;
 				this.theCanDraw = false;
-				this.theCanMove = true;
 				break;
 			case 3: // モード３：測定タイプ。
 				this.theLineOn = false;
 				this.theCanDraw = false;
-				this.theCanMove = true;
 				break;
 			case 4: // モード４：基準線分。
 				this.theLineOn = true;
 				this.theCanDraw = true;
-				this.theCanMove = true;
 				break;
 			case 5: // モード５：基準線分の長さ。
 				this.theLineOn = true;
 				this.theCanDraw = false;
-				this.theCanMove = true;
 				break;
 			case 6: // モード６：測定。
 				this.theLineOn = true;
 				this.theCanDraw = true;
-				this.theCanMove = true;
 				break;
 			}
 			this.theMode = mode;
@@ -827,9 +820,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			console.log("mousedown.VK_MBUTTON");
 			$(".info").text("MBUTTONDOWN");
 			e.preventDefault();
-			if (!this.theCanMove) {
-				return;
-			}
 			this.mx0 = e.offsetX;
 			this.my0 = e.offsetY;
 			this.theMoveOn = true;
@@ -853,6 +843,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault();
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
+				this.doTouchMove(t);
+				return;
+			}
+			if (this.touching) {
 				this.doTouchMove(t);
 				return;
 			}
@@ -882,42 +876,40 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.touchTime = new Date().getTime();
 			}
 			this.thePenOn = false; // ペンをオフにする。
-			if (this.theCanMove) { // 移動可能か？
-				var x0 = t[0].pageX, y0 = t[0].pageY;
-				var x1 = t[1].pageX, y1 = t[1].pageY;
-				var dx = x1 - x0, dy = y1 - y0;
-				if (!this.touching) {
-					// タッチを開始した。
-					this.touching = true; // タッチ開始。
-					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
-				} else {
-					// タッチ操作の続き。
-					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
-					// 距離に応じてズームする。
-					if (newTouchDistance > this.touchDistance + this.getScreenSizeIndex()) {
-						this.setZoom(this.theZoom * 1.1);
-					} else if (newTouchDistance + this.getScreenSizeIndex() < this.touchDistance) {
-						this.setZoom(this.theZoom * 0.9);
-					}
-					// 距離を更新。
-					this.touchDistance = newTouchDistance;
+			var x0 = t[0].pageX, y0 = t[0].pageY;
+			var x1 = t[1].pageX, y1 = t[1].pageY;
+			var dx = x1 - x0, dy = y1 - y0;
+			if (!this.touching) {
+				// タッチを開始した。
+				this.touching = true; // タッチ開始。
+				this.touchDistance = Math.sqrt(dx * dx + dy * dy);
+			} else {
+				// タッチ操作の続き。
+				var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
+				// 距離に応じてズームする。
+				if (newTouchDistance > this.touchDistance + this.getScreenSizeIndex()) {
+					this.setZoom(this.theZoom * 1.1);
+				} else if (newTouchDistance + this.getScreenSizeIndex() < this.touchDistance) {
+					this.setZoom(this.theZoom * 0.9);
 				}
-				// タッチ位置を取得。
-				var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
-				if (this.touchX === null || this.touchY === null) {
-					// タッチ位置を新しくセット。
-					this.touchX = newTouchX;
-					this.touchY = newTouchY;
-				} else {
-					// タッチ位置に違いに応じて画面を動かし、タッチ位置を更新。
-					this.theDeltaX += newTouchX - this.touchX;
-					this.theDeltaY += newTouchY - this.touchY;
-					this.touchX = newTouchX;
-					this.touchY = newTouchY;
-				}
-				// 再描画。
-				this.redraw();
+				// 距離を更新。
+				this.touchDistance = newTouchDistance;
 			}
+			// タッチ位置を取得。
+			var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
+			if (this.touchX === null || this.touchY === null) {
+				// タッチ位置を新しくセット。
+				this.touchX = newTouchX;
+				this.touchY = newTouchY;
+			} else {
+				// タッチ位置に違いに応じて画面を動かし、タッチ位置を更新。
+				this.theDeltaX += newTouchX - this.touchX;
+				this.theDeltaY += newTouchY - this.touchY;
+				this.touchX = newTouchX;
+				this.touchY = newTouchY;
+			}
+			// 再描画。
+			this.redraw();
 		},
 		// タッチデバイスでタッチ移動した。
 		onTouchMove: function(e){
@@ -964,11 +956,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				if (this.thePenOn) {
 					if (!this.theCanDraw || !this.theLineOn)
 						return;
-				} else if (this.theCanMove) {
-					if (!this.theMoveOn)
-						return;
-				} else {
-					return;
 				}
 			}
 			var x = e.offsetX, y = e.offsetY;
@@ -1101,7 +1088,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			console.log("mouseup.VK_MBUTTON");
 			$(".info").text("MBUTTONUP");
 			e.preventDefault();
-			if (!this.theCanMove || !this.theMoveOn)
+			if (!this.theMoveOn)
 				return;
 			this.theDeltaX += e.offsetX - this.mx0;
 			this.theDeltaY += e.offsetY - this.my0;
