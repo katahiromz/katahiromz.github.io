@@ -840,6 +840,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチが始まった。
 		onTouchStart: function(e){
 			console.log("touchstart");
+			$("#info").text("touchstart");
 			e.preventDefault();
 			if (!this.theCanDraw)
 				return;
@@ -882,7 +883,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					// タッチ操作の続き。
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
 					// 距離に応じてズームする。
-					$("#info").text(this.touchDistance + " | " + newTouchDistance);
 					if (newTouchDistance > this.touchDistance + this.getScreenSizeIndex()) {
 						this.setZoom(this.theZoom * 1.1);
 					} else if (newTouchDistance + this.getScreenSizeIndex() < this.touchDistance) {
@@ -911,6 +911,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチ移動した。
 		onTouchMove: function(e){
 			console.log("touchmove");
+			$("#info").text("touchmove");
 			e.preventDefault();
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
