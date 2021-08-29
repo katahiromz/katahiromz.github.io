@@ -39,7 +39,7 @@ $(function(){
 		if (t.length > 1) {
 			var w = Math.abs(t[1].pageX - t[0].pageX);
 			var h = Math.abs(t[1].pageY - t[0].pageY);
-			s0 = w * h;
+			s0 = Math.sqrt(w * h);
 		}
 	}, {passive: false});
 	// タッチデバイスでタッチ移動した。
@@ -49,7 +49,7 @@ $(function(){
 		if (t.length > 1) {
 			var w = Math.abs(t[1].pageX - t[0].pageX);
 			var h = Math.abs(t[1].pageY - t[0].pageY);
-			var s1 = w * h;
+			var s1 = Math.sqrt(w * h);
 			if (s0 + 10000 < s1) {
 				scale += 0.02 * scale;
 			} else if (s0 + 5000 < s1) {
