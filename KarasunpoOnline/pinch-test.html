@@ -36,16 +36,16 @@ $(function(){
 			var x1 = t[1].pageX;
 			var y1 = t[1].pageY;
 			var dx = x1 - x0, dy = y1 - y0;
-			var newPinchdistance = Math.sqrt(dx * dx + dy * dy);
+			var distance = Math.sqrt(dx * dx + dy * dy);
 			clearTimeout(timerID);
-			if (pinchDistance != 0 && pinchDistance != Infinity) {
-				scale = newPinchdistance / pinchDistance;
+			if (pinchDistance != 0) {
+				scale = distance / pinchDistance;
 				redraw();
-			} else {
-				pinchDistance = newPinchdistance;
 				timerID = setTimeout(function(){
 					pinchDistance = 0;
 				}, 500);
+			} else {
+				pinchDistance = distance;
 			}
 		}
 	}, {passive: false});
