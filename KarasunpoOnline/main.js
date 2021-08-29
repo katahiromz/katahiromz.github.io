@@ -93,13 +93,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				y : touch.clientY - rect.top
 			};
 		},
-		// スマートフォンか？
-		isSmartPhone: function(){
-			return (window.innerWidth < window.innerHeight);
+		// 縦長のデバイスか？
+		isPortraitDevice: function(){
+			return (window.innerWidth <= window.innerHeight);
 		},
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
-			if (this.isSmartPhone())
+			if (this.isPortraitDevice())
 				return 10;
 			return 5;
 		},
@@ -373,7 +373,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
-			if (this.isSmartPhone())
+			if (this.isPortraitDevice())
 				handleSize *= 3;
 			if (xy0[0] - handleSize <= x && x <= xy0[0] + handleSize &&
 				xy0[1] - handleSize <= y && y <= xy0[1] + handleSize)
@@ -463,7 +463,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// 画面のサイズが変わった。
 		onWindowResize: function(){
 			var canvas = $("#image-screen");
-			if (this.isSmartPhone()) {
+			if (this.isPortraitDevice()) {
 				this.cxCanvas = parseInt(window.innerWidth);
 				this.cyCanvas = parseInt(window.innerHeight * 0.74); // これはCSSに合わせる必要がある。
 			} else {
@@ -1280,7 +1280,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// 更新履歴ボタン。
 		$("#history-button").click(function(){
 			var width;
-			if (Karasunpo.isSmartPhone()) {
+			if (Karasunpo.isPortraitDevice()) {
 				width = "250px";
 			} else {
 				width = "500px";
@@ -1302,7 +1302,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		$("#about-button").click(function(){
 			$("#about-dialog-version").text(KARASUNPO_VERSION);
 			var width;
-			if (Karasunpo.isSmartPhone()) {
+			if (Karasunpo.isPortraitDevice()) {
 				width = "250px";
 			} else {
 				width = "500px";

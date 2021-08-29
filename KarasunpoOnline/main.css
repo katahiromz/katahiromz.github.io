@@ -103,7 +103,7 @@ footer {
 	float: left;
 	cursor: crosshair;
 }
-.smartphone-visible {
+.portrait-visible {
 	display: none;
 }
 @media (orientation: portrait) {
@@ -121,10 +121,10 @@ footer {
 	button {
 		padding: 0;
 	}
-	.smartphone-visible {
+	.portrait-visible {
 		display: block;
 	}
-	.smartphone-invisible {
+	.portrait-invisible {
 		display: none;
 	}
 	#navigation {
