@@ -917,10 +917,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.doTouchMove(t);
 				return;
 			} else {
-				if (this.theCanMove) {
-					if (this.touching)
-						return;
-				}
+				if (this.touching)
+					return;
 				if (this.theHandleOn == -1) {
 					if (!this.theCanDraw || !this.thePenOn || !this.theLineOn)
 						return;
@@ -1001,10 +999,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.py0 = this.savey0;
 				this.px1 = this.savex1;
 				this.py1 = this.savey1;
-				this.savex0 = undefined;
-				this.savey0 = undefined;
-				this.savex1 = undefined;
-				this.savey1 = undefined;
+				this.savex0 = this.savey0 = this.savex1 = this.savey1 = undefined;
 				if (this.touchDistance !== undefined ||
 				    this.touchX !== undefined || this.touchY !== undefined)
 				{
