@@ -50,9 +50,10 @@ $(function(){
 			var s1 = w * h;
 			if (s0 < s1) {
 				scale *= 0.9;
-			} else {
+			} else if (s0 > s1) {
 				scale *= 1.1;
 			}
+			s0 = s1;
 			var x0 = t[0].pageX;
 			var y0 = t[0].pageY;
 			var x1 = t[1].pageX;
