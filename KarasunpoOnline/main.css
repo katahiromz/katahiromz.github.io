@@ -106,12 +106,20 @@ footer {
 .smartphone-visible {
 	display: none;
 }
-@media (max-width: 750px) {
+@media (orientation: portrait) {
 	h1 {
 		font-size: 2.5vh;
 	}
-	p {
+	p, button, input {
 		font-size: 2vh;
+		line-height: 120%;
+	}
+	button img {
+		width: 4vh;
+		height: 4vh;
+	}
+	button {
+		padding: 0;
 	}
 	.smartphone-visible {
 		display: block;

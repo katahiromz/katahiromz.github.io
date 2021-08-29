@@ -31,6 +31,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		}
 	});
 
+	// 全角→半角(英数字)
+	var zenkakuToHankaku = function(str){
+		return str.replace(/[！-～]/g, function(s){
+			return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+		});
+	};
+
 	// We use module-pattern.
 	var Karasunpo = {
 		theImage: null, // 画像。
@@ -88,7 +95,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// スマートフォンか？
 		isSmartPhone: function(){
-			return (window.innerWidth < 750); // この値はCSSのmain.cssと合わせる必要がある。
+			return (window.innerWidth < window.innerHeight);
 		},
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
@@ -426,7 +433,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (this.thePDFIsDrawing || this.theIsDrawing) {
 				setTimeout(function(){
 					Karasunpo.doRedraw.call(Karasunpo);
-				}, 2000);
+				}, 1000);
 				return;
 			}
 			this.theIsDrawing = true;
@@ -528,8 +535,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					});
 					loadingTask.promise.then(function(pdf){
 						var text = file.name;
-						if (text.length > 16)
-							text = text.slice(0, 16) + "...";
+						if (text.length > 10)
+							text = text.slice(0, 10) + "...";
 						Karasunpo.theFileName = text;
 						Karasunpo.thePDF = pdf;
 						Karasunpo.thePDFPageNumber = 1;
@@ -545,8 +552,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					img1.src = e.target.result;
 					img1.onload = function(){
 						var text = file.name;
-						if (text.length > 16)
-							text = text.slice(0, 16) + "...";
+						if (text.length > 10)
+							text = text.slice(0, 10) + "...";
 						Karasunpo.theFileName = text;
 						Karasunpo.theImage = img1;
 						Karasunpo.cxImage = parseInt(Karasunpo.theImage.width);
@@ -1153,7 +1160,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		$(".mode5-next").prop('disabled', true);
 		$(".mode5-numeric-text").on('change input', function(){
 			// 基準線分の長さ（名目）。
-			Karasunpo.theStdNominalLength = $(this).val();
+			var text = $(this).val();
+			var text = zenkakuToHankaku(text);
+			Karasunpo.theStdNominalLength = parseFloat(text);
 			if (!isNaN(Karasunpo.theStdNominalLength) &&
 				isFinite(Karasunpo.theStdNominalLength) &&
 				Karasunpo.theStdNominalLength > 0)
