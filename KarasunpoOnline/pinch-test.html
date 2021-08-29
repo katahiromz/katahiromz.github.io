@@ -53,11 +53,11 @@ $(function(){
 				var s1 = Math.sqrt(w * h);
 				if (s0 + 300 < s1) {
 					scale += 0.02 * scale;
-				} else if (s0 + 100 < s1) {
+				} else if (s0 < s1) {
 					scale += 0.1 * scale;
 				} else if (s0 > s1 + 300) {
 					scale -= 0.02 * scale;
-				} else if (s0 > s1 + 100) {
+				} else if (s0 > s1) {
 					scale -= 0.1 * scale;
 				}
 				s0 = s1;
