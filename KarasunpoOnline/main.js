@@ -861,7 +861,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 					this.touching = true; // タッチ開始。
 				} else {
-					alert("OK3");
+					alert("OK3|" + dx + "|" + dy);
 					// タッチ操作の続き。
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
 					alert("OK3.5|" + newTouchDistance);
