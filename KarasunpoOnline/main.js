@@ -831,6 +831,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault();
 			if (!this.theCanDraw)
 				return;
+			if (e.touches.length > 1) { // 複数の指で操作？
+				return;
+			}
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
 			this.theHandleOn = this.isOnHandle(x, y);
@@ -845,53 +848,58 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			this.redraw();
 		},
+		// タッチデバイスでタッチ移動する。
+		doTouchMove: function(e){
+			alert("OK");
+			if (this.theCanMove) { // 移動可能か？
+				var x0 = t[0].pageX, y0 = t[0].pageY;
+				var x1 = t[1].pageX, y1 = t[1].pageY;
+				var dx = x1 - x0, dy = y1 - y0;
+				if (!this.touchDistance) {
+					// タッチを開始した。
+					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
+					this.touching = true; // タッチ開始。
+				} else {
+					// タッチ操作の続き。
+					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
+					// 距離に応じてズームする。
+					if (this.touchDistance + 3 < newTouchDistance) {
+						this.setZoom(theZoom * 1.08);
+					} else if (touchDistance + 1.2 < newTouchDistance) {
+						this.setZoom(theZoom * 1.1);
+					} else if (touchDistance > newTouchDistance + 3) {
+						this.setZoom(theZoom / 1.08);
+					} else if (touchDistance > newTouchDistance + 1.2) {
+						this.setZoom(theZoom / 1.1);
+					}
+					// 距離を更新。
+					this.touchDistance = newTouchDistance;
+				}
+				// タッチ位置を取得。
+				var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
+				if (this.touchX === undefined || this.touchY === undefined) {
+					// タッチ位置を新しくセット。
+					this.touchX = newTouchX;
+					this.touchY = newTouchY;
+				} else {
+					// タッチ位置に違いに応じて画面を動かし、タッチ位置を更新。
+					this.theDeltaX += newTouchX - this.touchX;
+					this.theDeltaY += newTouchY - this.touchY;
+					this.touchX = newTouchX;
+					this.touchY = newTouchY;
+				}
+				// 再描画。
+				this.redraw();
+			}
+		},
 		// タッチデバイスでタッチ移動した。
 		onTouchMove: function(e){
 			console.log("touchmove");
 			e.preventDefault();
-			if (e.touches.length > 1) { // 複数の指で操作？
+			var t = e.touches;
+			if (t.length > 1) { // 複数の指で操作？
 				this.thePenOn = false; // ペンをオフにする。
-				if (this.theCanMove) { // 移動可能か？
-					var t = e.touches;
-					var x0 = t[0].pageX, y0 = t[0].pageY;
-					var x1 = t[1].pageX, y1 = t[1].pageY;
-					var dx = x1 - x0, dy = y1 - y0;
-					if (!this.touchDistance) {
-						// タッチを開始した。
-						this.touchDistance = Math.sqrt(dx * dx + dy * dy);
-						this.touching = true; // タッチ開始。
-					} else {
-						// タッチ操作の続き。
-						var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
-						// 距離に応じてズームする。
-						if (this.touchDistance + 3 < newTouchDistance) {
-							this.setZoom(theZoom * 1.08);
-						} else if (touchDistance + 1.2 < newTouchDistance) {
-							this.setZoom(theZoom * 1.1);
-						} else if (touchDistance > newTouchDistance + 3) {
-							this.setZoom(theZoom / 1.08);
-						} else if (touchDistance > newTouchDistance + 1.2) {
-							this.setZoom(theZoom / 1.1);
-						}
-						// 距離を更新。
-						this.touchDistance = newTouchDistance;
-					}
-					// タッチ位置を取得。
-					var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
-					if (this.touchX === undefined || this.touchY === undefined) {
-						// タッチ位置を新しくセット。
-						this.touchX = newTouchX;
-						this.touchY = newTouchY;
-					} else {
-						// タッチ位置に違いに応じて画面を動かし、タッチ位置を更新。
-						this.theDeltaX += newTouchX - this.touchX;
-						this.theDeltaY += newTouchY - this.touchY;
-						this.touchX = newTouchX;
-						this.touchY = newTouchY;
-					}
-					// 再描画。
-					this.redraw();
-				}
+				this.doTouchMove(e);
 				return;
 			} else {
 				if (this.theCanMove) {
