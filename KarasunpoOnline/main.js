@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-;var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 
 (function($){
 	// 厳密に。
@@ -241,12 +241,10 @@
 			var renderTask = page.render(renderContext);
 			renderTask.promise.then(function(){
 				// PDFレンダリング完了。
-				var binded = Karasunpo.gotRendered.bind(Karasunpo);
-				binded(ctx);
+				Karasunpo.gotRendered.call(Karasunpo, ctx);
 			}, function(reason){
 				// PDFレンダリング失敗。
-				var binded = Karasunpo.failedToRender.bind(Karasunpo);
-				binded(ctx);
+				Karasunpo.failedToRender.call(Karasunpo, ctx);
 			});
 		},
 		// PDFを表示する。
@@ -257,8 +255,7 @@
 			}
 			var Karasunpo = this;
 			this.thePDF.getPage(this.thePDFPageNumber).then(function(page){
-				var binded = Karasunpo.gotPage.bind(Karasunpo);
-				binded(page, canvas, ctx);
+				Karasunpo.gotPage.call(Karasunpo, page, canvas, ctx);
 			}, function(reason){
 				// PDFレンダリング失敗。
 				this.thePDFIsDrawing = false;
@@ -342,13 +339,14 @@
 			this.theDeltaX = this.theDeltaY = 0;
 			if (this.theIsPDF) {
 				if (this.thePDF) {
+					var Karasunpo = this;
 					this.thePDF.getPage(this.thePDFPageNumber).then(
 						function(page){
 							var viewport = page.getViewport({
 								scale: 1.0,
 							});
 							if (viewport.width && viewport.height) {
-								Karasunpo.doFit0(viewport.width, viewport.height);
+								Karasunpo.doFit0.call(Karasunpo, viewport.width, viewport.height);
 							}
 						}
 					);
@@ -427,8 +425,7 @@
 			var Karasunpo = this;
 			if (this.thePDFIsDrawing || this.theIsDrawing) {
 				setTimeout(function(){
-					var binded = Karasunpo.doRedraw.bind(Karasunpo);
-					binded();
+					Karasunpo.doRedraw.call(Karasunpo);
 				}, 2000);
 				return;
 			}
@@ -460,10 +457,12 @@
 				this.cxCanvas = parseInt(window.innerWidth * 0.69);
 				this.cyCanvas = parseInt(window.innerHeight);
 			}
-			canvas.attr('width', this.cxCanvas + "px");
+
+			canvas.attr('width', this.cxCanvas + "px")
 			canvas.attr('height', this.cyCanvas + "px");
 			$("#offscreen").attr('width', this.cxCanvas + "px");
 			$("#offscreen").attr('height', this.cyCanvas + "px");
+
 			this.backgroundImage = null;
 			this.doFitImage();
 			this.doRedraw();
@@ -514,9 +513,10 @@
 		doFile: function(file){
 			this.theIsPDF = (file.name.indexOf(".pdf") != -1 || file.name.indexOf(".PDF") != -1);
 			var reader = new FileReader();
+			var Karasunpo = this;
 			if (this.theIsPDF) {
 				reader.onload = function(e){
-					Karasunpo.onWindowResize();
+					Karasunpo.onWindowResize.call(Karasunpo);
 					$(".mode2-filename").text("読み込み中...");
 					var ary = new Uint8Array(e.target.result);
 					var loadingTask = pdfjsLib.getDocument(ary);
@@ -527,8 +527,8 @@
 						Karasunpo.theFileName = text;
 						Karasunpo.thePDF = pdf;
 						Karasunpo.thePDFPageNumber = 1;
-						Karasunpo.doFitImage();
-						Karasunpo.doRedraw();
+						Karasunpo.doFitImage.call(Karasunpo);
+						Karasunpo.doRedraw.call(Karasunpo);
 					});
 				};
 			} else {
@@ -545,8 +545,8 @@
 						Karasunpo.theImage = img1;
 						Karasunpo.cxImage = parseInt(Karasunpo.theImage.width);
 						Karasunpo.cyImage = parseInt(Karasunpo.theImage.height);
-						Karasunpo.doFitImage();
-						Karasunpo.doRedraw();
+						Karasunpo.doFitImage.call(Karasunpo);
+						Karasunpo.doRedraw.call(Karasunpo);
 					};
 				};
 			}
@@ -1027,7 +1027,7 @@
 				title: "設定ダイアログ",
 				width: "300px",
 				buttons: {
-					"OK": Karasunpo.configOK.bind(Karasunpo),
+					"OK": Karasunpo.configOK.call(Karasunpo),
 					"キャンセル": function(){
 						// ダイアログを閉じる。
 						$(this).dialog("close");
@@ -1039,8 +1039,12 @@
 
 	// 初期化。
 	$(function(){
+		document.addEventListener('webviewerloaded', function() {
+			PDFViewerApplicationOptions.set('printResolution', 300);
+		});
+
 		$(window).on('resize', function(){
-			Karasunpo.onWindowResize.call();
+			Karasunpo.onWindowResize();
 		});
 
 		// モード１：初期画面。
@@ -1223,50 +1227,41 @@
 		});
 
 		$('#image-screen').on('mousedown', function(e){
-			var binded = Karasunpo.onMouseDown.bind(Karasunpo);
-			binded(e);
+			Karasunpo.onMouseDown.call(Karasunpo, e);
 		});
 
 		// タッチデバイスでタッチした。
 		document.getElementById("image-screen").addEventListener('touchstart', function(e){
-			var binded = Karasunpo.onTouchStart.bind(Karasunpo);
-			binded(e);
+			Karasunpo.onTouchStart.call(Karasunpo, e);
 		}, {passive: false});
 
 		// タッチデバイスでタッチ移動した。
 		document.getElementById("image-screen").addEventListener('touchmove', function(e){
-			var binded = Karasunpo.onTouchMove.bind(Karasunpo);
-			binded(e);
+			Karasunpo.onTouchMove.call(Karasunpo, e);
 		}, {passive: false});
 
 		$('#image-screen').on('mousemove', function(e){
-			var binded = Karasunpo.onMouseMove.bind(Karasunpo);
-			binded(e);
+			Karasunpo.onMouseMove.call(Karasunpo, e);
 		});
 
 		$('#image-screen').on('touchend', function(e){
-			var binded = Karasunpo.onTouchEnd.bind(Karasunpo);
-			binded(e);
+			Karasunpo.onTouchEnd.call(Karasunpo, e);
 		});
 
 		$('#image-screen').on('mouseup', function(e){
-			var binded = Karasunpo.onMouseUp.bind(Karasunpo);
-			binded(e);
+			Karasunpo.onMouseUp.call(Karasunpo, e);
 		});
 
 		document.getElementById("fullscreen").addEventListener('wheel', function(e){
-			var onWheelBinded = Karasunpo.onWheel.bind(Karasunpo);
-			onWheelBinded(e);
+			Karasunpo.onWheel.call(Karasunpo, e);
 		}, {passive: false});
 		document.getElementById("fullscreen").addEventListener('mousewheel', function(e){
-			var onWheelBinded = Karasunpo.onWheel.bind(Karasunpo);
-			onWheelBinded(e);
+			Karasunpo.onWheel.call(Karasunpo, e);
 		}, {passive: false});
 
 		// 設定ボタン。
 		$("#config-button").click(function(){
-			var binded = Karasunpo.config.bind(Karasunpo);
-			binded();
+			Karasunpo.config.call(Karasunpo);
 		});
 
 		// 更新履歴ボタン。
