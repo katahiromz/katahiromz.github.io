@@ -47,22 +47,22 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		cyImage: 0, // 画像の高さ（ピクセル単位）。
 		cxCanvas: 0, // キャンバスの幅（ピクセル単位）。
 		cyCanvas: 0, // キャンバスの高さ（ピクセル単位）。
-		theMeasureType: "length", // 測定タイプ。
+		measureType: "length", // 測定タイプ。
 		theMode: 1, // モード。
 		theFitMode: 0, // 画面モード（0：自動、1：横方向に合わせる、2：縦方向に合わせる）。
-		theZoom: 100.0, // ズーム率（百分率）。
-		theCanDraw: false, // 描画できるか？
-		theIsDrawing: false, // 描画中か？
-		thePenOn: false, // ペンはキャンバス上にあるか？
-		theLineOn: false, // 線分をキャンバスに表示するか？
-		theMoveOn: false, // 画像を動かしているか？
-		theHandleOn: -1, // ハンドルを動かしているか？
-		thePDFIsDrawing: false, // PDF描画中？
+		theZoomRate: 100.0, // ズーム率（百分率）。
+		canDraw: false, // 描画できるか？
+		isDrawing: false, // 描画中か？
+		penOn: false, // ペンはキャンバス上にあるか？
+		lineOn: false, // 線分をキャンバスに表示するか？
+		movingOn: false, // 画像を動かしているか？
+		handlingOn: -1, // ハンドルを動かしているか？
+		isPdfDrawing: false, // PDF描画中？
 		backgroundImage: null, // 背景イメージ。
 		backgroundMode: -2, // 背景モード（-2：市松模様、0：黒、1：白、2：緑、3：青、4：マゼンタ、5：赤）。
-		theIsRadian: false, // ラジアンか？
-		theDeltaX: 0, // 画面中央からのずれ（ピクセル単位）。
-		theDeltaY: 0, // 画面中央からのずれ（ピクセル単位）。
+		isRadian: false, // ラジアンか？
+		deltaX: 0, // 画面中央からのずれ（ピクセル単位）。
+		deltaY: 0, // 画面中央からのずれ（ピクセル単位）。
 		px0: 0, // 線分の位置。
 		py0: 0, // 線分の位置。
 		px1: 0, // 線分の位置。
@@ -77,9 +77,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		savey0: null, // 保存用。
 		savex1: null, // 保存用。
 		savey1: null, // 保存用。
-		theLineColor: 'red', // 線分の色。
-		theDrawCircle: false, // 補助円を描くか？
-		theIsPDF: false, // PDFファイルか？
+		lineColor: 'red', // 線分の色。
+		doDrawCircle: false, // 補助円を描くか？
+		isPDF: false, // PDFファイルか？
 		thePDF: null, // PDFオブジェクト。
 		thePDFPageNumber: 1, // PDFのページ番号。
 		theStdNominalLength: 0, // 基準線分の長さ（名目）。
@@ -149,7 +149,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 画像の中央座標を取得する。
 		getImageCenter: function(){
-			if (this.theIsPDF) {
+			if (this.isPDF) {
 				if (this.thePDF == null)
 					return [0, 0];
 			} else {
@@ -160,7 +160,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// キャンバスの中央座標を取得する。
 		getCanvasCenter: function(){
-			if (this.theIsPDF) {
+			if (this.isPDF) {
 				if (this.thePDF == null)
 					return [0, 0];
 			} else {
@@ -176,24 +176,24 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var IC = this.getImageCenter();
 			x += IC[0];
 			y += IC[1];
-			x *= this.theZoom / 100.0;
-			y *= this.theZoom / 100.0;
+			x *= this.theZoomRate / 100.0;
+			y *= this.theZoomRate / 100.0;
 			var CC = this.getCanvasCenter();
 			x += CC[0];
 			y += CC[1];
-			x += this.theDeltaX;
-			y += this.theDeltaY;
+			x += this.deltaX;
+			y += this.deltaY;
 			return [x, y];
 		},
 		// 物理座標から論理座標へ。
 		DPtoLP: function(x, y) {
-			x -= this.theDeltaX;
-			y -= this.theDeltaY;
+			x -= this.deltaX;
+			y -= this.deltaY;
 			var CC = this.getCanvasCenter();
 			x -= CC[0];
 			y -= CC[1];
-			x /= this.theZoom / 100.0;
-			y /= this.theZoom / 100.0;
+			x /= this.theZoomRate / 100.0;
+			y /= this.theZoomRate / 100.0;
 			var IC = this.getImageCenter();
 			x -= IC[0];
 			y -= IC[1];
@@ -253,12 +253,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// レンダリング完了。
 		gotRendered: function(ctx){
-			this.thePDFIsDrawing = false;
+			this.isPdfDrawing = false;
 			this.doRedrawFinish(ctx, true);
 		},
 		// レンダリング失敗。
 		failedToRender: function(ctx){
-			this.thePDFIsDrawing = false;
+			this.isPdfDrawing = false;
 			this.doRedrawFinish(ctx, false);
 		},
 		// PDFページを取得した。
@@ -275,19 +275,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 			}
 			// ズームしたサイズ。
-			var zoomedWidth = this.cxImage * this.theZoom / 100.0;
-			var zoomedHeight = this.cyImage * this.theZoom / 100.0;
+			var zoomedWidth = this.cxImage * this.theZoomRate / 100.0;
+			var zoomedHeight = this.cyImage * this.theZoomRate / 100.0;
 			// 描画位置（物理座標）。
 			var px = (this.cxCanvas - zoomedWidth) / 2;
 			var py = (this.cyCanvas - zoomedHeight) / 2;
 			// PDFのレンダリングで余白が描画されないことがあるのでここで白く塗りつぶす。
 			ctx.fillStyle = "rgb(255, 255, 255)";
-			ctx.fillRect(px + this.theDeltaX, py + this.theDeltaY, zoomedWidth, zoomedHeight);
+			ctx.fillRect(px + this.deltaX, py + this.deltaY, zoomedWidth, zoomedHeight);
 			// ビューポートを取得。
 			var viewport = page.getViewport({
-				scale: this.theZoom / 100.0,
-				offsetX: px + this.theDeltaX,
-				offsetY: py + this.theDeltaY
+				scale: this.theZoomRate / 100.0,
+				offsetX: px + this.deltaX,
+				offsetY: py + this.deltaY
 			});
 			// PDFレンダリング開始。
 			var renderContext = {
@@ -295,7 +295,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				viewport: viewport,
 				background: "rgba(255, 255, 255, 0)"
 			};
-			this.thePDFIsDrawing = true;
+			this.isPdfDrawing = true;
 			var renderTask = page.render(renderContext);
 			renderTask.promise.then(function(){
 				// PDFレンダリング完了。
@@ -307,7 +307,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// PDFを表示する。
 		putPDF: function(canvas, ctx) {
-			if (!this.theIsPDF || !this.thePDF) {
+			if (!this.isPDF || !this.thePDF) {
 				this.doRedrawFinish(ctx, false);
 				return;
 			}
@@ -321,12 +321,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 画像を表示する。
 		putImage: function(canvas, ctx) {
-			if (this.theIsPDF || !this.theImage) {
+			if (this.isPDF || !this.theImage) {
 				this.doRedrawFinish(ctx, false);
 				return;
 			}
-			var zoomedWidth = this.cxImage * this.theZoom / 100.0;
-			var zoomedHeight = this.cyImage * this.theZoom / 100.0;
+			var zoomedWidth = this.cxImage * this.theZoomRate / 100.0;
+			var zoomedHeight = this.cyImage * this.theZoomRate / 100.0;
 			var px = (this.cxCanvas - zoomedWidth) / 2;
 			var py = (this.cyCanvas - zoomedHeight) / 2;
 			// アンチエイジングを無効にする。
@@ -335,12 +335,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			ctx.msImageSmoothingEnabled = false;
 			ctx.imageSmoothingEnabled = false;
 			// 画像を描画。
-			ctx.drawImage(this.theImage, px + this.theDeltaX, py + this.theDeltaY, zoomedWidth, zoomedHeight);
+			ctx.drawImage(this.theImage, px + this.deltaX, py + this.deltaY, zoomedWidth, zoomedHeight);
 			this.doRedrawFinish(ctx, true);
 		},
 		// ズーム率を設定する。
 		setZoom: function(percents) {
-			if (this.theIsPDF) {
+			if (this.isPDF) {
 				if (this.thePDF == null)
 					return;
 			} else {
@@ -369,7 +369,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				percents = maxHeight * 100.0 / this.cyImage;
 			}
 
-			this.theZoom = percents;
+			this.theZoomRate = percents;
 		},
 		// 画像を画面のサイズに合わせる。
 		doFit0: function(width, height) {
@@ -393,8 +393,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 画像を画面のサイズに合わせる。
 		doFitImage: function() {
-			this.theDeltaX = this.theDeltaY = 0;
-			if (this.theIsPDF) {
+			this.deltaX = this.deltaY = 0;
+			if (this.isPDF) {
 				if (this.thePDF) {
 					var Karasunpo = this;
 					this.thePDF.getPage(this.thePDFPageNumber).then(
@@ -438,14 +438,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			} else {
 				ctx.lineWidth = 1;
 			}
-			ctx.strokeStyle = this.theLineColor;
+			ctx.strokeStyle = this.lineColor;
 			ctx.beginPath();
 			var xy0 = this.LPtoDP(x0, y0);
 			var xy1 = this.LPtoDP(x1, y1);
 			ctx.moveTo(xy0[0], xy0[1]);
 			ctx.lineTo(xy1[0], xy1[1]);
 			ctx.stroke();
-			ctx.fillStyle = this.theLineColor;
+			ctx.fillStyle = this.lineColor;
 			ctx.beginPath();
 			var handleSize = this.getHandleSize();
 			if (flag) {
@@ -467,9 +467,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			ctx.save();
 			ctx.lineCap = 'round';
 			ctx.lineWidth = 2;
-			ctx.strokeStyle = this.theLineColor;
+			ctx.strokeStyle = this.lineColor;
 			var xy0 = this.LPtoDP(cx, cy);
-			var r0 = r * this.theZoom / 100.0;
+			var r0 = r * this.theZoomRate / 100.0;
 			ctx.beginPath();
 			ctx.arc(xy0[0], xy0[1], r0, 0, 2 * Math.PI, false);
 			ctx.stroke();
@@ -478,13 +478,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// 画面を再描画する。
 		redraw: function(){
 			var Karasunpo = this;
-			if (this.thePDFIsDrawing || this.theIsDrawing) {
+			if (this.isPdfDrawing || this.isDrawing) {
 				setTimeout(function(){
 					Karasunpo.redraw.call(Karasunpo);
 				}, 1000);
 				return;
 			}
-			this.theIsDrawing = true;
+			this.isDrawing = true;
 			var canvas = $("#offscreen");
 			var ctx = canvas[0].getContext('2d');
 			// 背景を描画する。
@@ -496,7 +496,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.cyCanvas = parseInt(canvas.attr('height'));
 				this.drawBackground(ctx, this.cxCanvas, this.cyCanvas);
 			}
-			if (this.theIsPDF) {
+			if (this.isPDF) {
 				this.putPDF(canvas, ctx);
 			} else {
 				this.putImage(canvas, ctx);
@@ -531,30 +531,30 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 
 			switch (mode) {
 			case 1: // モード１：初期画面。
-				this.theLineOn = false;
-				this.theCanDraw = false;
+				this.lineOn = false;
+				this.canDraw = false;
 				// 画面サイズに関する初期化。
 				this.onWindowResize();
 				break;
 			case 2: // モード２：ファイルを開く。
-				this.theLineOn = false;
-				this.theCanDraw = false;
+				this.lineOn = false;
+				this.canDraw = false;
 				break;
 			case 3: // モード３：測定タイプ。
-				this.theLineOn = false;
-				this.theCanDraw = false;
+				this.lineOn = false;
+				this.canDraw = false;
 				break;
 			case 4: // モード４：基準線分。
-				this.theLineOn = true;
-				this.theCanDraw = true;
+				this.lineOn = true;
+				this.canDraw = true;
 				break;
 			case 5: // モード５：基準線分の長さ。
-				this.theLineOn = true;
-				this.theCanDraw = false;
+				this.lineOn = true;
+				this.canDraw = false;
 				break;
 			case 6: // モード６：測定。
-				this.theLineOn = true;
-				this.theCanDraw = true;
+				this.lineOn = true;
+				this.canDraw = true;
 				break;
 			}
 			this.theMode = mode;
@@ -562,10 +562,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// ファイルを処理する。
 		doFile: function(file){
-			this.theIsPDF = (file.name.indexOf(".pdf") != -1 || file.name.indexOf(".PDF") != -1);
+			this.isPDF = (file.name.indexOf(".pdf") != -1 || file.name.indexOf(".PDF") != -1);
 			var reader = new FileReader();
 			var Karasunpo = this;
-			if (this.theIsPDF) {
+			if (this.isPDF) {
 				reader.onload = function(e){
 					Karasunpo.onWindowResize.call(Karasunpo);
 					$(".mode2-filename").text("読み込み中...");
@@ -605,7 +605,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					};
 				};
 			}
-			if (this.theIsPDF)
+			if (this.isPDF)
 				reader.readAsArrayBuffer(file);
 			else
 				reader.readAsDataURL(file);
@@ -627,7 +627,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 測定。
 		doMeasure: function(){
-			switch (this.theMeasureType) {
+			switch (this.measureType) {
 			case "length":
 				console.log("doMeasure.length");
 				// 基準線分のベクトル。
@@ -653,7 +653,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				var dx = this.px1 - this.px0, dy = this.py1 - this.py0;
 				var value = Math.atan2(-dy, dx);
 				// 必要なら度に直す。
-				if (!this.theIsRadian)
+				if (!this.isRadian)
 					value = value * 180.0 / Math.PI;
 				// 四捨五入。
 				value *= 10000.0;
@@ -661,7 +661,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				value /= 10000.0;
 				// テキストボックスに格納。
 				var text;
-				if (this.theIsRadian)
+				if (this.isRadian)
 					text = value.toString() + "rad";
 				else
 					text = value.toString() + "度";
@@ -687,7 +687,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				if (value > Math.PI)
 					value -= 2 * Math.PI;
 				// 必要なら度に直す。
-				if (!this.theIsRadian)
+				if (!this.isRadian)
 					value = value * 180.0 / Math.PI;
 				// 四捨五入。
 				value *= 10000.0;
@@ -695,7 +695,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				value /= 10000.0;
 				// テキストボックスに格納。
 				var text;
-				if (this.theIsRadian)
+				if (this.isRadian)
 					text = value.toString() + "rad";
 				else
 					text = value.toString() + "度";
@@ -719,28 +719,28 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				var LP = this.DPtoLP(CC[0], CC[1]);
 				var DP0 = this.LPtoDP(LP[0], LP[1]);
 				if (delta > 0) {
-					this.setZoom(this.theZoom * 1.25);
+					this.setZoom(this.theZoomRate * 1.25);
 				} else {
-					this.setZoom(this.theZoom / 1.25);
+					this.setZoom(this.theZoomRate / 1.25);
 				}
 				var DP1 = this.LPtoDP(LP[0], LP[1]);
-				this.theDeltaX -= DP1[0] - DP0[0];
-				this.theDeltaY -= DP1[1] - DP0[1];
+				this.deltaX -= DP1[0] - DP0[0];
+				this.deltaY -= DP1[1] - DP0[1];
 			} else {
 				// ずらす。
 				if (oe.shiftKey) { // Shiftキーが押されている？
 					// 横にずらす。
 					if (delta > 0) {
-						this.theDeltaX -= 50;
+						this.deltaX -= 50;
 					} else {
-						this.theDeltaX += 50;
+						this.deltaX += 50;
 					}
 				} else {
 					// 縦にずらす。
 					if (delta > 0) {
-						this.theDeltaY += 50;
+						this.deltaY += 50;
 					} else {
-						this.theDeltaY -= 50;
+						this.deltaY -= 50;
 					}
 				}
 			}
@@ -767,16 +767,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 描画の終わり。
 		doRedrawFinish: function(ctx, succeeded){
-			if (this.theLineOn) { // 線分を描画するか？
+			if (this.lineOn) { // 線分を描画するか？
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
 					this.doDrawLine(ctx, this.px0, this.py0, this.px1, this.py1, true);
-					if (this.theDrawCircle) {
+					if (this.doDrawCircle) {
 						this.doDrawCircle(ctx, this.px0, this.py0, this.px1, this.py1);
 					}
 				}
 				if (this.theMode == 6) {
-					if (this.theMeasureType == 'length' ||
-						this.theMeasureType == 'angle')
+					if (this.measureType == 'length' ||
+						this.measureType == 'angle')
 					{
 						if (this.sx0 != this.sx1 || this.sy0 != this.sy1) {
 							this.doDrawLine(ctx, this.sx0, this.sy0, this.sx1, this.sy1, false);
@@ -798,20 +798,20 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 			}
 			// 描画完了。
-			this.theIsDrawing = false;
+			this.isDrawing = false;
 		},
 		// マウスの左ボタンが押された。
 		onLButtonDown: function(e){
 			console.log("mousedown.VK_LBUTTON");
 			e.preventDefault();
-			if (!this.theCanDraw)
+			if (!this.canDraw)
 				return;
 			var x = e.offsetX, y = e.offsetY;
-			this.theHandleOn = this.isOnHandle(x, y);
+			this.handlingOn = this.isOnHandle(x, y);
 			var LP = this.DPtoLP(x, y);
-			if (this.theHandleOn == -1) {
+			if (this.handlingOn == -1) {
 				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
-				this.thePenOn = true;
+				this.penOn = true;
 			}
 			if (this.theMode == 6) {
 				$(".mode6-measure-results").val("");
@@ -824,7 +824,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault();
 			this.mx0 = e.offsetX;
 			this.my0 = e.offsetY;
-			this.theMoveOn = true;
+			this.movingOn = true;
 			this.redraw();
 		},
 		// マウスのボタンが押された。
@@ -887,15 +887,15 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (this.touchMoving) {
 				return;
 			}
-			if (!this.theCanDraw)
+			if (!this.canDraw)
 				return;
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
-			this.theHandleOn = this.isOnHandle(x, y);
+			this.handlingOn = this.isOnHandle(x, y);
 			var LP = this.DPtoLP(x, y);
-			if (this.theHandleOn == -1) {
+			if (this.handlingOn == -1) {
 				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
-				this.thePenOn = true;
+				this.penOn = true;
 			}
 			if (this.theMode == 6) {
 				$(".mode6-measure-results").val("");
@@ -920,7 +920,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.savex1 = this.px1;
 				this.savey1 = this.py1;
 			}
-			this.thePenOn = false; // ペンをオフにする。
+			this.penOn = false; // ペンをオフにする。
 			var pos0 = this.touchGetPos(e, 0);
 			var pos1 = this.touchGetPos(e, 1);
 			var x0 = pos0.x, y0 = pos0.y;
@@ -935,9 +935,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
 				// 距離に応じてズームする。
 				if (newTouchDistance > this.touchDistance + this.getScreenSizeIndex()) {
-					this.setZoom(this.theZoom * 1.1);
+					this.setZoom(this.theZoomRate * 1.1);
 				} else if (newTouchDistance + this.getScreenSizeIndex() < this.touchDistance) {
-					this.setZoom(this.theZoom * 0.9);
+					this.setZoom(this.theZoomRate * 0.9);
 				}
 				// 距離を更新。
 				this.touchDistance = newTouchDistance;
@@ -950,8 +950,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.touchY = newTouchY;
 			} else {
 				// タッチ位置に違いに応じて画面を動かし、タッチ位置を更新。
-				this.theDeltaX += newTouchX - this.touchX;
-				this.theDeltaY += newTouchY - this.touchY;
+				this.deltaX += newTouchX - this.touchX;
+				this.deltaY += newTouchY - this.touchY;
 				this.touchX = newTouchX;
 				this.touchY = newTouchY;
 			}
@@ -983,16 +983,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					this.redraw();
 					return;
 				}
-				if (this.theHandleOn == -1) {
-					if (!this.theCanDraw || !this.thePenOn || !this.theLineOn)
+				if (this.handlingOn == -1) {
+					if (!this.canDraw || !this.penOn || !this.lineOn)
 						return;
 				}
 			}
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
 			var LP = this.DPtoLP(x, y);
-			if (this.theHandleOn != -1) {
-				if (this.theHandleOn == 0) {
+			if (this.handlingOn != -1) {
+				if (this.handlingOn == 0) {
 					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
 					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
@@ -1011,16 +1011,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onMouseMove: function(e){
 			console.log("mousemove");
 			e.preventDefault();
-			if (this.theHandleOn == -1) {
-				if (this.thePenOn) {
-					if (!this.theCanDraw || !this.theLineOn)
+			if (this.handlingOn == -1) {
+				if (this.penOn) {
+					if (!this.canDraw || !this.lineOn)
 						return;
 				}
 			}
 			var x = e.offsetX, y = e.offsetY;
 			var LP = this.DPtoLP(x, y);
-			if (this.theHandleOn != -1) {
-				if (this.theHandleOn == 0) {
+			if (this.handlingOn != -1) {
+				if (this.handlingOn == 0) {
 					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
 					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
@@ -1028,16 +1028,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				if (this.theMode == 6) {
 					this.doMeasure();
 				}
-			} else if (this.thePenOn) {
+			} else if (this.penOn) {
 				var LP = this.DPtoLP(x, y);
 				this.px1 = LP[0];
 				this.py1 = LP[1];
 				if (this.theMode == 6) {
 					this.doMeasure();
 				}
-			} else if (this.theMoveOn) {
-				this.theDeltaX += x - this.mx0;
-				this.theDeltaY += y - this.my0;
+			} else if (this.movingOn) {
+				this.deltaX += x - this.mx0;
+				this.deltaY += y - this.my0;
 				this.mx0 = x;
 				this.my0 = y;
 			}
@@ -1069,24 +1069,24 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.redraw();
 				return;
 			}
-			if (this.theHandleOn == -1) {
-				if (!this.theCanDraw)
+			if (this.handlingOn == -1) {
+				if (!this.canDraw)
 					return;
 			}
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
 			var LP = this.DPtoLP(x, y);
-			if (this.theHandleOn != -1) {
-				if (this.theHandleOn == 0) {
+			if (this.handlingOn != -1) {
+				if (this.handlingOn == 0) {
 					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
 					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
-				this.theHandleOn = -1;
+				this.handlingOn = -1;
 			} else {
 				this.px1 = LP[0];
 				this.py1 = LP[1];
-				this.thePenOn = false;
+				this.penOn = false;
 			}
 			if (this.theMode == 4) {
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
@@ -1104,23 +1104,23 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onLButtonUp: function(e){
 			console.log("mouseup.VK_LBUTTON");
 			e.preventDefault();
-			if (this.theHandleOn == -1) {
-				if (!this.theCanDraw)
+			if (this.handlingOn == -1) {
+				if (!this.canDraw)
 					return;
 			}
 			var x = e.offsetX, y = e.offsetY;
 			var LP = this.DPtoLP(x, y);
-			if (this.theHandleOn != -1) {
-				if (this.theHandleOn == 0) {
+			if (this.handlingOn != -1) {
+				if (this.handlingOn == 0) {
 					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
 					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
-				this.theHandleOn = -1;
+				this.handlingOn = -1;
 			} else {
 				this.px1 = LP[0];
 				this.py1 = LP[1];
-				this.thePenOn = false;
+				this.penOn = false;
 			}
 			if (this.theMode == 4) {
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
@@ -1138,14 +1138,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onMButtonUp: function(e){
 			console.log("mouseup.VK_MBUTTON");
 			e.preventDefault();
-			if (!this.theMoveOn)
+			if (!this.movingOn)
 				return;
-			this.theDeltaX += e.offsetX - this.mx0;
-			this.theDeltaY += e.offsetY - this.my0;
+			this.deltaX += e.offsetX - this.mx0;
+			this.deltaY += e.offsetY - this.my0;
 			this.mx0 = e.offsetX;
 			this.my0 = e.offsetY;
-			this.theMoveOn = false;
-			this.theHandleOn = -1;
+			this.movingOn = false;
+			this.handlingOn = -1;
 			this.redraw();
 		},
 		// マウスのボタンが解放された。
@@ -1181,7 +1181,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var color = $("#config-dialog-line-color").val();
 			switch (color) {
 			case 'red': case 'blue': case 'green': case 'yellow':
-				this.theLineColor = color;
+				this.lineColor = color;
 				break;
 			}
 			// 背景。
@@ -1209,7 +1209,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var Karasunpo = this;
 			// 「設定」ダイアログを初期化。
 			$("#config-dialog-zoom").val("-1");
-			$("#config-dialog-line-color").val(this.theLineColor);
+			$("#config-dialog-line-color").val(this.lineColor);
 			switch (this.backgroundMode) {
 			case -2: case 0: case 1: case 2: case 3: case 4: case 5:
 				$("#config-dialog-background").val(this.backgroundMode);
@@ -1264,7 +1264,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			Karasunpo.setMode(2);
 		});
 		$(".mode3-next").on('click', function(){
-			if (Karasunpo.theMeasureType == 'inclination') {
+			if (Karasunpo.measureType == 'inclination') {
 				$(".mode6-measure-results").val("");
 				Karasunpo.setMode(6);
 			} else {
@@ -1276,27 +1276,27 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		});
 		$(".mode3-measure-type-length").on('click', function(){
 			$(".mode6-measure-type-text").text("長さ：");
-			Karasunpo.theMeasureType = "length";
+			Karasunpo.measureType = "length";
 			$("#mode3-measure-type-length-1").prop('checked', true);
 			$("#mode3-measure-type-length-2").prop('checked', true);
 		});
 		$(".mode3-measure-type-inclination").on('click', function(){
 			$(".mode6-measure-type-text").text("傾き：");
-			Karasunpo.theMeasureType = "inclination";
+			Karasunpo.measureType = "inclination";
 			$("#mode3-measure-type-inclination-1").prop('checked', true);
 			$("#mode3-measure-type-inclination-2").prop('checked', true);
 		});
 		$(".mode3-measure-type-angle").on('click', function(){
 			$(".mode6-measure-type-text").text("角度：");
-			Karasunpo.theMeasureType = "angle";
+			Karasunpo.measureType = "angle";
 			$("#mode3-measure-type-angle-1").prop('checked', true);
 			$("#mode3-measure-type-angle-2").prop('checked', true);
 		});
 		$(".mode3-is-radian").on('click', function(){
 			if ($(this).prop('checked')) {
-				Karasunpo.theIsRadian = true;
+				Karasunpo.isRadian = true;
 			} else {
-				Karasunpo.theIsRadian = false;
+				Karasunpo.isRadian = false;
 			}
 		});
 		// モード４：基準線分。
@@ -1304,7 +1304,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			Karasunpo.setMode(3);
 		});
 		$(".mode4-next").on('click', function(){
-			if (Karasunpo.theMeasureType == 'angle') {
+			if (Karasunpo.measureType == 'angle') {
 				Karasunpo.sx0 = Karasunpo.px0;
 				Karasunpo.sy0 = Karasunpo.py0;
 				Karasunpo.sx1 = Karasunpo.px1;
@@ -1323,9 +1323,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 		});
 		$(".mode4-draw-circle").on('click', function(){
-			Karasunpo.theDrawCircle = $(this).prop('checked');
-			$(".mode4-draw-circle").prop('checked', Karasunpo.theDrawCircle);
-			$(".mode6-draw-circle").prop('checked', Karasunpo.theDrawCircle);
+			Karasunpo.doDrawCircle = $(this).prop('checked');
+			$(".mode4-draw-circle").prop('checked', Karasunpo.doDrawCircle);
+			$(".mode6-draw-circle").prop('checked', Karasunpo.doDrawCircle);
 			Karasunpo.redraw();
 		});
 
@@ -1365,9 +1365,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 
 		// モード６：測定。
 		$(".mode6-back").on('click', function(){
-			if (Karasunpo.theMeasureType == 'inclination') {
+			if (Karasunpo.measureType == 'inclination') {
 				Karasunpo.setMode(3);
-			} else if (Karasunpo.theMeasureType == 'angle') {
+			} else if (Karasunpo.measureType == 'angle') {
 				Karasunpo.setMode(4);
 			} else {
 				Karasunpo.setSegment(Karasunpo.sx0, Karasunpo.sy0, Karasunpo.sx1, Karasunpo.sy1);
@@ -1378,9 +1378,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			location.reload();
 		});
 		$(".mode6-draw-circle").on('click', function(){
-			Karasunpo.theDrawCircle = $(this).prop('checked');
-			$(".mode4-draw-circle").prop('checked', this.theDrawCircle);
-			$(".mode6-draw-circle").prop('checked', this.theDrawCircle);
+			Karasunpo.doDrawCircle = $(this).prop('checked');
+			$(".mode4-draw-circle").prop('checked', this.doDrawCircle);
+			$(".mode6-draw-circle").prop('checked', this.doDrawCircle);
 			Karasunpo.redraw();
 		});
 		$(".mode6-copy-text").on('click', function(){
