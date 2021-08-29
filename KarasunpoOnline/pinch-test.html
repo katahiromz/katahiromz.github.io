@@ -49,6 +49,8 @@ $(function(){
 			} else {
 				px += ptx0 - tx0;
 				py += pty0 - ty0;
+				ptx0 = tx0;
+				pty0 = ty0;
 			}
 			clearTimeout(timerID);
 			if (pinchDistance != 0) {
