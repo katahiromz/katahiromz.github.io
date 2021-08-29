@@ -386,14 +386,15 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
+			var sensitiveRadius = handleSize * 2;
 			var dx, dy;
 			dx = x - xy0[0];
 			dy = y - xy0[1];
-			if (Math.sqrt(dx * dx + dy * dy) < handleSize)
+			if (Math.sqrt(dx * dx + dy * dy) <= sensitiveRadius)
 				return 0;
 			dx = x - xy1[0];
 			dy = y - xy1[1];
-			if (Math.sqrt(dx * dx + dy * dy) < handleSize)
+			if (Math.sqrt(dx * dx + dy * dy) <= sensitiveRadius)
 				return 1;
 			return -1;
 		},
@@ -726,14 +727,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
-			var radius = handleSize * 2;
+			var sensitiveRadius = handleSize * 2;
 			ctx.save();
 			ctx.strokeStyle = "darkgreen";
 			ctx.beginPath();
-			ctx.arc(xy0[0], xy0[1], radius, 0, 2 * Math.PI, false);
+			ctx.arc(xy0[0], xy0[1], sensitiveRadius, 0, 2 * Math.PI, false);
 			ctx.stroke();
 			ctx.beginPath();
-			ctx.arc(xy1[0], xy1[1], radius, 0, 2 * Math.PI, false);
+			ctx.arc(xy1[0], xy1[1], sensitiveRadius, 0, 2 * Math.PI, false);
 			ctx.stroke();
 			ctx.restore();
 		},
