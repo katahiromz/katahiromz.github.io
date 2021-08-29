@@ -18,7 +18,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<!-- PDF.js -->
-	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.min.js"></script>
 	<!-- main.css -->
 	<link rel="stylesheet" href="main.css">
 	<!-- main.js -->
@@ -376,6 +376,10 @@
 							<option value="4">マゼンタ</option>
 							<option value="5">赤</option>
 						</select>
+					</p>
+					<p>
+						PDFのページ番号：
+						<input type="text" class="config-dialog-page-number" value="" size="4" />
 					</p>
 				</div>
 				<div id="history-dialog" class="invisible">

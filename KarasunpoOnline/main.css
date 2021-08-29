@@ -164,3 +164,6 @@ li {
 .nobreak {
 	white-space: nowrap;
 }
+.config-dialog-page-number {
+	text-align: right;
+}

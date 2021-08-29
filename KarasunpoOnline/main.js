@@ -4,6 +4,10 @@
 
 var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.cMapUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/cmaps/';
+pdfjsLib.GlobalWorkerOptions.cMapPacked = true;
+
 (function($){
 	// 厳密に。
 	'use strict';
@@ -254,10 +258,9 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			var Karasunpo = this;
 			this.thePDF.getPage(this.thePDFPageNumber).then(function(page){
 				Karasunpo.gotPage.call(Karasunpo, page, canvas, ctx);
-			}, function(reason){
-				// PDFレンダリング失敗。
-				this.thePDFIsDrawing = false;
-				this.doRedrawFinish(ctx, false);
+			}, function(reason) {
+				Karasunpo.failedToRender.call(Karasunpo, ctx);
+				alert("ページ取得に失敗しました。");
 			});
 		},
 		// 画像を表示する。
@@ -990,6 +993,11 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			default:
 				break;
 			}
+			// ページ番号
+			var page_no = parseInt($(".config-dialog-page-number").val());
+			if (!isNaN(page_no)) {
+				this.thePDFPageNumber = page_no;
+			}
 			// 再描画。
 			if (isNaN(this.theZoom)) {
 				alert("OK");
@@ -1009,6 +1017,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 				$("#config-dialog-background").val(this.backgroundMode);
 				break;
 			}
+			$(".config-dialog-page-number").val('' + this.thePDFPageNumber);
 			// 「設定」ダイアログを開く。
 			$("#config-dialog").dialog({
 				modal: true,
@@ -1027,11 +1036,6 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 
 	// 初期化。
 	$(function(){
-		// 解像度を高くする。
-		document.addEventListener('webviewerloaded', function() {
-			PDFViewerApplicationOptions.set('printResolution', 300);
-		});
-
 		$(window).on('resize', function(){
 			Karasunpo.onWindowResize();
 		});
