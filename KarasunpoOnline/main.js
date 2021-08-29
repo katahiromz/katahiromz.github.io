@@ -1078,6 +1078,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				modal: true,
 				title: "設定ダイアログ",
 				width: "300px",
+				draggable: true,
 				buttons: {
 					"OK": Karasunpo.configOK.bind(Karasunpo),
 					"キャンセル": function(){
@@ -1327,6 +1328,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				modal: true,
 				title: "更新履歴",
 				width: width,
+				draggable: true,
 				buttons: {
 					"OK": function() {
 						// ダイアログを閉じる。
@@ -1349,6 +1351,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				modal: true,
 				title: "バージョン情報",
 				width: width,
+				draggable: true,
 				buttons: {
 					"OK": function() {
 						// ダイアログを閉じる。
