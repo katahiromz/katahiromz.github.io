@@ -101,9 +101,18 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		isSmartPhone: function(){
 			return navigator.userAgent.match(/iPhone|Android.+Mobile/);
 		},
+		// タブレットか？
+		isTablet: function(){
+			var ua = navigator.userAgent;
+			if (ua.indexOf("iPad") != -1)
+				return true;
+			if (ua.indexOf("Android") != -1 && ua.indexOf("Mobile") == -1)
+				return true;
+			return false;
+		},
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
-			if (this.isSmartPhone())
+			if (this.isSmartPhone() || this.isTablet())
 				return 10;
 			return 5;
 		},
@@ -377,7 +386,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
-			if (this.isSmartPhone())
+			if (this.isSmartPhone() || this.isTablet())
 				handleSize *= 5;
 			if (xy0[0] - handleSize <= x && x <= xy0[0] + handleSize &&
 				xy0[1] - handleSize <= y && y <= xy0[1] + handleSize)
