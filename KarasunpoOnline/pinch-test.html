@@ -19,27 +19,28 @@
 <p id="info"></p>
 <script>
 $(function(){
-	var pinchDistance = 0;
 	var scale = 1.0;
 	var timerID;
-	var tx0, ty0;
-	var px = 0, py = 0;
-	var s0;
+	var touchX, touchY;
+	var TheDeltaX = 0, TheDeltaY = 0;
+	var touchDistance;
+	// 再描画。
 	function redraw() {
 		var canvas = $("#image-screen");
 		var ctx = canvas[0].getContext('2d');
 		ctx.fillStyle = "white";
 		ctx.fillRect(0, 0, 400, 400);
 		ctx.strokeStyle = "black";
-		ctx.strokeRect(200 - 70 * scale / 2 + px, 200 - 70 * scale / 2 + py, 70 * scale, 70 * scale);
+		ctx.strokeRect(200 - 70 * scale / 2 + TheDeltaX, 200 - 70 * scale / 2 + TheDeltaY, 70 * scale, 70 * scale);
 	}
 	// タッチデバイスでタッチ開始した。
 	document.getElementById("image-screen").addEventListener('touchstart', function(e){
 		var t = e.touches;
 		if (t.length > 1) {
-			var w = Math.abs(t[1].pageX - t[0].pageX);
-			var h = Math.abs(t[1].pageY - t[0].pageY);
-			s0 = Math.sqrt(w * h);
+			var x0 = t[0].pageX, y0 = t[0].pageY;
+			var x1 = t[1].pageX, y1 = t[1].pageY;
+			var dx = x1 - x0, dy = y1 - y0;
+			touchDistance = Math.sqrt(dx * dx + dy * dy);
 		}
 	}, {passive: false});
 	// タッチデバイスでタッチ移動した。
@@ -47,44 +48,41 @@ $(function(){
 		e.preventDefault();
 		var t = e.touches;
 		if (t.length > 1) {
-			if (s0) {
-				var w = Math.abs(t[1].pageX - t[0].pageX);
-				var h = Math.abs(t[1].pageY - t[0].pageY);
-				var s1 = Math.sqrt(w * h);
-				if (s0 + 4 < s1) {
+			var x0 = t[0].pageX, y0 = t[0].pageY;
+			var x1 = t[1].pageX, y1 = t[1].pageY;
+			if (touchDistance) {
+				var dx = x1 - x0, dy = y1 - y0;
+				var newTouchDistance = Math.sqrt(dx * dx + dy * dy);
+				if (touchDistance + 3 < newTouchDistance) {
 					scale *= 1.08;
-				} else if (s0 + 2 < s1) {
+				} else if (touchDistance + 1.2 < newTouchDistance) {
 					scale *= 1.1;
-				} else if (s0 > s1 + 4) {
+				} else if (touchDistance > newTouchDistance + 3) {
 					scale /= 1.08;
-				} else if (s0 > s1 + 2) {
+				} else if (touchDistance > newTouchDistance + 1.2) {
 					scale /= 1.1;
 				}
-				$("#info").text(s0 + " | " + s1);
-				s0 = s1;
+				$("#info").text(touchDistance + " | " + newTouchDistance);
+				touchDistance = newTouchDistance;
 			}
-			var x0 = t[0].pageX;
-			var y0 = t[0].pageY;
-			var x1 = t[1].pageX;
-			var y1 = t[1].pageY;
-			var ptx0 = (x0 + x1) / 2;
-			var pty0 = (y0 + y1) / 2;
-			if (tx0 === undefined || ty0 === undefined) {
-				tx0 = ptx0;
-				ty0 = pty0;
+			var newTouchX = (x0 + x1) / 2;
+			var newTouchY = (y0 + y1) / 2;
+			if (touchX === undefined || touchY === undefined) {
+				touchX = newTouchX;
+				touchY = newTouchY;
 			} else {
-				px += ptx0 - tx0;
-				py += pty0 - ty0;
-				tx0 = ptx0;
-				ty0 = pty0;
+				TheDeltaX += newTouchX - touchX;
+				TheDeltaY += newTouchY - touchY;
+				touchX = newTouchX;
+				touchY = newTouchY;
 			}
 			redraw();
 		}
 	}, {passive: false});
 	// タッチデバイスでタッチ終了した。
 	document.getElementById("image-screen").addEventListener('touchend', function(e){
-		s0 = 0;
-		tx0 = ty0 = undefined;
+		touchDistance = undefined;
+		touchX = touchY = undefined;
 	}, {passive: false});
 	redraw();
 });
