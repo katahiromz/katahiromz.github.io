@@ -867,15 +867,17 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				var x0 = t[0].pageX, y0 = t[0].pageY;
 				var x1 = t[1].pageX, y1 = t[1].pageY;
 				var dx = x1 - x0, dy = y1 - y0;
-				if (!this.touching) {
-					// タッチを開始した。
-					this.touching = true; // タッチ開始。
-					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
+				if (this.savex0 === undefined) {
 					// 線分の位置を保存する。
 					this.savex0 = this.px0;
 					this.savey0 = this.py0;
 					this.savex1 = this.px1;
 					this.savey1 = this.py1;
+				}
+				if (!this.touching) {
+					// タッチを開始した。
+					this.touching = true; // タッチ開始。
+					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 				} else {
 					// タッチ操作の続き。
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
@@ -993,12 +995,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			console.log("touchend");
 			e.preventDefault();
 			if (this.touching) { // タッチ中か？
+				this.touching = false; // タッチを終了。
 				// 線分の位置を復元する。
 				this.px0 = this.savex0;
 				this.py0 = this.savey0;
 				this.px1 = this.savex1;
 				this.py1 = this.savey1;
-				this.touching = false; // タッチを終了。
+				this.savex0 = undefined;
+				this.savey0 = undefined;
+				this.savex1 = undefined;
+				this.savey1 = undefined;
 				if (this.touchDistance !== undefined ||
 				    this.touchX !== undefined || this.touchY !== undefined)
 				{
