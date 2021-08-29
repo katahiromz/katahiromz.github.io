@@ -37,8 +37,8 @@ $(function(){
 	document.getElementById("image-screen").addEventListener('touchstart', function(e){
 		var t = e.touches;
 		if (t.length > 1) {
-			var w = t[1].pageX - t[0].pageX;
-			var h = t[1].pageY - t[0].pageY;
+			var w = Math.abs(t[1].pageX - t[0].pageX);
+			var h = Math.abs(t[1].pageY - t[0].pageY);
 			s0 = w * h;
 		}
 	}, {passive: false});
@@ -47,8 +47,8 @@ $(function(){
 		e.preventDefault();
 		var t = e.touches;
 		if (t.length > 1) {
-			var w = t[1].pageX - t[0].pageX;
-			var h = t[1].pageY - t[0].pageY;
+			var w = Math.abs(t[1].pageX - t[0].pageX);
+			var h = Math.abs(t[1].pageY - t[0].pageY);
 			var s1 = w * h;
 			if (s0 + 80 < s1) {
 				scale -= 0.02 * scale;
