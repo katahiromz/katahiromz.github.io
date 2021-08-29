@@ -378,7 +378,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
 			if (this.isSmartPhone())
-				handleSize *= 3;
+				handleSize *= 5;
 			if (xy0[0] - handleSize <= x && x <= xy0[0] + handleSize &&
 				xy0[1] - handleSize <= y && y <= xy0[1] + handleSize)
 			{
