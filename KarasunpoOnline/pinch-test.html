@@ -56,10 +56,12 @@ $(function(){
 				redraw();
 				timerID = setTimeout(function(){
 					pinchDistance = 0;
+					tx0 = ty0 = undefined;
 				}, 500);
 			} else {
 				pinchDistance = distance;
 			}
+			redraw();
 		}
 	}, {passive: false});
 	redraw();
