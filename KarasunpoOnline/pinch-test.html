@@ -30,7 +30,7 @@ $(function(){
 	document.getElementById("image-screen").addEventListener('touchmove', function(e){
 		e.preventDefault();
 		var t = e.changedTouches;
-		if (touches > 1) {
+		if (t.length > 1) {
 			var x0 = t[0].pageX;
 			var y0 = t[0].pageY;
 			var x1 = t[1].pageX;
