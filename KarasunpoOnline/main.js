@@ -583,7 +583,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 				var dx = this.px1 - this.px0, dy = this.py1 - this.py0;
 				var pixelLength = Math.sqrt(dx * dx + dy * dy);
 				// 名目上の長さを求める。
-				var value = parseFloat(this.theStdNominalLength) * parseFloat(this.pixelLength) / parseFloat(this.stdPixelLength);
+				var value = parseFloat(this.theStdNominalLength) * parseFloat(pixelLength) / parseFloat(stdPixelLength);
 				// 四捨五入。
 				value *= 10000.0;
 				value = Math.round(value);
