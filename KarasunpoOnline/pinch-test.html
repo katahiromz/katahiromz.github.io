@@ -51,13 +51,13 @@ $(function(){
 			var h = Math.abs(t[1].pageY - t[0].pageY);
 			var s1 = w * h;
 			if (s0 + 80 < s1) {
-				scale -= 0.02 * scale;
-			} else if (s0 + 20 < s1) {
-				scale -= 0.1 * scale;
-			} else if (s0 > s1 + 80) {
 				scale += 0.02 * scale;
-			} else if (s0 > s1 + 20) {
+			} else if (s0 + 20 < s1) {
 				scale += 0.1 * scale;
+			} else if (s0 > s1 + 80) {
+				scale -= 0.02 * scale;
+			} else if (s0 > s1 + 20) {
+				scale -= 0.1 * scale;
 			}
 			s0 = s1;
 			$("#info").text(s0);
