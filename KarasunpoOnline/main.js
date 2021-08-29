@@ -864,17 +864,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					// 距離に応じてズームする。
 					$("#info").text(this.touchDistance + " | " + newTouchDistance);
 					if (newTouchDistance > this.touchDistance) {
-						if (newTouchDistance > 2 * this.touchDistance) {
-							this.setZoom(this.theZoom * 1.08);
-						} else if (newTouchDistance > 1.2 * this.touchDistance) {
-							this.setZoom(this.theZoom * 1.1);
-						}
+						this.setZoom(this.theZoom * 1.1);
 					} else if (newTouchDistance < this.touchDistance) {
-						if (1.2 * newTouchDistance < this.touchDistance) {
-							this.setZoom(this.theZoom / 1.1);
-						} else if (2 * newTouchDistance < this.touchDistance) {
-							this.setZoom(this.theZoom / 1.08);
-						}
+						this.setZoom(this.theZoom / 1.08);
 					}
 					// 距離を更新。
 					this.touchDistance = newTouchDistance;
