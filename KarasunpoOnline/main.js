@@ -962,9 +962,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			switch (zoom) {
 			case "-1":
 				break;
-			case "0":
-			case "1":
-			case "2":
+			case "0": case "1": case "2":
 				this.theFitMode = parseInt(zoom);
 				this.doFitImage();
 				break;
@@ -978,22 +976,14 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			// 線分の色。
 			var color = $("#config-dialog-line-color").val();
 			switch (color) {
-			case "red":
-			case "blue":
-			case "green":
+			case 'red': case 'blue': case 'green': case 'yellow':
 				this.theLineColor = color;
 				break;
 			}
 			// 背景。
 			var back = $("#config-dialog-background").val();
 			switch (back) {
-			case "-2":
-			case "0":
-			case "1":
-			case "2":
-			case "3":
-			case "4":
-			case "5":
+			case "-2": case "0": case "1": case "2": case "3": case "4": case "5":
 				this.backgroundMode = parseInt(back);
 				this.backgroundImage = null;
 				break;
@@ -1015,13 +1005,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			$("#config-dialog-zoom").val("-1");
 			$("#config-dialog-line-color").val(this.theLineColor);
 			switch (this.backgroundMode) {
-			case -2:
-			case 0:
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
+			case -2: case 0: case 1: case 2: case 3: case 4: case 5:
 				$("#config-dialog-background").val(this.backgroundMode);
 				break;
 			}
