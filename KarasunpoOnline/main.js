@@ -864,7 +864,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					alert("OK3|" + dx + "|" + dy);
 					// タッチ操作の続き。
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
-					alert("OK3.5|" + newTouchDistance);
+					alert("OK3.5==|" + newTouchDistance + "|" + this.touchDistance);
 					// 距離に応じてズームする。
 					if (this.touchDistance + 3 < newTouchDistance) {
 						this.setZoom(theZoom * 1.08);
