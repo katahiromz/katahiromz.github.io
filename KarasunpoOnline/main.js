@@ -855,13 +855,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				var x0 = t[0].pageX, y0 = t[0].pageY;
 				var x1 = t[1].pageX, y1 = t[1].pageY;
 				var dx = x1 - x0, dy = y1 - y0;
-				alert("OK2");
-				if (!this.touchDistance) {
+				alert("OK2|" + x0);
+				if (this.touchDistance === undefined) {
 					// タッチを開始した。
 					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 					this.touching = true; // タッチ開始。
-				alert("OK3");
 				} else {
+					alert("OK3");
 					// タッチ操作の続き。
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
 					// 距離に応じてズームする。
@@ -884,14 +884,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					// タッチ位置を新しくセット。
 					this.touchX = newTouchX;
 					this.touchY = newTouchY;
-				alert("OK5");
 				} else {
 					// タッチ位置に違いに応じて画面を動かし、タッチ位置を更新。
 					this.theDeltaX += newTouchX - this.touchX;
 					this.theDeltaY += newTouchY - this.touchY;
 					this.touchX = newTouchX;
 					this.touchY = newTouchY;
-				alert("OK6");
 				}
 				// 再描画。
 				this.redraw();
