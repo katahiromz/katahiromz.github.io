@@ -113,8 +113,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
 			if (this.isSmartPhone() || this.isTablet())
-				return 10;
-			return 5;
+				return 15;
+			return 10;
 		},
 		// 画像の中央座標を取得する。
 		getImageCenter: function(){
@@ -386,18 +386,15 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
-			if (this.isSmartPhone() || this.isTablet())
-				handleSize *= 5;
-			if (xy0[0] - handleSize <= x && x <= xy0[0] + handleSize &&
-				xy0[1] - handleSize <= y && y <= xy0[1] + handleSize)
-			{
+			var dx, dy;
+			dx = x - xy0[0];
+			dy = y - xy0[1];
+			if (Math.sqrt(dx * dx + dy * dy) < handleSize)
 				return 0;
-			}
-			if (xy1[0] - handleSize <= x && x <= xy1[0] + handleSize &&
-				xy1[1] - handleSize <= y && y <= xy1[1] + handleSize)
-			{
+			dx = x - xy1[0];
+			dy = y - xy1[1];
+			if (Math.sqrt(dx * dx + dy * dy) < handleSize)
 				return 1;
-			}
 			return -1;
 		},
 		// 線を描く。
@@ -724,6 +721,22 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// 再描画。
 			this.doRedraw();
 		},
+		// 感知領域を描画する。
+		drawSensitive : function(ctx){
+			var xy0 = this.LPtoDP(this.px0, this.py0);
+			var xy1 = this.LPtoDP(this.px1, this.py1);
+			var handleSize = this.getHandleSize();
+			var radius = handleSize * 2;
+			ctx.save();
+			ctx.strokeStyle = "darkgreen";
+			ctx.beginPath();
+			ctx.arc(xy0[0], xy0[1], radius, 0, 2 * Math.PI, false);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(xy1[0], xy1[1], radius, 0, 2 * Math.PI, false);
+			ctx.stroke();
+			ctx.restore();
+		},
 		// 描画の終わり。
 		doRedrawFinish: function(ctx, succeeded){
 			if (this.theLineOn) { // 線分を描画するか？
@@ -743,6 +756,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					}
 				}
 			}
+			// 感知領域を描画する。
+			this.drawSensitive(ctx);
+			// キャンバスに転送する。
 			var canvas = $("#image-screen");
 			var data = ctx.getImageData(0, 0, this.cxCanvas, this.cyCanvas);
 			canvas[0].getContext('2d').putImageData(data, 0, 0);
@@ -753,6 +769,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					$(".mode2-next").prop('disabled', false);
 				}
 			}
+			// 描画完了。
 			this.theIsDrawing = false;
 		},
 		// マウスの左ボタンが押された。
