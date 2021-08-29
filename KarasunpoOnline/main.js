@@ -4,9 +4,8 @@
 
 var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.worker.min.js';
-pdfjsLib.GlobalWorkerOptions.cMapUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/cmaps/';
-pdfjsLib.GlobalWorkerOptions.cMapPacked = true;
+var pdfjsLib = window['pdfjs-dist/build/pdf'];
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
 
 (function($){
 	// 厳密に。
@@ -522,7 +521,11 @@ pdfjsLib.GlobalWorkerOptions.cMapPacked = true;
 					Karasunpo.onWindowResize.call(Karasunpo);
 					$(".mode2-filename").text("読み込み中...");
 					var ary = new Uint8Array(e.target.result);
-					var loadingTask = pdfjsLib.getDocument(ary);
+					var loadingTask = pdfjsLib.getDocument({
+						data: ary,
+						cMapUrl: 'https://mozilla.github.io/pdf.js/web/cmaps/',
+						cMapPacked: true,
+					});
 					loadingTask.promise.then(function(pdf){
 						var text = file.name;
 						if (text.length > 16)
