@@ -70,8 +70,6 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 		theStdNominalLength: 0, // 基準線分の長さ（名目）。
 		theLengthUnit: "", // 長さの単位。
 		theFileName: "", // ファイル名。
-		touchMoved: false, // タッチを移動したか？
-		pinchDistance: 0, // ピンチの距離。
 		// HTMLの特殊文字を変換。
 		htmlspecialchars: function(str){
 			return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -772,8 +770,6 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 		// タッチデバイスでタッチが始まった。
 		onTouchStart: function(e){
 			console.log("touchstart");
-			this.touchMoved = false;
-			this.pinchDistance = 0;
 			e.preventDefault();
 			if (!this.theCanDraw)
 				return;
