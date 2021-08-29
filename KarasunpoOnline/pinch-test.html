@@ -16,6 +16,8 @@
 <hr />
 <canvas id="image-screen" width="400" height="400" style="border: 3px solid black"></canvas>
 <script>
+<hr />
+<p id="info"></p>
 $(function(){
 	var pinchDistance = 0;
 	var scale = 1.0;
@@ -58,6 +60,7 @@ $(function(){
 				scale += 0.1 * scale;
 			}
 			s0 = s1;
+			$("#info").text(s0);
 			var x0 = t[0].pageX;
 			var y0 = t[0].pageY;
 			var x1 = t[1].pageX;
@@ -79,5 +82,4 @@ $(function(){
 	redraw();
 });
 </script>
-<hr />
 </body></html>
