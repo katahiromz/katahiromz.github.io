@@ -54,7 +54,7 @@ $(function(){
 			}
 			clearTimeout(timerID);
 			if (pinchDistance != 0) {
-				scale *= distance / pinchDistance;
+				scale *= Math.sqrt(distance / pinchDistance);
 				redraw();
 				timerID = setTimeout(function(){
 					pinchDistance = 0;
