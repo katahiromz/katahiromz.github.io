@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.872"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.873"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -99,9 +99,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 		},
 		// タップ位置を取得する為の関数群
-		touchGetPos: function(e) {
+		touchGetPos: function(e, i = 0) {
 			var rect = $("#image-screen")[0].getBoundingClientRect();
-			var touch = e.touches[0] || e.changedTouches[0];
+			var touch = e.touches[i] || e.changedTouches[i];
 			return {
 				x : touch.clientX - rect.left,
 				y : touch.clientY - rect.top
@@ -842,7 +842,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault();
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
-				this.doTouchMove(t);
+				this.doTouchMove(e, t);
 				return;
 			}
 			if (this.touchMoving) {
@@ -864,7 +864,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.redraw();
 		},
 		// タッチデバイスでタッチ移動する。
-		doTouchMove: function(t){
+		doTouchMove: function(e, t){
 			if (this.savex0 === null) {
 				// 線分の位置を保存する。
 				this.savex0 = this.px0;
@@ -873,8 +873,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.savey1 = this.py1;
 			}
 			this.thePenOn = false; // ペンをオフにする。
-			var x0 = t[0].pageX, y0 = t[0].pageY;
-			var x1 = t[1].pageX, y1 = t[1].pageY;
+			var pos0 = touchGetPos(e, 0);
+			var pos1 = touchGetPos(e, 1);
+			var x0 = pos0[0], y0 = pos0[1];
+			var x1 = pos1[0], y1 = pos1[1];
 			var dx = x1 - x0, dy = y1 - y0;
 			if (!this.touchMoving) {
 				// タッチを開始した。
@@ -915,7 +917,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault();
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
-				this.doTouchMove(t);
+				this.doTouchMove(e, t);
 				return;
 			} else {
 				if (this.touchMoving) {
