@@ -728,6 +728,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 感知領域を描画する。
 		drawSensitive : function(ctx){
+			if (this.px0 == this.px1 && this.py0 == this.py1)
+				return;
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
