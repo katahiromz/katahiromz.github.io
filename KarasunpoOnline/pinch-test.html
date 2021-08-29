@@ -47,20 +47,22 @@ $(function(){
 		e.preventDefault();
 		var t = e.touches;
 		if (t.length > 1) {
-			var w = Math.abs(t[1].pageX - t[0].pageX);
-			var h = Math.abs(t[1].pageY - t[0].pageY);
-			var s1 = Math.sqrt(w * h);
-			if (s0 + 10000 < s1) {
-				scale += 0.02 * scale;
-			} else if (s0 + 5000 < s1) {
-				scale += 0.1 * scale;
-			} else if (s0 > s1 + 10000) {
-				scale -= 0.02 * scale;
-			} else if (s0 > s1 + 5000) {
-				scale -= 0.1 * scale;
+			if (s0) {
+				var w = Math.abs(t[1].pageX - t[0].pageX);
+				var h = Math.abs(t[1].pageY - t[0].pageY);
+				var s1 = Math.sqrt(w * h);
+				if (s0 + 10000 < s1) {
+					scale += 0.02 * scale;
+				} else if (s0 + 5000 < s1) {
+					scale += 0.1 * scale;
+				} else if (s0 > s1 + 10000) {
+					scale -= 0.02 * scale;
+				} else if (s0 > s1 + 5000) {
+					scale -= 0.1 * scale;
+				}
+				s0 = s1;
+				$("#info").text(s0);
 			}
-			s0 = s1;
-			$("#info").text(s0);
 			var x0 = t[0].pageX;
 			var y0 = t[0].pageY;
 			var x1 = t[1].pageX;
@@ -78,6 +80,10 @@ $(function(){
 			}
 			redraw();
 		}
+	}, {passive: false});
+	// タッチデバイスでタッチ終了した。
+	document.getElementById("image-screen").addEventListener('touchend', function(e){
+		s0 = 0;
 	}, {passive: false});
 	redraw();
 });
