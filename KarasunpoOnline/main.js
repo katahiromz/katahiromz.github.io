@@ -1135,7 +1135,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 		});
 		$(".mode4-draw-circle").on('click', function(){
-			Karasunpo.theDrawCircle = $(".mode4-draw-circle").prop('checked');
+			Karasunpo.theDrawCircle = $(this).prop('checked');
+			$(".mode4-draw-circle").prop('checked', Karasunpo.theDrawCircle);
 			$(".mode6-draw-circle").prop('checked', Karasunpo.theDrawCircle);
 			Karasunpo.doRedraw();
 		});
@@ -1195,8 +1196,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			location.reload();
 		});
 		$(".mode6-draw-circle").on('click', function(){
-			Karasunpo.theDrawCircle = $(".mode6-draw-circle").prop('checked');
+			Karasunpo.theDrawCircle = $(this).prop('checked');
 			$(".mode4-draw-circle").prop('checked', this.theDrawCircle);
+			$(".mode6-draw-circle").prop('checked', this.theDrawCircle);
 			Karasunpo.doRedraw();
 		});
 		$(".mode6-copy-text").on('click', function(){
