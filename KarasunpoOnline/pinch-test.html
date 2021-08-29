@@ -43,6 +43,7 @@ $(function(){
 				scale = newPinchdistance / pinchDistance;
 				redraw();
 			} else {
+				pinchDistance = newPinchdistance;
 				timerID = setTimeout(function(){
 					pinchDistance = 0;
 				}, 500);
