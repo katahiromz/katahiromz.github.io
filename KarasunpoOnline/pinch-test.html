@@ -48,10 +48,10 @@ $(function(){
 			var w = t[1].pageX - t[0].pageX;
 			var h = t[1].pageY - t[0].pageY;
 			var s1 = w * h;
-			if (s0 < s1) {
-				scale *= 0.9;
-			} else if (s0 > s1) {
-				scale *= 1.1;
+			if (s0 + 10 < s1) {
+				scale -= 0.1 * scale;
+			} else if (s0 > s1 + 10) {
+				scale += 0.1 * scale;
 			}
 			s0 = s1;
 			var x0 = t[0].pageX;
