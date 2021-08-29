@@ -72,6 +72,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		sy1: 0, // 基準線分の位置。
 		mx0: 0, // 中央ボタンでドラッグしている位置。
 		my0: 0, // 中央ボタンでドラッグしている位置。
+		savex0: 0, // 保存用。
+		savey0: 0, // 保存用。
+		savex1: 0, // 保存用。
+		savey1: 0, // 保存用。
 		theLineColor: 'red', // 線分の色。
 		theDrawCircle: false, // 補助円を描くか？
 		theIsPDF: false, // PDFファイルか？
@@ -858,14 +862,20 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// タッチデバイスでタッチ移動する。
 		doTouchMove: function(t){
+			this.thePenOn = false; // ペンをオフにする。
 			if (this.theCanMove) { // 移動可能か？
 				var x0 = t[0].pageX, y0 = t[0].pageY;
 				var x1 = t[1].pageX, y1 = t[1].pageY;
 				var dx = x1 - x0, dy = y1 - y0;
-				if (this.touchDistance === undefined) {
+				if (!this.touching) {
 					// タッチを開始した。
-					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 					this.touching = true; // タッチ開始。
+					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
+					// 線分の位置を保存する。
+					this.savex0 = this.px0;
+					this.savey0 = this.py0;
+					this.savex1 = this.px1;
+					this.savey1 = this.py1;
 				} else {
 					// タッチ操作の続き。
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
@@ -902,7 +912,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault();
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
-				this.thePenOn = false; // ペンをオフにする。
 				this.doTouchMove(t);
 				return;
 			} else {
@@ -984,13 +993,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			console.log("touchend");
 			e.preventDefault();
 			if (this.touching) { // タッチ中か？
+				// 線分の位置を復元する。
+				this.px0 = this.savex0;
+				this.py0 = this.savey0;
+				this.px1 = this.savex1;
+				this.py1 = this.savey1;
 				this.touching = false; // タッチを終了。
 				if (this.touchDistance !== undefined ||
 				    this.touchX !== undefined || this.touchY !== undefined)
 				{
 					this.touchDistance = this.touchX = this.touchY = undefined;
-					return;
 				}
+				this.redraw();
+				return;
 			}
 			if (this.theHandleOn == -1) {
 				if (!this.theCanDraw)
