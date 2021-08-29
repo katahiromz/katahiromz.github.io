@@ -268,8 +268,8 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 				this.doRedrawFinish(ctx, false);
 				return;
 			}
-			var zoomedWidth = cxImage * theZoom / 100.0;
-			var zoomedHeight = cyImage * theZoom / 100.0;
+			var zoomedWidth = cxImage * this.theZoom / 100.0;
+			var zoomedHeight = cyImage * this.theZoom / 100.0;
 			var px = (this.cxCanvas - zoomedWidth) / 2;
 			var py = (this.cyCanvas - zoomedHeight) / 2;
 			// アンチエイジングを無効にする。
