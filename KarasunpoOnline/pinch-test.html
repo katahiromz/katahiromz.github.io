@@ -51,14 +51,14 @@ $(function(){
 				var w = Math.abs(t[1].pageX - t[0].pageX);
 				var h = Math.abs(t[1].pageY - t[0].pageY);
 				var s1 = Math.sqrt(w * h);
-				if (s0 + 10 < s1) {
-					scale += 0.2 * scale;
+				if (s0 + 4 < s1) {
+					scale *= 1.08;
 				} else if (s0 + 2 < s1) {
-					scale += 0.1 * scale;
-				} else if (s0 > s1 + 10) {
-					scale -= 0.2 * scale;
+					scale *= 1.1;
+				} else if (s0 > s1 + 4) {
+					scale /= 1.08;
 				} else if (s0 > s1 + 2) {
-					scale -= 0.1 * scale;
+					scale /= 1.1;
 				}
 				$("#info").text(s0 + " | " + s1);
 				s0 = s1;
@@ -84,6 +84,7 @@ $(function(){
 	// タッチデバイスでタッチ終了した。
 	document.getElementById("image-screen").addEventListener('touchend', function(e){
 		s0 = 0;
+		tx0 = ty0 = undefined;
 	}, {passive: false});
 	redraw();
 });
