@@ -281,8 +281,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.doRedrawFinish(ctx, false);
 				return;
 			}
-			var zoomedWidth = cxImage * this.theZoom / 100.0;
-			var zoomedHeight = cyImage * this.theZoom / 100.0;
+			var zoomedWidth = this.cxImage * this.theZoom / 100.0;
+			var zoomedHeight = this.cyImage * this.theZoom / 100.0;
 			var px = (this.cxCanvas - zoomedWidth) / 2;
 			var py = (this.cyCanvas - zoomedHeight) / 2;
 			// アンチエイジングを無効にする。
