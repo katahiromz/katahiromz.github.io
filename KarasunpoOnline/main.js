@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -123,6 +123,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (this.isSmartPhone() || this.isTablet())
 				return 55;
 			return 30;
+		},
+		// 画面の大きさを表す指標を取得する。
+		getScreenSizeIndex: function() {
+			if (window.innerWidth < window.innerHeight) {
+				return window.innerWidth / 100;
+			} else {
+				return window.innerHeight / 100;
+			}
 		},
 		// 画像の中央座標を取得する。
 		getImageCenter: function(){
@@ -863,9 +871,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
 					// 距離に応じてズームする。
 					$("#info").text(this.touchDistance + " | " + newTouchDistance);
-					if (newTouchDistance > this.touchDistance * 1.02) {
+					if (newTouchDistance > this.touchDistance + this.getScreenSizeIndex()) {
 						this.setZoom(this.theZoom * 1.1);
-					} else if (newTouchDistance * 1.02 < this.touchDistance) {
+					} else if (newTouchDistance + this.getScreenSizeIndex() < this.touchDistance) {
 						this.setZoom(this.theZoom * 0.9);
 					}
 					// 距離を更新。
