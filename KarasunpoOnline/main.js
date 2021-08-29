@@ -698,7 +698,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
 					this.doDrawLine(ctx, this.px0, this.py0, this.px1, this.py1, true);
 					if (this.theDrawCircle) {
-						doDrawCircle(ctx, this.px0, this.py0, this.px1, this.py1);
+						this.doDrawCircle(ctx, this.px0, this.py0, this.px1, this.py1);
 					}
 				}
 				if (this.theMode == 6) {
