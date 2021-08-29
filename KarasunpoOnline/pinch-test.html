@@ -29,6 +29,7 @@ $(function(){
 	// タッチデバイスでタッチ移動した。
 	document.getElementById("image-screen").addEventListener('touchmove', function(e){
 		e.preventDefault();
+		alert("OK");
 		var t = e.changedTouches;
 		if (touches > 1) {
 			var x0 = t[0].pageX;
