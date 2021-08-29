@@ -851,39 +851,28 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチ移動する。
 		doTouchMove: function(t){
 			if (this.theCanMove) { // 移動可能か？
-				alert("OK1");
 				var x0 = t[0].pageX, y0 = t[0].pageY;
 				var x1 = t[1].pageX, y1 = t[1].pageY;
 				var dx = x1 - x0, dy = y1 - y0;
-				alert("OK2|" + x0);
 				if (this.touchDistance === undefined) {
 					// タッチを開始した。
 					this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 					this.touching = true; // タッチ開始。
 				} else {
-					alert("OK3|" + dx + "|" + dy);
 					// タッチ操作の続き。
 					var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
-					alert("OK3.5==|" + newTouchDistance + "|" + this.touchDistance);
 					// 距離に応じてズームする。
 					if (this.touchDistance + 3 < newTouchDistance) {
-						this.setZoom(theZoom * 1.08);
-						alert("OK3.6");
+						this.setZoom(this.theZoom * 1.08);
 					} else if (touchDistance + 1.2 < newTouchDistance) {
-						this.setZoom(theZoom * 1.1);
-						alert("OK3.7");
+						this.setZoom(this.theZoom * 1.1);
 					} else if (touchDistance > newTouchDistance + 3) {
-						this.setZoom(theZoom / 1.08);
-						alert("OK3.8");
+						this.setZoom(this.theZoom / 1.08);
 					} else if (touchDistance > newTouchDistance + 1.2) {
-						this.setZoom(theZoom / 1.1);
-						alert("OK3.9");
-					} else {
-						alert("OK3.99");
+						this.setZoom(this.theZoom / 1.1);
 					}
 					// 距離を更新。
 					this.touchDistance = newTouchDistance;
-				alert("OK4");
 				}
 				// タッチ位置を取得。
 				var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
@@ -1133,9 +1122,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.thePDFPageNumber = page_no;
 			}
 			// 再描画。
-			if (isNaN(this.theZoom)) {
-				alert("OK");
-			}
 			this.redraw();
 			// ダイアログを閉じる。
 			$("#config-dialog").dialog("close");
