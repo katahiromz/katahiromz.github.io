@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.82"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.83"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -31,7 +31,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		}
 	});
 
-	// 全角→半角(英数字)
+	// 全角→半角（英数字）。
 	var zenkakuToHankaku = function(str){
 		return str.replace(/[！-～]/g, function(s){
 			return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
@@ -844,11 +844,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			console.log("touchstart");
 			$(".info").text("touchstart");
 			e.preventDefault();
-			if (!this.theCanDraw)
-				return;
-			if (e.touches.length > 1) { // 複数の指で操作？
+			var t = e.touches;
+			if (t.length > 1) { // 複数の指で操作？
+				this.doTouchMove(t);
 				return;
 			}
+			if (!this.theCanDraw)
+				return;
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
 			this.theHandleOn = this.isOnHandle(x, y);
