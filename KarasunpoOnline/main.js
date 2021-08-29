@@ -117,7 +117,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// 感知半径を取得する。
 		getSensitiveRadius: function() {
 			if (this.isSmartPhone() || this.isTablet())
-				return 45;
+				return 55;
 			return 30;
 		},
 		// 画像の中央座標を取得する。
