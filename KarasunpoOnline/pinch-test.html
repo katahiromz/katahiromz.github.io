@@ -21,14 +21,14 @@ $(function(){
 	var scale = 1.0;
 	var timerID;
 	var tx0, ty0;
-	var dx = 0, dy = 0;
+	var px = 0, py = 0;
 	function redraw() {
 		var canvas = $("#image-screen");
 		var ctx = canvas[0].getContext('2d');
 		ctx.fillStyle = "white";
 		ctx.fillRect(0, 0, 400, 400);
 		ctx.strokeStyle = "black";
-		ctx.strokeRect(200 - 70 * scale / 2 + dx, 200 - 70 * scale / 2 + dy, 70 * scale, 70 * scale);
+		ctx.strokeRect(200 - 70 * scale / 2 + px, 200 - 70 * scale / 2 + py, 70 * scale, 70 * scale);
 	}
 	// タッチデバイスでタッチ移動した。
 	document.getElementById("image-screen").addEventListener('touchmove', function(e){
@@ -47,8 +47,8 @@ $(function(){
 				tx0 = ptx0;
 				ty0 = pty0;
 			} else {
-				dx += ptx0 - tx0;
-				dy += pty0 - ty0;
+				px += ptx0 - tx0;
+				py += pty0 - ty0;
 			}
 			clearTimeout(timerID);
 			if (pinchDistance != 0) {
