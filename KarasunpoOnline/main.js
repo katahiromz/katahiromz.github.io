@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.83"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.84"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -76,6 +76,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		savey0: 0, // 保存用。
 		savex1: 0, // 保存用。
 		savey1: 0, // 保存用。
+		touchTime: null, // タッチした時刻。
 		theLineColor: 'red', // 線分の色。
 		theDrawCircle: false, // 補助円を描くか？
 		theIsPDF: false, // PDFファイルか？
@@ -867,18 +868,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// タッチデバイスでタッチ移動する。
 		doTouchMove: function(t){
+			if (this.savex0 === undefined) {
+				// 線分の位置を保存する。
+				this.savex0 = this.px0;
+				this.savey0 = this.py0;
+				this.savex1 = this.px1;
+				this.savey1 = this.py1;
+				this.touchTime = new Date().getTime();
+			}
 			this.thePenOn = false; // ペンをオフにする。
 			if (this.theCanMove) { // 移動可能か？
 				var x0 = t[0].pageX, y0 = t[0].pageY;
 				var x1 = t[1].pageX, y1 = t[1].pageY;
 				var dx = x1 - x0, dy = y1 - y0;
-				if (this.savex0 === undefined) {
-					// 線分の位置を保存する。
-					this.savex0 = this.px0;
-					this.savey0 = this.py0;
-					this.savex1 = this.px1;
-					this.savey1 = this.py1;
-				}
 				if (!this.touching) {
 					// タッチを開始した。
 					this.touching = true; // タッチ開始。
@@ -999,6 +1001,21 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			console.log("touchend");
 			$(".info").text("touchend");
 			e.preventDefault();
+			if (this.touchTime != null &&
+				new Date().getTime() - this.touchTime < 100)
+			{
+				this.touchTime = null;
+				this.touching = false; // タッチを終了。
+				if (this.savex0 !== undefined) {
+					// 線分の位置を復元する。
+					this.px0 = this.savex0;
+					this.py0 = this.savey0;
+					this.px1 = this.savex1;
+					this.py1 = this.savey1;
+				}
+				return;
+			}
+			this.touchTime = null;
 			if (this.touching) { // タッチ中か？
 				this.touching = false; // タッチを終了。
 				if (this.savex0 !== undefined) {
