@@ -112,9 +112,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
-			if (this.isSmartPhone() || this.isTablet())
-				return 15;
 			return 10;
+		},
+		// 感知半径を取得する。
+		getSensitiveRadius: function() {
+			if (this.isSmartPhone() || this.isTablet())
+				return 45;
+			return 30;
 		},
 		// 画像の中央座標を取得する。
 		getImageCenter: function(){
@@ -386,11 +390,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
-			var sensitiveRadius;
-			if (this.isSmartPhone() || this.isTablet())
-				sensitiveRadius = handleSize * 3;
-			else
-				sensitiveRadius = handleSize * 2;
+			var sensitiveRadius = this.getSensitiveRadius();
 			var dx, dy;
 			dx = x - xy0[0];
 			dy = y - xy0[1];
@@ -733,11 +733,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var xy0 = this.LPtoDP(this.px0, this.py0);
 			var xy1 = this.LPtoDP(this.px1, this.py1);
 			var handleSize = this.getHandleSize();
-			var sensitiveRadius;
-			if (this.isSmartPhone() || this.isTablet())
-				sensitiveRadius = handleSize * 3;
-			else
-				sensitiveRadius = handleSize * 2;
+			var sensitiveRadius = this.getSensitiveRadius();
 			ctx.save();
 			ctx.strokeStyle = "darkgreen";
 			ctx.beginPath();
