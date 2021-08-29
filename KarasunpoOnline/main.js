@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.877"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.878"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -73,10 +73,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		sy1: 0, // 基準線分の位置。
 		mx0: 0, // 中央ボタンでドラッグしている位置。
 		my0: 0, // 中央ボタンでドラッグしている位置。
-		savex0: null, // 保存用。
-		savey0: null, // 保存用。
-		savex1: null, // 保存用。
-		savey1: null, // 保存用。
+		savepx0: null, // 保存用。
+		savepy0: null, // 保存用。
+		savepx1: null, // 保存用。
+		savepy1: null, // 保存用。
 		lineColor: 'red', // 線分の色。
 		shouldDrawCircle: false, // 補助円を描くか？
 		isPDF: false, // PDFファイルか？
@@ -880,7 +880,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
-				this.touchX = this.touchY = null;
+				if (!this.touchMoving) {
+					this.touchX = this.touchY = null;
+					this.savepx0 = this.savepy0 = null;
+					this.savepx1 = this.savepy1 = null;
+				}
 				this.doTouchMove(e, t);
 				return;
 			}
@@ -913,12 +917,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					Karasunpo.touchY == null;
 				}, 800);
 			}
-			if (this.savex0 === null) {
+			if (this.savepx0 === null) {
 				// 線分の位置を保存する。
-				this.savex0 = this.px0;
-				this.savey0 = this.py0;
-				this.savex1 = this.px1;
-				this.savey1 = this.py1;
+				this.savepx0 = this.px0;
+				this.savepy0 = this.py0;
+				this.savepx1 = this.px1;
+				this.savepy1 = this.py1;
 			}
 			this.penOn = false; // ペンをオフにする。
 			var pos0 = this.touchGetPos(e, 0);
@@ -1061,11 +1065,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			if (this.touchMoving) {
 				this.touchMoving = false; // タッチを終了。
-				if (this.savex0 !== null) {
+				if (this.savepx0 !== null) {
 					// 線分の位置を復元する。
-					this.setSegment(this.savex0, this.savey0, this.savex1, this.savey1);
+					this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
 				}
-				this.savex0 = this.savey0 = this.savex1 = this.savey1 = null;
+				this.savepx0 = this.savepy0 = null;
+				this.savepx1 = this.savepy1 = null;
 				this.redraw();
 				return;
 			}
