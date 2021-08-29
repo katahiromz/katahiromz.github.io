@@ -1,0 +1,53 @@
+<html><head>
+	<title>pinch-test</title>
+	<!-- Disable browser cache -->
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<!-- polyfill -->
+	<script src="polyfill.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<h1>pinch-test.html</h1>
+<hr />
+<canvas id="image-screen" width="300" height="300" style="border: 3px solid black"></canvas>
+<script>
+$(function(){
+	var pinchDistance = 0;
+	var scale = 1.0;
+	var timerID;
+	function redraw() {
+		var canvas = $("#image-screen");
+		var ctx = canvas[0].getContext('2d');
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(150 - 100 * scale, 150 - 100 * scale, 2 * 100 * scale, 2 * 100 * scale);
+	}
+	// タッチデバイスでタッチ移動した。
+	document.getElementById("image-screen").addEventListener('touchmove', function(e){
+		e.preventDefault();
+		var t = e.changedTouches;
+		if (touches > 1) {
+			var x0 = t[0].pageX;
+			var y0 = t[0].pageY;
+			var x1 = t[1].pageX;
+			var y1 = t[1].pageY;
+			var dx = x1 - x0, dy = y1 - y0;
+			var newPinchdistance = Math.sqrt(dx * dx + dy * dy);
+			clearTimeout(timerID);
+			if (pinchDistance != 0) {
+				scale = newPinchdistance / pinchDistance;
+				redraw();
+			} else {
+				timerID = setTimeout(function(){
+					pinchDistance = 0;
+				}, 500);
+			}
+		}
+	}, {passive: false});
+	redraw();
+});
+</script>
+<hr />
+</body></html>
