@@ -22,6 +22,7 @@ $(function(){
 	var timerID;
 	var tx0, ty0;
 	var px = 0, py = 0;
+	var s0;
 	function redraw() {
 		var canvas = $("#image-screen");
 		var ctx = canvas[0].getContext('2d');
@@ -30,17 +31,32 @@ $(function(){
 		ctx.strokeStyle = "black";
 		ctx.strokeRect(200 - 70 * scale / 2 + px, 200 - 70 * scale / 2 + py, 70 * scale, 70 * scale);
 	}
+	// タッチデバイスでタッチ開始した。
+	document.getElementById("image-screen").addEventListener('touchstart', function(e){
+		var t = e.touches;
+		if (t.length > 1) {
+			var w = t[1].pageX - t[0].pageX;
+			var h = t[1].pageY - t[0].pageY;
+			s0 = w * h;
+		}
+	}, {passive: false});
 	// タッチデバイスでタッチ移動した。
 	document.getElementById("image-screen").addEventListener('touchmove', function(e){
 		e.preventDefault();
-		var t = e.changedTouches;
+		var t = e.touches;
 		if (t.length > 1) {
+			var w = t[1].pageX - t[0].pageX;
+			var h = t[1].pageY - t[0].pageY;
+			var s1 = w * h;
+			if (s0 < s1) {
+				scale *= 0.9;
+			} else {
+				scale *= 1.1;
+			}
 			var x0 = t[0].pageX;
 			var y0 = t[0].pageY;
 			var x1 = t[1].pageX;
 			var y1 = t[1].pageY;
-			var dx = x1 - x0, dy = y1 - y0;
-			var distance = Math.sqrt(dx * dx + dy * dy);
 			var ptx0 = (x0 + x1) / 2;
 			var pty0 = (y0 + y1) / 2;
 			if (tx0 === undefined || ty0 === undefined) {
@@ -51,17 +67,6 @@ $(function(){
 				py += pty0 - ty0;
 				tx0 = ptx0;
 				ty0 = pty0;
-			}
-			clearTimeout(timerID);
-			if (pinchDistance != 0) {
-				scale *= Math.sqrt(distance / pinchDistance);
-				redraw();
-				timerID = setTimeout(function(){
-					pinchDistance = 0;
-					tx0 = ty0 = undefined;
-				}, 500);
-			} else {
-				pinchDistance = distance;
 			}
 			redraw();
 		}
