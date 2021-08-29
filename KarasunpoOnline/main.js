@@ -850,7 +850,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// タッチデバイスでタッチ移動する。
 		doTouchMove: function(e){
-			alert("OK");
+			var t = e.touches;
 			if (this.theCanMove) { // 移動可能か？
 				var x0 = t[0].pageX, y0 = t[0].pageY;
 				var x1 = t[1].pageX, y1 = t[1].pageY;
