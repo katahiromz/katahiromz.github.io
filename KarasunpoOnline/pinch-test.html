@@ -60,8 +60,8 @@ $(function(){
 				} else if (s0 > s1) {
 					scale -= 0.1 * scale;
 				}
+				$("#info").text(s0 + " | " + s1);
 				s0 = s1;
-				$("#info").text(s0);
 			}
 			var x0 = t[0].pageX;
 			var y0 = t[0].pageY;
