@@ -62,7 +62,7 @@
 		sy1: 0, // 基準線分の位置。
 		mx0: 0, // 中央ボタンでドラッグしている位置。
 		my0: 0, // 中央ボタンでドラッグしている位置。
-		theLineStyle: 'rgb(255, 0, 0)', // 線分の色。
+		theLineColor: 'rgb(255, 0, 0)', // 線分の色。
 		theDrawCircle: false, // 補助円を描くか？
 		theIsPDF: false, // PDFファイルか？
 		thePDF: null, // PDFオブジェクト。
@@ -205,7 +205,6 @@
 		},
 		// PDFページを取得した。
 		gotPage: function(page, canvas, ctx){
-			console.log(this.theZoom);
 			if (!this.cxImage || !this.cyImage) {
 				var viewport = page.getViewport({
 					scale: 1.0
@@ -232,9 +231,6 @@
 				offsetX: px + this.theDeltaX,
 				offsetY: py + this.theDeltaY
 			});
-			console.log(viewport);
-			if (isNaN(viewport.scale))
-				console.trace();
 			// PDFレンダリング開始。
 			var renderContext = {
 				canvasContext: ctx,
@@ -279,18 +275,11 @@
 			var zoomedHeight = cyImage * theZoom / 100.0;
 			var px = (this.cxCanvas - zoomedWidth) / 2;
 			var py = (this.cyCanvas - zoomedHeight) / 2;
-			// 小さい画像のときは、アンチエイジングを無効にする。
-			if (this.cxImage < 100 && this.cyImage < 100) {
-				ctx.mozImageSmoothingEnabled = false;
-				ctx.webkitImageSmoothingEnabled = false;
-				ctx.msImageSmoothingEnabled = false;
-				ctx.imageSmoothingEnabled = false;
-			} else {
-				ctx.mozImageSmoothingEnabled = true;
-				ctx.webkitImageSmoothingEnabled = true;
-				ctx.msImageSmoothingEnabled = true;
-				ctx.imageSmoothingEnabled = true;
-			}
+			// アンチエイジングを無効にする。
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
 			// 画像を描画。
 			ctx.drawImage(this.theImage, px + this.theDeltaX, py + this.theDeltaY, zoomedWidth, zoomedHeight);
 			this.doRedrawFinish(ctx, true);
@@ -396,14 +385,14 @@
 			} else {
 				ctx.lineWidth = 1;
 			}
-			ctx.strokeStyle = this.theLineStyle;
+			ctx.strokeStyle = this.theLineColor;
 			ctx.beginPath();
 			var xy0 = this.LPtoDP(x0, y0);
 			var xy1 = this.LPtoDP(x1, y1);
 			ctx.moveTo(xy0[0], xy0[1]);
 			ctx.lineTo(xy1[0], xy1[1]);
 			ctx.stroke();
-			ctx.fillStyle = this.theLineStyle;
+			ctx.fillStyle = this.theLineColor;
 			ctx.beginPath();
 			var handleSize = this.getHandleSize();
 			if (flag) {
@@ -425,7 +414,7 @@
 			ctx.save();
 			ctx.lineCap = 'round';
 			ctx.lineWidth = 2;
-			ctx.strokeStyle = theLineStyle;
+			ctx.strokeStyle = theLineColor;
 			var xy0 = this.LPtoDP(cx, cy);
 			var r0 = r * this.theZoom / 100.0;
 			ctx.beginPath();
@@ -527,7 +516,6 @@
 			var reader = new FileReader();
 			if (this.theIsPDF) {
 				reader.onload = function(e){
-					console.log(this);
 					Karasunpo.onWindowResize();
 					$(".mode2-filename").text("読み込み中...");
 					var ary = new Uint8Array(e.target.result);
@@ -545,7 +533,6 @@
 				};
 			} else {
 				reader.onload = function(e){
-					console.log(this);
 					Karasunpo.onWindowResize();
 					$(".mode2-filename").text("読み込み中...");
 					var img1 = new Image();
@@ -974,11 +961,64 @@
 				break;
 			}
 		},
+		// 設定OK。
+		configOK: function(){
+			// ズーム。
+			var zoom = $("#config-dialog-zoom").val();
+			switch (zoom) {
+			case "-1":
+				break;
+			case "0":
+			case "1":
+			case "2":
+				this.theFitMode = parseInt(zoom);
+				this.doFitImage();
+				break;
+			default:
+				zoom = parseInt(zoom);
+				if (!isNaN(zoom)) {
+					this.doSetZoom(zoom);
+				}
+				break;
+			}
+			// 線分の色。
+			var color = $("#config-dialog-line-color").val();
+			switch (color) {
+			case "red":
+			case "blue":
+			case "green":
+				this.theLineColor = color;
+				break;
+			}
+			// 背景。
+			var back = $("#config-dialog-background").val();
+			switch (back) {
+			case "-2":
+			case "0":
+			case "1":
+			case "2":
+			case "3":
+			case "4":
+			case "5":
+				this.backgroundMode = parseInt(back);
+				this.backgroundImage = null;
+				break;
+			default:
+				break;
+			}
+			// 再描画。
+			if (isNaN(this.theZoom)) {
+				alert("OK");
+			}
+			this.doRedraw();
+			// ダイアログを閉じる。
+			$("#config-dialog").dialog("close");
+		},
 		// 設定。
-		Config: function(){
+		config: function(){
 			var Karasunpo = this;
 			// 「設定」ダイアログを初期化。
-			$("#config-dialog-zoom").val("");
+			$("#config-dialog-zoom").val("-1");
 			$("#config-dialog-line-color").val("");
 			$("#config-dialog-background").val("");
 			// 「設定」ダイアログを開く。
@@ -987,54 +1027,8 @@
 				title: "設定ダイアログ",
 				width: "300px",
 				buttons: {
-					"OK": function() {
-						var zoom = $("#config-dialog-zoom").val();
-						switch (zoom) {
-						case "-1":
-							break;
-						case "0":
-						case "1":
-						case "2":
-							Karasunpo.theFitMode = parseInt(zoom);
-							Karasunpo.doFitImage();
-							break;
-						default:
-							zoom = parseInt(zoom);
-							Karasunpo.doSetZoom(zoom);
-							break;
-						}
-						var color = $("#config-dialog-line-color").val();
-						switch (color) {
-						case "red":
-							Karasunpo.theLineStyle = 'rgb(255, 0, 0)';
-							break;
-						case "blue":
-							Karasunpo.theLineStyle = 'rgb(0, 0, 255)';
-							break;
-						case "green":
-							Karasunpo.theLineStyle = 'rgb(0, 255, 0)';
-							break;
-						}
-						var back = $("#config-dialog-background").val();
-						switch (back) {
-						case "-2":
-						case "0":
-						case "1":
-						case "2":
-						case "3":
-						case "4":
-						case "5":
-							Karasunpo.backgroundMode = parseInt(back);
-							Karasunpo.backgroundImage = null;
-							break;
-						}
-						// 再描画。
-						var binded = Karasunpo.doRedraw.bind(Karasunpo);
-						binded();
-						// ダイアログを閉じる。
-						$(this).dialog("close");
-					},
-					"キャンセル": function() {
+					"OK": Karasunpo.configOK.bind(Karasunpo),
+					"キャンセル": function(){
 						// ダイアログを閉じる。
 						$(this).dialog("close");
 					}
@@ -1271,7 +1265,7 @@
 
 		// 設定ボタン。
 		$("#config-button").click(function(){
-			var binded = Karasunpo.Config.bind(Karasunpo);
+			var binded = Karasunpo.config.bind(Karasunpo);
 			binded();
 		});
 
