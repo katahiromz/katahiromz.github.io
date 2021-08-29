@@ -78,7 +78,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		savex1: null, // 保存用。
 		savey1: null, // 保存用。
 		lineColor: 'red', // 線分の色。
-		doDrawCircle: false, // 補助円を描くか？
+		shouldDrawCircle: false, // 補助円を描くか？
 		isPDF: false, // PDFファイルか？
 		thePDF: null, // PDFオブジェクト。
 		thePDFPageNumber: 1, // PDFのページ番号。
@@ -770,7 +770,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (this.lineOn) { // 線分を描画するか？
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
 					this.doDrawLine(ctx, this.px0, this.py0, this.px1, this.py1, true);
-					if (this.doDrawCircle) {
+					if (this.shouldDrawCircle) {
 						this.doDrawCircle(ctx, this.px0, this.py0, this.px1, this.py1);
 					}
 				}
@@ -1323,9 +1323,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 		});
 		$(".mode4-draw-circle").on('click', function(){
-			Karasunpo.doDrawCircle = $(this).prop('checked');
-			$(".mode4-draw-circle").prop('checked', Karasunpo.doDrawCircle);
-			$(".mode6-draw-circle").prop('checked', Karasunpo.doDrawCircle);
+			Karasunpo.shouldDrawCircle = $(this).prop('checked');
+			$(".mode4-draw-circle").prop('checked', Karasunpo.shouldDrawCircle);
+			$(".mode6-draw-circle").prop('checked', Karasunpo.shouldDrawCircle);
 			Karasunpo.redraw();
 		});
 
@@ -1378,9 +1378,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			location.reload();
 		});
 		$(".mode6-draw-circle").on('click', function(){
-			Karasunpo.doDrawCircle = $(this).prop('checked');
-			$(".mode4-draw-circle").prop('checked', this.doDrawCircle);
-			$(".mode6-draw-circle").prop('checked', this.doDrawCircle);
+			Karasunpo.shouldDrawCircle = $(this).prop('checked');
+			$(".mode4-draw-circle").prop('checked', this.shouldDrawCircle);
+			$(".mode6-draw-circle").prop('checked', this.shouldDrawCircle);
 			Karasunpo.redraw();
 		});
 		$(".mode6-copy-text").on('click', function(){
