@@ -155,23 +155,27 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			y -= IC[1];
 			return [x, y];
 		},
+		// 市松模様を描画する。
+		drawChecker: function(ctx, cx, cy) {
+			var i = 0, j = 0, size = 16;
+			for (var y = 0; y < cy + size; y += size) {
+				i = (j % 2 == 0) ? 1 : 0;
+				for (var x = 0; x < cx + size; x += size) {
+					if (i % 2 == 0)
+						ctx.fillStyle = "rgb(90, 90, 90)";
+					else
+						ctx.fillStyle = "rgb(191, 191, 191)";
+					ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(cx), Math.floor(cy));
+					++i;
+				}
+				++j;
+			}
+		},
 		// 背景を描画する。
 		drawBackground: function(ctx, cx, cy) {
 			switch (this.backgroundMode) {
 			case -2: // 市松模様。
-				var i = 0, j = 0, size = 16;
-				for (var y = 0; y < cy + size; y += size) {
-					i = (j % 2 == 0) ? 1 : 0;
-					for (var x = 0; x < cx + size; x += size) {
-						if (i % 2 == 0)
-							ctx.fillStyle = "rgb(90, 90, 90)";
-						else
-							ctx.fillStyle = "rgb(191, 191, 191)";
-						ctx.fillRect(Math.floor(x), Math.floor(y), Math.floor(cx), Math.floor(cy));
-						++i;
-					}
-					++j;
-				}
+				this.drawChecker(ctx, cx, cy);
 				break;
 			case 0: // 黒。
 				ctx.fillStyle = "rgb(0, 0, 0)";
