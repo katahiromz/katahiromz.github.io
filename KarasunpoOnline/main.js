@@ -62,7 +62,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 		sy1: 0, // 基準線分の位置。
 		mx0: 0, // 中央ボタンでドラッグしている位置。
 		my0: 0, // 中央ボタンでドラッグしている位置。
-		theLineColor: 'rgb(255, 0, 0)', // 線分の色。
+		theLineColor: 'red', // 線分の色。
 		theDrawCircle: false, // 補助円を描くか？
 		theIsPDF: false, // PDFファイルか？
 		thePDF: null, // PDFオブジェクト。
@@ -1013,15 +1013,25 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			var Karasunpo = this;
 			// 「設定」ダイアログを初期化。
 			$("#config-dialog-zoom").val("-1");
-			$("#config-dialog-line-color").val("");
-			$("#config-dialog-background").val("");
+			$("#config-dialog-line-color").val(this.theLineColor);
+			switch (this.backgroundMode) {
+			case -2:
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+				$("#config-dialog-background").val(this.backgroundMode);
+				break;
+			}
 			// 「設定」ダイアログを開く。
 			$("#config-dialog").dialog({
 				modal: true,
 				title: "設定ダイアログ",
 				width: "300px",
 				buttons: {
-					"OK": Karasunpo.configOK.call(Karasunpo),
+					"OK": Karasunpo.configOK.bind(Karasunpo),
 					"キャンセル": function(){
 						// ダイアログを閉じる。
 						$(this).dialog("close");
@@ -1261,31 +1271,23 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 
 		// 更新履歴ボタン。
 		$("#history-button").click(function(){
+			var width;
 			if (Karasunpo.isSmartPhone()) {
-				$("#history-dialog").dialog({
-					modal: true,
-					title: "更新履歴",
-					width: "250px",
-					buttons: {
-						"OK": function() {
-							// ダイアログを閉じる。
-							$(this).dialog("close");
-						},
-					}
-				});
+				width = "250px";
 			} else {
-				$("#history-dialog").dialog({
-					modal: true,
-					title: "更新履歴",
-					width: "500px",
-					buttons: {
-						"OK": function() {
-							// ダイアログを閉じる。
-							$(this).dialog("close");
-						},
-					}
-				});
+				width = "500px";
 			}
+			$("#history-dialog").dialog({
+				modal: true,
+				title: "更新履歴",
+				width: width,
+				buttons: {
+					"OK": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+				}
+			});
 		});
 
 		// バージョン情報ボタン。
