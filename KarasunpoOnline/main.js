@@ -718,10 +718,6 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 					$(".mode2-filename").removeClass("error");
 					$(".mode2-next").prop('disabled', false);
 				}
-			} else {
-				$(".mode2-filename").text("読み込み失敗");
-				$(".mode2-filename").addClass("error");
-				$(".mode2-next").prop('disabled', true);
 			}
 			this.theIsDrawing = false;
 		},
@@ -1035,6 +1031,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 
 	// 初期化。
 	$(function(){
+		// 解像度を高くする。
 		document.addEventListener('webviewerloaded', function() {
 			PDFViewerApplicationOptions.set('printResolution', 300);
 		});
@@ -1223,41 +1220,41 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 		});
 
 		$('#image-screen').on('mousedown', function(e){
-			Karasunpo.onMouseDown.call(Karasunpo, e);
+			Karasunpo.onMouseDown(e);
 		});
 
 		// タッチデバイスでタッチした。
 		document.getElementById("image-screen").addEventListener('touchstart', function(e){
-			Karasunpo.onTouchStart.call(Karasunpo, e);
+			Karasunpo.onTouchStart(e);
 		}, {passive: false});
 
 		// タッチデバイスでタッチ移動した。
 		document.getElementById("image-screen").addEventListener('touchmove', function(e){
-			Karasunpo.onTouchMove.call(Karasunpo, e);
+			Karasunpo.onTouchMove(e);
 		}, {passive: false});
 
 		$('#image-screen').on('mousemove', function(e){
-			Karasunpo.onMouseMove.call(Karasunpo, e);
+			Karasunpo.onMouseMove(e);
 		});
 
 		$('#image-screen').on('touchend', function(e){
-			Karasunpo.onTouchEnd.call(Karasunpo, e);
+			Karasunpo.onTouchEnd(e);
 		});
 
 		$('#image-screen').on('mouseup', function(e){
-			Karasunpo.onMouseUp.call(Karasunpo, e);
+			Karasunpo.onMouseUp(e);
 		});
 
 		document.getElementById("fullscreen").addEventListener('wheel', function(e){
-			Karasunpo.onWheel.call(Karasunpo, e);
+			Karasunpo.onWheel(e);
 		}, {passive: false});
 		document.getElementById("fullscreen").addEventListener('mousewheel', function(e){
-			Karasunpo.onWheel.call(Karasunpo, e);
+			Karasunpo.onWheel(e);
 		}, {passive: false});
 
 		// 設定ボタン。
 		$("#config-button").click(function(){
-			Karasunpo.config.call(Karasunpo);
+			Karasunpo.config();
 		});
 
 		// 更新履歴ボタン。
