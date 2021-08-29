@@ -992,6 +992,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチが終了した。
 		onTouchEnd: function(e){
 			console.log("touchend");
+			$("#info").text("touchend");
 			e.preventDefault();
 			if (this.touching) { // タッチ中か？
 				this.touching = false; // タッチを終了。
