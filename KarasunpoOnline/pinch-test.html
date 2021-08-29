@@ -14,7 +14,7 @@
 <body>
 <h1>pinch-test.html</h1>
 <hr />
-<canvas id="image-screen" width="500" height="500" style="border: 3px solid black"></canvas>
+<canvas id="image-screen" width="400" height="400" style="border: 3px solid black"></canvas>
 <script>
 $(function(){
 	var pinchDistance = 0;
@@ -24,7 +24,7 @@ $(function(){
 		var canvas = $("#image-screen");
 		var ctx = canvas[0].getContext('2d');
 		ctx.strokeStyle = "black";
-		ctx.strokeRect(250 - 100 * scale / 2, 250 - 100 * scale / 2, 100 * scale, 100 * scale);
+		ctx.strokeRect(200 - 70 * scale / 2, 200 - 70 * scale / 2, 70 * scale, 70 * scale);
 	}
 	// タッチデバイスでタッチ移動した。
 	document.getElementById("image-screen").addEventListener('touchmove', function(e){
