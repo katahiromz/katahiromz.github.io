@@ -72,10 +72,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		sy1: 0, // 基準線分の位置。
 		mx0: 0, // 中央ボタンでドラッグしている位置。
 		my0: 0, // 中央ボタンでドラッグしている位置。
-		savex0: 0, // 保存用。
-		savey0: 0, // 保存用。
-		savex1: 0, // 保存用。
-		savey1: 0, // 保存用。
+		savex0: null, // 保存用。
+		savey0: null, // 保存用。
+		savex1: null, // 保存用。
+		savey1: null, // 保存用。
 		touchTime: null, // タッチした時刻。
 		theLineColor: 'red', // 線分の色。
 		theDrawCircle: false, // 補助円を描くか？
@@ -86,9 +86,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		theLengthUnit: "", // 長さの単位。
 		theFileName: "", // ファイル名。
 		touching: false, // タッチ中か？
-		touchX: undefined, // タッチ位置。
-		touchY: undefined, // タッチ位置。
-		touchDistance: undefined, // 二本指のタッチ距離。
+		touchX: null, // タッチ位置。
+		touchY: null, // タッチ位置。
+		touchDistance: null, // 二本指のタッチ距離。
 		// HTMLの特殊文字を変換。
 		htmlspecialchars: function(str){
 			return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -704,7 +704,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault();
 			var delta;
 			var oe = e; //var oe = e.originalEvent;
-			if (oe.wheelDelta !== undefined) {
+			if (oe.wheelDelta !== null) {
 				delta = oe.wheelDelta;
 			} else {
 				delta = oe.deltaY * -1;
@@ -868,7 +868,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// タッチデバイスでタッチ移動する。
 		doTouchMove: function(t){
-			if (this.savex0 === undefined) {
+			if (this.savex0 === null) {
 				// 線分の位置を保存する。
 				this.savex0 = this.px0;
 				this.savey0 = this.py0;
@@ -899,7 +899,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 				// タッチ位置を取得。
 				var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
-				if (this.touchX === undefined || this.touchY === undefined) {
+				if (this.touchX === null || this.touchY === null) {
 					// タッチ位置を新しくセット。
 					this.touchX = newTouchX;
 					this.touchY = newTouchY;
@@ -1006,30 +1006,31 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			{
 				this.touchTime = null;
 				this.touching = false; // タッチを終了。
-				if (this.savex0 !== undefined) {
+				if (this.savex0 !== null) {
 					// 線分の位置を復元する。
 					this.px0 = this.savex0;
 					this.py0 = this.savey0;
 					this.px1 = this.savex1;
 					this.py1 = this.savey1;
 				}
+				this.savex0 = this.savey0 = this.savex1 = this.savey1 = null;
 				return;
 			}
 			this.touchTime = null;
 			if (this.touching) { // タッチ中か？
 				this.touching = false; // タッチを終了。
-				if (this.savex0 !== undefined) {
+				if (this.savex0 !== null) {
 					// 線分の位置を復元する。
 					this.px0 = this.savex0;
 					this.py0 = this.savey0;
 					this.px1 = this.savex1;
 					this.py1 = this.savey1;
 				}
-				this.savex0 = this.savey0 = this.savex1 = this.savey1 = undefined;
-				if (this.touchDistance !== undefined ||
-				    this.touchX !== undefined || this.touchY !== undefined)
+				this.savex0 = this.savey0 = this.savex1 = this.savey1 = null;
+				if (this.touchDistance !== null ||
+				    this.touchX !== null || this.touchY !== null)
 				{
-					this.touchDistance = this.touchX = this.touchY = undefined;
+					this.touchDistance = this.touchX = this.touchY = null;
 				}
 				this.redraw();
 				return;
