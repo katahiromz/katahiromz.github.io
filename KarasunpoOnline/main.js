@@ -15,6 +15,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	var VK_MBUTTON = 1; // マウスの中央ボタン。
 	var VK_RBUTTON = 2; // マウスの右ボタン。
 
+	var DEBUGGING = true;
+
 	// ダイアログでEnterキーを有効にする。
 	// See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
 	$.extend($.ui.dialog.prototype.options, {
@@ -88,6 +90,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		touchY: null, // タッチ位置。
 		touchDistance: null, // 二本指のタッチ距離。
 		touchTimer: null, // タイマー。
+		infoTimer: null, // デバッグ用タイマー。
+		info: [], // デバッグ用情報。
 		// 線分を変更する。
 		setSegment: function(x0, y0, x1, y1) {
 			this.px0 = x0;
@@ -799,7 +803,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの左ボタンが押された。
 		onLButtonDown: function(e){
 			console.log("mousedown.VK_LBUTTON");
-			$(".info").text("LBUTTONDOWN");
 			e.preventDefault();
 			if (!this.theCanDraw)
 				return;
@@ -818,7 +821,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの中央ボタンが押された。
 		onMButtonDown: function(e){
 			console.log("mousedown.VK_MBUTTON");
-			$(".info").text("MBUTTONDOWN");
 			e.preventDefault();
 			this.mx0 = e.offsetX;
 			this.my0 = e.offsetY;
@@ -836,11 +838,46 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				break;
 			}
 		},
+		// デバッグタイマー。
+		onInfoTimer: function(){
+			alert(JSON.stringify(this.info));
+			this.info = [];
+			this.infoTimer = null;
+		},
+		// デバッグ情報を追加。
+		addInfo: function(e, data){
+			var prev = ""
+			if (this.info.length > 0) {
+				prev = this.info[this.info.length - 1];
+			}
+			var i = prev.indexOf("|");
+			prev = prev.substr(0, i);
+			if (prev == data)
+				return;
+			var pos0 = this.touchGetPos(e);
+			data += "|" + pos0.x + "," + pos0.y;
+			if (e.touches.length > 1) {
+				var pos1 = this.touchGetPos(e);
+				data += "|" + pos1.x + "," + pos1.y;
+			}
+			this.info.push(data);
+		},
 		// タッチデバイスでタッチが始まった。
 		onTouchStart: function(e){
 			console.log("touchstart");
-			$(".info").text("touchstart");
 			e.preventDefault();
+			if (DEBUGGING) {
+				if (this.infoTimer) {
+					clearTimeout(this.infoTimer);
+					this.infoTimer = null;
+				}
+				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
+				if (e.touches.length > 1) {
+					this.addInfo(e, "onTouchStart.2");
+				} else {
+					this.addInfo(e, "onTouchStart.1");
+				}
+			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
 				this.touchX = this.touchY = null;
@@ -924,8 +961,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチ移動した。
 		onTouchMove: function(e){
 			console.log("touchmove");
-			$(".info").text("touchmove");
 			e.preventDefault();
+			if (DEBUGGING) {
+				if (this.infoTimer) {
+					clearTimeout(this.infoTimer);
+					this.infoTimer = null;
+				}
+				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
+				if (e.touches.length > 1) {
+					this.addInfo(e, "onTouchMove.2");
+				} else {
+					this.addInfo(e, "onTouchMove.1");
+				}
+			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
 				this.doTouchMove(e, t);
@@ -962,7 +1010,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスが移動した。
 		onMouseMove: function(e){
 			console.log("mousemove");
-			$(".info").text("mousemove");
 			e.preventDefault();
 			if (this.theHandleOn == -1) {
 				if (this.thePenOn) {
@@ -999,8 +1046,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチが終了した。
 		onTouchEnd: function(e){
 			console.log("touchend");
-			$(".info").text("touchend");
 			e.preventDefault();
+			if (DEBUGGING) {
+				if (this.infoTimer) {
+					clearTimeout(this.infoTimer);
+					this.infoTimer = null;
+				}
+				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
+				if (e.touches.length > 1) {
+					this.addInfo(e, "onTouchEnd.2");
+				} else {
+					this.addInfo(e, "onTouchEnd.1");
+				}
+			}
 			if (this.touchMoving) {
 				this.touchMoving = false; // タッチを終了。
 				if (this.savex0 !== null) {
@@ -1045,7 +1103,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの左ボタンが解放された。
 		onLButtonUp: function(e){
 			console.log("mouseup.VK_LBUTTON");
-			$(".info").text("LBUTTONUP");
 			e.preventDefault();
 			if (this.theHandleOn == -1) {
 				if (!this.theCanDraw)
@@ -1080,7 +1137,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの中央ボタンが解放された。
 		onMButtonUp: function(e){
 			console.log("mouseup.VK_MBUTTON");
-			$(".info").text("MBUTTONUP");
 			e.preventDefault();
 			if (!this.theMoveOn)
 				return;
