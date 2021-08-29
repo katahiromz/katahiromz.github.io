@@ -705,7 +705,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// フルスクリーンでマウスホイール操作があった。
 		onWheel: function(e){
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			var delta;
 			var oe = e; //var oe = e.originalEvent;
 			if (oe.wheelDelta !== null) {
@@ -803,7 +803,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの左ボタンが押された。
 		onLButtonDown: function(e){
 			console.log("mousedown.VK_LBUTTON");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (!this.canDraw)
 				return;
 			var x = e.offsetX, y = e.offsetY;
@@ -821,7 +821,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの中央ボタンが押された。
 		onMButtonDown: function(e){
 			console.log("mousedown.VK_MBUTTON");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			this.mx0 = e.offsetX;
 			this.my0 = e.offsetY;
 			this.movingOn = true;
@@ -865,7 +865,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチが始まった。
 		onTouchStart: function(e){
 			console.log("touchstart");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (DEBUGGING) {
 				if (this.infoTimer) {
 					clearTimeout(this.infoTimer);
@@ -961,7 +961,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチ移動した。
 		onTouchMove: function(e){
 			console.log("touchmove");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (DEBUGGING) {
 				if (this.infoTimer) {
 					clearTimeout(this.infoTimer);
@@ -1010,7 +1010,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスが移動した。
 		onMouseMove: function(e){
 			console.log("mousemove");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (this.handlingOn == -1) {
 				if (this.penOn) {
 					if (!this.canDraw || !this.lineOn)
@@ -1046,7 +1046,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// タッチデバイスでタッチが終了した。
 		onTouchEnd: function(e){
 			console.log("touchend");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (DEBUGGING) {
 				if (this.infoTimer) {
 					clearTimeout(this.infoTimer);
@@ -1103,7 +1103,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの左ボタンが解放された。
 		onLButtonUp: function(e){
 			console.log("mouseup.VK_LBUTTON");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (this.handlingOn == -1) {
 				if (!this.canDraw)
 					return;
@@ -1137,7 +1137,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// マウスの中央ボタンが解放された。
 		onMButtonUp: function(e){
 			console.log("mouseup.VK_MBUTTON");
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (!this.movingOn)
 				return;
 			this.deltaX += e.offsetX - this.mx0;
@@ -1395,19 +1395,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// ドロップ領域。
 		$(".drop-area").on('dragenter dragover', function(e){
 			e.stopPropagation();
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (Karasunpo.theMode != 1 && Karasunpo.theMode != 2)
 				return;
 			$('.drop-area-navi').addClass('dragging-over');
 		});
 		$('.drop-area').on('dragleave', function(e){
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (Karasunpo.theMode != 1 && Karasunpo.theMode != 2)
 				return;
 			$('.drop-area-navi').removeClass('dragging-over');
 		});
 		$('.drop-area').on('drop', function(e){
-			e.preventDefault();
+			e.preventDefault(); // 既定の処理を妨害する。
 			if (Karasunpo.theMode != 1 && Karasunpo.theMode != 2)
 				return;
 			var file = e.originalEvent.dataTransfer.files[0];
