@@ -1165,7 +1165,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				Karasunpo.sy0 = Karasunpo.py0;
 				Karasunpo.sx1 = Karasunpo.px1;
 				Karasunpo.sy1 = Karasunpo.py1;
-				Karasunpo.px0 = Karasunpo.py0 = Karasunpo.px1 = Karasunpo.py1 = 0;
 				$(".mode5-numeric-text").text("");
 				$(".mode5-unit-text").text("");
 				Karasunpo.setMode(5);
