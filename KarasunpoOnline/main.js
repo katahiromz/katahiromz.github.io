@@ -341,7 +341,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 					this.thePDF.getPage(this.thePDFPageNumber).then(
 						function(page){
 							var viewport = page.getViewport({
-								scale: 1.0,
+								scale: 1.0
 							});
 							if (viewport.width && viewport.height) {
 								Karasunpo.doFit0.call(Karasunpo, viewport.width, viewport.height);
@@ -450,19 +450,21 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 			var canvas = $("#image-screen");
 			if (this.isSmartPhone()) {
 				this.cxCanvas = parseInt(window.innerWidth);
-				this.cyCanvas = parseInt(window.innerHeight * 0.74);
+				this.cyCanvas = parseInt(window.innerHeight * 0.74); // これはCSSに合わせる必要がある。
 			} else {
-				this.cxCanvas = parseInt(window.innerWidth * 0.69);
+				this.cxCanvas = parseInt(window.innerWidth * 0.69); // これはCSSに合わせる必要がある。
 				this.cyCanvas = parseInt(window.innerHeight);
 			}
-
+			// キャンバスのサイズを合わせる。
 			canvas.attr('width', this.cxCanvas + "px")
 			canvas.attr('height', this.cyCanvas + "px");
 			$("#offscreen").attr('width', this.cxCanvas + "px");
 			$("#offscreen").attr('height', this.cyCanvas + "px");
-
+			// 背景をリセットする。
 			this.backgroundImage = null;
+			// 画像を画面に合わせる。
 			this.doFitImage();
+			// 再描画。
 			this.doRedraw();
 		},
 		// モードを設定する。
@@ -531,7 +533,7 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 				};
 			} else {
 				reader.onload = function(e){
-					Karasunpo.onWindowResize();
+					Karasunpo.onWindowResize.call(Karasunpo);
 					$(".mode2-filename").text("読み込み中...");
 					var img1 = new Image();
 					img1.src = e.target.result;
@@ -1289,31 +1291,23 @@ var KARASUNPO_VERSION = "0.7"; // カラスンポのバージョン番号。
 		// バージョン情報ボタン。
 		$("#about-button").click(function(){
 			$("#about-dialog-version").text(KARASUNPO_VERSION);
+			var width;
 			if (Karasunpo.isSmartPhone()) {
-				$("#about-dialog").dialog({
-					modal: true,
-					title: "バージョン情報",
-					width: "250px",
-					buttons: {
-						"OK": function() {
-							// ダイアログを閉じる。
-							$(this).dialog("close");
-						},
-					}
-				});
+				width = "250px";
 			} else {
-				$("#about-dialog").dialog({
-					modal: true,
-					title: "バージョン情報",
-					width: "500px",
-					buttons: {
-						"OK": function() {
-							// ダイアログを閉じる。
-							$(this).dialog("close");
-						},
-					}
-				});
+				width = "500px";
 			}
+			$("#about-dialog").dialog({
+				modal: true,
+				title: "バージョン情報",
+				width: width,
+				buttons: {
+					"OK": function() {
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
+				}
+			});
 		});
 
 		// モードを初期化。
