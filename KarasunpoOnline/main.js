@@ -86,8 +86,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		theLengthUnit: "", // 長さの単位。
 		theFileName: "", // ファイル名。
 		isTouchPinching: false, // ピンチング中か？
-		touchX: null, // タッチ位置。
-		touchY: null, // タッチ位置。
+		touchX: null, // タッチ位置の平均。
+		touchY: null, // タッチ位置の平均。
 		touchDistance: null, // 二本指のタッチ距離。
 		touchTimer: null, // タイマー。
 		infoTimer: null, // デバッグ用タイマー。
@@ -862,8 +862,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			this.info.push(data);
 		},
-		// タッチデバイスでタッチ移動する。
+		// タッチデバイスでピンチングがあった。
 		onTouchPinch: function(e, t){
+			this.penOn = false; // ペンをオフにする。
 			if (this.savepx0 === null) {
 				// 線分の位置を保存する。
 				this.savepx0 = this.px0;
@@ -871,22 +872,22 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.savepx1 = this.px1;
 				this.savepy1 = this.py1;
 			}
-			this.penOn = false; // ペンをオフにする。
+			// ピンチング位置を取得する。
 			var pos0 = this.touchGetPos(e, 0);
 			var pos1 = this.touchGetPos(e, 1);
 			var x0 = pos0.x, y0 = pos0.y;
 			var x1 = pos1.x, y1 = pos1.y;
 			var dx = x1 - x0, dy = y1 - y0;
 			if (!this.isTouchPinching) {
-				// タッチを開始した。
-				this.isTouchPinching = true; // タッチ開始。
+				// ピンチングを開始した。
+				this.isTouchPinching = true; // ピンチング開始。
 				this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 				if (this.savepx0 !== null) {
 					// 線分の位置を復元する。
 					this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
 				}
 			} else {
-				// タッチ操作の続き。
+				// ピンチング操作の続き。
 				var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
 				// 距離に応じてズームする。
 				if (newTouchDistance > this.touchDistance + this.getScreenSizeIndex()) {
@@ -897,7 +898,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				// 距離を更新。
 				this.touchDistance = newTouchDistance;
 			}
-			// タッチ位置を取得。
+			// タッチ位置の平均を取得。
 			var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
 			if (this.touchX === null || this.touchY === null) {
 				// タッチ位置を新しくセット。
