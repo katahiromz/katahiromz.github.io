@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.880"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.881"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -969,6 +969,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					this.addInfo(e, "onTouchMove.1");
 				}
 			}
+			if (this.touchTimer) {
+				clearTimeout(this.touchTimer);
+				this.touchTimer = null;
+			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
 				this.doTouchMove(e, t);
@@ -1038,6 +1042,17 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			this.redraw();
 		},
+		// タッチが終わってから時間が経った？
+		onTouchTimeout: function(){
+			this.touchMoving = false; // タッチを完全に終了。
+			if (this.savepx0 !== null) {
+				// 線分の位置を復元する。
+				this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
+			}
+			this.savepx0 = this.savepy0 = null;
+			this.savepx1 = this.savepy1 = null;
+			this.redraw();
+		},
 		// タッチデバイスでタッチが終了した。
 		onTouchEnd: function(e){
 			console.log("touchend");
@@ -1055,14 +1070,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 			}
 			if (this.touchMoving) {
-				this.touchMoving = false; // タッチを終了。
-				if (this.savepx0 !== null) {
-					// 線分の位置を復元する。
-					this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
+				if (this.touchTimer) {
+					clearTimeout(this.touchTimer);
+					this.touchTimer = null;
 				}
-				this.savepx0 = this.savepy0 = null;
-				this.savepx1 = this.savepy1 = null;
-				this.redraw();
+				this.touchTimer = setTimeout(this.onTouchTimeout.bind(this), 800);
 				return;
 			}
 			if (this.handlingOn == -1) {
