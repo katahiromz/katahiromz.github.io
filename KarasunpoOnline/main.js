@@ -1218,6 +1218,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (!isNaN(page_no)) {
 				this.thePDFPageNumber = page_no;
 			}
+			// ローカルストレージに保存。
+			localStorage.setItem('line-color', this.lineColor);
+			localStorage.setItem('background-mode', this.backgroundMode);
 			// 再描画。
 			this.redraw();
 			// ダイアログを閉じる。
@@ -1516,6 +1519,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 			});
 		});
+
+		// ローカルストレージの設定を復元。
+		var redrawFlag = false;
+		if (localStorage.getItem('line-color') != null) {
+			Karasunpo.lineColor = localStorage.getItem('line-color');
+		}
+		if (localStorage.getItem('background-mode') != null) {
+			Karasunpo.backgroundMode = parseInt(localStorage.getItem('background-mode'));
+			this.backgroundImage = null;
+		}
 
 		// モードを初期化。
 		Karasunpo.setMode(1);
