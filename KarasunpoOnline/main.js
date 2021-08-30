@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.882"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.884"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -866,6 +866,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onTouchStart: function(e){
 			console.log("touchstart");
 			e.preventDefault(); // 既定の処理を妨害する。
+			// デバッグ情報。
 			if (DEBUGGING) {
 				if (this.infoTimer) {
 					clearTimeout(this.infoTimer);
@@ -877,6 +878,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				} else {
 					this.addInfo(e, "onTouchStart.1");
 				}
+			}
+			if (this.savepx0 === null) {
+				// 線分の位置を保存する。
+				this.savepx0 = this.px0;
+				this.savepy0 = this.py0;
+				this.savepx1 = this.px1;
+				this.savepy1 = this.py1;
 			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
@@ -920,6 +928,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				// タッチを開始した。
 				this.touchMoving = true; // タッチ開始。
 				this.touchDistance = Math.sqrt(dx * dx + dy * dy);
+				if (this.savepx0 !== null) {
+					// 線分の位置を復元する。
+					this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
+				}
 			} else {
 				// タッチ操作の続き。
 				var newTouchDistance = Math.sqrt(dx * dx + dy * dy); // 新しい距離。
@@ -952,6 +964,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onTouchMove: function(e){
 			console.log("touchmove");
 			e.preventDefault(); // 既定の処理を妨害する。
+			// デバッグ情報。
 			if (DEBUGGING) {
 				if (this.infoTimer) {
 					clearTimeout(this.infoTimer);
@@ -1052,6 +1065,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onTouchEnd: function(e){
 			console.log("touchend");
 			e.preventDefault(); // 既定の処理を妨害する。
+			// デバッグ情報。
 			if (DEBUGGING) {
 				if (this.infoTimer) {
 					clearTimeout(this.infoTimer);
