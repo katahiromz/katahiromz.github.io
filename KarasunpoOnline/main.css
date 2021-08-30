@@ -18,9 +18,18 @@ p {
 input, button {
 	padding: 2px 8px;
 }
+ul {
+	margin: 8px;
+}
+li {
+	margin: 4px;
+}
 footer {
+	position: absolute;
+	bottom: 0;
 	font-size: 75%;
 }
+
 .invisible {
 	display: none;
 }
@@ -37,25 +46,6 @@ footer {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-}
-.canvas {
-	width: 200px;
-	height: 200px;
-}
-.frame {
-	width: 200px;
-	height: 200px;
-	border: 4px solid black;
-	margin: 8px;
-}
-.frame_center {
-	margin-left: auto;
-	margin-right: auto;
-}
-.border {
-	border: 4px solid black;
-	padding: 8px;
-	margin: 0px;
 }
 .drop-area-navi {
 	border: 5px dotted darkgreen;
@@ -83,6 +73,23 @@ footer {
 .icon {
 	vertical-align: -50%;
 }
+.portrait-visible {
+	display: none;
+}
+.big-button {
+	padding: 5px 30px;
+}
+.error {
+	color: red;
+	font-weight: bold;
+}
+.nobreak {
+	white-space: nowrap;
+}
+.right {
+	text-align: right;
+}
+
 #fullscreen {
 	width: 100vw;
 	height: 100vh;
@@ -103,9 +110,7 @@ footer {
 	float: left;
 	cursor: crosshair;
 }
-.portrait-visible {
-	display: none;
-}
+
 @media (orientation: portrait) {
 	h1 {
 		font-size: 2.5vh;
@@ -121,12 +126,17 @@ footer {
 	button {
 		padding: 0;
 	}
+
 	.portrait-visible {
 		display: block;
 	}
 	.portrait-invisible {
 		display: none;
 	}
+	.drop-area-navi {
+		border: none;
+	}
+
 	#navigation {
 		width: 100%;
 		height: 25%;
@@ -142,36 +152,4 @@ footer {
 		float: none;
 		cursor: crosshair;
 	}
-	.drop-area-navi {
-		border: none;
-	}
-}
-footer {
-	position: absolute;
-	bottom: 0;
-}
-.big-button {
-	padding: 5px 30px;
-}
-ul {
-	margin: 8px;
-}
-li {
-	margin: 4px;
-}
-.indented {
-	margin-left: 8px;
-}
-.error {
-	color: red;
-	font-weight: bold;
-}
-.mode5-numeric-text {
-	text-align: right;
-}
-.nobreak {
-	white-space: nowrap;
-}
-.config-dialog-page-number {
-	text-align: right;
 }
