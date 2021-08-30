@@ -85,7 +85,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		theStdNominalLength: 0, // 基準線分の長さ（名目）。
 		theLengthUnit: "", // 長さの単位。
 		theFileName: "", // ファイル名。
-		touchMoving: false, // タッチ移動中か？
+		isTouchPinching: false, // ピンチング中か？
 		touchX: null, // タッチ位置。
 		touchY: null, // タッチ位置。
 		touchDistance: null, // 二本指のタッチ距離。
@@ -862,55 +862,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			this.info.push(data);
 		},
-		// タッチデバイスでタッチが始まった。
-		onTouchStart: function(e){
-			console.log("touchstart");
-			e.preventDefault(); // 既定の処理を妨害する。
-			// デバッグ情報。
-			if (DEBUGGING) {
-				if (this.infoTimer) {
-					clearTimeout(this.infoTimer);
-					this.infoTimer = null;
-				}
-				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
-				if (e.touches.length > 1) {
-					this.addInfo(e, "onTouchStart.2");
-				} else {
-					this.addInfo(e, "onTouchStart.1");
-				}
-			}
-			if (this.savepx0 === null) {
-				// 線分の位置を保存する。
-				this.savepx0 = this.px0;
-				this.savepy0 = this.py0;
-				this.savepx1 = this.px1;
-				this.savepy1 = this.py1;
-			}
-			var t = e.touches;
-			if (t.length > 1) { // 複数の指で操作？
-				this.doTouchMove(e, t);
-				return;
-			}
-			if (this.touchMoving) {
-				return;
-			}
-			if (!this.canDraw)
-				return;
-			var pos = this.touchGetPos(e);
-			var x = pos.x, y = pos.y;
-			this.handlingOn = this.isOnHandle(x, y);
-			var LP = this.DPtoLP(x, y);
-			if (this.handlingOn == -1) {
-				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
-				this.penOn = true;
-			}
-			if (this.theMode == 6) {
-				$(".mode6-measure-results").val("");
-			}
-			this.redraw();
-		},
 		// タッチデバイスでタッチ移動する。
-		doTouchMove: function(e, t){
+		onTouchPinch: function(e, t){
 			if (this.savepx0 === null) {
 				// 線分の位置を保存する。
 				this.savepx0 = this.px0;
@@ -924,9 +877,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var x0 = pos0.x, y0 = pos0.y;
 			var x1 = pos1.x, y1 = pos1.y;
 			var dx = x1 - x0, dy = y1 - y0;
-			if (!this.touchMoving) {
+			if (!this.isTouchPinching) {
 				// タッチを開始した。
-				this.touchMoving = true; // タッチ開始。
+				this.isTouchPinching = true; // タッチ開始。
 				this.touchDistance = Math.sqrt(dx * dx + dy * dy);
 				if (this.savepx0 !== null) {
 					// 線分の位置を復元する。
@@ -960,6 +913,54 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// 再描画。
 			this.redraw();
 		},
+		// タッチデバイスでタッチが始まった。
+		onTouchStart: function(e){
+			console.log("touchstart");
+			e.preventDefault(); // 既定の処理を妨害する。
+			// デバッグ情報。
+			if (DEBUGGING) {
+				if (this.infoTimer) {
+					clearTimeout(this.infoTimer);
+					this.infoTimer = null;
+				}
+				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
+				if (e.touches.length > 1) {
+					this.addInfo(e, "onTouchStart.2");
+				} else {
+					this.addInfo(e, "onTouchStart.1");
+				}
+			}
+			if (this.savepx0 === null) {
+				// 線分の位置を保存する。
+				this.savepx0 = this.px0;
+				this.savepy0 = this.py0;
+				this.savepx1 = this.px1;
+				this.savepy1 = this.py1;
+			}
+			var t = e.touches;
+			if (t.length > 1) { // 複数の指で操作？
+				this.onTouchPinch(e, t);
+				return;
+			}
+			if (this.isTouchPinching) {
+				this.redraw();
+				return;
+			}
+			if (!this.canDraw)
+				return;
+			var pos = this.touchGetPos(e);
+			var x = pos.x, y = pos.y;
+			this.handlingOn = this.isOnHandle(x, y);
+			var LP = this.DPtoLP(x, y);
+			if (this.handlingOn == -1) {
+				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
+				this.penOn = true;
+			}
+			if (this.theMode == 6) {
+				$(".mode6-measure-results").val("");
+			}
+			this.redraw();
+		},
 		// タッチデバイスでタッチ移動した。
 		onTouchMove: function(e){
 			console.log("touchmove");
@@ -983,10 +984,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
-				this.doTouchMove(e, t);
+				this.onTouchPinch(e, t);
 				return;
 			} else {
-				if (this.touchMoving) {
+				if (this.isTouchPinching) {
 					this.redraw();
 					return;
 				}
@@ -1052,7 +1053,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// タッチが終わってから時間が経った？
 		onTouchTimeout: function(){
-			this.touchMoving = false; // タッチを完全に終了。
+			this.isTouchPinching = false; // ピンチングを完全に終了。
 			if (this.savepx0 !== null) {
 				// 線分の位置を復元する。
 				this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
@@ -1078,7 +1079,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					this.addInfo(e, "onTouchEnd.1");
 				}
 			}
-			if (this.touchMoving) {
+			if (this.isTouchPinching) {
 				if (this.touchTimer) {
 					clearTimeout(this.touchTimer);
 					this.touchTimer = null;
