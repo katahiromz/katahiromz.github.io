@@ -583,11 +583,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 							return;
 						}
 						if (reason === 1) { // need password
-							var password = prompt("Please enter a password:");
+							var password = prompt("パスワードを入力して下さい。");
 							Karasunpo.thePDFPassword = password;
 							updatePassword(password);
    						} else {
-							var password = prompt("Invalid password. Please enter another password:");
+							var password = prompt("無効なパスワードです。別のパスワードを入力して下さい。");
 							Karasunpo.thePDFPassword = password;
 							updatePassword(password);
 						}
