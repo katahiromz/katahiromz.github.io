@@ -49,7 +49,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		cyCanvas: 0, // キャンバスの高さ（ピクセル単位）。
 		measureType: "length", // 測定タイプ。
 		theMode: 1, // モード。
-		theFitMode: 0, // 画面モード（0：自動、1：横方向に合わせる、2：縦方向に合わせる）。
+		theFitMode: "Fit", // 画面モード（""：何もしない、"Fit"：全体に合わせる、"hFit"：横方向に合わせる、"vFit"：縦方向に合わせる）。
 		theZoomRate: 100.0, // ズーム率（百分率）。
 		canDraw: false, // 描画できるか？
 		isDrawing: false, // 描画中か？
@@ -376,17 +376,17 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.cxImage = width;
 			this.cyImage = height;
 			switch (this.theFitMode) {
-			case 0: // 自動
+			case "Fit": // 自動
 				if (this.cxCanvas / this.cyCanvas > width / height) {
 					this.setZoom(this.cyCanvas / height * 100);
 				} else {
 					this.setZoom(this.cxCanvas / width * 100);
 				}
 				break;
-			case 1: // 横方向に合わせる。
+			case "hFit": // 横方向に合わせる。
 				this.setZoom(this.cxCanvas / width * 100);
 				break;
-			case 2: // 縦方向に合わせる。
+			case "vFit": // 縦方向に合わせる。
 				this.setZoom(this.cyCanvas / height * 100);
 				break;
 			}
@@ -1193,15 +1193,18 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// ズーム。
 			var zoom = $("#config-dialog-zoom").val();
 			switch (zoom) {
-			case "-1":
+			case "":
 				break;
-			case "0": case "1": case "2":
-				this.theFitMode = parseInt(zoom);
+			case "Fit":
+			case "hFit":
+			case "vFit":
+				this.theFitMode = zoom;
 				this.doFitImage();
 				break;
 			default:
 				zoom = parseInt(zoom);
 				if (!isNaN(zoom)) {
+					this.theFitMode = "";
 					this.setZoom(zoom);
 				}
 				break;
@@ -1240,7 +1243,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		config: function(){
 			var Karasunpo = this;
 			// 「設定」ダイアログを初期化。
-			$("#config-dialog-zoom").val("-1");
+			if (this.theFitMode == "") {
+				$("#config-dialog-zoom").val(parseInt(this.theZoomRate) + "");
+			} else {
+				$("#config-dialog-zoom").val(this.theFitMode);
+			}
 			$("#config-dialog-line-color").val(this.lineColor);
 			switch (this.backgroundMode) {
 			case -2: case 0: case 1: case 2: case 3: case 4: case 5:
