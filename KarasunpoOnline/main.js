@@ -40,6 +40,29 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		});
 	};
 
+	// HTMLの特殊文字を変換。
+	var htmlspecialchars = function(str){
+		return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+	};
+
+	// 縦長のデバイスか？
+	var isPortraitDevice = function(){
+		return (window.innerWidth <= window.innerHeight);
+	};
+	// スマートフォンか？
+	var isSmartPhone = function(){
+		return navigator.userAgent.match(/iPhone|Android.+Mobile/);
+	};
+	// タブレットか？
+	var isTablet = function(){
+		var ua = navigator.userAgent;
+		if (ua.indexOf("iPad") != -1)
+			return true;
+		if (ua.indexOf("Android") != -1 && ua.indexOf("Mobile") == -1)
+			return true;
+		return false;
+	};
+
 	// We use module-pattern.
 	var Karasunpo = {
 		image: null, // 画像。
@@ -92,50 +115,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		touchTimer: null, // タイマー。
 		infoTimer: null, // デバッグ用タイマー。
 		info: [], // デバッグ用情報。
-		// 線分を変更する。
-		setSegment: function(x0, y0, x1, y1) {
-			this.px0 = x0;
-			this.py0 = y0;
-			this.px1 = x1;
-			this.py1 = y1;
-		},
-		// HTMLの特殊文字を変換。
-		htmlspecialchars: function(str){
-			return (str + '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#039;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-		},
-		// タップ位置を取得する為の関数群
-		touchGetPos: function(e, i = 0) {
-			var rect = $("#image-screen")[0].getBoundingClientRect();
-			var touch = e.touches[i] || e.changedTouches[i];
-			return {
-				x : touch.clientX - rect.left,
-				y : touch.clientY - rect.top
-			};
-		},
-		// 縦長のデバイスか？
-		isPortraitDevice: function(){
-			return (window.innerWidth <= window.innerHeight);
-		},
-		// スマートフォンか？
-		isSmartPhone: function(){
-			return navigator.userAgent.match(/iPhone|Android.+Mobile/);
-		},
-		// タブレットか？
-		isTablet: function(){
-			var ua = navigator.userAgent;
-			if (ua.indexOf("iPad") != -1)
-				return true;
-			if (ua.indexOf("Android") != -1 && ua.indexOf("Mobile") == -1)
-				return true;
-			return false;
-		},
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
 			return 10;
 		},
 		// 感知半径を取得する。
 		getSensitiveRadius: function() {
-			if (this.isSmartPhone() || this.isTablet())
+			if (isSmartPhone() || isTablet())
 				return 55;
 			return 30;
 		},
@@ -146,6 +132,22 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			} else {
 				return window.innerHeight / 100;
 			}
+		},
+		// 線分を変更する。
+		setSegment: function(x0, y0, x1, y1) {
+			this.px0 = x0;
+			this.py0 = y0;
+			this.px1 = x1;
+			this.py1 = y1;
+		},
+		// タップ位置を取得する為の関数。
+		touchGetPos: function(e, i = 0) {
+			var rect = $("#image-screen")[0].getBoundingClientRect();
+			var touch = e.touches[i] || e.changedTouches[i];
+			return {
+				x : touch.clientX - rect.left,
+				y : touch.clientY - rect.top
+			};
 		},
 		// 画像の中央座標を取得する。
 		getImageCenter: function(){
@@ -505,7 +507,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// 画面のサイズが変わった。
 		onWindowResize: function(){
 			var canvas = $("#image-screen");
-			if (this.isPortraitDevice()) {
+			if (isPortraitDevice()) {
 				this.cxCanvas = parseInt(window.innerWidth);
 				this.cyCanvas = parseInt(window.innerHeight * 0.74); // これはCSSに合わせる必要がある。
 			} else {
@@ -655,7 +657,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				value /= 10000.0;
 				// テキストボックスに格納。
 				var text = value.toString() + this.lengthUnit;
-				$(".mode6-measure-results").val(this.htmlspecialchars(text));
+				$(".mode6-measure-results").val(htmlspecialchars(text));
 				break;
 			case 'inclination':
 				console.log("doMeasure.inclination");
@@ -675,7 +677,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					text = value.toString() + "rad";
 				else
 					text = value.toString() + "度";
-				$(".mode6-measure-results").val(this.htmlspecialchars(text));
+				$(".mode6-measure-results").val(htmlspecialchars(text));
 				break;
 			case 'angle':
 				console.log("doMeasure.angle");
@@ -709,7 +711,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					text = value.toString() + "rad";
 				else
 					text = value.toString() + "度";
-				$(".mode6-measure-results").val(this.htmlspecialchars(text));
+				$(".mode6-measure-results").val(htmlspecialchars(text));
 				break;
 			}
 		},
@@ -802,7 +804,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			canvas[0].getContext('2d').putImageData(data, 0, 0);
 			if (succeeded) {
 				if (this.image || this.pdf) {
-					$(".mode2-filename").text(this.htmlspecialchars(this.filename));
+					$(".mode2-filename").text(htmlspecialchars(this.filename));
 					$(".mode2-filename").removeClass("error");
 					$(".mode2-next").prop('disabled', false);
 				}
@@ -1495,7 +1497,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// 更新履歴ボタン。
 		$("#history-button").click(function(){
 			var width;
-			if (Karasunpo.isPortraitDevice()) {
+			if (isPortraitDevice()) {
 				width = "250px";
 			} else {
 				width = "500px";
