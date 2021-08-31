@@ -82,6 +82,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		isPDF: false, // PDFファイルか？
 		thePDF: null, // PDFオブジェクト。
 		thePDFPageNumber: 1, // PDFのページ番号。
+		thePDFPassword: null, // PDFのパスワード。
 		theStdNominalLength: 0, // 基準線分の長さ（名目）。
 		theLengthUnit: "", // 長さの単位。
 		theFileName: "", // ファイル名。
@@ -567,14 +568,31 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var Karasunpo = this;
 			if (this.isPDF) {
 				reader.onload = function(e){
-					Karasunpo.onWindowResize.call(Karasunpo);
 					$(".mode2-filename").text("読み込み中...");
 					var ary = new Uint8Array(e.target.result);
 					var loadingTask = pdfjsLib.getDocument({
 						data: ary,
 						cMapUrl: 'https://mozilla.github.io/pdf.js/web/cmaps/',
 						cMapPacked: true,
+						password: Karasunpo.thePDFPassword,
 					});
+					// パスワード処理。
+					loadingTask.onPassword = function (updatePassword, reason) {
+						if (Karasunpo.thePDFPassword !== null && reason === 1) {
+							updatePassword(Karasunpo.thePDFPassword);
+							return;
+						}
+						if (reason === 1) { // need password
+							var password = prompt("Please enter a password:");
+							Karasunpo.thePDFPassword = password;
+							updatePassword(password);
+   						} else {
+							var password = prompt("Invalid password. Please enter another password:");
+							Karasunpo.thePDFPassword = password;
+							updatePassword(password);
+						}
+					};
+					// PDFを読み込む。
 					loadingTask.promise.then(function(pdf){
 						var text = file.name;
 						if (text.length > 10)
