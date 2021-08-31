@@ -1500,12 +1500,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		// バージョン情報ボタン。
 		$("#about-button").click(function(){
 			$("#about-dialog-version").text(KARASUNPO_VERSION);
-			var width;
-			if (Karasunpo.isPortraitDevice()) {
-				width = "250px";
-			} else {
-				width = "500px";
-			}
+			var width = Math.floor(window.innerWidth * 0.9);
+			if (width > 600)
+				width = 600;
+			width += "px";
 			$("#about-dialog").dialog({
 				modal: true,
 				title: "バージョン情報",
