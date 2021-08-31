@@ -49,10 +49,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	var isPortraitDevice = function(){
 		return (window.innerWidth <= window.innerHeight);
 	};
+
 	// スマートフォンか？
 	var isSmartPhone = function(){
 		return navigator.userAgent.match(/iPhone|Android.+Mobile/);
 	};
+
 	// タブレットか？
 	var isTablet = function(){
 		var ua = navigator.userAgent;
@@ -61,6 +63,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		if (ua.indexOf("Android") != -1 && ua.indexOf("Mobile") == -1)
 			return true;
 		return false;
+	};
+
+	// デバッグトレース情報を取得する。
+	var getStackTrace = function(){
+		var obj = {};
+		Error.captureStackTrace(obj, getStackTrace);
+		return obj.stack;
 	};
 
 	// We use module-pattern.
