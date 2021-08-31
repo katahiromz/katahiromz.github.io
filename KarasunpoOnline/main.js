@@ -82,7 +82,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		isPDF: false, // PDFファイルか？
 		thePDF: null, // PDFオブジェクト。
 		thePDFPageNumber: 1, // PDFのページ番号。
-		thePDFPassword: null, // PDFのパスワード。
 		theStdNominalLength: 0, // 基準線分の長さ（名目）。
 		theLengthUnit: "", // 長さの単位。
 		theFileName: "", // ファイル名。
@@ -562,7 +561,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.redraw();
 		},
 		// ファイルを処理する。
-		doFile: function(file){
+		openFile: function(file){
 			this.isPDF = (file.name.indexOf(".pdf") != -1 || file.name.indexOf(".PDF") != -1);
 			var reader = new FileReader();
 			var Karasunpo = this;
@@ -574,21 +573,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 						data: ary,
 						cMapUrl: 'https://mozilla.github.io/pdf.js/web/cmaps/',
 						cMapPacked: true,
-						password: Karasunpo.thePDFPassword,
 					});
 					// パスワード処理。
 					loadingTask.onPassword = function (updatePassword, reason) {
-						if (Karasunpo.thePDFPassword !== null && reason === 1) {
-							updatePassword(Karasunpo.thePDFPassword);
-							return;
-						}
 						if (reason === 1) { // need password
 							var password = prompt("パスワードを入力して下さい。");
-							Karasunpo.thePDFPassword = password;
 							updatePassword(password);
    						} else {
 							var password = prompt("無効なパスワードです。別のパスワードを入力して下さい。");
-							Karasunpo.thePDFPassword = password;
 							updatePassword(password);
 						}
 					};
@@ -1295,7 +1287,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		});
 		$(".mode2-upload-file").change(function(){
 			var file = $(this).prop('files')[0];
-			Karasunpo.doFile(file);
+			Karasunpo.openFile(file);
 		});
 		$(".mode2-next").prop('disabled', true);
 
@@ -1452,7 +1444,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				return;
 			var file = e.originalEvent.dataTransfer.files[0];
 			$('.drop-area-navi').removeClass('dragging-over');
-			Karasunpo.doFile(file);
+			Karasunpo.openFile(file);
 		});
 
 		$('#image-screen').on('mousedown', function(e){
