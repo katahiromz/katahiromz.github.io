@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8955"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8956"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -915,8 +915,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				// 距離に応じてズームする。
 				if (newTouchDistance > this.touchDistance + this.getScreenSizeIndex()) {
 					this.setZoom(this.zoomRate * 1.1);
+					this.fitMode = "";
 				} else if (newTouchDistance + this.getScreenSizeIndex() < this.touchDistance) {
 					this.setZoom(this.zoomRate * 0.9);
+					this.fitMode = "";
 				}
 				// 距離を更新。
 				this.touchDistance = newTouchDistance;
@@ -1273,10 +1275,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		config: function(){
 			var Karasunpo = this;
 			// 「設定」ダイアログを初期化。
-			if (this.fitMode == "") {
+			switch (this.fitMode) {
+			case "":
 				$("#config-dialog-zoom").val(parseInt(this.zoomRate) + "");
-			} else {
+				break;
+			default:
 				$("#config-dialog-zoom").val(this.fitMode);
+				break;
 			}
 			$("#config-dialog-line-color").val(this.lineColor);
 			switch (this.backgroundMode) {
