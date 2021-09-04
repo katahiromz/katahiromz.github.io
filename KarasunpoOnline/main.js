@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.888"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.889"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -950,6 +950,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					this.addInfo(e, "onTouchStart.1");
 				}
 			}
+			// 線分の位置を保存する。
+			if (this.savepx0 === null) {
+				this.savepx0 = this.px0;
+				this.savepy0 = this.py0;
+				this.savepx1 = this.px1;
+				this.savepy1 = this.py1;
+			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
 				this.onTouchPinch(e, t);
@@ -1066,11 +1073,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// タッチが終わってから時間が経った？
 		onTouchTimeout: function(){
-			this.isTouchPinching = false; // ピンチングを完全に終了。
-			if (this.savepx0 !== null) {
-				// 線分の位置を復元する。
-				this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
+			// デバッグ情報。
+			if (DEBUGGING) {
+				if (this.infoTimer) {
+					clearTimeout(this.infoTimer);
+					this.infoTimer = null;
+				}
+				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
+				this.addInfo(e, "onTouchTimeout");
 			}
+			this.isTouchPinching = false; // ピンチングを完全に終了。
 			this.savepx0 = this.savepy0 = null;
 			this.savepx1 = this.savepy1 = null;
 			this.redraw();
