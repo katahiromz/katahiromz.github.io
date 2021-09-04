@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8945"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8947"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -11,11 +11,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	// 厳密に。
 	'use strict';
 
+	var DEBUGGING = false; // デバッグ中か？
+	var TOUCH_TIMEOUT = 300; // タッチのタイムアウト（ミリ秒）。
+
 	var VK_LBUTTON = 0; // マウスの左ボタン。
 	var VK_MBUTTON = 1; // マウスの中央ボタン。
 	var VK_RBUTTON = 2; // マウスの右ボタン。
-
-	var DEBUGGING = false;
 
 	// ダイアログでEnterキーを有効にする。
 	// See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
@@ -831,25 +832,34 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault(); // 既定の処理を妨害する。
 			if (!this.canDraw)
 				return;
+			// カーソル位置を取得する。
 			var x = e.offsetX, y = e.offsetY;
-			this.handlingOn = this.isOnHandle(x, y);
 			var LP = this.DPtoLP(x, y);
+			// ハンドル上か？
+			this.handlingOn = this.isOnHandle(x, y);
 			if (this.handlingOn == -1) {
+				// 線分をセットする。
 				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
+				// ペンをオンにする。
 				this.penOn = true;
 			}
+			// 測定結果をクリアする。
 			if (this.taskMode == 6) {
 				$(".mode6-measure-results").val("");
 			}
+			// 再描画。
 			this.redraw();
 		},
 		// マウスの中央ボタンが押された。
 		onMButtonDown: function(e){
 			console.log("mousedown.VK_MBUTTON");
 			e.preventDefault(); // 既定の処理を妨害する。
+			// 押された位置を記憶する。
 			this.mx0 = e.offsetX;
 			this.my0 = e.offsetY;
+			// 移動フラグをオンにする。
 			this.movingOn = true;
+			// 再描画。
 			this.redraw();
 		},
 		// マウスのボタンが押された。
@@ -862,24 +872,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.onMButtonDown(e);
 				break;
 			}
-		},
-		// デバッグ情報を追加。
-		addInfo: function(e, data){
-			var prev = ""
-			if (this.info.length > 0) {
-				prev = this.info[this.info.length - 1];
-			}
-			var i = prev.indexOf("|");
-			prev = prev.substr(0, i);
-			if (prev == data)
-				return;
-			var pos0 = this.touchGetPos(e);
-			data += "|" + pos0.x + "," + pos0.y;
-			if (e.touches.length > 1) {
-				var pos1 = this.touchGetPos(e);
-				data += "|" + pos1.x + "," + pos1.y;
-			}
-			this.info.push(data);
 		},
 		// タッチデバイスでピンチングがあった。
 		onTouchPinch: function(e, t){
@@ -949,28 +941,36 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.savepx1 = this.px1;
 				this.savepy1 = this.py1;
 			}
+			// タッチを取得する。
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
 				this.onTouchPinch(e, t);
 				return;
 			}
-			if (this.isTouchPinching) {
-				this.redraw();
+			if (this.isTouchPinching) { // ピンチング中か？
+				this.redraw(); // 再描画する。
 				return;
 			}
+			// 線分を描画可能でなければ戻る。
 			if (!this.canDraw)
 				return;
+			// タッチ位置を取得する。
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
-			this.handlingOn = this.isOnHandle(x, y);
 			var LP = this.DPtoLP(x, y);
+
+			// ハンドル上か？
+			this.handlingOn = this.isOnHandle(x, y);
 			if (this.handlingOn == -1) {
+				// ハンドル上でなければ、線分を更新する。
 				this.setSegment(LP[0], LP[1], LP[0], LP[1]);
 				this.penOn = true;
 			}
+			// 測定結果をクリア。
 			if (this.taskMode == 6) {
 				$(".mode6-measure-results").val("");
 			}
+			// 再描画。
 			this.redraw();
 		},
 		// タッチデバイスでタッチ移動した。
@@ -1079,9 +1079,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				var Karasunpo = this;
 				this.touchTimer = setTimeout(function(){
 					Karasunpo.onTouchTimer.call(Karasunpo);
-				}, 500);
+				}, TOUCH_TIMEOUT);
 				return;
 			}
+			// ハンドル上をドラッグしてないか？
 			if (this.handlingOn == -1) {
 				if (!this.canDraw)
 					return;
@@ -1093,16 +1094,21 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// 線分をセット。
 			if (this.handlingOn != -1) {
 				if (this.handlingOn == 0) {
+					// 始点をセット。
 					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
+					// 終点をセット。
 					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
+				// ハンドルロックを解除。
 				this.handlingOn = -1;
 			} else {
+				// 終点をセット。
 				this.px1 = LP[0];
 				this.py1 = LP[1];
 				this.penOn = false;
 			}
+			// 「次へ」ボタンを有効／無効にする。
 			if (this.taskMode == 4) {
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
 					$(".mode4-next").prop('disabled', false);
@@ -1110,6 +1116,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					$(".mode4-next").prop('disabled', true);
 				}
 			}
+			// 測定する。
 			if (this.taskMode == 6) {
 				this.doMeasure();
 			}
@@ -1123,24 +1130,32 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onLButtonUp: function(e){
 			console.log("mouseup.VK_LBUTTON");
 			e.preventDefault(); // 既定の処理を妨害する。
+			// ハンドル上でなく、線分を描画可能でなければ戻る。
 			if (this.handlingOn == -1) {
 				if (!this.canDraw)
 					return;
 			}
+			// カーソル位置を取得する。
 			var x = e.offsetX, y = e.offsetY;
 			var LP = this.DPtoLP(x, y);
-			if (this.handlingOn != -1) {
+			if (this.handlingOn != -1) { // ハンドル上か？
 				if (this.handlingOn == 0) {
+					// 始点をセットする。
 					this.setSegment(LP[0], LP[1], this.px1, this.py1);
 				} else {
+					// 終点をセットする。
 					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
+				// ハンドルロックを解除する。
 				this.handlingOn = -1;
 			} else {
+				// 終点をセットする。
 				this.px1 = LP[0];
 				this.py1 = LP[1];
+				// ペンをオフにする。
 				this.penOn = false;
 			}
+			// 「次へ」ボタンを有効／無効にする。
 			if (this.taskMode == 4) {
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
 					$(".mode4-next").prop('disabled', false);
@@ -1148,9 +1163,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					$(".mode4-next").prop('disabled', true);
 				}
 			}
+			// 測定。
 			if (this.taskMode == 6) {
 				this.doMeasure();
 			}
+			// 再描画。
 			this.redraw();
 		},
 		// マウスの中央ボタンが解放された。
@@ -1159,21 +1176,25 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			e.preventDefault(); // 既定の処理を妨害する。
 			if (!this.movingOn)
 				return;
+			// イメージを移動する。
 			this.deltaX += e.offsetX - this.mx0;
 			this.deltaY += e.offsetY - this.my0;
 			this.mx0 = e.offsetX;
 			this.my0 = e.offsetY;
+			// 移動フラグをクリアする。
 			this.movingOn = false;
+			// ハンドルロックを解除する。
 			this.handlingOn = -1;
+			// 再描画。
 			this.redraw();
 		},
 		// マウスのボタンが解放された。
 		onMouseUp: function(e){
 			switch (e.button) {
-			case VK_LBUTTON:
+			case VK_LBUTTON: // 左ボタン。
 				this.onLButtonUp(e);
 				break;
-			case VK_MBUTTON:
+			case VK_MBUTTON: // 中央ボタン。
 				this.onMButtonUp(e);
 				break;
 			}
