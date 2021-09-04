@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8943"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8944"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -1086,9 +1086,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				if (!this.canDraw)
 					return;
 			}
+			// タッチを取得。
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
 			var LP = this.DPtoLP(x, y);
+			// 線分をセット。
 			if (this.handlingOn != -1) {
 				if (this.handlingOn == 0) {
 					this.setSegment(LP[0], LP[1], this.px1, this.py1);
@@ -1111,6 +1113,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (this.taskMode == 6) {
 				this.doMeasure();
 			}
+			// タッチ位置を破棄。
+			this.savepx0 = this.savepy0 = null;
+			this.savepx1 = this.savepy1 = null;
+			// 再描画。
 			this.redraw();
 		},
 		// マウスの左ボタンが解放された。
