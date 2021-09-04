@@ -148,6 +148,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.py0 = y0;
 			this.px1 = x1;
 			this.py1 = y1;
+			if (DEBUGGING) {
+				if (this.isTouchPinching) {
+					alert(getStackTrace());
+				}
+			}
 		},
 		// タップ位置を取得する為の関数。
 		touchGetPos: function(e, i = 0) {
