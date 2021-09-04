@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8956"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8957"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -13,6 +13,22 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 
 	var DEBUGGING = false; // デバッグ中か？
 	var TOUCH_TIMEOUT = 200; // タッチのタイムアウト（ミリ秒）。
+
+	var ERROR_CANNOT_GET_PAGE = "ページ取得に失敗しました。";
+	var ERROR_ENTER_PASSWORD = "パスワードを入力して下さい。";
+	var ERROR_REENTER_PASSWORD = "無効なパスワードです。別のパスワードを入力して下さい。";
+
+	var MESSAGE_LOADING = "読み込み中...";
+	var MESSAGE_CANCEL = "キャンセル";
+	var MESSAGE_CONFIG_DIALOG = "設定ダイアログ";
+	var MESSAGE_ABOUT = "バージョン情報";
+	var MESSAGE_HISTORY = "更新履歴";
+	var MESSAGE_LENGTH = "長さ：";
+	var MESSAGE_INCLINATION = "傾き：";
+	var MESSAGE_ANGLE = "角度：";
+	var MESSAGE_DEGREE = "度";
+	var MESSAGE_COPYED = 'コピーしました！';
+	var MESSAGE_FAILED_TO_COPY = '残念、コピーに失敗しました。';
 
 	var VK_LBUTTON = 0; // マウスの左ボタン。
 	var VK_MBUTTON = 1; // マウスの中央ボタン。
@@ -338,7 +354,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				Karasunpo.gotPage.call(Karasunpo, page, canvas, ctx);
 			}, function(reason) {
 				Karasunpo.failedToRender.call(Karasunpo, ctx);
-				alert("ページ取得に失敗しました。");
+				alert(ERROR_CANNOT_GET_PAGE);
 			});
 		},
 		// 画像を表示する。
@@ -594,7 +610,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var Karasunpo = this;
 			if (this.isPDF) {
 				reader.onload = function(e){
-					$(".mode2-filename").text("読み込み中...");
+					$(".mode2-filename").text(MESSAGE_LOADING);
 					var ary = new Uint8Array(e.target.result);
 					var loadingTask = pdfjsLib.getDocument({
 						data: ary,
@@ -604,10 +620,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					// パスワード処理。
 					loadingTask.onPassword = function (updatePassword, reason) {
 						if (reason === 1) { // need password
-							var password = prompt("パスワードを入力して下さい。");
+							var password = prompt(ERROR_ENTER_PASSWORD);
 							updatePassword(password);
    						} else {
-							var password = prompt("無効なパスワードです。別のパスワードを入力して下さい。");
+							var password = prompt(ERROR_REENTER_PASSWORD);
 							updatePassword(password);
 						}
 					};
@@ -626,7 +642,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			} else {
 				reader.onload = function(e){
 					Karasunpo.onWindowResize.call(Karasunpo);
-					$(".mode2-filename").text("読み込み中...");
+					$(".mode2-filename").text(MESSAGE_LOADING);
 					var img1 = new Image();
 					img1.src = e.target.result;
 					img1.onload = function(){
@@ -701,7 +717,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				if (this.isRadian)
 					text = value.toString() + "rad";
 				else
-					text = value.toString() + "度";
+					text = value.toString() + MESSAGE_DEGREE;
 				$(".mode6-measure-results").val(htmlspecialchars(text));
 				break;
 			case 'angle':
@@ -735,7 +751,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				if (this.isRadian)
 					text = value.toString() + "rad";
 				else
-					text = value.toString() + "度";
+					text = value.toString() + MESSAGE_DEGREE;
 				$(".mode6-measure-results").val(htmlspecialchars(text));
 				break;
 			}
@@ -1293,12 +1309,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// 「設定」ダイアログを開く。
 			$("#config-dialog").dialog({
 				modal: true,
-				title: "設定ダイアログ",
+				title: MESSAGE_CONFIG_DIALOG;
 				width: "300px",
 				draggable: true,
 				buttons: {
 					"OK": Karasunpo.configOK.bind(Karasunpo),
-					"キャンセル": function(){
+					MESSAGE_CANCEL: function(){
 						// ダイアログを閉じる。
 						$(this).dialog("close");
 					}
@@ -1349,19 +1365,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 		});
 		$(".mode3-measure-type-length").on('click', function(){
-			$(".mode6-measure-type-text").text("長さ：");
+			$(".mode6-measure-type-text").text(MESSAGE_LENGTH);
 			Karasunpo.measureType = "length";
 			$("#mode3-measure-type-length-1").prop('checked', true);
 			$("#mode3-measure-type-length-2").prop('checked', true);
 		});
 		$(".mode3-measure-type-inclination").on('click', function(){
-			$(".mode6-measure-type-text").text("傾き：");
+			$(".mode6-measure-type-text").text(MESSAGE_INCLINATION);
 			Karasunpo.measureType = "inclination";
 			$("#mode3-measure-type-inclination-1").prop('checked', true);
 			$("#mode3-measure-type-inclination-2").prop('checked', true);
 		});
 		$(".mode3-measure-type-angle").on('click', function(){
-			$(".mode6-measure-type-text").text("角度：");
+			$(".mode6-measure-type-text").text(MESSAGE_ANGLE);
 			Karasunpo.measureType = "angle";
 			$("#mode3-measure-type-angle-1").prop('checked', true);
 			$("#mode3-measure-type-angle-2").prop('checked', true);
@@ -1460,9 +1476,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		$(".mode6-copy-text").on('click', function(){
 			var text = $(".mode6-measure-results").val();
 			if (Karasunpo.doCopyText(text)) {
-				alert('コピーしました！');
+				alert(MESSAGE_COPYED);
 			} else {
-				alert('残念、コピーに失敗しました。');
+				alert(MESSAGE_FAILED_TO_COPY);
 			}
 		});
 
@@ -1537,7 +1553,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			$("#history-dialog").dialog({
 				modal: true,
-				title: "更新履歴",
+				title: MESSAGE_HISTORY,
 				width: width,
 				draggable: true,
 				buttons: {
@@ -1558,7 +1574,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			width += "px";
 			$("#about-dialog").dialog({
 				modal: true,
-				title: "バージョン情報",
+				title: MESSAGE_ABOUT,
 				width: width,
 				draggable: true,
 				buttons: {
