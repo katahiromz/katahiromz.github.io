@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8950"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8952"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -304,6 +304,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			ctx.save();
 			ctx.fillStyle = "rgb(255, 255, 255)";
 			ctx.fillRect(px + this.deltaX, py + this.deltaY, zoomedWidth, zoomedHeight);
+			ctx.fillStyle = "transparent";
 			ctx.restore();
 			// ビューポートを取得。
 			var viewport = page.getViewport({
@@ -788,12 +789,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var handleSize = this.getHandleSize();
 			var sensitiveRadius = this.getSensitiveRadius();
 			ctx.save();
-			ctx.strokeStyle = "darkgreen";
-			ctx.fillStyle = "transparent";
 			ctx.beginPath();
+			ctx.fillStyle = "transparent";
+			ctx.strokeStyle = "darkgreen";
 			ctx.arc(xy0[0], xy0[1], sensitiveRadius, 0, 2 * Math.PI, false);
 			ctx.stroke();
+			ctx.restore();
+			ctx.save();
 			ctx.beginPath();
+			ctx.fillStyle = "transparent";
+			ctx.strokeStyle = "darkgreen";
 			ctx.arc(xy1[0], xy1[1], sensitiveRadius, 0, 2 * Math.PI, false);
 			ctx.stroke();
 			ctx.restore();
