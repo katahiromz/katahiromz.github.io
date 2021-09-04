@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8954"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8955"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -12,7 +12,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	'use strict';
 
 	var DEBUGGING = false; // デバッグ中か？
-	var TOUCH_TIMEOUT = 300; // タッチのタイムアウト（ミリ秒）。
+	var TOUCH_TIMEOUT = 200; // タッチのタイムアウト（ミリ秒）。
 
 	var VK_LBUTTON = 0; // マウスの左ボタン。
 	var VK_MBUTTON = 1; // マウスの中央ボタン。
