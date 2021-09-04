@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.886"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.888"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -148,11 +148,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.py0 = y0;
 			this.px1 = x1;
 			this.py1 = y1;
-			if (DEBUGGING) {
-				if (this.isTouchPinching) {
-					alert(getStackTrace());
-				}
-			}
 		},
 		// タップ位置を取得する為の関数。
 		touchGetPos: function(e, i = 0) {
@@ -919,6 +914,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 				// 距離を更新。
 				this.touchDistance = newTouchDistance;
+				// 線分を復元。
+				this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
 			}
 			// タッチ位置の平均を取得。
 			var newTouchX = (x0 + x1) / 2, newTouchY = (y0 + y1) / 2;
