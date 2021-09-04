@@ -1309,7 +1309,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// 「設定」ダイアログを開く。
 			$("#config-dialog").dialog({
 				modal: true,
-				title: MESSAGE_CONFIG_DIALOG;
+				title: MESSAGE_CONFIG_DIALOG,
 				width: "300px",
 				draggable: true,
 				buttons: {
