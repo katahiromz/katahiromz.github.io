@@ -966,6 +966,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			if (this.savepx0 !== null) {
 				this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
 			}
+			// 測定結果をクリア。
+			$(".mode6-measure-results").val('');
 			// 再描画。
 			this.redraw();
 		},
