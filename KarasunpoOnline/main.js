@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.893"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8941"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -121,6 +121,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		touchX: null, // タッチ位置の平均。
 		touchY: null, // タッチ位置の平均。
 		touchDistance: null, // 二本指のタッチ距離。
+		touchTimer: null, // タッチ用のタイマー。
 		info: [], // デバッグ用情報。
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
@@ -146,9 +147,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			this.py0 = y0;
 			this.px1 = x1;
 			this.py1 = y1;
-			//if (x0 === null || (x0 == x1 && y0 == y1)) {
-			//	alert(getStackTrace());
-			//}
 		},
 		// タップ位置を取得する為の関数。
 		touchGetPos: function(e, i = 0) {
@@ -934,6 +932,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onTouchStart: function(e){
 			console.log("touchstart");
 			e.preventDefault(); // 既定の処理を妨害する。
+			// タッチタイマーをクリアする。
+			if (this.touchTimer) {
+				clearTimeout(this.touchTimer);
+				this.touchTimer = null;
+			}
 			// 線分の位置を保存する。
 			if (this.savepx0 === null) {
 				this.savepx0 = this.px0;
@@ -969,6 +972,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onTouchMove: function(e){
 			console.log("touchmove");
 			e.preventDefault(); // 既定の処理を妨害する。
+			// タッチタイマーをクリアする。
+			if (this.touchTimer) {
+				clearTimeout(this.touchTimer);
+				this.touchTimer = null;
+			}
+			// タッチを取得する。
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
 				this.onTouchPinch(e, t);
@@ -1038,19 +1047,34 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			this.redraw();
 		},
+		// タッチ判定用のタイマー。
+		onTouchTimer: function(){
+			this.isTouchPinching = false; // ピンチングを完全に終了。
+			// タッチ位置を復元。
+			if (this.savepx0 !== null) {
+				this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
+			}
+			// タッチ位置を破棄。
+			this.savepx0 = this.savepy0 = null;
+			this.savepx1 = this.savepy1 = null;
+			// 再描画。
+			this.redraw();
+		},
 		// タッチデバイスでタッチが終了した。
 		onTouchEnd: function(e){
 			console.log("touchend");
 			e.preventDefault(); // 既定の処理を妨害する。
 			if (this.isTouchPinching) {
-				this.isTouchPinching = false; // ピンチングを完全に終了。
-				// タッチ位置を復元。
-				if (this.savepx0 !== null) {
-					this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
+				// タッチタイマーをクリアする。
+				if (this.touchTimer) {
+					clearTimeout(this.touchTimer);
+					this.touchTimer = null;
 				}
-				// タッチ位置を破棄。
-				this.savepx0 = this.savepy0 = null;
-				this.savepx1 = this.savepy1 = null;
+				// タッチの解除を待つ。
+				var Karasunpo = this;
+				this.touchTimer = setTimeout(function(){
+					Karasunpo.onTouchTimer.call(Karasunpo);
+				}, 500);
 				return;
 			}
 			if (this.handlingOn == -1) {
