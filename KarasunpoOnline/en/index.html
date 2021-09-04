@@ -1,0 +1,666 @@
+<!DOCTYPE html><html lang="ja"><head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Karasunpo Online</title>
+	<!-- Disable browser cache -->
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<!-- TODO: ここで読み込むJavascriptプログラムはきちんとテストされた最新のものでなければならない。-->
+	<!-- TODO: 時々バージョン番号を確認し、古くなっていたらテスト後に更新しないといけない。 -->
+	<!-- polyfill -->
+	<script src="polyfill.min.js"></script>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<!-- jQuery UI Touch Punch -->
+	<script src="jquery.ui.touch-punch.min.js"></script>
+	<!-- PDF.js -->
+	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<!-- main.css -->
+	<link rel="stylesheet" href="main.css">
+	<!-- main.js -->
+	<script>
+	document.write('<sc'+'ript src="main.js?'+Math.random()+'"></sc'+'ript>');
+	</script>
+</head>
+<body>
+	<section id="fullscreen" class="drop-area">
+		<section id="navigation">
+			<nav id="mode1" class="mode">
+				<div class="drop-area-navi">
+					<header>
+						<h1 class="center">** Karasunpo Online **</h1>
+						<hr />
+					</header>
+					<form onsubmit="return false;">
+						<div class="portrait-visible">
+							<p>
+								This Web app can measure the nominal distance between two points and/or an angle on an image file.
+							</p>
+							<p>
+								Tap 'Next' button.
+							</p>
+						</div>
+						<div class="portrait-invisible">
+							<p>
+								This Web app can measure the nominal distance between two points and/or an angle on an image file.
+							</p>
+							<p>
+								Click 'Next' button.
+							</p>
+						</div>
+						<p class="center">
+							<button class="mode1-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+						</p>
+					</form>
+				</div>
+			</nav>
+			<nav id="mode2" class="mode invisible">
+				<div class="drop-area-navi">
+					<header>
+						<h1 class="center">** Open A File **</h1>
+						<hr />
+					</header>
+					<form onsubmit="return false;">
+						<div class="portrait-visible">
+							<p>
+								Choose an image file and tap "Next" button.
+							</p>
+							<p class="center">
+								<label for="mode2-upload-file">
+									<span class="center">
+										<span class="center invisible">
+											<input type="file" class="mode2-upload-file" name="mode2-upload-file" accept="image/jpeg, image/png, image/gif, image/tiff, image/bmp, application/pdf" />
+										</span>
+										<button class="mode2-choose-image"><img class="icon" src="img/picture-1.png" alt="" /> Choose image</button>
+										<span class="error nobreak mode2-filename">
+											* Not selected
+										</span>
+									</span>
+								</label>
+							</p>
+							<p class="center">
+								<span class="nobreak">
+									<button class="mode2-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+									<button class="mode2-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+								</span>
+							</p>
+							<div class="info"></div>
+						</div>
+						<div class="portrait-invisible">
+							<p>
+								Please drop your image file and click 'Next'.
+							</p>
+							<p class="center invisible">
+								<input type="file" class="mode2-upload-file" name="mode2-upload-file" accept="image/jpeg, image/png, image/gif, image/tiff, image/bmp, application/pdf" />
+							</p>
+							<p class="center">
+								<button class="mode2-choose-image"><img class="icon" src="img/picture-1.png" alt="" /> Choose image</button>
+							</p>
+							<p class="center">
+								<span class="error nobreak mode2-filename">
+									* Not selected
+								</span>
+							</p>
+							<p class="center">
+								<button class="mode2-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+								<button class="mode2-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+							</p>
+							<div class="info"></div>
+						</div>
+					</form>
+				</div>
+			</nav>
+			<nav id="mode3" class="mode invisible">
+				<header>
+					<h1 class="center">** Measuring Type **</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<div class="portrait-visible">
+						<p class="center">
+							<span class="smaller">
+								<input type="radio" name="mode3-measure-type-radio-1" class="mode3-measure-type-length" id="mode3-measure-type-length-1" value="length" checked="checked" /> <label for="mode3-measure-type-length-1">Length of one segment</label>
+								　
+							</span>
+							<span class="smaller">
+								<input type="radio" name="mode3-measure-type-radio-1" class="mode3-measure-type-inclination" id="mode3-measure-type-inclination-1" value="inclination" /> <label for="mode3-measure-type-inclination-1">Inclination of one segment</label>
+								　
+							</span>
+						</p>
+						<p class="center">
+							<span class="smaller">
+								<input type="radio" name="mode3-measure-type-radio-1" class="mode3-measure-type-angle" id="mode3-measure-type-angle-1" value="angle" /> <label for="mode3-measure-type-angle-1">Angle, formed by two segments</label>
+								　
+							</span>
+							<span class="nobreak">
+								<input type="checkbox" class="mode3-is-radian" name="mode3-is-radian-1" id="mode3-is-radian-1"> <label for="mode3-is-radian-1">Radian</label>
+							</span>
+						</p>
+						<p class="center">
+							<button class="mode3-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+							<button class="mode3-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+						</p>
+					</div>
+					<div class="portrait-invisible">
+						<p>
+							Select a measuring type:
+						</p>
+						<p class="smaller">
+							<input type="radio" name="mode3-measure-type-radio-2" class="mode3-measure-type-length" id="mode3-measure-type-length-2" value="length" checked="checked" /> <label for="mode3-measure-type-length-2">Length of one segment</label>
+							　
+						</p>
+						<p class="smaller">
+							<input type="radio" name="mode3-measure-type-radio-2" class="mode3-measure-type-inclination" id="mode3-measure-type-inclination-2" value="inclination" /> <label for="mode3-measure-type-inclination-2">Inclination of one segment</label>
+							　
+						</p>
+						<p class="smaller">
+							<input type="radio" name="mode3-measure-type-radio-2" class="mode3-measure-type-angle" id="mode3-measure-type-angle-2" value="angle" /> <label for="mode3-measure-type-angle-2">Angle, formed by two segments</label>
+						</p>
+						<p class="center">
+							<input type="checkbox" class="mode3-is-radian" name="mode3-is-radian-2" id="mode3-is-radian-2"> <label for="mode3-is-radian-2">Radian</label>
+						</p>
+						<p class="center">
+							<button class="mode3-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+							<button class="mode3-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+						</p>
+					</div>
+				</form>
+			</nav>
+			<nav id="mode4" class="mode invisible">
+				<header>
+					<h1 class="center">** Standard Segment **</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<div class="portrait-visible">
+						<p>
+							<span class="smaller">Enter the standard segment by tracing over the image.</span>
+							<span class="smaller">The standard segment will become the nominal length or angle standard on the image.</span>
+							<span class="smaller hint">* You can move, zoom in and out with two fingers.</span>
+						</p>
+						<p class="center">
+							<span class="nobreak">
+								<input type="checkbox" class="mode4-draw-circle" name="mode4-draw-circle-1" id="mode4-draw-circle-1"> <label for="mode4-draw-circle-1" class="smaller">Draw auxiliary circle</label>
+							</span>
+						</p>
+						<p class="center">
+							<button class="mode4-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+							<button class="mode4-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+						</p>
+						<div class="info"></div>
+					</div>
+					<div class="portrait-invisible">
+						<p>
+							Please input the standard segment on the image by dragging.
+							<span class="smaller">The standard segment will become the nominal length or angle standard on the image.</span>
+						</p>
+						<p>
+						</p>
+						<p class="center">
+							<span class="nobreak">
+								<input type="checkbox" class="mode4-draw-circle" name="mode4-draw-circle-2" id="mode4-draw-circle-2"> <label for="mode4-draw-circle-2" class="smaller">Draw auxiliary circle</label>
+							</span>
+						</p>
+						<p class="center">
+							<button class="mode4-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+							<button class="mode4-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+						</p>
+						<div class="info"></div>
+					</div>
+				</form>
+			</nav>
+			<nav id="mode5" class="mode invisible">
+				<header>
+					<h1 class="center">** Nominal Length **</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<div class="portrait-visible">
+						<p>
+							Please enter the nominal length of the standard segment you inputted.
+						</p>
+						<p class="center">
+							<span class="smaller">
+								Length of the standard segment:
+							</span>
+							<span class="nobreak">
+								<input type="text" class="mode5-numeric-text right" size="5" placeholder="Numeric" />
+								<input list="mode5-unit-list" size="3" class="mode5-unit-text" name="unit" placeholder="Unit" />
+								<datalist class="mode5-unit-list">
+									<option value="mm" />
+									<option value="cm" />
+									<option value="m" />
+									<option value="km" />
+									<option value="inch" />
+									<option value="pt" />
+									<option value="px" />
+									<option value="feet" />
+									<option value="yards" />
+									<option value="AU" />
+									<option value="miles" />
+								</datalist>
+							</span>
+						</p>
+						<p class="center">
+							<button class="mode5-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+							<button class="mode5-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+						</span>
+					</div>
+					<div class="portrait-invisible">
+						<p>
+							Please enter the nominal length of the standard segment you inputted.
+						</p>
+						<p class="center smaller">
+							Length of the standard segment:
+						</p>
+						<p class="center">
+							<input type="text" class="mode5-numeric-text right" size="5" placeholder="Numeric" />
+							<input list="mode5-unit-list" size="3" class="mode5-unit-text" name="unit" placeholder="Unit" />
+							<datalist class="mode5-unit-list">
+								<option value="mm" />
+								<option value="cm" />
+								<option value="m" />
+								<option value="km" />
+								<option value="inch" />
+								<option value="pt" />
+								<option value="px" />
+								<option value="feet" />
+								<option value="yards" />
+								<option value="AU" />
+								<option value="miles" />
+							</datalist>
+						</p>
+						<p class="center">
+							<button class="mode5-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+							<button class="mode5-next"><img class="icon" src="img/right-arrow.png" alt="" />Next</button>
+						</p>
+					</div>
+				</form>
+			</nav>
+			<nav id="mode6" class="mode invisible">
+				<header>
+					<h1 class="center">** Measuring **</h1>
+					<hr />
+				</header>
+				<form onsubmit="return false;">
+					<div class="portrait-visible">
+						<p>
+							Enter the line segment you want to measure by tracing over the image.
+						</p>
+						<p class="center">
+							<span class="nobreak">
+								<span class="mode6-measure-type-text">Length:</span>
+								<input class="mode6-measure-results" type="text" size="15" disabled="disabled" class="right" />
+							</span>
+							<button class="mode6-copy-text">Copy</button>　
+						</p>
+						<p class="center">
+							<span class="nobreak">
+								<input type="checkbox" class="mode6-draw-circle" name="mode6-draw-circle-1" id="mode6-draw-circle-1"> <label for="mode6-draw-circle-1" class="smaller">Draw auxiliary circle</label>
+								　
+							</span>
+							<span class="nobreak">
+								<button class="mode6-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+								<button class="mode6-finish"><img class="icon" src="img/up-arrow.png" alt="" />終了</button>
+							</span>
+						</p>
+					</div>
+					<div class="portrait-invisible">
+						<p>
+							Please input the segment to measure by dragging on the image.
+						</p>
+						<p class="center">
+							<span class="mode6-measure-type-text">Length:</span>
+							<input class="mode6-measure-results" type="text" size="15" disabled="disabled" />
+						</p>
+						<p class="center">
+							<button class="mode6-copy-text" class="big-button">Copy to clipbard</button>
+						</p>
+						<p class="center">
+							<input type="checkbox" class="mode6-draw-circle" name="mode6-draw-circle-2" id="mode6-draw-circle-2"> <label for="mode6-draw-circle-2" class="smaller">Draw auxiliary circle</label>
+						</p>
+						<p class="center">
+							<button class="mode6-back"><img class="icon" src="img/left-arrow.png" alt="" />Back</button>
+							<button class="mode6-finish"><img class="icon" src="img/up-arrow.png" alt="" />終了</button>
+						</p>
+					</div>
+				</form>
+			</nav>
+			<footer>
+				<button id="config-button"><img class="icon" src="img/hamburger.png" alt="" />Config</button>
+				<button id="history-button"><img class="icon" src="img/history.png" alt="" />History</button>
+				<button id="about-button"><img class="icon" src="img/tag.png" alt="" />About</button>
+				<div id="config-dialog" class="invisible">
+					<p>
+						Zoom:
+						<select id="config-dialog-zoom">
+							<option value="" selected="selected"></option>
+							<option value="Fit">Show whole image</option>
+							<option value="hFit">Fit horizontally</option>
+							<option value="vFit">Fit vertically</option>
+							<option value="10">10%</option>
+							<option value="25">25%</option>
+							<option value="50">50%</option>
+							<option value="75">75%</option>
+							<option value="100">100%</option>
+							<option value="125">125%</option>
+							<option value="150">150%</option>
+							<option value="200">200%</option>
+							<option value="300">300%</option>
+						</select>
+					</p>
+					<p>
+						The color of segments:
+						<select id="config-dialog-line-color">
+							<option value="red" selected="selected">Red</option>
+							<option value="green">Green</option>
+							<option value="blue">Blue</option>
+							<option value="yellow">Yellow</option>
+						</select>
+					</p>
+					<p>
+						The background:
+						<select id="config-dialog-background">
+							<option value="-1" selected="selected"></option>
+							<option value="-2">Checker</option>
+							<option value="0">Black</option>
+							<option value="1">White</option>
+							<option value="2">Green</option>
+							<option value="3">Blue</option>
+							<option value="4">Magenta</option>
+							<option value="5">Red</option>
+						</select>
+					</p>
+					<p>
+						The page number of PDF:
+						<input type="text" class="config-dialog-page-number right" value="" size="4" />
+					</p>
+				</div>
+				<div id="history-dialog" class="invisible">
+					<p class="smaller">
+						2021.08.28 First release.
+					</p>
+				</div>
+				<div id="about-dialog" class="invisible">
+					<p>
+						Karasunpo Online Version <span id="about-dialog-version">0.0</a>
+					</p>
+					<hr />
+					<p class="smaller">
+						Karasunpo Online won't use your files without your permission.
+					</p>
+<!-- TODO: Please sync this text to LICENSE.TXT. -->
+					<textarea class="license">
+Main part of Karasunpo Online:
+	Copyright (C) 2021 Katayama Hirofumi MZ.
+jQuery v3.3.1:
+	(c) JS Foundation and other contributors.
+jQuery UI Touch Punch:
+	Copyright 2011-2014, Dave Furfero.
+PDF.js:
+	Copyright 2021 Mozilla Foundation.
+polyfill.js:
+	Copyright 2013 Marcello Bastea-Forte (marcello@cellosoft.com)
+
+Karasunpo Online is made by Katayama Hirofumi MZ (katayama.hirofumi.mz@gmail.com).
+jQuery and jQuery UI are licensed under the the MIT license.
+jQuery UI Touch Punch is dual licensed under the MIT or GPL Version 2 licenses (we apply MIT license, not GPLv2).
+PDF.js is licensed under the Apache License Version 2.0.
+polyfill.js is licensed under the zlib License.
+---
+The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+---
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+---
+The zlib License
+
+This software is provided 'as-is', without any express or implied
+  warranty. In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+---
+					</textarea>
+				</div>
+				<hr />
+				<div class="smaller">&copy; 2021 katahiromz</div>
+			</footer>
+		</section>
+		<canvas id="image-screen"></canvas>
+		<canvas id="offscreen" class="invisible"></canvas>
+	</section>
+</body>
+</html>

@@ -1,0 +1,162 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	color: black;
+	background-color: white;
+	height: 100vh;
+}
+h1 {
+	margin: 4px;
+	paddding: 4px;
+	font-size: 120%;
+}
+p {
+	margin: 8px;
+}
+input, button {
+	padding: 2px 8px;
+}
+ul {
+	margin: 8px;
+}
+li {
+	margin: 4px;
+}
+footer {
+	position: absolute;
+	bottom: 0;
+	font-size: 75%;
+}
+textarea.license {
+	padding: 4px;
+	width: 100%;
+	height: 25vh;
+	font-size: 80%;
+	font-family: monospace;
+}
+
+.invisible {
+	display: none;
+}
+.larger {
+	font-size: 125%;
+}
+.smaller {
+	font-size: 75%;
+}
+.no_break {
+	white-space: nowrap;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+.drop-area-navi {
+	border: 5px dotted darkgreen;
+}
+.dragging-over {
+	border: 5px solid yellow;
+}
+.black {
+	background-color: black;
+}
+.red {
+	background-color: red;
+}
+.blue {
+	background-color: blue;
+}
+.green {
+	background-color: darkgreen;
+}
+.focus_box {
+	border: 2px dotted blue;
+	padding: 2px;
+	margin: 2px;
+}
+.icon {
+	vertical-align: -50%;
+}
+.portrait-visible {
+	display: none;
+}
+.big-button {
+	padding: 5px 30px;
+}
+.error {
+	color: red;
+	font-weight: bold;
+}
+.nobreak {
+	white-space: nowrap;
+}
+.right {
+	text-align: right;
+}
+
+#fullscreen {
+	width: 100vw;
+	height: 100vh;
+	background-size: 100% 100%;
+}
+#navigation {
+	width: 30%;
+	height: 100vh;
+	background-size: auto 100%;
+	border-right: 2px solid black;
+	float: left;
+	background-color: lightyellow;
+}
+#image-screen {
+	width: 69%;
+	height: 100vh;
+	background-size: auto 100%;
+	float: left;
+	cursor: crosshair;
+}
+
+@media (orientation: portrait) {
+	h1 {
+		font-size: 2.5vh;
+	}
+	p, button, input {
+		font-size: 2vh;
+		line-height: 120%;
+	}
+	button img {
+		width: 4vh;
+		height: 4vh;
+	}
+	button {
+		padding: 0;
+	}
+
+	.portrait-visible {
+		display: block;
+	}
+	.portrait-invisible {
+		display: none;
+	}
+	.drop-area-navi {
+		border: none;
+	}
+
+	#navigation {
+		width: 100%;
+		height: 25%;
+		background-size: 100% auto;
+		border-right: 2px solid black;
+		float: none;
+		background-color: lightyellow;
+	}
+	#image-screen {
+		width: 100%;
+		height: 74%;
+		background-size: 100% auto;
+		float: none;
+		cursor: crosshair;
+	}
+}

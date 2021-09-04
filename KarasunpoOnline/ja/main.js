@@ -19,7 +19,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	var ERROR_REENTER_PASSWORD = "無効なパスワードです。別のパスワードを入力して下さい。";
 
 	var MESSAGE_LOADING = "読み込み中...";
-	var MESSAGE_CANCEL = "キャンセル";
 	var MESSAGE_CONFIG_DIALOG = "設定ダイアログ";
 	var MESSAGE_ABOUT = "バージョン情報";
 	var MESSAGE_HISTORY = "更新履歴";
@@ -605,6 +604,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// ファイルを処理する。
 		openFile: function(file){
+			this.pdf = null;
 			this.isPDF = (file.name.indexOf(".pdf") != -1 || file.name.indexOf(".PDF") != -1);
 			var reader = new FileReader();
 			var Karasunpo = this;
@@ -621,10 +621,18 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					loadingTask.onPassword = function (updatePassword, reason) {
 						if (reason === 1) { // need password
 							var password = prompt(ERROR_ENTER_PASSWORD);
-							updatePassword(password);
+							if (password || password === '') {
+								updatePassword(password);
+							} else {
+								throw new Error("");
+							}
    						} else {
 							var password = prompt(ERROR_REENTER_PASSWORD);
-							updatePassword(password);
+							if (password || password === '') {
+								updatePassword(password);
+							} else {
+								throw new Error("");
+							}
 						}
 					};
 					// PDFを読み込む。
@@ -637,6 +645,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 						Karasunpo.pdfPageNumber = 1;
 						Karasunpo.doFitImage.call(Karasunpo);
 						Karasunpo.redraw.call(Karasunpo);
+					}, function(reason) {
+						;
 					});
 				};
 			} else {
@@ -1314,7 +1324,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				draggable: true,
 				buttons: {
 					"OK": Karasunpo.configOK.bind(Karasunpo),
-					MESSAGE_CANCEL: function(){
+					"キャンセル": function(){
 						// ダイアログを閉じる。
 						$(this).dialog("close");
 					}
