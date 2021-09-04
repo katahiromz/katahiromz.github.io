@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.892"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.893"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -121,8 +121,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		touchX: null, // タッチ位置の平均。
 		touchY: null, // タッチ位置の平均。
 		touchDistance: null, // 二本指のタッチ距離。
-		touchTimer: null, // タイマー。
-		infoTimer: null, // デバッグ用タイマー。
 		info: [], // デバッグ用情報。
 		// ハンドルのサイズを取得する。
 		getHandleSize: function() {
@@ -862,12 +860,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				break;
 			}
 		},
-		// デバッグタイマー。
-		onInfoTimer: function(){
-			alert(JSON.stringify(this.info));
-			this.info = [];
-			this.infoTimer = null;
-		},
 		// デバッグ情報を追加。
 		addInfo: function(e, data){
 			var prev = ""
@@ -942,19 +934,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onTouchStart: function(e){
 			console.log("touchstart");
 			e.preventDefault(); // 既定の処理を妨害する。
-			// デバッグ情報。
-			if (DEBUGGING) {
-				if (this.infoTimer) {
-					clearTimeout(this.infoTimer);
-					this.infoTimer = null;
-				}
-				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
-				if (e.touches.length > 1) {
-					this.addInfo(e, "onTouchStart.2");
-				} else {
-					this.addInfo(e, "onTouchStart.1");
-				}
-			}
 			// 線分の位置を保存する。
 			if (this.savepx0 === null) {
 				this.savepx0 = this.px0;
@@ -990,19 +969,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		onTouchMove: function(e){
 			console.log("touchmove");
 			e.preventDefault(); // 既定の処理を妨害する。
-			// デバッグ情報。
-			if (DEBUGGING) {
-				if (this.infoTimer) {
-					clearTimeout(this.infoTimer);
-					this.infoTimer = null;
-				}
-				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
-				if (e.touches.length > 1) {
-					this.addInfo(e, "onTouchMove.2");
-				} else {
-					this.addInfo(e, "onTouchMove.1");
-				}
-			}
 			var t = e.touches;
 			if (t.length > 1) { // 複数の指で操作？
 				this.onTouchPinch(e, t);
@@ -1072,42 +1038,19 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			this.redraw();
 		},
-		// タッチが終わってから時間が経った？
-		onTouchTimeout: function(){
-			// タッチ位置を復元する。
-			if (this.isTouchPinching) {
-				if (this.savepx0 !== null) {
-					this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
-				}
-				this.isTouchPinching = false; // ピンチングを完全に終了。
-			}
-			this.savepx0 = this.savepy0 = null;
-			this.savepx1 = this.savepy1 = null;
-			this.redraw();
-		},
 		// タッチデバイスでタッチが終了した。
 		onTouchEnd: function(e){
 			console.log("touchend");
 			e.preventDefault(); // 既定の処理を妨害する。
-			// デバッグ情報。
-			if (DEBUGGING) {
-				if (this.infoTimer) {
-					clearTimeout(this.infoTimer);
-					this.infoTimer = null;
-				}
-				this.infoTimer = setTimeout(this.onInfoTimer.bind(this), 2000);
-				if (e.touches.length > 1) {
-					this.addInfo(e, "onTouchEnd.2");
-				} else {
-					this.addInfo(e, "onTouchEnd.1");
-				}
-			}
 			if (this.isTouchPinching) {
-				if (this.touchTimer) {
-					clearTimeout(this.touchTimer);
-					this.touchTimer = null;
+				this.isTouchPinching = false; // ピンチングを完全に終了。
+				// タッチ位置を復元。
+				if (this.savepx0 !== null) {
+					this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
 				}
-				this.touchTimer = setTimeout(this.onTouchTimeout.bind(this), 800);
+				// タッチ位置を破棄。
+				this.savepx0 = this.savepy0 = null;
+				this.savepx1 = this.savepy1 = null;
 				return;
 			}
 			if (this.handlingOn == -1) {
