@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8953"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8954"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -468,13 +468,18 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			ctx.lineTo(xy1[0], xy1[1]);
 			ctx.stroke();
 			ctx.fillStyle = this.lineColor;
-			ctx.beginPath();
 			var handleSize = this.getHandleSize();
+			ctx.beginPath();
 			if (flag) {
 				ctx.arc(xy0[0], xy0[1], handleSize, 0, 2 * Math.PI, false);
-				ctx.arc(xy1[0], xy1[1], handleSize, 0, 2 * Math.PI, false);
 			} else {
 				ctx.arc(xy0[0], xy0[1], handleSize / 2, 0, 2 * Math.PI, false);
+			}
+			ctx.fill();
+			ctx.beginPath();
+			if (flag) {
+				ctx.arc(xy1[0], xy1[1], handleSize, 0, 2 * Math.PI, false);
+			} else {
 				ctx.arc(xy1[0], xy1[1], handleSize / 2, 0, 2 * Math.PI, false);
 			}
 			ctx.fill();
@@ -779,29 +784,29 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// 再描画。
 			this.redraw();
 		},
-		// 感知領域を描画する。
-		drawSensitive : function(ctx){
-			if (this.px0 == this.px1 && this.py0 == this.py1)
-				return;
-			var xy0 = this.LPtoDP(this.px0, this.py0);
-			var xy1 = this.LPtoDP(this.px1, this.py1);
-			var handleSize = this.getHandleSize();
-			var sensitiveRadius = this.getSensitiveRadius();
-			ctx.save();
-			ctx.beginPath();
-			ctx.fillStyle = "rgba(255, 255, 255, 0)";
-			ctx.strokeStyle = "darkgreen";
-			ctx.arc(xy0[0], xy0[1], sensitiveRadius, 0, 2 * Math.PI, false);
-			ctx.stroke();
-			ctx.restore();
-			ctx.save();
-			ctx.beginPath();
-			ctx.fillStyle = "rgba(255, 255, 255, 0)";
-			ctx.strokeStyle = "darkgreen";
-			ctx.arc(xy1[0], xy1[1], sensitiveRadius, 0, 2 * Math.PI, false);
-			ctx.stroke();
-			ctx.restore();
-		},
+		//// 感知領域を描画する。
+		//drawSensitive : function(ctx){
+		//	if (this.px0 == this.px1 && this.py0 == this.py1)
+		//		return;
+		//	var xy0 = this.LPtoDP(this.px0, this.py0);
+		//	var xy1 = this.LPtoDP(this.px1, this.py1);
+		//	var handleSize = this.getHandleSize();
+		//	var sensitiveRadius = this.getSensitiveRadius();
+		//	ctx.save();
+		//	ctx.beginPath();
+		//	ctx.fillStyle = "rgba(255, 255, 255, 0)";
+		//	ctx.strokeStyle = "darkgreen";
+		//	ctx.arc(xy0[0], xy0[1], sensitiveRadius, 0, 2 * Math.PI, false);
+		//	ctx.stroke();
+		//	ctx.restore();
+		//	ctx.save();
+		//	ctx.beginPath();
+		//	ctx.fillStyle = "rgba(255, 255, 255, 0)";
+		//	ctx.strokeStyle = "darkgreen";
+		//	ctx.arc(xy1[0], xy1[1], sensitiveRadius, 0, 2 * Math.PI, false);
+		//	ctx.stroke();
+		//	ctx.restore();
+		//},
 		// 描画の終わり。
 		doRedrawFinish: function(ctx, succeeded){
 			if (this.lineOn) { // 線分を描画するか？
@@ -821,8 +826,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					}
 				}
 			}
-			// 感知領域を描画する。
-			this.drawSensitive(ctx);
+			//// 感知領域を描画する。
+			//this.drawSensitive(ctx);
 			// キャンバスに転送する。
 			var canvas = $("#image-screen");
 			var data = ctx.getImageData(0, 0, this.cxCanvas, this.cyCanvas);
