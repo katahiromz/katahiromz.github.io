@@ -2,7 +2,7 @@
 // Copyright (C) 2021 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.8949"; // カラスンポのバージョン番号。
+var KARASUNPO_VERSION = "0.8950"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -217,6 +217,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 市松模様を描画する。
 		drawChecker: function(ctx, cx, cy) {
+			ctx.save();
 			// 背景をライトグレーで塗りつぶす。
 			ctx.fillStyle = "rgb(191, 191, 191)";
 			ctx.fillRect(0, 0, Math.floor(cx), Math.floor(cy));
@@ -232,9 +233,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					}
 				}
 			}
+			ctx.restore();
 		},
 		// 背景を描画する。
 		drawBackground: function(ctx, cx, cy) {
+			ctx.save();
 			switch (this.backgroundMode) {
 			case -2: // 市松模様。
 				this.drawChecker(ctx, cx, cy);
@@ -264,6 +267,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				ctx.fillRect(0, 0, cx, cy);
 				break;
 			}
+			ctx.restore();
 			// 高速化のためにイメージデータを保存する。
 			this.backgroundImage = ctx.getImageData(0, 0, this.cxCanvas, this.cyCanvas);
 		},
@@ -297,8 +301,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			var px = (this.cxCanvas - zoomedWidth) / 2;
 			var py = (this.cyCanvas - zoomedHeight) / 2;
 			// PDFのレンダリングで余白が描画されないことがあるのでここで白く塗りつぶす。
+			ctx.save();
 			ctx.fillStyle = "rgb(255, 255, 255)";
 			ctx.fillRect(px + this.deltaX, py + this.deltaY, zoomedWidth, zoomedHeight);
+			ctx.restore();
 			// ビューポートを取得。
 			var viewport = page.getViewport({
 				scale: this.zoomRate / 100.0,
