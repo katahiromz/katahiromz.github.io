@@ -14,6 +14,8 @@ jQuery and jQuery UI are licensed under the the MIT license.
 jQuery UI Touch Punch is dual licensed under the MIT or GPL Version 2 licenses (we apply MIT license, not GPLv2).
 PDF.js is licensed under the Apache License Version 2.0.
 polyfill.js is licensed under the zlib License.
+
+The source code of Karasunpo Online is available at https://github.com/katahiromz/katahiromz.github.io/tree/main/karasunpo-online .
 ---
 The MIT License
 
