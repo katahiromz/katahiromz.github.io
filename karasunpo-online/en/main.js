@@ -1063,6 +1063,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.py1 = LP[1];
 			}
 			if (this.taskMode == 6) {
+				// 再計測。
 				this.doMeasure();
 			}
 			this.redraw();
@@ -1086,6 +1087,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					this.setSegment(this.px0, this.py0, LP[0], LP[1]);
 				}
 				if (this.taskMode == 6) {
+					// 再計測。
 					this.doMeasure();
 				}
 			} else if (this.penOn) {
@@ -1093,6 +1095,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.px1 = LP[0];
 				this.py1 = LP[1];
 				if (this.taskMode == 6) {
+					// 再計測。
 					this.doMeasure();
 				}
 			} else if (this.movingOn) {
@@ -1109,6 +1112,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチ位置を復元。
 			if (this.savepx0 !== null) {
 				this.setSegment(this.savepx0, this.savepy0, this.savepx1, this.savepy1);
+				if (this.taskMode == 6) {
+					// 再計測。
+					this.doMeasure();
+				}
 			}
 			// タッチ位置を破棄。
 			this.savepx0 = this.savepy0 = null;
@@ -1170,8 +1177,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					$(".mode4-next").prop('disabled', true);
 				}
 			}
-			// 測定する。
 			if (this.taskMode == 6) {
+				// 再計測。
 				this.doMeasure();
 			}
 			// タッチ位置を破棄。
@@ -1217,8 +1224,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					$(".mode4-next").prop('disabled', true);
 				}
 			}
-			// 測定。
 			if (this.taskMode == 6) {
+				// 再計測。
 				this.doMeasure();
 			}
 			// 再描画。
