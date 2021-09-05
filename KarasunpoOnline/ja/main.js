@@ -88,6 +88,23 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		return obj.stack;
 	};
 
+	// draw an arrow
+	var drawArrow = function(ctx, fromx, fromy, tox, toy, headlen = 20) {
+		var dx = tox - fromx;
+		var dy = toy - fromy;
+		var angle = Math.atan2(dy, dx);
+		ctx.moveTo(fromx, fromy);
+		ctx.lineTo(tox, toy);
+		ctx.moveTo(tox, toy);
+		ctx.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+		ctx.moveTo(tox, toy);
+		ctx.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+		ctx.moveTo(fromx, fromy);
+		ctx.lineTo(fromx + headlen * Math.cos(angle - Math.PI / 6), fromy + headlen * Math.sin(angle - Math.PI / 6));
+		ctx.moveTo(fromx, fromy);
+		ctx.lineTo(fromx + headlen * Math.cos(angle + Math.PI / 6), fromy + headlen * Math.sin(angle + Math.PI / 6));
+	}
+
 	// We use module-pattern.
 	var Karasunpo = {
 		image: null, // 画像。
@@ -467,7 +484,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			return -1;
 		},
 		// 線を描く。
-		doDrawLine: function(ctx, x0, y0, x1, y1, flag = true){
+		doDrawArrow: function(ctx, x0, y0, x1, y1, flag = true){
 			ctx.save();
 			ctx.lineCap = 'round';
 			if (flag) {
@@ -479,25 +496,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			ctx.beginPath();
 			var xy0 = this.LPtoDP(x0, y0);
 			var xy1 = this.LPtoDP(x1, y1);
-			ctx.moveTo(xy0[0], xy0[1]);
-			ctx.lineTo(xy1[0], xy1[1]);
-			ctx.stroke();
-			ctx.fillStyle = this.lineColor;
 			var handleSize = this.getHandleSize();
-			ctx.beginPath();
 			if (flag) {
-				ctx.arc(xy0[0], xy0[1], handleSize, 0, 2 * Math.PI, false);
+				drawArrow(ctx, xy0[0], xy0[1], xy1[0], xy1[1], handleSize);
 			} else {
-				ctx.arc(xy0[0], xy0[1], handleSize / 2, 0, 2 * Math.PI, false);
+				drawArrow(ctx, xy0[0], xy0[1], xy1[0], xy1[1], handleSize / 2);
 			}
-			ctx.fill();
-			ctx.beginPath();
-			if (flag) {
-				ctx.arc(xy1[0], xy1[1], handleSize, 0, 2 * Math.PI, false);
-			} else {
-				ctx.arc(xy1[0], xy1[1], handleSize / 2, 0, 2 * Math.PI, false);
-			}
-			ctx.fill();
+			ctx.stroke();
 			ctx.restore();
 		},
 		// 補助円を描画する。
@@ -837,7 +842,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		doRedrawFinish: function(ctx, succeeded){
 			if (this.lineOn) { // 線分を描画するか？
 				if (this.px0 != this.px1 || this.py0 != this.py1) {
-					this.doDrawLine(ctx, this.px0, this.py0, this.px1, this.py1, true);
+					this.doDrawArrow(ctx, this.px0, this.py0, this.px1, this.py1, true);
 					if (this.shouldDrawCircle) {
 						this.doDrawCircle(ctx, this.px0, this.py0, this.px1, this.py1);
 					}
@@ -847,7 +852,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 						this.measureType == 'angle')
 					{
 						if (this.sx0 != this.sx1 || this.sy0 != this.sy1) {
-							this.doDrawLine(ctx, this.sx0, this.sy0, this.sx1, this.sy1, false);
+							this.doDrawArrow(ctx, this.sx0, this.sy0, this.sx1, this.sy1, false);
 						}
 					}
 				}
