@@ -1,0 +1,30 @@
+{
+	"name": "Karasunpo Online",
+	"short_name": "Karasunpo",
+	"description": "Measures the nominal distance/angle on an image file.",
+	"lang": "en-US",
+	"start_url": "https://katahiromz.github.io/karasunpo-online/en/",
+	"icons": [
+		{
+			"src": "karasunpo-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "karasunpo-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		},
+		{
+			"src": "karasunpo-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "karasunpo.svg",
+			"sizes": "256x256",
+			"type": "image/svg+xml"
+		}
+	]
+}

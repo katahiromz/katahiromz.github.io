@@ -1,0 +1,30 @@
+{
+	"name": "カラスンポ Online",
+	"short_name": "カラスンポ",
+	"description": "画像上の２点間の名目の距離や角度を測定。",
+	"lang": "ja-JP",
+	"start_url": "https://katahiromz.github.io/karasunpo-online/ja/",
+	"icons": [
+		{
+			"src": "karasunpo-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "karasunpo-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		},
+		{
+			"src": "karasunpo-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		},
+		{
+			"src": "karasunpo.svg",
+			"sizes": "256x256",
+			"type": "image/svg+xml"
+		}
+	]
+}
