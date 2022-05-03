@@ -83,7 +83,7 @@
 <button id="text-button" class="invisible">Text</button>
 
 <div id="text-dialog" class="invisible">
-	<input type="text" size="20" maxlength="20" id="textbox" />
+	<input type="text" size="20" maxlength="20" id="textbox" readonly autofocus />
 </div>
 
 <div id="about-dialog" class="invisible">
@@ -233,6 +233,7 @@ function init(){
 
 	$("#text-button").click(function(){
 		document.getElementById('textbox').value = theText;
+		document.getElementById('textbox').readOnly = false;
 		$("#text-dialog").dialog({
 			dialogClass: "no-close",
 			title: "テキストの設定",
@@ -276,6 +277,11 @@ function init(){
 	});
 	var select = document.getElementById('select');
 	select.addEventListener('click', function(){
+		if (!ready)
+			return;
+		setType(parseInt(select.value));
+	}, false);
+	select.addEventListener('select', function(){
 		if (!ready)
 			return;
 		setType(parseInt(select.value));
