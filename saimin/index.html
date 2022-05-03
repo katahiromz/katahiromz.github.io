@@ -203,14 +203,14 @@ function doAdultCheck(){
 		title: "成人チェック",
 		buttons: [
 			{
-				text: "おとな",
+				text: "おとなです",
 				click: function(){
 					$(this).dialog('close');
 					accepted();
 				},
 			},
 			{
-				text: "こども",
+				text: "こどもです",
 				click: function(){
 					localStorage.setItem('saiminAdultCheck', '-1');
 					$(this).dialog('close');
