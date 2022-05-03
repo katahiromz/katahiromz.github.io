@@ -330,6 +330,19 @@ function line(ctx, x0, y0, x1, y1, lineWidth){
 	ctx.stroke();
 }
 
+function drawType0(ctx, px, py, dx, dy){
+	ctx.save();
+
+	ctx.save();
+
+	var qx = px + dx / 2;
+	var qy = py + dy / 2;
+
+	ctx.clearRect(px, py, dx, dy);
+
+	ctx.restore();
+}
+
 function drawType1(ctx, px, py, dx, dy){
 	ctx.save();
 
@@ -568,6 +581,9 @@ function drawType3(ctx, px, py, dx, dy){
 
 function drawType(ctx, px, py, cx, cy){
 	switch (type){
+	case 0:
+		drawType0(ctx, px, py, cx, cy);
+		break;
 	case 1:
 		drawType1(ctx, px, py, cx, cy);
 		break;
@@ -585,6 +601,8 @@ function draw(){
 	var ctx = document.getElementById('canvas').getContext('2d');
 	ctx.globalCompositeOperation = 'destination-over';
 
+	var x = cx / 2, y = cy / 2;
+
 	if (cx >= cy * 1.75){
 		drawType(ctx, 0, 0, cx / 2, cy);
 		drawType(ctx, cx / 2, 0, cx / 2, cy);
@@ -593,10 +611,10 @@ function draw(){
 		drawType(ctx, 0, cy / 2, cx, cy / 2);
 	}else{
 		drawType(ctx, 0, 0, cx, cy);
+		y += cy / 4;
 	}
 
 	if (theText != '') {
-		var x = cx / 2, y = cy * 3 / 4;
 		y += 20 * Math.sin(counter * 0.1);
 
 		ctx.font = "20px sans-serif";
