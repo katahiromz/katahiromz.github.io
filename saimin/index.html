@@ -104,7 +104,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 0.7
+催眠ウェブアプリ Version 0.8
 
 【使用上の注意】
 
@@ -645,6 +645,7 @@ function draw(){
 
 	if (division == 1) {
 		drawType(ctx, 0, 0, cx, cy);
+		y += cy / 4;
 	} else if (division == -1) {
 		if (cx >= cy * 1.75){
 			drawType(ctx, 0, 0, cx / 2, cy);
@@ -657,7 +658,7 @@ function draw(){
 			y += cy / 4;
 		}
 	} else {
-		if (cx > cy){
+		if (cx >= cy){
 			drawType(ctx, 0, 0, cx / 2, cy);
 			drawType(ctx, cx / 2, 0, cx / 2, cy);
 		}else {
