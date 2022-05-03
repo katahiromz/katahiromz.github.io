@@ -64,6 +64,14 @@
 			font-size: 0.5cm;
 			font-family: monospace, ui-monospace;
 		}
+		#division-select {
+			position: absolute;
+			right: 3cm;
+			bottom: 0;
+			z-index: 2;
+			padding: 0.3cm;
+			font-size: 0.5cm;
+		}
 	</style>
 </head>
 <body>
@@ -83,6 +91,12 @@
 
 <button id="text-button" class="invisible">Text</button>
 
+<select id="division-select">
+	<option value="-1" selected>自動</option>
+	<option value="1">分割なし</option>
+	<option value="2">2分割</option>
+</select>
+
 <div id="text-dialog" class="invisible">
 	<input type="text" size="20" maxlength="20" id="textbox" readonly />
 </div>
@@ -90,7 +104,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 0.6
+催眠ウェブアプリ Version 0.7
 
 【使用上の注意】
 
@@ -146,6 +160,13 @@ var type = 0;
 var counter = 0;
 var ready = false;
 var theText = '';
+var division = -1;
+
+function setDivision(value) {
+	division = parseInt(value);
+	localStorage.setItem('saiminDivision', division.toString());
+	document.getElementById('division-select').value = division;
+}
 
 function getCount() {
 	return counter;
@@ -235,6 +256,11 @@ function init(){
 		setText(saiminText);
 	}
 
+	var saiminDivision = localStorage.getItem('saiminDivision');
+	if (saiminDivision) {
+		setDivision(saiminDivision);
+	}
+
 	$("#text-button").click(function(){
 		document.getElementById('textbox').value = theText;
 		$("#text-dialog").dialog({
@@ -281,6 +307,7 @@ function init(){
 			width: window.innerWidth * 5 / 6,
 		});
 	});
+
 	var select = document.getElementById('select');
 	select.addEventListener('change', function(){
 		if (!ready)
@@ -291,6 +318,18 @@ function init(){
 		if (!ready)
 			return;
 		setType(parseInt(select.value));
+	}, false);
+
+	var division_select = document.getElementById('division-select');
+	division_select.addEventListener('change', function(){
+		if (!ready)
+			return;
+		setDivision(parseInt(division_select.value));
+	}, false);
+	division_select.addEventListener('click', function(){
+		if (!ready)
+			return;
+		setDivision(parseInt(division_select.value));
 	}, false);
 
 	document.getElementById('canvas').addEventListener('click', function(e){
@@ -604,15 +643,27 @@ function draw(){
 
 	var x = cx / 2, y = cy / 2;
 
-	if (cx >= cy * 1.75){
-		drawType(ctx, 0, 0, cx / 2, cy);
-		drawType(ctx, cx / 2, 0, cx / 2, cy);
-	}else if (cy >= cx * 1.75) {
-		drawType(ctx, 0, 0, cx, cy / 2);
-		drawType(ctx, 0, cy / 2, cx, cy / 2);
-	}else{
+	if (division == 1) {
 		drawType(ctx, 0, 0, cx, cy);
-		y += cy / 4;
+	} else if (division == -1) {
+		if (cx >= cy * 1.75){
+			drawType(ctx, 0, 0, cx / 2, cy);
+			drawType(ctx, cx / 2, 0, cx / 2, cy);
+		}else if (cy >= cx * 1.75) {
+			drawType(ctx, 0, 0, cx, cy / 2);
+			drawType(ctx, 0, cy / 2, cx, cy / 2);
+		}else{
+			drawType(ctx, 0, 0, cx, cy);
+			y += cy / 4;
+		}
+	} else {
+		if (cx > cy){
+			drawType(ctx, 0, 0, cx / 2, cy);
+			drawType(ctx, cx / 2, 0, cx / 2, cy);
+		}else {
+			drawType(ctx, 0, 0, cx, cy / 2);
+			drawType(ctx, 0, cy / 2, cx, cy / 2);
+		}
 	}
 
 	if (theText != '') {
