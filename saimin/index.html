@@ -73,6 +73,7 @@
 <canvas id="canvas"></canvas>
 
 <select id="select">
+	<option value="0">None</option>
 	<option value="1" selected>Type 1</option>
 	<option value="2">Type 2</option>
 	<option value="3">Type 3</option>
@@ -279,6 +280,11 @@ function init(){
 	});
 	var select = document.getElementById('select');
 	select.addEventListener('change', function(){
+		if (!ready)
+			return;
+		setType(parseInt(select.value));
+	}, false);
+	select.addEventListener('click', function(){
 		if (!ready)
 			return;
 		setType(parseInt(select.value));
