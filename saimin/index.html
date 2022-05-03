@@ -223,7 +223,9 @@ function doAdultCheck(){
 
 function init(){
 	window.addEventListener('resize', function(){
-		location.reload();
+		if ($("#text-dailog").css('display') == 'none') {
+			location.reload();
+		}
 	}, false);
 	fit();
 
