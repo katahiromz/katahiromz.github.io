@@ -104,7 +104,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 1.0
+催眠ウェブアプリ Version 1.1
 
 【使用上の注意】
 
@@ -618,6 +618,14 @@ function drawType3(ctx, px, py, dx, dy){
 			++nCount2;
 	}
 
+	cxy = (cx >= cy) ? cx : cy;
+
+	var grd = ctx.createRadialGradient(qx, qy, cy / 4, qx, qy, cxy / 3);
+	grd.addColorStop(0, "rgba(255, 255, 255, 0.0)");
+	grd.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+	ctx.fillStyle = grd;
+	circle(ctx, qx, qy, cxy, true);
+
 	ctx.restore();
 }
 
@@ -641,7 +649,6 @@ function drawType(ctx, px, py, cx, cy){
 
 function draw(){
 	var ctx = document.getElementById('canvas').getContext('2d');
-	ctx.globalCompositeOperation = 'destination-over';
 
 	var x = cx / 2, y = cy / 2;
 
@@ -679,8 +686,6 @@ function draw(){
 		var dx = metrics.width;
 		var dy = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 		var padding = 10;
-
-		ctx.globalCompositeOperation = 'source-over';
 
 		ctx.fillStyle = 'rgb(0, 0, 0)';
 		ctx.fillRect(x - dx / 2 - padding, y - dy / 2 - padding, dx + 2*padding, dy + 2*padding);
