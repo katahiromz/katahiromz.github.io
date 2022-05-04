@@ -1,0 +1,708 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Saimin On the Web</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Security-Policy" content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;" />
+	<script src="jquery.js"></script>
+	<script src="jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="jquery-ui.min.css">
+	<script src="complex.min.js"></script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		#canvas {
+			z-index: 1;
+		}
+		#select {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			z-index: 2;
+			padding: 0.10cm 0.28cm;
+			font-size: 0.5cm;
+		}
+		#caption {
+			font-size: 100%;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 2;
+			background-color: white;
+			font-size: 0.5cm;
+		}
+		#about-button {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			z-index: 2;
+			padding: 0.10cm 0.34cm;
+			font-size: 0.5cm;
+		}
+		#text-button {
+			position: absolute;
+			right: 1.2cm;
+			bottom: 0;
+			z-index: 2;
+			padding: 0.10cm 0.34cm;
+			font-size: 0.5cm;
+		}
+		.invisible {
+			display: none;
+		}
+		.center {
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
+		textarea {
+			font-size: 0.5cm;
+			font-family: monospace, ui-monospace;
+		}
+		#division-select {
+			position: absolute;
+			right: 3cm;
+			bottom: 0;
+			z-index: 2;
+			padding: 0.10cm 0.28cm;
+			font-size: 0.5cm;
+		}
+	</style>
+</head>
+<body>
+
+<h1 id="caption">[(Saimin On the Web)]</h1>
+
+<canvas id="canvas"></canvas>
+
+<select id="select" class="invisible">
+	<option value="0">None</option>
+	<option value="1" selected>Type 1</option>
+	<option value="2">Type 2</option>
+	<option value="3">Type 3</option>
+</select>
+
+<button id="about-button" class="invisible">?</button>
+
+<button id="text-button" class="invisible">Text</button>
+
+<select id="division-select" class="invisible">
+	<option value="-1" selected>Auto</option>
+	<option value="1">No div</option>
+	<option value="2">Div by 2</option>
+</select>
+
+<div id="text-dialog" class="invisible">
+	<input type="text" size="20" maxlength="20" id="textbox" readonly />
+</div>
+
+<div id="about-dialog" class="invisible">
+Precautions for use and Version Info<br />
+<textarea id="notice-text" rows="10" style="width: 90%;" readonly>
+Saimin On The Web Version 1.1
+
+[(Precautions for use)]
+
+- Please keep in mind in advance the possibility that some effects on the psyche may occur.
+- The benefits of the software cannot be insisted by the Medical Practitioners Act in some countries.
+- Persons under 18 years of age are prohibited from using this software.
+- Please do not try this software on young child. It may cause parent-child disagreement and mental illness.
+- Acute schizophrenic patients should not use this software.
+- Repeated use of this software may lead to slower reactions and reducing social skills.
+- Mental experiments require the consent of the subject.
+- Avoid driving a car immediately after using this software.
+- People with trypophobia should not use this software.
+- If you experience symptoms such as headache, nausea, gastrointestinal problems, or abnormal emotions, discontinue use immediately and consult a specialist.
+
+---
+The MIT License (MIT)
+
+Copyright (c) 2022 Katayama Hirofumi MZ
+Copyright (c) 2018 Robert Eisele
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</textarea>
+</div>
+<div id="child-dialog" class="invisible">
+	Children should not use this software.
+</div>
+<div id="adult-check-dialog" class="invisible">
+	<p class="center">
+		Are you an adult?
+	</p>
+</div>
+
+<script>
+var cx = 0, cy = 0;
+var old_time = (new Date()).getTime();
+var type = 0;
+var counter = 0;
+var ready = false;
+var theText = '';
+var division = -1;
+
+function setDivision(value) {
+	division = parseInt(value);
+	localStorage.setItem('saiminDivision', division.toString());
+	document.getElementById('division-select').value = division;
+}
+
+function getCount() {
+	return counter;
+}
+
+function setType(value){
+	type = parseInt(value);
+	var select = document.getElementById('select');
+	select.value = type.toString();
+	localStorage.setItem('saiminType', type.toString());
+}
+
+function setText(txt){
+	theText = txt.replace('　', '  ').trim();
+	localStorage.setItem('saiminText', theText);
+}
+
+function fit(){
+	var ctx = document.getElementById('canvas').getContext('2d');
+	cx = ctx.canvas.width = window.innerWidth;
+	cy = ctx.canvas.height = window.innerHeight;
+}
+
+function forbidden(){
+	$("#child-dialog").dialog({
+		dialogClass: "no-close",
+		title: "Forbidden",
+		buttons: [{
+			text: "OK",
+			click: function(){
+				$(this).dialog('close');
+				location.href = "https://google.co.jp";
+				return false;
+			},
+		}],
+	});
+}
+
+function accepted(){
+	ready = true;
+	localStorage.setItem('saiminAdultCheck', '1');
+	var saiminType = localStorage.getItem('saiminType');
+	if (saiminType) {
+		setType(parseInt(saiminType));
+	} else {
+		setType(1);
+	}
+	$('#about-button').removeClass('invisible');
+	$('#text-button').removeClass('invisible');
+	$('#select').removeClass('invisible');
+	$('#division-select').removeClass('invisible');
+	window.requestAnimationFrame(draw);
+}
+
+function doAdultCheck(){
+	$("#adult-check-dialog").dialog({
+		dialogClass: "no-close",
+		title: "Adult Check",
+		buttons: [
+			{
+				text: "I'm an adult",
+				click: function(){
+					$(this).dialog('close');
+					accepted();
+				},
+			},
+			{
+				text: "I'm a child",
+				click: function(){
+					localStorage.setItem('saiminAdultCheck', '-1');
+					$(this).dialog('close');
+					forbidden();
+				},
+			},
+		],
+	});
+}
+
+function init(){
+	window.addEventListener('resize', function(){
+		if ($("#text-dialog").css('display') == 'none') {
+			location.reload();
+		}
+	}, false);
+	fit();
+
+	var saiminText = localStorage.getItem('saiminText');
+	if (saiminText) {
+		setText(saiminText);
+	}
+
+	var saiminDivision = localStorage.getItem('saiminDivision');
+	if (saiminDivision) {
+		setDivision(saiminDivision);
+	}
+
+	$("#text-button").click(function(){
+		document.getElementById('textbox').value = theText;
+		$("#text-dialog").dialog({
+			dialogClass: "no-close",
+			title: "Set Text",
+			open: function(){
+				document.getElementById('textbox').readOnly = false;
+			},
+			buttons: [
+				{
+					text: "OK",
+					click: function(){
+						setText(document.getElementById('textbox').value);
+						$(this).dialog('close');
+					},
+				},{
+					text: "Cancel",
+					click: function(){
+						$(this).dialog('close');
+					},
+				},{
+					text: "Reset",
+					click: function(){
+						setText('');
+						$(this).dialog('close');
+					},
+				},
+			],
+		});
+	});
+
+	$("#about-button").click(function(){
+		$("#notice-text").width(window.innerWidth * 2 / 3);
+		$("#notice-text").height(window.innerHeight * 2 / 5);
+		$("#about-dialog").dialog({
+			dialogClass: "no-close",
+			title: "About this app",
+			buttons: [{
+				text: "OK",
+				click: function(){
+					$(this).dialog('close');
+				},
+			}],
+			width: window.innerWidth * 5 / 6,
+		});
+	});
+
+	var select = document.getElementById('select');
+	select.addEventListener('change', function(){
+		if (!ready)
+			return;
+		setType(parseInt(select.value));
+	}, false);
+	select.addEventListener('click', function(){
+		if (!ready)
+			return;
+		setType(parseInt(select.value));
+	}, false);
+
+	var division_select = document.getElementById('division-select');
+	division_select.addEventListener('change', function(){
+		if (!ready)
+			return;
+		setDivision(parseInt(division_select.value));
+	}, false);
+	division_select.addEventListener('click', function(){
+		if (!ready)
+			return;
+		setDivision(parseInt(division_select.value));
+	}, false);
+
+	document.getElementById('canvas').addEventListener('click', function(e){
+		if (!ready)
+			return;
+		if (e.shiftKey) {
+			setType((type + 1) % 3 + 1);
+		} else {
+			setType(type % 3 + 1);
+		}
+		select.value = type.toString();
+	}, false);
+
+	var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
+	if (!saiminAdultCheck) {
+		doAdultCheck();
+	} else if (saiminAdultCheck == "1") {
+		accepted();
+	} else if (saiminAdultCheck == "-1") {
+		forbidden();
+	}
+}
+
+function circle(ctx, x, y, radius, is_fill = true){
+	ctx.beginPath();
+	ctx.arc(x, y, radius, 0, 2 * Math.PI);
+	if (is_fill)
+		ctx.fill();
+	else
+		ctx.stroke();
+}
+
+function line(ctx, x0, y0, x1, y1, lineWidth){
+	ctx.lineWidth = lineWidth;
+	ctx.beginPath();
+	ctx.moveTo(x0, y0);
+	ctx.lineTo(x1, y1);
+	ctx.stroke();
+}
+
+function drawType0(ctx, px, py, dx, dy){
+	ctx.save();
+
+	ctx.save();
+
+	var qx = px + dx / 2;
+	var qy = py + dy / 2;
+
+	ctx.clearRect(px, py, dx, dy);
+
+	ctx.restore();
+}
+
+function drawType1(ctx, px, py, dx, dy){
+	ctx.save();
+
+	var qx = px + dx / 2;
+	var qy = py + dy / 2;
+
+	ctx.beginPath();
+	ctx.moveTo(px, py);
+	ctx.lineTo(px + dx, py);
+	ctx.lineTo(px + dx, py + dy);
+	ctx.lineTo(px, py + dy);
+	ctx.closePath();
+	ctx.clip();
+
+	ctx.clearRect(px, py, dx, dy);
+
+	var size = (dx + dy) * 2 / 5;
+	var count2 = getCount();
+	qx += 30 * Math.cos(count2 * 0.1);
+	qy += 30 * Math.sin(count2 * 0.1);
+
+	var dr0 = 15;
+	var dr = dr0 / 2;
+	var flag2 = -1;
+	var ci = 6;
+
+	ctx.strokeStyle = 'rgb(0, 0, 0)';
+	ctx.lineCap = 'square';
+
+	for (var i = 0; i <= ci; ++i) {
+		var count = 0;
+		var x, y, oldx = qx, oldy = qy, f = 0.5;
+		for (var radius = 0; radius < size; radius += f) {
+			var theta = dr0 * count * 0.375;
+			var value = 0.3 * Math.sin(count2 * 0.04) + 0.7;
+
+			var radian = theta * (Math.PI / 180.0) + i * (2 * Math.PI) / ci;
+			var comp = new Complex({abs:radius, arg:flag2 * radian - count2 * (Math.PI * 0.03)});
+			x = qx + comp.re;
+			y = qy + comp.im;
+		
+			line(ctx, oldx, oldy, x, y, dr * f * 0.666);
+
+			oldx = x;
+			oldy = y;
+			count += 1;
+			f *= 1.02;
+		}
+	}
+
+	ctx.restore();
+}
+
+function drawType2(ctx, px, py, dx, dy, flag=true){
+	ctx.save();
+
+	var qx = px + dx / 2;
+	var qy = py + dy / 2;
+	var dxy = (dx + dy) / 2;
+
+	var count2 = getCount();
+	var factor = (0.99 + Math.abs(Math.sin(count2 * 0.2)) * 0.01);
+
+	ctx.beginPath();
+	if (flag){
+		ctx.moveTo(px, py);
+		ctx.lineTo(px + dx, py);
+		ctx.lineTo(px + dx, py + dy);
+		ctx.lineTo(px, py + dy);
+	} else {
+		var value = 0.2 + 0.2 * Math.abs(Math.sin(count2 * 0.02));
+		ctx.arc(qx, qy, dxy * value, 0, 2 * Math.PI);
+	}
+	ctx.closePath();
+	ctx.clip();
+
+	ctx.clearRect(px, py, dx, dy);
+
+	var size = (cx + cy) * 0.4;
+
+	var dr0 = 30;
+	var dr = dr0 / 2 * factor;
+	var radius = (count2 * 4) % dr0;
+	if (flag)
+		radius = dr0 - radius;
+
+	if (radius < 0)
+		radius = -radius;
+
+	ctx.lineWidth = 15;
+
+	for (; radius < size; radius += dr0)
+	{
+		circle(ctx, qx, qy, radius, false);
+	}
+
+	ctx.restore();
+}
+
+function hsv2rgb(h, s, v)
+{
+	var r, g, b;
+	r = g = b = v;
+	if (s > 0)
+	{
+		h *= 6;
+		var i = Math.floor(h);
+		var f = h - i;
+		switch (i)
+		{
+		case 0:
+		default:
+			g *= 1 - s * (1 - f);
+			b *= 1 - s;
+			break;
+		case 1:
+			r *= 1 - s * f;
+			b *= 1 - s;
+			break;
+		case 2:
+			r *= 1 - s;
+			b *= 1 - s * (1 - f);
+			break;
+		case 3:
+			r *= 1 - s;
+			g *= 1 - s * f;
+			break;
+		case 4:
+			r *= 1 - s * (1 - f);
+			g *= 1 - s;
+			break;
+		case 5:
+			g *= 1 - s;
+			b *= 1 - s * f;
+			break;
+		}
+	}
+	return [r, g, b];
+}
+
+function drawType3(ctx, px, py, dx, dy){
+	ctx.save();
+
+	var qx = px + dx / 2;
+	var qy = py + dy / 2;
+	var dxy = (dx + dy) / 2;
+
+	ctx.beginPath();
+	ctx.moveTo(px, py);
+	ctx.lineTo(px + dx, py);
+	ctx.lineTo(px + dx, py + dy);
+	ctx.lineTo(px, py + dy);
+	ctx.closePath();
+	ctx.clip();
+
+	ctx.clearRect(px, py, dx, dy);
+
+	var count2 = getCount();
+	var factor = count2 * 0.03;
+
+	var size = 32;
+	var nCount2 = 0;
+	var cxy = (cx + cy) * 0.35;
+	var xy0 = (cxy + size) - (cxy + size) % size;
+	for (var y = -xy0; y < cxy + size; y += size)
+	{
+		var nCount = nCount2 % 3;
+		for (var x = -xy0; x < cxy + size; x += size)
+		{
+			var h, s = 1.0, v = 1.0;
+			switch (nCount % 3)
+			{
+			case 0:
+				h = (0.2 + factor * 1.2) % 1.0;
+				break;
+			case 1:
+				h = (0.4 + factor * 1.2) % 1.0;
+				break;
+			case 2:
+				h = (0.8 + factor * 1.2) % 1.0;
+				break;
+			}
+			[r, g, b] = hsv2rgb(h, s, v);
+
+			if (r < 0.2)
+				r = 0.2;
+			if (g < 0.2)
+				g = 0.2;
+			if (b < 0.2)
+				b = 0.2;
+
+			if (r > 0.8)
+				r = 1.0;
+			if (g > 0.8)
+				g = 1.0;
+			if (b > 0.8)
+				b = 1.0;
+
+			ctx.fillStyle = `rgb(${r * 255},${g * 255},${b * 255})`;
+
+			var comp;
+			var comp0 = new Complex({abs:1.0, arg:factor * 1.0});
+
+			var x0 = x - size / 2;
+			var y0 = y - size / 2;
+			var x1 = x0 + size;
+			var y1 = y0 + size;
+			ctx.beginPath();
+			var comp1 = new Complex({re:x0, im:y0});
+			comp1 = comp1.mul(comp0);
+			ctx.moveTo(qx + comp1.re, qy + comp1.im);
+			var comp2 = new Complex({re:x0, im:y1});
+			comp2 = comp2.mul(comp0);
+			ctx.lineTo(qx + comp2.re, qy + comp2.im);
+			var comp3 = new Complex({re:x1, im:y1});
+			comp3 = comp3.mul(comp0);
+			ctx.lineTo(qx + comp3.re, qy + comp3.im);
+			var comp4 = new Complex({re:x1, im:y0});
+			comp4 = comp4.mul(comp0);
+			ctx.lineTo(qx + comp4.re, qy + comp4.im);
+			ctx.fill();
+
+			if (x >= 0)
+				nCount = (nCount + 2) % 3;
+			else
+				++nCount;
+		}
+		if (y >= 0)
+			nCount2 = (nCount2 + 2) % 3;
+		else
+			++nCount2;
+	}
+
+	cxy = (cx >= cy) ? cx : cy;
+
+	var grd = ctx.createRadialGradient(qx, qy, cy / 4, qx, qy, cxy / 3);
+	grd.addColorStop(0, "rgba(255, 255, 255, 0.0)");
+	grd.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+	ctx.fillStyle = grd;
+	circle(ctx, qx, qy, cxy, true);
+
+	ctx.restore();
+}
+
+function drawType(ctx, px, py, cx, cy){
+	switch (type){
+	case 0:
+		drawType0(ctx, px, py, cx, cy);
+		break;
+	case 1:
+		drawType1(ctx, px, py, cx, cy);
+		break;
+	case 2:
+		drawType2(ctx, px, py, cx, cy, true);
+		drawType2(ctx, px, py, cx, cy, false);
+		break;
+	case 3:
+		drawType3(ctx, px, py, cx, cy);
+		break;
+	}
+}
+
+function draw(){
+	var ctx = document.getElementById('canvas').getContext('2d');
+
+	var x = cx / 2, y = cy / 2;
+
+	if (division == 1) {
+		drawType(ctx, 0, 0, cx, cy);
+		y += cy / 4;
+	} else if (division == -1) {
+		if (cx >= cy * 1.75){
+			drawType(ctx, 0, 0, cx / 2, cy);
+			drawType(ctx, cx / 2, 0, cx / 2, cy);
+		}else if (cy >= cx * 1.75) {
+			drawType(ctx, 0, 0, cx, cy / 2);
+			drawType(ctx, 0, cy / 2, cx, cy / 2);
+		}else{
+			drawType(ctx, 0, 0, cx, cy);
+			y += cy / 4;
+		}
+	} else {
+		if (cx >= cy){
+			drawType(ctx, 0, 0, cx / 2, cy);
+			drawType(ctx, cx / 2, 0, cx / 2, cy);
+		}else{
+			drawType(ctx, 0, 0, cx, cy / 2);
+			drawType(ctx, 0, cy / 2, cx, cy / 2);
+		}
+	}
+
+	if (theText != '') {
+		y += 20 * Math.sin(counter * 0.1);
+
+		ctx.font = "20px sans-serif";
+		ctx.textBaseline = "middle";
+
+		var metrics = ctx.measureText(theText);
+		var dx = metrics.width;
+		var dy = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+		var padding = 10;
+
+		ctx.fillStyle = 'rgb(0, 0, 0)';
+		ctx.fillRect(x - dx / 2 - padding, y - dy / 2 - padding, dx + 2*padding, dy + 2*padding);
+
+		ctx.fillStyle = 'rgb(255, 255, 255)';
+		ctx.fillText(theText, x - dx / 2, y);
+	}
+
+	var new_time = (new Date()).getTime();
+	var diff = (new_time - old_time) / 1000.0;
+	counter += diff * 45.0;
+	old_time = new_time;
+
+	window.requestAnimationFrame(draw);
+}
+
+init();
+</script>
+
+</body></html>
