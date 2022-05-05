@@ -104,7 +104,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 1.1
+催眠ウェブアプリ Version 1.2
 
 【使用上の注意】
 
@@ -161,6 +161,7 @@ var counter = 0;
 var ready = false;
 var theText = '';
 var division = -1;
+var speed = 45.0;
 
 function setDivision(value) {
 	division = parseInt(value);
@@ -343,6 +344,25 @@ function init(){
 			setType(type % 3 + 1);
 		}
 		select.value = type.toString();
+	}, false);
+
+	document.getElementById('canvas').addEventListener('wheel', function(e){
+		e.preventDefault();
+		if (!ready)
+			return;
+		if (e.ctrlKey)
+			return;
+		if (e.deltaY < 0) {
+			if (speed < 80.0)
+				speed += 5.0;
+			else
+				speed = 80.0;
+		} else if (e.deltaY > 0) {
+			if (speed > 0.0)
+				speed -= 5.0;
+			else
+				speed = 0.0;
+		}
 	}, false);
 
 	var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
@@ -687,7 +707,7 @@ function draw(){
 
 	var new_time = (new Date()).getTime();
 	var diff = (new_time - old_time) / 1000.0;
-	counter += diff * 45.0;
+	counter += diff * speed;
 	old_time = new_time;
 
 	window.requestAnimationFrame(draw);
