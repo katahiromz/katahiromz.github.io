@@ -247,10 +247,6 @@ function doAdultCheck(){
 }
 
 function init(){
-	document.addEventListener('touchstart', function(e){
-		e.preventDefault();
-	}, { passive: false });
-
 	window.addEventListener('resize', function(){
 		if ($("#text-dialog").css('display') == 'none') {
 			location.reload();
@@ -349,6 +345,10 @@ function init(){
 		}
 		select.value = type.toString();
 	}, false);
+
+	document.getElementById('canvas').addEventListener('touchmove', function(e){
+		e.preventDefault();
+	}, { passive: false });
 
 	document.getElementById('canvas').addEventListener('wheel', function(e){
 		e.preventDefault();
