@@ -249,7 +249,7 @@ function doAdultCheck(){
 function init(){
 	document.addEventListener('touchstart', function(e){
 		e.preventDefault();
-	}, false);
+	}, { passive: false });
 
 	window.addEventListener('resize', function(){
 		if ($("#text-dialog").css('display') == 'none') {
