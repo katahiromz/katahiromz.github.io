@@ -549,6 +549,7 @@ function drawType3(ctx, px, py, dx, dy){
 	var nCount2 = 0;
 	var cxy = ((cx >= cy) ? cy : cx) * 1.2;
 	var xy0 = (cxy + size) - (cxy + size) % size;
+	var comp0 = new Complex({abs:1.0, arg:factor * 1.0});
 	for (var y = -xy0; y < cxy + size; y += size)
 	{
 		var nCount = nCount2 % 3;
@@ -577,9 +578,6 @@ function drawType3(ctx, px, py, dx, dy){
 				b = 1.0;
 
 			ctx.fillStyle = `rgb(${r * 255},${g * 255},${b * 255})`;
-
-			var comp;
-			var comp0 = new Complex({abs:1.0, arg:factor * 1.0});
 
 			var x0 = x - size / 2;
 			var y0 = y - size / 2;
