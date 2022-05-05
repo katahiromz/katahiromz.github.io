@@ -247,6 +247,10 @@ function doAdultCheck(){
 }
 
 function init(){
+	document.addEventListener('touchstart', function(e){
+		e.preventDefault();
+	}, false);
+
 	window.addEventListener('resize', function(){
 		if ($("#text-dialog").css('display') == 'none') {
 			location.reload();
