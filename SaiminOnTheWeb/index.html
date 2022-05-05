@@ -28,7 +28,7 @@
 		}
 		#sound-select {
 			position: absolute;
-			left: 2.1cm;
+			left: 2.0cm;
 			bottom: 0;
 			z-index: 2;
 			padding: 0.10cm 0.2cm;
@@ -106,7 +106,7 @@
 
 <button id="about-button" class="invisible">?</button>
 
-<button id="text-button" class="invisible">Text</button>
+<button id="text-button" class="invisible">msg</button>
 
 <select id="division-select" class="invisible">
 	<option value="-1" selected>Auto</option>
@@ -115,13 +115,14 @@
 </select>
 
 <div id="text-dialog" class="invisible">
+	Message Text:<br />
 	<input type="text" size="20" maxlength="20" id="textbox" readonly />
 </div>
 
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Saimin On The Web Version 1.3
+Saimin On The Web Version 1.4
 
 [(Precautions for use)]
 
@@ -299,11 +300,19 @@ function init(){
 		setDivision(saiminDivision);
 	}
 
+	$("#text-dialog").keydown(function(e){
+		if (e.keyCode == $.ui.keyCode.ENTER){
+			setText(document.getElementById('textbox').value);
+			$(this).parent().find("button:eq(0)").trigger("click");
+			return false;
+		}
+	});
+
 	$("#text-button").click(function(){
 		document.getElementById('textbox').value = theText;
 		$("#text-dialog").dialog({
 			dialogClass: "no-close",
-			title: "Set Text",
+			title: "Set Message",
 			open: function(){
 				document.getElementById('textbox').readOnly = false;
 			},
