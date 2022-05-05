@@ -547,7 +547,7 @@ function drawType3(ctx, px, py, dx, dy){
 
 	var size = 32;
 	var nCount2 = 0;
-	var cxy = (cx + cy) * 0.35;
+	var cxy = ((cx >= cy) ? cy : cx) * 1.2;
 	var xy0 = (cxy + size) - (cxy + size) % size;
 	for (var y = -xy0; y < cxy + size; y += size)
 	{
