@@ -138,7 +138,7 @@
 
 <div id="text-dialog" class="invisible">
 	Message Text:<br />
-	<input type="text" size="20" maxlength="20" id="textbox" readonly />
+	<input type="text" size="20" maxlength="20" id="textbox" />
 </div>
 
 <div id="about-dialog" class="invisible">
@@ -204,6 +204,7 @@ var theText = '';
 var division = -1;
 var speed = 45.0;
 var sound = null;
+var in_text_dialog = false;
 
 function setSound(value) {
 	if (sound) {
@@ -307,7 +308,7 @@ function doAdultCheck(){
 
 function init(){
 	window.addEventListener('resize', function(){
-		if ($("#text-dialog").css('display') == 'none') {
+		if (!in_text_dialog) {
 			location.reload();
 		}
 	}, false);
@@ -333,11 +334,12 @@ function init(){
 
 	$("#text-button").click(function(){
 		document.getElementById('textbox').value = theText;
+		in_text_dialog = true;
 		$("#text-dialog").dialog({
 			dialogClass: "no-close",
 			title: "Set Message",
-			open: function(){
-				document.getElementById('textbox').readOnly = false;
+			close: function(){
+				in_text_dialog = false;
 			},
 			buttons: [
 				{
@@ -790,7 +792,7 @@ function draw(){
 
 	if (old_cx !== null && old_cy !== null) {
 		if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
-			if ($("#text-dialog").css('display') != 'none') {
+			if (!in_text_dialog) {
 				location.reload();
 			}
 		}
