@@ -18,12 +18,20 @@
 		#canvas {
 			z-index: 1;
 		}
-		#select {
+		#type-select {
 			position: absolute;
 			left: 0;
 			bottom: 0;
 			z-index: 2;
-			padding: 0.10cm 0.28cm;
+			padding: 0.10cm 0.0cm;
+			font-size: 0.5cm;
+		}
+		#sound-select {
+			position: absolute;
+			left: 2.2cm;
+			bottom: 0;
+			z-index: 2;
+			padding: 0.10cm 0.2cm;
 			font-size: 0.5cm;
 		}
 		#caption {
@@ -81,11 +89,19 @@
 
 <canvas id="canvas"></canvas>
 
-<select id="select" class="invisible">
+<select id="type-select" class="invisible">
 	<option value="0">None</option>
-	<option value="1" selected>Type 1</option>
-	<option value="2">Type 2</option>
-	<option value="3">Type 3</option>
+	<option value="1" selected>Type1</option>
+	<option value="2">Type2</option>
+	<option value="3">Type3</option>
+</select>
+
+<select id="sound-select" class="invisible">
+	<option value="0" selected></option>
+	<option value="1">s1</option>
+	<option value="2">s2</option>
+	<option value="3">s3</option>
+	<option value="4">s4</option>
 </select>
 
 <button id="about-button" class="invisible">?</button>
@@ -94,7 +110,7 @@
 
 <select id="division-select" class="invisible">
 	<option value="-1" selected>自動</option>
-	<option value="1">分割なし</option>
+	<option value="1">分割ﾅｼ</option>
 	<option value="2">2分割</option>
 </select>
 
@@ -105,7 +121,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 1.2
+催眠ウェブアプリ Version 1.3
 
 【使用上の注意】
 
@@ -163,6 +179,23 @@ var ready = false;
 var theText = '';
 var division = -1;
 var speed = 45.0;
+var sound = null;
+
+function setSound(value) {
+	if (sound) {
+		sound.loop = false;
+		sound.muted = true;
+	}
+	if (!value)
+	{
+		sound = null;
+		return;
+	}
+	sound = new Audio("snd/snd" + value.toString() + ".mp3")
+	sound.loop = true;
+	sound.play();
+	document.getElementById('sound-select').value = value;
+}
 
 function setDivision(value) {
 	division = parseInt(value);
@@ -176,8 +209,8 @@ function getCount() {
 
 function setType(value){
 	type = parseInt(value);
-	var select = document.getElementById('select');
-	select.value = type.toString();
+	var type_select = document.getElementById('type-select');
+	type_select.value = type.toString();
 	localStorage.setItem('saiminType', type.toString());
 }
 
@@ -218,7 +251,8 @@ function accepted(){
 	}
 	$('#about-button').removeClass('invisible');
 	$('#text-button').removeClass('invisible');
-	$('#select').removeClass('invisible');
+	$('#type-select').removeClass('invisible');
+	$('#sound-select').removeClass('invisible');
 	$('#division-select').removeClass('invisible');
 	window.requestAnimationFrame(draw);
 }
@@ -312,16 +346,28 @@ function init(){
 		});
 	});
 
-	var select = document.getElementById('select');
-	select.addEventListener('change', function(){
+	var type_select = document.getElementById('type-select');
+	type_select.addEventListener('change', function(){
 		if (!ready)
 			return;
-		setType(parseInt(select.value));
+		setType(parseInt(type_select.value));
 	}, false);
-	select.addEventListener('click', function(){
+	type_select.addEventListener('click', function(){
 		if (!ready)
 			return;
-		setType(parseInt(select.value));
+		setType(parseInt(type_select.value));
+	}, false);
+
+	var sound_select = document.getElementById('sound-select');
+	sound_select.addEventListener('change', function(){
+		if (!ready)
+			return;
+		setSound(parseInt(sound_select.value));
+	}, false);
+	sound_select.addEventListener('click', function(){
+		if (!ready)
+			return;
+		setSound(parseInt(sound_select.value));
 	}, false);
 
 	var division_select = document.getElementById('division-select');
@@ -344,7 +390,7 @@ function init(){
 		} else {
 			setType(type % 3 + 1);
 		}
-		select.value = type.toString();
+		type_select.value = type.toString();
 	}, false);
 
 	document.getElementById('canvas').addEventListener('touchmove', function(e){
@@ -370,7 +416,7 @@ function init(){
 			else
 				speed = 0.0;
 		}
-	}, false);
+	}, { passive: false });
 
 	var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
 	if (!saiminAdultCheck) {
