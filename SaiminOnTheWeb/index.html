@@ -613,7 +613,7 @@ function drawType3(ctx, px, py, dx, dy){
 
 	var dxy = (dx >= dy) ? dx : dy;
 
-	var grd = ctx.createRadialGradient(qx, qy, dxy / 4, qx, qy, dxy / 2);
+	var grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.6);
 	grd.addColorStop(0, "rgba(255, 255, 255, 0.0)");
 	grd.addColorStop(1, "rgba(255, 255, 255, 1.0)");
 	ctx.fillStyle = grd;
