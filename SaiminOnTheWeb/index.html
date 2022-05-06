@@ -788,7 +788,7 @@ function drawType3(ctx, px, py, dx, dy){
 			++nCount2;
 	}
 
-	var dxy = (dx >= dy) ? dx : dy;
+	dxy = (dx >= dy) ? dx : dy;
 
 	var grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.6);
 	grd.addColorStop(0, "rgba(255, 255, 255, 0.0)");
@@ -818,18 +818,15 @@ function drawType4(ctx, px, py, dx, dy){
 
 	var count2 = getCount();
 	var factor = count2 * 0.04;
-	var ratio = 0.01;
-	if (isLargeDisplay())
-		ratio = 0.02;
-	for (var radius = (dx + dy) * 0.4; radius >= 8; radius *= 0.9) {
+	for (var radius = (dx + dy) * 0.4; radius >= 10; radius *= 0.9) {
 		var r0, g0, b0;
-		[r0, g0, b0] = hsv2rgb((radius * ratio + 1.0 - (factor % 1.0)) % 1.0, 1.0, 1.0);
+		[r0, g0, b0] = hsv2rgb((radius * 0.01 + 1.0 - (factor % 1.0)) % 1.0, 1.0, 1.0);
 		ctx.fillStyle = `rgb(${r0*255},${g0*255},${b0*255})`;
 
-		var N0 = 25, N1 = 5;
+		var N0 = 30, N1 = 5;
 		var i = 0;
 		for (var angle = 0; angle < 360; angle += 360 / N0) {
-			var radian = (angle + 90 + count2 * 2) * Math.PI / 180.0;
+			var radian = (angle + 90 + count2 * 2) * (Math.PI / 180.0);
 			var factor2 = (1 + Math.abs(Math.sin(N1 * i * Math.PI / N0)));
 			var x = qx + radius * factor2 * Math.cos(radian);
 			var y = qy + radius * factor2 * Math.sin(radian);
@@ -844,7 +841,7 @@ function drawType4(ctx, px, py, dx, dy){
 		ctx.fill();
 	}
 
-	var dxy = (dx >= dy) ? dx : dy;
+	dxy = (dx >= dy) ? dx : dy;
 
 	var grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.5);
 	grd.addColorStop(0, "rgba(255, 255, 255, 0.0)");
