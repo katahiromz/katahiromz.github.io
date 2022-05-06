@@ -328,6 +328,7 @@ function init(){
 		if (e.keyCode == $.ui.keyCode.ENTER){
 			setText(document.getElementById('textbox').value);
 			$(this).parent().find("button:eq(0)").trigger("click");
+			location.reload();
 			return false;
 		}
 	});
@@ -348,17 +349,20 @@ function init(){
 					click: function(){
 						setText(document.getElementById('textbox').value);
 						$(this).dialog('close');
+						location.reload();
 					},
 				},{
 					text: "Cancel",
 					click: function(){
 						$(this).dialog('close');
+						location.reload();
 					},
 				},{
 					text: "Reset",
 					click: function(){
 						setText('');
 						$(this).dialog('close');
+						location.reload();
 					},
 				},
 			],

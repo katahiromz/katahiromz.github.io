@@ -348,17 +348,20 @@ function init(){
 					click: function(){
 						setText(document.getElementById('textbox').value);
 						$(this).dialog('close');
+						location.reload();
 					},
 				},{
 					text: "Cancel",
 					click: function(){
 						$(this).dialog('close');
+						location.reload();
 					},
 				},{
 					text: "Reset",
 					click: function(){
 						setText('');
 						$(this).dialog('close');
+						location.reload();
 					},
 				},
 			],
