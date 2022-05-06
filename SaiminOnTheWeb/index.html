@@ -568,6 +568,12 @@ function drawType2(ctx, px, py, dx, dy, flag=true){
 	var size = (cx + cy) * 0.4;
 
 	var dr0 = 30;
+	if (cx >= 1500 || cy >= 1500) {
+		dr0 *= 2;
+		ctx.lineWidth = 30;
+	} else {
+		ctx.lineWidth = 15;
+	}
 	var dr = dr0 / 2 * factor;
 	var radius = (count2 * 4) % dr0;
 	if (flag)
@@ -576,7 +582,6 @@ function drawType2(ctx, px, py, dx, dy, flag=true){
 	if (radius < 0)
 		radius = -radius;
 
-	ctx.lineWidth = 15;
 
 	for (; radius < size; radius += dr0)
 	{
