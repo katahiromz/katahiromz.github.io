@@ -196,6 +196,7 @@ SOFTWARE.
 <script>
 var cx = 0, cy = 0;
 var old_cx = null, old_cy = null;
+var zoomWidth = null, zoomHeight = null;
 var old_time = (new Date()).getTime();
 var type = 0;
 var counter = 0;
@@ -804,6 +805,19 @@ function draw(){
 	}
 	old_cx = window.innerWidth;
 	old_cy = window.innerHeight;
+
+	if (document.body.getBoundingClientRect) {
+		let rect = document.body.getBoundingClientRect();
+		if (zoomWidth !== null && zoomHeight !== null) {
+			if (zoomWidth != rect.width || zoomHeight != rect.height) {
+				if (!in_text_dialog) {
+					location.reload();
+				}
+			}
+		}
+		zoomWidth = rect.width;
+		zoomHeight = rect.height;
+	}
 
 	var new_time = (new Date()).getTime();
 	var diff = (new_time - old_time) / 1000.0;
