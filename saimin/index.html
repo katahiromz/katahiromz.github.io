@@ -786,11 +786,11 @@ function draw(){
 	}
 
 	if (theText != '') {
-		y += 20 * Math.sin(counter * 0.1);
-
 		if (isLargeDisplay()){
+			y += 40 * Math.sin(counter * 0.1);
 			ctx.font = "40px sans-serif";
 		}else{
+			y += 20 * Math.sin(counter * 0.1);
 			ctx.font = "20px sans-serif";
 		}
 		ctx.textBaseline = "middle";
