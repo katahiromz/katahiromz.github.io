@@ -818,7 +818,8 @@ function drawType4(ctx, px, py, dx, dy){
 
 	var count2 = getCount();
 	var factor = count2 * 0.04;
-	for (var radius = (dx + dy) * 0.4; radius >= 10; radius *= 0.9) {
+	var isLarge = isLargeDisplay();
+	for (var radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.9) {
 		var r0, g0, b0;
 		[r0, g0, b0] = hsv2rgb((radius * 0.01 + 1.0 - (factor % 1.0)) % 1.0, 1.0, 1.0);
 		ctx.fillStyle = `rgb(${r0*255},${g0*255},${b0*255})`;
@@ -828,6 +829,8 @@ function drawType4(ctx, px, py, dx, dy){
 		for (var angle = 0; angle < 360; angle += 360 / N0) {
 			var radian = (angle + count2 * 2) * (Math.PI / 180.0);
 			var factor2 = radius * (1 + Math.abs(Math.sin(N1 * i * Math.PI / N0)));
+			if (isLarge)
+				factor2 *= 2;
 			var x = qx + factor2 * Math.cos(radian);
 			var y = qy + factor2 * Math.sin(radian);
 			if (angle == 0){
