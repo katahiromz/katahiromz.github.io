@@ -309,7 +309,7 @@ function doAdultCheck(){
 function init(){
 	window.addEventListener('resize', function(){
 		if (!in_text_dialog) {
-			window.location.reload();
+			location.reload();
 		}
 	}, false);
 	fit();
@@ -340,7 +340,7 @@ function init(){
 			title: "メッセージの設定",
 			close: function(){
 				in_text_dialog = false;
-				window.location.reload();
+				location.reload(true);
 			},
 			buttons: [
 				{
@@ -796,7 +796,7 @@ function draw(){
 	if (old_cx !== null && old_cy !== null) {
 		if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
 			if (!in_text_dialog) {
-				window.location.reload();
+				location.reload();
 			}
 		}
 	}
