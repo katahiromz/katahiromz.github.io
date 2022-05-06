@@ -103,6 +103,36 @@
 				bottom: 0;
 			}
 		}
+		@media (min-width: 750px) {
+			#caption {
+				font-size: 0.8cm;
+			}
+			#type-select {
+				left: 0;
+				bottom: 0;
+				font-size: 0.8cm;
+			}
+			#sound-select {
+				left: 3.0cm;
+				bottom: 0;
+				font-size: 0.8cm;
+			}
+			#division-select {
+				right: 4.5cm;
+				bottom: 0;
+				font-size: 0.8cm;
+			}
+			#text-button {
+				right: 1.8cm;
+				bottom: 0;
+				font-size: 0.8cm;
+			}
+			#about-button {
+				right: 0;
+				bottom: 0;
+				font-size: 0.8cm;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -344,9 +374,7 @@ function init(){
 			title: "メッセージの設定",
 			close: function(){
 				in_text_dialog = false;
-				var viewport = document.querySelector("meta[name=viewport]");
-				viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
-				fit();
+				location.reload();
 			},
 			buttons: [
 				{
