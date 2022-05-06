@@ -206,6 +206,10 @@ var speed = 45.0;
 var sound = null;
 var in_text_dialog = false;
 
+function isLargeDisplay(){
+	return cx >= 1500 || cy >= 1500;
+}
+
 function setSound(value) {
 	if (sound) {
 		sound.loop = false;
@@ -505,8 +509,13 @@ function drawType1(ctx, px, py, dx, dy){
 
 	var size = (dx + dy) * 2 / 5;
 	var count2 = getCount();
-	qx += 30 * Math.cos(count2 * 0.1);
-	qy += 30 * Math.sin(count2 * 0.1);
+	if (isLargeDisplay()){
+		qx += 60 * Math.cos(count2 * 0.1);
+		qy += 60 * Math.sin(count2 * 0.1);
+	}else{
+		qx += 30 * Math.cos(count2 * 0.1);
+		qy += 30 * Math.sin(count2 * 0.1);
+	}
 
 	var dr0 = 15;
 	var dr = dr0 / 2;
@@ -568,7 +577,7 @@ function drawType2(ctx, px, py, dx, dy, flag=true){
 	var size = (cx + cy) * 0.4;
 
 	var dr0 = 30;
-	if (cx >= 1500 || cy >= 1500) {
+	if (isLargeDisplay()) {
 		dr0 *= 2;
 		count2 *= 2;
 		ctx.lineWidth = 30;
@@ -653,7 +662,7 @@ function drawType3(ctx, px, py, dx, dy){
 	var factor = count2 * 0.03;
 
 	var size = 32;
-	if (cx >= 1500 || cy >= 1500)
+	if (isLargeDisplay())
 		size *= 2;
 	var nCount2 = 0;
 	var cxy = ((cx >= cy) ? cy : cx) * 1.2;
@@ -779,7 +788,11 @@ function draw(){
 	if (theText != '') {
 		y += 20 * Math.sin(counter * 0.1);
 
-		ctx.font = "20px sans-serif";
+		if (isLargeDisplay()){
+			ctx.font = "40px sans-serif";
+		}else{
+			ctx.font = "20px sans-serif";
+		}
 		ctx.textBaseline = "middle";
 
 		var metrics = ctx.measureText(theText);
