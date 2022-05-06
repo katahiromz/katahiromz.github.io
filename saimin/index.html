@@ -144,7 +144,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 1.4
+催眠ウェブアプリ Version 1.5
 
 【使用上の注意】
 
@@ -340,6 +340,7 @@ function init(){
 			title: "メッセージの設定",
 			close: function(){
 				in_text_dialog = false;
+				location.reload();
 			},
 			buttons: [
 				{
@@ -651,6 +652,8 @@ function drawType3(ctx, px, py, dx, dy){
 	var factor = count2 * 0.03;
 
 	var size = 32;
+	if (cx >= 1500 || cy >= 1500)
+		size *= 2;
 	var nCount2 = 0;
 	var cxy = ((cx >= cy) ? cy : cx) * 1.2;
 	var xy0 = (cxy + size) - (cxy + size) % size;
