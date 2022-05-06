@@ -825,10 +825,10 @@ function drawType4(ctx, px, py, dx, dy){
 		var N0 = 30, N1 = 5;
 		var i = 0;
 		for (var angle = 0; angle < 360; angle += 360 / N0) {
-			var radian = (angle + 90 + count2 * 2) * (Math.PI / 180.0);
-			var factor2 = (1 + Math.abs(Math.sin(N1 * i * Math.PI / N0)));
-			var x = qx + radius * factor2 * Math.cos(radian);
-			var y = qy + radius * factor2 * Math.sin(radian);
+			var radian = (angle + count2 * 2) * (Math.PI / 180.0);
+			var factor2 = radius * (1 + Math.abs(Math.sin(N1 * i * Math.PI / N0)));
+			var x = qx + factor2 * Math.cos(radian);
+			var y = qy + factor2 * Math.sin(radian);
 			if (angle == 0){
 				ctx.beginPath();
 				ctx.moveTo(x, y);
