@@ -796,21 +796,19 @@ function draw(){
 		ctx.fillText(theText, x - dx / 2, y);
 	}
 
-	if (old_cx !== null && old_cy !== null) {
-		if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
-			if (!in_text_dialog) {
+	if (!in_text_dialog) {
+		if (old_cx !== null && old_cy !== null) {
+			if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
 				location.reload();
 			}
 		}
-	}
-	old_cx = window.innerWidth;
-	old_cy = window.innerHeight;
+		old_cx = window.innerWidth;
+		old_cy = window.innerHeight;
 
-	if (document.body.getBoundingClientRect) {
-		let rect = document.body.getBoundingClientRect();
-		if (zoomWidth !== null && zoomHeight !== null) {
-			if (zoomWidth != rect.width || zoomHeight != rect.height) {
-				if (!in_text_dialog) {
+		if (document.body.getBoundingClientRect) {
+			let rect = document.body.getBoundingClientRect();
+			if (zoomWidth !== null && zoomHeight !== null) {
+				if (zoomWidth != rect.width || zoomHeight != rect.height) {
 					location.reload();
 				}
 			}
