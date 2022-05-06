@@ -817,18 +817,20 @@ function drawType4(ctx, px, py, dx, dy){
 	//ctx.clearRect(px, py, dx, dy);
 
 	var count2 = getCount();
-	var factor = count2 * 0.04;
+	var factor = count2 * 0.16;
 	var isLarge = isLargeDisplay();
-	for (var radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.9) {
+	for (var radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.92) {
 		var r0, g0, b0;
-		[r0, g0, b0] = hsv2rgb((radius * 0.01 + 1.0 - (factor % 1.0)) % 1.0, 1.0, 1.0);
+		[r0, g0, b0] = hsv2rgb((dxy + factor * 0.2 - radius * 0.008) % 1.0, 1.0, 1.0);
+		//[r0, g0, b0] = hsv2rgb((dxy + factor * 0.2 + radius * 0.008) % 1.0, 1.0, 1.0);
 		ctx.fillStyle = `rgb(${r0*255},${g0*255},${b0*255})`;
 
-		var N0 = 30, N1 = 5;
+		var N0 = 10, N1 = 5;
 		var i = 0;
-		for (var angle = 0; angle < 360; angle += 360 / N0) {
+		var oldx = null, oldy = null;
+		for (var angle = 0; angle <= 360; angle += 360 / N0) {
 			var radian = (angle + count2 * 2) * (Math.PI / 180.0);
-			var factor2 = radius * (1 + Math.abs(Math.sin(N1 * i * Math.PI / N0)));
+			var factor2 = radius * (1 + 1.5 * Math.abs(Math.sin(N1 * i * Math.PI / N0)));
 			if (isLarge)
 				factor2 *= 2;
 			var x = qx + factor2 * Math.cos(radian);
@@ -837,8 +839,12 @@ function drawType4(ctx, px, py, dx, dy){
 				ctx.beginPath();
 				ctx.moveTo(x, y);
 			}else{
-				ctx.lineTo(x, y);
+				if ((i & 1) == 0) {
+					ctx.bezierCurveTo(oldx, oldy, (x + oldx) / 2, (y + oldy) / 2, x, y);
+				}
 			}
+			oldx = x;
+			oldy = y;
 			++i;
 		}
 		ctx.fill();
