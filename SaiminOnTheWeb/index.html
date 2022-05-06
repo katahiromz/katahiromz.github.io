@@ -341,7 +341,8 @@ function init(){
 			close: function(){
 				in_text_dialog = false;
 				location.reload();
-				window.style.transform = 'scale(1.0)';
+				$("body").css("zoom", "100%");
+				window.scrollTo(0, 0);
 				fit();
 			},
 			buttons: [
