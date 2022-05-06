@@ -817,8 +817,10 @@ function drawType4(ctx, px, py, dx, dy){
 
 	var count2 = getCount();
 	var factor = count2 * 0.04;
-
-	for (var radius = (dx + dy) * 0.4; radius >= 8; radius *= 0.9) {
+	var ratio = 0.9;
+	if (isLargeDisplay())
+		ratio = 0.8;
+	for (var radius = (dx + dy) * 0.4; radius >= 8; radius *= ratio) {
 		var r0, g0, b0;
 		[r0, g0, b0] = hsv2rgb((radius * 0.01 + 1.0 - (factor % 1.0)) % 1.0, 1.0, 1.0);
 		ctx.fillStyle = `rgb(${r0*255},${g0*255},${b0*255})`;
