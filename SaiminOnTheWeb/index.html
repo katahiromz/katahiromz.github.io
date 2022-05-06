@@ -196,7 +196,6 @@ SOFTWARE.
 <script>
 var cx = 0, cy = 0;
 var old_cx = null, old_cy = null;
-var zoomWidth = null, zoomHeight = null;
 var old_time = (new Date()).getTime();
 var type = 0;
 var counter = 0;
@@ -430,12 +429,6 @@ function init(){
 		}
 		type_select.value = type.toString();
 	}, false);
-
-	document.getElementById('canvas').addEventListener('touchmove', function(e){
-		if (e.touches.length >= 2) {
-			e.preventDefault();
-		}
-	}, { passive: false });
 
 	document.getElementById('canvas').addEventListener('wheel', function(e){
 		e.preventDefault();
@@ -804,24 +797,12 @@ function draw(){
 		}
 		old_cx = window.innerWidth;
 		old_cy = window.innerHeight;
-
-		if (document.body.getBoundingClientRect) {
-			let rect = document.body.getBoundingClientRect();
-			if (zoomWidth !== null && zoomHeight !== null) {
-				if (zoomWidth != rect.width || zoomHeight != rect.height) {
-					location.reload();
-				}
-			}
-		}
-		zoomWidth = rect.width;
-		zoomHeight = rect.height;
 	}
 
 	var new_time = (new Date()).getTime();
 	var diff = (new_time - old_time) / 1000.0;
 	counter += diff * speed;
 	old_time = new_time;
-
 
 	window.requestAnimationFrame(draw);
 }
