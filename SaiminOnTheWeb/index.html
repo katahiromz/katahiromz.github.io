@@ -340,11 +340,8 @@ function init(){
 			title: "Set Message",
 			close: function(){
 				in_text_dialog = false;
-				document.body.style.zoom = 1.0;
-				document.body.style.MozTransform = 'scale(1.0)';
-				document.body.style.WebkitTransform = 'scale(1.0)';
-				document.body.style.width = "100vw";
-				document.body.style.height = "100vh";
+				var viewport = document.querySelector("meta[name=viewport]");
+				viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
 				fit();
 			},
 			buttons: [
