@@ -194,6 +194,7 @@ SOFTWARE.
 </div>
 
 <script>
+const theLocation = "https://katahiromz.github.io/SaiminOnTheWeb/"
 var cx = 0, cy = 0;
 var old_cx = null, old_cy = null;
 var old_time = (new Date()).getTime();
@@ -340,7 +341,7 @@ function init(){
 			title: "Set Message",
 			close: function(){
 				in_text_dialog = false;
-				location.reload(true);
+				location.href = theLocation;
 			},
 			buttons: [
 				{

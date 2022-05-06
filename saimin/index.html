@@ -193,6 +193,7 @@ SOFTWARE.
 	</p>
 </div>
 
+const theLocation = "https://katahiromz.github.io/saimin/"
 <script>
 var cx = 0, cy = 0;
 var old_cx = null, old_cy = null;
@@ -340,7 +341,7 @@ function init(){
 			title: "メッセージの設定",
 			close: function(){
 				in_text_dialog = false;
-				location.reload(true);
+				location.href = theLocation;
 			},
 			buttons: [
 				{
