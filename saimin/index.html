@@ -194,7 +194,6 @@ SOFTWARE.
 </div>
 
 <script>
-const theLocation = "https://katahiromz.github.io/saimin/"
 var cx = 0, cy = 0;
 var old_cx = null, old_cy = null;
 var old_time = (new Date()).getTime();
@@ -341,7 +340,12 @@ function init(){
 			title: "メッセージの設定",
 			close: function(){
 				in_text_dialog = false;
-				location.href = theLocation;
+				document.body.style.zoom = 1.0;
+				document.body.style.MozTransform = 'scale(1.0)';
+				document.body.style.WebkitTransform = 'scale(1.0)';
+				document.body.style.width = "100vw";
+				document.body.style.height = "100vh";
+				fit();
 			},
 			buttons: [
 				{
