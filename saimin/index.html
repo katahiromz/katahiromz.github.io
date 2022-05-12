@@ -177,6 +177,7 @@
 	<option value="2">type2</option>
 	<option value="3">type3</option>
 	<option value="4">type4</option>
+	<option value="5">type5</option>
 </select>
 
 <select id="sound-select" class="invisible">
@@ -205,7 +206,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 1.5
+催眠ウェブアプリ Version 1.6
 
 【使用上の注意】
 
@@ -255,7 +256,7 @@ SOFTWARE.
 </div>
 
 <script>
-const NUM_TYPE = 4;
+const NUM_TYPE = 5;
 var cx = 0, cy = 0;
 var old_cx = null, old_cy = null;
 var old_time = (new Date()).getTime();
@@ -540,6 +541,22 @@ function line(ctx, x0, y0, x1, y1, lineWidth){
 	ctx.stroke();
 }
 
+function heart(ctx, x0, y0, x1, y1){
+	var x2 = (0.6 * x0 + 0.4 * x1);
+	var y2 = (0.6 * y0 + 0.4 * y1);
+	var comp = new Complex({re:x1 - x0, im:y1 - y0});
+	var comp0 = new Complex({abs:1.0, arg:Math.PI * 0.5});
+	var p0 = comp.mul(comp0.div(16)).add({re:x0, im:y0});
+	var p1 = comp.div(comp0.mul(16)).add({re:x0, im:y0});
+	var p2 = comp.mul(comp0).add({re:x0, im:y0});
+	var p3 = comp.div(comp0).add({re:x0, im:y0});
+	ctx.beginPath();
+	ctx.moveTo(x2, y2);
+	ctx.bezierCurveTo(p0.re, p0.im, p2.re, p2.im, x1, y1);
+	ctx.bezierCurveTo(p3.re, p3.im, p1.re, p1.im, x2, y2);
+	ctx.fill();
+}
+
 function drawType0(ctx, px, py, dx, dy){
 	ctx.save();
 
@@ -798,7 +815,7 @@ function drawType3(ctx, px, py, dx, dy){
 	ctx.restore();
 }
 
-function drawType4(ctx, px, py, dx, dy){
+function drawType4_5(ctx, px, py, dx, dy, t){
 	ctx.save();
 
 	var qx = px + dx / 2;
@@ -865,6 +882,20 @@ function drawType4(ctx, px, py, dx, dy){
 	ctx.fillStyle = grd;
 	circle(ctx, qx, qy, dxy, true);
 
+	if (t == 5) {
+		var value = factor * 25 + 10;
+		ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
+		var M = 5;
+		for (var radius = (factor * 10) % 100; radius < dxy; radius += 100) {
+			for (var angle = 0; angle < 360; angle += 360 / M) {
+				var radian = angle * (Math.PI / 180.0);
+				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
+				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
+				heart(ctx, x0, y0, x0, y0 + 30);
+			}
+		}
+	}
+
 	ctx.restore();
 }
 
@@ -884,7 +915,10 @@ function drawType(ctx, px, py, cx, cy){
 		drawType3(ctx, px, py, cx, cy);
 		break;
 	case 4:
-		drawType4(ctx, px, py, cx, cy);
+		drawType4_5(ctx, px, py, cx, cy, type);
+		break;
+	case 5:
+		drawType4_5(ctx, px, py, cx, cy, type);
 		break;
 	}
 }
