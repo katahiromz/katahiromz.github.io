@@ -812,6 +812,18 @@ function drawType3(ctx, px, py, dx, dy){
 	ctx.fillStyle = grd;
 	circle(ctx, qx, qy, dxy, true);
 
+	ctx.lineWidth = 10;
+	var i = 0;
+	for (var r = (count2 * 2) % 100; r < cxy; r += 100) {
+		if (i < 3) {
+			ctx.strokeStyle = "rgba(255, 20, 29, 0.9)";
+		} else {
+			ctx.strokeStyle = "rgba(255, 20, 29, 0.4)";
+		}
+		circle(ctx, qx, qy, r, false);
+		++i;
+	}
+
 	ctx.restore();
 }
 
