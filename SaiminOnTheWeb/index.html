@@ -557,6 +557,17 @@ function heart(ctx, x0, y0, x1, y1){
 	ctx.fill();
 }
 
+function light(ctx, x0, y0, radius){
+	ctx.beginPath();
+	ctx.moveTo(x0 - radius, y0);
+	var r0 = radius * 0.2;
+	ctx.bezierCurveTo(x0 - r0, y0 - r0, x0 - r0, y0 - r0, x0, y0 - radius);
+	ctx.bezierCurveTo(x0 + r0, y0 - r0, x0 + r0, y0 - r0, x0 + radius, y0);
+	ctx.bezierCurveTo(x0 + r0, y0 + r0, x0 + r0, y0 + r0, x0, y0 + radius);
+	ctx.bezierCurveTo(x0 - r0, y0 + r0, x0 - r0, y0 + r0, x0 - radius, y0);
+	ctx.fill();
+}
+
 function drawType0(ctx, px, py, dx, dy){
 	ctx.save();
 
@@ -895,17 +906,30 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 	ctx.fillStyle = grd;
 	circle(ctx, qx, qy, dxy, true);
 
-	if (t == 5) {
-		var value = factor * 25 + 10;
-		ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
+	if (t == 4) {
+		ctx.fillStyle = `rgb(255, 255, ${(factor * 10) % 255}, 0.8)`;
 		var M = 5;
 		for (var radius = (factor * 10) % 100; radius < dxy; radius += 100) {
 			for (var angle = 0; angle < 360; angle += 360 / M) {
 				var radian = angle * (Math.PI / 180.0);
 				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
 				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
-				heart(ctx, x0, y0, x0, y0 + 30);
+				light(ctx, x0, y0, (radius * 0.1) % 30 + 10);
 			}
+		}
+	} else if (t == 5) {
+		var value = factor * 25 + 10;
+		ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
+		var M = 5;
+		var heartSize = 30;
+		for (var radius = (factor * 10) % 100 + 30; radius < dxy; radius += 100) {
+			for (var angle = 0; angle < 360; angle += 360 / M) {
+				var radian = angle * (Math.PI / 180.0);
+				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
+				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
+				heart(ctx, x0, y0, x0, y0 + heartSize);
+			}
+			heartSize += 5;
 		}
 	}
 
