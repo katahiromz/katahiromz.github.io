@@ -929,7 +929,7 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 				var radian = angle * (Math.PI / 180.0);
 				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
 				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
-				heart(ctx, x0, y0, x0, y0 + heartSize);
+				heart(ctx, x0, y0, x0, y0 + heartSize + value % 191 / 12);
 			}
 			heartSize += 5;
 		}
