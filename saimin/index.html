@@ -285,13 +285,12 @@ function cancelSpeech(){
 	}
 }
 
-async function playSpeech(text, lang){
+async function playSpeech(text){
 	cancelSpeech();
 	if (speechSynthesis.cancel){
 		text += '。';
 		text = text.repeat(512);
 		var speech = new SpeechSynthesisUtterance(text);
-		speech.lang = lang;
 		speechSynthesis.speak(speech);
 	}
 }
@@ -311,7 +310,7 @@ function setSound(value) {
 		return;
 	}
 	if (value == 'msg'){
-		playSpeech(theText, "ja-JP");
+		playSpeech(theText);
 	}else{
 		sound = new Audio("snd/snd" + value + ".mp3")
 		sound.loop = true;
