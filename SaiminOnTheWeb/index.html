@@ -418,7 +418,7 @@ function init(){
 	cancelSpeech();
 
 	window.addEventListener('resize', function(){
-		if (!in_text_dialog) {
+		if (!in_text_dialog){
 			fit();
 		}
 	}, false);
@@ -1056,7 +1056,7 @@ function draw(){
 	if (!in_text_dialog) {
 		if (old_cx !== null && old_cy !== null) {
 			if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
-				location.reload();
+				fit();
 			}
 		}
 		old_cx = window.innerWidth;
