@@ -191,6 +191,7 @@
 	<option value="3">sd3</option>
 	<option value="4">sd4</option>
 	<option value="5">sd5</option>
+	<option value="msg">msg</option>
 </select>
 
 <button id="about-button" class="invisible">?</button>
@@ -211,7 +212,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ Version 1.7
+催眠ウェブアプリ Version 1.8
 
 ※ ソース: https://github.com/katahiromz/katahiromz.github.io
 ※ 一部、OtoLogicの音声素材を使用。
@@ -278,24 +279,44 @@ var speed = 45.0;
 var sound = null;
 var in_text_dialog = false;
 
+function cancelSpeech(){
+	if (speechSynthesis.cancel){
+		speechSynthesis.cancel();
+	}
+}
+
+async function playSpeech(text, lang){
+	cancelSpeech();
+	if (speechSynthesis.cancel){
+		text += '。';
+		text = text.repeat(512);
+		var speech = new SpeechSynthesisUtterance(text);
+		speech.lang = lang;
+		speechSynthesis.speak(speech);
+	}
+}
+
 function isLargeDisplay(){
 	return cx >= 1500 || cy >= 1500;
 }
 
 function setSound(value) {
-	if (sound) {
+	cancelSpeech();
+	if (sound){
 		sound.loop = false;
 		sound.muted = true;
 	}
-	if (!value)
-	{
+	if (value == '0'){
 		sound = null;
 		return;
 	}
-	sound = new Audio("snd/snd" + value.toString() + ".mp3")
-	sound.loop = true;
-	sound.play();
-	document.getElementById('sound-select').value = value;
+	if (value == 'msg'){
+		playSpeech(theText, "ja-JP");
+	}else{
+		sound = new Audio("snd/snd" + value + ".mp3")
+		sound.loop = true;
+		sound.play();
+	}
 }
 
 function setDivision(value) {
@@ -318,6 +339,11 @@ function setType(value){
 function setText(txt){
 	theText = txt.replace('　', '  ').trim();
 	localStorage.setItem('saiminText', theText);
+	var sound_select = document.getElementById('sound-select');
+	if (sound_select.value == 'msg'){
+		cancelSpeech();
+		setSound(sound_select.value);
+	}
 }
 
 function fit(){
@@ -383,6 +409,8 @@ function doAdultCheck(){
 }
 
 function init(){
+	cancelSpeech();
+
 	window.addEventListener('resize', function(){
 		if (!in_text_dialog) {
 			location.reload();
@@ -472,12 +500,12 @@ function init(){
 	sound_select.addEventListener('change', function(){
 		if (!ready)
 			return;
-		setSound(parseInt(sound_select.value));
+		setSound(sound_select.value);
 	}, false);
 	sound_select.addEventListener('click', function(){
 		if (!ready)
 			return;
-		setSound(parseInt(sound_select.value));
+		setSound(sound_select.value);
 	}, false);
 
 	var division_select = document.getElementById('division-select');
