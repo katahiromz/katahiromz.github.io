@@ -297,6 +297,9 @@ function init(){
 			close: function(){
 				in_text_dialog = false;
 				after_text_dialog = true;
+				setTimeout(function(){
+					after_text_dialog = false;
+				}, 500);
 			},
 			buttons: [
 				{
