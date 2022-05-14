@@ -135,8 +135,10 @@ async function playSpeech(text){
 		return;
 	}
 	if (speechSynthesis.cancel){
-		if (text.slice(-1) == '.')
+		while (text.slice(-1) == '.')
 			text = text.slice(0, -1);
+		if (text == '')
+			return;
 		text += '. ';
 		text = text.repeat(256);
 		var speech = new SpeechSynthesisUtterance(text);
