@@ -261,6 +261,7 @@ function init(){
 
 	window.addEventListener('resize', function(){
 		if (!in_text_dialog){
+			alert("OK1");
 			location.reload();
 		}
 	}, false);
@@ -899,6 +900,7 @@ function draw(){
 		if (old_cx !== null && old_cy !== null) {
 			if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
 				fit();
+				alert("OK2");
 			}
 		}
 		old_cx = window.innerWidth;
