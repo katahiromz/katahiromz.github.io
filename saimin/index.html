@@ -287,7 +287,13 @@ function cancelSpeech(){
 
 async function playSpeech(text){
 	cancelSpeech();
+	text = text.replace('　', '  ').trim();
+	if (text == ''){
+		return;
+	}
 	if (speechSynthesis.cancel){
+		if (text.slice(-1) == '。')
+			text = text.slice(0, -1);
 		text += '。';
 		text = text.repeat(256);
 		var speech = new SpeechSynthesisUtterance(text);
