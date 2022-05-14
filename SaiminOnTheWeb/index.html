@@ -120,6 +120,7 @@ var division = -1;
 var speed = 45.0;
 var sound = null;
 var in_text_dialog = false;
+var after_text_dialog = false;
 
 function cancelSpeech(){
 	if (speechSynthesis.cancel){
@@ -260,11 +261,13 @@ function init(){
 	cancelSpeech();
 
 	window.addEventListener('resize', function(){
-		if (!in_text_dialog){
+		if (!in_text_dialog && !after_text_dialog){
 			alert("OK1");
 			location.reload();
 		}
+		after_text_dialog = false;
 	}, false);
+
 	fit();
 
 	var saiminText = localStorage.getItem('saiminText');
@@ -293,6 +296,7 @@ function init(){
 			title: "Set Message",
 			close: function(){
 				in_text_dialog = false;
+				after_text_dialog = true;
 			},
 			buttons: [
 				{
@@ -900,7 +904,6 @@ function draw(){
 		if (old_cx !== null && old_cy !== null) {
 			if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
 				fit();
-				alert("OK2");
 			}
 		}
 		old_cx = window.innerWidth;
