@@ -198,6 +198,8 @@ function fit(){
 	var ctx = document.getElementById('canvas').getContext('2d');
 	cx = ctx.canvas.width = window.innerWidth;
 	cy = ctx.canvas.height = window.innerHeight;
+	var style = $('<link href="style.css?' + (new Date()).getTime().toString() + '" rel="stylesheet" type="text/css" />');
+	$('head link:last').after(style);
 }
 
 function forbidden(){
@@ -261,7 +263,7 @@ function init(){
 
 	window.addEventListener('resize', function(){
 		if (!in_text_dialog){
-			location.reload();
+			fit();
 		}
 	}, false);
 	fit();
