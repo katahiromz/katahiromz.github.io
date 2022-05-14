@@ -291,6 +291,7 @@ async function playSpeech(text){
 		text += '。';
 		text = text.repeat(512);
 		var speech = new SpeechSynthesisUtterance(text);
+		speech.lang = "ja-JP";
 		speechSynthesis.speak(speech);
 	}
 }
