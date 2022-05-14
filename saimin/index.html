@@ -120,6 +120,7 @@ var division = -1;
 var speed = 45.0;
 var sound = null;
 var in_text_dialog = false;
+var after_text_dialog = false;
 
 function cancelSpeech(){
 	if (speechSynthesis.cancel){
@@ -260,9 +261,10 @@ function init(){
 	cancelSpeech();
 
 	window.addEventListener('resize', function(){
-		if (!in_text_dialog){
+		if (!in_text_dialog && !after_text_dialog){
 			location.reload();
 		}
+		after_text_dialog = false;
 	}, false);
 	fit();
 
@@ -292,6 +294,10 @@ function init(){
 			title: "メッセージの設定",
 			close: function(){
 				in_text_dialog = false;
+				after_text_dialog = true;
+				setTimeout(function(){
+					after_text_dialog = false;
+				}, 500);
 			},
 			buttons: [
 				{
