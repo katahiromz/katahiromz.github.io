@@ -289,9 +289,9 @@ async function playSpeech(text){
 	cancelSpeech();
 	if (speechSynthesis.cancel){
 		text += '。';
-		text = text.repeat(512);
+		text = text.repeat(256);
 		var speech = new SpeechSynthesisUtterance(text);
-		speech.lang = "ja-JP";
+		speech.lang = 'ja-JP';
 		speechSynthesis.speak(speech);
 	}
 }
