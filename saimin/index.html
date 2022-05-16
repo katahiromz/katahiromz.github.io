@@ -103,7 +103,7 @@ SOFTWARE.
 </div>
 <div id="adult-check-dialog" class="invisible">
 	<p class="center">
-		あなたはおとなですか？
+		あなたは18歳以上ですか？
 	</p>
 </div>
 
@@ -241,14 +241,14 @@ function doAdultCheck(){
 		title: "成人チェック",
 		buttons: [
 			{
-				text: "おとなです",
+				text: "はい",
 				click: function(){
 					$(this).dialog('close');
 					accepted();
 				},
 			},
 			{
-				text: "こどもです",
+				text: "いいえ",
 				click: function(){
 					localStorage.setItem('saiminAdultCheck', '-1');
 					$(this).dialog('close');
