@@ -745,7 +745,10 @@ function drawType3(ctx, px, py, dx, dy){
 
 	ctx.strokeStyle = "black";
 	ctx.fillStyle = "black";
-	ctx.lineWidth = 10;
+	if (isLargeDisplay())
+		ctx.lineWidth = 16;
+	else
+		ctx.lineWidth = 8;
 	eye(ctx, qx, qy, cxy / 10);
 
 	const N = 4;
