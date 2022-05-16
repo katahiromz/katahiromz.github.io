@@ -264,7 +264,11 @@ function init(){
 
 	window.addEventListener('resize', function(){
 		if (!in_text_dialog && !after_text_dialog){
-			location.reload();
+			if (location.hostname == '') {
+				fit();
+			} else {
+				location.reload();
+			}
 		}
 		after_text_dialog = false;
 	}, false);
