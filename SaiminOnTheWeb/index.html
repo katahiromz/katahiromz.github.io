@@ -54,7 +54,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Saimin On The Web Version 1.8
+Saimin On The Web Version 1.9
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
@@ -420,6 +420,7 @@ function init(){
 function circle(ctx, x, y, radius, is_fill = true){
 	ctx.beginPath();
 	ctx.arc(x, y, radius, 0, 2 * Math.PI);
+	ctx.closePath();
 	if (is_fill)
 		ctx.fill();
 	else
@@ -448,6 +449,26 @@ function heart(ctx, x0, y0, x1, y1){
 	ctx.bezierCurveTo(p0.re, p0.im, p2.re, p2.im, x1, y1);
 	ctx.bezierCurveTo(p3.re, p3.im, p1.re, p1.im, x2, y2);
 	ctx.fill();
+}
+
+function eye(ctx, x0, y0, r, lineWidth, factor = 1.0){
+	ctx.lineWidth = lineWidth;
+	ctx.beginPath();
+	ctx.moveTo(x0 - r, y0);
+	var r025 = r * 0.25;
+	var r05 = r025 * 2;
+	ctx.bezierCurveTo(x0 - r025, y0 - r05, x0 + r025, y0 - r05, x0 + r, y0);
+	ctx.bezierCurveTo(x0 + r025, y0 + r05, x0 - r025, y0 + r05, x0 - r, y0);
+	ctx.closePath();
+	ctx.save();
+	ctx.stroke();
+	ctx.restore();
+	ctx.fill();
+
+	ctx.save();
+	ctx.fillStyle = "black";
+	circle(ctx, x0, y0, r * factor / 3, true);
+	ctx.restore();
 }
 
 function light(ctx, x0, y0, radius){
@@ -727,6 +748,22 @@ function drawType3(ctx, px, py, dx, dy){
 		}
 		circle(ctx, qx, qy, r, false);
 		++i;
+	}
+
+	var factor2 = 0.5 + (1.0 + Math.sin(factor)) / 4;
+
+	ctx.strokeStyle = "black";
+	ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+	eye(ctx, qx, qy, cxy / 10, 10, factor2);
+
+	const N = 4;
+	const delta = (2 * Math.PI) / N;
+	var radian = factor;
+	for (i = 0; i < N; ++i) {
+		var x = qx + cxy * Math.cos(radian) / 4;
+		var y = qy + cxy * Math.sin(radian) / 4;
+		eye(ctx, x, y, cxy / 10, 10, factor2);
+		radian += delta;
 	}
 
 	ctx.restore();
