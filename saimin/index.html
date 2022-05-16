@@ -450,18 +450,18 @@ function heart(ctx, x0, y0, x1, y1){
 	ctx.fill();
 }
 
-function eye(ctx, x0, y0, r){
+function eye(ctx, x0, y0, r, opened = 1.0){
 	ctx.beginPath();
 	ctx.moveTo(x0 - r, y0);
 	const r025 = r * 0.25;
-	const r05 = r025 * 2;
+	const r05 = r025 * 2 * opened;
 	ctx.bezierCurveTo(x0 - r025, y0 - r05, x0 + r025, y0 - r05, x0 + r, y0);
 	ctx.bezierCurveTo(x0 + r025, y0 + r05, x0 - r025, y0 + r05, x0 - r, y0);
 	ctx.closePath();
 	ctx.stroke();
 
 	ctx.save();
-	circle(ctx, x0, y0, r / 3, true);
+	circle(ctx, x0, y0, r / 3 * opened, true);
 	ctx.restore();
 }
 
@@ -749,7 +749,13 @@ function drawType3(ctx, px, py, dx, dy){
 		ctx.lineWidth = 16;
 	else
 		ctx.lineWidth = 8;
-	eye(ctx, qx, qy, cxy / 10);
+	
+	var opened = 1.0;
+	var f = Math.abs(count2);
+	if (f % 120.0 < 3.0) {
+		opened = 0.35;
+	}
+	eye(ctx, qx, qy, cxy / 10, opened);
 
 	const N = 4;
 	const delta = (2 * Math.PI) / N;
@@ -757,7 +763,7 @@ function drawType3(ctx, px, py, dx, dy){
 	for (i = 0; i < N; ++i) {
 		var x = qx + cxy * Math.cos(radian) * 0.3;
 		var y = qy + cxy * Math.sin(radian) * 0.3;
-		eye(ctx, x, y, cxy / 10);
+		eye(ctx, x, y, cxy / 10, opened);
 		radian += delta;
 	}
 
