@@ -450,8 +450,7 @@ function heart(ctx, x0, y0, x1, y1){
 	ctx.fill();
 }
 
-function eye(ctx, x0, y0, r, lineWidth){
-	ctx.lineWidth = lineWidth;
+function eye(ctx, x0, y0, r){
 	ctx.beginPath();
 	ctx.moveTo(x0 - r, y0);
 	const r025 = r * 0.25;
@@ -746,15 +745,16 @@ function drawType3(ctx, px, py, dx, dy){
 
 	ctx.strokeStyle = "black";
 	ctx.fillStyle = "black";
-	eye(ctx, qx, qy, cxy / 10, 10);
+	ctx.lineWidth = 10;
+	eye(ctx, qx, qy, cxy / 10);
 
 	const N = 4;
 	const delta = (2 * Math.PI) / N;
 	var radian = factor;
 	for (i = 0; i < N; ++i) {
-		var x = qx + cxy * Math.cos(radian) / 4;
-		var y = qy + cxy * Math.sin(radian) / 4;
-		eye(ctx, x, y, cxy / 10, 10);
+		var x = qx + cxy * Math.cos(radian) * 0.3;
+		var y = qy + cxy * Math.sin(radian) * 0.3;
+		eye(ctx, x, y, cxy / 10);
 		radian += delta;
 	}
 
