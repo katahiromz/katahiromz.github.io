@@ -752,12 +752,13 @@ function drawType3(ctx, px, py, dx, dy){
 	else
 		ctx.lineWidth = 8;
 
+	eye(ctx, qx, qy, cxy / 10, 1.0);
+
 	var opened = 1.0;
-	var f = Math.abs(count2);
-	if (f % 120.0 < 3.0) {
-		opened = 0.35;
+	var f = Math.sin(Math.abs(count2 * 0.1));
+	if (f >= 0.8) {
+		opened = 0.6 + 0.4 * Math.abs(Math.sin(f * Math.PI));
 	}
-	eye(ctx, qx, qy, cxy / 10, opened);
 
 	const N = 4;
 	const delta = (2 * Math.PI) / N;
