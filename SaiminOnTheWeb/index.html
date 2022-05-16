@@ -460,10 +460,7 @@ function eye(ctx, x0, y0, r, lineWidth, factor = 1.0){
 	ctx.bezierCurveTo(x0 - r025, y0 - r05, x0 + r025, y0 - r05, x0 + r, y0);
 	ctx.bezierCurveTo(x0 + r025, y0 + r05, x0 - r025, y0 + r05, x0 - r, y0);
 	ctx.closePath();
-	ctx.save();
 	ctx.stroke();
-	ctx.restore();
-	ctx.fill();
 
 	ctx.save();
 	ctx.fillStyle = "black";
@@ -753,7 +750,6 @@ function drawType3(ctx, px, py, dx, dy){
 	var factor2 = 0.5 + (1.0 + Math.sin(factor)) / 4;
 
 	ctx.strokeStyle = "black";
-	ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
 	eye(ctx, qx, qy, cxy / 10, 10, factor2);
 
 	const N = 4;
