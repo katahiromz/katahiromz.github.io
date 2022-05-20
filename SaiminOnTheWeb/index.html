@@ -57,7 +57,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Saimin On The Web Version 2.0
+Saimin On The Web Version 2.1
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
@@ -125,11 +125,21 @@ var speed = 45.0;
 var sound = null;
 var in_text_dialog = false;
 var after_text_dialog = false;
+var stars = new Array(32);
+var touchmoving = false;
 
 function cancelSpeech(){
 	if (speechSynthesis.cancel){
 		speechSynthesis.cancel();
 	}
+}
+
+function addStar(x, y){
+	stars.shift();
+	x += (Math.random() - 0.5) * 2 * 20;
+	y += (Math.random() - 0.5) * 2 * 20;
+	var size = 5 + Math.random() * 5;
+	stars.push([x, y, size]);
 }
 
 async function playSpeech(text){
@@ -396,6 +406,38 @@ function init(){
 		type_select.value = type.toString();
 	}, false);
 
+	document.getElementById('canvas').addEventListener('mousemove', function(e){
+		if (!ready)
+			return;
+		addStar(e.clientX, e.clientY);
+	}, false);
+
+	document.getElementById('canvas').addEventListener('touchstart', function(e){
+		if (!ready)
+			return;
+		touchmoving = true;
+	}, {passive: true});
+	document.getElementById('canvas').addEventListener('touchmove', function(e){
+		if (!ready)
+			return;
+		if (touchmoving){
+			var touches = e.touches;
+			if (touches && touches.length == 1) {
+				 addStar(touches[0].clientX, touches[0].clientY);
+			}
+		}
+	}, {passive: true});
+	document.getElementById('canvas').addEventListener('touchend', function(e){
+		if (!ready)
+			return;
+		touchmoving = false;
+	}, {passive: true});
+	document.getElementById('canvas').addEventListener('touchcancel', function(e){
+		if (!ready)
+			return;
+		touchmoving = false;
+	}, {passive: true});
+
 	document.getElementById('canvas').addEventListener('wheel', function(e){
 		e.preventDefault();
 		if (!ready)
@@ -475,13 +517,20 @@ function eye(ctx, x0, y0, r, opened = 1.0){
 }
 
 function light(ctx, x0, y0, radius){
+	var r0 = radius;
+	var rmid = radius * 0.333;
 	ctx.beginPath();
-	ctx.moveTo(x0 - radius, y0);
-	var r0 = radius * 0.2;
-	ctx.bezierCurveTo(x0 - r0, y0 - r0, x0 - r0, y0 - r0, x0, y0 - radius);
-	ctx.bezierCurveTo(x0 + r0, y0 - r0, x0 + r0, y0 - r0, x0 + radius, y0);
-	ctx.bezierCurveTo(x0 + r0, y0 + r0, x0 + r0, y0 + r0, x0, y0 + radius);
-	ctx.bezierCurveTo(x0 - r0, y0 + r0, x0 - r0, y0 + r0, x0 - radius, y0);
+	ctx.moveTo(x0 - r0, y0);
+	ctx.lineTo(x0, y0 + rmid);
+	ctx.lineTo(x0 + r0, y0);
+	ctx.lineTo(x0, y0 - rmid);
+	ctx.fill();
+
+	ctx.beginPath();
+	ctx.moveTo(x0, y0 - r0);
+	ctx.lineTo(x0 + rmid, y0);
+	ctx.lineTo(x0, y0 + r0);
+	ctx.lineTo(x0 - rmid, y0);
 	ctx.fill();
 }
 
@@ -952,6 +1001,16 @@ function draw(){
 		ctx.fillStyle = 'rgb(255, 255, 255)';
 		ctx.fillText(theText, x - dx / 2, y);
 	}
+
+	for (var iStar = 0; iStar < stars.length; ++iStar){
+		if (stars[iStar]){
+			ctx.fillStyle = `rgb(255, 255, 0, 0.8)`;
+			var star = stars[iStar];
+			light(ctx, star[0], star[1], star[2]);
+		}
+	}
+	stars.shift();
+	stars.push(null);
 
 	if (!in_text_dialog) {
 		if (old_cx !== null && old_cy !== null) {
