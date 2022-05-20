@@ -28,11 +28,14 @@
 
 <select id="sound-select" class="invisible">
 	<option value="0" selected></option>
-	<option value="1">sd1</option>
-	<option value="2">sd2</option>
-	<option value="3">sd3</option>
-	<option value="4">sd4</option>
-	<option value="5">sd5</option>
+	<option value="1">sn1</option>
+	<option value="2">sn2</option>
+	<option value="3">sn3</option>
+	<option value="4">sn4</option>
+	<option value="5">sn5</option>
+	<option value="6">sn6</option>
+	<option value="7">sn7</option>
+	<option value="8">sn8</option>
 	<option value="msg">msg</option>
 </select>
 
@@ -54,7 +57,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ「くらくら」 Version 1.9
+催眠ウェブアプリ「くらくら」 Version 2.0
 
 ※ ソース: https://github.com/katahiromz/katahiromz.github.io
 ※ 一部、OtoLogicの音声素材を使用。
@@ -165,7 +168,7 @@ function setSound(value) {
 	if (value == 'msg'){
 		playSpeech(theText);
 	}else{
-		sound = new Audio("snd/snd" + value + ".mp3")
+		sound = new Audio("sn/sn" + value + ".mp3")
 		sound.loop = true;
 		sound.play();
 	}
