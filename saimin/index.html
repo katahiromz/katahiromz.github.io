@@ -57,7 +57,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ「くらくら」 Version 2.1
+催眠ウェブアプリ「くらくら」 Version 2.2
 
 ※ ソース: https://github.com/katahiromz/katahiromz.github.io
 ※ 一部、OtoLogicの音声素材を使用。
@@ -139,6 +139,9 @@ function addStar(x, y){
 	x += (Math.random() - 0.5) * 2 * 20;
 	y += (Math.random() - 0.5) * 2 * 20;
 	var size = 5 + Math.random() * 10;
+	if (isLargeDisplay()){
+		size *= 2;
+	}
 	stars.push([x, y, size]);
 }
 
@@ -1006,7 +1009,7 @@ function draw(){
 			ctx.fillStyle = `rgb(255, 255, 0, 0.8)`;
 			light(ctx, star[0], star[1], star[2]);
 			if (star[2] > 1.0){
-				star[2] -= 0.5;
+				star[2] *= 0.98;
 			}
 		}
 	}
