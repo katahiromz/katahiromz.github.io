@@ -165,7 +165,7 @@ function isLargeDisplay(){
 	return cx >= 1500 || cy >= 1500;
 }
 
-function setSound(value) {
+function setSound(value){
 	cancelSpeech();
 	if (sound){
 		sound.loop = false;
@@ -184,13 +184,13 @@ function setSound(value) {
 	}
 }
 
-function setDivision(value) {
+function setDivision(value){
 	division = parseInt(value);
 	localStorage.setItem('saiminDivision', division.toString());
 	document.getElementById('division-select').value = division;
 }
 
-function getCount() {
+function getCount(){
 	return counter;
 }
 
@@ -236,7 +236,7 @@ function accepted(){
 	ready = true;
 	localStorage.setItem('saiminAdultCheck', '1');
 	var saiminType = localStorage.getItem('saiminType');
-	if (saiminType) {
+	if (saiminType){
 		setType(parseInt(saiminType));
 	} else {
 		setType(1);
@@ -278,7 +278,7 @@ function init(){
 
 	window.addEventListener('resize', function(){
 		if (!in_text_dialog && !after_text_dialog){
-			if (location.hostname == '') {
+			if (location.hostname == ''){
 				fit();
 			} else {
 				location.reload();
@@ -290,12 +290,12 @@ function init(){
 	fit();
 
 	var saiminText = localStorage.getItem('saiminText');
-	if (saiminText) {
+	if (saiminText){
 		setText(saiminText);
 	}
 
 	var saiminDivision = localStorage.getItem('saiminDivision');
-	if (saiminDivision) {
+	if (saiminDivision){
 		setDivision(saiminDivision);
 	}
 
@@ -398,7 +398,7 @@ function init(){
 	document.getElementById('canvas').addEventListener('click', function(e){
 		if (!ready)
 			return;
-		if (e.shiftKey) {
+		if (e.shiftKey){
 			setType((type + NUM_TYPE - 2) % NUM_TYPE + 1);
 		} else {
 			setType(type % NUM_TYPE + 1);
@@ -422,7 +422,7 @@ function init(){
 			return;
 		if (touchmoving){
 			var touches = e.touches;
-			if (touches && touches.length == 1) {
+			if (touches && touches.length == 1){
 				 addStar(touches[0].clientX, touches[0].clientY);
 			}
 		}
@@ -444,12 +444,12 @@ function init(){
 			return;
 		if (e.ctrlKey)
 			return;
-		if (e.deltaY < 0) {
+		if (e.deltaY < 0){
 			if (speed < 80.0)
 				speed += 5.0;
 			else
 				speed = 80.0;
-		} else if (e.deltaY > 0) {
+		} else if (e.deltaY > 0){
 			if (speed > 0.0)
 				speed -= 5.0;
 			else
@@ -458,11 +458,11 @@ function init(){
 	}, { passive: false });
 
 	var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
-	if (!saiminAdultCheck) {
+	if (!saiminAdultCheck){
 		doAdultCheck();
-	} else if (saiminAdultCheck == "1") {
+	} else if (saiminAdultCheck == "1"){
 		accepted();
-	} else if (saiminAdultCheck == "-1") {
+	} else if (saiminAdultCheck == "-1"){
 		forbidden();
 	}
 }
@@ -579,10 +579,10 @@ function drawType1(ctx, px, py, dx, dy){
 	ctx.strokeStyle = 'rgb(0, 0, 0)';
 	ctx.lineCap = 'square';
 
-	for (var i = 0; i <= ci; ++i) {
+	for (var i = 0; i <= ci; ++i){
 		var count = 0;
 		var x, y, oldx = qx, oldy = qy, f = 0.5;
-		for (var radius = 0; radius < size; radius += f) {
+		for (var radius = 0; radius < size; radius += f){
 			var theta = dr0 * count * 0.375;
 			var value = 0.3 * Math.sin(count2 * 0.04) + 0.7;
 
@@ -792,8 +792,8 @@ function drawType3(ctx, px, py, dx, dy){
 
 	ctx.lineWidth = 10;
 	var i = 0;
-	for (var r = (count2 * 2) % 100; r < cxy; r += 100) {
-		if (i < 3) {
+	for (var r = (count2 * 2) % 100; r < cxy; r += 100){
+		if (i < 3){
 			ctx.strokeStyle = "rgba(255, 20, 29, 0.9)";
 		} else {
 			ctx.strokeStyle = "rgba(255, 20, 29, 0.4)";
@@ -813,14 +813,14 @@ function drawType3(ctx, px, py, dx, dy){
 
 	var opened = 1.0;
 	var f = Math.sin(Math.abs(count2 * 0.1));
-	if (f >= 0.8) {
+	if (f >= 0.8){
 		opened = 0.6 + 0.4 * Math.abs(Math.sin(f * Math.PI));
 	}
 
 	const N = 4;
 	const delta = (2 * Math.PI) / N;
 	var radian = factor;
-	for (i = 0; i < N; ++i) {
+	for (i = 0; i < N; ++i){
 		var x = qx + cxy * Math.cos(radian) * 0.3;
 		var y = qy + cxy * Math.sin(radian) * 0.3;
 		eye(ctx, x, y, cxy / 10, opened);
@@ -850,7 +850,7 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 	var count2 = getCount();
 	var factor = count2 * 0.16;
 
-	if (isLargeDisplay()) {
+	if (isLargeDisplay()){
 		qx += 60 * Math.cos(factor * 0.8);
 		qy += 60 * Math.sin(factor * 0.8);
 	}else{
@@ -859,7 +859,7 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 	}
 
 	var isLarge = isLargeDisplay();
-	for (var radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.92) {
+	for (var radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.92){
 		var r0, g0, b0;
 		[r0, g0, b0] = hsv2rgb((dxy + factor * 0.3 - radius * 0.015) % 1.0, 1.0, 1.0);
 		ctx.fillStyle = `rgb(${r0*255},${g0*255},${b0*255})`;
@@ -867,7 +867,7 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 		var N0 = 20, N1 = 5;
 		var i = 0;
 		var oldx = null, oldy = null;
-		for (var angle = 0; angle <= 360; angle += 360 / N0) {
+		for (var angle = 0; angle <= 360; angle += 360 / N0){
 			var radian = (angle + count2 * 2) * (Math.PI / 180.0);
 			var factor2 = radius * (1 + 0.7 * Math.abs(Math.sin(N1 * i * Math.PI / N0)));
 			if (isLarge)
@@ -878,7 +878,7 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 				ctx.beginPath();
 				ctx.moveTo(x, y);
 			}else{
-				if ((i & 1) == 0) {
+				if ((i & 1) == 0){
 					ctx.bezierCurveTo(oldx, oldy, (x + oldx) / 2, (y + oldy) / 2, x, y);
 				}
 			}
@@ -897,24 +897,24 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 	ctx.fillStyle = grd;
 	circle(ctx, qx, qy, dxy, true);
 
-	if (t == 4) {
+	if (t == 4){
 		ctx.fillStyle = `rgb(255, 255, ${(factor * 10) % 255}, 0.8)`;
 		var M = 5;
-		for (var radius = (factor * 10) % 100; radius < dxy; radius += 100) {
-			for (var angle = 0; angle < 360; angle += 360 / M) {
+		for (var radius = (factor * 10) % 100; radius < dxy; radius += 100){
+			for (var angle = 0; angle < 360; angle += 360 / M){
 				var radian = angle * (Math.PI / 180.0);
 				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
 				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
 				light(ctx, x0, y0, (radius * 0.1) % 30 + 10);
 			}
 		}
-	} else if (t == 5) {
+	} else if (t == 5){
 		var value = factor * 25 + 10;
 		ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
 		var M = 5;
 		var heartSize = 30;
-		for (var radius = (factor * 10) % 100 + 30; radius < dxy; radius += 100) {
-			for (var angle = 0; angle < 360; angle += 360 / M) {
+		for (var radius = (factor * 10) % 100 + 30; radius < dxy; radius += 100){
+			for (var angle = 0; angle < 360; angle += 360 / M){
 				var radian = angle * (Math.PI / 180.0);
 				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
 				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
@@ -956,14 +956,14 @@ function draw(){
 
 	var x = cx / 2, y = cy / 2;
 
-	if (division == 1) {
+	if (division == 1){
 		drawType(ctx, 0, 0, cx, cy);
 		y += cy / 4;
-	} else if (division == -1) {
+	} else if (division == -1){
 		if (cx >= cy * 1.75){
 			drawType(ctx, 0, 0, cx / 2, cy);
 			drawType(ctx, cx / 2, 0, cx / 2, cy);
-		}else if (cy >= cx * 1.75) {
+		}else if (cy >= cx * 1.75){
 			drawType(ctx, 0, 0, cx, cy / 2);
 			drawType(ctx, 0, cy / 2, cx, cy / 2);
 		}else{
@@ -980,7 +980,7 @@ function draw(){
 		}
 	}
 
-	if (theText != '') {
+	if (theText != ''){
 		if (isLargeDisplay()){
 			y += 40 * Math.sin(counter * 0.1);
 			ctx.font = "40px sans-serif";
@@ -1007,7 +1007,7 @@ function draw(){
 		if (star){
 			ctx.fillStyle = `rgb(255, 255, 0, 0.8)`;
 			light(ctx, star[0], star[1], star[2]);
-			if (star[2] > 1.0) {
+			if (star[2] > 1.0){
 				star[2] -= 0.5;
 			}
 		}
@@ -1015,9 +1015,9 @@ function draw(){
 	stars.shift();
 	stars.push(null);
 
-	if (!in_text_dialog) {
-		if (old_cx !== null && old_cy !== null) {
-			if (window.innerWidth != old_cx || window.innerHeight != old_cy) {
+	if (!in_text_dialog){
+		if (old_cx !== null && old_cy !== null){
+			if (window.innerWidth != old_cx || window.innerHeight != old_cy){
 				fit();
 			}
 		}
