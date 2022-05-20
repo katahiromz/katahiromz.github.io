@@ -138,7 +138,7 @@ function addStar(x, y){
 	stars.shift();
 	x += (Math.random() - 0.5) * 2 * 20;
 	y += (Math.random() - 0.5) * 2 * 20;
-	var size = 5 + Math.random() * 5;
+	var size = 5 + Math.random() * 10;
 	stars.push([x, y, size]);
 }
 
@@ -1001,10 +1001,13 @@ function draw(){
 	}
 
 	for (var iStar = 0; iStar < stars.length; ++iStar){
-		if (stars[iStar]){
+		var star = stars[iStar];
+		if (star){
 			ctx.fillStyle = `rgb(255, 255, 0, 0.8)`;
-			var star = stars[iStar];
 			light(ctx, star[0], star[1], star[2]);
+			if (star[2] > 1.0) {
+				star[2] -= 0.5;
+			}
 		}
 	}
 	stars.shift();
