@@ -136,13 +136,17 @@ function cancelSpeech(){
 
 function addStar(x, y){
 	stars.shift();
-	x += (Math.random() - 0.5) * 2 * 20;
-	y += (Math.random() - 0.5) * 2 * 20;
-	var size = 5 + Math.random() * 10;
 	if (isLargeDisplay()){
-		size *= 2;
+		x += (Math.random() - 0.5) * 2 * 20 * 2;
+		y += (Math.random() - 0.5) * 2 * 20 * 2;
+		var size = 5 + Math.random() * 10 * 2;
+		stars.push([x, y, size]);
+	}else{
+		x += (Math.random() - 0.5) * 2 * 20;
+		y += (Math.random() - 0.5) * 2 * 20;
+		var size = 5 + Math.random() * 10;
+		stars.push([x, y, size]);
 	}
-	stars.push([x, y, size]);
 }
 
 async function playSpeech(text){
