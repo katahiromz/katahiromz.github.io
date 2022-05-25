@@ -164,7 +164,7 @@ async function playSpeech(text){
 		text = text.repeat(256);
 		var speech = new SpeechSynthesisUtterance(text);
 		speech.pitch = 1;
-		speech.rate = 0.2;
+		speech.rate = 0.3;
 		speech.lang = 'en-US';
 		
 		speechSynthesis.speak(speech);
