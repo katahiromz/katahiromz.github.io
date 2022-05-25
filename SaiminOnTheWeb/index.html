@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>Saimin On the Web</title>
+	<title>Hyponosis KraKra</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="keywords" content="Saimin on the web,Hypnosis Web app,Saimin Web app,katahiromz" />
 	<meta http-equiv="Content-Security-Policy" content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;" />
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<h1 id="caption">[(Saimin On the Web)]</h1>
+<h1 id="caption">[(Hyponosis KraKra)]</h1>
 
 <canvas id="canvas"></canvas>
 
@@ -57,7 +57,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Saimin On The Web Version 2.3
+Hyponosis KraKra Version 2.4
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
@@ -163,7 +163,10 @@ async function playSpeech(text){
 		text += '. ';
 		text = text.repeat(256);
 		var speech = new SpeechSynthesisUtterance(text);
+		speech.pitch = 1;
+		speech.rate = 0.2;
 		speech.lang = 'en-US';
+		
 		speechSynthesis.speak(speech);
 	}
 }
