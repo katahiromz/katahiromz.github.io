@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="jquery-ui.min.css">
 	<script src="complex.min.js"></script>
 	<link href="style.css" rel="stylesheet" type="text/css" />
+	<script src="mic.js"></script>
 </head>
 <body>
 
@@ -25,6 +26,8 @@
 	<option value="4">type4</option>
 	<option value="5">type5</option>
 </select>
+
+<label for="microphone"><input type="checkbox" id="microphone" />mic</label>
 
 <select id="sound-select" class="invisible">
 	<option value="0" selected></option>
@@ -56,7 +59,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.4
+Hyponosis KraKra Version 2.5
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
@@ -1043,6 +1046,20 @@ function draw(){
 }
 
 init();
+
+var micSetuped = false;
+let mic = document.getElementById('microphone');
+  mic.addEventListener('click', function(e){
+    if (mic.checked) {
+      if (!micSetuped) {
+        micSetup();
+        micSetuped = true;
+      }
+      voiceChange('distortion');
+    } else {
+      voiceChange('off');
+    }
+});
 </script>
 
 </body></html>
