@@ -166,8 +166,8 @@ async function playSpeech(text){
 		text = text.repeat(256);
 		var speech = new SpeechSynthesisUtterance(text);
 		speech.lang = 'ja-JP';
-		speech.pitch = 1;
-		speech.rate = 0.3;
+		speech.pitch = 0.6;
+		speech.rate = 0.4;
 		speechSynthesis.speak(speech);
 	}
 }
