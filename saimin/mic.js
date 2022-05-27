@@ -1,4 +1,4 @@
-var mic_audioCtx = null;
+var mic_context = null;
 var mic_distortion = null;
 var mic_gainNode = null;
 var mic_biquadFilter = null;
@@ -40,27 +40,27 @@ function mic_Setup(){
 }
 
 function mic_connect(){
-  mic_audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  mic_analyser = mic_audioCtx.createAnalyser();
+  mic_context = new (window.AudioContext || window.webkitAudioContext)();
+  mic_analyser = mic_context.createAnalyser();
   mic_analyser.minDecibels = -90;
   mic_analyser.maxDecibels = -10;
   mic_analyser.smoothingTimeConstant = 0.85;
 
-  mic_distortion = mic_audioCtx.createWaveShaper();
-  mic_gainNode = mic_audioCtx.createGain();
-  mic_biquadFilter = mic_audioCtx.createBiquadFilter();
+  mic_distortion = mic_context.createWaveShaper();
+  mic_gainNode = mic_context.createGain();
+  mic_biquadFilter = mic_context.createBiquadFilter();
 
   if (navigator.mediaDevices.getUserMedia){
     let constraints = {audio: true};
     navigator.mediaDevices.getUserMedia(constraints)
     .then(
       function(stream){
-        mic_source = mic_audioCtx.createMediaStreamSource(stream);
+        mic_source = mic_context.createMediaStreamSource(stream);
         mic_source.connect(mic_distortion);
         mic_distortion.connect(mic_biquadFilter);
         mic_biquadFilter.connect(mic_gainNode);
         mic_gainNode.connect(mic_analyser);
-        mic_analyser.connect(mic_audioCtx.destination);
+        mic_analyser.connect(mic_context.destination);
         mic_voiceChange();
     })
     .catch(function(err){
@@ -80,7 +80,7 @@ function mic_disconnect(){
   mic_biquadFilter.disconnect(0);
   mic_gainNode.disconnect(0);
   mic_analyser.disconnect(0);
-  mic_audioCtx = null;
+  mic_context = null;
   mic_distortion = null;
   mic_gainNode = null;
   mic_biquadFilter = null;
@@ -90,7 +90,7 @@ function mic_disconnect(){
 
 function mic_voiceChange(voiceSetting){
   mic_distortion.oversample = '4x';
-  mic_biquadFilter.gain.setTargetAtTime(0, mic_audioCtx.currentTime, 0)
+  mic_biquadFilter.gain.setTargetAtTime(0, mic_context.currentTime, 0)
 
   switch (voiceSetting){
   case 'distortion':
@@ -102,8 +102,8 @@ function mic_voiceChange(voiceSetting){
     mic_biquadFilter.disconnect(0);
     mic_biquadFilter.connect(mic_gainNode);
     mic_biquadFilter.type = "lowshelf";
-    mic_biquadFilter.frequency.setTargetAtTime(1000, mic_audioCtx.currentTime, 0)
-    mic_biquadFilter.gain.setTargetAtTime(25, mic_audioCtx.currentTime, 0)
+    mic_biquadFilter.frequency.setTargetAtTime(1000, mic_context.currentTime, 0)
+    mic_biquadFilter.gain.setTargetAtTime(25, mic_context.currentTime, 0)
     break;
   case 'off':
     mic_biquadFilter.disconnect(0);
