@@ -24,6 +24,7 @@ label[for='microphone'] {
 	z-index: 2;
 	padding: 0.10cm 0.0cm;
 	font-size: 0.5cm;
+	padding: 0.2cm;
 }
 #sound-select {
 	position: absolute;

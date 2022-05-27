@@ -72,8 +72,6 @@ function mic_connect(){
 }
 
 function mic_disconnect(){
-  let constraints = {audio: false};
-  navigator.mediaDevices.getUserMedia(constraints)
   mic_biquadFilter.disconnect(0);
   mic_source.disconnect(0);
   mic_distortion.disconnect(0);
