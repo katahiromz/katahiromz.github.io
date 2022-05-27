@@ -1047,18 +1047,21 @@ function draw(){
 
 init();
 
-var micSetuped = false;
+let mic_setuped = false;
 let mic = document.getElementById('microphone');
-  mic.addEventListener('click', function(e){
-    if (mic.checked) {
-      if (!micSetuped) {
-        micSetup();
-        micSetuped = true;
-      }
-      voiceChange('distortion');
-    } else {
-      voiceChange('off');
+mic.addEventListener('click', function(e){
+  if (mic.checked){
+    if (!mic_setuped){
+      mic_Setup();
+      mic_setuped = true;
     }
+    mic_connect();
+    mic_gainNode.value = 2.0;
+    mic_voiceChange('biquad');
+  } else {
+    mic_voiceChange('off');
+    mic_disconnect();
+  }
 });
 </script>
 
