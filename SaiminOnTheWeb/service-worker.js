@@ -135,11 +135,3 @@ function offlineAsset(url) {
     return caches.match(offlineURL);
   }
 }
-
-// load script to populate offline page list
-if (document.getElementById('cachedpagelist') && 'caches' in window) {
-  var scr = document.createElement('script');
-  scr.src = './offlinepage.js';
-  scr.async = 1;
-  document.head.appendChild(scr);
-}
