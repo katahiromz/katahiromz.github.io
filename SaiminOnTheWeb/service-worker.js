@@ -95,6 +95,7 @@ self.addEventListener('fetch', event => {
             return fetch(event.request)
               .then(newreq => {
                 console.log('network fetch: ' + url);
+                console.log(newreq);
                 if (newreq.ok) cache.put(event.request, newreq.clone());
                 return newreq;
               })
