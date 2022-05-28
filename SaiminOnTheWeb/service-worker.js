@@ -81,7 +81,6 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   let url = event.request.url;
-  
   const largeFiles = [
     'sn/sn2.mp3',
     'sn/sn3.mp3',
@@ -93,7 +92,6 @@ self.addEventListener('fetch', event => {
   ];
   for (file in largeFiles) {
     if (url.endsWith(file)) {
-      event.respondWith(cacheFallingBackToNetwork(event));
       return;
     }
   }
