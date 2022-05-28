@@ -60,7 +60,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.6
+Hyponosis KraKra Version 2.7.0
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
@@ -493,6 +493,10 @@ function init(){
 			mic_disconnect();
 		}
 	});
+
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./service-worker.js');
+	}
 }
 
 function circle(ctx, x, y, radius, is_fill = true){
