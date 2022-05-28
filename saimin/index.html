@@ -476,6 +476,20 @@ function init(){
 	} else if (saiminAdultCheck == "-1"){
 		forbidden();
 	}
+
+	let mic_isInited = false;
+	let mic = document.getElementById('microphone');
+	mic.addEventListener('click', function(e){
+		if (mic.checked){
+			if (!mic_isInited){
+				mic_setup();
+				mic_isInited = true;
+			}
+			mic_connect();
+		} else {
+			mic_disconnect();
+		}
+	});
 }
 
 function circle(ctx, x, y, radius, is_fill = true){
@@ -528,21 +542,21 @@ function eye(ctx, x0, y0, r, opened = 1.0){
 }
 
 function light(ctx, x0, y0, radius){
-    var r0 = radius;
-    var rmid = radius * 0.333;
-    ctx.beginPath();
-    ctx.moveTo(x0 - r0, y0);
-    ctx.lineTo(x0, y0 + rmid);
-    ctx.lineTo(x0 + r0, y0);
-    ctx.lineTo(x0, y0 - rmid);
-    ctx.fill();
-    
-    ctx.beginPath();
-    ctx.moveTo(x0, y0 - r0);
-    ctx.lineTo(x0 + rmid, y0);
-    ctx.lineTo(x0, y0 + r0);
-    ctx.lineTo(x0 - rmid, y0);
-    ctx.fill();
+	var r0 = radius;
+	var rmid = radius * 0.333;
+	ctx.beginPath();
+	ctx.moveTo(x0 - r0, y0);
+	ctx.lineTo(x0, y0 + rmid);
+	ctx.lineTo(x0 + r0, y0);
+	ctx.lineTo(x0, y0 - rmid);
+	ctx.fill();
+	
+	ctx.beginPath();
+	ctx.moveTo(x0, y0 - r0);
+	ctx.lineTo(x0 + rmid, y0);
+	ctx.lineTo(x0, y0 + r0);
+	ctx.lineTo(x0 - rmid, y0);
+	ctx.fill();
 }
 
 function drawType0(ctx, px, py, dx, dy){
@@ -1044,20 +1058,6 @@ function draw(){
 }
 
 init();
-
-let mic_isInited = false;
-let mic = document.getElementById('microphone');
-mic.addEventListener('click', function(e){
-  if (mic.checked){
-    if (!mic_isInited){
-      mic_setup();
-      mic_isInited = true;
-    }
-    mic_connect();
-  } else {
-    mic_disconnect();
-  }
-});
 </script>
 
 </body></html>
