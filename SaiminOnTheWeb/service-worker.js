@@ -81,7 +81,22 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   let url = event.request.url;
-  const destination = fetchEvent.request.destination;
+  
+  const largeFiles = [
+    'sn/sn2.mp3',
+    'sn/sn3.mp3',
+    'sn/sn4.mp3',
+    'sn/sn5.mp3',
+    'sn/sn6.mp3',
+    'sn/sn7.mp3',
+    'sn/sn8.mp3'
+  ];
+  for (file in largeFiles) {
+    if (url.endsWith(file)) {
+      event.respondWith(cacheFallingBackToNetwork(event));
+      return;
+    }
+  }
   event.respondWith(
     caches.open(CACHE)
       .then(cache => {
