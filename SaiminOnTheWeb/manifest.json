@@ -10,6 +10,7 @@
   "display": "minimal-ui",
   "description": "It's a hypnotic web app.",
   "shortcuts": [],
+  "orientation": "any",
   "icons": [
     {
       "src": "icons/icon-48.png",
