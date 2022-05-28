@@ -17,7 +17,7 @@ label, input[type='checkbox'] {
 	padding: 0.10cm 0.0cm;
 	font-size: 0.5cm;
 }
-label[for='microphone'] {
+#microphone-label {
 	position: absolute;
 	left: 0;
 	bottom: 0.8cm;
@@ -87,7 +87,7 @@ textarea {
 		left: 0;
 		bottom: 1.0cm;
 	}
-	label[for='microphone'] {
+	#microphone-label {
 		left: 0;
 		bottom: 1.8cm;
 	}
@@ -118,7 +118,7 @@ textarea {
 		bottom: 0;
 		font-size: 0.8cm;
 	}
-	label[for='microphone'] {
+	#microphone-label {
 		left: 0;
 		bottom: 1.0cm;
 		font-size: 0.8cm;
@@ -154,7 +154,7 @@ textarea {
 		bottom: 0;
 		font-size: 1.5cm;
 	}
-	label[for='microphone'] {
+	#microphone-label {
 		left: 0;
 		bottom: 1.5cm;
 		font-size: 1.5cm;
