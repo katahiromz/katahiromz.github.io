@@ -81,6 +81,7 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   let url = event.request.url;
+  const destination = fetchEvent.request.destination;
   event.respondWith(
     caches.open(CACHE)
       .then(cache => {
@@ -95,7 +96,7 @@ self.addEventListener('fetch', event => {
             return fetch(event.request)
               .then(newreq => {
                 console.log('network fetch: ' + url);
-                console.log(newreq);
+                console.log(destination);
                 if (newreq.ok) cache.put(event.request, newreq.clone());
                 return newreq;
               })
