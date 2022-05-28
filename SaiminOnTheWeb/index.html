@@ -28,7 +28,7 @@
 	<option value="5">type5</option>
 </select>
 
-<label for="microphone"><input type="checkbox" id="microphone" />mic</label>
+<label for="microphone"><input type="checkbox" id="microphone" class="invisible" />mic</label>
 
 <select id="sound-select" class="invisible">
 	<option value="0" selected></option>
@@ -259,6 +259,7 @@ function accepted(){
 	$('#type-select').removeClass('invisible');
 	$('#sound-select').removeClass('invisible');
 	$('#division-select').removeClass('invisible');
+	$('#microphone').removeClass('invisible');
 	window.requestAnimationFrame(draw);
 }
 
