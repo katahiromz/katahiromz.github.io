@@ -1,7 +1,7 @@
 // cache name
 const
   CACHE = '::PWAsite',
-  offlineURL = './index.html',
+  offlineURL = 'index.html',
   list = document.getElementById('cachedpagelist');
 
 // fetch all caches
@@ -31,7 +31,6 @@ window.caches.keys()
                   a.textContent = a.pathname;
                   frag.appendChild(li);
               });
-
             if (list) list.appendChild(frag);
           });
       })
