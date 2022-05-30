@@ -68,7 +68,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.7.1
+Hyponosis KraKra Version 2.7.2
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
@@ -79,6 +79,7 @@ Hyponosis KraKra Version 2.7.1
 - Please keep in mind in advance the possibility that some effects on the psyche may occur.
 - The benefits of the software cannot be insisted by the Medical Practitioners Act in some countries.
 - Persons under 18 years of age are prohibited from using this software.
+- Do not use this software if you have epilepsy symptoms.
 - Please do not try this software on young child. It may cause parent-child disagreement and mental illness.
 - Acute schizophrenic patients should not use this software.
 - Repeated use of this software may lead to slower reactions and reducing social skills.
@@ -253,6 +254,22 @@ function forbidden(){
 	});
 }
 
+function help(){
+	$("#notice-text").width(window.innerWidth * 2 / 3);
+	$("#notice-text").height(window.innerHeight * 2 / 5);
+	$("#about-dialog").dialog({
+		dialogClass: "no-close",
+		title: "About this app",
+		buttons: [{
+			text: "OK",
+			click: function(){
+				$(this).dialog('close');
+			},
+		}],
+		width: window.innerWidth * 5 / 6,
+	});
+}
+
 function accepted(){
 	ready = true;
 	localStorage.setItem('saiminAdultCheck', '1');
@@ -281,6 +298,7 @@ function doAdultCheck(){
 				click: function(){
 					$(this).dialog('close');
 					accepted();
+					help();
 				},
 			},
 			{
@@ -366,19 +384,7 @@ function init(){
 	});
 
 	$("#about-button").click(function(){
-		$("#notice-text").width(window.innerWidth * 2 / 3);
-		$("#notice-text").height(window.innerHeight * 2 / 5);
-		$("#about-dialog").dialog({
-			dialogClass: "no-close",
-			title: "About this app",
-			buttons: [{
-				text: "OK",
-				click: function(){
-					$(this).dialog('close');
-				},
-			}],
-			width: window.innerWidth * 5 / 6,
-		});
+		help();
 	});
 
 	var type_select = document.getElementById('type-select');
@@ -426,6 +432,10 @@ function init(){
 			setType(type % NUM_TYPE + 1);
 		}
 		type_select.value = type.toString();
+		let kirakira_sound = new Audio("kirakira.mp3");
+		if (kirakira_sound){
+			kirakira_sound.play();
+		}
 	}, false);
 
 	document.getElementById('canvas').addEventListener('mousemove', function(e){
@@ -445,7 +455,7 @@ function init(){
 		if (touchmoving){
 			var touches = e.touches;
 			if (touches && touches.length == 1){
-				 addStar(touches[0].clientX, touches[0].clientY);
+				addStar(touches[0].clientX, touches[0].clientY);
 			}
 		}
 	}, {passive: true});

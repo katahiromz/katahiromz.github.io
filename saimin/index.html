@@ -68,7 +68,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ「くらくら」 Version 2.7.1
+催眠ウェブアプリ「くらくら」 Version 2.7.2
 
 ※ ソース: https://github.com/katahiromz/katahiromz.github.io
 ※ 一部、OtoLogicの音声素材を使用。
@@ -79,6 +79,7 @@
 - 精神に何らかの影響が発生する可能性をあらかじめ留意して下さい。
 - 医師法により効用をうたうことはできません。
 - 18才未満は使用禁止です。
+- てんかんの症状のある方は使用しないで下さい。
 - 幼い子どもに試すのはやめて下さい。親子の不仲と精神異常の恐れがあります。
 - 急性期の統合失調症患者は使用禁止です。
 - 繰り返し使用すると、反応が鈍くなり、社会性が低下する恐れがあります。
@@ -270,6 +271,22 @@ function accepted(){
 	window.requestAnimationFrame(draw);
 }
 
+function help(){
+	$("#notice-text").width(window.innerWidth * 2 / 3);
+	$("#notice-text").height(window.innerHeight * 2 / 5);
+	$("#about-dialog").dialog({
+		dialogClass: "no-close",
+		title: "バージョン情報",
+		buttons: [{
+			text: "OK",
+			click: function(){
+				$(this).dialog('close');
+			},
+		}],
+		width: window.innerWidth * 5 / 6,
+	});
+}
+
 function doAdultCheck(){
 	$("#adult-check-dialog").dialog({
 		dialogClass: "no-close",
@@ -280,6 +297,7 @@ function doAdultCheck(){
 				click: function(){
 					$(this).dialog('close');
 					accepted();
+					help();
 				},
 			},
 			{
@@ -364,19 +382,7 @@ function init(){
 	});
 
 	$("#about-button").click(function(){
-		$("#notice-text").width(window.innerWidth * 2 / 3);
-		$("#notice-text").height(window.innerHeight * 2 / 5);
-		$("#about-dialog").dialog({
-			dialogClass: "no-close",
-			title: "バージョン情報",
-			buttons: [{
-				text: "OK",
-				click: function(){
-					$(this).dialog('close');
-				},
-			}],
-			width: window.innerWidth * 5 / 6,
-		});
+		help();
 	});
 
 	var type_select = document.getElementById('type-select');
@@ -424,6 +430,10 @@ function init(){
 			setType(type % NUM_TYPE + 1);
 		}
 		type_select.value = type.toString();
+		var kirakira_sound = new Audio("kirakira.mp3");
+		if (kirakira_sound){
+			kirakira_sound.play();
+		}
 	}, false);
 
 	document.getElementById('canvas').addEventListener('mousemove', function(e){
