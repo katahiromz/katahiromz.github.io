@@ -81,6 +81,7 @@ self.addEventListener('fetch', event => {
   // abandon non-GET requests
   if (event.request.method !== 'GET') return;
 
+  // TODO: Add large files
   let url = event.request.url;
   const largeFiles = [
     'sn/sn2.mp3',
@@ -89,7 +90,8 @@ self.addEventListener('fetch', event => {
     'sn/sn5.mp3',
     'sn/sn6.mp3',
     'sn/sn7.mp3',
-    'sn/sn8.mp3'
+    'sn/sn8.mp3',
+    'kirakira.mp3'
   ];
   for (file in largeFiles) {
     if (url.endsWith(file)) {
