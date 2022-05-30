@@ -68,7 +68,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.7.3
+Hyponosis KraKra Version 2.7.4
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
@@ -523,6 +523,10 @@ function init(){
 		scr.async = 1;
 		document.head.appendChild(scr);
 	}
+
+	// make kirakira sound quickly playable
+	var kirakira_sound_cache = new Audio("kirakira.mp3");
+	kirakira_sound_cache = null;
 }
 
 function circle(ctx, x, y, radius, is_fill = true){

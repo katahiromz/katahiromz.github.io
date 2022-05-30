@@ -68,7 +68,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ「くらくら」 Version 2.7.3
+催眠ウェブアプリ「くらくら」 Version 2.7.4
 
 ※ ソース: https://github.com/katahiromz/katahiromz.github.io
 ※ 一部、OtoLogicの音声素材を使用。
@@ -521,6 +521,10 @@ function init(){
 		scr.async = 1;
 		document.head.appendChild(scr);
 	}
+
+	// make kirakira sound quickly playable
+	var kirakira_sound_cache = new Audio("kirakira.mp3");
+	kirakira_sound_cache = null;
 }
 
 function circle(ctx, x, y, radius, is_fill = true){
