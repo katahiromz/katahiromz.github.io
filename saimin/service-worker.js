@@ -1,6 +1,6 @@
 // configuration
 const
-  version = '2.7.9',
+  version = '2.8.0',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -26,8 +26,7 @@ const
     'images/ui-icons_777620_256x240.png',
     'images/ui-icons_777777_256x240.png',
     'images/ui-icons_cc0000_256x240.png',
-    'images/ui-icons_ffffff_256x240.png',
-    'kirakira.mp3'
+    'images/ui-icons_ffffff_256x240.png'
   ];
 
 // install static assets
