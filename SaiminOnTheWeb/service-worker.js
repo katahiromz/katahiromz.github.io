@@ -1,6 +1,6 @@
 // configuration
 const
-  version = '2.8.1',
+  version = '2.8.2',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -80,8 +80,12 @@ self.addEventListener('fetch', event => {
   // abandon non-GET requests
   if (event.request.method !== 'GET') return;
 
-  // TODO: Add large files
   let url = event.request.url;
+  if (url.endsWith('/')) {
+    return;
+  }
+
+  // TODO: Add large files
   const largeFiles = [
     'sn/sn2.mp3',
     'sn/sn3.mp3',
