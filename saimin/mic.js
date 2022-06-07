@@ -28,13 +28,15 @@ function mic_connect(){
   mic_analyser.minDecibels = -90;
   mic_analyser.maxDecibels = -10;
   mic_analyser.smoothingTimeConstant = 0.85;
-
   mic_gainNode = mic_context.createGain();
   mic_biquadFilter = mic_context.createBiquadFilter();
 
   if (navigator.mediaDevices.getUserMedia){
-    let constraints = {audio: true};
-    navigator.mediaDevices.getUserMedia(constraints)
+    navigator.mediaDevices.getUserMedia({
+      audio: {
+        autoGainControl: true
+      }
+    })
     .then(
       function(stream){
         mic_source = mic_context.createMediaStreamSource(stream);
@@ -42,7 +44,7 @@ function mic_connect(){
         mic_biquadFilter.connect(mic_gainNode);
         mic_gainNode.connect(mic_analyser);
         mic_analyser.connect(mic_context.destination);
-        mic_biquadFilter.gain.setTargetAtTime(0, mic_context.currentTime, 0)
+        mic_biquadFilter.gain.setTargetAtTime(0, mic_context.currentTime, 0);
     })
     .catch(function(err){
       console.log('The following gUM error occured: ' + err);
@@ -55,9 +57,8 @@ function mic_connect(){
   mic_biquadFilter.gain.setTargetAtTime(0, mic_context.currentTime, 0)
   mic_biquadFilter.disconnect(0);
   mic_biquadFilter.connect(mic_gainNode);
-  mic_biquadFilter.type = "lowshelf";
-  mic_biquadFilter.frequency.setTargetAtTime(1000, mic_context.currentTime, 0)
-  mic_biquadFilter.gain.setTargetAtTime(25, mic_context.currentTime, 0)
+  mic_biquadFilter.type = "lowpass";
+  mic_biquadFilter.frequency.value = 400;
 }
 
 function mic_disconnect(){
