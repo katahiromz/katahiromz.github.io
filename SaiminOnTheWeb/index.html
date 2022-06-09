@@ -68,7 +68,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.8.4
+Hyponosis KraKra Version 2.8.5
 
 This software is a hypnotic web application. It is free of charge except cost of electricity and packet communication fees.
 
@@ -526,7 +526,7 @@ function init(){
 	});
 
 	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('./service-worker.js');
+		navigator.serviceWorker.register('./service-worker.js', {scope: './'});
 	}
 
 	// load script to populate offline page list
