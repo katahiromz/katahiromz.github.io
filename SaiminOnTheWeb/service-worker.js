@@ -21,6 +21,7 @@ const
     'icons/icon-192.png',
     'icons/icon-256.png',
     'icons/icon-512.png',
+    'icons/icon-maskable-256.png',
     'images/ui-icons_444444_256x240.png',
     'images/ui-icons_555555_256x240.png',
     'images/ui-icons_777620_256x240.png',
