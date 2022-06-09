@@ -1,6 +1,6 @@
 // configuration
 const
-  version = '2.8.8',
+  version = '2.8.9',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -22,6 +22,7 @@ const
     'icons/icon-256.png',
     'icons/icon-512.png',
     'icons/icon-maskable-256.png',
+    'icons/apple-touch-icon.png',
     'images/ui-icons_444444_256x240.png',
     'images/ui-icons_555555_256x240.png',
     'images/ui-icons_777620_256x240.png',
