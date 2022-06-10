@@ -70,7 +70,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ「くらくら」 Version 2.8.9
+催眠ウェブアプリ「くらくら」 Version 2.9.0
 
 本ソフトウェアは催眠っぽいWebアプリです。電気代・パケット通信費以外は無料でご利用できます。
 
@@ -156,8 +156,8 @@ var stars = new Array(32);
 var touchmoving = false;
 
 function cancelSpeech(){
-	if (speechSynthesis.cancel){
-		speechSynthesis.cancel();
+	if (window.speechSynthesis){
+		window.speechSynthesis.cancel();
 	}
 }
 
@@ -182,7 +182,7 @@ async function playSpeech(text){
 	if (text == ''){
 		return;
 	}
-	if (speechSynthesis.cancel){
+	if (window.speechSynthesis){
 		while (text.slice(-1) == '。')
 			text = text.slice(0, -1);
 		if (text == '')
@@ -193,7 +193,7 @@ async function playSpeech(text){
 		speech.lang = 'ja-JP';
 		speech.pitch = 0.6;
 		speech.rate = 0.4;
-		speechSynthesis.speak(speech);
+		window.speechSynthesis.speak(speech);
 	}
 }
 
