@@ -239,9 +239,7 @@ function forbidden(){
 }
 
 function help(){
-	$('#notice-text').scrollTop(0);
-	$("#notice-text").width(window.innerWidth * 2 / 3);
-	$("#notice-text").height(window.innerHeight * 2 / 5);
+	$("#notice-text").width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
 	$("#about-dialog").dialog({
 		dialogClass: "no-close",
 		title: "About this app",
@@ -253,6 +251,17 @@ function help(){
 		}],
 		width: window.innerWidth * 5 / 6,
 	});
+}
+
+function updateVersionDisplay(){
+	let nativeVersion = getNativeAppVersion();
+	let text = copyright_text;
+	if (nativeVersion){
+		text = text.replace('[[VERSION]]', nativeVersion + '(native) / ' + VERSION + '(web)');
+	}else{
+		text = text.replace('[[VERSION]]', VERSION + '(web)');
+	}
+	$('#notice-text').text(text);
 }
 
 function accepted(){
@@ -273,14 +282,7 @@ function accepted(){
 	if (isNativeApp()){
 		$('#caption').addClass('invisible');
 	}
-	let nativeVersion = getNativeAppVersion();
-	let text = copyright_text;
-	if (nativeVersion){
-		text = text.replace('[[VERSION]]', nativeVersion + '(native) / ' + VERSION + '(web)');
-	}else{
-		text = text.replace('[[VERSION]]', VERSION + '(web)');
-	}
-	$('#notice-text').text(text);
+	updateVersionDisplay();
 	window.requestAnimationFrame(draw);
 }
 
