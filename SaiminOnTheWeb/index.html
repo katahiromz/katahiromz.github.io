@@ -74,7 +74,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.9.1
+Hyponosis KraKra Version 2.9.2
 
 This software is a hypnotic web application. It is free of charge except cost of electricity and packet communication fees.
 
@@ -158,6 +158,10 @@ var in_text_dialog = false;
 var after_text_dialog = false;
 var stars = new Array(32);
 var touchmoving = false;
+
+function isNativeApp(){
+	return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
+}
 
 function cancelSpeech(){
 	if (window.speechSynthesis){
@@ -343,7 +347,7 @@ function init(){
 
 	window.addEventListener('resize', function(){
 		if (!in_text_dialog && !after_text_dialog){
-			if (location.hostname == ''){
+			if (location.hostname == '' || isNativeApp()){
 				fit();
 			} else {
 				location.reload();
