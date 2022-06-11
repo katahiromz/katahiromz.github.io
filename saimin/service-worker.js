@@ -1,6 +1,6 @@
 // configuration
 const
-  version = '2.9.9',
+  version = '3.0.0',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
