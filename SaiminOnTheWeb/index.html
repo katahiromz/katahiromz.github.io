@@ -275,9 +275,9 @@ function accepted(){
 	let nativeVersion = getNativeAppVersion();
 	let text = copyright_text;
 	if (nativeVersion){
-		text = text.replace('[[VERSION]]', nativeVersion);
+		text = text.replace('[[VERSION]]', nativeVersion + '(native) / ' + VERSION + '(web)');
 	}else{
-		text = text.replace('[[VERSION]]', VERSION);
+		text = text.replace('[[VERSION]]', VERSION + '(web)');
 	}
 	$('#notice-text').text(text);
 	window.requestAnimationFrame(draw);
