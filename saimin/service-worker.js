@@ -1,6 +1,6 @@
 // configuration
 const
-  version = '2.9.5',
+  version = '2.9.6',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -12,7 +12,8 @@ const
     'jquery-ui.min.css',
     'jquery-ui.min.js',
     'mic.js',
-    'service-worker.js'
+    'service-worker.js',
+    'copyright.js'
   ],
   installFilesDesirable = [
     'favicon.ico',
