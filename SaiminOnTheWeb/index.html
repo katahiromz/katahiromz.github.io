@@ -71,10 +71,12 @@
 	(Please tap here)
 </div>
 
+<div id="floating-text"></div>
+
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.9.4
+Hyponosis KraKra Version 2.9.5
 
 This software is a hypnotic application.
 
@@ -260,6 +262,7 @@ function setText(txt){
 		cancelSpeech();
 		setSound(sound_select.value);
 	}
+	$("#floating-text").text(theText);
 }
 
 function fit(){
@@ -1050,11 +1053,12 @@ function drawType(ctx, px, py, cx, cy){
 function draw(){
 	var ctx = document.getElementById('canvas').getContext('2d');
 
-	var x = cx / 2, y = cy / 2;
+	var x = cx / 2, y = cy / 2, delta_percent = 0;
 
 	if (division == 1){
 		drawType(ctx, 0, 0, cx, cy);
 		y += cy / 4;
+		delta_percent = 25;
 	} else if (division == -1){
 		if (cx >= cy * 1.75){
 			drawType(ctx, 0, 0, cx / 2, cy);
@@ -1065,6 +1069,7 @@ function draw(){
 		}else{
 			drawType(ctx, 0, 0, cx, cy);
 			y += cy / 4;
+			delta_percent = 25;
 		}
 	} else {
 		if (cx >= cy){
@@ -1077,27 +1082,11 @@ function draw(){
 	}
 
 	if (theText != ''){
-		if (isLargeDisplay()){
-			y += 40 * Math.sin(counter * 0.1);
-			ctx.font = "40px sans-serif";
-		}else{
-			y += 20 * Math.sin(counter * 0.1);
-			ctx.font = "20px sans-serif";
-		}
-		ctx.textBaseline = "middle";
-
-		var metrics = ctx.measureText(theText);
-		var dx = metrics.width;
-		var dy = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-		var padding = 10;
-
-		ctx.fillStyle = 'rgb(0, 0, 0)';
-		ctx.beginPath();
-		ctx.rect(x - dx / 2 - padding, y - dy / 2 - padding, dx + 2*padding, dy + 2*padding);
-		ctx.fill();
-
-		ctx.fillStyle = 'rgb(255, 255, 255)';
-		ctx.fillText(theText, x - dx / 2, y);
+		$("#floating-text").removeClass('invisible');
+		let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + "%";
+		document.getElementById("floating-text").style.top = top;
+	}else{
+		$("#floating-text").addClass('invisible');
 	}
 
 	for (var iStar = 0; iStar < stars.length; ++iStar){
