@@ -127,12 +127,12 @@ function addStar(x, y){
 	if (isLargeDisplay()){
 		x += (Math.random() - 0.5) * 2 * 20 * 2;
 		y += (Math.random() - 0.5) * 2 * 20 * 2;
-		var size = 5 + Math.random() * 10 * 2;
+		let size = 5 + Math.random() * 10 * 2;
 		stars.push([x, y, size]);
 	}else{
 		x += (Math.random() - 0.5) * 2 * 20;
 		y += (Math.random() - 0.5) * 2 * 20;
-		var size = 5 + Math.random() * 10;
+		let size = 5 + Math.random() * 10;
 		stars.push([x, y, size]);
 	}
 }
@@ -175,7 +175,7 @@ function setSound(value){
 	if (value == 'msg'){
 		playSpeech(theText);
 	}else{
-		sound = new Audio("sn/sn" + value + ".mp3")
+		sound = new Audio("sn/sn" + value + ".mp3");
 		sound.loop = true;
 		sound.play();
 	}
@@ -800,6 +800,7 @@ function drawType3(ctx, px, py, dx, dy){
 				h = (0.8 + factor * 1.2) % 1.0;
 				break;
 			}
+			let r, g, b;
 			[r, g, b] = hsv2rgb(h, s, v);
 
 			if (r > 0.8)
@@ -880,8 +881,8 @@ function drawType3(ctx, px, py, dx, dy){
 	const delta = (2 * Math.PI) / N;
 	var radian = factor;
 	for (i = 0; i < N; ++i){
-		var x = qx + cxy * Math.cos(radian) * 0.3;
-		var y = qy + cxy * Math.sin(radian) * 0.3;
+		let x = qx + cxy * Math.cos(radian) * 0.3;
+		let y = qy + cxy * Math.sin(radian) * 0.3;
 		eye(ctx, x, y, cxy / 10, opened);
 		radian += delta;
 	}
@@ -937,7 +938,7 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 				ctx.beginPath();
 				ctx.moveTo(x, y);
 			}else{
-				if ((i & 1) == 0){
+				if ((i % 2) == 0){
 					ctx.bezierCurveTo(oldx, oldy, (x + oldx) / 2, (y + oldy) / 2, x, y);
 				}
 			}
@@ -958,25 +959,25 @@ function drawType4_5(ctx, px, py, dx, dy, t){
 
 	if (t == 4){
 		ctx.fillStyle = `rgb(255, 255, ${(factor * 10) % 255}, 0.8)`;
-		var M = 5;
-		for (var radius = (factor * 10) % 100; radius < dxy; radius += 100){
-			for (var angle = 0; angle < 360; angle += 360 / M){
-				var radian = angle * (Math.PI / 180.0);
-				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
-				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
+		let M = 5;
+		for (let radius = (factor * 10) % 100; radius < dxy; radius += 100){
+			for (let angle = 0; angle < 360; angle += 360 / M){
+				let radian = angle * (Math.PI / 180.0);
+				let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
+				let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
 				light(ctx, x0, y0, (radius * 0.1) % 30 + 10);
 			}
 		}
 	} else if (t == 5){
 		var value = factor * 25 + 10;
 		ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
-		var M = 5;
+		let M = 5;
 		var heartSize = 30;
-		for (var radius = (factor * 10) % 100 + 30; radius < dxy; radius += 100){
+		for (let radius = (factor * 10) % 100 + 30; radius < dxy; radius += 100){
 			for (var angle = 0; angle < 360; angle += 360 / M){
-				var radian = angle * (Math.PI / 180.0);
-				var x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
-				var y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
+				let radian = angle * (Math.PI / 180.0);
+				let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
+				let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
 				heart(ctx, x0, y0, x0, y0 + heartSize + value % 191 / 12);
 			}
 			heartSize += 5;
