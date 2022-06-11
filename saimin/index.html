@@ -103,7 +103,7 @@ var in_text_dialog = false;
 var after_text_dialog = false;
 var stars = new Array(32);
 var touchmoving = false;
-const VERSION = '2.9.8';
+const VERSION = '2.9.9';
 
 function isNativeApp(){
 	return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
@@ -267,6 +267,7 @@ function accepted(){
 }
 
 function help(){
+	$('#notice-text').scrollTop(0);
 	$("#notice-text").width(window.innerWidth * 2 / 3);
 	$("#notice-text").height(window.innerHeight * 2 / 5);
 	$("#about-dialog").dialog({

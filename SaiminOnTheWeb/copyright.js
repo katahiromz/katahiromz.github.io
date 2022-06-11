@@ -1,4 +1,4 @@
-let copyright_text = `Hyponosis KraKra Version [[VERSION]]
+﻿let copyright_text = `Hyponosis KraKra Version [[VERSION]]
 
 This software is a hypnotic application.
 
