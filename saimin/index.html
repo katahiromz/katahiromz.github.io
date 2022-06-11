@@ -74,7 +74,7 @@
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ「くらくら」 Version 2.9.2
+催眠ウェブアプリ「くらくら」 Version 2.9.3
 
 本ソフトウェアは催眠っぽいWebアプリです。電気代・パケット通信費以外は無料でご利用できます。
 
@@ -298,6 +298,9 @@ function accepted(){
 	$('#sound-select').removeClass('invisible');
 	$('#division-select').removeClass('invisible');
 	$('#microphone-label').removeClass('invisible');
+	if (isNativeApp()){
+		$('#caption').addClass('invisible');
+	}
 	window.requestAnimationFrame(draw);
 }
 

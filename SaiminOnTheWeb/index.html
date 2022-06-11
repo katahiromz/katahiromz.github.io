@@ -74,7 +74,7 @@
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.9.2
+Hyponosis KraKra Version 2.9.3
 
 This software is a hypnotic web application. It is free of charge except cost of electricity and packet communication fees.
 
@@ -242,7 +242,7 @@ function setType(value){
 	if (!ready)
 		return;
 	type = parseInt(value);
-	if (type == 0) {
+	if (type == 0){
 		$('#please-tap-here').removeClass('invisible');
 	} else  {
 		$('#please-tap-here').addClass('invisible');
@@ -314,6 +314,9 @@ function accepted(){
 	$('#sound-select').removeClass('invisible');
 	$('#division-select').removeClass('invisible');
 	$('#microphone-label').removeClass('invisible');
+	if (isNativeApp()){
+		$('#caption').addClass('invisible');
+	}
 	window.requestAnimationFrame(draw);
 }
 
@@ -541,13 +544,13 @@ function init(){
 		}
 	});
 
-	if (location.protocol != 'file:') {
-		if ('serviceWorker' in navigator) {
+	if (location.protocol != 'file:'){
+		if ('serviceWorker' in navigator){
 			navigator.serviceWorker.register('./service-worker.js', {scope: './'});
 		}
 
 		// load script to populate offline page list
-		if (document.getElementById('cachedpagelist') && 'caches' in window) {
+		if (document.getElementById('cachedpagelist') && 'caches' in window){
 			var scr = document.createElement('script');
 			scr.src = './offlinepage.js';
 			scr.async = 1;
