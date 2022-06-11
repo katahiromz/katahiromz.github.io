@@ -1085,7 +1085,9 @@ function draw(){
 		var padding = 10;
 
 		ctx.fillStyle = 'rgb(0, 0, 0)';
-		ctx.fillRect(x - dx / 2 - padding, y - dy / 2 - padding, dx + 2*padding, dy + 2*padding);
+		ctx.beginPath();
+		ctx.rect(x - dx / 2 - padding, y - dy / 2 - padding, dx + 2*padding, dy + 2*padding);
+		ctx.fill();
 
 		ctx.fillStyle = 'rgb(255, 255, 255)';
 		ctx.fillText(theText, x - dx / 2, y);
