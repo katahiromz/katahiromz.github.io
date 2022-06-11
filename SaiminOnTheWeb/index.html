@@ -67,10 +67,14 @@
 	<input type="text" size="20" maxlength="20" id="textbox" x-webkit-speech lang="en" />
 </div>
 
+<div id="please-tap-here" class="invisible">
+	(Please tap here)
+</div>
+
 <div id="about-dialog" class="invisible">
 Precautions for use and Version Info<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-Hyponosis KraKra Version 2.9.0
+Hyponosis KraKra Version 2.9.1
 
 This software is a hypnotic web application. It is free of charge except cost of electricity and packet communication fees.
 
@@ -231,7 +235,14 @@ function getCount(){
 }
 
 function setType(value){
+	if (!ready)
+		return;
 	type = parseInt(value);
+	if (type == 0) {
+		$('#please-tap-here').removeClass('invisible');
+	} else  {
+		$('#please-tap-here').addClass('invisible');
+	}
 	var type_select = document.getElementById('type-select');
 	type_select.value = type.toString();
 	localStorage.setItem('saiminType', type.toString());
@@ -526,16 +537,18 @@ function init(){
 		}
 	});
 
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('./service-worker.js', {scope: './'});
-	}
+	if (location.protocol != 'file:') {
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('./service-worker.js', {scope: './'});
+		}
 
-	// load script to populate offline page list
-	if (document.getElementById('cachedpagelist') && 'caches' in window) {
-		var scr = document.createElement('script');
-		scr.src = './offlinepage.js';
-		scr.async = 1;
-		document.head.appendChild(scr);
+		// load script to populate offline page list
+		if (document.getElementById('cachedpagelist') && 'caches' in window) {
+			var scr = document.createElement('script');
+			scr.src = './offlinepage.js';
+			scr.async = 1;
+			document.head.appendChild(scr);
+		}
 	}
 
 	// make kirakira sound quickly playable

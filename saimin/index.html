@@ -67,10 +67,14 @@
 	<input type="text" size="20" maxlength="20" id="textbox" x-webkit-speech lang="ja" />
 </div>
 
+<div id="please-tap-here" class="invisible">
+	(ここをタップして下さい)
+</div>
+
 <div id="about-dialog" class="invisible">
 使用上の注意とバージョン情報：<br />
 <textarea id="notice-text" rows="10" style="width: 90%;" readonly>
-催眠ウェブアプリ「くらくら」 Version 2.9.0
+催眠ウェブアプリ「くらくら」 Version 2.9.1
 
 本ソフトウェアは催眠っぽいWebアプリです。電気代・パケット通信費以外は無料でご利用できます。
 
@@ -231,7 +235,14 @@ function getCount(){
 }
 
 function setType(value){
+	if (!ready)
+		return;
 	type = parseInt(value);
+	if (type == 0){
+		$('#please-tap-here').removeClass('invisible');
+	}else{
+		$('#please-tap-here').addClass('invisible');
+	}
 	var type_select = document.getElementById('type-select');
 	type_select.value = type.toString();
 	localStorage.setItem('saiminType', type.toString());
@@ -525,16 +536,18 @@ function init(){
 		}
 	});
 
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('./service-worker.js', {scope: './'});
-	}
+	if (location.protocol != 'file:'){
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('./service-worker.js', {scope: './'});
+		}
 
-	// load script to populate offline page list
-	if (document.getElementById('cachedpagelist') && 'caches' in window) {
-		var scr = document.createElement('script');
-		scr.src = './offlinepage.js';
-		scr.async = 1;
-		document.head.appendChild(scr);
+		// load script to populate offline page list
+		if (document.getElementById('cachedpagelist') && 'caches' in window) {
+			var scr = document.createElement('script');
+			scr.src = './offlinepage.js';
+			scr.async = 1;
+			document.head.appendChild(scr);
+		}
 	}
 
 	// make kirakira sound quickly playable
