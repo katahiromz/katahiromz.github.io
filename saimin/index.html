@@ -103,10 +103,17 @@ var in_text_dialog = false;
 var after_text_dialog = false;
 var stars = new Array(32);
 var touchmoving = false;
-const VERSION = '2.9.6';
+const VERSION = '2.9.8';
 
 function isNativeApp(){
 	return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
+}
+
+function getNativeAppVersion(){
+	let results = navigator.userAgent.match(/\/KraKra-native-app\/([\d\.]+)\//);
+	if (results)
+		return results[1];
+	return false;
 }
 
 function cancelSpeech(){
@@ -248,7 +255,13 @@ function accepted(){
 	if (isNativeApp()){
 		$('#caption').addClass('invisible');
 	}
-	let text = copyright_text.replace('[[VERSION]]', VERSION);
+	let nativeVersion = getNativeAppVersion();
+	let text = copyright_text;
+	if (nativeVersion){
+		text = text.replace('[[VERSION]]', nativeVersion);
+	}else{
+		text = text.replace('[[VERSION]]', VERSION);
+	}
 	$('#notice-text').text(text);
 	window.requestAnimationFrame(draw);
 }
