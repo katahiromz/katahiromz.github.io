@@ -5,6 +5,7 @@ const
   offlineURL = 'index.html',
   installFilesEssential = [
     'index.html',
+    'main.js',
     'manifest.json',
     'style.css',
     'complex.min.js',
