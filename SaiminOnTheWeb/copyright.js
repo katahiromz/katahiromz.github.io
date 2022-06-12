@@ -8,14 +8,11 @@ This software is a hypnotic application.
 [(Precautions for use)]
 
 - This software is a joke app.
-- The benefits of the software cannot be insisted by the Medical Practitioners Act in some countries.
 - Persons under 18 years of age are prohibited from using this software.
 - Do not use this software if you have epilepsy symptoms.
 - If your country, school, religion or region prohibits hypnosis, do not use this application.
 - Please do not try this software on young child. It may cause parent-child disagreement and mental illness.
 - Acute schizophrenic patients should not use this software.
-- Repeated use of this software may lead to slower reactions and reducing social skills.
-- Mental experiments require the consent of the subject.
 - Avoid driving a car immediately after using this software.
 - People with trypophobia should not use this software.
 - If you experience symptoms such as headache, nausea, gastrointestinal problems, or abnormal emotions, discontinue use immediately and consult a specialist.
