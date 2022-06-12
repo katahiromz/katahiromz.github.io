@@ -7,7 +7,7 @@ This software is a hypnotic application.
 
 [(Precautions for use)]
 
-- This software is a joke app.
+- This software is a joke application and its operation is not guaranteed.
 - Do not use this software if you have epilepsy symptoms.
 - If your country, school, religion or region prohibits hypnosis, do not use this application.
 - Please do not try this software on young child. It may cause parent-child disagreement and mental illness.
