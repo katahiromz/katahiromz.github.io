@@ -1,22 +1,22 @@
-﻿/* jshint esversion: 8 */
-const NUM_TYPE = 5;
-var cx = 0, cy = 0;
-var old_cx = null, old_cy = null;
-var old_time = (new Date()).getTime();
-var type = 0;
-var counter = 0;
-var ready = false;
-var theText = '';
-var division = -1;
-var speed = 45.0;
-var sound = null;
-var in_text_dialog = false;
-var after_text_dialog = false;
-var stars = new Array(32);
-var touchmoving = false;
-const VERSION = '3.0.0';
+﻿jQuery(function($){
+	/* jshint esversion: 8 */
+	const NUM_TYPE = 5;
+	var cx = 0, cy = 0;
+	var old_cx = null, old_cy = null;
+	var old_time = (new Date()).getTime();
+	var type = 0;
+	var counter = 0;
+	var ready = false;
+	var theText = '';
+	var division = -1;
+	var speed = 45.0;
+	var sound = null;
+	var in_text_dialog = false;
+	var after_text_dialog = false;
+	var stars = new Array(32);
+	var touchmoving = false;
+	const VERSION = '3.0.0';
 
-$(function(){
 	function isNativeApp(){
 		return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
 	}
@@ -996,4 +996,4 @@ $(function(){
 	}
 
 	init();
-})();
+})
