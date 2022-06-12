@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.0.2';
+	const VERSION = '3.0.3';
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
@@ -198,28 +198,33 @@ jQuery(function($){
 	}
 
 	function doAdultCheck(){
-		$("#adult-check-dialog").dialog({
-			dialogClass: "no-close",
-			title: "Adult Check",
-			buttons: [
-				{
-					text: "I'm an adult",
-					click: function(){
-						$(this).dialog('close');
-						accepted();
-						help();
+		if (true){ // We don't do adult check any more
+			accepted();
+			help();
+		}else{
+			$("#adult-check-dialog").dialog({
+				dialogClass: "no-close",
+				title: "Adult Check",
+				buttons: [
+					{
+						text: "I'm an adult",
+						click: function(){
+							$(this).dialog('close');
+							accepted();
+							help();
+						},
 					},
-				},
-				{
-					text: "I'm a child",
-					click: function(){
-						localStorage.setItem('saiminAdultCheck', '-1');
-						$(this).dialog('close');
-						forbidden();
+					{
+						text: "I'm a child",
+						click: function(){
+							localStorage.setItem('saiminAdultCheck', '-1');
+							$(this).dialog('close');
+							forbidden();
+						},
 					},
-				},
-			],
-		});
+				],
+			});
+		}
 	}
 
 	function init(){
