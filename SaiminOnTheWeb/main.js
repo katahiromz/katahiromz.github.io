@@ -1,6 +1,7 @@
 ﻿jQuery(function($){
 	/* jshint esversion: 8 */
 	const NUM_TYPE = 5;
+	const VERSION = '3.0.1';
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
@@ -15,7 +16,6 @@
 	var after_text_dialog = false;
 	var stars = new Array(32);
 	var touchmoving = false;
-	const VERSION = '3.0.0';
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
