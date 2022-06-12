@@ -1,6 +1,6 @@
 let copyright_text = `催眠アプリ「くらくら」 Version [[VERSION]]
 
-本ソフトウェアは催眠っぽいアプリです。
+本ソフトウェアは、催眠っぽい映像を楽しむアプリです。
 
 ※ ソース: https://github.com/katahiromz/katahiromz.github.io
 ※ 一部、OtoLogicの音声素材を使用。

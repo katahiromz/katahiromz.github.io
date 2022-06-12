@@ -1,6 +1,6 @@
 let copyright_text = `Hyponosis KraKra Version [[VERSION]]
 
-This software is a hypnotic application.
+This software is an application to enjoy hypnotic images.
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
