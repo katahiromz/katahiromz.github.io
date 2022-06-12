@@ -11,7 +11,6 @@ It generates hypnosis video in real time without using any video files.
 - This software is a joke application and its operation is not guaranteed.
 - Do not use this software if you have epilepsy symptoms.
 - If your country, school, religion or region prohibits hypnosis, do not use this application.
-- Please do not try this software on young child. It may cause parent-child disagreement and mental illness.
 - Acute schizophrenic patients should not use this software.
 - Avoid driving a car immediately after using this software.
 - People with trypophobia should not use this software.
