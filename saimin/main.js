@@ -166,8 +166,6 @@ jQuery(function($){
 		var saiminType = localStorage.getItem('saiminType');
 		if (saiminType){
 			setType(parseInt(saiminType));
-		} else {
-			setType(1);
 		}
 		$('#about-button').removeClass('invisible');
 		$('#text-button').removeClass('invisible');
