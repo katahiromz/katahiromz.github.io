@@ -1,4 +1,4 @@
-﻿let copyright_text = `催眠アプリ「くらくら」 Version [[VERSION]]
+let copyright_text = `催眠アプリ「くらくら」 Version [[VERSION]]
 
 本ソフトウェアは催眠っぽいアプリです。
 
