@@ -8,7 +8,6 @@ This software is a hypnotic application.
 [(Precautions for use)]
 
 - This software is a joke app.
-- Please keep in mind in advance the possibility that some effects on the psyche may occur.
 - The benefits of the software cannot be insisted by the Medical Practitioners Act in some countries.
 - Persons under 18 years of age are prohibited from using this software.
 - Do not use this software if you have epilepsy symptoms.
