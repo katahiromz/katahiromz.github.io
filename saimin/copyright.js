@@ -1,6 +1,7 @@
 let copyright_text = `催眠アプリ「くらくら」 Version [[VERSION]]
 
 本ソフトウェアは、催眠っぽい映像を楽しむアプリです。
+動画ファイルを一切使わず、リアルタイムで催眠映像を生成します。
 
 ※ ソース: https://github.com/katahiromz/katahiromz.github.io
 ※ 一部、OtoLogicの音声素材を使用。

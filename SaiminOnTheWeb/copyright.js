@@ -1,6 +1,7 @@
 let copyright_text = `Hyponosis KraKra Version [[VERSION]]
 
 This software is an application to enjoy hypnotic images.
+It generates hypnosis video in real time without using any video files.
 
 * Source: https://github.com/katahiromz/katahiromz.github.io
 * Some OtoLogic audio material is used.
