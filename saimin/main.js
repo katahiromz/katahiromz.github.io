@@ -1,5 +1,5 @@
+/* jshint esversion: 8 */
 jQuery(function($){
-	/* jshint esversion: 8 */
 	const NUM_TYPE = 5;
 	const VERSION = '3.0.1';
 	var cx = 0, cy = 0;
