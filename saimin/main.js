@@ -275,7 +275,7 @@ jQuery(function($){
 
 		$("#text-button").click(function(){
 			let text = prompt('メッセージ テキスト:', theText);
-			if (text){
+			if (text !== null){
 				setText(text);
 			}
 		});
