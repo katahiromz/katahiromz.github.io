@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.0.6';
+	const VERSION = '3.0.7';
 	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
@@ -546,13 +546,13 @@ jQuery(function($){
 			if ('serviceWorker' in navigator){
 				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
 					document.getElementById('update-web-button').addEventListener('click', function(e){
-						return registration.update();
+						registration.update().then(function(){
+							alert("Updated the app. Please restart the app.");
+						}).catch(function(error){
+							alert("Failed to update the app: " + error);
+							log.error(error);
+						});
 					});
-				}).then(function(){
-					alert("Updated. Please restart the app.");
-				}).catch(function(error){
-					alert("Failed to update. " + error);
-					log.error(error);
 				});
 			}
 

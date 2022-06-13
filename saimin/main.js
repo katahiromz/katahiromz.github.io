@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.0.6';
+	const VERSION = '3.0.7';
 	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
@@ -545,13 +545,13 @@ jQuery(function($){
 			if ('serviceWorker' in navigator) {
 				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
 					document.getElementById('update-web-button').addEventListener('click', function(e){
-						return registration.update();
+						registration.update().then(function(){
+							alert("アプリを更新しました。アプリを再起動して下さい。");
+						}).catch(function(error){
+							alert("アプリの更新に失敗しました: " + error);
+							log.error(error);
+						});
 					});
-				}).then(function(){
-					alert("更新されました。アプリを再起動して下さい。");
-				}).catch(function(error){
-					alert("更新に失敗しました。" + error);
-					log.error(error);
 				});
 			}
 
