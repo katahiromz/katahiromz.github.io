@@ -154,3 +154,26 @@ textarea {
 		width: 19%;
 	}
 }
+button {
+	-webkit-appearance: none;
+	 -moz-appearance: none;
+	      appearance: none;
+	border: 0;
+	border-radius: 4px;
+	background-color: rgba(21, 21, 21, 75%);
+	color: white;
+	padding: 0;
+}
+button:hover {
+	background-color: rgba(40, 21, 21, 100%);
+}
+label {
+	background-color: rgba(21, 21, 21, 75%);
+	color: white;
+	border: 0;
+	padding: 0;
+	border-radius: 4px;
+}
+label:hover {
+	background-color: rgba(40, 21, 21, 100%);
+}

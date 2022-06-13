@@ -2,7 +2,7 @@
 jQuery(function($){
 	const NUM_TYPE = 5;
 	const VERSION = '3.1.3';
-	const DEBUG = false;
+	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
