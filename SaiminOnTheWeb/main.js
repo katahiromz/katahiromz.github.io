@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.0.8';
+	const VERSION = '3.0.9';
 	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
@@ -546,7 +546,7 @@ jQuery(function($){
 			if ('serviceWorker' in navigator){
 				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
 					document.getElementById('update-web-button').addEventListener('click', function(e){
-						registration.update().then(function(){
+						registration.unregister().then(function(){
 							alert("Updated the app. Please restart the app.");
 						}).catch(function(error){
 							alert("Failed to update the app: " + error);
