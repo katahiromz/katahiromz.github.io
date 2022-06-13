@@ -1,6 +1,6 @@
 // configuration
 const
-  version = '3.0.4',
+  version = '3.0.5',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -91,14 +91,8 @@ self.addEventListener('fetch', event => {
 
   // TODO: Add large files
   const largeFiles = [
-    'sn/sn2.mp3',
-    'sn/sn3.mp3',
     'sn/sn4.mp3',
-    'sn/sn5.mp3',
-    'sn/sn6.mp3',
-    'sn/sn7.mp3',
-    'sn/sn8.mp3',
-    'kirakira.mp3'
+    'sn/kirakira.mp3'
   ];
   for (file in largeFiles) {
     if (url.endsWith(file)) {

@@ -30,67 +30,108 @@
 
 <h1 id="caption">催眠アプリ【くらくら】</h1>
 
+<!-- キャンバス -->
 <canvas id="canvas"></canvas>
 
-<select id="type-select" class="invisible">
-	<option value="0" selected>none</option>
-	<option value="1">type1</option>
-	<option value="2">type2</option>
-	<option value="3">type3</option>
-	<option value="4">type4</option>
-	<option value="5">type5</option>
-</select>
-
+<!-- 「mic」チェックボックス -->
 <label for="microphone" id="microphone-label" class="invisible"><input type="checkbox" id="microphone" />mic</label>
 
-<select id="sound-select" class="invisible">
-	<option value="0" selected>(音)</option>
-	<option value="2">sn2</option>
-	<option value="3">sn3</option>
-	<option value="4">sn4</option>
-	<option value="5">sn5</option>
-	<option value="6">sn6</option>
-	<option value="7">sn7</option>
-	<option value="8">sn8</option>
-	<option value="msg">msg</option>
-</select>
+<!-- 「画#」ボタン-->
+<button id="type-select-button" class="invisible">画0</button>
 
-<button id="about-button" class="invisible">?</button>
+<!-- 「音!」ボタン-->
+<button id="sound-button" class="invisible">音!</button>
 
-<button id="text-button" class="invisible">msg</button>
+<!-- 「字」ボタン-->
+<button id="text-button" class="invisible">字</button>
 
-<select id="division-select" class="invisible">
-	<option value="-1" selected>自動</option>
-	<option value="1">分割なし</option>
-	<option value="2">2分割</option>
-</select>
+<!-- 「話」チェックボックス -->
+<label for="speech" id="speech-label" class="invisible"><input type="checkbox" id="speech" />話</label>
 
+<!-- 「設」ボタン -->
+<button id="config-button" class="invisible">設</button>
+
+<!-- 「？」ボタン -->
+<button id="about-button" class="invisible">？</button>
+
+<!-- 「映像の設定」ダイアログ -->
+<div id="type-select-dialog" class="invisible">
+	<div>
+		映像の種類:
+		<select id="type-select">
+			<option value="0" selected>画0</option>
+			<option value="1">画1</option>
+			<option value="2">画2</option>
+			<option value="3">画3</option>
+			<option value="4">画4</option>
+			<option value="5">画5</option>
+		</select>
+	</div>
+</div>
+
+<!-- 「全般設定」ダイアログ -->
+<div id="config-dialog" class="invisible">
+	<div>
+		音!ボタン:
+		<select id="sound-select">
+			<option value="" selected>(なし)</option>
+			<option value="sn4">sn4</option>
+		</select>
+	</div>
+	<div>
+		切り替え音:
+		<select id="type-sound-select">
+			<option value="0" selected>なし</option>
+			<option value="1">あり</option>
+		</select>
+	</div>
+	<div>
+		分割:
+		<select id="division-select">
+			<option value="-1" selected>自動</option>
+			<option value="1">分割なし</option>
+			<option value="2">2分割</option>
+		</select>
+	</div>
+</div>
+
+<!-- 「メッセージの設定」ダイアログ -->
 <div id="text-dialog" class="invisible">
 	メッセージ テキスト:<br />
 	<input type="text" size="20" maxlength="20" id="textbox" />
 </div>
 
+<!-- 「ここをタップして下さい」 -->
 <div id="please-tap-here" class="invisible">
 	(ここをタップして下さい)
 </div>
 
+<!-- 浮かび上がるテキスト -->
 <div id="floating-text" class="invisible"></div>
 
+<!-- 「バージョン情報」ダイアログ -->
 <div id="about-dialog" class="invisible">
-使用上の注意とバージョン情報：<br />
-<textarea id="notice-text" rows="10" style="width: 90%;" readonly></textarea>
+	<div>
+		<textarea id="notice-text" rows="8" style="width: 90%;" readonly></textarea>
+	</div>
+	<div>
+		<button id="update-web-button">Webを更新</button>
+	</div>
 </div>
 
+<!-- 「使用禁止」ダイアログ -->
 <div id="child-dialog" class="invisible">
 	こどもはつかってはいけません。
 </div>
 
+<!-- 「成人チェック」ダイアログ -->
 <div id="adult-check-dialog" class="invisible">
 	<p class="center">
 		あなたは18歳以上ですか？
 	</p>
 </div>
 
+<!-- 「期限切れ」ダイアログ -->
 <div id="license-expired-dialog" class="invisible">
 	ライセンスが期限切れです。
 </div>

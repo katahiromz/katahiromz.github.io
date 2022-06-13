@@ -30,67 +30,108 @@
 
 <h1 id="caption">[(Hyponosis KraKra)]</h1>
 
+<!-- The canvas -->
 <canvas id="canvas"></canvas>
 
-<select id="type-select" class="invisible">
-	<option value="0" selected>none</option>
-	<option value="1">type1</option>
-	<option value="2">type2</option>
-	<option value="3">type3</option>
-	<option value="4">type4</option>
-	<option value="5">type5</option>
-</select>
-
+<!-- The 'mic' checkbox -->
 <label for="microphone" id="microphone-label" class="invisible"><input type="checkbox" id="microphone" />mic</label>
 
-<select id="sound-select" class="invisible">
-	<option value="0" selected>(snd)</option>
-	<option value="2">sn2</option>
-	<option value="3">sn3</option>
-	<option value="4">sn4</option>
-	<option value="5">sn5</option>
-	<option value="6">sn6</option>
-	<option value="7">sn7</option>
-	<option value="8">sn8</option>
-	<option value="msg">msg</option>
-</select>
+<!-- The 'pic#' button -->
+<button id="type-select-button" class="invisible">pic0</button>
 
-<button id="about-button" class="invisible">?</button>
+<!-- The 'snd!' button -->
+<button id="sound-button" class="invisible">snd!</button>
 
+<!-- The 'msg' button -->
 <button id="text-button" class="invisible">msg</button>
 
-<select id="division-select" class="invisible">
-	<option value="-1" selected>Auto</option>
-	<option value="1">No div</option>
-	<option value="2">Div by 2</option>
-</select>
+<!-- The 'sp' checkbox -->
+<label for="speech" id="speech-label" class="invisible"><input type="checkbox" id="speech" />sp</label>
 
+<!-- The 'cfg' button -->
+<button id="config-button" class="invisible">cfg</button>
+
+<!-- The '?' button -->
+<button id="about-button" class="invisible">?</button>
+
+<!-- The picture setting dialog -->
+<div id="type-select-dialog" class="invisible">
+	<div>
+		The type of picture:
+		<select id="type-select">
+			<option value="0" selected>pic0</option>
+			<option value="1">pic1</option>
+			<option value="2">pic2</option>
+			<option value="3">pic3</option>
+			<option value="4">pic4</option>
+			<option value="5">pic5</option>
+		</select>
+	</div>
+</div>
+
+<!-- The 'Config' dialog -->
+<div id="config-dialog" class="invisible">
+	<div>
+		snd! button:
+		<select id="sound-select">
+			<option value="" selected>(None)</option>
+			<option value="sn4">sn4</option>
+		</select>
+	</div>
+	<div>
+		Pic change sound:
+		<select id="type-sound-select">
+			<option value="0" selected>No</option>
+			<option value="1">Yes</option>
+		</select>
+	</div>
+	<div>
+		Division:
+		<select id="division-select">
+			<option value="-1" selected>Auto</option>
+			<option value="1">No division</option>
+			<option value="2">Division by 2</option>
+		</select>
+	</div>
+</div>
+
+<!-- the 'Set Message' dialog -->
 <div id="text-dialog" class="invisible">
 	Message Text:<br />
 	<input type="text" size="20" maxlength="20" id="textbox" />
 </div>
 
+<!-- "Please tap here" -->
 <div id="please-tap-here" class="invisible">
 	(Please tap here)
 </div>
 
+<!-- The floating text -->
 <div id="floating-text" class="invisible"></div>
 
+<!-- The version info dialog -->
 <div id="about-dialog" class="invisible">
-Precautions for use and Version Info<br />
-<textarea id="notice-text" rows="10" style="width: 90%;" readonly></textarea>
+	<div>
+		<textarea id="notice-text" rows="8" style="width: 90%;" readonly></textarea>
+	</div>
+	<div>
+		<button id="update-web-button">Update Web</button>
+	</div>
 </div>
 
+<!-- The 'Forbidden' dialog -->
 <div id="child-dialog" class="invisible">
 	Children should not use this software.
 </div>
 
+<!-- The 'adult check' dialog -->
 <div id="adult-check-dialog" class="invisible">
 	<p class="center">
 		Are you an adult?
 	</p>
 </div>
 
+<!-- The 'expired' dialog -->
 <div id="license-expired-dialog" class="invisible">
 	License is expired.
 </div>

@@ -3,6 +3,17 @@ body {
 	padding: 0;
 	overflow: hidden;
 }
+#caption {
+	font-size: 100%;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	background-color: white;
+	font-size: 0.5cm;
+}
 #canvas {
 	z-index: 1;
 }
@@ -30,58 +41,69 @@ label, input[type='checkbox'] {
 	padding: 4px;
 	z-index: 3;
 }
-#type-select {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	z-index: 2;
-	padding: 0.10cm 0.0cm;
-	font-size: 0.5cm;
-}
 #microphone-label {
 	position: absolute;
 	left: 0;
-	bottom: 0.8cm;
+	bottom: 0.9cm;
+	width: 16%;
 	z-index: 2;
-	padding: 0.10cm 0.0cm;
 	font-size: 0.5cm;
-	padding: 0.2cm;
+	text-align: center;
 }
-#sound-select {
+#type-select-button {
 	position: absolute;
-	left: 2.0cm;
+	left: calc(16.66% * 0);
 	bottom: 0;
+	width: 16%;
 	z-index: 2;
-	padding: 0.10cm 0.2cm;
-		font-size: 0.5cm;
-	}
-#caption {
-	font-size: 100%;
-	margin: 0;
+	font-size: 0.5cm;
 	padding: 0;
-	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: 2;
-	background-color: white;
-	font-size: 0.5cm;
 }
-#about-button {
+#sound-button {
 	position: absolute;
-	right: 0;
+	left: calc(16.66% * 1);
 	bottom: 0;
+	width: 16%;
 	z-index: 2;
-	padding: 0.10cm 0.34cm;
 	font-size: 0.5cm;
-	width: 1.1cm;
+	padding: 0;
 }
 #text-button {
 	position: absolute;
-	right: 1.2cm;
+	left: calc(16.66% * 2);
 	bottom: 0;
+	width: 16%;
 	z-index: 2;
-	padding: 0.10cm 0.34cm;
 	font-size: 0.5cm;
+	padding: 0;
+}
+#speech-label {
+	position: absolute;
+	left: calc(16.66% * 3);
+	bottom: 0;
+	width: 16%;
+	z-index: 2;
+	font-size: 0.5cm;
+	padding: auto;
+	text-align: center;
+}
+#config-button {
+	position: absolute;
+	left: calc(16.66% * 4);
+	bottom: 0;
+	width: 16%;
+	z-index: 2;
+	font-size: 0.5cm;
+	padding: 0;
+}
+#about-button {
+	position: absolute;
+	left: calc(16.66% * 5);
+	bottom: 0;
+	width: 16%;
+	z-index: 2;
+	font-size: 0.5cm;
+	padding: 0;
 }
 .invisible {
 	display: none;
@@ -95,110 +117,44 @@ textarea {
 	font-size: 0.5cm;
 	font-family: monospace, ui-monospace;
 }
-#division-select {
-	position: absolute;
-	right: 3cm;
-	bottom: 0;
-	z-index: 2;
-	padding: 0.10cm 0.0cm;
-	font-size: 0.5cm;
-}
-@media (max-width: 350px) {
-	#type-select {
-		left: 0;
-		bottom: 1.0cm;
-	}
+@media (max-width: 300px) {
 	#microphone-label {
 		left: 0;
-		bottom: 1.8cm;
+		bottom: 0.9cm;
+		width: 25%;
 	}
-	#sound-select {
-		left: 0cm;
-		bottom: 0;
+	#type-select-button {
+		left: 25%;
+		bottom: 0.9cm;
+		width: 20%;
 	}
-	#division-select {
-		right: 1.2cm;
+	#sound-button {
+		left: calc(20% * 0);
 		bottom: 0;
+		width: 19%;
 	}
 	#text-button {
-		right: 0cm;
-		bottom: 1.0cm;
+		left: calc(20% * 1);
+		bottom: 0;
+		width: 19%;
+	}
+	#speech-label {
+		left: calc(20% * 2);
+		bottom: 0;
+		width: 19%;
+	}
+	#config-button {
+		left: calc(20% * 3);
+		bottom: 0;
+		width: 19%;
 	}
 	#about-button {
-		right: 0;
+		left: calc(20% * 4);
 		bottom: 0;
-		width: 1.0cm;
+		width: 19%;
 	}
 }
 @media (min-width: 750px) {
-	#caption {
-		font-size: 0.8cm;
-	}
-	#type-select {
-		left: 0;
-		bottom: 0;
-		font-size: 0.8cm;
-	}
-	#microphone-label {
-		left: 0;
-		bottom: 1.0cm;
-		font-size: 0.8cm;
-	}
-	#sound-select {
-		left: 3.0cm;
-		bottom: 0;
-		font-size: 0.8cm;
-	}
-	#division-select {
-		right: 4.5cm;
-		bottom: 0;
-		font-size: 0.8cm;
-	}
-	#text-button {
-		right: 1.8cm;
-		bottom: 0;
-		font-size: 0.8cm;
-	}
-	#about-button {
-		right: 0;
-		bottom: 0;
-		font-size: 0.8cm;
-		width: 1.7cm;
-	}
 }
 @media (min-width: 800px) and (min-height: 800px) {
-	#caption {
-		font-size: 1.5cm;
-	}
-	#type-select {
-		left: 0;
-		bottom: 0;
-		font-size: 1.5cm;
-	}
-	#microphone-label {
-		left: 0;
-		bottom: 1.5cm;
-		font-size: 1.5cm;
-	}
-	#sound-select {
-		left: 4.6cm;
-		bottom: 0;
-		font-size: 1.5cm;
-	}
-	#division-select {
-		right: 6.2cm;
-		bottom: 0;
-		font-size: 1.5cm;
-	}
-	#text-button {
-		right: 2.0cm;
-		bottom: 0;
-		font-size: 1.5cm;
-	}
-	#about-button {
-		right: 0;
-		bottom: 0;
-		font-size: 1.5cm;
-		width: 1.9cm;
-	}
 }

@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.0.4';
+	const VERSION = '3.0.5';
 	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
@@ -12,7 +12,8 @@ jQuery(function($){
 	var theText = '';
 	var division = -1;
 	var speed = 45.0;
-	var sound = null;
+	var soundName = '';
+	var typeSound = 1;
 	var in_text_dialog = false;
 	var after_text_dialog = false;
 	var stars = new Array(32);
@@ -75,29 +76,22 @@ jQuery(function($){
 		return cx >= 1500 || cy >= 1500;
 	}
 
-	function setSound(value){
-		cancelSpeech();
-		if (sound){
-			sound.loop = false;
-			sound.muted = true;
-		}
-		if (value == '0'){
-			sound = null;
-			return;
-		}
-		if (value == 'msg'){
-			playSpeech(theText);
-		}else{
-			sound = new Audio("sn/sn" + value + ".mp3");
-			sound.loop = true;
-			sound.play();
-		}
+	function setSoundName(value){
+		soundName = value;
+		document.getElementById('sound-select').value = value;
+		localStorage.setItem('saiminSoundName', soundName);
+	}
+
+	function setTypeSound(value){
+		typeSound = parseInt(value);
+		document.getElementById('type-sound-select').value = value;
+		localStorage.setItem('saiminTypeSound', value);
 	}
 
 	function setDivision(value){
 		division = parseInt(value);
-		localStorage.setItem('saiminDivision', division.toString());
 		document.getElementById('division-select').value = division;
+		localStorage.setItem('saiminDivision', division.toString());
 	}
 
 	function getCount(){
@@ -115,16 +109,16 @@ jQuery(function($){
 		}
 		var type_select = document.getElementById('type-select');
 		type_select.value = type.toString();
+		$('#type-select-button').text("pic" + type.toString());
 		localStorage.setItem('saiminType', type.toString());
 	}
 
 	function setText(txt){
-		theText = txt.replace('　', '  ').trim();
-		localStorage.setItem('saiminText', theText);
-		var sound_select = document.getElementById('sound-select');
-		if (sound_select.value == 'msg'){
-			cancelSpeech();
-			setSound(sound_select.value);
+ 		theText = txt.replace('　', '  ').trim();
+ 		localStorage.setItem('saiminText', theText);
+		var speech = document.getElementById('speech');
+		if (speech.checked){
+			playSpeech(theText);
 		}
 		$("#floating-text").text(theText);
 	}
@@ -161,7 +155,7 @@ jQuery(function($){
 					$(this).dialog('close');
 				},
 			}],
-			width: window.innerWidth * 5 / 6,
+			width: window.innerWidth * 4 / 5,
 		});
 	}
 
@@ -183,12 +177,13 @@ jQuery(function($){
 		if (saiminType){
 			setType(parseInt(saiminType));
 		}
+		$('#microphone-label').removeClass('invisible');
+		$('#type-select-button').removeClass('invisible');
+		$('#sound-button').removeClass('invisible');
+		$('#speech-label').removeClass('invisible');
+		$('#config-button').removeClass('invisible');
 		$('#about-button').removeClass('invisible');
 		$('#text-button').removeClass('invisible');
-		$('#type-select').removeClass('invisible');
-		$('#sound-select').removeClass('invisible');
-		$('#division-select').removeClass('invisible');
-		$('#microphone-label').removeClass('invisible');
 		if (isNativeApp()){
 			$('#caption').addClass('invisible');
 		}
@@ -252,6 +247,16 @@ jQuery(function($){
 			setDivision(saiminDivision);
 		}
 
+		var saiminSoundName = localStorage.getItem('saiminSoundName');
+		if (saiminSoundName){
+			setSoundName(saiminSoundName);
+		}
+
+		var saiminTypeSound = localStorage.getItem('saiminTypeSound');
+		if (saiminTypeSound){
+			setTypeSound(saiminTypeSound);
+		}
+
 		$("#text-dialog").keydown(function(e){
 			if (e.keyCode == $.ui.keyCode.ENTER){
 				setText(document.getElementById('textbox').value);
@@ -300,6 +305,71 @@ jQuery(function($){
 			help();
 		});
 
+		$("#type-select-button").click(function(){
+			let type_select = document.getElementById('type-select');
+			let old_value = type_select.value;
+			$("#type-select-dialog").dialog({
+				dialogClass: "no-close",
+				title: "Set Picture",
+				buttons: [
+					{
+						text: "OK",
+						click: function(){
+							$(this).dialog('close');
+						},
+					},{
+						text: "Cancel",
+						click: function(){
+							setType(old_value);
+							$(this).dialog('close');
+						},
+					}
+				],
+			});
+		});
+
+		function config(){
+			let sound_select = document.getElementById('sound-select');
+			let type_sound_select = document.getElementById('type-sound-select');
+			let division_select = document.getElementById('division-select');
+			let old_sound_value = sound_select.value;
+			let old_type_sound_value = type_sound_select.value;
+			let old_division_value = division_select.value;
+			$("#config-dialog").dialog({
+				dialogClass: "no-close",
+				title: "Configuration",
+				buttons: [
+					{
+						text: "OK",
+						click: function(){
+							$(this).dialog('close');
+						},
+					},{
+						text: "Cancel",
+						click: function(){
+							setSoundName(old_sound_value);
+							setTypeSound(old_type_sound_value);
+							setDivision(old_division_value);
+							$(this).dialog('close');
+						},
+					}
+				],
+			});
+		}
+
+		$("#sound-button").click(function(){
+			if (soundName != ''){
+				let sound = new Audio("sn/" + soundName + ".mp3");
+				sound.play();
+			}else{
+				config();
+			}
+		});
+
+		$("#config-button").click(function(){
+			config();
+		});
+
 		var type_select = document.getElementById('type-select');
 		type_select.addEventListener('change', function(){
 			if (!ready)
@@ -316,12 +386,24 @@ jQuery(function($){
 		sound_select.addEventListener('change', function(){
 			if (!ready)
 				return;
-			setSound(sound_select.value);
+			setSoundName(sound_select.value);
 		}, false);
 		sound_select.addEventListener('click', function(){
 			if (!ready)
 				return;
-			setSound(sound_select.value);
+			setSoundName(sound_select.value);
+		}, false);
+
+		var type_sound_select = document.getElementById('type-sound-select');
+		type_sound_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setTypeSound(type_sound_select.value);
+		}, false);
+		type_sound_select.addEventListener('click', function(){
+			if (!ready)
+				return;
+			setTypeSound(type_sound_select.value);
 		}, false);
 
 		var division_select = document.getElementById('division-select');
@@ -336,19 +418,29 @@ jQuery(function($){
 			setDivision(parseInt(division_select.value));
 		}, false);
 
-		document.getElementById('canvas').addEventListener('click', function(e){
+		function canvasClick(e){
 			if (!ready)
 				return;
 			if (e.shiftKey){
-				setType((type + NUM_TYPE - 2) % NUM_TYPE + 1);
-			} else {
-				setType(type % NUM_TYPE + 1);
+				setType((type + (NUM_TYPE + 1) - 1) % (NUM_TYPE + 1));
+			}else{
+				setType((type + 1) % (NUM_TYPE + 1));
 			}
 			type_select.value = type.toString();
-			let kirakira_sound = new Audio("kirakira.mp3");
-			if (kirakira_sound){
-				kirakira_sound.play();
+			if (typeSound == 1){
+				var kirakira_sound = new Audio("sn/kirakira.mp3");
+				if (kirakira_sound){
+					kirakira_sound.play();
+				}
 			}
+		}
+
+		document.getElementById('floating-text').addEventListener('click', function(e){
+			canvasClick(e);
+		}, false);
+
+		document.getElementById('canvas').addEventListener('click', function(e){
++			canvasClick(e);
 		}, false);
 
 		document.getElementById('canvas').addEventListener('mousemove', function(e){
@@ -427,6 +519,15 @@ jQuery(function($){
 			forbidden();
 		}
 
+		let speech = document.getElementById('speech');
+		speech.addEventListener('click', function(e){
+			if (speech.checked){
+				playSpeech(theText);
+			} else {
+				cancelSpeech();
+			}
+		});
+
 		let mic_isInited = false;
 		let mic = document.getElementById('microphone');
 		mic.addEventListener('click', function(e){
@@ -443,7 +544,13 @@ jQuery(function($){
 
 		if (location.protocol != 'file:'){
 			if ('serviceWorker' in navigator){
-				navigator.serviceWorker.register('./sw.js', {scope: './'});
+				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
+					document.getElementById('update-web-button').addEventListener('click', function(e){
+						registration.update();
+					});
+				}).catch(function(error){
+					log.error(error);
+				});
 			}
 
 			// load script to populate offline page list
@@ -456,7 +563,7 @@ jQuery(function($){
 		}
 
 		// make kirakira sound quickly playable
-		var kirakira_sound_cache = new Audio("kirakira.mp3");
+		var kirakira_sound_cache = new Audio("sn/kirakira.mp3");
 		kirakira_sound_cache = null;
 	}
 
