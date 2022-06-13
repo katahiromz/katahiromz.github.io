@@ -33,6 +33,7 @@ input[type='checkbox'] {
 	transform: translateY(-50%) translateX(-50%);
 	-webkit- transform: translateY(-50%) translateX(-50%);
 	margin: auto;
+	width:250px;
 }
 #floating-text {
 	position: absolute;
