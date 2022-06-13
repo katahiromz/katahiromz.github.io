@@ -16,8 +16,6 @@ jQuery(function($){
 	var soundName = '';
 	var kirakira_sound = null;
 	var typeSound = 1;
-	var in_text_dialog = false;
-	var after_text_dialog = false;
 	var stars = new Array(32);
 	var touchmoving = false;
 
@@ -247,14 +245,11 @@ jQuery(function($){
 		cancelSpeech();
 
 		window.addEventListener('resize', function(){
-			if (!in_text_dialog && !after_text_dialog){
-				if (location.hostname == '' || isNativeApp()){
-					fit();
-				} else {
-					location.reload();
-				}
+			if (location.hostname == '' || isNativeApp()){
+				fit();
+			} else {
+				location.reload();
 			}
-			after_text_dialog = false;
 		}, false);
 
 		fit();
@@ -279,48 +274,10 @@ jQuery(function($){
 			setTypeSound(saiminTypeSound);
 		}
 
-		$("#text-dialog").keydown(function(e){
-			if (e.keyCode == $.ui.keyCode.ENTER){
-				setText(document.getElementById('textbox').value);
-				$(this).parent().find("button:eq(0)").trigger("click");
-				return false;
-			}
-		});
-
 		$("#text-button").click(function(){
+			let text = prompt('Message Text:', theText);
+			setText(text);
 			document.getElementById('textbox').value = theText;
-			in_text_dialog = true;
-			$("#text-dialog").dialog({
-				dialogClass: "no-close",
-				title: "Set Message",
-				close: function(){
-					in_text_dialog = false;
-					after_text_dialog = true;
-					setTimeout(function(){
-						after_text_dialog = false;
-					}, 500);
-				},
-				buttons: [
-					{
-						text: "OK",
-						click: function(){
-							setText(document.getElementById('textbox').value);
-							$(this).dialog('close');
-						},
-					},{
-						text: "Cancel",
-						click: function(){
-							$(this).dialog('close');
-						},
-					},{
-						text: "Reset",
-						click: function(){
-							setText('');
-							$(this).dialog('close');
-						},
-					},
-				],
-			});
 		});
 
 		$("#about-button").click(function(){
@@ -1117,15 +1074,13 @@ jQuery(function($){
 		stars.shift();
 		stars.push(null);
 
-		if (!in_text_dialog){
-			if (old_cx !== null && old_cy !== null){
-				if (window.innerWidth != old_cx || window.innerHeight != old_cy){
-					fit();
-				}
+		if (old_cx !== null && old_cy !== null){
+			if (window.innerWidth != old_cx || window.innerHeight != old_cy){
+				fit();
 			}
-			old_cx = window.innerWidth;
-			old_cy = window.innerHeight;
 		}
+		old_cx = window.innerWidth;
+		old_cy = window.innerHeight;
 
 		var new_time = (new Date()).getTime();
 		var diff = (new_time - old_time) / 1000.0;
