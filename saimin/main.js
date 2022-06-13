@@ -3,6 +3,7 @@ jQuery(function($){
 	const NUM_TYPE = 5;
 	const VERSION = '3.1.3';
 	const DEBUG = true;
+	const DISABLE_SERVICE_WORKDER = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
@@ -570,7 +571,7 @@ jQuery(function($){
 			alert("アプリを初期化しました。アプリを再起動して下さい。");
 		});
 
-		if (location.protocol != 'file:'){
+		if (location.protocol != 'file:' && !DISABLE_SERVICE_WORKDER){
 			if ('serviceWorker' in navigator) {
 				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
 					document.getElementById('update-web-button').addEventListener('click', function(e){
