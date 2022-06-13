@@ -76,20 +76,17 @@ jQuery(function($){
 		return cx >= 1500 || cy >= 1500;
 	}
 
-	let playing_sound = null;
-
 	function setSoundName(value, test = false){
 		if (value.indexOf('sn') == 0)
 			value = '';
 		soundName = value;
 		if (soundName != ''){
-			console.log("sn/" + soundName + ".mp3" + test);
-			if (test && playing_sound) {
-				playing_sound.pause();
-				playing_sound = null;
+			console.log("sn/" + soundName + ".mp3, " + test);
+			if (test){
+				sound = null;
 			}
-			playing_sound = sound = new Audio("sn/" + soundName + ".mp3");
-			if (test) {
+			sound = new Audio("sn/" + soundName + ".mp3");
+			if (test){
 				sound.play();
 			}
 		}else{
