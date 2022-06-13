@@ -58,7 +58,7 @@ function mic_connect(){
   mic_biquadFilter.disconnect(0);
   mic_biquadFilter.connect(mic_gainNode);
   mic_biquadFilter.type = "lowpass";
-  mic_biquadFilter.frequency.value = 350;
+  mic_biquadFilter.frequency.value = 310;
 }
 
 function mic_disconnect(){
