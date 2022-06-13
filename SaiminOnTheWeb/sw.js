@@ -38,6 +38,7 @@ const largeFiles = [
   'sn/kirakira.mp3',
   'sn/Magic.mp3',
   'sn/Strange.mp3',
+  'sn/sp4.mp3', // TODO: Delete me!
 ];
 
 // install static assets
