@@ -368,7 +368,8 @@ jQuery(function($){
 		$("#sound-button").click(function(){
  			if (soundName != ''){
 				if (sound){
-					sound.play();
+					let s = new Audio('sn/' + soundName '.mp3');
+					s.play();
 				}
 			}else{
 				config();
@@ -438,7 +439,8 @@ jQuery(function($){
 			type_select.value = type.toString();
 			if (typeSound == 1){
 				if (kirakira_sound){
-					kirakira_sound.play();
+					let kirakira = new Audio("sn/kirakira.mp3");
+					kirakira.play();
 				}
 			}
 		}
