@@ -34,7 +34,10 @@ const
     'images/ui-icons_ffffff_256x240.png'
   ];
 // TODO: Add large files
-const largeFiles = [
+const ignoreFiles = [
+  'jquery-3.6.0.min.js',
+  'jquery-ui.min.js',
+  'jquery-ui.css',
   'sn/Horror.mp3',
   'sn/kirakira.mp3',
   'sn/Magic.mp3',
@@ -97,7 +100,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  for (file in largeFiles) {
+  for (file in ignoreFiles) {
     if (url.endsWith(file)) {
       return;
     }
