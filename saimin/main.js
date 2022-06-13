@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.1.0';
+	const VERSION = '3.1.1';
 	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
@@ -367,7 +367,7 @@ jQuery(function($){
 		$("#sound-button").click(function(){
 			if (soundName != ''){
 				if (sound){
-					let s = new Audio('sn/' + soundName '.mp3');
+					let s = new Audio('sn/' + soundName + '.mp3');
 					s.play();
 				}
 			}else{
