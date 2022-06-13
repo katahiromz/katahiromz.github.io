@@ -1,4 +1,4 @@
-// configuration
+// service worker
 const
   version = '3.1.0',
   CACHE = version + '::PWAsite',
