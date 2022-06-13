@@ -32,6 +32,13 @@ const
     'images/ui-icons_cc0000_256x240.png',
     'images/ui-icons_ffffff_256x240.png'
   ];
+// TODO: Add large files
+const largeFiles = [
+  'sn/Horror.mp3',
+  'sn/kirakira.mp3',
+  'sn/Magic.mp3',
+  'sn/Strange.mp3',
+];
 
 // install static assets
 function installStaticFiles() {
@@ -89,13 +96,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // TODO: Add large files
-  const largeFiles = [
-    'sn/Horror.mp3',
-    'sn/kirakira.mp3'
-    'sn/Magic.mp3',
-    'sn/Strange.mp3',
-  ];
   for (file in largeFiles) {
     if (url.endsWith(file)) {
       return;
