@@ -443,7 +443,7 @@ jQuery(function($){
 
 		if (location.protocol != 'file:'){
 			if ('serviceWorker' in navigator){
-				navigator.serviceWorker.register('./service-worker.js', {scope: './'});
+				navigator.serviceWorker.register('./sw.js', {scope: './'});
 			}
 
 			// load script to populate offline page list

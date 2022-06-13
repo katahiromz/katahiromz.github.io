@@ -13,7 +13,7 @@ const
     'jquery-ui.min.css',
     'jquery-ui.min.js',
     'mic.js',
-    'service-worker.js',
+    'sw.js',
     'copyright.js'
   ],
   installFilesDesirable = [
