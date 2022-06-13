@@ -566,6 +566,11 @@ jQuery(function($){
 			}
 		});
 
+		document.getElementById('initialize-button').addEventListener('click', function(e){
+			localStorage.clear();
+			alert("Now I initialized the app. Please restart the app.");
+		});
+
 		if (location.protocol != 'file:'){
 			if ('serviceWorker' in navigator){
 				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){

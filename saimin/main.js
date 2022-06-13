@@ -565,6 +565,11 @@ jQuery(function($){
 			}
 		});
 
+		document.getElementById('initialize-button').addEventListener('click', function(e){
+			localStorage.clear();
+			alert("アプリを初期化しました。アプリを再起動して下さい。");
+		});
+
 		if (location.protocol != 'file:'){
 			if ('serviceWorker' in navigator) {
 				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
