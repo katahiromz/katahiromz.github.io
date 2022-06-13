@@ -546,9 +546,12 @@ jQuery(function($){
 			if ('serviceWorker' in navigator){
 				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
 					document.getElementById('update-web-button').addEventListener('click', function(e){
-						registration.update();
+						return registration.update();
 					});
+				}).then(function(){
+					alert("Updated. Please restart the app.");
 				}).catch(function(error){
+					alert("Failed to update. " + error);
 					log.error(error);
 				});
 			}
