@@ -3,7 +3,6 @@ jQuery(function($){
 	const NUM_TYPE = 5;
 	const VERSION = '3.1.3';
 	const DEBUG = true;
-	const DISABLE_SERVICE_WORKDER = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
@@ -571,30 +570,6 @@ jQuery(function($){
 			localStorage.clear();
 			alert("Now I initialized the app. Please restart the app.");
 		});
-
-		if (location.protocol != 'file:' && !DISABLE_SERVICE_WORKDER){
-			if ('serviceWorker' in navigator){
-				navigator.serviceWorker.register('./sw.js', {scope: './'}).then(function(registration){
-					document.getElementById('update-web-button').addEventListener('click', function(e){
-						registration.update();
-						registration.unregister().then(function(){
-							alert("Updated the app. Please restart the app.");
-						}).catch(function(error){
-							alert("Failed to update the app: " + error);
-							log.error(error);
-						});
-					});
-				});
-			}
-
-			// load script to populate offline page list
-			if (document.getElementById('cachedpagelist') && 'caches' in window){
-				var scr = document.createElement('script');
-				scr.src = './offlinepage.js';
-				scr.async = 1;
-				document.head.appendChild(scr);
-			}
-		}
 
 		// make kirakira sound quickly playable
 		kirakira_sound = new Audio("sn/kirakira.mp3");
