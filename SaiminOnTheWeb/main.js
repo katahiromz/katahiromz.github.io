@@ -623,7 +623,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = 'white';
+		ctx.fillStyle = 'rgba(255, 145, 255)';
 		ctx.fillRect(px, py, dx, dy);
 
 		var size = (dx + dy) * 2 / 5;
@@ -691,7 +691,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = 'white';
+		ctx.fillStyle = 'rgba(255, 191, 255)';
 		ctx.fillRect(px, py, dx, dy);
 
 		var size = (cx + cy) * 0.4;
