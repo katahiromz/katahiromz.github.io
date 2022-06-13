@@ -78,13 +78,15 @@ jQuery(function($){
 		return cx >= 1500 || cy >= 1500;
 	}
 
-	function setSoundName(value){
+	function setSoundName(value, test = false){
 		if (value.indexOf('sn') == 0)
 			value = '';
 		soundName = value;
 		if (soundName != ''){
-			console.log("sn/" + soundName + ".mp3");
+			console.log("sn/" + soundName + ".mp3, " + test);
 			sound = new Audio("sn/" + soundName + ".mp3");
+			if (test)
+				sound.play();
 		}else{
 			sound = null;
 		}
@@ -397,12 +399,12 @@ jQuery(function($){
 		sound_select.addEventListener('change', function(){
 			if (!ready)
 				return;
-			setSoundName(sound_select.value);
+			setSoundName(sound_select.value, true);
 		}, false);
 		sound_select.addEventListener('click', function(){
 			if (!ready)
 				return;
-			setSoundName(sound_select.value);
+			setSoundName(sound_select.value, true);
 		}, false);
 
 		var type_sound_select = document.getElementById('type-sound-select');
