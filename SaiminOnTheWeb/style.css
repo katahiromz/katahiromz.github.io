@@ -17,8 +17,14 @@ body {
 #canvas {
 	z-index: 1;
 }
-label, input[type='checkbox'] {
-    cursor: pointer;
+label {
+	cursor: pointer;
+	font-size: 0.5cm;
+}
+input[type='checkbox'] {
+	cursor: pointer;
+	font-size: 0.5cm;
+	padding: 0;
 }
 #please-tap-here {
 	position: absolute;
@@ -43,12 +49,15 @@ label, input[type='checkbox'] {
 }
 #microphone-label {
 	position: absolute;
-	left: 0;
-	bottom: 0.9cm;
+	left: calc(16.66% * 0);
+	bottom: 1.0cm;
 	width: 16%;
 	z-index: 2;
 	font-size: 0.5cm;
+	padding: 0;
 	text-align: center;
+	height: 0.9cm;
+	line-height: 0.9cm;
 }
 #type-select-button {
 	position: absolute;
@@ -58,6 +67,7 @@ label, input[type='checkbox'] {
 	z-index: 2;
 	font-size: 0.5cm;
 	padding: 0;
+	height: 0.9cm;
 }
 #sound-button {
 	position: absolute;
@@ -67,6 +77,7 @@ label, input[type='checkbox'] {
 	z-index: 2;
 	font-size: 0.5cm;
 	padding: 0;
+	height: 0.9cm;
 }
 #text-button {
 	position: absolute;
@@ -76,6 +87,7 @@ label, input[type='checkbox'] {
 	z-index: 2;
 	font-size: 0.5cm;
 	padding: 0;
+	height: 0.9cm;
 }
 #speech-label {
 	position: absolute;
@@ -84,8 +96,10 @@ label, input[type='checkbox'] {
 	width: 16%;
 	z-index: 2;
 	font-size: 0.5cm;
-	padding: auto;
+	padding: 0;
 	text-align: center;
+	height: 0.9cm;
+	line-height: 0.9cm;
 }
 #config-button {
 	position: absolute;
@@ -95,6 +109,7 @@ label, input[type='checkbox'] {
 	z-index: 2;
 	font-size: 0.5cm;
 	padding: 0;
+	height: 0.9cm;
 }
 #about-button {
 	position: absolute;
@@ -104,6 +119,7 @@ label, input[type='checkbox'] {
 	z-index: 2;
 	font-size: 0.5cm;
 	padding: 0;
+	height: 0.9cm;
 }
 .invisible {
 	display: none;
@@ -155,14 +171,11 @@ textarea {
 	}
 }
 button {
-	-webkit-appearance: none;
-	 -moz-appearance: none;
-	      appearance: none;
-	border: 0;
+	outline: 1px solid white;
 	border-radius: 4px;
 	background-color: rgba(21, 21, 21, 75%);
 	color: white;
-	padding: 0;
+	padding: 4px;
 }
 button:hover {
 	background-color: rgba(40, 21, 21, 100%);
@@ -170,7 +183,8 @@ button:hover {
 label {
 	background-color: rgba(21, 21, 21, 75%);
 	color: white;
-	padding: 0;
+	outline: 1px solid white;
+	padding: 4px;
 	border-radius: 4px;
 }
 label:hover {
