@@ -1,6 +1,6 @@
 // configuration
 const
-  version = '3.0.9',
+  version = '3.1.0',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -99,6 +99,7 @@ self.addEventListener('fetch', event => {
       return;
     }
   }
+
   event.respondWith(
     caches.open(CACHE)
       .then(cache => {
