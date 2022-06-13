@@ -530,7 +530,7 @@ jQuery(function($){
 
 		// service worker
 		if (location.host != '' && 'serviceWorker' in navigator){
-			navigator.serviceWorker.register('./sw.js')
+			navigator.serviceWorker.register('./sw.js', {scope: './'})
 			.then(() => {
 				console.log('Service worker registered');
 			});
