@@ -273,18 +273,11 @@ jQuery(function($){
 			setTypeSound(saiminTypeSound);
 		}
 
-		$("#text-dialog").keydown(function(e){
-			if (e.keyCode == $.ui.keyCode.ENTER){
-				setText(document.getElementById('textbox').value);
-				$(this).parent().find("button:eq(0)").trigger("click");
-				return false;
-			}
-		});
-
 		$("#text-button").click(function(){
 			let text = prompt('メッセージ テキスト:', theText);
-			setText(text);
-			document.getElementById('textbox').value = theText;
+			if (text){
+				setText(text);
+			}
 		});
 
 		$("#about-button").click(function(){

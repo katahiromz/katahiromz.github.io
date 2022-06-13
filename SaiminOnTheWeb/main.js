@@ -276,8 +276,9 @@ jQuery(function($){
 
 		$("#text-button").click(function(){
 			let text = prompt('Message Text:', theText);
-			setText(text);
-			document.getElementById('textbox').value = theText;
+			if (text){
+				setText(text);
+			}
 		});
 
 		$("#about-button").click(function(){
