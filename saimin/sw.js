@@ -1,6 +1,6 @@
 // service worker
 const
-  version = '3.1.2',
+  version = '3.1.3',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -38,7 +38,6 @@ const largeFiles = [
   'sn/kirakira.mp3',
   'sn/Magic.mp3',
   'sn/Strange.mp3',
-  'sn/sp4.mp3', // TODO: Delete me!
 ];
 
 // install static assets
