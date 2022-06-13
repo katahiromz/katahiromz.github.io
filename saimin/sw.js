@@ -12,9 +12,10 @@ const
     'jquery.js',
     'jquery-ui.min.css',
     'jquery-ui.min.js',
+    'jquery-ui.theme.min.css',
     'mic.js',
     'sw.js',
-    'copyright.js'
+    'copyright.js',
   ],
   installFilesDesirable = [
     'favicon.ico',
