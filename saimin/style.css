@@ -19,6 +19,9 @@ body {
 	z-index: 1;
 	background-color: #222;
 }
+textarea {
+	font-size: 9pt;
+}
 label {
 	cursor: pointer;
 	font-size: 0.5cm;

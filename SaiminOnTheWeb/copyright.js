@@ -20,11 +20,12 @@ It generates hypnosis video in real time without using any video files.
 
 - Basically, it is an application to enjoy looking at the screen.
 - Tap/click on the screen to switch images.
-- Use the combo box at the lower left end to switch the pictures.
-- The combo box to the right of it switches the audio.
-- The screen split can be changed.
-- The "msg" button allows you to set the message.
 - Check "mic" to use the microphone.
+- The "pic?" button allows you to select a video.
+- The "snd!" button makes a sound.
+- The "msg" button allows you to set the message to be displayed.
+- When the check button "sp" is checked, the message is spoken automatically.
+- The "cfg" button allows for general settings.
 
 ---
 The MIT License (MIT)
