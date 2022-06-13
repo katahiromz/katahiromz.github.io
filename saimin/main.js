@@ -14,6 +14,7 @@ jQuery(function($){
 	var speed = 45.0;
 	var sound = null;
 	var soundName = '';
+	var kirakira_sound = null;
 	var typeSound = 1;
 	var in_text_dialog = false;
 	var after_text_dialog = false;
@@ -435,7 +436,6 @@ jQuery(function($){
 			}
 			type_select.value = type.toString();
 			if (typeSound == 1){
-				var kirakira_sound = new Audio("sn/kirakira.mp3");
 				if (kirakira_sound){
 					kirakira_sound.play();
 				}
@@ -574,8 +574,7 @@ jQuery(function($){
 		}
 
 		// make kirakira sound quickly playable
-		var kirakira_sound_cache = new Audio("sn/kirakira.mp3");
-		kirakira_sound_cache = null;
+		kirakira_sound = new Audio("sn/kirakira.mp3");
 	}
 
 	function circle(ctx, x, y, radius, is_fill = true){
