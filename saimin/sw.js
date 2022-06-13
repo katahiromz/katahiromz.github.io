@@ -1,6 +1,6 @@
 // service worker
 const
-  version = '3.1.1',
+  version = '3.1.2',
   CACHE = version + '::PWAsite',
   offlineURL = 'index.html',
   installFilesEssential = [
@@ -91,8 +91,10 @@ self.addEventListener('fetch', event => {
 
   // TODO: Add large files
   const largeFiles = [
-    'sn/sn4.mp3',
+    'sn/Horror.mp3',
     'sn/kirakira.mp3'
+    'sn/Magic.mp3',
+    'sn/Strange.mp3',
   ];
   for (file in largeFiles) {
     if (url.endsWith(file)) {
