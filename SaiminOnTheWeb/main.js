@@ -12,6 +12,7 @@ jQuery(function($){
 	var theText = '';
 	var division = -1;
 	var speed = 45.0;
+	var sound = null;
 	var soundName = '';
 	var typeSound = 1;
 	var in_text_dialog = false;
@@ -78,6 +79,12 @@ jQuery(function($){
 
 	function setSoundName(value){
 		soundName = value;
+		if (soundName != ''){
+			console.log("sn/" + soundName + ".mp3");
+			sound = new Audio("sn/" + soundName + ".mp3");
+		}else{
+			sound = null;
+		}
 		document.getElementById('sound-select').value = value;
 		localStorage.setItem('saiminSoundName', soundName);
 	}
@@ -358,10 +365,10 @@ jQuery(function($){
 		}
 
 		$("#sound-button").click(function(){
-			if (soundName != ''){
-				console.log("sn/" + soundName + ".mp3");
-				let sound = new Audio("sn/" + soundName + ".mp3");
-				sound.play();
+ 			if (soundName != ''){
+				if (sound){
+					sound.play();
+				}
 			}else{
 				config();
 			}
