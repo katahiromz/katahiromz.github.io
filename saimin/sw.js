@@ -37,7 +37,7 @@ const largeFiles = [
   'sn/Horror.mp3',
   'sn/kirakira.mp3',
   'sn/Magic.mp3',
-  'sn/Strange.mp3',
+  'sn/Weird.mp3',
 ];
 
 // install static assets
