@@ -647,7 +647,8 @@ jQuery(function($){
 		var qx = px + dx / 2;
 		var qy = py + dy / 2;
 
-		ctx.clearRect(px, py, dx, dy);
+		ctx.fillStyle = 'black';
+		ctx.fillRect(px, py, dx, dy);
 
 		ctx.restore();
 	}
@@ -666,7 +667,8 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.clearRect(px, py, dx, dy);
+		ctx.fillStyle = 'white';
+		ctx.fillRect(px, py, dx, dy);
 
 		var size = (dx + dy) * 2 / 5;
 		var count2 = getCount();
@@ -733,7 +735,8 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.clearRect(px, py, dx, dy);
+		ctx.fillStyle = 'white';
+		ctx.fillRect(px, py, dx, dy);
 
 		var size = (cx + cy) * 0.4;
 
@@ -817,7 +820,8 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		//ctx.clearRect(px, py, dx, dy);
+		//ctx.fillStyle = 'white';
+		//ctx.fillRect(px, py, dx, dy);
 
 		var count2 = getCount();
 		var factor = count2 * 0.03;
@@ -952,7 +956,8 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		//ctx.clearRect(px, py, dx, dy);
+		//ctx.fillStyle = 'white';
+		//ctx.fillRect(px, py, dx, dy);
 
 		var count2 = getCount();
 		var factor = count2 * 0.16;
