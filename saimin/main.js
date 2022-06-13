@@ -527,6 +527,14 @@ jQuery(function($){
 
 		// make kirakira sound quickly playable
 		kirakira_sound = new Audio("sn/kirakira.mp3");
+
+		// service worker
+		if (location.host != '' && 'serviceWorker' in navigator){
+			navigator.serviceWorker.register('./sw.js')
+			.then(() => {
+				console.log('Service worker registered');
+			});
+		}
 	}
 
 	function circle(ctx, x, y, radius, is_fill = true){
