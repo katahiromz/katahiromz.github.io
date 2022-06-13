@@ -78,15 +78,22 @@ jQuery(function($){
 		return cx >= 1500 || cy >= 1500;
 	}
 
+	let playing_sound = null;
+
 	function setSoundName(value, test = false){
 		if (value.indexOf('sn') == 0)
 			value = '';
 		soundName = value;
 		if (soundName != ''){
-			console.log("sn/" + soundName + ".mp3, " + test);
-			sound = new Audio("sn/" + soundName + ".mp3");
-			if (test)
+			console.log("sn/" + soundName + ".mp3" + test);
+			if (test && playing_sound) {
+				playing_sound.pause();
+				playing_sound = null;
+			}
+			playing_sound = sound = new Audio("sn/" + soundName + ".mp3");
+			if (test) {
 				sound.play();
+			}
 		}else{
 			sound = null;
 		}
@@ -94,10 +101,13 @@ jQuery(function($){
 		localStorage.setItem('saiminSoundName', soundName);
 	}
 
-	function setTypeSound(value){
+	function setTypeSound(value, test = false){
 		typeSound = parseInt(value);
 		document.getElementById('type-sound-select').value = value;
 		localStorage.setItem('saiminTypeSound', value);
+		if (test && typeSound == 1 && kirakira_sound){
+			kirakira_sound.play();
+		}
 	}
 
 	function setDivision(value){
@@ -411,12 +421,12 @@ jQuery(function($){
 		type_sound_select.addEventListener('change', function(){
 			if (!ready)
 				return;
-			setTypeSound(type_sound_select.value);
+			setTypeSound(type_sound_select.value, true);
 		}, false);
 		type_sound_select.addEventListener('click', function(){
 			if (!ready)
 				return;
-			setTypeSound(type_sound_select.value);
+			setTypeSound(type_sound_select.value, true);
 		}, false);
 
 		var division_select = document.getElementById('division-select');
