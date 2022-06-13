@@ -170,23 +170,13 @@ textarea {
 		width: 19%;
 	}
 }
-button {
+.navigate-button {
 	outline: 1px solid white;
 	border-radius: 4px;
 	background-color: rgba(21, 21, 21, 75%);
 	color: white;
 	padding: 4px;
 }
-button:hover {
-	background-color: rgba(40, 21, 21, 100%);
-}
-label {
-	background-color: rgba(21, 21, 21, 75%);
-	color: white;
-	outline: 1px solid white;
-	padding: 4px;
-	border-radius: 4px;
-}
-label:hover {
+.navigate-button:hover {
 	background-color: rgba(40, 21, 21, 100%);
 }
