@@ -522,9 +522,12 @@ jQuery(function($){
 			}
 		});
 
+		var sw_initialize_flag = false;
+
 		document.getElementById('initialize-button').addEventListener('click', function(e){
 			localStorage.clear();
-			alert("アプリを初期化しました。アプリを再起動して下さい。");
+			if (!sw_initialize_flag)
+				alert("アプリを初期化しました。アプリを再起動して下さい。");
 		});
 
 		// make kirakira sound quickly playable
@@ -534,10 +537,12 @@ jQuery(function($){
 		if (location.host != '' && 'serviceWorker' in navigator){
 			navigator.serviceWorker.register('./sw.js', {scope: './'})
 			.then((registration) => {
+				sw_initialize_flag = true;
 				document.getElementById('initialize-button').addEventListener('click', function(e){
 					registration.unregister();
 				});
 				console.log('Service worker registered');
+				alert("アプリを初期化しました。アプリを再起動して下さい。");
 			});
 		}
 	}
