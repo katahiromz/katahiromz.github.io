@@ -541,9 +541,9 @@ jQuery(function($){
 				sw_initialize_flag = true;
 				document.getElementById('initialize-button').addEventListener('click', function(e){
 					registration.unregister();
+					alert("Now I initialized the app. Please restart the app.");
 				});
 				console.log('Service worker registered');
-				alert("Now I initialized the app. Please restart the app.");
 			});
 		}
 	}

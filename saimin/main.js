@@ -540,9 +540,9 @@ jQuery(function($){
 				sw_initialize_flag = true;
 				document.getElementById('initialize-button').addEventListener('click', function(e){
 					registration.unregister();
+					alert("アプリを初期化しました。アプリを再起動して下さい。");
 				});
 				console.log('Service worker registered');
-				alert("アプリを初期化しました。アプリを再起動して下さい。");
 			});
 		}
 	}
