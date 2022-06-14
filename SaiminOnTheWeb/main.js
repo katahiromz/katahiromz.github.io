@@ -1,8 +1,8 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.1.3';
-	const DEBUG = true;
+	const VERSION = '3.1.4';
+	const DEBUG = false;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
