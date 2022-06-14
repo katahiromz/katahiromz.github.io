@@ -13,7 +13,7 @@ jQuery(function($){
 	var division = -1;
 	var speed = 45.0;
 	var sound = null;
-	var soundName = '';
+	var soundName = 'Magic';
 	var kirakira_sound = null;
 	var typeSound = 1;
 	var stars = new Array(32);
