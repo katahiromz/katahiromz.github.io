@@ -189,6 +189,11 @@ jQuery(function($){
 		if (isNativeApp()){
 			$('#caption').addClass('invisible');
 		}
+		if (type == 0){
+			$('#please-tap-here').removeClass('invisible');
+		}else{
+			$('#please-tap-here').addClass('invisible');
+		}
 		updateVersionDisplay();
 		window.requestAnimationFrame(draw);
 	}
