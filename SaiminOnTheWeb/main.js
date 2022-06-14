@@ -264,6 +264,8 @@ jQuery(function($){
 		var saiminSoundName = localStorage.getItem('saiminSoundName');
 		if (saiminSoundName){
 			setSoundName(saiminSoundName);
+		}else{
+			setSoundName('Magic');
 		}
 
 		var saiminTypeSound = localStorage.getItem('saiminTypeSound');
