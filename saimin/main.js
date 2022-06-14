@@ -531,7 +531,10 @@ jQuery(function($){
 		// service worker
 		if (location.host != '' && 'serviceWorker' in navigator){
 			navigator.serviceWorker.register('./sw.js', {scope: './'})
-			.then(() => {
+			.then((registration) => {
+				document.getElementById('initialize-button').addEventListener('click', function(e){
+					registration.unregister();
+				});
 				console.log('Service worker registered');
 			});
 		}
