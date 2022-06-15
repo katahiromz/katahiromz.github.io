@@ -178,13 +178,13 @@ jQuery(function($){
 
 	function updateVersionDisplay(){
 		let nativeVersion = getNativeAppVersion();
-		let text = copyright_text;
+		let text = $('#version-text').text();
 		if (nativeVersion){
 			text = text.replace('[[VERSION]]', nativeVersion + '(native) / ' + VERSION + '(web)');
 		}else{
 			text = text.replace('[[VERSION]]', VERSION + '(web)');
 		}
-		$('#notice-text').text(text);
+		$('#version-text').text(text);
 	}
 
 	function accepted(){
