@@ -23,17 +23,15 @@ jQuery(function($){
 		return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
 	}
 
+	function isWebApp(){
+		return navigator.userAgent.indexOf("/KraKra-web-app/") != -1;
+	}
+
 	function getNativeAppVersion(){
 		let results = navigator.userAgent.match(/\/KraKra-native-app\/([\d\.]+)\//);
 		if (results)
 			return results[1];
 		return false;
-	}
-
-	function cancelSpeech(){
-		if (window.speechSynthesis){
-			window.speechSynthesis.cancel();
-		}
 	}
 
 	function addStar(x, y){
@@ -51,18 +49,28 @@ jQuery(function($){
 		}
 	}
 
+	function cancelSpeech(){
+		if (isNativeApp()){
+			console.info('{{cancelSpeech}}');
+		}else if (window.speechSynthesis){
+			window.speechSynthesis.cancel();
+		}
+	}
+
 	async function playSpeech(text){
 		cancelSpeech();
 		text = text.replace('　', '  ').trim();
 		if (text == ''){
 			return;
 		}
-		if (window.speechSynthesis){
-			while (text.slice(-1) == '.')
-				text = text.slice(0, -1);
-			if (text == '')
-				return;
-			text += '. ';
+		while (text.slice(-1) == '.')
+			text = text.slice(0, -1);
+		if (text == '')
+			return;
+		text += '. ';
+		if (isNativeApp()){
+			console.info('{{speechLoop::' + text + '}}');
+		}else if (window.speechSynthesis){
 			text = text.repeat(256);
 			var speech = new SpeechSynthesisUtterance(text);
 			speech.pitch = 1;
@@ -247,7 +255,7 @@ jQuery(function($){
 		cancelSpeech();
 
 		window.addEventListener('resize', function(){
-			if (location.hostname == '' || isNativeApp()){
+			if (location.hostname == '' || isNativeApp() || isWebApp()){
 				fit();
 			} else {
 				location.reload();
@@ -480,7 +488,7 @@ jQuery(function($){
 			}
 		}, { passive: false });
 
-		if (!DEBUG && !isNativeApp()){
+		if (!DEBUG && !isNativeApp() && !isWebApp()){
 			$("#license-expired-dialog").dialog({
 				dialogClass: "no-close",
 				title: "Expired",
