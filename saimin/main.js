@@ -278,7 +278,7 @@ jQuery(function($){
 		}
 
 		$("#text-button").click(function(){
-			let text = prompt('メッセージ テキスト:', theText);
+			let text = prompt('メッセージ文字列を入力して下さい。', theText);
 			if (text !== null){
 				setText(text);
 			}

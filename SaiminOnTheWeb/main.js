@@ -279,7 +279,7 @@ jQuery(function($){
 		}
 
 		$("#text-button").click(function(){
-			let text = prompt('Message Text:', theText);
+			let text = prompt('Please input a message string:', theText);
 			if (text !== null){
 				setText(text);
 			}
