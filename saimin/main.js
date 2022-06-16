@@ -149,10 +149,14 @@ jQuery(function($){
 		$("#floating-text").text(theText);
 	}
 
-	function fit(){
+	function fitCanvas(){
 		var ctx = document.getElementById('canvas').getContext('2d');
 		cx = ctx.canvas.width = window.innerWidth;
 		cy = ctx.canvas.height = window.innerHeight;
+	}
+
+	function fit(){
+		fitCanvas();
 		let position = { my: "center", at: "center", of: window };
 		if (localStorage.getItem('saiminHelpShowing')){
 			$("#about-dialog").dialog('option', 'position', position);
@@ -593,6 +597,8 @@ jQuery(function($){
 				location.reload();
 			}
 		}, false);
+
+		fitCanvas();
 	}
 
 	function circle(ctx, x, y, radius, is_fill = true){
