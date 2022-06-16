@@ -2,7 +2,7 @@
 jQuery(function($){
 	const NUM_TYPE = 5;
 	const VERSION = '3.1.5';
-	const DEBUG = false;
+	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
@@ -337,268 +337,6 @@ jQuery(function($){
 		$("#config-dialog").on('dialogclose', function(event){
 			localStorage.removeItem('saiminConfigShowing');
 		});
-	}
-
-	function init(){
-		cancelSpeech();
-
-		var saiminText = localStorage.getItem('saiminText');
-		if (saiminText){
-			setText(saiminText);
-		}
-
-		var saiminDivision = localStorage.getItem('saiminDivision');
-		if (saiminDivision){
-			setDivision(saiminDivision);
-		}
-
-		var saiminSoundName = localStorage.getItem('saiminSoundName');
-		if (saiminSoundName){
-			setSoundName(saiminSoundName);
-		}else{
-			setSoundName('Magic');
-		}
-
-		var saiminTypeSound = localStorage.getItem('saiminTypeSound');
-		if (saiminTypeSound){
-			setTypeSound(saiminTypeSound);
-		}
-
-		$("#text-button").click(function(){
-			let text = prompt('Please input a message string:', theText);
-			if (text !== null){
-				setText(text);
-			}
-		});
-
-		$("#about-button").click(function(){
-			help();
-		});
-
-		$("#type-select-button").click(function(){
-			typeSelect();
-		});
-
-		$("#sound-button").click(function(){
- 			if (soundName != ''){
-				if (sound){
-					let s = new Audio('sn/' + soundName + '.mp3');
-					s.play();
-				}
-			}else{
-				config();
-			}
-		});
-
-		$("#config-button").click(function(){
-			config();
-		});
-
-		var type_select = document.getElementById('type-select');
-		type_select.addEventListener('change', function(){
-			if (!ready)
-				return;
-			setType(parseInt(type_select.value));
-		}, false);
-		type_select.addEventListener('click', function(){
-			if (!ready)
-				return;
-			setType(parseInt(type_select.value));
-		}, false);
-
-		var sound_select = document.getElementById('sound-select');
-		sound_select.addEventListener('change', function(){
-			if (!ready)
-				return;
-			setSoundName(sound_select.value, true);
-		}, false);
-		sound_select.addEventListener('click', function(){
-			if (!ready)
-				return;
-			setSoundName(sound_select.value, true);
-		}, false);
-
-		var type_sound_select = document.getElementById('type-sound-select');
-		type_sound_select.addEventListener('change', function(){
-			if (!ready)
-				return;
-			setTypeSound(type_sound_select.value, true);
-		}, false);
-		type_sound_select.addEventListener('click', function(){
-			if (!ready)
-				return;
-			setTypeSound(type_sound_select.value, true);
-		}, false);
-
-		var division_select = document.getElementById('division-select');
-		division_select.addEventListener('change', function(){
-			if (!ready)
-				return;
-			setDivision(parseInt(division_select.value));
-		}, false);
-		division_select.addEventListener('click', function(){
-			if (!ready)
-				return;
-			setDivision(parseInt(division_select.value));
-		}, false);
-
-		function canvasClick(e){
-			if (!ready)
-				return;
-			if (e.shiftKey){
-				setType((type + (NUM_TYPE + 1) - 1) % (NUM_TYPE + 1));
-			}else{
-				setType((type + 1) % (NUM_TYPE + 1));
-			}
-			type_select.value = type.toString();
-			if (typeSound == 1){
-				if (kirakira_sound){
-					let kirakira = new Audio("sn/kirakira.mp3");
-					kirakira.play();
-				}
-			}
-		}
-
-		document.getElementById('floating-text').addEventListener('click', function(e){
-			canvasClick(e);
-		}, false);
-
-		document.getElementById('canvas').addEventListener('click', function(e){
-			canvasClick(e);
-		}, false);
-
-		document.getElementById('canvas').addEventListener('mousemove', function(e){
-			if (!ready)
-				return;
-			addStar(e.clientX, e.clientY);
-		}, false);
-
-		document.getElementById('canvas').addEventListener('touchstart', function(e){
-			if (!ready)
-				return;
-			touchmoving = true;
-		}, {passive: true});
-		document.getElementById('canvas').addEventListener('touchmove', function(e){
-			if (!ready)
-				return;
-			if (touchmoving){
-				var touches = e.touches;
-				if (touches && touches.length == 1){
-					addStar(touches[0].clientX, touches[0].clientY);
-				}
-			}
-		}, {passive: true});
-		document.getElementById('canvas').addEventListener('touchend', function(e){
-			if (!ready)
-				return;
-			touchmoving = false;
-		}, {passive: true});
-		document.getElementById('canvas').addEventListener('touchcancel', function(e){
-			if (!ready)
-				return;
-			touchmoving = false;
-		}, {passive: true});
-
-		document.getElementById('canvas').addEventListener('wheel', function(e){
-			e.preventDefault();
-			if (!ready)
-				return;
-			if (e.ctrlKey)
-				return;
-			if (e.deltaY < 0){
-				if (speed < 80.0)
-					speed += 5.0;
-				else
-					speed = 80.0;
-			} else if (e.deltaY > 0){
-				if (speed > 0.0)
-					speed -= 5.0;
-				else
-					speed = 0.0;
-			}
-		}, { passive: false });
-
-		if (!DEBUG && !isNativeApp() && !isWebApp()){
-			$("#license-expired-dialog").dialog({
-				dialogClass: "no-close",
-				title: "Expired",
-				buttons: [
-					{
-						text: "OK",
-						click: function(){
-							$(this).dialog('close');
-						},
-					},
-				],
-			});
-			return;
-		}
-
-		var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
-		if (!saiminAdultCheck){
-			doAdultCheck();
-		} else if (saiminAdultCheck == "1"){
-			accepted();
-		} else if (saiminAdultCheck == "-1"){
-			forbidden();
-		}
-
-		let speech = document.getElementById('speech');
-		speech.addEventListener('click', function(e){
-			if (speech.checked){
-				playSpeech(theText);
-			} else {
-				cancelSpeech();
-			}
-		});
-
-		let mic_isInited = false;
-		let mic = document.getElementById('microphone');
-		mic.addEventListener('click', function(e){
-			if (mic.checked){
-				if (!mic_isInited){
-					mic_setup();
-					mic_isInited = true;
-				}
-				mic_connect();
-			} else {
-				mic_disconnect();
-			}
-		});
-
-		// make kirakira sound quickly playable
-		kirakira_sound = new Audio("sn/kirakira.mp3");
-
-		if (localStorage.getItem('saiminHelpShowing')){
-			help();
-		}else if (localStorage.getItem('saiminTypeSelectShowing')){
-			typeSelect();
-		}else if (localStorage.getItem('saiminConfigShowing')){
-			config();
-		}
-
-		// service worker
-		if (location.host != '' && 'serviceWorker' in navigator){
-			navigator.serviceWorker.register('./sw.js', {scope: './'})
-			.then((registration) => {
-				theRegistration = registration;
-				console.log('Service worker registered');
-			});
-		}
-
-		window.addEventListener('resize', function(){
-			if (location.hostname == '' || isNativeApp() || isWebApp()){
-				if (localStorage.getItem('saiminHelpShowing')){
-					location.reload();
-				}else{
-					fit();
-				}
-			} else {
-				location.reload();
-			}
-		}, false);
-
-		fitCanvas();
 	}
 
 	function circle(ctx, x, y, radius, is_fill = true){
@@ -1157,6 +895,267 @@ jQuery(function($){
 		old_time = new_time;
 
 		window.requestAnimationFrame(draw);
+	}
+
+	function init(){
+		cancelSpeech();
+		fitCanvas();
+
+		var saiminText = localStorage.getItem('saiminText');
+		if (saiminText){
+			setText(saiminText);
+		}
+
+		var saiminDivision = localStorage.getItem('saiminDivision');
+		if (saiminDivision){
+			setDivision(saiminDivision);
+		}
+
+		var saiminSoundName = localStorage.getItem('saiminSoundName');
+		if (saiminSoundName){
+			setSoundName(saiminSoundName);
+		}else{
+			setSoundName('Magic');
+		}
+
+		var saiminTypeSound = localStorage.getItem('saiminTypeSound');
+		if (saiminTypeSound){
+			setTypeSound(saiminTypeSound);
+		}
+
+		$("#text-button").click(function(){
+			let text = prompt('Please input a message string:', theText);
+			if (text !== null){
+				setText(text);
+			}
+		});
+
+		$("#about-button").click(function(){
+			help();
+		});
+
+		$("#type-select-button").click(function(){
+			typeSelect();
+		});
+
+		$("#sound-button").click(function(){
+ 			if (soundName != ''){
+				if (sound){
+					let s = new Audio('sn/' + soundName + '.mp3');
+					s.play();
+				}
+			}else{
+				config();
+			}
+		});
+
+		$("#config-button").click(function(){
+			config();
+		});
+
+		var type_select = document.getElementById('type-select');
+		type_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setType(parseInt(type_select.value));
+		}, false);
+		type_select.addEventListener('click', function(){
+			if (!ready)
+				return;
+			setType(parseInt(type_select.value));
+		}, false);
+
+		var sound_select = document.getElementById('sound-select');
+		sound_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setSoundName(sound_select.value, true);
+		}, false);
+		sound_select.addEventListener('click', function(){
+			if (!ready)
+				return;
+			setSoundName(sound_select.value, true);
+		}, false);
+
+		var type_sound_select = document.getElementById('type-sound-select');
+		type_sound_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setTypeSound(type_sound_select.value, true);
+		}, false);
+		type_sound_select.addEventListener('click', function(){
+			if (!ready)
+				return;
+			setTypeSound(type_sound_select.value, true);
+		}, false);
+
+		var division_select = document.getElementById('division-select');
+		division_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setDivision(parseInt(division_select.value));
+		}, false);
+		division_select.addEventListener('click', function(){
+			if (!ready)
+				return;
+			setDivision(parseInt(division_select.value));
+		}, false);
+
+		function canvasClick(e){
+			if (!ready)
+				return;
+			if (e.shiftKey){
+				setType((type + (NUM_TYPE + 1) - 1) % (NUM_TYPE + 1));
+			}else{
+				setType((type + 1) % (NUM_TYPE + 1));
+			}
+			type_select.value = type.toString();
+			if (typeSound == 1){
+				if (kirakira_sound){
+					let kirakira = new Audio("sn/kirakira.mp3");
+					kirakira.play();
+				}
+			}
+		}
+
+		document.getElementById('floating-text').addEventListener('click', function(e){
+			canvasClick(e);
+		}, false);
+
+		document.getElementById('canvas').addEventListener('click', function(e){
+			canvasClick(e);
+		}, false);
+
+		document.getElementById('canvas').addEventListener('mousemove', function(e){
+			if (!ready)
+				return;
+			addStar(e.clientX, e.clientY);
+		}, false);
+
+		document.getElementById('canvas').addEventListener('touchstart', function(e){
+			if (!ready)
+				return;
+			touchmoving = true;
+		}, {passive: true});
+		document.getElementById('canvas').addEventListener('touchmove', function(e){
+			if (!ready)
+				return;
+			if (touchmoving){
+				var touches = e.touches;
+				if (touches && touches.length == 1){
+					addStar(touches[0].clientX, touches[0].clientY);
+				}
+			}
+		}, {passive: true});
+		document.getElementById('canvas').addEventListener('touchend', function(e){
+			if (!ready)
+				return;
+			touchmoving = false;
+		}, {passive: true});
+		document.getElementById('canvas').addEventListener('touchcancel', function(e){
+			if (!ready)
+				return;
+			touchmoving = false;
+		}, {passive: true});
+
+		document.getElementById('canvas').addEventListener('wheel', function(e){
+			e.preventDefault();
+			if (!ready)
+				return;
+			if (e.ctrlKey)
+				return;
+			if (e.deltaY < 0){
+				if (speed < 80.0)
+					speed += 5.0;
+				else
+					speed = 80.0;
+			} else if (e.deltaY > 0){
+				if (speed > 0.0)
+					speed -= 5.0;
+				else
+					speed = 0.0;
+			}
+		}, { passive: false });
+
+		if (!DEBUG && !isNativeApp() && !isWebApp()){
+			$("#license-expired-dialog").dialog({
+				dialogClass: "no-close",
+				title: "Expired",
+				buttons: [
+					{
+						text: "OK",
+						click: function(){
+							$(this).dialog('close');
+						},
+					},
+				],
+			});
+			return;
+		}
+
+		var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
+		if (!saiminAdultCheck){
+			doAdultCheck();
+		} else if (saiminAdultCheck == "1"){
+			accepted();
+		} else if (saiminAdultCheck == "-1"){
+			forbidden();
+		}
+
+		let speech = document.getElementById('speech');
+		speech.addEventListener('click', function(e){
+			if (speech.checked){
+				playSpeech(theText);
+			} else {
+				cancelSpeech();
+			}
+		});
+
+		let mic_isInited = false;
+		let mic = document.getElementById('microphone');
+		mic.addEventListener('click', function(e){
+			if (mic.checked){
+				if (!mic_isInited){
+					mic_setup();
+					mic_isInited = true;
+				}
+				mic_connect();
+			} else {
+				mic_disconnect();
+			}
+		});
+
+		// make kirakira sound quickly playable
+		kirakira_sound = new Audio("sn/kirakira.mp3");
+
+		if (localStorage.getItem('saiminHelpShowing')){
+			help();
+		}else if (localStorage.getItem('saiminTypeSelectShowing')){
+			typeSelect();
+		}else if (localStorage.getItem('saiminConfigShowing')){
+			config();
+		}
+
+		// service worker
+		if (location.host != '' && 'serviceWorker' in navigator){
+			navigator.serviceWorker.register('./sw.js', {scope: './'})
+			.then((registration) => {
+				theRegistration = registration;
+				console.log('Service worker registered');
+			});
+		}
+
+		window.addEventListener('resize', function(){
+			if (location.hostname == '' || isNativeApp() || isWebApp()){
+				if (localStorage.getItem('saiminHelpShowing')){
+					location.reload();
+				}else{
+					fit();
+				}
+			} else {
+				location.reload();
+			}
+		}, false);
 	}
 
 	init();
