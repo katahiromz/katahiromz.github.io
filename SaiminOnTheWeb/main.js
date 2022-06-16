@@ -2,7 +2,7 @@
 jQuery(function($){
 	const NUM_TYPE = 5;
 	const VERSION = '3.1.4';
-	const DEBUG = false;
+	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
@@ -152,6 +152,14 @@ jQuery(function($){
 		var ctx = document.getElementById('canvas').getContext('2d');
 		cx = ctx.canvas.width = window.innerWidth;
 		cy = ctx.canvas.height = window.innerHeight;
+		let position = { my: "center", at: "center", of: window };
+		if (localStorage.getItem('saiminHelpShowing')){
+			$("#about-dialog").dialog('option', 'position', position);
+		}else if (localStorage.getItem('saiminTypeSelectShowing')){
+			$("#type-select-dialog").dialog('option', 'position', position);
+		}else if (localStorage.getItem('saiminConfigShowing')) {
+			$("#config-dialog").dialog('option', 'position', position);
+		}
 	}
 
 	function forbidden(){
@@ -171,6 +179,7 @@ jQuery(function($){
 
 	function help(){
 		$("#notice-text").width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
+		localStorage.setItem('saiminHelpShowing', '1');
 		$("#about-dialog").dialog({
 			dialogClass: "no-close",
 			title: "About this app",
@@ -181,6 +190,9 @@ jQuery(function($){
 				},
 			}],
 			width: window.innerWidth * 4 / 5,
+		});
+		$("#about-dialog").on('dialogclose', function(event){
+			localStorage.removeItem('saiminHelpShowing');
 		});
 	}
 
@@ -251,18 +263,68 @@ jQuery(function($){
 		}
 	}
 
+	function typeSelect(){
+		let type_select = document.getElementById('type-select');
+		let old_value = type_select.value;
+		localStorage.setItem('saiminTypeSelectShowing', '1');
+		$("#type-select-dialog").dialog({
+			dialogClass: "no-close",
+			title: "Set Picture",
+			buttons: [
+				{
+					text: "OK",
+					click: function(){
+						$(this).dialog('close');
+					},
+				},{
+					text: "Cancel",
+					click: function(){
+						setType(old_value);
+						$(this).dialog('close');
+					},
+				}
+			],
+		});
+		$("#type-select-dialog").on('dialogclose', function(event){
+			localStorage.removeItem('saiminTypeSelectShowing');
+		});
+	}
+
+	function config(){
+		let sound_select = document.getElementById('sound-select');
+		let type_sound_select = document.getElementById('type-sound-select');
+		let division_select = document.getElementById('division-select');
+		let old_sound_value = sound_select.value;
+		let old_type_sound_value = type_sound_select.value;
+		let old_division_value = division_select.value;
+		localStorage.setItem('saiminConfigShowing', '1');
+		$("#config-dialog").dialog({
+			dialogClass: "no-close",
+			title: "Configuration",
+			buttons: [
+				{
+					text: "OK",
+					click: function(){
+						$(this).dialog('close');
+					},
+				},{
+					text: "Cancel",
+					click: function(){
+						setSoundName(old_sound_value);
+						setTypeSound(old_type_sound_value);
+						setDivision(old_division_value);
+						$(this).dialog('close');
+					},
+				}
+			],
+		});
+		$("#config-dialog").on('dialogclose', function(event){
+			localStorage.removeItem('saiminConfigShowing');
+		});
+	}
+
 	function init(){
 		cancelSpeech();
-
-		window.addEventListener('resize', function(){
-			if (location.hostname == '' || isNativeApp() || isWebApp()){
-				fit();
-			} else {
-				location.reload();
-			}
-		}, false);
-
-		fit();
 
 		var saiminText = localStorage.getItem('saiminText');
 		if (saiminText){
@@ -298,56 +360,8 @@ jQuery(function($){
 		});
 
 		$("#type-select-button").click(function(){
-			let type_select = document.getElementById('type-select');
-			let old_value = type_select.value;
-			$("#type-select-dialog").dialog({
-				dialogClass: "no-close",
-				title: "Set Picture",
-				buttons: [
-					{
-						text: "OK",
-						click: function(){
-							$(this).dialog('close');
-						},
-					},{
-						text: "Cancel",
-						click: function(){
-							setType(old_value);
-							$(this).dialog('close');
-						},
-					}
-				],
-			});
+			typeSelect();
 		});
-
-		function config(){
-			let sound_select = document.getElementById('sound-select');
-			let type_sound_select = document.getElementById('type-sound-select');
-			let division_select = document.getElementById('division-select');
-			let old_sound_value = sound_select.value;
-			let old_type_sound_value = type_sound_select.value;
-			let old_division_value = division_select.value;
-			$("#config-dialog").dialog({
-				dialogClass: "no-close",
-				title: "Configuration",
-				buttons: [
-					{
-						text: "OK",
-						click: function(){
-							$(this).dialog('close');
-						},
-					},{
-						text: "Cancel",
-						click: function(){
-							setSoundName(old_sound_value);
-							setTypeSound(old_type_sound_value);
-							setDivision(old_division_value);
-							$(this).dialog('close');
-						},
-					}
-				],
-			});
-		}
 
 		$("#sound-button").click(function(){
  			if (soundName != ''){
@@ -434,7 +448,7 @@ jQuery(function($){
 		}, false);
 
 		document.getElementById('canvas').addEventListener('click', function(e){
-+			canvasClick(e);
+			canvasClick(e);
 		}, false);
 
 		document.getElementById('canvas').addEventListener('mousemove', function(e){
@@ -547,6 +561,14 @@ jQuery(function($){
 		// make kirakira sound quickly playable
 		kirakira_sound = new Audio("sn/kirakira.mp3");
 
+		if (localStorage.getItem('saiminHelpShowing')){
+			help();
+		}else if (localStorage.getItem('saiminTypeSelectShowing')){
+			typeSelect();
+		}else if (localStorage.getItem('saiminConfigShowing')){
+			config();
+		}
+
 		// service worker
 		if (location.host != '' && 'serviceWorker' in navigator){
 			navigator.serviceWorker.register('./sw.js', {scope: './'})
@@ -559,6 +581,18 @@ jQuery(function($){
 				console.log('Service worker registered');
 			});
 		}
+
+		window.addEventListener('resize', function(){
+			if (location.hostname == '' || isNativeApp() || isWebApp()){
+				if (localStorage.getItem('saiminHelpShowing')){
+					location.reload();
+				}else{
+					fit();
+				}
+			} else {
+				location.reload();
+			}
+		}, false);
 	}
 
 	function circle(ctx, x, y, radius, is_fill = true){
