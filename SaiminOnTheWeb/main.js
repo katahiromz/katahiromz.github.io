@@ -185,11 +185,6 @@ jQuery(function($){
 			dialogClass: "no-close",
 			title: "About this app",
 			buttons: [{
-				text: "OK",
-				click: function(){
-					$(this).dialog('close');
-				},
-			},{
 				text: "Init app",
 				click: function(){
 					localStorage.clear();
@@ -199,6 +194,11 @@ jQuery(function($){
 					alert("Now I initialized the app.");
 					$(this).dialog('close');
 					location.reload();
+				},
+			},{
+				text: "OK",
+				click: function(){
+					$(this).dialog('close');
 				},
 			}],
 			width: window.innerWidth * 4 / 5,

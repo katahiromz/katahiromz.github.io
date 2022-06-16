@@ -222,11 +222,6 @@ jQuery(function($){
 			dialogClass: "no-close",
 			title: "バージョン情報",
 			buttons: [{
-				text: "OK",
-				click: function(){
-					$(this).dialog('close');
-				},
-			},{
 				text: "アプリの初期化",
 				click: function(){
 					localStorage.clear();
@@ -236,6 +231,11 @@ jQuery(function($){
 					alert("アプリを初期化しました。");
 					$(this).dialog('close');
 					location.reload();
+				},
+			},{
+				text: "OK",
+				click: function(){
+					$(this).dialog('close');
 				},
 			}],
 			width: window.innerWidth * 4 / 5,
