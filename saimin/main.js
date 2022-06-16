@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.1.4';
+	const VERSION = '3.1.5';
 	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
@@ -18,6 +18,7 @@ jQuery(function($){
 	var typeSound = 1;
 	var stars = new Array(32);
 	var touchmoving = false;
+	var theRegistration = null;
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
@@ -224,6 +225,17 @@ jQuery(function($){
 				text: "OK",
 				click: function(){
 					$(this).dialog('close');
+				},
+			},{
+				text: "アプリの初期化",
+				click: function(){
+					localStorage.clear();
+					if (theRegistration){
+						theRegistration.unregister();
+					}
+					alert("アプリを初期化しました。");
+					$(this).dialog('close');
+					location.reload();
 				},
 			}],
 			width: window.innerWidth * 4 / 5,
@@ -550,14 +562,6 @@ jQuery(function($){
 			}
 		});
 
-		var sw_initialize_flag = false;
-
-		document.getElementById('initialize-button').addEventListener('click', function(e){
-			localStorage.clear();
-			if (!sw_initialize_flag)
-				alert("アプリを初期化しました。アプリを再起動して下さい。");
-		});
-
 		// make kirakira sound quickly playable
 		kirakira_sound = new Audio("sn/kirakira.mp3");
 
@@ -573,11 +577,7 @@ jQuery(function($){
 		if (location.host != '' && 'serviceWorker' in navigator){
 			navigator.serviceWorker.register('./sw.js', {scope: './'})
 			.then((registration) => {
-				sw_initialize_flag = true;
-				document.getElementById('initialize-button').addEventListener('click', function(e){
-					registration.unregister();
-					alert("アプリを初期化しました。アプリを再起動して下さい。");
-				});
+				theRegistration = registration;
 				console.log('Service worker registered');
 			});
 		}
