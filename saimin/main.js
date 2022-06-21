@@ -118,7 +118,7 @@ jQuery(function($){
 	function setSpeedType(value){
 		switch (value){
 		case 'slow':
-			speed = 30.0;
+			speed = 35.0;
 			break;
 		case 'normal':
 		case 'irregular':
@@ -918,7 +918,7 @@ jQuery(function($){
 			clock += diff;
 			if (clock >= speed / 30.0){
 				clock = 0;
-				const MIN_VALUE = 30.0;
+				const MIN_VALUE = 35.0;
 				const MAX_VALUE = 70.0;
 				const MIDDLE = (MIN_VALUE + MAX_VALUE) * 0.5;
 				if (speed < MIDDLE)
