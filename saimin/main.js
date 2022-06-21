@@ -916,9 +916,15 @@ jQuery(function($){
 
 		if (speedType == 'irregular'){
 			clock += diff;
-			if (clock >= 50.0 / speed){
+			if (clock >= speed / 30.0){
 				clock = 0;
-				speed = 30.0 + Math.random() * 40.0;
+				const MIN_VALUE = 30.0;
+				const MAX_VALUE = 70.0;
+				const MIDDLE = (MIN_VALUE + MAX_VALUE) * 0.5;
+				if (speed < MIDDLE)
+					speed = MIDDLE + (MAX_VALUE - MIDDLE) * Math.random();
+				else
+					speed = MIN_VALUE + (MIDDLE - MIN_VALUE) * Math.random();
 			}
 		}
 
