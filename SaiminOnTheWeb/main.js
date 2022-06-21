@@ -2,12 +2,12 @@
 jQuery(function($){
 	const NUM_TYPE = 5;
 	const VERSION = '3.1.5';
-	const DEBUG = false;
+	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
 	var type = 0;
-	var counter = 0;
+	var counter = 0, clock = 0;
 	var ready = false;
 	var theText = '';
 	var division = -1;
@@ -19,6 +19,7 @@ jQuery(function($){
 	var stars = new Array(32);
 	var touchmoving = false;
 	var theRegistration = null;
+	var speedType = 'normal';
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
@@ -112,6 +113,26 @@ jQuery(function($){
 		if (test && typeSound == 1 && kirakira_sound){
 			kirakira_sound.play();
 		}
+	}
+
+	function setSpeedType(value){
+		switch (value){
+		case 'slow':
+			speed = 30.0;
+			break;
+		case 'normal':
+		case 'irregular':
+			speed = 45.0;
+			break;
+		case 'fast':
+			speed = 70.0;
+			break;
+		default:
+			return;
+		}
+		speedType = value;
+		document.getElementById('speed-type-select').value = value;
+		localStorage.setItem('saiminSpeedType', value);
 	}
 
 	function setDivision(value){
@@ -894,6 +915,14 @@ jQuery(function($){
 		counter += diff * speed;
 		old_time = new_time;
 
+		if (speedType == 'irregular'){
+			clock += diff;
+			if (clock >= 50.0 / speed){
+				clock = 0;
+				speed = 30.0 + Math.random() * 40.0;
+			}
+		}
+
 		window.requestAnimationFrame(draw);
 	}
 
@@ -921,6 +950,13 @@ jQuery(function($){
 		var saiminTypeSound = localStorage.getItem('saiminTypeSound');
 		if (saiminTypeSound){
 			setTypeSound(saiminTypeSound);
+		}
+
+		var saiminSpeedType = localStorage.getItem('saiminSpeedType');
+		if (saiminSpeedType){
+			setSpeedType(saiminSpeedType);
+		}else{
+			setSpeedType('normal');
 		}
 
 		$("#text-button").click(function(){
@@ -999,6 +1035,13 @@ jQuery(function($){
 			if (!ready)
 				return;
 			setDivision(parseInt(division_select.value));
+		}, false);
+
+		var speed_type_select = document.getElementById('speed-type-select');
+		speed_type_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setSpeedType(speed_type_select.value);
 		}, false);
 
 		function canvasClick(e){
