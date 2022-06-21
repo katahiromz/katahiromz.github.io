@@ -7,7 +7,7 @@ jQuery(function($){
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
 	var type = 0;
-	var normal_counter = 0, dynamic_counter = 0, clock = 0;
+	var counter = 0, clock = 0;
 	var ready = false;
 	var theText = '';
 	var division = -1;
@@ -142,7 +142,7 @@ jQuery(function($){
 	}
 
 	function getCount(){
-		return dynamic_counter;
+		return counter;
 	}
 
 	function setType(value){
@@ -882,7 +882,7 @@ jQuery(function($){
 
 		if (theText != ''){
 			$("#floating-text").removeClass('invisible');
-			let top = (50 + 5 * Math.sin(dynamic_counter * 0.1) + delta_percent) + "%";
+			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + "%";
 			document.getElementById("floating-text").style.top = top;
 		}else{
 			$("#floating-text").addClass('invisible');
@@ -911,13 +911,12 @@ jQuery(function($){
 
 		var new_time = (new Date()).getTime();
 		var diff = (new_time - old_time) / 1000.0;
-		normal_counter += diff;
-		dynamic_counter += diff * speed;
+		counter += diff * speed;
 		old_time = new_time;
 
 		if (speedType == 'irregular'){
 			clock += diff;
-			if (clock >= 2.0){
+			if (clock >= 50.0 / speed){
 				clock = 0;
 				speed = 30.0 + Math.random() * 40.0;
 			}
