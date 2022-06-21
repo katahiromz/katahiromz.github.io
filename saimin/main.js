@@ -2,12 +2,12 @@
 jQuery(function($){
 	const NUM_TYPE = 5;
 	const VERSION = '3.1.5';
-	const DEBUG = false;
+	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
 	var type = 0;
-	var counter = 0;
+	var normal_counter = 0, dynamic_counter = 0, clock = 0;
 	var ready = false;
 	var theText = '';
 	var division = -1;
@@ -19,6 +19,7 @@ jQuery(function($){
 	var stars = new Array(32);
 	var touchmoving = false;
 	var theRegistration = null;
+	var speedType = 'normal';
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
@@ -114,6 +115,26 @@ jQuery(function($){
 		}
 	}
 
+	function setSpeedType(value){
+		switch (value){
+		case 'slow':
+			speed = 30.0;
+			break;
+		case 'normal':
+		case 'irregular':
+			speed = 45.0;
+			break;
+		case 'fast':
+			speed = 70.0;
+			break;
+		default:
+			return;
+		}
+		speedType = value;
+		document.getElementById('speed-type-select').value = value;
+		localStorage.setItem('saiminSpeedType', value);
+	}
+
 	function setDivision(value){
 		division = parseInt(value);
 		document.getElementById('division-select').value = division;
@@ -121,7 +142,7 @@ jQuery(function($){
 	}
 
 	function getCount(){
-		return counter;
+		return dynamic_counter;
 	}
 
 	function setType(value){
@@ -861,7 +882,7 @@ jQuery(function($){
 
 		if (theText != ''){
 			$("#floating-text").removeClass('invisible');
-			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + "%";
+			let top = (50 + 5 * Math.sin(dynamic_counter * 0.1) + delta_percent) + "%";
 			document.getElementById("floating-text").style.top = top;
 		}else{
 			$("#floating-text").addClass('invisible');
@@ -890,8 +911,17 @@ jQuery(function($){
 
 		var new_time = (new Date()).getTime();
 		var diff = (new_time - old_time) / 1000.0;
-		counter += diff * speed;
+		normal_counter += diff;
+		dynamic_counter += diff * speed;
 		old_time = new_time;
+
+		if (speedType == 'irregular'){
+			clock += diff;
+			if (clock >= 2.0){
+				clock = 0;
+				speed = 30.0 + Math.random() * 40.0;
+			}
+		}
 
 		window.requestAnimationFrame(draw);
 	}
@@ -921,6 +951,13 @@ jQuery(function($){
 		var saiminTypeSound = localStorage.getItem('saiminTypeSound');
 		if (saiminTypeSound){
 			setTypeSound(saiminTypeSound);
+		}
+
+		var saiminSpeedType = localStorage.getItem('saiminSpeedType');
+		if (saiminSpeedType){
+			setSpeedType(saiminSpeedType);
+		}else{
+			setSpeedType('normal');
 		}
 
 		$("#text-button").click(function(){
@@ -999,6 +1036,13 @@ jQuery(function($){
 			if (!ready)
 				return;
 			setDivision(parseInt(division_select.value));
+		}, false);
+
+		var speed_type_select = document.getElementById('speed-type-select');
+		speed_type_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setSpeedType(speed_type_select.value);
 		}, false);
 
 		function canvasClick(e){
