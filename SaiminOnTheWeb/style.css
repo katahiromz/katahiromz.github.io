@@ -56,45 +56,56 @@ input[type='checkbox'] {
 }
 #microphone-label {
 	position: absolute;
-	left: calc(16.66% * 0);
-	bottom: 1.2cm;
-	width: 16%;
+	left: calc(100% / 5 * 0);
+	bottom: 0;
+	width: calc(100% / 5 - 5px);
 }
 #type-select-button {
 	position: absolute;
-	left: calc(16.66% * 0);
+	left: calc(100% / 5 * 1);
 	bottom: 0;
-	width: 16%;
+	width: calc(100% / 5 - 5px);
 }
 #sound-button {
 	position: absolute;
-	left: calc(16.66% * 1);
+	left: calc(100% / 5 * 2);
 	bottom: 0;
-	width: 16%;
+	width: calc(100% / 5 - 5px);
 }
 #text-button {
 	position: absolute;
-	left: calc(16.66% * 2);
+	left: calc(100% / 5 * 3);
 	bottom: 0;
-	width: 16%;
+	width: calc(100% / 5 - 5px);
 }
 #speech-label {
 	position: absolute;
-	left: calc(16.66% * 3);
+	left: calc(100% / 5 * 4);
 	bottom: 0;
-	width: 16%;
+	width: calc(100% / 5 - 5px);
+}
+.round-button {
+	width: 1cm;
+	height: 1cm;
+	background-color: rgba(255, 181, 230, 0%);
+	border: 0;
+	border-radius: 100%;
+	padding: 0;
+	margin: 0;
+}
+.round-button img {
+	width: 1cm;
+	height: 1cm;
 }
 #config-button {
 	position: absolute;
-	left: calc(16.66% * 4);
-	bottom: 0;
-	width: 16%;
+	left: 3px;
+	top: 3px;
 }
 #about-button {
 	position: absolute;
-	left: calc(16.66% * 5);
-	bottom: 0;
-	width: 16%;
+	right: 3px;
+	top: 3px;
 }
 .invisible {
 	display: none;
@@ -122,43 +133,13 @@ textarea {
 	padding: 0;
 	text-align: center;
 }
+button.navigate-button {
+	vertical-align: top;
+	line-height: 0.5cm;
+}
+.navigate-button img {
+	vertical-align: middle;
+}
 .navigate-button:hover {
 	background-color: rgba(255, 210, 230, 100%);
-}
-@media (max-width: 300px) {
-	#microphone-label {
-		left: 0;
-		bottom: 1.2cm;
-		width: 25%;
-	}
-	#type-select-button {
-		left: 25%;
-		bottom: 1.2cm;
-		width: 20%;
-	}
-	#sound-button {
-		left: calc(20% * 0);
-		bottom: 0;
-		width: 19%;
-	}
-	#text-button {
-		left: calc(20% * 1);
-		bottom: 0;
-		width: 19%;
-	}
-	#speech-label {
-		left: calc(20% * 2);
-		bottom: 0;
-		width: 19%;
-	}
-	#config-button {
-		left: calc(20% * 3);
-		bottom: 0;
-		width: 19%;
-	}
-	#about-button {
-		left: calc(20% * 4);
-		bottom: 0;
-		width: 19%;
-	}
 }

@@ -15,6 +15,12 @@ sw.precache('precached', [
 	'./manifest.json',
 	'./mic.js',
 	'./style.css',
+	'./images/char.png',
+	'./images/gear.png',
+	'./images/mic.png',
+	'./images/question.png',
+	'./images/sound.png',
+	'./images/speak.png',
 ]);
 
 sw.addRoute(/.*\.mp3$/, { method: 'get' }, sw.networkOnly({ timeout: 3000 }));
