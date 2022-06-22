@@ -331,9 +331,11 @@ jQuery(function($){
 		let sound_select = document.getElementById('sound-select');
 		let type_sound_select = document.getElementById('type-sound-select');
 		let division_select = document.getElementById('division-select');
+		let speed_type_select = document.getElementById('speed-type-select');
 		let old_sound_value = sound_select.value;
 		let old_type_sound_value = type_sound_select.value;
 		let old_division_value = division_select.value;
+		let old_speed_type_value = speed_type_select.value;
 		localStorage.setItem('saiminConfigShowing', '1');
 		$("#config-dialog").dialog({
 			dialogClass: "no-close",
@@ -350,6 +352,7 @@ jQuery(function($){
 						setSoundName(old_sound_value);
 						setTypeSound(old_type_sound_value);
 						setDivision(old_division_value);
+						setSpeedType(old_speed_type_value);
 						$(this).dialog('close');
 					},
 				}
