@@ -1152,16 +1152,20 @@ jQuery(function($){
 		}
 
 		let speech = document.getElementById('speech');
+		let speech_label = $('#speech-label');
 		speech.addEventListener('click', function(e){
 			if (speech.checked){
 				playSpeech(theText);
+				speech_label.addClass('checked');
 			} else {
 				cancelSpeech();
+				speech_label.removeClass('checked');
 			}
 		});
 
 		let mic_isInited = false;
 		let mic = document.getElementById('microphone');
+		let mic_label = $('#microphone-label');
 		mic.addEventListener('click', function(e){
 			if (mic.checked){
 				if (!mic_isInited){
@@ -1169,8 +1173,10 @@ jQuery(function($){
 					mic_isInited = true;
 				}
 				mic_connect();
+				mic_label.addClass('checked');
 			} else {
 				mic_disconnect();
+				mic_label.removeClass('checked');
 			}
 		});
 

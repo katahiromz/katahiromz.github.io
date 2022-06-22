@@ -141,5 +141,8 @@ button.navigate-button {
 	vertical-align: middle;
 }
 .navigate-button:hover {
-	background-color: rgba(255, 210, 230, 100%);
+	background-color: rgba(255, 210, 230, 85%);
+}
+.checked {
+	background-color: rgba(255, 100, 100, 90%) !important;
 }
