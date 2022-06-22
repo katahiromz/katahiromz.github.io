@@ -54,13 +54,13 @@ input[type='checkbox'] {
 	padding: 4px;
 	z-index: 3;
 }
-#microphone-label {
+#type-select-button {
 	position: absolute;
 	left: calc(100% / 5 * 0);
 	bottom: 0;
 	width: calc(100% / 5 - 5px);
 }
-#type-select-button {
+#microphone-label {
 	position: absolute;
 	left: calc(100% / 5 * 1);
 	bottom: 0;
