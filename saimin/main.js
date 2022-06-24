@@ -706,14 +706,15 @@ jQuery(function($){
 			++i;
 		}
 
-		ctx.strokeStyle = "black";
-		ctx.fillStyle = "black";
+		ctx.strokeStyle = "#633";
 		if (isLargeDisplay())
 			ctx.lineWidth = 16;
 		else
 			ctx.lineWidth = 8;
-		
+		ctx.fillStyle = "#633";
 		eye(ctx, qx, qy, cxy / 10, 1.0);
+		ctx.fillStyle = "#f66";
+		heart(ctx, qx, qy - cxy / 50, qx, qy + cxy / 50);
 
 		var opened = 1.0;
 		var f = Math.sin(Math.abs(count2 * 0.1));
@@ -727,7 +728,10 @@ jQuery(function($){
 		for (i = 0; i < N; ++i){
 			let x = qx + cxy * Math.cos(radian) * 0.3;
 			let y = qy + cxy * Math.sin(radian) * 0.3;
+			ctx.fillStyle = "#633";
 			eye(ctx, x, y, cxy / 10, opened);
+			ctx.fillStyle = "#f66";
+			heart(ctx, x, y - cxy * opened / 50, x, y + cxy * opened / 50);
 			radian += delta;
 		}
 
