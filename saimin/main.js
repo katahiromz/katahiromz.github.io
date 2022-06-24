@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 jQuery(function($){
 	const NUM_TYPE = 5;
-	const VERSION = '3.1.5';
+	const VERSION = '3.1.6';
 	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
@@ -302,7 +302,11 @@ jQuery(function($){
 
 	function typeSelect(){
 		let type_select = document.getElementById('type-select');
-		let old_value = type_select.value;
+		let division_select = document.getElementById('division-select');
+		let speed_type_select = document.getElementById('speed-type-select');
+		let old_type_value = type_select.value;
+		let old_division_value = division_select.value;
+		let old_speed_type_value = speed_type_select.value;
 		localStorage.setItem('saiminTypeSelectShowing', '1');
 		$("#type-select-dialog").dialog({
 			dialogClass: "no-close",
@@ -316,7 +320,9 @@ jQuery(function($){
 				},{
 					text: "Cancel",
 					click: function(){
-						setType(old_value);
+						setType(old_type_value);
+						setDivision(old_division_value);
+						setSpeedType(old_speed_type_value);
 						$(this).dialog('close');
 					},
 				}
@@ -330,12 +336,8 @@ jQuery(function($){
 	function config(){
 		let sound_select = document.getElementById('sound-select');
 		let type_sound_select = document.getElementById('type-sound-select');
-		let division_select = document.getElementById('division-select');
-		let speed_type_select = document.getElementById('speed-type-select');
 		let old_sound_value = sound_select.value;
 		let old_type_sound_value = type_sound_select.value;
-		let old_division_value = division_select.value;
-		let old_speed_type_value = speed_type_select.value;
 		localStorage.setItem('saiminConfigShowing', '1');
 		$("#config-dialog").dialog({
 			dialogClass: "no-close",
@@ -351,8 +353,6 @@ jQuery(function($){
 					click: function(){
 						setSoundName(old_sound_value);
 						setTypeSound(old_type_sound_value);
-						setDivision(old_division_value);
-						setSpeedType(old_speed_type_value);
 						$(this).dialog('close');
 					},
 				}
