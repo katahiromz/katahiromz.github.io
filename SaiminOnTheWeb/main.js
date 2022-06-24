@@ -252,6 +252,8 @@ jQuery(function($){
 		var saiminType = localStorage.getItem('saiminType');
 		if (saiminType){
 			setType(parseInt(saiminType));
+		}else{
+			setType(0);
 		}
 		$('#microphone-label').removeClass('invisible');
 		$('#type-select-button').removeClass('invisible');
