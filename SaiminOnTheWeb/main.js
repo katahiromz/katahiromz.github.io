@@ -151,8 +151,10 @@ jQuery(function($){
 		type = parseInt(value);
 		if (type == 0){
 			$('#please-tap-here').removeClass('invisible');
+			$('#heart-block').removeClass('invisible');
 		} else  {
 			$('#please-tap-here').addClass('invisible');
+			$('#heart-block').addClass('invisible');
 		}
 		var type_select = document.getElementById('type-select');
 		type_select.value = type.toString();
@@ -1075,6 +1077,13 @@ jQuery(function($){
 		}, false);
 
 		document.getElementById('canvas').addEventListener('click', function(e){
+			canvasClick(e);
+		}, false);
+
+		document.getElementById('please-tap-here').addEventListener('click', function(e){
+			canvasClick(e);
+		}, false);
+		document.getElementById('heart-block').addEventListener('click', function(e){
 			canvasClick(e);
 		}, false);
 

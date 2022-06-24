@@ -17,6 +17,7 @@ sw.precache('precached', [
 	'./style.css',
 	'./images/char.png',
 	'./images/gear.png',
+	'./images/heart.png',
 	'./images/mic.png',
 	'./images/question.png',
 	'./images/sound.png',
