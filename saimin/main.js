@@ -478,7 +478,7 @@ jQuery(function($){
 		var flag2 = -1;
 		var ci = 6;
 
-		ctx.strokeStyle = 'rgb(0, 0, 0)';
+		ctx.strokeStyle = '#000';
 		ctx.lineCap = 'square';
 
 		for (var i = 0; i <= ci; ++i){
@@ -528,7 +528,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = 'rgba(255, 191, 255)';
+		ctx.fillStyle = '#f77';
 		ctx.fillRect(px, py, dx, dy);
 
 		var size = (cx + cy) * 0.4;
