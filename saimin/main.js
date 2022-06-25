@@ -253,6 +253,7 @@ jQuery(function($){
 			buttons: [{
 				text: "アプリの初期化",
 				click: function(){
+					console.info('{{clearSettings}}');
 					localStorage.clear();
 					if (theRegistration){
 						theRegistration.unregister();

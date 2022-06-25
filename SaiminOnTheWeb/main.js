@@ -214,6 +214,7 @@ jQuery(function($){
 			buttons: [{
 				text: "Init app",
 				click: function(){
+					console.info('{{clearSettings}}');
 					localStorage.clear();
 					if (theRegistration){
 						theRegistration.unregister();
