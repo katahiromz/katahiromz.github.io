@@ -1,8 +1,29 @@
 /* jshint esversion: 8 */
+
+const NUM_TYPE = 5;
+const VERSION = '3.1.7';
+const DEBUG = true;
+
+// {{language-specific}}
+const TEXT_PIC = '画';
+const TEXT_OK = 'OK';
+const TEXT_CANCEL = 'Cancel'; // 画面が小さいからこれは英語のままにする。
+const TEXT_YES = 'はい';
+const TEXT_NO = 'いいえ';
+const TEXT_VERSION_INFO = 'バージョン情報';
+const TEXT_INIT_APP = 'アプリの初期化';
+const TEXT_INITTED_APP = 'アプリを初期化しました。';
+const TEXT_ADULT_CHECK = '成人チェック';
+const TEXT_CONFIGURATION = '全般設定';
+const TEXT_EXPIRED = '期限切れ';
+const TEXT_PIC_SETTINGS = '映像の設定';
+const TEXT_INPUT_MESSAGE = 'メッセージ文字列を入力して下さい。';
+const TEXT_FORBIDDEN = '使用禁止';
+const TEXT_FULLWIDTH_SPACE = '　';
+const TEXT_PERIOD = '。';
+const TEXT_PERIOD_SPACE = '。';
+
 jQuery(function($){
-	const NUM_TYPE = 5;
-	const VERSION = '3.1.6';
-	const DEBUG = true;
 	var cx = 0, cy = 0;
 	var old_cx = null, old_cy = null;
 	var old_time = (new Date()).getTime();
@@ -22,11 +43,11 @@ jQuery(function($){
 	var speedType = 'normal';
 
 	function isNativeApp(){
-		return navigator.userAgent.indexOf("/KraKra-native-app/") != -1;
+		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
 	}
 
 	function isWebApp(){
-		return navigator.userAgent.indexOf("/KraKra-web-app/") != -1;
+		return navigator.userAgent.indexOf('/KraKra-web-app/') != -1;
 	}
 
 	function getNativeAppVersion(){
@@ -61,26 +82,33 @@ jQuery(function($){
 		}
 	}
 
-	async function playSpeech(text){
-		cancelSpeech();
-		text = text.replace('　', '  ').trim();
+	function adjustText(text){
+		// {{language-specific}}
+		text = text.replace(TEXT_FULLWIDTH_SPACE, '  ').trim();
 		if (text == ''){
 			return;
 		}
-		while (text.slice(-1) == '。')
+		while (text.slice(-1) == TEXT_PERIOD)
 			text = text.slice(0, -1);
 		if (text == '')
 			return;
-		text += '。';
+		text += TEXT_PERIOD_SPACE;
+		return text;
+	}
+
+	async function playSpeech(text){
+		cancelSpeech();
+		text = adjustText(text);
 		try{
 			android.speechLoop(text);
 		}catch(error){
 			if (window.speechSynthesis){
 				text = text.repeat(256);
 				var speech = new SpeechSynthesisUtterance(text);
-				speech.lang = 'ja-JP';
+				// {{language-specific}}
 				speech.pitch = 0.6;
 				speech.rate = 0.4;
+				speech.lang = 'ja-JP';
 				window.speechSynthesis.speak(speech);
 			}
 		}
@@ -95,11 +123,11 @@ jQuery(function($){
 			value = '';
 		soundName = value;
 		if (soundName != ''){
-			console.log("sn/" + soundName + ".mp3, " + test);
+			console.log('sn/' + soundName + '.mp3, ' + test);
 			if (test){
 				sound = null;
 			}
-			sound = new Audio("sn/" + soundName + ".mp3");
+			sound = new Audio('sn/' + soundName + '.mp3');
 			if (test){
 				sound.play();
 			}
@@ -162,18 +190,18 @@ jQuery(function($){
 		}
 		var type_select = document.getElementById('type-select');
 		type_select.value = type.toString();
-		$('#type-select-button').text("画" + type.toString());
+		$('#type-select-button').text(TEXT_PIC + type.toString());
 		localStorage.setItem('saiminType', type.toString());
 	}
 
 	function setText(txt){
-		theText = txt.replace('　', '  ').trim();
+		theText = txt.replace(TEXT_FULLWIDTH_SPACE, '  ').trim();
 		localStorage.setItem('saiminText', theText);
 		var speech = document.getElementById('speech');
 		if (speech.checked){
 			playSpeech(theText);
 		}
-		$("#floating-text").text(theText);
+		$('#floating-text').text(theText);
 	}
 
 	function fitCanvas(){
@@ -184,25 +212,25 @@ jQuery(function($){
 
 	function fit(){
 		fitCanvas();
-		let position = { my: "center", at: "center", of: window };
+		let position = { my: 'center', at: 'center', of: window };
 		if (localStorage.getItem('saiminHelpShowing')){
-			$("#about-dialog").dialog('option', 'position', position);
+			$('#about-dialog').dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminTypeSelectShowing')){
-			$("#type-select-dialog").dialog('option', 'position', position);
+			$('#type-select-dialog').dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminConfigShowing')) {
-			$("#config-dialog").dialog('option', 'position', position);
+			$('#config-dialog').dialog('option', 'position', position);
 		}
 	}
 
 	function forbidden(){
-		$("#child-dialog").dialog({
-			dialogClass: "no-close",
-			title: "使用禁止",
+		$('#child-dialog').dialog({
+			dialogClass: 'no-close',
+			title: TEXT_FORBIDDEN,
 			buttons: [{
-				text: "OK",
+				text: TEXT_OK,
 				click: function(){
 					$(this).dialog('close');
-					location.href = "https://google.co.jp";
+					location.href = 'https://google.co.jp';
 					return false;
 				},
 			}],
@@ -249,13 +277,13 @@ jQuery(function($){
 	}
 
 	function help(){
-		$("#notice-text").width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
+		$('#notice-text').width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
 		localStorage.setItem('saiminHelpShowing', '1');
-		$("#about-dialog").dialog({
-			dialogClass: "no-close",
-			title: "バージョン情報",
+		$('#about-dialog').dialog({
+			dialogClass: 'no-close',
+			title: TEXT_VERSION_INFO,
 			buttons: [{
-				text: "アプリの初期化",
+				text: TEXT_INIT_APP,
 				click: function(){
 					try{
 						android.clearSettings();
@@ -266,19 +294,19 @@ jQuery(function($){
 					if (theRegistration){
 						theRegistration.unregister();
 					}
-					alert("アプリを初期化しました。");
+					alert(TEXT_INITTED_APP);
 					$(this).dialog('close');
 					location.reload();
 				},
 			},{
-				text: "OK",
+				text: TEXT_OK,
 				click: function(){
 					$(this).dialog('close');
 				},
 			}],
 			width: window.innerWidth * 4 / 5,
 		});
-		$("#about-dialog").on('dialogclose', function(event){
+		$('#about-dialog').on('dialogclose', function(event){
 			localStorage.removeItem('saiminHelpShowing');
 		});
 	}
@@ -288,12 +316,12 @@ jQuery(function($){
 			accepted();
 			help();
 		}else{
-			$("#adult-check-dialog").dialog({
-				dialogClass: "no-close",
-				title: "成人チェック",
+			$('#adult-check-dialog').dialog({
+				dialogClass: 'no-close',
+				title: TEXT_ADULT_CHECK,
 				buttons: [
 					{
-						text: "はい",
+						text: TEXT_YES,
 						click: function(){
 							$(this).dialog('close');
 							accepted();
@@ -301,7 +329,7 @@ jQuery(function($){
 						},
 					},
 					{
-						text: "いいえ",
+						text: TEXT_NO,
 						click: function(){
 							localStorage.setItem('saiminAdultCheck', '-1');
 							$(this).dialog('close');
@@ -321,17 +349,17 @@ jQuery(function($){
 		let old_division_value = division_select.value;
 		let old_speed_type_value = speed_type_select.value;
 		localStorage.setItem('saiminTypeSelectShowing', '1');
-		$("#type-select-dialog").dialog({
-			dialogClass: "no-close",
-			title: "映像の設定",
+		$('#type-select-dialog').dialog({
+			dialogClass: 'no-close',
+			title: TEXT_PIC_SETTINGS,
 			buttons: [
 				{
-					text: "OK",
+					text: TEXT_OK,
 					click: function(){
 						$(this).dialog('close');
 					},
 				},{
-					text: "Cancel",
+					text: TEXT_CANCEL,
 					click: function(){
 						setType(old_type_value);
 						setDivision(old_division_value);
@@ -341,7 +369,7 @@ jQuery(function($){
 				}
 			],
 		});
-		$("#type-select-dialog").on('dialogclose', function(event){
+		$('#type-select-dialog').on('dialogclose', function(event){
 			localStorage.removeItem('saiminTypeSelectShowing');
 		});
 	}
@@ -352,17 +380,17 @@ jQuery(function($){
 		let old_sound_value = sound_select.value;
 		let old_type_sound_value = type_sound_select.value;
 		localStorage.setItem('saiminConfigShowing', '1');
-		$("#config-dialog").dialog({
-			dialogClass: "no-close",
-			title: "全般設定",
+		$('#config-dialog').dialog({
+			dialogClass: 'no-close',
+			title: TEXT_CONFIGURATION,
 			buttons: [
 				{
-					text: "OK",
+					text: TEXT_OK,
 					click: function(){
 						$(this).dialog('close');
 					},
 				},{
-					text: "Cancel",
+					text: TEXT_CANCEL,
 					click: function(){
 						setSoundName(old_sound_value);
 						setTypeSound(old_type_sound_value);
@@ -371,7 +399,7 @@ jQuery(function($){
 				}
 			],
 		});
-		$("#config-dialog").on('dialogclose', function(event){
+		$('#config-dialog').on('dialogclose', function(event){
 			localStorage.removeItem('saiminConfigShowing');
 		});
 	}
@@ -698,8 +726,8 @@ jQuery(function($){
 		dxy = (dx >= dy) ? dx : dy;
 
 		var grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.6);
-		grd.addColorStop(0, "rgba(255, 255, 255, 0.0)");
-		grd.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
+		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
 
@@ -707,22 +735,22 @@ jQuery(function($){
 		var i = 0;
 		for (var r = (count2 * 2) % 100; r < cxy; r += 100){
 			if (i < 3){
-				ctx.strokeStyle = "rgba(255, 20, 29, 0.9)";
+				ctx.strokeStyle = 'rgba(255, 20, 29, 0.9)';
 			} else {
-				ctx.strokeStyle = "rgba(255, 20, 29, 0.4)";
+				ctx.strokeStyle = 'rgba(255, 20, 29, 0.4)';
 			}
 			circle(ctx, qx, qy, r, false);
 			++i;
 		}
 
-		ctx.strokeStyle = "#633";
+		ctx.strokeStyle = '#633';
 		if (isLargeDisplay())
 			ctx.lineWidth = 16;
 		else
 			ctx.lineWidth = 8;
-		ctx.fillStyle = "#633";
+		ctx.fillStyle = '#633';
 		eye(ctx, qx, qy, cxy / 10, 1.0);
-		ctx.fillStyle = "#f66";
+		ctx.fillStyle = '#f66';
 		heart(ctx, qx, qy - cxy / 50, qx, qy + cxy / 50);
 
 		var opened = 1.0;
@@ -737,9 +765,9 @@ jQuery(function($){
 		for (i = 0; i < N; ++i){
 			let x = qx + cxy * Math.cos(radian) * 0.3;
 			let y = qy + cxy * Math.sin(radian) * 0.3;
-			ctx.fillStyle = "#633";
+			ctx.fillStyle = '#633';
 			eye(ctx, x, y, cxy / 10, opened);
-			ctx.fillStyle = "#f66";
+			ctx.fillStyle = '#f66';
 			heart(ctx, x, y - cxy * opened / 50, x, y + cxy * opened / 50);
 			radian += delta;
 		}
@@ -810,8 +838,8 @@ jQuery(function($){
 		dxy = (dx >= dy) ? dx : dy;
 
 		var grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.5);
-		grd.addColorStop(0, "rgba(255, 255, 255, 0.0)");
-		grd.addColorStop(1, "rgba(255, 255, 255, 1.0)");
+		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
+		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
 
@@ -901,11 +929,11 @@ jQuery(function($){
 		}
 
 		if (theText != ''){
-			$("#floating-text").removeClass('invisible');
-			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + "%";
-			document.getElementById("floating-text").style.top = top;
+			$('#floating-text').removeClass('invisible');
+			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + '%';
+			document.getElementById('floating-text').style.top = top;
 		}else{
-			$("#floating-text").addClass('invisible');
+			$('#floating-text').addClass('invisible');
 		}
 
 		for (var iStar = 0; iStar < stars.length; ++iStar){
@@ -985,22 +1013,22 @@ jQuery(function($){
 			setSpeedType('normal');
 		}
 
-		$("#text-button").click(function(){
-			let text = prompt('メッセージ文字列を入力して下さい。', theText);
+		$('#text-button').click(function(){
+			let text = prompt(TEXT_INPUT_MESSAGE, theText);
 			if (text !== null){
 				setText(text);
 			}
 		});
 
-		$("#about-button").click(function(){
+		$('#about-button').click(function(){
 			help();
 		});
 
-		$("#type-select-button").click(function(){
+		$('#type-select-button').click(function(){
 			typeSelect();
 		});
 
-		$("#sound-button").click(function(){
+		$('#sound-button').click(function(){
 			if (soundName != ''){
 				if (sound){
 					let s = new Audio('sn/' + soundName + '.mp3');
@@ -1011,7 +1039,7 @@ jQuery(function($){
 			}
 		});
 
-		$("#config-button").click(function(){
+		$('#config-button').click(function(){
 			config();
 		});
 
@@ -1081,7 +1109,7 @@ jQuery(function($){
 			type_select.value = type.toString();
 			if (typeSound == 1){
 				if (kirakira_sound){
-					let kirakira = new Audio("sn/kirakira.mp3");
+					let kirakira = new Audio('sn/kirakira.mp3');
 					kirakira.play();
 				}
 			}
@@ -1154,12 +1182,12 @@ jQuery(function($){
 		}, { passive: false });
 
 		if (!DEBUG && !isNativeApp() && !isWebApp()){
-			$("#license-expired-dialog").dialog({
-				dialogClass: "no-close",
-				title: "期限切れ",
+			$('#license-expired-dialog').dialog({
+				dialogClass: 'no-close',
+				title: TEXT_EXPIRED,
 				buttons: [
 					{
-						text: "OK",
+						text: TEXT_OK,
 						click: function(){
 							$(this).dialog('close');
 						},
@@ -1172,9 +1200,9 @@ jQuery(function($){
 		var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
 		if (!saiminAdultCheck){
 			doAdultCheck();
-		} else if (saiminAdultCheck == "1"){
+		} else if (saiminAdultCheck == '1'){
 			accepted();
-		} else if (saiminAdultCheck == "-1"){
+		} else if (saiminAdultCheck == '-1'){
 			forbidden();
 		}
 
@@ -1208,7 +1236,7 @@ jQuery(function($){
 		});
 
 		// make kirakira sound quickly playable
-		kirakira_sound = new Audio("sn/kirakira.mp3");
+		kirakira_sound = new Audio('sn/kirakira.mp3');
 
 		if (localStorage.getItem('saiminHelpShowing')){
 			help();
