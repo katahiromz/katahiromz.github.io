@@ -52,10 +52,12 @@ jQuery(function($){
 	}
 
 	function cancelSpeech(){
-		if (isNativeApp()){
-			console.info('{{cancelSpeech}}');
-		}else if (window.speechSynthesis){
-			window.speechSynthesis.cancel();
+		try{
+			android.cancelSpeech();
+		}catch(error){
+			if (window.speechSynthesis){
+				window.speechSynthesis.cancel();
+			}
 		}
 	}
 
@@ -70,15 +72,17 @@ jQuery(function($){
 		if (text == '')
 			return;
 		text += '。';
-		if (isNativeApp()){
-			console.info('{{speechLoop::' + text + '}}');
-		}else if (window.speechSynthesis){
-			text = text.repeat(256);
-			var speech = new SpeechSynthesisUtterance(text);
-			speech.lang = 'ja-JP';
-			speech.pitch = 0.6;
-			speech.rate = 0.4;
-			window.speechSynthesis.speak(speech);
+		try{
+			android.speechLoop(text);
+		}catch(error){
+			if (window.speechSynthesis){
+				text = text.repeat(256);
+				var speech = new SpeechSynthesisUtterance(text);
+				speech.lang = 'ja-JP';
+				speech.pitch = 0.6;
+				speech.rate = 0.4;
+				window.speechSynthesis.speak(speech);
+			}
 		}
 	}
 
@@ -253,7 +257,11 @@ jQuery(function($){
 			buttons: [{
 				text: "アプリの初期化",
 				click: function(){
-					console.info('{{clearSettings}}');
+					try{
+						android.clearSettings();
+					}catch(error){
+						;
+					}
 					localStorage.clear();
 					if (theRegistration){
 						theRegistration.unregister();
