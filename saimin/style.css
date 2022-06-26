@@ -19,6 +19,10 @@ body {
 #canvas {
 	z-index: 1;
 	background-color: #222;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
 }
 .ui-widget textarea {
 	font-size: 9pt;
