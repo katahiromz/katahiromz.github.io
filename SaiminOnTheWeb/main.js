@@ -572,7 +572,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#f77';
+		ctx.fillStyle = '#f3c';
 		ctx.fillRect(px, py, dx, dy);
 
 		var size = (cx + cy) * 0.4;
