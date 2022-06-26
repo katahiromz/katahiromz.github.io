@@ -476,9 +476,16 @@ jQuery(function($){
 
 		var qx = px + dx / 2;
 		var qy = py + dy / 2;
+		var dxy = (dx + dy) / 2;
 
 		ctx.fillStyle = 'black';
 		ctx.fillRect(px, py, dx, dy);
+
+		let grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * 0.5);
+		grd.addColorStop(0, 'rgba(255, 0, 255, 0.0)');
+		grd.addColorStop(1, 'rgba(255, 0, 255, 1.0)');
+		ctx.fillStyle = grd;
+		circle(ctx, qx, qy, dxy, true);
 
 		ctx.restore();
 	}
@@ -902,7 +909,7 @@ jQuery(function($){
 
 		var x = cx / 2, y = cy / 2, delta_percent = 0;
 
-		if (division == 1){
+		if (type == 0 || division == 1){
 			drawType(ctx, 0, 0, cx, cy);
 			y += cy / 4;
 			delta_percent = 25;
