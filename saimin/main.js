@@ -504,7 +504,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = 'rgba(255, 145, 255)';
+		ctx.fillStyle = '#f6f';
 		ctx.fillRect(px, py, dx, dy);
 
 		var size = (dx + dy) * 2 / 5;
