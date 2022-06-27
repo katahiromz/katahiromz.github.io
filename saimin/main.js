@@ -291,6 +291,7 @@ jQuery(function($){
 						;
 					}
 					localStorage.clear();
+					localStorage.setItem('saiminAdultCheck', '1');
 					if (theRegistration){
 						theRegistration.unregister();
 					}
