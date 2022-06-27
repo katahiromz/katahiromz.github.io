@@ -6,7 +6,6 @@ sw.precache('precached', [
 	'./',
 	'./complex.min.js',
 	'./favicon.ico',
-	'./icons/icon-192.png',
 	'./jquery-3.6.0.min.js',
 	'./jquery-ui.css',
 	'./jquery-ui.min.js',
