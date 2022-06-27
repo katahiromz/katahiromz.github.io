@@ -16,7 +16,7 @@ const TEXT_INITTED_APP = 'I initialized the app.';
 const TEXT_ADULT_CHECK = 'Adult check';
 const TEXT_CONFIGURATION = 'Configuration';
 const TEXT_EXPIRED = 'Expired';
-const TEXT_PIC_SETTINGS = 'Picture Settings';
+const TEXT_APPEARANCE = 'Appearance';
 const TEXT_INPUT_MESSAGE = 'Please enter a message text.';
 const TEXT_FORBIDDEN = 'Forbidden';
 const TEXT_FULLWIDTH_SPACE = '　';
@@ -215,8 +215,8 @@ jQuery(function($){
 		let position = { my: 'center', at: 'center', of: window };
 		if (localStorage.getItem('saiminHelpShowing')){
 			$('#about-dialog').dialog('option', 'position', position);
-		}else if (localStorage.getItem('saiminTypeSelectShowing')){
-			$('#type-select-dialog').dialog('option', 'position', position);
+		}else if (localStorage.getItem('saiminAppearanceShowing')){
+			$('#appearance-dialog').dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminConfigShowing')) {
 			$('#config-dialog').dialog('option', 'position', position);
 		}
@@ -341,17 +341,17 @@ jQuery(function($){
 		}
 	}
 
-	function typeSelect(){
+	function apperance(){
 		let type_select = document.getElementById('type-select');
 		let division_select = document.getElementById('division-select');
 		let speed_type_select = document.getElementById('speed-type-select');
 		let old_type_value = type_select.value;
 		let old_division_value = division_select.value;
 		let old_speed_type_value = speed_type_select.value;
-		localStorage.setItem('saiminTypeSelectShowing', '1');
-		$('#type-select-dialog').dialog({
+		localStorage.setItem('saiminAppearanceShowing', '1');
+		$('#appearance-dialog').dialog({
 			dialogClass: 'no-close',
-			title: TEXT_PIC_SETTINGS,
+			title: TEXT_APPEARANCE,
 			buttons: [
 				{
 					text: TEXT_OK,
@@ -369,8 +369,8 @@ jQuery(function($){
 				}
 			],
 		});
-		$('#type-select-dialog').on('dialogclose', function(event){
-			localStorage.removeItem('saiminTypeSelectShowing');
+		$('#appearance-dialog').on('dialogclose', function(event){
+			localStorage.removeItem('saiminAppearanceShowing');
 		});
 	}
 
@@ -1032,7 +1032,7 @@ jQuery(function($){
 		});
 
 		$('#type-select-button').click(function(){
-			typeSelect();
+			apperance();
 		});
 
 		$('#sound-button').click(function(){
@@ -1247,8 +1247,8 @@ jQuery(function($){
 
 		if (localStorage.getItem('saiminHelpShowing')){
 			help();
-		}else if (localStorage.getItem('saiminTypeSelectShowing')){
-			typeSelect();
+		}else if (localStorage.getItem('saiminAppearanceShowing')){
+			apperance();
 		}else if (localStorage.getItem('saiminConfigShowing')){
 			config();
 		}
