@@ -4,7 +4,6 @@ let sw = new ServiceWorkerJS();
 
 sw.precache('precached', [
 	'./',
-	'./index.html',
 	'./complex.min.js',
 	'./favicon.ico',
 	'./icons/icon-192.png',
