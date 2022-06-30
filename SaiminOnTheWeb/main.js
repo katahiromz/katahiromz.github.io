@@ -483,8 +483,8 @@ jQuery(function($){
 		ctx.fillRect(px, py, dx, dy);
 
 		let grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * 0.5);
-		grd.addColorStop(0, 'rgba(255, 0, 255, 0.0)');
-		grd.addColorStop(1, 'rgba(255, 0, 255, 1.0)');
+		grd.addColorStop(0, 'rgba(170, 85, 255, 0.0)');
+		grd.addColorStop(1, 'rgba(170, 85, 255, 1.0)');
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
 
@@ -505,7 +505,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#f6f';
+		ctx.fillStyle = '#a5f';
 		ctx.fillRect(px, py, dx, dy);
 
 		var size = (dx + dy) * 2 / 5;
@@ -573,7 +573,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#f3c';
+		ctx.fillStyle = '#d5f';
 		ctx.fillRect(px, py, dx, dy);
 
 		var size = (cx + cy) * 0.4;
@@ -751,12 +751,12 @@ jQuery(function($){
 			++i;
 		}
 
-		ctx.strokeStyle = '#633';
+		ctx.strokeStyle = '#63f';
 		if (isLargeDisplay())
 			ctx.lineWidth = 16;
 		else
 			ctx.lineWidth = 8;
-		ctx.fillStyle = '#633';
+		ctx.fillStyle = '#63f';
 		eye(ctx, qx, qy, cxy / 10, 1.0);
 		ctx.fillStyle = '#f66';
 		heart(ctx, qx, qy - cxy / 50, qx, qy + cxy / 50);
@@ -773,7 +773,7 @@ jQuery(function($){
 		for (i = 0; i < N; ++i){
 			let x = qx + cxy * Math.cos(radian) * 0.3;
 			let y = qy + cxy * Math.sin(radian) * 0.3;
-			ctx.fillStyle = '#633';
+			ctx.fillStyle = '#63f';
 			eye(ctx, x, y, cxy / 10, opened);
 			ctx.fillStyle = '#f66';
 			heart(ctx, x, y - cxy * opened / 50, x, y + cxy * opened / 50);
