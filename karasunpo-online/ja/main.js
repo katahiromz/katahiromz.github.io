@@ -1260,10 +1260,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				break;
 			}
 		},
-		// 設定OK。
-		configOK: function(){
-			// ズーム。
-			var zoom = $("#config-dialog-zoom").val();
+		setZoomValue: function(zoom){
 			switch (zoom) {
 			case "":
 				break;
@@ -1281,15 +1278,21 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 				break;
 			}
-			// 線分の色。
-			var color = $("#config-dialog-line-color").val();
+			// 再描画。
+			this.redraw();
+		},
+		setLineColor: function(color){
 			switch (color) {
 			case 'red': case 'blue': case 'green': case 'yellow':
 				this.lineColor = color;
 				break;
 			}
-			// 背景。
-			var back = $("#config-dialog-background").val();
+			// ローカルストレージに保存。
+			localStorage.setItem('line-color', this.lineColor);
+			// 再描画。
+			this.redraw();
+		},
+		setBack: function(back){
 			switch (back) {
 			case "-2": case "0": case "1": case "2": case "3": case "4": case "5":
 				this.backgroundMode = parseInt(back);
@@ -1298,18 +1301,18 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			default:
 				break;
 			}
-			// ページ番号
-			var page_no = parseInt($(".config-dialog-page-number").val());
-			if (!isNaN(page_no)) {
-				this.pdfPageNumber = page_no;
-			}
 			// ローカルストレージに保存。
-			localStorage.setItem('line-color', this.lineColor);
 			localStorage.setItem('background-mode', this.backgroundMode);
 			// 再描画。
 			this.redraw();
-			// ダイアログを閉じる。
-			$("#config-dialog").dialog("close");
+		},
+		setPageNo: function(page_no){
+			var number = parseInt(page_no);
+			if (!isNaN(number)) {
+				this.pdfPageNumber = number;
+			}
+			// 再描画。
+			this.redraw();
 		},
 		// 設定。
 		config: function(){
@@ -1330,6 +1333,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				break;
 			}
 			$(".config-dialog-page-number").val('' + this.pdfPageNumber);
+			// 古い値を保存する。
+			var old_zoom = $("#config-dialog-zoom").val();
+			var old_color = $("#config-dialog-line-color").val();
+			var old_back = $("#config-dialog-background").val();
+			var old_page_no = $(".config-dialog-page-number").val();
 			// 「設定」ダイアログを開く。
 			$("#config-dialog").dialog({
 				modal: true,
@@ -1337,12 +1345,23 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				width: "300px",
 				draggable: true,
 				buttons: {
-					"OK": Karasunpo.configOK.bind(Karasunpo),
+					"OK": function(){
+						// ダイアログを閉じる。
+						$(this).dialog("close");
+					},
 					"キャンセル": function(){
+						// 古い値を復元する。
+						Karasunpo.setZoomValue(old_zoom);
+						Karasunpo.setLineColor(old_color);
+						Karasunpo.setBack(old_back);
+						Karasunpo.setPageNo(old_page_no);
 						// ダイアログを閉じる。
 						$(this).dialog("close");
 					}
 				}
+			});
+			$('#config-dialog').on('dialogclose', function(e){
+				;
 			});
 		},
 	};
@@ -1608,6 +1627,26 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					},
 				}
 			});
+		});
+
+		// ズーム率。
+		$("#config-dialog-zoom").click(function(){
+			Karasunpo.setZoomValue($("#config-dialog-zoom").val());
+		});
+		// 線分の色。
+		$("#config-dialog-line-color").click(function(){
+			Karasunpo.setLineColor($("#config-dialog-line-color").val());
+		});
+		// 背景。
+		$("#config-dialog-background").click(function(){
+			Karasunpo.setBack($("#config-dialog-background").val());
+		});
+		// PDFのページ番号。
+		$(".config-dialog-page-number").change(function(){
+			Karasunpo.setPageNo($(".config-dialog-page-number").val());
+		});
+		$(".config-dialog-page-number").keyup(function(){
+			Karasunpo.setPageNo($(".config-dialog-page-number").val());
 		});
 
 		// ローカルストレージの設定を復元。
