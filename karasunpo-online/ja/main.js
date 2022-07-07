@@ -1630,15 +1630,15 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		});
 
 		// ズーム率。
-		$("#config-dialog-zoom").click(function(){
+		$("#config-dialog-zoom").change(function(){
 			Karasunpo.setZoomValue($("#config-dialog-zoom").val());
 		});
 		// 線分の色。
-		$("#config-dialog-line-color").click(function(){
+		$("#config-dialog-line-color").change(function(){
 			Karasunpo.setLineColor($("#config-dialog-line-color").val());
 		});
 		// 背景。
-		$("#config-dialog-background").click(function(){
+		$("#config-dialog-background").change(function(){
 			Karasunpo.setBack($("#config-dialog-background").val());
 		});
 		// PDFのページ番号。
