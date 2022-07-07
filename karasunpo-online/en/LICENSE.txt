@@ -1,6 +1,6 @@
 Main part of Karasunpo Online:
-	Copyright (C) 2021 Katayama Hirofumi MZ.
-jQuery v3.3.1:
+	Copyright (C) 2021-2022 Katayama Hirofumi MZ.
+jQuery v3.6.0:
 	(c) JS Foundation and other contributors.
 jQuery UI Touch Punch:
 	Copyright 2011-2014, Dave Furfero.
@@ -13,7 +13,6 @@ Karasunpo Online is made by Katayama Hirofumi MZ (katayama.hirofumi.mz@gmail.com
 jQuery and jQuery UI are licensed under the the MIT license.
 jQuery UI Touch Punch is dual licensed under the MIT or GPL Version 2 licenses (we apply MIT license, not GPLv2).
 PDF.js is licensed under the Apache License Version 2.0.
-polyfill.js is licensed under the zlib License.
 
 The source code of Karasunpo Online is available at https://github.com/katahiromz/katahiromz.github.io/tree/main/karasunpo-online .
 ---
@@ -238,22 +237,4 @@ DEALINGS IN THE SOFTWARE.
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
----
-The zlib License
-
-This software is provided 'as-is', without any express or implied
-  warranty. In no event will the authors be held liable for any damages
-  arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose,
-  including commercial applications, and to alter it and redistribute it
-  freely, subject to the following restrictions:
-
-  1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
-  2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
-  3. This notice may not be removed or altered from any source distribution.
 ---
