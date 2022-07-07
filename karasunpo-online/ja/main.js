@@ -14,7 +14,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	var DEBUGGING = false; // デバッグ中か？
 	var TOUCH_TIMEOUT = 200; // タッチのタイムアウト（ミリ秒）。
 
-	var ERROR_CANNOT_GET_PAGE = "ページ取得に失敗しました。";
 	var ERROR_ENTER_PASSWORD = "パスワードを入力して下さい。";
 	var ERROR_REENTER_PASSWORD = "無効なパスワードです。別のパスワードを入力して下さい。";
 
@@ -370,7 +369,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				Karasunpo.gotPage.call(Karasunpo, page, canvas, ctx);
 			}, function(reason) {
 				Karasunpo.failedToRender.call(Karasunpo, ctx);
-				alert(ERROR_CANNOT_GET_PAGE);
 			});
 		},
 		// 画像を表示する。
