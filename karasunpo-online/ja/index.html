@@ -11,23 +11,24 @@
 	<link rel="shortcut icon" href="karasunpo-192x192.png" type="image/png" />
 	<!-- TODO: ここで読み込むJavascriptプログラムはきちんとテストされた最新のものでなければならない。-->
 	<!-- TODO: 時々バージョン番号を確認し、古くなっていたらテスト後に更新しないといけない。 -->
-	<!-- polyfill -->
-	<script src="polyfill.min.js"></script>
+	<!--
+		<script defer src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+		<script defer src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/dark-hive/jquery-ui.css" crossorigin="anonymous" />
+	-->
 	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script defer src="jquery-3.6.0.min.js"></script>
 	<!-- jQuery UI -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script defer src="jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<!-- jQuery UI Touch Punch -->
-	<script src="jquery.ui.touch-punch.min.js"></script>
+	<script defer src="jquery.ui.touch-punch.min.js"></script>
 	<!-- PDF.js -->
-	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<script defer src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 	<!-- main.css -->
 	<link rel="stylesheet" href="main.css">
 	<!-- main.js -->
-	<script>
-	document.write('<sc'+'ript src="main.js?'+Math.random()+'"></sc'+'ript>');
-	</script>
+	<script defer src="main.js"></script>
 </head>
 <body>
 	<section id="fullscreen" class="drop-area">
@@ -35,13 +36,13 @@
 			<nav id="mode1" class="mode">
 				<div class="drop-area-navi">
 					<header>
-						<h1 class="center">☆ カラスンポ Online ☆</h1>
+						<h1 class="center">☆ カラスンポ ☆</h1>
 						<hr />
 					</header>
 					<form onsubmit="return false;">
 						<div class="portrait-visible">
 							<p>
-								「カラスンポ Online」は、画像ファイルのイメージ上の２点間の名目の距離や角度を測定できます。
+								「カラスンポ」は、画像ファイルのイメージ上の２点間の名目の距離や角度を測定できます。
 							</p>
 							<p>
 							「次へ」ボタンをタップして下さい。
@@ -49,7 +50,7 @@
 						</div>
 						<div class="portrait-invisible">
 							<p>
-								「カラスンポ Online」は、画像ファイルのイメージ上の２点間の名目の距離や角度を測定できます。
+								「カラスンポ」は、画像ファイルのイメージ上の２点間の名目の距離や角度を測定できます。
 							</p>
 							<p>
 								「次へ」ボタンをクリックして下さい。
