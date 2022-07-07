@@ -56,10 +56,10 @@ textarea.license {
 	text-align: center;
 }
 .drop-area-navi {
-	border: 5px dotted darkgreen;
+	outline: 5px dotted darkgreen;
 }
 .dragging-over {
-	border: 5px solid yellow;
+	outline: 5px solid yellow;
 }
 .black {
 	background-color: black;
@@ -74,7 +74,7 @@ textarea.license {
 	background-color: darkgreen;
 }
 .focus_box {
-	border: 2px dotted blue;
+	outline: 2px dotted blue;
 	padding: 2px;
 	margin: 2px;
 }
@@ -107,7 +107,6 @@ textarea.license {
 	width: 30%;
 	height: 100vh;
 	background-size: auto 100%;
-	border-right: 2px solid black;
 	float: left;
 	background-color: lightyellow;
 }
@@ -142,14 +141,13 @@ textarea.license {
 		display: none;
 	}
 	.drop-area-navi {
-		border: none;
+		outline: none;
 	}
 
 	#navigation {
 		width: 100%;
 		height: 25%;
 		background-size: 100% auto;
-		border-right: 2px solid black;
 		float: none;
 		background-color: lightyellow;
 	}
