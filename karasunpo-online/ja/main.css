@@ -162,3 +162,44 @@ textarea.license {
 		cursor: crosshair;
 	}
 }
+.pushy {
+	background-color: white;
+	font-size: 13px;
+	padding: 0;
+}
+.pushy a {
+	padding: 0;
+	margin: 0;
+}
+.pushy-content {
+	margin: 0;
+}
+.pushy-content ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+.pushy-content ul li {
+	border-bottom: black solid 1px;
+	margin: 8px;
+	padding: 4px;
+}
+.pushy-content ul li:hover {
+	background-color: #ddf;
+	font-weight: bold;
+}
+.pushy-link img {
+	vertical-align: middle;
+}
+.right {
+	text-align: right;
+	margin-left: auto;
+}
+.menu-close-button:hover a {
+	background-color: #fcc;
+	color: #c00;
+	font-weight: bold;
+}
+.ui-widget {
+	font-size: 0.9em;
+}

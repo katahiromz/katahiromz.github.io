@@ -23,6 +23,9 @@
 	<link rel="stylesheet" href="jquery-ui.css">
 	<!-- jQuery UI Touch Punch -->
 	<script defer src="jquery.ui.touch-punch.min.js"></script>
+	<!-- jQuery pushy sidemenu -->
+	<script defer src="pushy.min.js"></script>
+	<link rel="stylesheet" href="pushy.css">
 	<!-- PDF.js -->
 	<script defer src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 	<!-- main.css -->
@@ -335,10 +338,23 @@
 					</div>
 				</form>
 			</nav>
+			<!-- メニュー(using pushy) -->
+			<nav class="pushy pushy-left">
+				<div class="pushy-content">
+					<ul>
+						<li class="pushy-link right menu-close-button"><a href="#"><img class="icon" src="img/cross.png" alt="" />Close</a></li>
+						<li class="pushy-link" id="config-button"><img class="icon" src="img/settings.png" alt="" />Settings</li>
+						<li class="pushy-link" id="history-button"><img class="icon" src="img/history.png" alt="" />History</li>
+						<li class="pushy-link" id="about-button"><img class="icon" src="img/tag.png" alt="" />About Karasunpo</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- オーバーレイ (pushyメニューを閉じるのに必要) -->
+			<div class="site-overlay"></div>
 			<footer>
-				<button id="config-button"><img class="icon" src="img/hamburger.png" alt="" />Config</button>
-				<button id="history-button"><img class="icon" src="img/history.png" alt="" />History</button>
-				<button id="about-button"><img class="icon" src="img/tag.png" alt="" />About</button>
+				<!-- ボタン -->
+				<button class="menu-btn"><img class="icon" src="img/hamburger.png" alt="" /> Menu</button>
+				<!-- ダイアログ -->
 				<div id="config-dialog" class="invisible">
 					<p>
 						Zoom:
@@ -386,19 +402,17 @@
 					</p>
 				</div>
 				<div id="history-dialog" class="invisible">
-					<p class="smaller">
-						2021.09.05 Ver.0.9 First release.
-						2022.07.07 Ver.0.9.1 Made config dialog interactive.
-					</p>
+<pre>
+2021-09-05 Ver.0.9 First release.
+2022-07-07 Ver.0.9.1 Made config dialog interactive.
+2022-07-08 Ver.0.9.2 Implemented side-menu.
+</pre>
 				</div>
 				<div id="about-dialog" class="invisible">
 					<p>
 						Karasunpo Online Version <span id="about-dialog-version">0.0</a>
 					</p>
 					<hr />
-					<p class="smaller">
-						Karasunpo Online won't use your files without your permission.
-					</p>
 <!-- TODO: Please sync this text to LICENSE.TXT. -->
 					<textarea class="license" readonly="readonly">
 Main part of Karasunpo Online:
