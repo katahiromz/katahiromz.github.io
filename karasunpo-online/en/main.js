@@ -2,7 +2,7 @@
 // Copyright (C) 2021-2022 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.9.2"; // カラスンポのバージョン番号。
+const KARASUNPO_VERSION = "0.9.3"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -11,26 +11,27 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	// 厳密に。
 	'use strict';
 
-	var DEBUGGING = false; // デバッグ中か？
-	var TOUCH_TIMEOUT = 200; // タッチのタイムアウト（ミリ秒）。
+	const DEBUGGING = false; // デバッグ中か？
+	const TOUCH_TIMEOUT = 200; // タッチのタイムアウト（ミリ秒）。
 
-	var ERROR_ENTER_PASSWORD = "Please enter a password:";
-	var ERROR_REENTER_PASSWORD = "Invalid password. Please enter another password:";
+	const ERROR_ENTER_PASSWORD = "Please enter a password:";
+	const ERROR_REENTER_PASSWORD = "Invalid password. Please enter another password:";
 
-	var MESSAGE_LOADING = "Loading...";
-	var MESSAGE_CONFIG_DIALOG = "Configuration";
-	var MESSAGE_ABOUT = "About this Web app";
-	var MESSAGE_HISTORY = "History";
-	var MESSAGE_LENGTH = "Length:";
-	var MESSAGE_INCLINATION = "Inclination:";
-	var MESSAGE_ANGLE = "Angle:";
-	var MESSAGE_DEGREE = "deg";
-	var MESSAGE_COPYED = 'Copyed!';
-	var MESSAGE_FAILED_TO_COPY = 'Sorry, failed to copy.';
+	const MESSAGE_LOADING = "Loading...";
+	const MESSAGE_CONFIG_DIALOG = "Configuration";
+	const MESSAGE_ABOUT = "About this Web app";
+	const MESSAGE_HISTORY = "History";
+	const MESSAGE_LENGTH = "Length:";
+	const MESSAGE_INCLINATION = "Inclination:";
+	const MESSAGE_ANGLE = "Angle:";
+	const MESSAGE_DEGREE = "deg";
+	const MESSAGE_COPYED = 'Copyed!';
+	const MESSAGE_FAILED_TO_COPY = 'Sorry, failed to copy.';
+	const MESSAGE_WANNA_INIT_APP = 'Do you want to initialize the application?';
 
-	var VK_LBUTTON = 0; // マウスの左ボタン。
-	var VK_MBUTTON = 1; // マウスの中央ボタン。
-	var VK_RBUTTON = 2; // マウスの右ボタン。
+	const VK_LBUTTON = 0; // マウスの左ボタン。
+	const VK_MBUTTON = 1; // マウスの中央ボタン。
+	const VK_RBUTTON = 2; // マウスの右ボタン。
 
 	// ダイアログでEnterキーを有効にする。
 	// See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
@@ -1625,6 +1626,18 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					},
 				}
 			});
+		});
+
+		// 「最初に戻る」ボタン。
+		$("#back-to-first-button").click(function(){
+			location.reload();
+		});
+		// 「アプリの初期化」ボタン。
+		$("#initialize-button").click(function(){
+			if (confirm(MESSAGE_WANNA_INIT_APP)){
+				localStorage.clear();
+				location.reload();
+			}
 		});
 
 		// ズーム率。

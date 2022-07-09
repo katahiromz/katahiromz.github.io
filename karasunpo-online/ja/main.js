@@ -2,7 +2,7 @@
 // Copyright (C) 2021-2022 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-var KARASUNPO_VERSION = "0.9.2"; // カラスンポのバージョン番号。
+const KARASUNPO_VERSION = "0.9.3"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -11,26 +11,27 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 	// 厳密に。
 	'use strict';
 
-	var DEBUGGING = false; // デバッグ中か？
-	var TOUCH_TIMEOUT = 200; // タッチのタイムアウト（ミリ秒）。
+	const DEBUGGING = false; // デバッグ中か？
+	const TOUCH_TIMEOUT = 200; // タッチのタイムアウト（ミリ秒）。
 
-	var ERROR_ENTER_PASSWORD = "パスワードを入力して下さい。";
-	var ERROR_REENTER_PASSWORD = "無効なパスワードです。別のパスワードを入力して下さい。";
+	const ERROR_ENTER_PASSWORD = "パスワードを入力して下さい。";
+	const ERROR_REENTER_PASSWORD = "無効なパスワードです。別のパスワードを入力して下さい。";
 
-	var MESSAGE_LOADING = "読み込み中...";
-	var MESSAGE_CONFIG_DIALOG = "設定ダイアログ";
-	var MESSAGE_ABOUT = "バージョン情報";
-	var MESSAGE_HISTORY = "更新履歴";
-	var MESSAGE_LENGTH = "長さ：";
-	var MESSAGE_INCLINATION = "傾き：";
-	var MESSAGE_ANGLE = "角度：";
-	var MESSAGE_DEGREE = "度";
-	var MESSAGE_COPYED = 'コピーしました！';
-	var MESSAGE_FAILED_TO_COPY = '残念、コピーに失敗しました。';
+	const MESSAGE_LOADING = "読み込み中...";
+	const MESSAGE_CONFIG_DIALOG = "設定ダイアログ";
+	const MESSAGE_ABOUT = "バージョン情報";
+	const MESSAGE_HISTORY = "更新履歴";
+	const MESSAGE_LENGTH = "長さ：";
+	const MESSAGE_INCLINATION = "傾き：";
+	const MESSAGE_ANGLE = "角度：";
+	const MESSAGE_DEGREE = "度";
+	const MESSAGE_COPYED = 'コピーしました！';
+	const MESSAGE_FAILED_TO_COPY = '残念、コピーに失敗しました。';
+	const MESSAGE_WANNA_INIT_APP = 'アプリを初期化しますか？';
 
-	var VK_LBUTTON = 0; // マウスの左ボタン。
-	var VK_MBUTTON = 1; // マウスの中央ボタン。
-	var VK_RBUTTON = 2; // マウスの右ボタン。
+	const VK_LBUTTON = 0; // マウスの左ボタン。
+	const VK_MBUTTON = 1; // マウスの中央ボタン。
+	const VK_RBUTTON = 2; // マウスの右ボタン。
 
 	// ダイアログでEnterキーを有効にする。
 	// See https://stackoverflow.com/questions/868889/submit-jquery-ui-dialog-on-enter
@@ -1625,6 +1626,18 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 					},
 				}
 			});
+		});
+
+		// 「最初に戻る」ボタン。
+		$("#back-to-first-button").click(function(){
+			location.reload();
+		});
+		// 「アプリの初期化」ボタン。
+		$("#initialize-button").click(function(){
+			if (confirm(MESSAGE_WANNA_INIT_APP)){
+				localStorage.clear();
+				location.reload();
+			}
 		});
 
 		// ズーム率。

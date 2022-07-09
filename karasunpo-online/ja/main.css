@@ -181,8 +181,15 @@ textarea.license {
 }
 .pushy-content ul li {
 	border-bottom: black solid 1px;
-	margin: 8px;
-	padding: 4px;
+	margin: 0;
+	padding: 8px;
+}
+.pushy-content ul li a {
+	color: black;
+	margin: 0;
+}
+.pushy-content ul li a:hover {
+	color: black;
 }
 .pushy-content ul li:hover {
 	background-color: #ddf;
@@ -194,11 +201,6 @@ textarea.license {
 .right {
 	text-align: right;
 	margin-left: auto;
-}
-.menu-close-button:hover a {
-	background-color: #fcc;
-	color: #c00;
-	font-weight: bold;
 }
 .ui-widget {
 	font-size: 0.9em;
