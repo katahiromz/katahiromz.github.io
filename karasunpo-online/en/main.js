@@ -575,6 +575,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			$(".mode").hide();
 			$("#mode" + mode).show();
 
+			// ページ番号の有効・無効を切り替える。
+			if (mode == 1 || mode == 2) {
+				$(".config-dialog-page-number").prop('disabled', false);
+			}else{
+				$(".config-dialog-page-number").prop('disabled', true);
+			}
+
 			switch (mode) {
 			case 1: // モード１：初期画面。
 				this.lineOn = false;
