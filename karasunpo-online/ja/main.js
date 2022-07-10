@@ -525,14 +525,21 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		},
 		// 顕微鏡を描画する。
 		drawMicroscope: function(canvas, ctx){
-			if (!this.hotspotx && !this.hotspoty)
+			if (!this.hotspotx || !this.hotspoty)
 				return;
 
 			canvas = canvas.get(0);
-			let width = canvas.width, height = canvas.height;
-			let radius = 40, ratio = 1.5;
 
-			let centerx, centery, margin = 10;
+			let width = canvas.width, height = canvas.height;
+			if (isPortraitDevice())
+				height -= 85;
+
+			const radius = 50; // 半径。
+			const ratio = 1.3; // ズーム率。
+			const margin = 10; // 余白。
+
+			// 邪魔にならないように照準の座標を設定する。
+			let centerx, centery;
 			if (this.hotspotx < width / 2){
 				centerx = width - radius - margin;
 			}else{
@@ -540,12 +547,11 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			if (this.hotspoty < height / 2){
 				centery = height - radius - margin;
-				if (isPortraitDevice())
-					centery -= 80;
 			}else{
 				centery = radius + margin;
 			}
 
+			// 新たなメモリーキャンバスに描画する。
 			var mem_canvas = document.createElement("canvas");
 			mem_canvas.width = radius * 2 / ratio;
 			mem_canvas.height = radius * 2 / ratio;
@@ -555,6 +561,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				radius * 2 / ratio, radius * 2 / ratio,
 				0, 0, radius * 2 / ratio, radius * 2 / ratio);
 
+			// 顕微鏡の枠として円を描画する。
 			ctx.save();
 			ctx.strokeStyle = this.lineColor;
 			ctx.lineWidth = 5;
@@ -563,6 +570,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			ctx.stroke();
 			ctx.restore();
 
+			// 顕微鏡の像を描画する。
 			ctx.save();
 			ctx.beginPath();
 			ctx.arc(centerx, centery, radius, 0, 2 * Math.PI, false);
@@ -571,6 +579,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				centerx - radius, centery - radius, radius * 2, radius * 2);
 			ctx.restore();
 
+			// 顕微鏡の十字を描画する。
 			ctx.save();
 			ctx.strokeStyle = this.lineColor;
 			ctx.lineWidth = 1;
