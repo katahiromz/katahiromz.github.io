@@ -1190,6 +1190,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				this.deltaY += y - this.my0;
 				this.mx0 = x;
 				this.my0 = y;
+			} else {
+				this.hotspotx = this.hotspoty = null;
 			}
 			this.redraw();
 		},
@@ -1274,6 +1276,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチ位置を破棄。
 			this.savepx0 = this.savepy0 = null;
 			this.savepx1 = this.savepy1 = null;
+			this.hotspotx = this.hotspoty = null;
 			// 再描画。
 			this.redraw();
 		},
