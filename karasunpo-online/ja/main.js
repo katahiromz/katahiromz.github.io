@@ -2,7 +2,7 @@
 // Copyright (C) 2021-2022 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-const KARASUNPO_VERSION = "0.9.3"; // カラスンポのバージョン番号。
+const KARASUNPO_VERSION = "0.9.4"; // カラスンポのバージョン番号。
 
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
@@ -137,6 +137,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 		sy1: 0, // 基準線分の位置。
 		mx0: 0, // 中央ボタンでドラッグしている位置。
 		my0: 0, // 中央ボタンでドラッグしている位置。
+		hotspotx: null, // マウスまたはタッチの場所。
+		hotspoty: null, // マウスまたはタッチの場所。
 		savepx0: null, // 保存用。
 		savepy0: null, // 保存用。
 		savepx1: null, // 保存用。
@@ -521,6 +523,70 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			ctx.stroke();
 			ctx.restore();
 		},
+		// 顕微鏡を描画する。
+		drawMicroscope: function(canvas, ctx){
+			if (!this.hotspotx && !this.hotspoty)
+				return;
+
+			canvas = canvas.get(0);
+			let width = canvas.width, height = canvas.height;
+			let radius = 40, ratio = 1.5;
+
+			if (isPortraitDevice())
+				height -= 80;
+
+			let centerx, centery, margin = 10;
+			if (this.hotspotx < width / 2){
+				centerx = width - radius - margin;
+			}else{
+				centerx = radius + margin;
+			}
+			if (this.hotspoty < height / 2){
+				centery = height - radius - margin;
+				if (isPortraitDevice())
+					centery -= 80;
+			}else{
+				centery = radius + margin;
+			}
+
+			var mem_canvas = document.createElement("canvas");
+			mem_canvas.width = radius * 2 / ratio;
+			mem_canvas.height = radius * 2 / ratio;
+			var mem_ctx = mem_canvas.getContext('2d');
+			mem_ctx.drawImage(canvas,
+				this.hotspotx - radius / ratio, this.hotspoty - radius / ratio,
+				radius * 2 / ratio, radius * 2 / ratio,
+				0, 0, radius * 2 / ratio, radius * 2 / ratio);
+
+			ctx.save();
+			ctx.strokeStyle = this.lineColor;
+			ctx.lineWidth = 5;
+			ctx.beginPath();
+			ctx.arc(centerx, centery, radius, 0, 2 * Math.PI, false);
+			ctx.stroke();
+			ctx.restore();
+
+			ctx.save();
+			ctx.beginPath();
+			ctx.arc(centerx, centery, radius, 0, 2 * Math.PI, false);
+			ctx.clip();
+			ctx.drawImage(mem_canvas, 0, 0, radius * 2 / ratio, radius * 2 / ratio,
+				centerx - radius, centery - radius, radius * 2, radius * 2);
+			ctx.restore();
+
+			ctx.save();
+			ctx.strokeStyle = this.lineColor;
+			ctx.lineWidth = 1;
+			ctx.beginPath();
+			ctx.moveTo(centerx - radius, centery);
+			ctx.lineTo(centerx + radius, centery);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(centerx, centery - radius);
+			ctx.lineTo(centerx, centery + radius);
+			ctx.stroke();
+			ctx.restore();
+		},
 		// 画面を再描画する。
 		redraw: function(){
 			var Karasunpo = this;
@@ -867,6 +933,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			//this.drawSensitive(ctx);
 			// キャンバスに転送する。
 			var canvas = $("#image-screen");
+			// 顕微鏡を描画する。
+			this.drawMicroscope(canvas, ctx);
 			var data = ctx.getImageData(0, 0, this.cxCanvas, this.cyCanvas);
 			canvas[0].getContext('2d').putImageData(data, 0, 0);
 			if (succeeded) {
@@ -887,6 +955,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				return;
 			// カーソル位置を取得する。
 			var x = e.offsetX, y = e.offsetY;
+			this.hotspotx = x;
+			this.hotspoty = y;
 			var LP = this.DPtoLP(x, y);
 			// ハンドル上か？
 			this.handlingOn = this.isOnHandle(x, y);
@@ -1014,8 +1084,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチ位置を取得する。
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
+			this.hotspotx = x;
+			this.hotspoty = y;
 			var LP = this.DPtoLP(x, y);
-
 			// ハンドル上か？
 			this.handlingOn = this.isOnHandle(x, y);
 			if (this.handlingOn == -1) {
@@ -1056,6 +1127,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			}
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
+			this.hotspotx = x;
+			this.hotspoty = y;
 			var LP = this.DPtoLP(x, y);
 			if (this.handlingOn != -1) {
 				if (this.handlingOn == 0) {
@@ -1085,6 +1158,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 				}
 			}
 			var x = e.offsetX, y = e.offsetY;
+			this.hotspotx = x;
+			this.hotspoty = y;
 			var LP = this.DPtoLP(x, y);
 			if (this.handlingOn != -1) {
 				if (this.handlingOn == 0) {
@@ -1126,6 +1201,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチ位置を破棄。
 			this.savepx0 = this.savepy0 = null;
 			this.savepx1 = this.savepy1 = null;
+			this.hotspotx = this.hotspoty = null;
 			// 再描画。
 			this.redraw();
 		},
@@ -1157,6 +1233,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチを取得。
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
+			this.hotspotx = x;
+			this.hotspoty = y;
 			var LP = this.DPtoLP(x, y);
 			// 線分をセット。
 			if (this.handlingOn != -1) {
