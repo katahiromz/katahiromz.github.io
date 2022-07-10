@@ -1079,10 +1079,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチ位置を取得する。
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
-			this.hotspotx = pos.x;
-			this.hotspoty = pos.y;
+			this.hotspotx = x;
+			this.hotspoty = y;
 			var LP = this.DPtoLP(x, y);
-
 			// ハンドル上か？
 			this.handlingOn = this.isOnHandle(x, y);
 			if (this.handlingOn == -1) {
@@ -1197,8 +1196,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチ位置を破棄。
 			this.savepx0 = this.savepy0 = null;
 			this.savepx1 = this.savepy1 = null;
-			this.hotspotx = null;
-			this.hotspoty = null;
+			this.hotspotx = this.hotspoty = null;
 			// 再描画。
 			this.redraw();
 		},
@@ -1230,6 +1228,8 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチを取得。
 			var pos = this.touchGetPos(e);
 			var x = pos.x, y = pos.y;
+			this.hotspotx = x;
+			this.hotspoty = y;
 			var LP = this.DPtoLP(x, y);
 			// 線分をセット。
 			if (this.handlingOn != -1) {
@@ -1263,8 +1263,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			// タッチ位置を破棄。
 			this.savepx0 = this.savepy0 = null;
 			this.savepx1 = this.savepy1 = null;
-			this.hotspotx = null;
-			this.hotspoty = null;
 			// 再描画。
 			this.redraw();
 		},
