@@ -532,9 +532,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 			let width = canvas.width, height = canvas.height;
 			let radius = 40, ratio = 1.5;
 
-			if (isPortraitDevice())
-				height -= 80;
-
 			let centerx, centery, margin = 10;
 			if (this.hotspotx < width / 2){
 				centerx = width - radius - margin;
