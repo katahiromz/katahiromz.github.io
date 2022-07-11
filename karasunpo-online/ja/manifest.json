@@ -4,6 +4,10 @@
 	"description": "画像上の２点間の名目の距離や角度を測定。",
 	"lang": "ja-JP",
 	"start_url": "https://katahiromz.github.io/karasunpo-online/ja/",
+	"display": "minimal-ui",
+	"background_color": "green",
+	"theme_color": "darkgreen",
+	"orientation": "portrait-primary",
 	"icons": [
 		{
 			"src": "images/karasunpo-192x192.png",

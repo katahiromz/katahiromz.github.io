@@ -4,6 +4,10 @@
 	"description": "Measures the nominal distance/angle on an image file.",
 	"lang": "en-US",
 	"start_url": "https://katahiromz.github.io/karasunpo-online/en/",
+	"display": "minimal-ui",
+	"background_color": "green",
+	"theme_color": "darkgreen",
+	"orientation": "portrait-primary",
 	"icons": [
 		{
 			"src": "images/karasunpo-192x192.png",
