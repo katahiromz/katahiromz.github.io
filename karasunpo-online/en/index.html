@@ -3,12 +3,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Karasunpo Online</title>
-	<!-- Disable browser cache -->
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Cache-Control" content="no-cache" />
-	<meta http-equiv="Expires" content="0" />
-	<link rel="manifest" href="karasunpo.webmanifest" />
-	<link rel="shortcut icon" href="karasunpo-192x192.png" type="image/png" />
+	<link rel="manifest" href="manifest.json" />
+	<link rel="icon" href="images/karasunpo-192x192.png" type="image/png" />
 	<!-- TODO: ここで読み込むJavascriptプログラムはきちんとテストされた最新のものでなければならない。-->
 	<!-- TODO: 時々バージョン番号を確認し、古くなっていたらテスト後に更新しないといけない。 -->
 	<!--
@@ -33,6 +29,14 @@
 	<link rel="stylesheet" href="main.css">
 	<!-- main.js -->
 	<script defer src="main.js"></script>
+	<!-- Open Graph Protocol -->
+	<meta property="og:title" content="Karasunpo" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://katahiromz.github.io/karasunpo-online/en/" />
+	<meta property="og:image" content="https://katahiromz.github.io/karasunpo-online/en/images/karasunpo-512x512-maskable.png" />
+	<meta property="og:site_name" content="Karasunpo Online" />
+	<meta property="og:description" content="Measures the nominal distance/angle on an image file" />
+	<meta name="twitter:card" content="summary" />
 </head>
 <body>
 	<section id="fullscreen" class="drop-area">
