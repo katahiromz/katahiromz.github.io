@@ -1766,5 +1766,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build
 
 		// モードを初期化。
 		Karasunpo.setMode(1);
+
+		// service worker
+		if (location.host != '' && 'serviceWorker' in navigator){
+			navigator.serviceWorker.register('./sw.js', {scope: './'})
+			.then((registration) => {
+				console.log('Service worker registered');
+			});
+		}
 	});
 })(jQuery);
