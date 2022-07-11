@@ -8,6 +8,13 @@
 	"background_color": "green",
 	"theme_color": "darkgreen",
 	"orientation": "portrait-primary",
+	"categories": ["utilities"],
+	"shortcuts": [
+		{
+			"name": "最初に戻る",
+			"url": "."
+		}
+	],
 	"icons": [
 		{
 			"src": "images/karasunpo-192x192.png",
