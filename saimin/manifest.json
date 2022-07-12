@@ -10,7 +10,7 @@
   "display": "minimal-ui",
   "description": "催眠っぽいWebアプリです。",
   "shortcuts": [],
-  "orientation": "any",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "icons/icon-48.png",
