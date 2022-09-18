@@ -988,7 +988,8 @@ jQuery(function($){
 		let factor2 = count2 * 0.04;
 
 		let i = 0;
-		for (let radius = dxy * 0.3; radius > 0; radius -= 10){
+		const delta = dxy * 0.015 + 1;
+		for (let radius = dxy * 0.3; radius > 0; radius -= delta){
 			switch (i & 3){
 			case 0: ctx.fillStyle = '#f00'; break;
 			case 1: ctx.fillStyle = '#ff0'; break;
