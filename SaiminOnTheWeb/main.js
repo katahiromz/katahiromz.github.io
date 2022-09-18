@@ -985,11 +985,11 @@ jQuery(function($){
 		ctx.fillRect(px, py, dx, dy);
 
 		let factor1 = count2 * 0.13;
-		let factor2 = count2 * 0.04;
+		let factor2 = count2 * 0.075;
 
 		let i = 0;
 		const delta = dxy * 0.015 + 1;
-		for (let radius = dxy * 0.3; radius > 0; radius -= delta){
+		for (let radius = (Math.floor(dxy * 0.4 / delta) + 1) * delta; radius > 0; radius -= delta){
 			switch (i & 3){
 			case 0: ctx.fillStyle = '#f00'; break;
 			case 1: ctx.fillStyle = '#ff0'; break;
@@ -999,8 +999,9 @@ jQuery(function($){
 			ctx.beginPath();
 			for (let angle = 0; angle <= 360; angle += 5){
 				let radian = angle * (Math.PI / 180);
-				let x = (radius + 1) * Math.cos(radian + factor2) * (Math.abs(Math.sin(radian * 4)) + Math.cos(factor1) + 2);
-				let y = (radius + 1) * Math.sin(radian + factor2) * (Math.abs(Math.sin(radian * 4)) + Math.cos(factor1) + 2);
+				let zoom = (1.0 * Math.abs(Math.sin(radian * 3)) + Math.cos(factor1) + 2);
+				let x = (radius + 2) * Math.cos(radian + factor2) * zoom;
+				let y = (radius + 2) * Math.sin(radian + factor2) * zoom;
 				if (angle == 0){
 					ctx.moveTo(qx + x, qy + y);
 				}else{
@@ -1010,6 +1011,12 @@ jQuery(function($){
 			ctx.fill();
 			++i;
 		}
+
+		var grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * 0.75);
+		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
+		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
+		ctx.fillStyle = grd;
+		circle(ctx, qx, qy, dxy, true);
 
 		ctx.restore();
 	}
