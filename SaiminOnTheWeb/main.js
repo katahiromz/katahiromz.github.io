@@ -989,7 +989,7 @@ jQuery(function($){
 
 		let i = 0;
 		const delta = dxy * 0.015 + 1;
-		for (let radius = (Math.floor(dxy * 0.4 / delta) + 1) * delta; radius > 0; radius -= delta){
+		for (let radius = (Math.floor(dxy * 0.35 / delta) + 1) * delta; radius > 0; radius -= delta){
 			switch (i & 3){
 			case 0: ctx.fillStyle = '#f00'; break;
 			case 1: ctx.fillStyle = '#ff0'; break;
