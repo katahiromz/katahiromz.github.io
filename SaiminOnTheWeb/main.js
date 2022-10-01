@@ -912,35 +912,32 @@ jQuery(function($){
 		ctx.fillStyle = '#33F';
 		ctx.fillRect(px, py, dx, dy);
 
-		let focal = 100;
-		let cx = 8000;
-		const deltax = 300, deltay = 400, deltaz = 100;
-
+		const focal = 100;
 		function perspective(x, y, z){
 			let w = focal / (focal + z);
 			return [x * w, y * w];
 		}
 
-		for (let y = 600; y <= 600; y += deltay){
-			let iz = 0;
-			for (let z = 0; z <= 900; z += deltaz){
-				let ix = 0;
-				for (let x = -cx; x < cx; x += deltax){
-					const [x0, y0] = perspective(x, y, z);
-					const [x1, y1] = perspective(x + deltax, y, z);
-					const [x2, y2] = perspective(x + deltax, y, z + deltaz);
-					const [x3, y3] = perspective(x, y, z + deltaz);
-					ctx.beginPath();
-					ctx.moveTo(qx + x0, qy + y0);
-					ctx.lineTo(qx + x1, qy + y1);
-					ctx.lineTo(qx + x2, qy + y2);
-					ctx.lineTo(qx + x3, qy + y3);
-					ctx.fillStyle = ((ix + iz) & 1) ? '#333' : '#666';
-					ctx.fill();
-					++ix;
-				}
-				++iz;
+		const y = 600, cx = 8000;
+		const deltax = 300, deltaz = 100;
+		let iz = 0;
+		for (let z = 0; z <= 900; z += deltaz){
+			let ix = 0;
+			for (let x = -cx; x < cx; x += deltax){
+				const [x0, y0] = perspective(x, y, z);
+				const [x1, y1] = perspective(x + deltax, y, z);
+				const [x2, y2] = perspective(x + deltax, y, z + deltaz);
+				const [x3, y3] = perspective(x, y, z + deltaz);
+				ctx.beginPath();
+				ctx.moveTo(qx + x0, qy + y0);
+				ctx.lineTo(qx + x1, qy + y1);
+				ctx.lineTo(qx + x2, qy + y2);
+				ctx.lineTo(qx + x3, qy + y3);
+				ctx.fillStyle = ((ix + iz) & 1) ? '#333' : '#666';
+				ctx.fill();
+				++ix;
 			}
+			++iz;
 		}
 
 		if (coin.complete){
