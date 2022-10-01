@@ -909,38 +909,38 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#99F';
+		ctx.fillStyle = '#33F';
 		ctx.fillRect(px, py, dx, dy);
 
-		ctx.fillStyle = '#336';
-		ctx.strokeStyle = '#ccc';
-		ctx.lineWidth = 4;
-
 		let focal = 100;
-		let cx = 8000, cy = 600;
-		for (let z = 0; z <= 1000; z += 100){
+		let cx = 8000;
+		const deltax = 300, deltay = 400, deltaz = 100;
+
+		function perspective(x, y, z){
 			let w = focal / (focal + z);
-			let x0 = -cx * w;
-			let x1 = +cx * w;
-			let y0 = cy * w;
-			ctx.beginPath();
-			ctx.moveTo(qx + x0, qy + y0);
-			ctx.lineTo(qx + x1, qy + y0);
-			ctx.stroke();
+			return [x * w, y * w];
 		}
-		for (let x = -cx; x < cx; x += 400){
-			let z0 = 0;
-			let z1 = 1000;
-			let w0 = focal / (focal + z0);
-			let w1 = focal / (focal + z1);
-			let x0 = x * w0;
-			let x1 = x * w1;
-			let y0 = cy * w0;
-			let y1 = cy * w1;
-			ctx.beginPath();
-			ctx.moveTo(qx + x0, qy + y0);
-			ctx.lineTo(qx + x1, qy + y1);
-			ctx.stroke();
+
+		for (let y = 600; y <= 600; y += deltay){
+			let iz = 0;
+			for (let z = 0; z <= 900; z += deltaz){
+				let ix = 0;
+				for (let x = -cx; x < cx; x += deltax){
+					const [x0, y0] = perspective(x, y, z);
+					const [x1, y1] = perspective(x + deltax, y, z);
+					const [x2, y2] = perspective(x + deltax, y, z + deltaz);
+					const [x3, y3] = perspective(x, y, z + deltaz);
+					ctx.beginPath();
+					ctx.moveTo(qx + x0, qy + y0);
+					ctx.lineTo(qx + x1, qy + y1);
+					ctx.lineTo(qx + x2, qy + y2);
+					ctx.lineTo(qx + x3, qy + y3);
+					ctx.fillStyle = ((ix + iz) & 1) ? '#333' : '#666';
+					ctx.fill();
+					++ix;
+				}
+				++iz;
+			}
 		}
 
 		if (coin.complete){
