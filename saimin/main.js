@@ -1038,11 +1038,11 @@ jQuery(function($){
 
 		let count2 = getCount();
 		if (isLargeDisplay()){
-			qx += 70 * Math.cos(count2 * 0.1);
-			qy += 70 * Math.sin(count2 * 0.1);
+			qx += 60 * Math.cos(count2 * 0.1);
+			qy += 60 * Math.sin(count2 * 0.1);
 		}else{
-			qx += 50 * Math.cos(count2 * 0.1);
-			qy += 50 * Math.sin(count2 * 0.1);
+			qx += 40 * Math.cos(count2 * 0.1);
+			qy += 40 * Math.sin(count2 * 0.1);
 		}
 
 		const rotation = 10, width = dxy * 0.1;
@@ -1052,22 +1052,22 @@ jQuery(function($){
 			return [x, y];
 		}
 		let calc_colors = function(f0, f1, f2){
-			const values = '0123456789abcdef';
-			let value0 = values.charAt(7 + parseInt(Math.cos(1 * f0) * 7));
-			let value1 = values.charAt(7 + parseInt(Math.sin(2 * f1) * 7));
-			let value2 = values.charAt(7 + parseInt(Math.cos(3 * f2) * 7));
+			const values = '0000066999abffff';
+			let value0 = values.charAt(7 + parseInt(Math.cos(f0 * 1) * 7));
+			let value1 = values.charAt(7 + parseInt(Math.sin(f1 * 2) * 7));
+			let value2 = values.charAt(7 + parseInt(Math.cos(f2 * 3) * 7));
 			return '#' + value0 + value1 + value2;
 		}
-		let f = count2 / 15;
-		const color0 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		let f = count2 / 80;
+		const color0 = calc_colors(f, f + 1.2, f + 2.3);
 		f += Math.PI * 0.4;
-		const color1 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
-		f += Math.PI * 0.3;
-		const color2 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
-		f += Math.PI * 0.3;
-		const color3 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		const color1 = calc_colors(f, f + 1.2, f + 2.3);
 		f += Math.PI * 0.4;
-		const color4 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		const color2 = calc_colors(f, f + 1.2, f + 2.3);
+		f += Math.PI * 0.4;
+		const color3 = calc_colors(f, f + 1.2, f + 2.3);
+		f += Math.PI * 0.4;
+		const color4 = calc_colors(f, f + 1.2, f + 2.3);
 		const factor = count2 * 0.6;
 		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.1){
 			let radian1 = radian0 + 0.2;
