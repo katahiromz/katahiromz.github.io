@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
-const NUM_TYPE = 7;
-const VERSION = '3.2.3';
+const NUM_TYPE = 8;
+const VERSION = '3.2.4';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -1018,6 +1018,83 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	function drawType8(ctx, px, py, dx, dy, t){
+		ctx.save();
+
+		var qx = px + dx / 2;
+		var qy = py + dy / 2;
+		var dxy = (dx + dy) / 2;
+
+		ctx.beginPath();
+		ctx.moveTo(px, py);
+		ctx.lineTo(px + dx, py);
+		ctx.lineTo(px + dx, py + dy);
+		ctx.lineTo(px, py + dy);
+		ctx.closePath();
+		ctx.clip();
+
+		ctx.fillStyle = '#000';
+		ctx.fillRect(px, py, dx, dy);
+
+		let count2 = getCount();
+		if (isLargeDisplay()){
+			qx += 70 * Math.cos(count2 * 0.1);
+			qy += 70 * Math.sin(count2 * 0.1);
+		}else{
+			qx += 50 * Math.cos(count2 * 0.1);
+			qy += 50 * Math.sin(count2 * 0.1);
+		}
+
+		const rotation = 10, width = dxy * 0.1;
+		let calc_point = function(radius, radian){
+			let x = qx + radius * Math.cos(radian);
+			let y = qy + radius * Math.sin(radian);
+			return [x, y];
+		}
+		let calc_colors = function(f0, f1, f2){
+			const values = '0123456789abcdef';
+			let value0 = values.charAt(7 + parseInt(Math.cos(1 * f0) * 7));
+			let value1 = values.charAt(7 + parseInt(Math.sin(2 * f1) * 7));
+			let value2 = values.charAt(7 + parseInt(Math.cos(3 * f2) * 7));
+			return '#' + value0 + value1 + value2;
+		}
+		let f = count2 / 15;
+		const color0 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		f += Math.PI * 0.4;
+		const color1 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		f += Math.PI * 0.3;
+		const color2 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		f += Math.PI * 0.3;
+		const color3 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		f += Math.PI * 0.4;
+		const color4 = calc_colors(f, f + (Math.PI * 0.5), f + (Math.PI * 0.75));
+		const factor = count2 * 0.6;
+		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.1){
+			let radian1 = radian0 + 0.2;
+			let radius0 = width * radian0 / (2 * Math.PI);
+			let radius1 = radius0 + width;
+			const [x0, y0] = calc_point(radius0, radian0 - factor);
+			const [x1, y1] = calc_point(radius1, radian0 - factor);
+			const [x2, y2] = calc_point(radius1, radian1 - factor);
+			const [x3, y3] = calc_point(radius0, radian1 - factor);
+			let g = ctx.createLinearGradient(x0, y0, x1, y1);
+			g.addColorStop(0 / 4, color0);
+			g.addColorStop(1 / 4, color1);
+			g.addColorStop(2 / 4, color2);
+			g.addColorStop(3 / 4, color3);
+			g.addColorStop(4 / 4, color4);
+			ctx.fillStyle = g;
+			ctx.beginPath();
+			ctx.lineTo(x0, y0);
+			ctx.lineTo(x1, y1);
+			ctx.lineTo(x2, y2);
+			ctx.lineTo(x3, y3);
+			ctx.fill();
+		}
+
+		ctx.restore();
+	}
+
 	function drawType(ctx, px, py, cx, cy){
 		switch (type){
 		case 0:
@@ -1044,6 +1121,9 @@ jQuery(function($){
 			break;
 		case 7:
 			drawType7(ctx, px, py, cx, cy, type);
+			break;
+		case 8:
+			drawType8(ctx, px, py, cx, cy, type);
 			break;
 		}
 	}
