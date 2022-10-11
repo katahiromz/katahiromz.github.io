@@ -1051,23 +1051,7 @@ jQuery(function($){
 			let y = qy + radius * Math.sin(radian);
 			return [x, y];
 		}
-		let calc_colors = function(f0, f1, f2){
-			const values = '0000066999abffff';
-			let value0 = values.charAt(7 + parseInt(Math.cos(f0 * 1) * 7));
-			let value1 = values.charAt(7 + parseInt(Math.sin(f1 * 2) * 7));
-			let value2 = values.charAt(7 + parseInt(Math.cos(f2 * 3) * 7));
-			return '#' + value0 + value1 + value2;
-		}
-		let f = count2 / 80;
-		const color0 = calc_colors(f, f + 1.2, f + 2.3);
-		f += Math.PI * 0.4;
-		const color1 = calc_colors(f, f + 1.2, f + 2.3);
-		f += Math.PI * 0.4;
-		const color2 = calc_colors(f, f + 1.2, f + 2.3);
-		f += Math.PI * 0.4;
-		const color3 = calc_colors(f, f + 1.2, f + 2.3);
-		f += Math.PI * 0.4;
-		const color4 = calc_colors(f, f + 1.2, f + 2.3);
+		const colors = ['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f'];
 		const factor = count2 * 0.6;
 		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.1){
 			let radian1 = radian0 + 0.2;
@@ -1078,11 +1062,12 @@ jQuery(function($){
 			const [x2, y2] = calc_point(radius1, radian1 - factor);
 			const [x3, y3] = calc_point(radius0, radian1 - factor);
 			let g = ctx.createLinearGradient(x0, y0, x1, y1);
-			g.addColorStop(0 / 4, color0);
-			g.addColorStop(1 / 4, color1);
-			g.addColorStop(2 / 4, color2);
-			g.addColorStop(3 / 4, color3);
-			g.addColorStop(4 / 4, color4);
+			g.addColorStop(0 / 5, colors[0]);
+			g.addColorStop(1 / 5, colors[1]);
+			g.addColorStop(2 / 5, colors[2]);
+			g.addColorStop(3 / 5, colors[3]);
+			g.addColorStop(4 / 5, colors[4]);
+			g.addColorStop(5 / 5, colors[5]);
 			ctx.fillStyle = g;
 			ctx.beginPath();
 			ctx.lineTo(x0, y0);
