@@ -1045,7 +1045,7 @@ jQuery(function($){
 			qy += 40 * Math.sin(count2 * 0.1);
 		}
 
-		const rotation = 10, width = dxy * 0.1;
+		const rotation = 8, width = dxy * 0.1;
 		let calc_point = function(radius, radian){
 			let x = qx + radius * Math.cos(radian);
 			let y = qy + radius * Math.sin(radian);
@@ -1053,8 +1053,8 @@ jQuery(function($){
 		}
 		const colors = ['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f'];
 		const factor = count2 * 0.6;
-		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.1){
-			let radian1 = radian0 + 0.2;
+		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.12){
+			let radian1 = radian0 + 0.15;
 			let radius0 = width * radian0 / (2 * Math.PI);
 			let radius1 = radius0 + width;
 			const [x0, y0] = calc_point(radius0, radian0 - factor);
