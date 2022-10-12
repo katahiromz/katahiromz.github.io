@@ -1,6 +1,6 @@
 /* jshint esversion: 8 */
 
-const NUM_TYPE = 7;
+const NUM_TYPE = 8;
 const VERSION = '3.2.4';
 const DEBUG = true;
 
