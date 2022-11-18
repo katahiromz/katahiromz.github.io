@@ -160,7 +160,7 @@ jQuery(function($){
 
 	function setTypeSound(value, test = false){
 		typeSound = parseInt(value);
-		document.getElementById('type-sound-select').value = value;
+		type_sound_select.value = value;
 		localStorage.setItem('saiminTypeSound', value);
 		if (test && typeSound == 1 && kirakira_sound){
 			kirakira_sound.play();
@@ -223,7 +223,6 @@ jQuery(function($){
 	}
 
 	function setRotation(value){
-		let rotation_select = document.getElementById('rotation-select');
 		rotation_select.value = value.toString();
 		localStorage.setItem('saiminRotation', value.toString());
 		rotationType = value.toString();
@@ -368,7 +367,6 @@ jQuery(function($){
 	}
 
 	function apperance(){
-		let rotation_select = document.getElementById('rotation-select');
 		let old_type_value = type_select.value;
 		let old_division_value = division_select.value;
 		let old_speed_type_value = speed_type_select.value;
@@ -1351,7 +1349,6 @@ jQuery(function($){
 			setSpeedType(speed_type_select.value);
 		}, false);
 
-		let rotation_select = document.getElementById('rotation-select');
 		rotation_select.addEventListener('change', function(){
 			if (!ready)
 				return;
