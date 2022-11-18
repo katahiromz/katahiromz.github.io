@@ -202,10 +202,10 @@ jQuery(function($){
 			return;
 		type = parseInt(value);
 		if (type == 0){
-			$('#please-tap-here').removeClass('invisible');
+			please_tap_here.removeClass('invisible');
 			$('#heart-block').removeClass('invisible');
 		}else{
-			$('#please-tap-here').addClass('invisible');
+			please_tap_here.addClass('invisible');
 			$('#heart-block').addClass('invisible');
 		}
 		type_select.value = type.toString();
@@ -294,9 +294,9 @@ jQuery(function($){
 			$('#caption').addClass('invisible');
 		}
 		if (type == 0){
-			$('#please-tap-here').removeClass('invisible');
+			please_tap_here.removeClass('invisible');
 		}else{
-			$('#please-tap-here').addClass('invisible');
+			please_tap_here.addClass('invisible');
 		}
 		updateVersionDisplay();
 		window.requestAnimationFrame(draw);
@@ -1389,7 +1389,7 @@ jQuery(function($){
 			canvasClick(e);
 		}, false);
 
-		document.getElementById('please-tap-here').addEventListener('click', function(e){
+		please_tap_here.addEventListener('click', function(e){
 			canvasClick(e);
 		}, false);
 		document.getElementById('heart-block').addEventListener('click', function(e){
