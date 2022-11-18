@@ -183,7 +183,7 @@ jQuery(function($){
 			return;
 		}
 		speedType = value;
-		document.getElementById('speed-type-select').value = value;
+		speed_type_select.value = value;
 		localStorage.setItem('saiminSpeedType', value);
 	}
 
@@ -369,7 +369,6 @@ jQuery(function($){
 	}
 
 	function apperance(){
-		let speed_type_select = document.getElementById('speed-type-select');
 		let rotation_select = document.getElementById('rotation-select');
 		let old_type_value = type_select.value;
 		let old_division_value = division_select.value;
@@ -1351,7 +1350,6 @@ jQuery(function($){
 			setDivision(parseInt(division_select.value));
 		}, false);
 
-		let speed_type_select = document.getElementById('speed-type-select');
 		speed_type_select.addEventListener('change', function(){
 			if (!ready)
 				return;
