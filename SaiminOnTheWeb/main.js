@@ -230,7 +230,7 @@ jQuery(function($){
 	}
 
 	function fitCanvas(){
-		let ctx = document.getElementById('canvas').getContext('2d');
+		let ctx = saimin_canvas.getContext('2d');
 		cx = ctx.canvas.width = window.innerWidth;
 		cy = ctx.canvas.height = window.innerHeight;
 	}
@@ -1150,7 +1150,7 @@ jQuery(function($){
 	}
 
 	function draw(){
-		let ctx = document.getElementById('canvas').getContext('2d');
+		let ctx = saimin_canvas.getContext('2d');
 
 		let x = cx / 2, y = cy / 2, delta_percent = 0;
 
@@ -1384,7 +1384,7 @@ jQuery(function($){
 			canvasClick(e);
 		}, false);
 
-		document.getElementById('canvas').addEventListener('click', function(e){
+		saimin_canvas.addEventListener('click', function(e){
 			canvasClick(e);
 		}, false);
 
@@ -1395,18 +1395,18 @@ jQuery(function($){
 			canvasClick(e);
 		}, false);
 
-		document.getElementById('canvas').addEventListener('mousemove', function(e){
+		saimin_canvas.addEventListener('mousemove', function(e){
 			if (!ready)
 				return;
 			addStar(e.clientX, e.clientY);
 		}, false);
 
-		document.getElementById('canvas').addEventListener('touchstart', function(e){
+		saimin_canvas.addEventListener('touchstart', function(e){
 			if (!ready)
 				return;
 			touchmoving = true;
 		}, {passive: true});
-		document.getElementById('canvas').addEventListener('touchmove', function(e){
+		saimin_canvas.addEventListener('touchmove', function(e){
 			if (!ready)
 				return;
 			if (touchmoving){
@@ -1416,18 +1416,18 @@ jQuery(function($){
 				}
 			}
 		}, {passive: true});
-		document.getElementById('canvas').addEventListener('touchend', function(e){
+		saimin_canvas.addEventListener('touchend', function(e){
 			if (!ready)
 				return;
 			touchmoving = false;
 		}, {passive: true});
-		document.getElementById('canvas').addEventListener('touchcancel', function(e){
+		saimin_canvas.addEventListener('touchcancel', function(e){
 			if (!ready)
 				return;
 			touchmoving = false;
 		}, {passive: true});
 
-		document.getElementById('canvas').addEventListener('wheel', function(e){
+		saimin_canvas.addEventListener('wheel', function(e){
 			e.preventDefault();
 			if (!ready)
 				return;
