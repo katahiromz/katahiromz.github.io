@@ -246,7 +246,7 @@ jQuery(function($){
 	}
 
 	function forbidden(){
-		$('#child-dialog').dialog({
+		$('#child_dialog').dialog({
 			dialogClass: 'no-close',
 			title: TEXT_FORBIDDEN,
 			buttons: [{
@@ -287,9 +287,6 @@ jQuery(function($){
 		config_button.classList.remove('invisible');
 		about_button.classList.remove('invisible');
 		text_button.classList.remove('invisible');
-		if (isNativeApp()){
-			$('#caption').classList.add('invisible');
-		}
 		if (type == 0){
 			please_tap_here.classList.remove('invisible');
 		}else{
@@ -340,7 +337,7 @@ jQuery(function($){
 			accepted();
 			help();
 		}else{
-			$('#adult-check-dialog').dialog({
+			$('#adult_check_dialog').dialog({
 				dialogClass: 'no-close',
 				title: TEXT_ADULT_CHECK,
 				buttons: [
@@ -1439,7 +1436,7 @@ jQuery(function($){
 		}, { passive: false });
 
 		if (!DEBUG && !isNativeApp() && !isWebApp()){
-			$('#license-expired-dialog').dialog({
+			$('#license_expired_dialog').dialog({
 				dialogClass: 'no-close',
 				title: TEXT_EXPIRED,
 				buttons: [
