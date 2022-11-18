@@ -208,7 +208,6 @@ jQuery(function($){
 			$('#please-tap-here').addClass('invisible');
 			$('#heart-block').addClass('invisible');
 		}
-		let type_select = document.getElementById('type-select');
 		type_select.value = type.toString();
 		$('#type-select-button').text(TEXT_PIC + type.toString());
 		localStorage.setItem('saiminType', type.toString());
@@ -370,7 +369,6 @@ jQuery(function($){
 	}
 
 	function apperance(){
-		let type_select = document.getElementById('type-select');
 		let division_select = document.getElementById('division-select');
 		let speed_type_select = document.getElementById('speed-type-select');
 		let rotation_select = document.getElementById('rotation-select');
@@ -1309,7 +1307,6 @@ jQuery(function($){
 			config();
 		});
 
-		let type_select = document.getElementById('type-select');
 		type_select.addEventListener('change', function(){
 			if (!ready)
 				return;
