@@ -60,6 +60,11 @@ jQuery(function($){
 		return false;
 	}
 
+	function neg_mod(x, y){
+		if (x > 0) return x % y;
+		return neg_mod(x + y, y);
+	}
+
 	function addStar(x, y){
 		stars.shift();
 		if (isLargeDisplay()){
@@ -431,7 +436,7 @@ jQuery(function($){
 
 	function circle(ctx, x, y, radius, is_fill = true){
 		ctx.beginPath();
-		ctx.arc(x, y, radius, 0, 2 * Math.PI);
+		ctx.arc(x, y, Math.abs(radius), 0, 2 * Math.PI);
 		ctx.closePath();
 		if (is_fill)
 			ctx.fill();
@@ -695,11 +700,9 @@ jQuery(function($){
 		var cxy = ((cx >= cy) ? cy : cx) * 1.2;
 		var xy0 = (cxy + size) - (cxy + size) % size;
 		var comp0 = new Complex({abs:1.0, arg:factor * 1.0});
-		for (var y = -xy0; y < cxy + size; y += size)
-		{
+		for (var y = -xy0; y < cxy + size; y += size){
 			var nCount = nCount2 % 3;
-			for (var x = -xy0; x < cxy + size; x += size)
-			{
+			for (var x = -xy0; x < cxy + size; x += size){
 				var h, s = 1.0, v = 1.0;
 				switch (nCount % 3)
 				{
@@ -713,6 +716,8 @@ jQuery(function($){
 					h = (0.8 + factor * 1.2) % 1.0;
 					break;
 				}
+				if (h < 0)
+					h += 1.0;
 				let r, g, b;
 				[r, g, b] = hsv2rgb(h, s, v);
 
