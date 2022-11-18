@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 8;
-const VERSION = '3.2.4';
+const VERSION = '3.2.5';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -1054,9 +1054,9 @@ jQuery(function($){
 		const colors = ['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f'];
 		const factor = count2 * 0.6;
 		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.12){
-			let radian1 = radian0 + 0.15;
-			let radius0 = width * radian0 / (2 * Math.PI);
-			let radius1 = radius0 + width;
+			const radian1 = radian0 + 0.15;
+			const radius0 = width * radian0 / (2 * Math.PI);
+			const radius1 = radius0 + width * 1.03;
 			const [x0, y0] = calc_point(radius0, radian0 - factor);
 			const [x1, y1] = calc_point(radius1, radian0 - factor);
 			const [x2, y2] = calc_point(radius1, radian1 - factor);
