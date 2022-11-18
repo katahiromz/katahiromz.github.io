@@ -1435,22 +1435,6 @@ jQuery(function($){
 			}
 		}, { passive: false });
 
-		if (!DEBUG && !isNativeApp() && !isWebApp()){
-			$('#license_expired_dialog').dialog({
-				dialogClass: 'no-close',
-				title: TEXT_EXPIRED,
-				buttons: [
-					{
-						text: TEXT_OK,
-						click: function(){
-							$(this).dialog('close');
-						},
-					},
-				],
-			});
-			return;
-		}
-
 		let saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
 		if (!saiminAdultCheck){
 			doAdultCheck();
