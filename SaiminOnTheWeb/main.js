@@ -240,11 +240,11 @@ jQuery(function($){
 		fitCanvas();
 		let position = { my: 'center', at: 'center', of: window };
 		if (localStorage.getItem('saiminHelpShowing')){
-			$('#about-dialog').dialog('option', 'position', position);
+			about_dialog.dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminAppearanceShowing')){
-			$('#appearance-dialog').dialog('option', 'position', position);
+			appearance_dialog.dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminConfigShowing')) {
-			$('#config-dialog').dialog('option', 'position', position);
+			config_dialog.dialog('option', 'position', position);
 		}
 	}
 
@@ -305,7 +305,7 @@ jQuery(function($){
 	function help(){
 		$('#notice-text').width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
 		localStorage.setItem('saiminHelpShowing', '1');
-		$('#about-dialog').dialog({
+		about_dialog.dialog({
 			dialogClass: 'no-close',
 			title: TEXT_VERSION_INFO,
 			buttons: [{
@@ -333,7 +333,7 @@ jQuery(function($){
 			}],
 			width: window.innerWidth * 4 / 5,
 		});
-		$('#about-dialog').on('dialogclose', function(event){
+		about_dialog.on('dialogclose', function(event){
 			localStorage.removeItem('saiminHelpShowing');
 		});
 	}
@@ -375,7 +375,7 @@ jQuery(function($){
 		let old_speed_type_value = speed_type_select.value;
 		let old_rotation_value = rotation_select.value;
 		localStorage.setItem('saiminAppearanceShowing', '1');
-		$('#appearance-dialog').dialog({
+		appearance_dialog.dialog({
 			dialogClass: 'no-close',
 			title: TEXT_APPEARANCE,
 			buttons: [
@@ -396,7 +396,7 @@ jQuery(function($){
 				}
 			],
 		});
-		$('#appearance-dialog').on('dialogclose', function(event){
+		appearance_dialog.on('dialogclose', function(event){
 			localStorage.removeItem('saiminAppearanceShowing');
 		});
 	}
@@ -407,7 +407,7 @@ jQuery(function($){
 		let old_sound_value = sound_select.value;
 		let old_type_sound_value = type_sound_select.value;
 		localStorage.setItem('saiminConfigShowing', '1');
-		$('#config-dialog').dialog({
+		config_dialog.dialog({
 			dialogClass: 'no-close',
 			title: TEXT_CONFIGURATION,
 			buttons: [
@@ -426,7 +426,7 @@ jQuery(function($){
 				}
 			],
 		});
-		$('#config-dialog').on('dialogclose', function(event){
+		config_dialog.on('dialogclose', function(event){
 			localStorage.removeItem('saiminConfigShowing');
 		});
 	}
