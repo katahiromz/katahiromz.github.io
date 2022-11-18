@@ -880,7 +880,7 @@ jQuery(function($){
 		if (t == 4){
 			ctx.fillStyle = `rgb(255, 255, ${(factor * 10) % 255}, 0.8)`;
 			let M = 5;
-			for (let radius = (factor * 10) % 100; radius < dxy; radius += 100){
+			for (let radius = neg_mod(factor * 10, 100); radius < dxy; radius += 100){
 				for (let angle = 0; angle < 360; angle += 360 / M){
 					let radian = angle * (Math.PI / 180.0);
 					let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
@@ -893,7 +893,7 @@ jQuery(function($){
 			ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
 			let M = 5;
 			let heartSize = 30;
-			for (let radius = (factor * 10) % 100 + 30; radius < dxy; radius += 100){
+			for (let radius = neg_mod((factor * 10), 100) + 30; radius < dxy; radius += 100){
 				for (let angle = 0; angle < 360; angle += 360 / M){
 					let radian = angle * (Math.PI / 180.0);
 					let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
