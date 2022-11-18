@@ -287,7 +287,7 @@ jQuery(function($){
 		type_select_button.removeClass('invisible');
 		sound_button.removeClass('invisible');
 		$('#speech-label').removeClass('invisible');
-		$('#config-button').removeClass('invisible');
+		config_button.removeClass('invisible');
 		$('#about-button').removeClass('invisible');
 		text_button.removeClass('invisible');
 		if (isNativeApp()){
@@ -1300,7 +1300,7 @@ jQuery(function($){
 			}
 		});
 
-		$('#config-button').click(function(){
+		config_button.click(function(){
 			config();
 		});
 
