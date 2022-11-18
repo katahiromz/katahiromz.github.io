@@ -263,13 +263,13 @@ jQuery(function($){
 
 	function updateVersionDisplay(){
 		let nativeVersion = getNativeAppVersion();
-		let text = $('#version-text').text();
+		let text = version_text.innerText;
 		if (nativeVersion){
 			text = text.replace('[[VERSION]]', nativeVersion + '(native) / ' + VERSION + '(web)');
 		}else{
 			text = text.replace('[[VERSION]]', VERSION + '(web)');
 		}
-		$('#version-text').text(text);
+		version_text.innerText = text;
 	}
 
 	function accepted(){
@@ -301,7 +301,7 @@ jQuery(function($){
 	}
 
 	function help(){
-		$('#notice-text').width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
+		$('#notice_text').width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
 		localStorage.setItem('saiminHelpShowing', '1');
 		$('#about_dialog').dialog({
 			dialogClass: 'no-close',
