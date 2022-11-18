@@ -203,10 +203,10 @@ jQuery(function($){
 		type = parseInt(value);
 		if (type == 0){
 			please_tap_here.removeClass('invisible');
-			$('#heart-block').removeClass('invisible');
+			heart_block.removeClass('invisible');
 		}else{
 			please_tap_here.addClass('invisible');
-			$('#heart-block').addClass('invisible');
+			heart_block.addClass('invisible');
 		}
 		type_select.value = type.toString();
 		type_select_button.text(TEXT_PIC + type.toString());
@@ -1391,7 +1391,7 @@ jQuery(function($){
 		please_tap_here.addEventListener('click', function(e){
 			canvasClick(e);
 		}, false);
-		document.getElementById('heart-block').addEventListener('click', function(e){
+		heart_block.addEventListener('click', function(e){
 			canvasClick(e);
 		}, false);
 
