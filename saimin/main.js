@@ -209,7 +209,7 @@ jQuery(function($){
 			$('#heart-block').addClass('invisible');
 		}
 		type_select.value = type.toString();
-		$('#type-select-button').text(TEXT_PIC + type.toString());
+		type_select_button.text(TEXT_PIC + type.toString());
 		localStorage.setItem('saiminType', type.toString());
 	}
 
@@ -284,7 +284,7 @@ jQuery(function($){
 			setType(0);
 		}
 		$('#microphone-label').removeClass('invisible');
-		$('#type-select-button').removeClass('invisible');
+		type_select_button.removeClass('invisible');
 		$('#sound-button').removeClass('invisible');
 		$('#speech-label').removeClass('invisible');
 		$('#config-button').removeClass('invisible');
@@ -1285,7 +1285,7 @@ jQuery(function($){
 			help();
 		});
 
-		$('#type-select-button').click(function(){
+		type_select_button.click(function(){
 			apperance();
 		});
 
