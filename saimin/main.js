@@ -63,7 +63,7 @@ jQuery(function($){
 
 	function neg_mod(x, y){
 		if (x > 0) return x % y;
-		return neg_mod(x + y, y);
+		return neg_mod(x + 10 * y, y);
 	}
 
 	function addStar(x, y){
