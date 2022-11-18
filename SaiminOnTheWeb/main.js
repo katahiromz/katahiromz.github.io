@@ -22,25 +22,26 @@ const TEXT_FORBIDDEN = 'Forbidden';
 const TEXT_FULLWIDTH_SPACE = '　';
 const TEXT_PERIOD = '.';
 const TEXT_PERIOD_SPACE = '. ';
-var cx = 0, cy = 0;
-var old_cx = null, old_cy = null;
-var old_time = (new Date()).getTime();
-var type = 0;
-var counter = 0, clock = 0;
-var ready = false;
-var theText = '';
-var division = -1;
-var speed = 45.0;
-var sound = null;
-var soundName = 'Magic';
-var kirakira_sound = null;
-var typeSound = 1;
-var stars = new Array(32);
-var touchmoving = false;
-var theRegistration = null;
-var speedType = 'normal';
-var coin = new Image();
-var rotationType = 'normal';
+
+let cx = 0, cy = 0;
+let old_cx = null, old_cy = null;
+let old_time = (new Date()).getTime();
+let type = 0;
+let counter = 0, clock = 0;
+let ready = false;
+let theText = '';
+let division = -1;
+let speed = 45.0;
+let sound = null;
+let soundName = 'Magic';
+let kirakira_sound = null;
+let typeSound = 1;
+let stars = new Array(32);
+let touchmoving = false;
+let theRegistration = null;
+let speedType = 'normal';
+let coin = new Image();
+let rotationType = 'normal';
 
 jQuery(function($){
 	coin.src = 'images/coin5yen.png';
@@ -766,8 +767,8 @@ jQuery(function($){
 		circle(ctx, qx, qy, dxy, true);
 
 		ctx.lineWidth = 10;
-		var i = 0;
-		for (var r = (count2 * 2) % 100; r < cxy; r += 100){
+		let i = 0;
+		for (let r = neg_mod(count2 * 2, 100); r < cxy; r += 100){
 			if (i < 3){
 				ctx.strokeStyle = 'rgba(255, 20, 29, 0.9)';
 			} else {
