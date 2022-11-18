@@ -285,7 +285,7 @@ jQuery(function($){
 		}
 		$('#microphone-label').removeClass('invisible');
 		type_select_button.removeClass('invisible');
-		$('#sound-button').removeClass('invisible');
+		sound_button.removeClass('invisible');
 		$('#speech-label').removeClass('invisible');
 		$('#config-button').removeClass('invisible');
 		$('#about-button').removeClass('invisible');
@@ -1290,7 +1290,7 @@ jQuery(function($){
 			apperance();
 		});
 
-		$('#sound-button').click(function(){
+		sound_button.click(function(){
 			if (soundName != ''){
 				if (sound){
 					let s = new Audio('sn/' + soundName + '.mp3');
