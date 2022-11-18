@@ -112,7 +112,7 @@ jQuery(function($){
 		}catch(error){
 			if (window.speechSynthesis){
 				text = text.repeat(32);
-				var speech = new SpeechSynthesisUtterance(text);
+				let speech = new SpeechSynthesisUtterance(text);
 				// {{language-specific}}
 				speech.pitch = 0.6;
 				speech.rate = 0.4;
@@ -126,7 +126,7 @@ jQuery(function($){
 		return cx >= 1500 || cy >= 1500;
 	}
 
-	var playing = null;
+	let playing = null;
 
 	function setSoundName(value, test = false){
 		if (value.indexOf('sn') == 0)
@@ -208,7 +208,7 @@ jQuery(function($){
 			$('#please-tap-here').addClass('invisible');
 			$('#heart-block').addClass('invisible');
 		}
-		var type_select = document.getElementById('type-select');
+		let type_select = document.getElementById('type-select');
 		type_select.value = type.toString();
 		$('#type-select-button').text(TEXT_PIC + type.toString());
 		localStorage.setItem('saiminType', type.toString());
@@ -217,7 +217,7 @@ jQuery(function($){
 	function setText(txt){
 		theText = txt.replace(TEXT_FULLWIDTH_SPACE, '  ').trim();
 		localStorage.setItem('saiminText', theText);
-		var speech = document.getElementById('speech');
+		let speech = document.getElementById('speech');
 		if (speech.checked){
 			playSpeech(theText);
 		}
@@ -225,14 +225,14 @@ jQuery(function($){
 	}
 
 	function setRotation(value){
-		var rotation_select = document.getElementById('rotation-select');
+		let rotation_select = document.getElementById('rotation-select');
 		rotation_select.value = value.toString();
 		localStorage.setItem('saiminRotation', value.toString());
 		rotationType = value.toString();
 	}
 
 	function fitCanvas(){
-		var ctx = document.getElementById('canvas').getContext('2d');
+		let ctx = document.getElementById('canvas').getContext('2d');
 		cx = ctx.canvas.width = window.innerWidth;
 		cy = ctx.canvas.height = window.innerHeight;
 	}
@@ -278,7 +278,7 @@ jQuery(function($){
 	function accepted(){
 		ready = true;
 		localStorage.setItem('saiminAdultCheck', '1');
-		var saiminType = localStorage.getItem('saiminType');
+		let saiminType = localStorage.getItem('saiminType');
 		if (saiminType){
 			setType(parseInt(saiminType));
 		}else{
@@ -454,14 +454,14 @@ jQuery(function($){
 	}
 
 	function heart(ctx, x0, y0, x1, y1){
-		var x2 = (0.6 * x0 + 0.4 * x1);
-		var y2 = (0.6 * y0 + 0.4 * y1);
-		var comp = new Complex({re:x1 - x0, im:y1 - y0});
-		var comp0 = new Complex({abs:1.0, arg:Math.PI * 0.5});
-		var p0 = comp.mul(comp0.div(16)).add({re:x0, im:y0});
-		var p1 = comp.div(comp0.mul(16)).add({re:x0, im:y0});
-		var p2 = comp.mul(comp0).add({re:x0, im:y0});
-		var p3 = comp.div(comp0).add({re:x0, im:y0});
+		let x2 = (0.6 * x0 + 0.4 * x1);
+		let y2 = (0.6 * y0 + 0.4 * y1);
+		let comp = new Complex({re:x1 - x0, im:y1 - y0});
+		let comp0 = new Complex({abs:1.0, arg:Math.PI * 0.5});
+		let p0 = comp.mul(comp0.div(16)).add({re:x0, im:y0});
+		let p1 = comp.div(comp0.mul(16)).add({re:x0, im:y0});
+		let p2 = comp.mul(comp0).add({re:x0, im:y0});
+		let p3 = comp.div(comp0).add({re:x0, im:y0});
 		ctx.beginPath();
 		ctx.moveTo(x2, y2);
 		ctx.bezierCurveTo(p0.re, p0.im, p2.re, p2.im, x1, y1);
@@ -485,8 +485,8 @@ jQuery(function($){
 	}
 
 	function light(ctx, x0, y0, radius){
-		var r0 = radius;
-		var rmid = radius * 0.333;
+		let r0 = radius;
+		let rmid = radius * 0.333;
 		ctx.beginPath();
 		ctx.moveTo(x0 - r0, y0);
 		ctx.lineTo(x0, y0 + rmid);
@@ -505,9 +505,9 @@ jQuery(function($){
 	function drawType0(ctx, px, py, dx, dy){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
-		var dxy = (dx + dy) / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
 
 		ctx.fillStyle = 'black';
 		ctx.fillRect(px, py, dx, dy);
@@ -524,8 +524,8 @@ jQuery(function($){
 	function drawType1(ctx, px, py, dx, dy){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
 
 		ctx.beginPath();
 		ctx.moveTo(px, py);
@@ -538,8 +538,8 @@ jQuery(function($){
 		ctx.fillStyle = '#f6f';
 		ctx.fillRect(px, py, dx, dy);
 
-		var size = (dx + dy) * 2 / 5;
-		var count2 = getCount();
+		let size = (dx + dy) * 2 / 5;
+		let count2 = getCount();
 		if (isLargeDisplay()){
 			qx += 60 * Math.cos(count2 * 0.1);
 			qy += 60 * Math.sin(count2 * 0.1);
@@ -548,23 +548,23 @@ jQuery(function($){
 			qy += 30 * Math.sin(count2 * 0.1);
 		}
 
-		var dr0 = 15;
-		var dr = dr0 / 2;
-		var flag2 = -1;
-		var ci = 6;
+		let dr0 = 15;
+		let dr = dr0 / 2;
+		let flag2 = -1;
+		let ci = 6;
 
 		ctx.strokeStyle = '#000';
 		ctx.lineCap = 'square';
 
-		for (var i = 0; i <= ci; ++i){
-			var count = 0;
-			var x, y, oldx = qx, oldy = qy, f = 0.5;
-			for (var radius = 0; radius < size; radius += f){
-				var theta = dr0 * count * 0.375;
-				var value = 0.3 * Math.sin(count2 * 0.04) + 0.7;
+		for (let i = 0; i <= ci; ++i){
+			let count = 0;
+			let x, y, oldx = qx, oldy = qy, f = 0.5;
+			for (let radius = 0; radius < size; radius += f){
+				let theta = dr0 * count * 0.375;
+				let value = 0.3 * Math.sin(count2 * 0.04) + 0.7;
 
-				var radian = theta * (Math.PI / 180.0) + i * (2 * Math.PI) / ci;
-				var comp = new Complex({abs:radius, arg:flag2 * radian - count2 * (Math.PI * 0.03)});
+				let radian = theta * (Math.PI / 180.0) + i * (2 * Math.PI) / ci;
+				let comp = new Complex({abs:radius, arg:flag2 * radian - count2 * (Math.PI * 0.03)});
 				x = qx + comp.re;
 				y = qy + comp.im;
 			
@@ -583,12 +583,12 @@ jQuery(function($){
 	function drawType2(ctx, px, py, dx, dy, flag=true){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
-		var dxy = (dx + dy) / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
 
-		var count2 = getCount();
-		var factor = (0.99 + Math.abs(Math.sin(count2 * 0.2)) * 0.01);
+		let count2 = getCount();
+		let factor = (0.99 + Math.abs(Math.sin(count2 * 0.2)) * 0.01);
 
 		ctx.beginPath();
 		if (flag){
@@ -597,7 +597,7 @@ jQuery(function($){
 			ctx.lineTo(px + dx, py + dy);
 			ctx.lineTo(px, py + dy);
 		} else {
-			var value = 0.2 + 0.2 * Math.abs(Math.sin(count2 * 0.02));
+			let value = 0.2 + 0.2 * Math.abs(Math.sin(count2 * 0.02));
 			ctx.arc(qx, qy, Math.abs(dxy) * value, 0, 2 * Math.PI);
 		}
 		ctx.closePath();
@@ -606,9 +606,9 @@ jQuery(function($){
 		ctx.fillStyle = '#f3c';
 		ctx.fillRect(px, py, dx, dy);
 
-		var size = (cx + cy) * 0.4;
+		let size = (cx + cy) * 0.4;
 
-		var dr0 = 30;
+		let dr0 = 30;
 		if (isLargeDisplay()){
 			dr0 *= 2;
 			count2 *= 2;
@@ -616,8 +616,8 @@ jQuery(function($){
 		} else {
 			ctx.lineWidth = 15;
 		}
-		var dr = dr0 / 2 * factor;
-		var radius = neg_mod(count2 * 4, dr0);
+		let dr = dr0 / 2 * factor;
+		let radius = neg_mod(count2 * 4, dr0);
 		if (flag)
 			radius = dr0 - radius;
 
@@ -631,13 +631,13 @@ jQuery(function($){
 
 	function hsv2rgb(h, s, v)
 	{
-		var r, g, b;
+		let r, g, b;
 		r = g = b = v;
 		if (s > 0)
 		{
 			h *= 6;
-			var i = Math.floor(h);
-			var f = h - i;
+			let i = Math.floor(h);
+			let f = h - i;
 			switch (i)
 			{
 			case 0:
@@ -673,9 +673,9 @@ jQuery(function($){
 	function drawType3(ctx, px, py, dx, dy){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
-		var dxy = (dx + dy) / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
 
 		ctx.beginPath();
 		ctx.moveTo(px, py);
@@ -688,20 +688,20 @@ jQuery(function($){
 		//ctx.fillStyle = 'white';
 		//ctx.fillRect(px, py, dx, dy);
 
-		var count2 = getCount();
-		var factor = count2 * 0.03;
+		let count2 = getCount();
+		let factor = count2 * 0.03;
 
-		var size = 32;
+		let size = 32;
 		if (isLargeDisplay())
 			size *= 2;
-		var nCount2 = 0;
-		var cxy = ((cx >= cy) ? cy : cx) * 1.2;
-		var xy0 = (cxy + size) - (cxy + size) % size;
-		var comp0 = new Complex({abs:1.0, arg:factor * 1.0});
-		for (var y = -xy0; y < cxy + size; y += size){
-			var nCount = nCount2 % 3;
-			for (var x = -xy0; x < cxy + size; x += size){
-				var h, s = 1.0, v = 1.0;
+		let nCount2 = 0;
+		let cxy = ((cx >= cy) ? cy : cx) * 1.2;
+		let xy0 = (cxy + size) - (cxy + size) % size;
+		let comp0 = new Complex({abs:1.0, arg:factor * 1.0});
+		for (let y = -xy0; y < cxy + size; y += size){
+			let nCount = nCount2 % 3;
+			for (let x = -xy0; x < cxy + size; x += size){
+				let h, s = 1.0, v = 1.0;
 				switch (nCount % 3){
 				case 0:
 					h = (0.2 + factor * 1.2) % 1.0;
@@ -727,21 +727,21 @@ jQuery(function($){
 
 				ctx.fillStyle = `rgb(${r * 255},${g * 255},${b * 255})`;
 
-				var x0 = x - size / 2;
-				var y0 = y - size / 2;
-				var x1 = x0 + size;
-				var y1 = y0 + size;
+				let x0 = x - size / 2;
+				let y0 = y - size / 2;
+				let x1 = x0 + size;
+				let y1 = y0 + size;
 				ctx.beginPath();
-				var comp1 = new Complex({re:x0, im:y0});
+				let comp1 = new Complex({re:x0, im:y0});
 				comp1 = comp1.mul(comp0);
 				ctx.moveTo(qx + comp1.re, qy + comp1.im);
-				var comp2 = new Complex({re:x0, im:y1});
+				let comp2 = new Complex({re:x0, im:y1});
 				comp2 = comp2.mul(comp0);
 				ctx.lineTo(qx + comp2.re, qy + comp2.im);
-				var comp3 = new Complex({re:x1, im:y1});
+				let comp3 = new Complex({re:x1, im:y1});
 				comp3 = comp3.mul(comp0);
 				ctx.lineTo(qx + comp3.re, qy + comp3.im);
-				var comp4 = new Complex({re:x1, im:y0});
+				let comp4 = new Complex({re:x1, im:y0});
 				comp4 = comp4.mul(comp0);
 				ctx.lineTo(qx + comp4.re, qy + comp4.im);
 				ctx.fill();
@@ -759,7 +759,7 @@ jQuery(function($){
 
 		dxy = (dx >= dy) ? dx : dy;
 
-		var grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.6);
+		let grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.6);
 		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
 		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
 		ctx.fillStyle = grd;
@@ -787,15 +787,15 @@ jQuery(function($){
 		ctx.fillStyle = '#f66';
 		heart(ctx, qx, qy - cxy / 50, qx, qy + cxy / 50);
 
-		var opened = 1.0;
-		var f = Math.sin(Math.abs(count2 * 0.1));
+		let opened = 1.0;
+		let f = Math.sin(Math.abs(count2 * 0.1));
 		if (f >= 0.8){
 			opened = 0.6 + 0.4 * Math.abs(Math.sin(f * Math.PI));
 		}
 
 		const N = 4;
 		const delta = (2 * Math.PI) / N;
-		var radian = factor;
+		let radian = factor;
 		for (i = 0; i < N; ++i){
 			let x = qx + cxy * Math.cos(radian) * 0.3;
 			let y = qy + cxy * Math.sin(radian) * 0.3;
@@ -812,9 +812,9 @@ jQuery(function($){
 	function drawType4_5(ctx, px, py, dx, dy, t){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
-		var dxy = (dx + dy) / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
 
 		ctx.beginPath();
 		ctx.moveTo(px, py);
@@ -827,8 +827,8 @@ jQuery(function($){
 		//ctx.fillStyle = 'white';
 		//ctx.fillRect(px, py, dx, dy);
 
-		var count2 = getCount();
-		var factor = count2 * 0.16;
+		let count2 = getCount();
+		let factor = count2 * 0.16;
 
 		if (isLargeDisplay()){
 			qx += 60 * Math.cos(factor * 0.8);
@@ -838,22 +838,22 @@ jQuery(function($){
 			qy += 30 * Math.sin(factor * 0.8);
 		}
 
-		var isLarge = isLargeDisplay();
-		for (var radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.92){
-			var r0, g0, b0;
+		let isLarge = isLargeDisplay();
+		for (let radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.92){
+			let r0, g0, b0;
 			[r0, g0, b0] = hsv2rgb((dxy + factor * 0.3 - radius * 0.015) % 1.0, 1.0, 1.0);
 			ctx.fillStyle = `rgb(${r0*255},${g0*255},${b0*255})`;
 
-			var N0 = 20, N1 = 5;
-			var i = 0;
-			var oldx = null, oldy = null;
-			for (var angle = 0; angle <= 360; angle += 360 / N0){
-				var radian = (angle + count2 * 2) * (Math.PI / 180.0);
-				var factor2 = radius * (1 + 0.7 * Math.abs(Math.sin(N1 * i * Math.PI / N0)));
+			let N0 = 20, N1 = 5;
+			let i = 0;
+			let oldx = null, oldy = null;
+			for (let angle = 0; angle <= 360; angle += 360 / N0){
+				let radian = (angle + count2 * 2) * (Math.PI / 180.0);
+				let factor2 = radius * (1 + 0.7 * Math.abs(Math.sin(N1 * i * Math.PI / N0)));
 				if (isLarge)
 					factor2 *= 2;
-				var x = qx + factor2 * Math.cos(radian);
-				var y = qy + factor2 * Math.sin(radian);
+				let x = qx + factor2 * Math.cos(radian);
+				let y = qy + factor2 * Math.sin(radian);
 				if (angle == 0){
 					ctx.beginPath();
 					ctx.moveTo(x, y);
@@ -871,7 +871,7 @@ jQuery(function($){
 
 		dxy = (dx >= dy) ? dx : dy;
 
-		var grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.5);
+		let grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.5);
 		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
 		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
 		ctx.fillStyle = grd;
@@ -889,7 +889,7 @@ jQuery(function($){
 				}
 			}
 		} else if (t == 5){
-			var value = factor * 25 + 10;
+			let value = factor * 25 + 10;
 			ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
 			let M = 5;
 			let heartSize = 30;
@@ -910,9 +910,9 @@ jQuery(function($){
 	function drawType6(ctx, px, py, dx, dy, t){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
-		var dxy = (dx + dy) / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
 
 		ctx.beginPath();
 		ctx.moveTo(px, py);
@@ -922,7 +922,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		var count2 = getCount();
+		let count2 = getCount();
 		const value = Math.sin(count2 * 0.05);
 		ctx.fillStyle = `rgb(${value * 30 + 40}, ${value * 30 + 40}, ${value * 25 + 150})`
 		ctx.fillRect(px, py, dx, dy);
@@ -996,9 +996,9 @@ jQuery(function($){
 	function drawType7(ctx, px, py, dx, dy, t){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
-		var dxy = (dx + dy) / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
 
 		ctx.beginPath();
 		ctx.moveTo(px, py);
@@ -1048,7 +1048,7 @@ jQuery(function($){
 			++i;
 		}
 
-		var grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * 0.75);
+		let grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * 0.75);
 		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
 		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
 		ctx.fillStyle = grd;
@@ -1060,9 +1060,9 @@ jQuery(function($){
 	function drawType8(ctx, px, py, dx, dy, t){
 		ctx.save();
 
-		var qx = px + dx / 2;
-		var qy = py + dy / 2;
-		var dxy = (dx + dy) / 2;
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
 
 		ctx.beginPath();
 		ctx.moveTo(px, py);
@@ -1154,9 +1154,9 @@ jQuery(function($){
 	}
 
 	function draw(){
-		var ctx = document.getElementById('canvas').getContext('2d');
+		let ctx = document.getElementById('canvas').getContext('2d');
 
-		var x = cx / 2, y = cy / 2, delta_percent = 0;
+		let x = cx / 2, y = cy / 2, delta_percent = 0;
 
 		if (type == 0 || division == 1){
 			drawType(ctx, 0, 0, cx, cy);
@@ -1192,8 +1192,8 @@ jQuery(function($){
 			$('#floating-text').addClass('invisible');
 		}
 
-		for (var iStar = 0; iStar < stars.length; ++iStar){
-			var star = stars[iStar];
+		for (let iStar = 0; iStar < stars.length; ++iStar){
+			let star = stars[iStar];
 			if (star){
 				ctx.fillStyle = `rgb(255, 255, 0, 0.8)`;
 				light(ctx, star[0], star[1], star[2]);
@@ -1213,7 +1213,7 @@ jQuery(function($){
 		old_cx = window.innerWidth;
 		old_cy = window.innerHeight;
 
-		var new_time = (new Date()).getTime();
+		let new_time = (new Date()).getTime();
 		let diff = (new_time - old_time) / 1000.0;
 		if (rotationType == 'counter')
 			diff = -diff;
@@ -1242,36 +1242,36 @@ jQuery(function($){
 		cancelSpeech();
 		fitCanvas();
 
-		var saiminText = localStorage.getItem('saiminText');
+		let saiminText = localStorage.getItem('saiminText');
 		if (saiminText){
 			setText(saiminText);
 		}
 
-		var saiminDivision = localStorage.getItem('saiminDivision');
+		let saiminDivision = localStorage.getItem('saiminDivision');
 		if (saiminDivision){
 			setDivision(saiminDivision);
 		}
 
-		var saiminSoundName = localStorage.getItem('saiminSoundName');
+		let saiminSoundName = localStorage.getItem('saiminSoundName');
 		if (saiminSoundName){
 			setSoundName(saiminSoundName);
 		}else{
 			setSoundName('Magic');
 		}
 
-		var saiminTypeSound = localStorage.getItem('saiminTypeSound');
+		let saiminTypeSound = localStorage.getItem('saiminTypeSound');
 		if (saiminTypeSound){
 			setTypeSound(saiminTypeSound);
 		}
 
-		var saiminSpeedType = localStorage.getItem('saiminSpeedType');
+		let saiminSpeedType = localStorage.getItem('saiminSpeedType');
 		if (saiminSpeedType){
 			setSpeedType(saiminSpeedType);
 		}else{
 			setSpeedType('normal');
 		}
 
-		var saiminRotation = localStorage.getItem('saiminRotation');
+		let saiminRotation = localStorage.getItem('saiminRotation');
 		if (saiminRotation){
 			setRotation(saiminRotation);
 		}else{
@@ -1308,7 +1308,7 @@ jQuery(function($){
 			config();
 		});
 
-		var type_select = document.getElementById('type-select');
+		let type_select = document.getElementById('type-select');
 		type_select.addEventListener('change', function(){
 			if (!ready)
 				return;
@@ -1320,7 +1320,7 @@ jQuery(function($){
 			setType(parseInt(type_select.value));
 		}, false);
 
-		var sound_select = document.getElementById('sound-select');
+		let sound_select = document.getElementById('sound-select');
 		sound_select.addEventListener('change', function(){
 			if (!ready)
 				return;
@@ -1332,7 +1332,7 @@ jQuery(function($){
 			setSoundName(sound_select.value, true);
 		}, false);
 
-		var type_sound_select = document.getElementById('type-sound-select');
+		let type_sound_select = document.getElementById('type-sound-select');
 		type_sound_select.addEventListener('change', function(){
 			if (!ready)
 				return;
@@ -1344,7 +1344,7 @@ jQuery(function($){
 			setTypeSound(type_sound_select.value, true);
 		}, false);
 
-		var division_select = document.getElementById('division-select');
+		let division_select = document.getElementById('division-select');
 		division_select.addEventListener('change', function(){
 			if (!ready)
 				return;
@@ -1356,14 +1356,14 @@ jQuery(function($){
 			setDivision(parseInt(division_select.value));
 		}, false);
 
-		var speed_type_select = document.getElementById('speed-type-select');
+		let speed_type_select = document.getElementById('speed-type-select');
 		speed_type_select.addEventListener('change', function(){
 			if (!ready)
 				return;
 			setSpeedType(speed_type_select.value);
 		}, false);
 
-		var rotation_select = document.getElementById('rotation-select');
+		let rotation_select = document.getElementById('rotation-select');
 		rotation_select.addEventListener('change', function(){
 			if (!ready)
 				return;
@@ -1417,7 +1417,7 @@ jQuery(function($){
 			if (!ready)
 				return;
 			if (touchmoving){
-				var touches = e.touches;
+				let touches = e.touches;
 				if (touches && touches.length == 1){
 					addStar(touches[0].clientX, touches[0].clientY);
 				}
@@ -1469,7 +1469,7 @@ jQuery(function($){
 			return;
 		}
 
-		var saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
+		let saiminAdultCheck = localStorage.getItem('saiminAdultCheck');
 		if (!saiminAdultCheck){
 			doAdultCheck();
 		} else if (saiminAdultCheck == '1'){
