@@ -289,7 +289,7 @@ jQuery(function($){
 		$('#speech-label').removeClass('invisible');
 		$('#config-button').removeClass('invisible');
 		$('#about-button').removeClass('invisible');
-		$('#text-button').removeClass('invisible');
+		text_button.removeClass('invisible');
 		if (isNativeApp()){
 			$('#caption').addClass('invisible');
 		}
@@ -1274,7 +1274,7 @@ jQuery(function($){
 			setRotation('normal');
 		}
 
-		$('#text-button').click(function(){
+		text_button.click(function(){
 			let text = prompt(TEXT_INPUT_MESSAGE, theText);
 			if (text !== null){
 				setText(text);
