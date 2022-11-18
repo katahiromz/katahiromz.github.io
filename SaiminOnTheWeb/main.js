@@ -189,7 +189,7 @@ jQuery(function($){
 
 	function setDivision(value){
 		division = parseInt(value);
-		document.getElementById('division-select').value = division;
+		division_select.value = division;
 		localStorage.setItem('saiminDivision', division.toString());
 	}
 
@@ -369,7 +369,6 @@ jQuery(function($){
 	}
 
 	function apperance(){
-		let division_select = document.getElementById('division-select');
 		let speed_type_select = document.getElementById('speed-type-select');
 		let rotation_select = document.getElementById('rotation-select');
 		let old_type_value = type_select.value;
@@ -1342,7 +1341,6 @@ jQuery(function($){
 			setTypeSound(type_sound_select.value, true);
 		}, false);
 
-		let division_select = document.getElementById('division-select');
 		division_select.addEventListener('change', function(){
 			if (!ready)
 				return;
