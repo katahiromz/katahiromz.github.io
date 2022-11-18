@@ -493,7 +493,7 @@ jQuery(function($){
 		ctx.fill();
 	}
 
-	function drawType0(ctx, px, py, dx, dy){
+	function drawPic0(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -512,7 +512,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawType1(ctx, px, py, dx, dy){
+	function drawPic1(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -571,7 +571,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawType2(ctx, px, py, dx, dy, flag=true){
+	function drawPic2(ctx, px, py, dx, dy, flag=true){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -661,7 +661,7 @@ jQuery(function($){
 		return [r, g, b];
 	}
 
-	function drawType3(ctx, px, py, dx, dy){
+	function drawPic3(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -801,7 +801,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawType4_5(ctx, px, py, dx, dy, t){
+	function drawPic4_5(ctx, px, py, dx, dy, t){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -899,7 +899,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawType6(ctx, px, py, dx, dy, t){
+	function drawPic6(ctx, px, py, dx, dy, t){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -985,7 +985,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawType7(ctx, px, py, dx, dy, t){
+	function drawPic7(ctx, px, py, dx, dy, t){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1049,7 +1049,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawType8(ctx, px, py, dx, dy, t){
+	function drawPic8(ctx, px, py, dx, dy, t){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1112,35 +1112,35 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawType(ctx, px, py, cx, cy){
+	function drawPic(ctx, px, py, cx, cy){
 		switch (type){
 		case 0:
-			drawType0(ctx, px, py, cx, cy);
+			drawPic0(ctx, px, py, cx, cy);
 			break;
 		case 1:
-			drawType1(ctx, px, py, cx, cy);
+			drawPic1(ctx, px, py, cx, cy);
 			break;
 		case 2:
-			drawType2(ctx, px, py, cx, cy, true);
-			drawType2(ctx, px, py, cx, cy, false);
+			drawPic2(ctx, px, py, cx, cy, true);
+			drawPic2(ctx, px, py, cx, cy, false);
 			break;
 		case 3:
-			drawType3(ctx, px, py, cx, cy);
+			drawPic3(ctx, px, py, cx, cy);
 			break;
 		case 4:
-			drawType4_5(ctx, px, py, cx, cy, type);
+			drawPic4_5(ctx, px, py, cx, cy, type);
 			break;
 		case 5:
-			drawType4_5(ctx, px, py, cx, cy, type);
+			drawPic4_5(ctx, px, py, cx, cy, type);
 			break;
 		case 6:
-			drawType6(ctx, px, py, cx, cy, type);
+			drawPic6(ctx, px, py, cx, cy, type);
 			break;
 		case 7:
-			drawType7(ctx, px, py, cx, cy, type);
+			drawPic7(ctx, px, py, cx, cy, type);
 			break;
 		case 8:
-			drawType8(ctx, px, py, cx, cy, type);
+			drawPic8(ctx, px, py, cx, cy, type);
 			break;
 		}
 	}
@@ -1151,28 +1151,28 @@ jQuery(function($){
 		let x = cx / 2, y = cy / 2, delta_percent = 0;
 
 		if (type == 0 || division == 1){
-			drawType(ctx, 0, 0, cx, cy);
+			drawPic(ctx, 0, 0, cx, cy);
 			y += cy / 4;
 			delta_percent = 25;
 		} else if (division == -1){
 			if (cx >= cy * 1.75){
-				drawType(ctx, 0, 0, cx / 2, cy);
-				drawType(ctx, cx / 2, 0, cx / 2, cy);
+				drawPic(ctx, 0, 0, cx / 2, cy);
+				drawPic(ctx, cx / 2, 0, cx / 2, cy);
 			}else if (cy >= cx * 1.75){
-				drawType(ctx, 0, 0, cx, cy / 2);
-				drawType(ctx, 0, cy / 2, cx, cy / 2);
+				drawPic(ctx, 0, 0, cx, cy / 2);
+				drawPic(ctx, 0, cy / 2, cx, cy / 2);
 			}else{
-				drawType(ctx, 0, 0, cx, cy);
+				drawPic(ctx, 0, 0, cx, cy);
 				y += cy / 4;
 				delta_percent = 25;
 			}
 		} else {
 			if (cx >= cy){
-				drawType(ctx, 0, 0, cx / 2, cy);
-				drawType(ctx, cx / 2, 0, cx / 2, cy);
+				drawPic(ctx, 0, 0, cx / 2, cy);
+				drawPic(ctx, cx / 2, 0, cx / 2, cy);
 			}else{
-				drawType(ctx, 0, 0, cx, cy / 2);
-				drawType(ctx, 0, cy / 2, cx, cy / 2);
+				drawPic(ctx, 0, 0, cx, cy / 2);
+				drawPic(ctx, 0, cy / 2, cx, cy / 2);
 			}
 		}
 
