@@ -220,7 +220,7 @@ jQuery(function($){
 		if (speech.checked){
 			playSpeech(theText);
 		}
-		$('#floating-text').text(theText);
+		floating_text.text(theText);
 	}
 
 	function setRotation(value){
@@ -1182,11 +1182,11 @@ jQuery(function($){
 		}
 
 		if (theText != ''){
-			$('#floating-text').removeClass('invisible');
+			floating_text.removeClass('invisible');
 			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + '%';
-			document.getElementById('floating-text').style.top = top;
+			floating_text.style.top = top;
 		}else{
-			$('#floating-text').addClass('invisible');
+			floating_text.addClass('invisible');
 		}
 
 		for (let iStar = 0; iStar < stars.length; ++iStar){
@@ -1381,7 +1381,7 @@ jQuery(function($){
 			}
 		}
 
-		document.getElementById('floating-text').addEventListener('click', function(e){
+		floating_text.addEventListener('click', function(e){
 			canvasClick(e);
 		}, false);
 
