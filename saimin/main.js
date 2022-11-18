@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 8;
-const VERSION = '3.2.5';
+const VERSION = '3.2.6';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -23,27 +23,27 @@ const TEXT_FULLWIDTH_SPACE = '　';
 const TEXT_PERIOD = '。';
 const TEXT_PERIOD_SPACE = '。';
 
-let cx = 0, cy = 0;
-let old_cx = null, old_cy = null;
-let old_time = (new Date()).getTime();
-let type = 0;
-let counter = 0, clock = 0;
-let ready = false;
-let theText = '';
-let division = -1;
-let speed = 45.0;
-let sound = null;
-let soundName = 'Magic';
-let kirakira_sound = null;
-let typeSound = 1;
-let stars = new Array(32);
-let touchmoving = false;
-let theRegistration = null;
-let speedType = 'normal';
-let coin = new Image();
-let rotationType = 'normal';
-
 jQuery(function($){
+	let cx = 0, cy = 0;
+	let old_cx = null, old_cy = null;
+	let old_time = (new Date()).getTime();
+	let type = 0;
+	let counter = 0, clock = 0;
+	let ready = false;
+	let theText = '';
+	let division = -1;
+	let speed = 45.0;
+	let sound = null;
+	let soundName = 'Magic';
+	let kirakira_sound = null;
+	let typeSound = 1;
+	let stars = new Array(32);
+	let touchmoving = false;
+	let theRegistration = null;
+	let speedType = 'normal';
+	let coin = new Image();
+	let rotationType = 'normal';
+
 	coin.src = 'images/coin5yen.png';
 
 	function isNativeApp(){
