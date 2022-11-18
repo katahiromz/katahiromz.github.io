@@ -597,7 +597,7 @@ jQuery(function($){
 			ctx.lineTo(px, py + dy);
 		} else {
 			var value = 0.2 + 0.2 * Math.abs(Math.sin(count2 * 0.02));
-			ctx.arc(qx, qy, dxy * value, 0, 2 * Math.PI);
+			ctx.arc(qx, qy, Math.abs(dxy) * value, 0, 2 * Math.PI);
 		}
 		ctx.closePath();
 		ctx.clip();
