@@ -154,7 +154,7 @@ jQuery(function($){
 		}else{
 			sound = null;
 		}
-		document.getElementById('sound-select').value = value;
+		sound_select.value = value;
 		localStorage.setItem('saiminSoundName', soundName);
 	}
 
@@ -202,25 +202,24 @@ jQuery(function($){
 			return;
 		type = parseInt(value);
 		if (type == 0){
-			please_tap_here.removeClass('invisible');
-			heart_block.removeClass('invisible');
+			please_tap_here.classList.remove('invisible');
+			heart_block.classList.remove('invisible');
 		}else{
-			please_tap_here.addClass('invisible');
-			heart_block.addClass('invisible');
+			please_tap_here.classList.add('invisible');
+			heart_block.classList.add('invisible');
 		}
 		type_select.value = type.toString();
-		type_select_button.text(TEXT_PIC + type.toString());
+		type_select_button.innerText = TEXT_PIC + type.toString();
 		localStorage.setItem('saiminType', type.toString());
 	}
 
 	function setText(txt){
 		theText = txt.replace(TEXT_FULLWIDTH_SPACE, '  ').trim();
 		localStorage.setItem('saiminText', theText);
-		let speech = document.getElementById('speech');
-		if (speech.checked){
+		if (speech_checkbox.checked){
 			playSpeech(theText);
 		}
-		floating_text.text(theText);
+		floating_text.innerText = theText;
 	}
 
 	function setRotation(value){
@@ -240,11 +239,11 @@ jQuery(function($){
 		fitCanvas();
 		let position = { my: 'center', at: 'center', of: window };
 		if (localStorage.getItem('saiminHelpShowing')){
-			about_dialog.dialog('option', 'position', position);
+			$('#about_dialog').dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminAppearanceShowing')){
-			appearance_dialog.dialog('option', 'position', position);
+			$('#appearance_dialog').dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminConfigShowing')) {
-			config_dialog.dialog('option', 'position', position);
+			$('#config_dialog').dialog('option', 'position', position);
 		}
 	}
 
@@ -283,20 +282,20 @@ jQuery(function($){
 		}else{
 			setType(0);
 		}
-		$('#microphone-label').removeClass('invisible');
-		type_select_button.removeClass('invisible');
-		sound_button.removeClass('invisible');
-		$('#speech-label').removeClass('invisible');
-		config_button.removeClass('invisible');
-		about_button.removeClass('invisible');
-		text_button.removeClass('invisible');
+		microphone_label.classList.remove('invisible');
+		type_select_button.classList.remove('invisible');
+		sound_button.classList.remove('invisible');
+		speech_label.classList.remove('invisible');
+		config_button.classList.remove('invisible');
+		about_button.classList.remove('invisible');
+		text_button.classList.remove('invisible');
 		if (isNativeApp()){
-			$('#caption').addClass('invisible');
+			$('#caption').classList.add('invisible');
 		}
 		if (type == 0){
-			please_tap_here.removeClass('invisible');
+			please_tap_here.classList.remove('invisible');
 		}else{
-			please_tap_here.addClass('invisible');
+			please_tap_here.classList.add('invisible');
 		}
 		updateVersionDisplay();
 		window.requestAnimationFrame(draw);
@@ -305,7 +304,7 @@ jQuery(function($){
 	function help(){
 		$('#notice-text').width(window.innerWidth * 2 / 3).height(window.innerHeight * 2 / 5).scrollTop(0);
 		localStorage.setItem('saiminHelpShowing', '1');
-		about_dialog.dialog({
+		$('#about_dialog').dialog({
 			dialogClass: 'no-close',
 			title: TEXT_VERSION_INFO,
 			buttons: [{
@@ -333,7 +332,7 @@ jQuery(function($){
 			}],
 			width: window.innerWidth * 4 / 5,
 		});
-		about_dialog.on('dialogclose', function(event){
+		$('#about_dialog').on('dialogclose', function(event){
 			localStorage.removeItem('saiminHelpShowing');
 		});
 	}
@@ -375,7 +374,7 @@ jQuery(function($){
 		let old_speed_type_value = speed_type_select.value;
 		let old_rotation_value = rotation_select.value;
 		localStorage.setItem('saiminAppearanceShowing', '1');
-		appearance_dialog.dialog({
+		$('#appearance_dialog').dialog({
 			dialogClass: 'no-close',
 			title: TEXT_APPEARANCE,
 			buttons: [
@@ -396,18 +395,16 @@ jQuery(function($){
 				}
 			],
 		});
-		appearance_dialog.on('dialogclose', function(event){
+		$('#appearance_dialog').on('dialogclose', function(event){
 			localStorage.removeItem('saiminAppearanceShowing');
 		});
 	}
 
 	function config(){
-		let sound_select = document.getElementById('sound-select');
-		let type_sound_select = document.getElementById('type-sound-select');
 		let old_sound_value = sound_select.value;
 		let old_type_sound_value = type_sound_select.value;
 		localStorage.setItem('saiminConfigShowing', '1');
-		config_dialog.dialog({
+		$('#config_dialog').dialog({
 			dialogClass: 'no-close',
 			title: TEXT_CONFIGURATION,
 			buttons: [
@@ -426,7 +423,7 @@ jQuery(function($){
 				}
 			],
 		});
-		config_dialog.on('dialogclose', function(event){
+		$('#config_dialog').on('dialogclose', function(event){
 			localStorage.removeItem('saiminConfigShowing');
 		});
 	}
@@ -1181,11 +1178,11 @@ jQuery(function($){
 		}
 
 		if (theText != ''){
-			floating_text.removeClass('invisible');
+			floating_text.classList.remove('invisible');
 			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + '%';
 			floating_text.style.top = top;
 		}else{
-			floating_text.addClass('invisible');
+			floating_text.classList.add('invisible');
 		}
 
 		for (let iStar = 0; iStar < stars.length; ++iStar){
@@ -1274,22 +1271,22 @@ jQuery(function($){
 			setRotation('normal');
 		}
 
-		text_button.click(function(){
+		text_button.addEventListener('click', function(){
 			let text = prompt(TEXT_INPUT_MESSAGE, theText);
 			if (text !== null){
 				setText(text);
 			}
 		});
 
-		about_button.click(function(){
+		about_button.addEventListener('click', function(){
 			help();
 		});
 
-		type_select_button.click(function(){
+		type_select_button.addEventListener('click', function(){
 			apperance();
 		});
 
-		sound_button.click(function(){
+		sound_button.addEventListener('click', function(){
 			if (soundName != ''){
 				if (sound){
 					let s = new Audio('sn/' + soundName + '.mp3');
@@ -1300,7 +1297,7 @@ jQuery(function($){
 			}
 		});
 
-		config_button.click(function(){
+		config_button.addEventListener('click', function(){
 			config();
 		});
 
@@ -1315,7 +1312,6 @@ jQuery(function($){
 			setType(parseInt(type_select.value));
 		}, false);
 
-		let sound_select = document.getElementById('sound-select');
 		sound_select.addEventListener('change', function(){
 			if (!ready)
 				return;
@@ -1327,7 +1323,6 @@ jQuery(function($){
 			setSoundName(sound_select.value, true);
 		}, false);
 
-		let type_sound_select = document.getElementById('type-sound-select');
 		type_sound_select.addEventListener('change', function(){
 			if (!ready)
 				return;
@@ -1471,32 +1466,28 @@ jQuery(function($){
 			forbidden();
 		}
 
-		let speech = document.getElementById('speech');
-		let speech_label = $('#speech-label');
-		speech.addEventListener('click', function(e){
-			if (speech.checked){
+		speech_checkbox.addEventListener('click', function(e){
+			if (speech_checkbox.checked){
 				playSpeech(theText);
-				speech_label.addClass('checked');
+				speech_label.classList.add('checked');
 			} else {
 				cancelSpeech();
-				speech_label.removeClass('checked');
+				speech_label.classList.remove('checked');
 			}
 		});
 
 		let mic_isInited = false;
-		let mic = document.getElementById('microphone');
-		let mic_label = $('#microphone-label');
-		mic.addEventListener('click', function(e){
-			if (mic.checked){
+		microphone.addEventListener('click', function(e){
+			if (microphone.checked){
 				if (!mic_isInited){
 					mic_setup();
 					mic_isInited = true;
 				}
 				mic_connect();
-				mic_label.addClass('checked');
+				microphone_label.classList.add('checked');
 			} else {
 				mic_disconnect();
-				mic_label.removeClass('checked');
+				microphone_label.classList.remove('checked');
 			}
 		});
 

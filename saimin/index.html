@@ -36,7 +36,7 @@
 <canvas id="canvas"></canvas>
 
 <!-- 「mic」チェックボックス -->
-<label for="microphone" id="microphone-label" class="invisible navigate-button"><input type="checkbox" id="microphone" class="invisible" /><img src="images/mic.png" alt="mic" /></label>
+<label for="microphone" id="microphone_label" class="invisible navigate-button"><input type="checkbox" id="microphone" class="invisible" /><img src="images/mic.png" alt="mic" /></label>
 
 <!-- 「画#」ボタン-->
 <button id="type_select_button" class="invisible navigate-button">画0</button>
@@ -48,7 +48,7 @@
 <button id="text_button" class="invisible navigate-button"><img src="images/char.png" alt="字" /></button>
 
 <!-- 「話」チェックボックス -->
-<label for="speech" id="speech-label" class="invisible navigate-button"><input type="checkbox" id="speech" class="invisible" /><img src="images/speak.png" alt="話" /></label>
+<label for="speech_checkbox" id="speech_label" class="invisible navigate-button"><input type="checkbox" id="speech_checkbox" class="invisible" /><img src="images/speak.png" alt="話" /></label>
 
 <!-- 「設」ボタン -->
 <button id="config_button" class="invisible round-button"><img src="images/gear.png" alt="設" /></button>
@@ -102,7 +102,7 @@
 <div id="config_dialog" class="invisible">
 	<div>
 		音符ボタン:
-		<select id="sound-select">
+		<select id="sound_select">
 			<option value="" selected>(なし)</option>
 			<option value="Robot">Robot</option>
 			<option value="Keen">Keen</option>
@@ -117,7 +117,7 @@
 	</div>
 	<div>
 		切り替え音:
-		<select id="type-sound-select">
+		<select id="type_sound_select">
 			<option value="0">なし</option>
 			<option value="1" selected>あり</option>
 		</select>
@@ -133,7 +133,7 @@
 <div id="floating_text" class="invisible"></div>
 
 <!-- 中央のハート -->
-<div id="heart-block" class="invisible"><img src="images/heart.png" alt="" /></div>
+<div id="heart_block" class="invisible"><img src="images/heart.png" alt="" /></div>
 
 <!-- 「バージョン情報」ダイアログ -->
 <div id="about_dialog" class="invisible">
