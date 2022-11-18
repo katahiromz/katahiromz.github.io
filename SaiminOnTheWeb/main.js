@@ -616,12 +616,9 @@ jQuery(function($){
 			ctx.lineWidth = 15;
 		}
 		var dr = dr0 / 2 * factor;
-		var radius = (count2 * 4) % dr0;
+		var radius = neg_mod(count2 * 4, dr0);
 		if (flag)
 			radius = dr0 - radius;
-
-		if (radius < 0)
-			radius = -radius;
 
 		for (; radius < size; radius += dr0)
 		{
