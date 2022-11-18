@@ -15,7 +15,6 @@ const TEXT_INIT_APP = 'Init app';
 const TEXT_INITTED_APP = 'I initialized the app.';
 const TEXT_ADULT_CHECK = 'Adult check';
 const TEXT_CONFIGURATION = 'Configuration';
-const TEXT_EXPIRED = 'Expired';
 const TEXT_APPEARANCE = 'Appearance';
 const TEXT_INPUT_MESSAGE = 'Please enter a message text.';
 const TEXT_FORBIDDEN = 'Forbidden';
@@ -47,10 +46,6 @@ jQuery(function($){
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
-	}
-
-	function isWebApp(){
-		return navigator.userAgent.indexOf('/KraKra-web-app/') != -1;
 	}
 
 	function getNativeAppVersion(){
@@ -1490,7 +1485,7 @@ jQuery(function($){
 		}
 
 		window.addEventListener('resize', function(){
-			if (location.hostname == '' || isNativeApp() || isWebApp()){
+			if (location.hostname == '' || isNativeApp()){
 				if (localStorage.getItem('saiminHelpShowing')){
 					location.reload();
 				}else{

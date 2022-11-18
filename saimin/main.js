@@ -15,7 +15,6 @@ const TEXT_INIT_APP = 'アプリの初期化';
 const TEXT_INITTED_APP = 'アプリを初期化しました。';
 const TEXT_ADULT_CHECK = '成人チェック';
 const TEXT_CONFIGURATION = '全般設定';
-const TEXT_EXPIRED = '期限切れ';
 const TEXT_APPEARANCE = '見た目の設定';
 const TEXT_INPUT_MESSAGE = 'メッセージ文字列を入力して下さい。';
 const TEXT_FORBIDDEN = '使用禁止';
@@ -48,10 +47,6 @@ jQuery(function($){
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
-	}
-
-	function isWebApp(){
-		return navigator.userAgent.indexOf('/KraKra-web-app/') != -1;
 	}
 
 	function getNativeAppVersion(){
@@ -1490,7 +1485,7 @@ jQuery(function($){
 		}
 
 		window.addEventListener('resize', function(){
-			if (location.hostname == '' || isNativeApp() || isWebApp()){
+			if (location.hostname == '' || isNativeApp()){
 				if (localStorage.getItem('saiminHelpShowing')){
 					location.reload();
 				}else{
