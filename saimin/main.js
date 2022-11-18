@@ -909,8 +909,35 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#33F';
+		var count2 = getCount();
+		const value = Math.sin(count2 * 0.05);
+		ctx.fillStyle = `rgb(${value * 30 + 40}, ${value * 30 + 40}, ${value * 25 + 150})`
 		ctx.fillRect(px, py, dx, dy);
+
+		for (let k = dxy; k > 0; k -= 160){
+			const delta = 10000 / k;
+			for (let i = 0; i < 360; i += delta){
+				let x = qx + k * Math.cos(count2 / 200 + i * (Math.PI / 180));
+				let y = qy + k * Math.sin(count2 / 200 + i * (Math.PI / 180));
+				x += k * Math.cos(i) * 0.2;
+				y += k * Math.sin(i) * 0.2;
+				ctx.fillStyle = `rgba(${255 - i % 255}, 91, ${i % 255}, 0.75)`;
+				circle(ctx, x, y, i % 3 + 1);
+			}
+		}
+
+		do {
+			ctx.strokeStyle = `rgb(90, 80, 100)`;
+			let r = dxy * 0.5;
+			let r2 = r * 0.05;
+			let x = qx + r * Math.cos(count2 * 0.01);
+			let y = qy + r * Math.sin(count2 * 0.01);
+			let x0 = x + r2 * Math.cos(count2 / 20);
+			let y0 = y + r2 * Math.sin(count2 / 20);
+			let x1 = x + r2 * Math.cos(count2 / 20 + Math.PI * 0.25);
+			let y1 = y + r2 * Math.sin(count2 / 20 + Math.PI * 0.25);
+			line(ctx, x0, y0, x1, y1, 5);
+		} while(0);
 
 		const focal = 100;
 		function perspective(x, y, z){
@@ -943,8 +970,7 @@ jQuery(function($){
 		if (coin.complete){
 			ctx.translate(qx - coin.width * 0.5, qy - coin.height * 0.75);
 
-			var count2 = getCount();
-			var angle = Math.PI * Math.sin(count2 * 0.1 - 0.05) * 0.078;
+			let angle = Math.PI * Math.sin(count2 * 0.1 - 0.05) * 0.078;
 			ctx.rotate(angle);
 
 			let ratio = isLargeDisplay() ? 1.4 : 1;
