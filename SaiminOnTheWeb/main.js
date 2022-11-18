@@ -22,26 +22,27 @@ const TEXT_FORBIDDEN = 'Forbidden';
 const TEXT_FULLWIDTH_SPACE = '　';
 const TEXT_PERIOD = '.';
 const TEXT_PERIOD_SPACE = '. ';
+var cx = 0, cy = 0;
+var old_cx = null, old_cy = null;
+var old_time = (new Date()).getTime();
+var type = 0;
+var counter = 0, clock = 0;
+var ready = false;
+var theText = '';
+var division = -1;
+var speed = 45.0;
+var sound = null;
+var soundName = 'Magic';
+var kirakira_sound = null;
+var typeSound = 1;
+var stars = new Array(32);
+var touchmoving = false;
+var theRegistration = null;
+var speedType = 'normal';
+var coin = new Image();
+var rotationType = 'normal';
 
 jQuery(function($){
-	var cx = 0, cy = 0;
-	var old_cx = null, old_cy = null;
-	var old_time = (new Date()).getTime();
-	var type = 0;
-	var counter = 0, clock = 0;
-	var ready = false;
-	var theText = '';
-	var division = -1;
-	var speed = 45.0;
-	var sound = null;
-	var soundName = 'Magic';
-	var kirakira_sound = null;
-	var typeSound = 1;
-	var stars = new Array(32);
-	var touchmoving = false;
-	var theRegistration = null;
-	var speedType = 'normal';
-	var coin = new Image();
 	coin.src = 'images/coin5yen.png';
 
 	function isNativeApp(){
@@ -217,6 +218,13 @@ jQuery(function($){
 		$('#floating-text').text(theText);
 	}
 
+	function setRotation(value){
+		var rotation_select = document.getElementById('rotation-select');
+		rotation_select.value = value.toString();
+		localStorage.setItem('saiminRotation', value.toString());
+		rotationType = value.toString();
+	}
+
 	function fitCanvas(){
 		var ctx = document.getElementById('canvas').getContext('2d');
 		cx = ctx.canvas.width = window.innerWidth;
@@ -359,9 +367,11 @@ jQuery(function($){
 		let type_select = document.getElementById('type-select');
 		let division_select = document.getElementById('division-select');
 		let speed_type_select = document.getElementById('speed-type-select');
+		let rotation_select = document.getElementById('rotation-select');
 		let old_type_value = type_select.value;
 		let old_division_value = division_select.value;
 		let old_speed_type_value = speed_type_select.value;
+		let old_rotation_value = rotation_select.value;
 		localStorage.setItem('saiminAppearanceShowing', '1');
 		$('#appearance-dialog').dialog({
 			dialogClass: 'no-close',
@@ -378,6 +388,7 @@ jQuery(function($){
 						setType(old_type_value);
 						setDivision(old_division_value);
 						setSpeedType(old_speed_type_value);
+						setRotation(old_rotation_value);
 						$(this).dialog('close');
 					},
 				}
@@ -1201,7 +1212,9 @@ jQuery(function($){
 		old_cy = window.innerHeight;
 
 		var new_time = (new Date()).getTime();
-		var diff = (new_time - old_time) / 1000.0;
+		let diff = (new_time - old_time) / 1000.0;
+		if (rotationType == 'counter')
+			diff = -diff;
 		counter += diff * speed;
 		old_time = new_time;
 
@@ -1254,6 +1267,13 @@ jQuery(function($){
 			setSpeedType(saiminSpeedType);
 		}else{
 			setSpeedType('normal');
+		}
+
+		var saiminRotation = localStorage.getItem('saiminRotation');
+		if (saiminRotation){
+			setRotation(saiminRotation);
+		}else{
+			setRotation('normal');
 		}
 
 		$('#text-button').click(function(){
@@ -1339,6 +1359,13 @@ jQuery(function($){
 			if (!ready)
 				return;
 			setSpeedType(speed_type_select.value);
+		}, false);
+
+		var rotation_select = document.getElementById('rotation-select');
+		rotation_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setRotation(rotation_select.value);
 		}, false);
 
 		function canvasClick(e){
