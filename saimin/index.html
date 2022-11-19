@@ -101,6 +101,15 @@
 <!-- 「全般設定」ダイアログ -->
 <div id="config_dialog" class="invisible">
 	<div>
+		メッセージの大きさ:
+		<select id="message_size_select">
+			<option value="small">小さい</option>
+			<option value="normal" selected>普通</option>
+			<option value="large">大きい</option>
+			<option value="huge">特大</option>
+		</select>
+	</div>
+	<div>
 		音符ボタン:
 		<select id="sound_select">
 			<option value="" selected>(なし)</option>
@@ -130,7 +139,7 @@
 </div>
 
 <!-- 浮かび上がるテキスト -->
-<div id="floating_text" class="invisible"></div>
+<div id="floating_text" class="invisible font_size_normal"></div>
 
 <!-- 中央のハート -->
 <div id="heart_block" class="invisible"><img src="images/heart.png" alt="" /></div>

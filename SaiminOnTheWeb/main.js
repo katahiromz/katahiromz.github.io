@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 8;
-const VERSION = '3.2.6';
+const VERSION = '3.2.7';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -159,6 +159,30 @@ jQuery(function($){
 		if (test && typeSound == 1 && kirakira_sound){
 			kirakira_sound.play();
 		}
+	}
+
+function setMessageSizeType(value){
+		floating_text.classList.remove('font_size_small');
+		floating_text.classList.remove('font_size_normal');
+		floating_text.classList.remove('font_size_large');
+		floating_text.classList.remove('font_size_huge');
+		switch (value){
+		case 'small':
+			floating_text.classList.add('font_size_small');
+			break;
+		case 'normal':
+		default:
+			floating_text.classList.add('font_size_normal');
+			break;
+		case 'large':
+			floating_text.classList.add('font_size_large');
+			break;
+		case 'huge':
+			floating_text.classList.add('font_size_huge');
+			break;
+		}
+		message_size_select.value = value;
+		localStorage.setItem('saiminMessageSize', value);
 	}
 
 	function setSpeedType(value){
@@ -390,6 +414,7 @@ jQuery(function($){
 	}
 
 	function config(){
+		let old_message_size_value = message_size_select.value;
 		let old_sound_value = sound_select.value;
 		let old_type_sound_value = type_sound_select.value;
 		localStorage.setItem('saiminConfigShowing', '1');
@@ -405,6 +430,7 @@ jQuery(function($){
 				},{
 					text: TEXT_CANCEL,
 					click: function(){
+						setMessageSizeType(old_message_size_value);
 						setSoundName(old_sound_value);
 						setTypeSound(old_type_sound_value);
 						$(this).dialog('close');
@@ -1261,6 +1287,13 @@ jQuery(function($){
 			setRotation('normal');
 		}
 
+		let saiminMessageSize = localStorage.getItem('saiminMessageSize');
+		if (saiminMessageSize){
+			setMessageSizeType(saiminMessageSize);
+		}else{
+			setMessageSizeType('normal');
+		}
+
 		text_button.addEventListener('click', function(){
 			let text = prompt(TEXT_INPUT_MESSAGE, theText);
 			if (text !== null){
@@ -1300,6 +1333,12 @@ jQuery(function($){
 			if (!ready)
 				return;
 			setType(parseInt(type_select.value));
+		}, false);
+
+		message_size_select.addEventListener('change', function(){
+			if (!ready)
+				return;
+			setMessageSizeType(message_size_select.value, true);
 		}, false);
 
 		sound_select.addEventListener('change', function(){

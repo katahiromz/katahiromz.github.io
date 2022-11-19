@@ -39,7 +39,6 @@ input[type='checkbox'] {
 	left: 50%;
 	transform: translateY(-50%) translateX(-50%);
 	-webkit- transform: translateY(-50%) translateX(-50%);
-	font-size: 0.5cm;
 	color: white;
 	background-color: black;
 	padding: 4px;
@@ -48,6 +47,18 @@ input[type='checkbox'] {
 	max-width: 80%;
 	margin-left: auto;
 	margin-right: auto;
+}
+.font_size_small {
+	font-size: 0.4cm;
+}
+.font_size_normal {
+	font-size: 0.6cm;
+}
+.font_size_large {
+	font-size: 1.0cm;
+}
+.font_size_huge {
+	font-size: 2.0cm;
 }
 #type_select_button {
 	position: absolute;

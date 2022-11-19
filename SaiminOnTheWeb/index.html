@@ -101,7 +101,16 @@
 <!-- The 'Config' dialog -->
 <div id="config_dialog" class="invisible">
 	<div>
-		note button:
+		Size of message:
+		<select id="message_size_select">
+			<option value="small">Small</option>
+			<option value="normal" selected>Normal</option>
+			<option value="large">Large</option>
+			<option value="huge">Huge</option>
+		</select>
+	</div>
+	<div>
+		Note button:
 		<select id="sound_select">
 			<option value="" selected>(None)</option>
 			<option value="Robot">Robot</option>
@@ -130,7 +139,7 @@
 </div>
 
 <!-- The floating text -->
-<div id="floating_text" class="invisible"></div>
+<div id="floating_text" class="invisible font_size_normal"></div>
 
 <!-- The center heart -->
 <div id="heart_block" class="invisible"><img src="images/heart.png" alt="" /></div>
