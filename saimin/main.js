@@ -58,7 +58,7 @@ jQuery(function($){
 
 	function neg_mod(x, y){
 		if (x > 0) return x % y;
-		return neg_mod(x + 10 * y, y);
+		return neg_mod(x + 99999 * y, y);
 	}
 
 	function addStar(x, y){
@@ -899,7 +899,8 @@ function setMessageSizeType(value){
 			}
 		} else if (t == 5){
 			let value = factor * 25 + 10;
-			ctx.fillStyle = `rgb(255,${value % 191},${value % 191})`;
+			let value2 = neg_mod(value, 191);
+			ctx.fillStyle = `rgb(255,${value2},${value2})`;
 			let M = 5;
 			let heartSize = 30;
 			for (let radius = neg_mod((factor * 10), 100) + 30; radius < dxy; radius += 100){
