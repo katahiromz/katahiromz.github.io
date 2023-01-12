@@ -33,14 +33,20 @@ body {
 	#game_screen {
 		width: 99vw;
 		height: 77vh;
+		width: 99svw;
+		height: 77svh;
 	}
 	#controller {
 		width: 99vw;
 		height: 32vh;
+		width: 99svw;
+		height: 32svh;
 	}
 	button {
 		width: 30vw;
 		height: 7vh;
+		width: 30svw;
+		height: 7svh;
 		margin: 2px;
 	}
 }
@@ -51,14 +57,20 @@ body {
 	#game_screen {
 		width: 77vw;
 		height: 99vh;
+		width: 77svw;
+		height: 99svh;
 	}
 	#controller {
 		width: 32vw;
 		height: 99vh;
+		width: 32svw;
+		height: 99svh;
 	}
 	button {
 		width: 8vw;
 		height: 10vh;
+		width: 8svw;
+		height: 10svh;
 		margin: 2px;
 	}
 }
