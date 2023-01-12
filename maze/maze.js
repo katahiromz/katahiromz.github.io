@@ -1,5 +1,5 @@
 // バージョン情報。
-const MAZE_VERSION = '0.0.3';
+const MAZE_VERSION = '0.0.4';
 
 // マップの構成要素。
 const MAP_BLANK = ' '; // 通路。
