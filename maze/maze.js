@@ -7,6 +7,10 @@ const MAP_WALL  = '#'; // 壁。
 const MAP_ROOTE = '.'; // ゴールまでの道。
 const MAP_INVALID = '@';
 
+// メルセンヌツイスター乱数生成器。
+let mt = new MersenneTwister();
+mt.setSeed(11);
+
 // マップの幅。
 function getMapWidth(map)
 {
@@ -109,9 +113,7 @@ function openDoor(map, corner)
 // min以上max未満の整数乱数を取得する。
 function getRandomInt(min, max)
 {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
+    return mt.nextInt(min, max);
 }
 
 // 生成チェック。
