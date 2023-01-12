@@ -378,9 +378,10 @@ function getRouteTurns(map)
 function main()
 {
     // コンテキストメニューを無効化。
-    window.addEventListener("contextmenu", e => e.preventDefault());
-    // コピーを無効化。
-    window.addEventListener("copy", e => e.preventDefault());
+    window.addEventListener("contextmenu", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+    });
 
     // 迷路マップを生成。
     let start = CORNER_UPPER_LEFT;
