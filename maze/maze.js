@@ -394,10 +394,10 @@ function main()
         game_screen.setAttribute('width', screen_width);
         game_screen.setAttribute('height', screen_height);
 
-        let vw = window.innerWidth * 0.01;
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vw', `${vw}px`);
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+        document.getElementById('contents').style.width = w + 'px';
+        document.getElementById('contents').style.height = h + 'px';
     }
     window.addEventListener('resize', canvas_resize, false);
     canvas_resize();
