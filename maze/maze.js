@@ -387,7 +387,7 @@ function main()
         e.preventDefault();
         e.stopPropagation();
         return false;
-    });
+    }, false);
     // タッチ操作を無効にする。
     contents.addEventListener('touchstart', function(e){
         e.preventDefault();
@@ -413,6 +413,8 @@ function main()
         screen_height = game_screen.getBoundingClientRect().height;
         game_screen.setAttribute('width', screen_width);
         game_screen.setAttribute('height', screen_height);
+        contents.style.width = window.innerWidth + 'px';
+        contents.style.height = window.innerHeight + 'px';
     }
     window.addEventListener('resize', canvas_resize, false);
     canvas_resize();
