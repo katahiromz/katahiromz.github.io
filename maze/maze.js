@@ -387,18 +387,18 @@ function main()
         e.preventDefault();
         e.stopPropagation();
         return false;
-    }, { passive: true });
+    }, { passive: false });
     // タッチ操作を無効にする。
     contents.addEventListener('touchstart', function(e){
         e.preventDefault();
         e.stopPropagation();
         return false;
-    }, { passive: true });
+    }, { passive: false });
     contents.addEventListener('touchend', function(e){
         e.preventDefault();
         e.stopPropagation();
         return false;
-    }, { passive: true });
+    }, { passive: false });
 
     // 迷路マップを生成。
     let start = CORNER_UPPER_LEFT;
@@ -470,37 +470,37 @@ function main()
         self_dy = -1;
         self = self_up;
         e.preventDefault();
-    }, { passive: true });
+    }, { passive: false });
     up_button.addEventListener('touchend', function(e){
         self_dy = 0;
-    }, { passive: true });
+    }, { passive: false });
 
     down_button.addEventListener('touchstart', function(e){
         self_dy = +1;
         self = self_down;
         e.preventDefault();
-    }, { passive: true });
+    }, { passive: false });
     down_button.addEventListener('touchend', function(e){
         self_dy = 0;
-    }, { passive: true });
+    }, { passive: false });
 
     left_button.addEventListener('touchstart', function(e){
         self_dx = -1;
         self = self_left;
         e.preventDefault();
-    }, { passive: true });
+    }, { passive: false });
     left_button.addEventListener('touchend', function(e){
         self_dx = 0;
-    }, { passive: true });
+    }, { passive: false });
 
     right_button.addEventListener('touchstart', function(e){
         self_dx = +1;
         self = self_right;
         e.preventDefault();
-    }, { passive: true });
+    }, { passive: false });
     right_button.addEventListener('touchend', function(e){
         self_dx = 0;
-    }, { passive: true });
+    }, { passive: false });
 
     window.addEventListener("keydown", function(e){
         if (e.defaultPrevented)
