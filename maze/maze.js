@@ -1,3 +1,6 @@
+// バージョン情報。
+const MAZE_VERSION = '0.0';
+
 // マップの構成要素。
 const MAP_BLANK = ' '; // 通路。
 const MAP_WALL  = '#'; // 壁。
