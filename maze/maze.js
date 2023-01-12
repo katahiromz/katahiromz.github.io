@@ -1,5 +1,5 @@
 // バージョン情報。
-const MAZE_VERSION = '0.0.2';
+const MAZE_VERSION = '0.0.3';
 
 // マップの構成要素。
 const MAP_BLANK = ' '; // 通路。
@@ -411,10 +411,6 @@ function main()
         screen_height = game_screen.getBoundingClientRect().height;
         game_screen.setAttribute('width', screen_width);
         game_screen.setAttribute('height', screen_height);
-
-        let w = window.innerWidth, h = window.innerHeight;
-        document.getElementById('contents').style.width = w + 'px';
-        document.getElementById('contents').style.height = h + 'px';
     }
     window.addEventListener('resize', canvas_resize, false);
     canvas_resize();
