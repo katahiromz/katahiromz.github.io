@@ -394,8 +394,7 @@ function main()
         game_screen.setAttribute('width', screen_width);
         game_screen.setAttribute('height', screen_height);
 
-        let w = window.innerWidth;
-        let h = window.innerHeight;
+        let w = window.innerWidth, h = window.innerHeight;
         document.getElementById('contents').style.width = w + 'px';
         document.getElementById('contents').style.height = h + 'px';
     }
@@ -452,6 +451,7 @@ function main()
     up_button.addEventListener('touchstart', function(e){
         self_dy = -1;
         self = self_up;
+        e.preventDefault();
     }, false);
     up_button.addEventListener('touchend', function(e){
         self_dy = 0;
@@ -460,6 +460,7 @@ function main()
     down_button.addEventListener('touchstart', function(e){
         self_dy = +1;
         self = self_down;
+        e.preventDefault();
     }, false);
     down_button.addEventListener('touchend', function(e){
         self_dy = 0;
@@ -468,6 +469,7 @@ function main()
     left_button.addEventListener('touchstart', function(e){
         self_dx = -1;
         self = self_left;
+        e.preventDefault();
     }, false);
     left_button.addEventListener('touchend', function(e){
         self_dx = 0;
@@ -476,6 +478,7 @@ function main()
     right_button.addEventListener('touchstart', function(e){
         self_dx = +1;
         self = self_right;
+        e.preventDefault();
     }, false);
     right_button.addEventListener('touchend', function(e){
         self_dx = 0;
