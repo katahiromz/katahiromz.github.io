@@ -393,6 +393,11 @@ function main()
         screen_height = game_screen.getBoundingClientRect().height;
         game_screen.setAttribute('width', screen_width);
         game_screen.setAttribute('height', screen_height);
+
+        let vw = window.innerWidth * 0.01;
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vw', `${vw}px`);
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
     window.addEventListener('resize', canvas_resize, false);
     canvas_resize();
