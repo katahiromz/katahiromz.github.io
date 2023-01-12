@@ -418,6 +418,17 @@ function main()
     self_right.src = 'img/self_right.png';
     let self_dx = 0, self_dy = 0;
 
+    contents.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
+    contents.addEventListener('touchend', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
+
     // 自機の移動。
     const self_speed = 0.005;
     up_button.addEventListener('mousedown', function(e){
