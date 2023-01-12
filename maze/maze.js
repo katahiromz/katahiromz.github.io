@@ -1,5 +1,5 @@
 // バージョン情報。
-const MAZE_VERSION = '0.0';
+const MAZE_VERSION = '0.0.1';
 
 // マップの構成要素。
 const MAP_BLANK = ' '; // 通路。
@@ -387,6 +387,7 @@ function main()
         return false;
     });
     // タッチ操作を無効にする。
+if (false){
     game_screen.addEventListener('touchstart', function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -407,6 +408,18 @@ function main()
         e.stopPropagation();
         return false;
     }, false);
+}else{
+    contents.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
+    contents.addEventListener('touchend', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
+}
 
     // 迷路マップを生成。
     let start = CORNER_UPPER_LEFT;
