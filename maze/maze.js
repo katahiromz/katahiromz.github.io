@@ -592,8 +592,10 @@ function main()
             ++iy;
         }
 
+        let self_width = cell_width * 1.5;
+        let self_height = cell_height * 1.5;
         let [x, y] = translate(self_ix, self_iy);
-        ctx.drawImage(self, x, y, cell_width, cell_height);
+        ctx.drawImage(self, x - (self_width - cell_width) / 2, y - (self_height - cell_height) / 2, self_width, self_height);
 
         let delta_time = (new_date - old_date);
         let delta_ix = delta_time * self_dx * self_speed;
