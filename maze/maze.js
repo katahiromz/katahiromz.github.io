@@ -387,18 +387,18 @@ function main()
         e.preventDefault();
         e.stopPropagation();
         return false;
-    }, false);
+    }, { passive: true });
     // タッチ操作を無効にする。
     contents.addEventListener('touchstart', function(e){
         e.preventDefault();
         e.stopPropagation();
         return false;
-    }, false);
+    }, { passive: true });
     contents.addEventListener('touchend', function(e){
         e.preventDefault();
         e.stopPropagation();
         return false;
-    }, false);
+    }, { passive: true });
 
     // 迷路マップを生成。
     let start = CORNER_UPPER_LEFT;
@@ -470,37 +470,37 @@ function main()
         self_dy = -1;
         self = self_up;
         e.preventDefault();
-    }, false);
+    }, { passive: true });
     up_button.addEventListener('touchend', function(e){
         self_dy = 0;
-    }, false);
+    }, { passive: true });
 
     down_button.addEventListener('touchstart', function(e){
         self_dy = +1;
         self = self_down;
         e.preventDefault();
-    }, false);
+    }, { passive: true });
     down_button.addEventListener('touchend', function(e){
         self_dy = 0;
-    }, false);
+    }, { passive: true });
 
     left_button.addEventListener('touchstart', function(e){
         self_dx = -1;
         self = self_left;
         e.preventDefault();
-    }, false);
+    }, { passive: true });
     left_button.addEventListener('touchend', function(e){
         self_dx = 0;
-    }, false);
+    }, { passive: true });
 
     right_button.addEventListener('touchstart', function(e){
         self_dx = +1;
         self = self_right;
         e.preventDefault();
-    }, false);
+    }, { passive: true });
     right_button.addEventListener('touchend', function(e){
         self_dx = 0;
-    }, false);
+    }, { passive: true });
 
     window.addEventListener("keydown", function(e){
         if (e.defaultPrevented)
