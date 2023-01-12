@@ -383,6 +383,27 @@ function main()
         e.stopPropagation();
         return false;
     });
+    // タッチ操作を無効にする。
+    game_screen.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
+    game_screen.addEventListener('touchend', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
+    controller.addEventListener('touchstart', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
+    controller.addEventListener('touchend', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, false);
 
     // 迷路マップを生成。
     let start = CORNER_UPPER_LEFT;
@@ -417,17 +438,6 @@ function main()
     self_left.src = 'img/self_left.png';
     self_right.src = 'img/self_right.png';
     let self_dx = 0, self_dy = 0;
-
-    contents.addEventListener('touchstart', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }, false);
-    contents.addEventListener('touchend', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }, false);
 
     // 自機の移動。
     const self_speed = 0.005;
