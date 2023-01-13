@@ -473,15 +473,10 @@ function main()
         else if (delta_stage == -1)
             [self_ix, self_iy] = getCorner(map, corner_end);
 
-        // 移動中をキャンセルする。
-        self_dx = self_dy = 0;
+        // ボタンの状態を初期化する。
+        resetButtons();
 
-        // ボタンの表示状態を初期化する。
-        up_button.classList.remove('active');
-        down_button.classList.remove('active');
-        left_button.classList.remove('active');
-        right_button.classList.remove('active');
-
+        // 画面を初期化する。
         game_screen_resize();
 
         // ステージ番号を覚える。
@@ -689,15 +684,20 @@ function main()
         }
     }, false);
 
-    // キーを離した？
-    window.addEventListener("keyup", function(e){
-        if (self_locked) return;
+    // ボタンの状態を初期化する。
+    function resetButtons(){
         self_dx = 0;
         self_dy = 0;
         up_button.classList.remove('active');
         down_button.classList.remove('active');
         left_button.classList.remove('active');
         right_button.classList.remove('active');
+    }
+
+    // キーを離した？
+    window.addEventListener("keyup", function(e){
+        if (self_locked) return;
+        resetButtons();
     }, false);
 
     // 時間。
@@ -785,8 +785,13 @@ function main()
                 delta_iy = 0;
             }
             if (!localStorage.getItem('key') && ch == MAP_DOOR){
-                delta_ix = 0;
-                delta_iy = 0;
+                alert("ドアのカギが開かない!");
+                delta_ix = delta_iy = 0;
+
+                // ボタンの状態を初期化する。
+                resetButtons();
+
+                [self_ix, self_iy] = getCorner(map, corner_end);
             }
         }
         self_ix += delta_ix;
@@ -802,10 +807,15 @@ function main()
             // 自機の位置。
             let [ix, iy] = [Math.floor(self_ix + 0.5), Math.floor(self_iy + 0.5)];
 
+            // カギがあれば取得。
             if (key_ix != -1 && key_iy != -1){
                 if (ix == key_ix && iy == key_iy){
                     key_ix = key_iy = -1;
                     localStorage.setItem('key', '1');
+                    alert("ドアのカギを手に入れた");
+
+                    // ボタンの状態を初期化する。
+                    resetButtons();
                 }
             }
 
@@ -824,16 +834,18 @@ function main()
                 if (stage < 100){
                     // 次のステージへ。
                     new_stage(+1);
-                } else if (localStorage.getItem('key')){
-                    if (getMapCell(map, ix, iy) == MAP_DOOR){
-                        setMapCell(map, ix, iy, MAP_ROOTE);
-                        localStorage.removeItem('key');
-                        setTimeout(function(){
-                            alert("ダンゴムシは研究所から脱出し、安住の地で幸せに暮らしたとさ");
-                            alert("ゲームクリア!");
-                            stage = 1;
-                            new_stage(0);
-                        }, 1000);
+                } else {
+                    if (localStorage.getItem('key')){
+                        if (getMapCell(map, ix, iy) == MAP_DOOR){
+                            setMapCell(map, ix, iy, MAP_ROOTE);
+                            localStorage.removeItem('key');
+                            alert("ドアのカギが開いた！");
+                            setTimeout(function(){
+                                alert("ダンゴムシは研究所から脱出し、安住の地で幸せに暮らしたとさ");
+                                stage = 1;
+                                new_stage(0);
+                            }, 1000);
+                        }
                     }
                 }
             }
