@@ -373,7 +373,7 @@ function getRouteTurns(map)
 
 function main()
 {
-    let stage = 0;
+    let stage = 1;
 
     if (!DEBUGGING){
         // コンテキストメニューを無効化。
@@ -405,7 +405,7 @@ function main()
     let wall_color, border_color;
 
     // 新しいステージ。
-    function new_stage(delta_stage){
+    function new_stage(delta_stage = 0){
         stage += delta_stage;
         mt.setSeed(stage);
         switch (stage % 4){
@@ -438,7 +438,7 @@ function main()
             openDoor(map, corner_start, true);
         }
 
-        if (delta_stage == +1)
+        if (delta_stage == +1 || delta_stage == 0)
             [self_ix, self_iy] = getCorner(map, corner_start);
         else if (delta_stage == -1)
             [self_ix, self_iy] = getCorner(map, corner_end);
@@ -446,6 +446,8 @@ function main()
 
         ctx = game_screen.getContext('2d');
         game_screen_resize();
+
+        localStorage.setItem('stage', stage);
     }
 
     let screen_width, screen_height; // スクリーンのサイズ。
@@ -479,7 +481,10 @@ function main()
     }
     window.addEventListener('resize', game_screen_resize, false);
 
-    new_stage(+1);
+    if (localStorage.getItem('stage')){
+        stage = parseInt(localStorage.getItem('stage'));
+    }
+    new_stage();
 
     function translate(ix, iy){
         let x = inner_x + (inner_width - map_width) / 2 + cell_width * ix;
