@@ -28,7 +28,8 @@ body {
 	border: 1px solid black;
 }
 #controller {
-	border: 1px solid black;
+	/* border: 1px solid black; */
+	background-color: #fcc;
 	text-align: center;
 	display: grid;
 	place-items: center;
@@ -40,20 +41,20 @@ body {
 	}
 	#game_screen {
 		width: 99vw;
-		height: 77vh;
+		height: 70vh;
 		width: 99svw;
-		height: 77svh;
+		height: 70svh;
 	}
 	#controller {
 		width: 99vw;
-		height: 32vh;
+		height: 29vh;
 		width: 99svw;
-		height: 32svh;
+		height: 29svh;
 	}
 	button {
-		width: 30vw;
+		width: 20vw;
 		height: 7vh;
-		width: 30svw;
+		width: 20svw;
 		height: 7svh;
 		margin: 2px;
 	}
@@ -63,22 +64,22 @@ body {
 	#contents {
 	}
 	#game_screen {
-		width: 77vw;
+		width: 70vw;
 		height: 99vh;
-		width: 77svw;
+		width: 70svw;
 		height: 99svh;
 	}
 	#controller {
-		width: 32vw;
+		width: 29vw;
 		height: 99vh;
-		width: 32svw;
+		width: 29svw;
 		height: 99svh;
 	}
 	button {
-		width: 8vw;
-		height: 10vh;
-		width: 8svw;
-		height: 10svh;
+		width: 10vw;
+		height: 12vh;
+		width: 10svw;
+		height: 12svh;
 		margin: 2px;
 	}
 }

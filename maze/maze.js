@@ -1,5 +1,6 @@
 // バージョン情報。
-const MAZE_VERSION = '0.0.4';
+const MAZE_VERSION = '0.0.5';
+const DEBUGGING = true;
 
 // マップの構成要素。
 const MAP_BLANK = ' '; // 通路。
@@ -373,12 +374,14 @@ function getRouteTurns(map)
 
 function main()
 {
-    // コンテキストメニューを無効化。
-    window.addEventListener("contextmenu", function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }, { passive: false });
+    if (!DEBUGGING){
+        // コンテキストメニューを無効化。
+        window.addEventListener("contextmenu", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }, { passive: false });
+    }
     // タッチ操作を無効にする。
     contents.addEventListener('touchstart', function(e){
         e.preventDefault();
