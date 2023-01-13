@@ -7,6 +7,7 @@ const MAP_BLANK = ' '; // 通路。
 const MAP_WALL  = '#'; // 壁。
 const MAP_ROOTE = '.'; // ゴールまでの道。
 const MAP_INVALID = '@';
+const MAP_DOOR = '/';
 
 // メルセンヌツイスター乱数生成器。
 let mt = new MersenneTwister();
@@ -94,11 +95,11 @@ function getDoor(map, corner)
     }
 }
 
-// ドアを開く。
-function openDoor(map, corner, close = false)
+// ドアを開く、または閉じる。
+function openCloseDoor(map, corner, door = MAP_ROOTE)
 {
     const [x, y] = getDoor(map, corner);
-    setMapCell(map, x, y, close ? MAP_WALL : MAP_ROOTE);
+    setMapCell(map, x, y, door);
 }
 
 // min以上max未満の整数乱数を取得する。
@@ -301,8 +302,8 @@ function createMazeMap(x, y, start = CORNER_UPPER_LEFT, end = CORNER_LOWER_RIGHT
     getRoute(map, startx, starty, endx, endy);
 
     // ドアを開く。
-    openDoor(map, start);
-    openDoor(map, end);
+    openCloseDoor(map, start);
+    openCloseDoor(map, end);
 
     return map;
 }
@@ -403,6 +404,7 @@ function main()
     const margin = 4; // マージン。
     let corner_start = CORNER_UPPER_LEFT, corner_end = CORNER_LOWER_RIGHT;
     let wall_color, border_color;
+    let key_ix = -1, key_iy = -1;
 
     // 新しいステージ。
     function new_stage(delta_stage = 0){
@@ -447,10 +449,22 @@ function main()
 
         // 必要ならステージのドアを閉じる。
         if (stage == 0){
-            openDoor(map, corner_start, true);
+            openCloseDoor(map, corner_start, MAP_WALL);
         }
         if (stage == 100){
-            openDoor(map, corner_end, true);
+            openCloseDoor(map, corner_end, MAP_DOOR);
+        }
+
+        // ステージ50のとき、キーを置く。
+        if (stage == 50){
+            if (localStorage.getItem('key')){
+                key_ix = key_iy = -1;
+            }else{
+                key_ix = 15;
+                key_iy = 15;
+            }
+        } else {
+            key_ix = key_iy = -1;
         }
 
         // 自機の位置を決める。
@@ -526,11 +540,13 @@ function main()
     let self_down = new Image();
     let self_left = new Image();
     let self_right = new Image();
+    let key_image = new Image();
     let self = self_down;
     self_up.src = 'img/self_up.png';
     self_down.src = 'img/self_down.png';
     self_left.src = 'img/self_left.png';
     self_right.src = 'img/self_right.png';
+    key_image.src = 'img/key.png';
 
     // 自機の移動。
     const self_speed = 0.005;
@@ -709,10 +725,20 @@ function main()
             for (const row of map){
                 let ix = 0;
                 for (const ch of row){
+                    const [x, y] = translate(ix, iy);
                     if (ch == MAP_WALL){
-                        const [x, y] = translate(ix, iy);
                         ctx.fillRect(x, y, cell_width, cell_height);
                         ctx.strokeRect(x, y, cell_width, cell_height);
+                    } else if (ch == MAP_DOOR){
+                        ctx.strokeRect(x, y, cell_width, cell_height);
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x + cell_width, y + cell_height);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(x + cell_width, y);
+                        ctx.lineTo(x, y + cell_height);
+                        ctx.stroke();
                     }
                     ++ix;
                 }
@@ -728,6 +754,24 @@ function main()
         let self_y = y - (self_height - cell_height) / 2;
         ctx.drawImage(self, self_x, self_y, self_width, self_height);
 
+        // 必要ならばキーを描画する。
+        if (localStorage.getItem('key')){
+            key_ix = key_iy = -1;
+            let key_width = 32, key_height = 32;
+            let key_x = inner_x + inner_width - key_width;
+            let key_y = inner_y + inner_height - key_height;
+            ctx.drawImage(key_image, key_x, key_y, key_width, key_height);
+        }else{
+            if (key_ix != -1 && key_iy != -1){
+                [x, y] = translate(key_ix, key_iy);
+                let key_width = cell_width * 1.5;
+                let key_height = cell_height * 1.5;
+                let key_x = x - (key_width - cell_width) / 2;
+                let key_y = y - (key_height - cell_height) / 2;
+                ctx.drawImage(key_image, key_x, key_y, self_width, self_height);
+            }
+        }
+
         // 必要ならば自機を少し移動する。
         let delta_time = (new_time - old_time);
         let delta_ix = delta_time * self_dx * self_speed;
@@ -737,6 +781,10 @@ function main()
             let new_iy = Math.floor(self_iy + delta_iy + 0.5);
             let ch = getMapCellWithCheck(map, new_ix, new_iy);
             if (ch == MAP_INVALID || ch == MAP_WALL){
+                delta_ix = 0;
+                delta_iy = 0;
+            }
+            if (!localStorage.getItem('key') && ch == MAP_DOOR){
                 delta_ix = 0;
                 delta_iy = 0;
             }
@@ -752,12 +800,19 @@ function main()
         // 自機の位置に応じて、ステージを変化させる。
         if (map){
             // 自機の位置。
-            [x, y] = [Math.floor(self_ix + 0.5), Math.floor(self_iy + 0.5)];
+            let [ix, iy] = [Math.floor(self_ix + 0.5), Math.floor(self_iy + 0.5)];
+
+            if (key_ix != -1 && key_iy != -1){
+                if (ix == key_ix && iy == key_iy){
+                    key_ix = key_iy = -1;
+                    localStorage.setItem('key', '1');
+                }
+            }
 
             // スタート位置のドア。
             let [start_ix, start_iy] = getDoor(map, corner_start);
             // スタート位置のドア？
-            if (start_ix == x && start_iy == y && stage > 0){
+            if (start_ix == ix && start_iy == iy && stage > 0){
                 // 前のステージへ。
                 new_stage(-1);
             }
@@ -765,9 +820,22 @@ function main()
             // ゴール位置のドア。
             let [goal_ix, goal_iy] = getDoor(map, corner_end);
             // ゴール位置のドア？
-            if (goal_ix == x && goal_iy == y && stage < 100) {
-                // 次のステージへ。
-                new_stage(+1);
+            if (goal_ix == ix && goal_iy == iy) {
+                if (stage < 100){
+                    // 次のステージへ。
+                    new_stage(+1);
+                } else if (localStorage.getItem('key')){
+                    if (getMapCell(map, ix, iy) == MAP_DOOR){
+                        setMapCell(map, ix, iy, MAP_ROOTE);
+                        localStorage.removeItem('key');
+                        setTimeout(function(){
+                            alert("ダンゴムシは研究所から脱出し、安住の地で幸せに暮らしたとさ");
+                            alert("ゲームクリア!");
+                            stage = 1;
+                            new_stage(0);
+                        }, 1000);
+                    }
+                }
             }
         }
 
