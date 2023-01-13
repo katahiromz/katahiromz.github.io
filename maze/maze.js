@@ -1,6 +1,6 @@
 // バージョン情報。
 const MAZE_VERSION = '0.0.6';
-const DEBUGGING = true;
+const DEBUGGING = false;
 
 // マップの構成要素。
 const MAP_BLANK = ' '; // 通路。
@@ -371,9 +371,10 @@ function getRouteTurns(map)
     return turns;
 }
 
+// メイン処理。
 function main()
 {
-    let stage = 1;
+    let stage = 1; // ステージ番号。
 
     if (!DEBUGGING){
         // コンテキストメニューを無効化。
@@ -397,7 +398,6 @@ function main()
 
     let self_ix, self_iy; // 自機の位置。
     let self_dx, self_dy; // 自機の移動方向。
-    let ctx; // 描画対象。
     let inner_x, inner_y, inner_width, inner_height; // 内側のピクセルサイズと位置。
     let map_width, map_height; // マップのピクセルサイズ。
     const margin = 4; // マージン。
@@ -406,8 +406,13 @@ function main()
 
     // 新しいステージ。
     function new_stage(delta_stage = 0){
+        // ステージ番号を加算または減算。
         stage += delta_stage;
+
+        // ステージ番号により、乱数の種を決める。
         mt.setSeed(stage);
+
+        // スタート位置、ゴール位置を決める。
         switch (stage % 4){
         case 0:
             corner_start = CORNER_UPPER_LEFT;
@@ -426,66 +431,90 @@ function main()
             corner_end = CORNER_LOWER_LEFT;
             break;
         }
+
+        // 色。
         wall_color = `rgb(91, ${getRandomInt(0, 200)}, ${getRandomInt(100, 191)})`;
         border_color = `rgb(191, ${getRandomInt(0, 191)}, 0)`;
+
+        // ステージのサイズ。
         let cx = 9 + Math.floor(stage / 10) * 2;
         let cy = 9 + Math.floor(stage / 10) * 2;
+
+        // ステージの迷路を生成。
         do{
             map = createMazeMap(cx, cy, corner_start, corner_end);
         } while (getRouteTurns(map) < 5 || getRouteLength(map) < (cx + cy) * 1.5);
 
+        // 必要ならステージのドアを閉じる。
         if (stage == 0){
             openDoor(map, corner_start, true);
         }
+        if (stage == 100){
+            openDoor(map, corner_end, true);
+        }
 
+        // 自機の位置を決める。
         if (delta_stage == +1 || delta_stage == 0)
             [self_ix, self_iy] = getCorner(map, corner_start);
         else if (delta_stage == -1)
             [self_ix, self_iy] = getCorner(map, corner_end);
+
+        // 移動中をキャンセルする。
         self_dx = self_dy = 0;
 
-        ctx = game_screen.getContext('2d');
+        // ボタンの表示状態を初期化する。
+        up_button.classList.remove('active');
+        down_button.classList.remove('active');
+        left_button.classList.remove('active');
+        right_button.classList.remove('active');
+
         game_screen_resize();
 
+        // ステージ番号を覚える。
         localStorage.setItem('stage', stage);
     }
 
-    let screen_width, screen_height; // スクリーンのサイズ。
     let map = null; // 地図。
+    let screen_width, screen_height; // スクリーンのサイズ。
     let cell_width = null, cell_height = null; // セルのサイズ。
 
-    // スクリーンのサイズが変わった。
+    // スクリーンのサイズが変わった？
     function game_screen_resize(){
+        // ページ内容のサイズを補正。
         contents.style.width = window.innerWidth + 'px';
         contents.style.height = window.innerHeight + 'px';
+
+        // キャンバスのサイズを補正。
         screen_width = game_screen.width = game_screen.offsetWidth;
         screen_height = game_screen.height = game_screen.offsetHeight;
 
-        let cx = getMapWidth(map), cy = getMapHeight(map);
-
+        // 内側の位置とサイズ。
         inner_x = margin;
         inner_y = margin;
         inner_width = screen_width - margin * 2;
         inner_height = screen_height - margin * 2;
 
+        // セルのサイズを計算する。
+        let cx = getMapWidth(map), cy = getMapHeight(map);
         if (cx / cy < inner_width / inner_height){
             cell_width = cell_height = inner_height / cy;
         }else{
             cell_height = cell_width = inner_width / cx;
         }
 
+        // 地図のサイズ。
         map_width = cx * cell_width;
         map_height = cy * cell_height;
-
-        ctx = game_screen.getContext('2d');
     }
     window.addEventListener('resize', game_screen_resize, false);
 
+    // ステージの初期化。
     if (localStorage.getItem('stage')){
         stage = parseInt(localStorage.getItem('stage'));
     }
     new_stage();
 
+    // 座標変換。
     function translate(ix, iy){
         let x = inner_x + (inner_width - map_width) / 2 + cell_width * ix;
         let y = inner_y + (inner_height - map_height) / 2 + cell_height * iy;
@@ -606,31 +635,32 @@ function main()
         right_button.classList.remove('active');
     }, { passive: false });
 
+    // キー入力の処理。
     window.addEventListener("keydown", function(e){
         if (e.defaultPrevented)
             return;
         if (self_locked) return;
         let handled = false;
         switch (e.keyCode){
-        case 38: // up:
+        case 38: // 上矢印。
             self_dy = -1;
             self = self_up;
             up_button.classList.add('active');
             handled = true;
             break;
-        case 40: // down:
+        case 40: // 下矢印。
             self_dy = +1;
             self = self_down;
             down_button.classList.add('active');
             handled = true;
             break;
-        case 37: // left
+        case 37: // 左矢印。
             self_dx = -1;
             self = self_left;
             left_button.classList.add('active');
             handled = true;
             break;
-        case 39: // right
+        case 39: // 右矢印。
             self_dx = +1;
             self = self_right;
             right_button.classList.add('active');
@@ -642,6 +672,8 @@ function main()
             e.preventDefault();
         }
     }, false);
+
+    // キーを離した？
     window.addEventListener("keyup", function(e){
         if (self_locked) return;
         self_dx = 0;
@@ -653,20 +685,26 @@ function main()
     }, false);
 
     // 時間。
-    let old_date = new Date();
-    let new_date = new Date();
+    let old_time = new Date();
+    let new_time = new Date();
 
+    // アニメーション用関数。
     function animationCallback(){
-        new_date = new Date();
+        new_time = new Date();
 
+        // 描画対象を決める。
+        let ctx = game_screen.getContext('2d');
+
+        // 背景を黒で塗りつぶす。
         ctx.fillStyle = 'rgba(0, 0, 0)';
         ctx.fillRect(0, 0, game_screen.width, game_screen.height);
 
-        ctx.fillStyle = wall_color;
-        ctx.strokeStyle = border_color;
-        ctx.lineWidth = 2;
-
+        // 地図を描画する。
         if (map){
+            ctx.fillStyle = wall_color;
+            ctx.strokeStyle = border_color;
+            ctx.lineWidth = 2;
+
             let iy = 0;
             for (const row of map){
                 let ix = 0;
@@ -682,12 +720,16 @@ function main()
             }
         }
 
+        // 自機の位置を計算し、描画する。
         let self_width = cell_width * 1.5;
         let self_height = cell_height * 1.5;
         [x, y] = translate(self_ix, self_iy);
-        ctx.drawImage(self, x - (self_width - cell_width) / 2, y - (self_height - cell_height) / 2, self_width, self_height);
+        let self_x = x - (self_width - cell_width) / 2;
+        let self_y = y - (self_height - cell_height) / 2;
+        ctx.drawImage(self, self_x, self_y, self_width, self_height);
 
-        let delta_time = (new_date - old_date);
+        // 必要ならば自機を少し移動する。
+        let delta_time = (new_time - old_time);
         let delta_ix = delta_time * self_dx * self_speed;
         let delta_iy = delta_time * self_dy * self_speed;
         if (self_dx != 0 || self_dy != 0){
@@ -702,30 +744,45 @@ function main()
         self_ix += delta_ix;
         self_iy += delta_iy;
 
+        // ステージ番号を描画する。
         ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
         ctx.font = 'bold 7vw san-serif';
         ctx.fillText("Stage " + stage, inner_x, inner_y + inner_height, inner_width);
 
+        // 自機の位置に応じて、ステージを変化させる。
         if (map){
+            // 自機の位置。
             [x, y] = [Math.floor(self_ix + 0.5), Math.floor(self_iy + 0.5)];
+
+            // スタート位置のドア。
             let [start_ix, start_iy] = getDoor(map, corner_start);
-            let [goal_ix, goal_iy] = getDoor(map, corner_end);
-            if (goal_ix == x && goal_iy == y && stage < 100) {
-                new_stage(+1);
-            }
+            // スタート位置のドア？
             if (start_ix == x && start_iy == y && stage > 0){
+                // 前のステージへ。
                 new_stage(-1);
+            }
+
+            // ゴール位置のドア。
+            let [goal_ix, goal_iy] = getDoor(map, corner_end);
+            // ゴール位置のドア？
+            if (goal_ix == x && goal_iy == y && stage < 100) {
+                // 次のステージへ。
+                new_stage(+1);
             }
         }
 
-        old_date = new_date;
+        // 時間を進める。
+        old_time = new_time;
 
+        // アニメーションを要求。
         window.requestAnimationFrame(animationCallback);
     }
 
+    // アニメーションを開始する。
     animationCallback();
 }
 
+// ページを読み込んだらメイン処理。
 document.addEventListener('DOMContentLoaded', function(){
     main();
 });
