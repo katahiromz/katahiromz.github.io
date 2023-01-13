@@ -1,5 +1,5 @@
 // バージョン情報。
-const MAZE_VERSION = '0.0.5';
+const MAZE_VERSION = '0.0.6';
 const DEBUGGING = true;
 
 // マップの構成要素。
@@ -439,6 +439,8 @@ function main()
 
     // スクリーンのサイズが変わった。
     function game_screen_resize(){
+        contents.style.width = window.innerWidth + 'px';
+        contents.style.height = window.innerHeight + 'px';
         screen_width = game_screen.width = game_screen.offsetWidth;
         screen_height = game_screen.height = game_screen.offsetHeight;
 

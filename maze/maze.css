@@ -1,3 +1,4 @@
+/* version: 0.0.6 */
 * {
 	padding: 0;
 	margin: 0;
@@ -44,12 +45,16 @@ body {
 		height: 70vh;
 		width: 99svw;
 		height: 70svh;
+		width: 99%;
+		height: 70%;
 	}
 	#controller {
 		width: 99vw;
 		height: 29vh;
 		width: 99svw;
 		height: 29svh;
+		width: 99%;
+		height: 29%;
 	}
 	button {
 		width: 20vw;
@@ -68,12 +73,16 @@ body {
 		height: 99vh;
 		width: 70svw;
 		height: 99svh;
+		width: 70%;
+		height: 99%;
 	}
 	#controller {
 		width: 29vw;
 		height: 99vh;
 		width: 29svw;
 		height: 99svh;
+		width: 29%;
+		height: 99%;
 	}
 	button {
 		width: 10vw;
