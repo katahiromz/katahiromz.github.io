@@ -10,7 +10,6 @@ const MAP_INVALID = '@';
 
 // メルセンヌツイスター乱数生成器。
 let mt = new MersenneTwister();
-mt.setSeed(11);
 
 // マップの幅。
 function getMapWidth(map)
@@ -374,6 +373,8 @@ function getRouteTurns(map)
 
 function main()
 {
+    let stage = 0;
+
     if (!DEBUGGING){
         // コンテキストメニューを無効化。
         window.addEventListener("contextmenu", function(e){
@@ -400,25 +401,43 @@ function main()
     let inner_x, inner_y, inner_width, inner_height; // 内側のピクセルサイズと位置。
     let map_width, map_height; // マップのピクセルサイズ。
     const margin = 4; // マージン。
-    let corner_start, corner_end;
+    let corner_start = CORNER_UPPER_LEFT, corner_end = CORNER_LOWER_RIGHT;
+    let wall_color, border_color;
 
     // 新しいステージ。
-    function new_stage(start = CORNER_UPPER_LEFT, end = CORNER_LOWER_RIGHT){
-        corner_start = start;
-        corner_end = end;
-        map = createMazeMap(15, 11, start, end);
+    function new_stage(){
+        ++stage;
+        mt.setSeed(stage);
+        switch (corner_end){
+        case CORNER_LOWER_LEFT:
+            corner_start = CORNER_UPPER_LEFT;
+            corner_end = CORNER_LOWER_RIGHT;
+            break;
+        case CORNER_LOWER_RIGHT:
+            corner_start = CORNER_UPPER_RIGHT;
+            corner_end = CORNER_LOWER_LEFT;
+            break;
+        }
+        wall_color = `rgb(91, ${getRandomInt(0, 200)}, ${getRandomInt(100, 191)})`;
+        border_color = `rgb(191, ${getRandomInt(0, 191)}, 0)`;
+        let cx = 9 + Math.floor(stage / 10) * 2;
+        let cy = 9 + Math.floor(stage / 10) * 2;
+        do{
+            map = createMazeMap(cx, cy, corner_start, corner_end);
+        } while (getRouteTurns(map) < 5 || getRouteLength(map) < (cx + cy) * 1.5);
 
-        [self_ix, self_iy] = getCorner(map, start);
+        [self_ix, self_iy] = getCorner(map, corner_start);
         self_dx = self_dy = 0;
 
         ctx = game_screen.getContext('2d');
+        game_screen_resize();
     }
 
-    let screen_width, screen_height;
-    let map = null;
+    let screen_width, screen_height; // スクリーンのサイズ。
+    let map = null; // 地図。
+    let cell_width = null, cell_height = null; // セルのサイズ。
 
     // スクリーンのサイズが変わった。
-    let cell_width = null, cell_height = null; // セルのサイズ。
     function game_screen_resize(){
         screen_width = game_screen.width = game_screen.offsetWidth;
         screen_height = game_screen.height = game_screen.offsetHeight;
@@ -444,7 +463,6 @@ function main()
     window.addEventListener('resize', game_screen_resize, false);
 
     new_stage();
-    game_screen_resize();
 
     function translate(ix, iy){
         let x = inner_x + (inner_width - map_width) / 2 + cell_width * ix;
@@ -598,9 +616,9 @@ function main()
         ctx.fillStyle = 'rgba(0, 0, 0)';
         ctx.fillRect(0, 0, game_screen.width, game_screen.height);
 
-        ctx.fillStyle = 'rgb(255, 91, 255)';
-        ctx.strokeStyle = 'rgb(91, 255, 255)';
-        ctx.lineWidth = 3;
+        ctx.fillStyle = wall_color;
+        ctx.strokeStyle = border_color;
+        ctx.lineWidth = 2;
 
         if (map){
             let iy = 0;
@@ -637,6 +655,10 @@ function main()
         }
         self_ix += delta_ix;
         self_iy += delta_iy;
+
+        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        ctx.font = 'bold 7vw san-serif';
+        ctx.fillText("Stage " + stage, inner_x, inner_y + inner_height, inner_width);
 
         if (map){
             let [goal_ix, goal_iy] = getDoor(map, corner_end);
