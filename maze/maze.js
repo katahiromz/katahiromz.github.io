@@ -75,39 +75,30 @@ function getCorner(map, corner)
     }
 }
 
-// ドアを開く。
-function openDoor(map, corner)
+// ドアの位置を返す。
+function getDoor(map, corner)
 {
     const [x, y] = getCorner(map, corner);
     switch (corner)
     {
-    case CORNER_UPPER_LEFT:
-        setMapCell(map, x, y - 1, MAP_ROOTE);
-        break;
-    case CORNER_UPPER_RIGHT:
-        setMapCell(map, x, y - 1, MAP_ROOTE);
-        break;
-    case CORNER_LOWER_LEFT:
-        setMapCell(map, x, y + 1, MAP_ROOTE);
-        break;
-    case CORNER_LOWER_RIGHT:
-        setMapCell(map, x, y + 1, MAP_ROOTE);
-        break;
-    case CORNER_LEFT_UPPER:
-        setMapCell(map, x - 1, y, MAP_ROOTE);
-        break;
-    case CORNER_LEFT_LOWER:
-        setMapCell(map, x - 1, y, MAP_ROOTE);
-        break;
-    case CORNER_RIGHT_UPPER:
-        setMapCell(map, x + 1, y, MAP_ROOTE);
-        break;
-    case CORNER_RIGHT_LOWER:
-        setMapCell(map, x + 1, y, MAP_ROOTE);
-        break;
+    case CORNER_UPPER_LEFT: return [x, y - 1];
+    case CORNER_UPPER_RIGHT: return [x, y - 1];
+    case CORNER_LOWER_LEFT: return [x, y + 1];
+    case CORNER_LOWER_RIGHT: return [x, y + 1];
+    case CORNER_LEFT_UPPER: return [x - 1, y];
+    case CORNER_LEFT_LOWER: return [x - 1, y];
+    case CORNER_RIGHT_UPPER: return [x + 1, y];
+    case CORNER_RIGHT_LOWER: return [x + 1, y];
     default:
         alert('cornerの値が不正です。');
     }
+}
+
+// ドアを開く。
+function openDoor(map, corner, close = false)
+{
+    const [x, y] = getDoor(map, corner);
+    setMapCell(map, x, y, close ? MAP_WALL : MAP_ROOTE);
 }
 
 // min以上max未満の整数乱数を取得する。
@@ -400,27 +391,65 @@ function main()
         return false;
     }, { passive: false });
 
-    // 迷路マップを生成。
-    let start = CORNER_UPPER_LEFT;
-    let end = CORNER_LOWER_RIGHT;
-    let map = createMazeMap(11, 9, start, end);
-    let str = stringOfMap(map);
+    let self_ix, self_iy; // 自機の位置。
+    let self_dx, self_dy; // 自機の移動方向。
+    let ctx; // 描画対象。
+    let inner_x, inner_y, inner_width, inner_height; // 内側のピクセルサイズと位置。
+    let map_width, map_height; // マップのピクセルサイズ。
+    const margin = 4; // マージン。
+    let corner_start, corner_end;
 
-    // キャンバスサイズ。
-    let screen_width, screen_height;
-    function canvas_resize(){
-        screen_width = game_screen.getBoundingClientRect().width;
-        screen_height = game_screen.getBoundingClientRect().height;
-        game_screen.setAttribute('width', screen_width);
-        game_screen.setAttribute('height', screen_height);
-        contents.style.width = window.innerWidth + 'px';
-        contents.style.height = window.innerHeight + 'px';
+    // 新しいステージ。
+    function new_stage(start = CORNER_UPPER_LEFT, end = CORNER_LOWER_RIGHT){
+        corner_start = start;
+        corner_end = end;
+        map = createMazeMap(15, 11, start, end);
+
+        [self_ix, self_iy] = getCorner(map, start);
+        self_dx = self_dy = 0;
+
+        ctx = game_screen.getContext('2d');
     }
-    window.addEventListener('resize', canvas_resize, false);
-    canvas_resize();
+
+    let screen_width, screen_height;
+    let map = null;
+
+    // スクリーンのサイズが変わった。
+    let cell_width = null, cell_height = null; // セルのサイズ。
+    function game_screen_resize(){
+        screen_width = game_screen.width = game_screen.offsetWidth;
+        screen_height = game_screen.height = game_screen.offsetHeight;
+
+        let cx = getMapWidth(map), cy = getMapHeight(map);
+
+        inner_x = margin;
+        inner_y = margin;
+        inner_width = screen_width - margin * 2;
+        inner_height = screen_height - margin * 2;
+
+        if (cx / cy < inner_width / inner_height){
+            cell_width = cell_height = inner_height / cy;
+        }else{
+            cell_height = cell_width = inner_width / cx;
+        }
+
+        map_width = cx * cell_width;
+        map_height = cy * cell_height;
+
+        ctx = game_screen.getContext('2d');
+    }
+    window.addEventListener('resize', game_screen_resize, false);
+
+    new_stage();
+    game_screen_resize();
+
+    function translate(ix, iy){
+        let x = inner_x + (inner_width - map_width) / 2 + cell_width * ix;
+        let y = inner_y + (inner_height - map_height) / 2 + cell_height * iy;
+        return [x, y];
+    }
 
     // 自機。
-    let [self_ix, self_iy] = getCorner(map, start);
     let self_up = new Image();
     let self_down = new Image();
     let self_left = new Image();
@@ -430,81 +459,98 @@ function main()
     self_down.src = 'img/self_down.png';
     self_left.src = 'img/self_left.png';
     self_right.src = 'img/self_right.png';
-    let self_dx = 0, self_dy = 0;
 
     // 自機の移動。
     const self_speed = 0.005;
+    const self_locked = false;
     up_button.addEventListener('mousedown', function(e){
+        if (self_locked) return;
         self_dy = -1;
         self = self_up;
     }, false);
     up_button.addEventListener('mouseup', function(e){
+        if (self_locked) return;
         self_dy = 0;
     }, false);
 
     down_button.addEventListener('mousedown', function(e){
+        if (self_locked) return;
         self_dy = +1;
         self = self_down;
     }, false);
     down_button.addEventListener('mouseup', function(e){
+        if (self_locked) return;
         self_dy = 0;
     }, false);
 
     left_button.addEventListener('mousedown', function(e){
+        if (self_locked) return;
         self_dx = -1;
         self = self_left;
     }, false);
     left_button.addEventListener('mouseup', function(e){
+        if (self_locked) return;
         self_dx = 0;
     }, false);
 
     right_button.addEventListener('mousedown', function(e){
+        if (self_locked) return;
         self_dx = +1;
         self = self_right;
     }, false);
     right_button.addEventListener('mouseup', function(e){
+        if (self_locked) return;
         self_dx = 0;
     }, false);
 
     up_button.addEventListener('touchstart', function(e){
+        if (self_locked) return;
         self_dy = -1;
         self = self_up;
         e.preventDefault();
     }, { passive: false });
     up_button.addEventListener('touchend', function(e){
+        if (self_locked) return;
         self_dy = 0;
     }, { passive: false });
 
     down_button.addEventListener('touchstart', function(e){
+        if (self_locked) return;
         self_dy = +1;
         self = self_down;
         e.preventDefault();
     }, { passive: false });
     down_button.addEventListener('touchend', function(e){
+        if (self_locked) return;
         self_dy = 0;
     }, { passive: false });
 
     left_button.addEventListener('touchstart', function(e){
+        if (self_locked) return;
         self_dx = -1;
         self = self_left;
         e.preventDefault();
     }, { passive: false });
     left_button.addEventListener('touchend', function(e){
+        if (self_locked) return;
         self_dx = 0;
     }, { passive: false });
 
     right_button.addEventListener('touchstart', function(e){
+        if (self_locked) return;
         self_dx = +1;
         self = self_right;
         e.preventDefault();
     }, { passive: false });
     right_button.addEventListener('touchend', function(e){
+        if (self_locked) return;
         self_dx = 0;
     }, { passive: false });
 
     window.addEventListener("keydown", function(e){
         if (e.defaultPrevented)
             return;
+        if (self_locked) return;
         let handled = false;
         switch (e.keyCode){
         case 38: // up:
@@ -534,6 +580,7 @@ function main()
         }
     }, false);
     window.addEventListener("keyup", function(e){
+        if (self_locked) return;
         self_dx = 0;
         self_dy = 0;
     }, false);
@@ -545,56 +592,32 @@ function main()
     function animationCallback(){
         new_date = new Date();
 
-        let ctx = game_screen.getContext('2d');
         ctx.fillStyle = 'rgba(0, 0, 0)';
         ctx.fillRect(0, 0, game_screen.width, game_screen.height);
-
-        let cx = getMapWidth(map), cy = getMapHeight(map);
-        let margin = 4;
-
-        let inner_x = margin;
-        let inner_y = margin;
-        let inner_width = screen_width - margin * 2;
-        let inner_height = screen_height - margin * 2;
-
-        let cell_width, cell_height;
-        if (cx / cy < inner_width / inner_height){
-            cell_height = inner_height / cy;
-            cell_width = cell_height;
-        }else{
-            cell_width = inner_width / cx;
-            cell_height = cell_width;
-        }
-        
-        let map_width = cx * cell_width;
-        let map_height = cy * cell_height;
-
-        function translate(ix, iy){
-            let x = inner_x + (inner_width - map_width) / 2 + cell_width * ix;
-            let y = inner_y + (inner_height - map_height) / 2 + cell_height * iy;
-            return [x, y];
-        }
 
         ctx.fillStyle = 'rgb(255, 91, 255)';
         ctx.strokeStyle = 'rgb(91, 255, 255)';
         ctx.lineWidth = 3;
-        let iy = 0;
-        for (const row of map){
-            let ix = 0;
-            for (const ch of row){
-                if (ch == MAP_WALL){
-                    const [x, y] = translate(ix, iy);
-                    ctx.fillRect(x, y, cell_width, cell_height);
-                    ctx.strokeRect(x, y, cell_width, cell_height);
+
+        if (map){
+            let iy = 0;
+            for (const row of map){
+                let ix = 0;
+                for (const ch of row){
+                    if (ch == MAP_WALL){
+                        const [x, y] = translate(ix, iy);
+                        ctx.fillRect(x, y, cell_width, cell_height);
+                        ctx.strokeRect(x, y, cell_width, cell_height);
+                    }
+                    ++ix;
                 }
-                ++ix;
+                ++iy;
             }
-            ++iy;
         }
 
         let self_width = cell_width * 1.5;
         let self_height = cell_height * 1.5;
-        let [x, y] = translate(self_ix, self_iy);
+        [x, y] = translate(self_ix, self_iy);
         ctx.drawImage(self, x - (self_width - cell_width) / 2, y - (self_height - cell_height) / 2, self_width, self_height);
 
         let delta_time = (new_date - old_date);
@@ -611,7 +634,14 @@ function main()
         }
         self_ix += delta_ix;
         self_iy += delta_iy;
- 
+
+        if (map){
+            let [goal_ix, goal_iy] = getDoor(map, corner_end);
+            if (goal_ix == Math.floor(self_ix + 0.5) && goal_iy == Math.floor(self_iy + 0.5)){
+                new_stage();
+            }
+        }
+
         old_date = new_date;
 
         window.requestAnimationFrame(animationCallback);
