@@ -1,5 +1,5 @@
 // バージョン情報。
-const MAZE_VERSION = '0.0.6';
+const MAZE_VERSION = '0.0.7';
 const DEBUGGING = false;
 
 // マップの構成要素。
