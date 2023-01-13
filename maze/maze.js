@@ -405,16 +405,24 @@ function main()
     let wall_color, border_color;
 
     // 新しいステージ。
-    function new_stage(){
-        ++stage;
+    function new_stage(delta_stage){
+        stage += delta_stage;
         mt.setSeed(stage);
-        switch (corner_end){
-        case CORNER_LOWER_LEFT:
+        switch (stage % 4){
+        case 0:
             corner_start = CORNER_UPPER_LEFT;
             corner_end = CORNER_LOWER_RIGHT;
             break;
-        case CORNER_LOWER_RIGHT:
+        case 1:
             corner_start = CORNER_UPPER_RIGHT;
+            corner_end = CORNER_LEFT_LOWER;
+            break;
+        case 2:
+            corner_start = CORNER_RIGHT_UPPER;
+            corner_end = CORNER_RIGHT_LOWER;
+            break;
+        case 3:
+            corner_start = CORNER_LEFT_UPPER;
             corner_end = CORNER_LOWER_LEFT;
             break;
         }
@@ -426,7 +434,14 @@ function main()
             map = createMazeMap(cx, cy, corner_start, corner_end);
         } while (getRouteTurns(map) < 5 || getRouteLength(map) < (cx + cy) * 1.5);
 
-        [self_ix, self_iy] = getCorner(map, corner_start);
+        if (stage == 0){
+            openDoor(map, corner_start, true);
+        }
+
+        if (delta_stage == +1)
+            [self_ix, self_iy] = getCorner(map, corner_start);
+        else if (delta_stage == -1)
+            [self_ix, self_iy] = getCorner(map, corner_end);
         self_dx = self_dy = 0;
 
         ctx = game_screen.getContext('2d');
@@ -464,7 +479,7 @@ function main()
     }
     window.addEventListener('resize', game_screen_resize, false);
 
-    new_stage();
+    new_stage(+1);
 
     function translate(ix, iy){
         let x = inner_x + (inner_width - map_width) / 2 + cell_width * ix;
@@ -663,9 +678,14 @@ function main()
         ctx.fillText("Stage " + stage, inner_x, inner_y + inner_height, inner_width);
 
         if (map){
+            [x, y] = [Math.floor(self_ix + 0.5), Math.floor(self_iy + 0.5)];
+            let [start_ix, start_iy] = getDoor(map, corner_start);
             let [goal_ix, goal_iy] = getDoor(map, corner_end);
-            if (goal_ix == Math.floor(self_ix + 0.5) && goal_iy == Math.floor(self_iy + 0.5)){
-                new_stage();
+            if (goal_ix == x && goal_iy == y && stage < 100) {
+                new_stage(+1);
+            }
+            if (start_ix == x && start_iy == y && stage > 0){
+                new_stage(-1);
             }
         }
 
