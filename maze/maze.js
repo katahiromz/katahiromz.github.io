@@ -510,84 +510,100 @@ function main()
         if (self_locked) return;
         self_dy = -1;
         self = self_up;
+        up_button.classList.add('active');
     }, false);
     up_button.addEventListener('mouseup', function(e){
         if (self_locked) return;
         self_dy = 0;
+        up_button.classList.remove('active');
     }, false);
 
     down_button.addEventListener('mousedown', function(e){
         if (self_locked) return;
         self_dy = +1;
         self = self_down;
+        down_button.classList.add('active');
     }, false);
     down_button.addEventListener('mouseup', function(e){
         if (self_locked) return;
         self_dy = 0;
+        down_button.classList.remove('active');
     }, false);
 
     left_button.addEventListener('mousedown', function(e){
         if (self_locked) return;
         self_dx = -1;
         self = self_left;
+        left_button.classList.add('active');
     }, false);
     left_button.addEventListener('mouseup', function(e){
         if (self_locked) return;
         self_dx = 0;
+        left_button.classList.remove('active');
     }, false);
 
     right_button.addEventListener('mousedown', function(e){
         if (self_locked) return;
         self_dx = +1;
         self = self_right;
+        right_button.classList.add('active');
     }, false);
     right_button.addEventListener('mouseup', function(e){
         if (self_locked) return;
         self_dx = 0;
+        right_button.classList.remove('active');
     }, false);
 
     up_button.addEventListener('touchstart', function(e){
         if (self_locked) return;
         self_dy = -1;
         self = self_up;
+        up_button.classList.add('active');
         e.preventDefault();
     }, { passive: false });
     up_button.addEventListener('touchend', function(e){
         if (self_locked) return;
         self_dy = 0;
+        up_button.classList.remove('active');
     }, { passive: false });
 
     down_button.addEventListener('touchstart', function(e){
         if (self_locked) return;
         self_dy = +1;
         self = self_down;
+        down_button.classList.add('active');
         e.preventDefault();
     }, { passive: false });
     down_button.addEventListener('touchend', function(e){
         if (self_locked) return;
         self_dy = 0;
+        down_button.classList.remove('active');
     }, { passive: false });
 
     left_button.addEventListener('touchstart', function(e){
         if (self_locked) return;
         self_dx = -1;
         self = self_left;
+        left_button.classList.add('active');
         e.preventDefault();
     }, { passive: false });
     left_button.addEventListener('touchend', function(e){
         if (self_locked) return;
         self_dx = 0;
+        left_button.classList.remove('active');
     }, { passive: false });
 
     right_button.addEventListener('touchstart', function(e){
         if (self_locked) return;
         self_dx = +1;
         self = self_right;
+        right_button.classList.add('active');
         e.preventDefault();
     }, { passive: false });
     right_button.addEventListener('touchend', function(e){
         if (self_locked) return;
         self_dx = 0;
+        right_button.classList.remove('active');
     }, { passive: false });
 
     window.addEventListener("keydown", function(e){
@@ -599,21 +615,25 @@ function main()
         case 38: // up:
             self_dy = -1;
             self = self_up;
+            up_button.classList.add('active');
             handled = true;
             break;
         case 40: // down:
             self_dy = +1;
             self = self_down;
+            down_button.classList.add('active');
             handled = true;
             break;
         case 37: // left
             self_dx = -1;
             self = self_left;
+            left_button.classList.add('active');
             handled = true;
             break;
         case 39: // right
             self_dx = +1;
             self = self_right;
+            right_button.classList.add('active');
             handled = true;
             break;
         }
@@ -626,6 +646,10 @@ function main()
         if (self_locked) return;
         self_dx = 0;
         self_dy = 0;
+        up_button.classList.remove('active');
+        down_button.classList.remove('active');
+        left_button.classList.remove('active');
+        right_button.classList.remove('active');
     }, false);
 
     // 時間。
