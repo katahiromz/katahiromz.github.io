@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 8;
-const VERSION = '3.2.7';
+const VERSION = '3.2.8';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -21,6 +21,11 @@ const TEXT_FORBIDDEN = 'Forbidden';
 const TEXT_FULLWIDTH_SPACE = '　';
 const TEXT_PERIOD = '.';
 const TEXT_PERIOD_SPACE = '. ';
+
+function AndroidMicrophoneOnReload(){
+	localStorage.setItem('AndroidMicrophoneOnReload', '1');
+	location.reload();
+}
 
 jQuery(function($){
 	let cx = 0, cy = 0;
@@ -521,8 +526,8 @@ function setMessageSizeType(value){
 		ctx.fillRect(px, py, dx, dy);
 
 		let grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * 0.5);
-		grd.addColorStop(0, 'rgba(170, 85, 255, 0.0)');
-		grd.addColorStop(1, 'rgba(170, 85, 255, 1.0)');
+		grd.addColorStop(0, 'rgba(30, 0, 0, 1.0)');
+		grd.addColorStop(1, 'rgba(30, 0, 255, 1.0)');
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
 
@@ -543,7 +548,7 @@ function setMessageSizeType(value){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#a5f';
+		ctx.fillStyle = '#55f';
 		ctx.fillRect(px, py, dx, dy);
 
 		let size = (dx + dy) * 2 / 5;
@@ -611,7 +616,7 @@ function setMessageSizeType(value){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#d5f';
+		ctx.fillStyle = '#f5f';
 		ctx.fillRect(px, py, dx, dy);
 
 		let size = (cx + cy) * 0.4;
@@ -894,7 +899,7 @@ function setMessageSizeType(value){
 					let radian = angle * (Math.PI / 180.0);
 					let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
 					let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
-					light(ctx, x0, y0, (radius * 0.1) % 30 + 10);
+					light(ctx, x0, y0, neg_mod(radius * 0.1, 30) + 10);
 				}
 			}
 		} else if (t == 5){
@@ -908,7 +913,7 @@ function setMessageSizeType(value){
 					let radian = angle * (Math.PI / 180.0);
 					let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
 					let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
-					heart(ctx, x0, y0, x0, y0 + heartSize + value % 191 / 12);
+					heart(ctx, x0, y0, x0, y0 + heartSize + neg_mod(value, 191) / 12);
 				}
 				heartSize += 5;
 			}
@@ -1535,6 +1540,12 @@ function setMessageSizeType(value){
 				location.reload();
 			}
 		}, false);
+
+		if (localStorage.getItem('AndroidMicrophoneOnReload')){
+			localStorage.removeItem('AndroidMicrophoneOnReload');
+			mic_connect();
+			microphone_label.classList.add('checked');
+		}
 	}
 
 	init();
