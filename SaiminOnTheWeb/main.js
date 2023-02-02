@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 8;
-const VERSION = '3.2.8';
+const VERSION = '3.2.9';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -35,7 +35,7 @@ jQuery(function($){
 	let counter = 0, clock = 0;
 	let ready = false;
 	let theText = '';
-	let division = -1;
+	let division = 1;
 	let speed = 45.0;
 	let sound = null;
 	let soundName = 'Magic';
