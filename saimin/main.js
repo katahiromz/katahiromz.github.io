@@ -1143,8 +1143,10 @@ function setMessageSizeType(value){
 		let dxy = (dx + dy) / 2;
 
 		let count2 = getCount();
-		let sx = qx + dxy * Math.cos(count2 * 0.1) * 0.05;
-		let sy = qy + dxy * Math.sin(count2 * 0.1) * 0.05;
+		let sx = qx + dxy * Math.cos(count2 * 0.011) * 0.005;
+		let sy = qy + dxy * Math.sin(count2 * 0.011) * 0.005;
+		let tx = qx + dxy * Math.cos(count2 * 0.03) * 0.005;
+		let ty = qy + dxy * Math.sin(count2 * 0.03) * 0.005;
 		let delta1 = dxy / 50;
 		ctx.beginPath();
 		for (let i = 0; i < dxy; i += 2 * delta1){
@@ -1153,8 +1155,12 @@ function setMessageSizeType(value){
 		}
 		ctx.clip();
 
+		let ratio = 0.01;
+
 		counter = -counter;
-		drawPic1(ctx, px - dxy * 0.1, py, dx + dxy * 0.1, dy, t);
+		counter *= 0.3;
+		drawPic1(ctx, px - dxy * ratio, py, dx + dxy * ratio, dy, t);
+		counter /= 0.3;
 		counter = -counter;
 
 		ctx.restore();
@@ -1162,12 +1168,12 @@ function setMessageSizeType(value){
 
 		ctx.beginPath();
 		for (let i = delta1; i < dxy; i += 2 * delta1){
-			ctx.arc(sx, sy, i, 0, Math.PI * 2, false);
-			ctx.arc(sx, sy, i + delta1, 0, Math.PI * 2, true);
+			ctx.arc(tx, ty, i, 0, Math.PI * 2, false);
+			ctx.arc(tx, ty, i + delta1, 0, Math.PI * 2, true);
 		}
 		ctx.clip();
 
-		drawPic1(ctx, px, py, dx, dy, t);
+		drawPic1(ctx, px + dxy * ratio, py, dx - dxy * ratio, dy, t);
 
 		ctx.restore();
 	}
