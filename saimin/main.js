@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
-const NUM_TYPE = 8;
-const VERSION = '3.2.9';
+const NUM_TYPE = 9;
+const VERSION = '3.3.0';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -449,9 +449,9 @@ function setMessageSizeType(value){
 		});
 	}
 
-	function circle(ctx, x, y, radius, is_fill = true){
+	function circle(ctx, x, y, radius, is_fill = true, is_reverse = false){
 		ctx.beginPath();
-		ctx.arc(x, y, Math.abs(radius), 0, 2 * Math.PI);
+		ctx.arc(x, y, Math.abs(radius), 0, 2 * Math.PI, is_reverse);
 		ctx.closePath();
 		if (is_fill)
 			ctx.fill();
@@ -1135,6 +1135,43 @@ function setMessageSizeType(value){
 		ctx.restore();
 	}
 
+	function drawPic9(ctx, px, py, dx, dy, t){
+		ctx.save();
+
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
+
+		let count2 = getCount();
+		let sx = qx + dxy * Math.cos(count2 * 0.1) * 0.05;
+		let sy = qy + dxy * Math.sin(count2 * 0.1) * 0.05;
+		let delta1 = dxy / 50;
+		ctx.beginPath();
+		for (let i = 0; i < dxy; i += 2 * delta1){
+			ctx.arc(sx, sy, i, 0, Math.PI * 2, false);
+			ctx.arc(sx, sy, i + delta1, 0, Math.PI * 2, true);
+		}
+		ctx.clip();
+
+		counter = -counter;
+		drawPic1(ctx, px - dxy * 0.1, py, dx + dxy * 0.1, dy, t);
+		counter = -counter;
+
+		ctx.restore();
+		ctx.save();
+
+		ctx.beginPath();
+		for (let i = delta1; i < dxy; i += 2 * delta1){
+			ctx.arc(sx, sy, i, 0, Math.PI * 2, false);
+			ctx.arc(sx, sy, i + delta1, 0, Math.PI * 2, true);
+		}
+		ctx.clip();
+
+		drawPic1(ctx, px, py, dx, dy, t);
+
+		ctx.restore();
+	}
+
 	function drawPic(ctx, px, py, cx, cy){
 		switch (type){
 		case 0:
@@ -1164,6 +1201,9 @@ function setMessageSizeType(value){
 			break;
 		case 8:
 			drawPic8(ctx, px, py, cx, cy, type);
+			break;
+		case 9:
+			drawPic9(ctx, px, py, cx, cy, type);
 			break;
 		}
 	}
