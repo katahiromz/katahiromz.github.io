@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 9;
-const VERSION = '3.3.0';
+const VERSION = '3.3.1';
 const DEBUG = true;
 
 // {{language-specific}}
@@ -1143,11 +1143,11 @@ function setMessageSizeType(value){
 		let dxy = (dx + dy) / 2;
 
 		let count2 = getCount();
-		let sx = qx + dxy * Math.cos(count2 * 0.011) * 0.005;
-		let sy = qy + dxy * Math.sin(count2 * 0.011) * 0.005;
-		let tx = qx + dxy * Math.cos(count2 * 0.03) * 0.005;
-		let ty = qy + dxy * Math.sin(count2 * 0.03) * 0.005;
-		let delta1 = dxy / 50;
+		let sx = qx + dxy * Math.cos(count2 * 0.01) * 0.0015;
+		let sy = qy + dxy * Math.sin(count2 * 0.01) * 0.0015;
+		let tx = qx + dxy * Math.cos(count2 * 0.01) * 0.0025;
+		let ty = qy + dxy * Math.sin(count2 * 0.01) * 0.0025;
+		let delta1 = dxy / 12;
 		ctx.beginPath();
 		for (let i = 0; i < dxy; i += 2 * delta1){
 			ctx.arc(sx, sy, i, 0, Math.PI * 2, false);
@@ -1158,9 +1158,7 @@ function setMessageSizeType(value){
 		let ratio = 0.01;
 
 		counter = -counter;
-		counter *= 0.3;
-		drawPic1(ctx, px - dxy * ratio, py, dx + dxy * ratio, dy, t);
-		counter /= 0.3;
+		drawPic1(ctx, px, py, dx, dy, t);
 		counter = -counter;
 
 		ctx.restore();
@@ -1173,7 +1171,7 @@ function setMessageSizeType(value){
 		}
 		ctx.clip();
 
-		drawPic1(ctx, px + dxy * ratio, py, dx - dxy * ratio, dy, t);
+		drawPic1(ctx, px, py, dx, dy, t);
 
 		ctx.restore();
 	}
