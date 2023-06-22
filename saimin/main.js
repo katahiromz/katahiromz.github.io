@@ -245,10 +245,10 @@ jQuery(function($){
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
 			$('#appearance_type').text('映像の種類:');
 			$('#type_select option[value="0"]').text('画0: 初期画面');
-			$('#type_select option[value="1"]').text('画1: 渦巻き');
+			$('#type_select option[value="1"]').text('画1: ピンク色の渦巻き');
 			$('#type_select option[value="2"]').text('画2: 同心円状');
 			$('#type_select option[value="3"]').text('画3: 回る目玉');
-			$('#type_select option[value="4"]').text('画4: 広がる虹色(光)');
+			$('#type_select option[value="4"]').text('画4: 白黒の渦巻き');
 			$('#type_select option[value="5"]').text('画5: 広がる虹色(ハート)');
 			$('#type_select option[value="6"]').text('画6: 五円玉');
 			$('#type_select option[value="7"]').text('画7: ぼわんぼわん');
@@ -308,12 +308,12 @@ jQuery(function($){
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
 			$('#appearance_type').text('The type of picture:');
 			$('#type_select option[value="0"]').text('pic0: Initial Screen');
-			$('#type_select option[value="1"]').text('pic1: Spiral');
+			$('#type_select option[value="1"]').text('pic1: Pink Spiral');
 			$('#type_select option[value="2"]').text('pic2: Concentric Circles');
-			$('#type_select option[value="3"]').text('pic3: The eyes');
-			$('#type_select option[value="4"]').text('pic4: Spreading Rainbow (Lights)');
+			$('#type_select option[value="3"]').text('pic3: The Eyes');
+			$('#type_select option[value="4"]').text('pic4: Black and White Spiral');
 			$('#type_select option[value="5"]').text('pic5: Spreading Rainbow (Hearts)');
-			$('#type_select option[value="6"]').text('pic6: 5-yen coin');
+			$('#type_select option[value="6"]').text('pic6: 5-Yen Coin');
 			$('#type_select option[value="7"]').text('pic7: Clamor Clamor');
 			$('#type_select option[value="8"]').text('pic8: Crazy Colors');
 			$('#type_select option[value="9"]').text('pic9: Mixed Spirals');
@@ -1103,8 +1103,55 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	// pic4/pic5: Spreading Rainbow
-	function drawPic4_5(ctx, px, py, dx, dy, t){
+	// pic4: Black and White Spiral
+	function drawPic4(ctx, px, py, dx, dy, t){
+		ctx.save();
+
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
+
+		ctx.beginPath();
+		ctx.moveTo(px, py);
+		ctx.lineTo(px + dx, py);
+		ctx.lineTo(px + dx, py + dy);
+		ctx.lineTo(px, py + dy);
+		ctx.closePath();
+		ctx.clip();
+
+		ctx.fillStyle = 'black';
+		ctx.fillRect(px, py, dx, dy);
+
+		let count2 = getCount();
+		let factor = count2 * 0.5;
+
+		let isLarge = isLargeDisplay();
+		ctx.fillStyle = 'white';
+		ctx.strokeStyle = 'white';
+
+		let radius = 1;
+		for (let radian = 0; radian < 360;){
+			ctx.beginPath();
+			let x0 = qx + radius * Math.cos(radian - factor);
+			let y0 = qy + radius * Math.sin(radian - factor);
+			ctx.moveTo(x0, y0);
+			radius *= 1.007;
+			radian += 0.1;
+			let x1 = qx + radius * Math.cos(radian - factor);
+			let y1 = qy + radius * Math.sin(radian - factor);
+			ctx.lineTo(x1, y1);
+			ctx.lineWidth = radius * 0.2;
+			ctx.lineCap = "round";
+			ctx.stroke();
+		}
+
+		circle(ctx, qx, qy, dxy * 0.005, true);
+
+		ctx.restore();
+	}
+
+	// pic5: Spreading Rainbow
+	function drawPic5(ctx, px, py, dx, dy, t){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1477,10 +1524,10 @@ jQuery(function($){
 			drawPic3(ctx, px, py, cx, cy);
 			break;
 		case 4:
-			drawPic4_5(ctx, px, py, cx, cy, type);
+			drawPic4(ctx, px, py, cx, cy, type);
 			break;
 		case 5:
-			drawPic4_5(ctx, px, py, cx, cy, type);
+			drawPic5(ctx, px, py, cx, cy, type);
 			break;
 		case 6:
 			drawPic6(ctx, px, py, cx, cy, type);
