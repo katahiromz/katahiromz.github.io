@@ -51,6 +51,7 @@ When a keyboard is connected, the following operations are available.
 - Press "M" to turn on/off the microphone (it needs permission).
 - Press "T" to open the message settings.
 - Press "S" to speak the current message automatically.
+- Press "X" to pause.
 
 Copyright (c) 2022 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
@@ -105,6 +106,7 @@ Hypnosis KraKra
 - 「M」を押すとマイクのON/OFFを切り替えます(権限が必要です)。
 - 「T」を押すとメッセージの設定を開きます。
 - 「S」を押すと現在のメッセージを自動音声でしゃべります。
+- 「X」を押すと一時停止します。
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
@@ -588,7 +590,10 @@ jQuery(function($){
 		let lang = localStorage.getItem('saiminLanguage3');
 		let first_time = false;
 		if (!lang) {
-			lang = 'en';
+			if (navigator.language == 'ja' || navigator.language == 'ja-JP')
+				lang = 'ja';
+			else
+				lang = 'en';
 			first_time = true;
 		}
 		language_select2.value = lang;
