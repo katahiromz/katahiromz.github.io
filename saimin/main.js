@@ -302,7 +302,7 @@ jQuery(function($){
 			$('#question_img').attr('src', 'images/question.png');
 			$('#config_language').text('Language (言語):');
 			$('#language_select option[value="en"]').text('English (英語)');
-			$('#language_select option[value="ja"]').text('Japanese');
+			$('#language_select option[value="ja"]').text('Japanese (日本語)');
 			$('#config_language2').text('Language (言語):');
 			$('#language_select2 option[value="en"]').text('English (英語)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
