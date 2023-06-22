@@ -806,7 +806,7 @@ jQuery(function($){
 		ctx.bezierCurveTo(x0 - r05, y0 - r025, x0 - r05, y0 + r025, x0, y0 + r * 1.3);
 		ctx.bezierCurveTo(x0 + r05, y0 + r025, x0 + r05, y0 - r025, x0, y0 - r * 1.3);
 		ctx.closePath();
-		ctx.fillStyle = "#fff";
+		ctx.fillStyle = "#fcc";
 		ctx.fill();
 		ctx.strokeStyle = "#c66";
 		ctx.lineWidth = r * 0.15;
@@ -1048,15 +1048,14 @@ jQuery(function($){
 			let y1 = qy + cxy * Math.sin(radian);
 			ctx.lineTo(x1, y1);
 			let grd = ctx.createRadialGradient(qx, qy, 0, (x0 + x1) / 2, (y0 + y1) / 2, cxy);
-			let factor2 = Math.abs(Math.sin(factor * 3));
-			grd.addColorStop(0.05, `rgb(${factor2 * 192 % 255 + 191}, 255, 255)`);
-			grd.addColorStop(0.45 * factor2 / 2, 'rgb(255, 255, 0)');
-			grd.addColorStop(1.0, 'rgb(255, 0, 255)');
+			let factor2 = Math.abs(1 - Math.sin(factor * 2));
+			grd.addColorStop(0.05 + factor2 * 0.05, `rgb(255, ${factor2 * 50 + 55}, ${factor2 * 200 + 55})`);
+			grd.addColorStop(1.0, `rgb(${(255 - factor2 * 255) % 255}, 191, ${(191 - factor2 * 191) % 191})`);
 			ctx.fillStyle = grd;
 			ctx.fill();
 			ctx.moveTo(qx, qy);
 			ctx.lineTo((x0 + x1) / 2, (y0 + y1) / 2);
-			ctx.strokeStyle = "#fff";
+			ctx.strokeStyle = `rgb(255, 200, ${factor2 * 192}`;
 			ctx.lineWidth = 10;
 			ctx.stroke();
 			++k;
@@ -1066,7 +1065,7 @@ jQuery(function($){
 
 		ctx.lineWidth = 10;
 		let i = 0;
-		ctx.strokeStyle = '#f00';
+		ctx.strokeStyle = 'rgba(255, 0, 0, 50%)';
 		for (let r = neg_mod(count2 * 2, 100); r < cxy; r += 100){
 			circle(ctx, qx, qy, r, false);
 			++i;
@@ -1079,7 +1078,7 @@ jQuery(function($){
 		}
 
 		let factor3 = (0.3 + Math.sin(count2 * 0.05) * 0.3);
-		eye2(ctx, qx, qy, cxy / 10, (1.0 + factor3));
+		eye2(ctx, qx, qy, cxy / 8, (1.0 + factor3));
 		ctx.fillStyle = '#f00';
 		factor3 = 0.5 + Math.abs(factor3);
 		heart(ctx, qx, qy - cxy / 25 * factor3, qx, qy + cxy / 25 * factor3);
