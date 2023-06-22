@@ -797,7 +797,7 @@ jQuery(function($){
 		ctx.lineTo(x1 + udx, y1 + udy);
 		ctx.lineTo(x1 - udx, y1 - udy);
 		ctx.fill();
-		circle2(ctx, x0, y0, lineWidth / 2, true, 12);
+		circle2(ctx, x0, y0, lineWidth / 2, true, 15);
 	}
 
 	function heart(ctx, x0, y0, x1, y1){
@@ -1153,25 +1153,21 @@ jQuery(function($){
 		ctx.fillStyle = 'black';
 		ctx.fillRect(px, py, dx, dy);
 
-		let count2 = getCount();
-		let factor = count2 * 0.5;
-
-		let isLarge = isLargeDisplay();
-		ctx.fillStyle = 'white';
-		ctx.strokeStyle = 'white';
+		let factor = getCount() * 0.5;
 
 		let radius = 1;
-		for (let radian = 0; radian < 360;){
-			let x0 = qx + radius * Math.cos(radian - factor);
-			let y0 = qy + radius * Math.sin(radian - factor);
-			radius *= 1.007;
-			radian += 0.1;
-			let x1 = qx + radius * Math.cos(radian - factor);
-			let y1 = qy + radius * Math.sin(radian - factor);
-			line2(ctx, x0, y0, x1, y1, radius * 0.2);
+		ctx.fillStyle = 'white';
+		for (let radian = 0; radian < 60;){
+			const radian2 = radian - factor;
+			const x0 = qx + radius * Math.cos(radian2);
+			const y0 = qy + radius * Math.sin(radian2);
+			radius *= 1.009;
+			radian += 0.08;
+			const radian3 = radian - factor;
+			const x1 = qx + radius * Math.cos(radian3);
+			const y1 = qy + radius * Math.sin(radian3);
+			line2(ctx, x0, y0, x1, y1, radius * 0.3);
 		}
-
-		circle(ctx, qx, qy, dxy * 0.005, true);
 
 		ctx.restore();
 	}
