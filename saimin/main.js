@@ -2,7 +2,6 @@
 
 const NUM_TYPE = 9;
 const VERSION = '3.3.4';
-const DEBUG = true;
 
 const NOTICE_EN = `=================================
 催眠くらくら
