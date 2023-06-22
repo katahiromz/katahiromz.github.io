@@ -788,13 +788,11 @@ jQuery(function($){
 		ctx.bezierCurveTo(x0 - r025, y0 - r05, x0 + r025, y0 - r05, x0 + r, y0);
 		ctx.bezierCurveTo(x0 + r025, y0 + r05, x0 - r025, y0 + r05, x0 - r, y0);
 		ctx.closePath();
-		ctx.fillStyle = "rgba(100%,100%,100%,80%)";
-		ctx.fill();
-		ctx.strokeStyle = "rgba(0%,0%,0%,80%)";
+		ctx.strokeStyle = "#000";
 		ctx.lineWidth = r * 0.15;
 		ctx.stroke();
 
-		ctx.fillStyle = "black";
+		ctx.fillStyle = "#000";
 		ctx.save();
 		circle(ctx, x0, y0, r / 3 * opened, true);
 		ctx.restore();
@@ -808,13 +806,13 @@ jQuery(function($){
 		ctx.bezierCurveTo(x0 - r05, y0 - r025, x0 - r05, y0 + r025, x0, y0 + r * 1.3);
 		ctx.bezierCurveTo(x0 + r05, y0 + r025, x0 + r05, y0 - r025, x0, y0 - r * 1.3);
 		ctx.closePath();
-		ctx.fillStyle = "rgba(100%,100%,100%,80%)";
+		ctx.fillStyle = "#fff";
 		ctx.fill();
-		ctx.strokeStyle = "rgba(0%,0%,0%,80%)";
+		ctx.strokeStyle = "#c66";
 		ctx.lineWidth = r * 0.15;
 		ctx.stroke();
 
-		ctx.fillStyle = "black";
+		ctx.fillStyle = "#000";
 		ctx.save();
 		circle(ctx, x0, y0, r / 3 * opened, true);
 		ctx.restore();
@@ -873,7 +871,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#f6f';
+		ctx.fillStyle = '#f0f';
 		ctx.fillRect(px, py, dx, dy);
 
 		let size = (dx + dy) * 2 / 5;
@@ -942,7 +940,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#f6e';
+		ctx.fillStyle = '#fff';
 		ctx.fillRect(px, py, dx, dy);
 
 		let size = (cx + cy) * 0.4;
@@ -1009,8 +1007,6 @@ jQuery(function($){
 		return [r, g, b];
 	}
 
-	let random_value = 0;
-
 	// pic3: The eyes
 	function drawPic3(ctx, px, py, dx, dy){
 		ctx.save();
@@ -1027,94 +1023,51 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		//ctx.fillStyle = 'white';
-		//ctx.fillRect(px, py, dx, dy);
+		ctx.fillStyle = 'white';
+		ctx.fillRect(px, py, dx, dy);
 
 		let count2 = getCount();
 		let factor = count2 * 0.03;
 
-		let size = 32;
-		if (isLargeDisplay())
-			size *= 2;
-		let nCount2 = 0;
 		let cxy = ((cx >= cy) ? cy : cx) * 1.2;
-		let xy0 = (cxy + size) - (cxy + size) % size;
-		let comp0 = new Complex({abs:1.0, arg:factor * 1.0});
-		for (let y = -xy0; y < cxy + size; y += size){
-			let nCount = nCount2 % 3;
-			for (let x = -xy0; x < cxy + size; x += size){
-				let h, s = 1.0, v = 1.0;
-				switch (nCount % 3){
-				case 0:
-					h = (0.2 + factor * 1.2) % 1.0;
-					break;
-				case 1:
-					h = (0.4 + factor * 1.2) % 1.0;
-					break;
-				case 2:
-					h = (0.8 + factor * 1.2) % 1.0;
-					break;
-				}
-				if (h < 0)
-					h += 1.0;
-				let r, g, b;
-				[r, g, b] = hsv2rgb(h, s, v);
+		const colors = ['#f0f', '#ff0', '#0f0', '#0ff', '#00c', '#f0f'];
 
-				if (r > 0.8)
-					r = 1.0;
-				if (g > 0.8)
-					g = 1.0;
-				if (b > 0.8)
-					b = 1.0;
-
-				ctx.fillStyle = `rgb(${r * 255},${g * 255},${b * 255})`;
-
-				let x0 = x - size / 2;
-				let y0 = y - size / 2;
-				let x1 = x0 + size;
-				let y1 = y0 + size;
-				ctx.beginPath();
-				let comp1 = new Complex({re:x0, im:y0});
-				comp1 = comp1.mul(comp0);
-				ctx.moveTo(qx + comp1.re, qy + comp1.im);
-				let comp2 = new Complex({re:x0, im:y1});
-				comp2 = comp2.mul(comp0);
-				ctx.lineTo(qx + comp2.re, qy + comp2.im);
-				let comp3 = new Complex({re:x1, im:y1});
-				comp3 = comp3.mul(comp0);
-				ctx.lineTo(qx + comp3.re, qy + comp3.im);
-				let comp4 = new Complex({re:x1, im:y0});
-				comp4 = comp4.mul(comp0);
-				ctx.lineTo(qx + comp4.re, qy + comp4.im);
-				ctx.fill();
-
-				if (x >= 0)
-					nCount = (nCount + 2) % 3;
-				else
-					++nCount;
-			}
-			if (y >= 0)
-				nCount2 = (nCount2 + 2) % 3;
-			else
-				++nCount2;
+		let k = factor * 5;
+		let r_delta = 30;
+		let flag = (factor % 10) / 0.5;
+		for (let r = 0; r < 360;){
+			let radian = r * Math.PI / 180 + factor;
+			ctx.beginPath();
+			ctx.moveTo(qx, qy);
+			let x0 = qx + cxy * Math.cos(radian);
+			let y0 = qy + cxy * Math.sin(radian);
+			ctx.lineTo(x0, y0);
+			r += r_delta;
+			radian = r * Math.PI / 180 + factor;
+			let x1 = qx + cxy * Math.cos(radian);
+			let y1 = qy + cxy * Math.sin(radian);
+			ctx.lineTo(x1, y1);
+			let grd = ctx.createRadialGradient(qx, qy, 0, (x0 + x1) / 2, (y0 + y1) / 2, cxy);
+			let factor2 = Math.abs(Math.sin(factor * 3));
+			grd.addColorStop(0.05, `rgb(${factor2 * 192 % 255 + 191}, 255, 255)`);
+			grd.addColorStop(0.45 * factor2 / 2, 'rgb(255, 255, 0)');
+			grd.addColorStop(1.0, 'rgb(255, 0, 255)');
+			ctx.fillStyle = grd;
+			ctx.fill();
+			ctx.moveTo(qx, qy);
+			ctx.lineTo((x0 + x1) / 2, (y0 + y1) / 2);
+			ctx.strokeStyle = "#fff";
+			ctx.lineWidth = 10;
+			ctx.stroke();
+			++k;
 		}
 
 		dxy = (dx >= dy) ? dx : dy;
 
-		let grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.6);
-		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
-		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
-		ctx.fillStyle = grd;
-		circle(ctx, qx, qy, dxy, true);
-
 		ctx.lineWidth = 10;
 		let i = 0;
+		ctx.strokeStyle = '#f00';
 		for (let r = neg_mod(count2 * 2, 100); r < cxy; r += 100){
-			if (i < 3){
-				ctx.strokeStyle = 'rgba(255, 20, 29, 0.9)';
-			} else {
-				ctx.strokeStyle = 'rgba(255, 20, 29, 0.4)';
-			}
 			circle(ctx, qx, qy, r, false);
 			++i;
 		}
@@ -1125,14 +1078,10 @@ jQuery(function($){
 			opened = 0.6 + 0.4 * Math.abs(Math.sin(f * Math.PI));
 		}
 
-		if (random_value > 1.0)
-			random_value -= 0.1 * Math.random();
-		else
-			random_value += 0.2 * Math.random();
-		let factor3 = (0.3 + Math.sin(count2 * 0.05 * random_value) * 0.3);
+		let factor3 = (0.3 + Math.sin(count2 * 0.05) * 0.3);
 		eye2(ctx, qx, qy, cxy / 10, (1.0 + factor3));
-		ctx.fillStyle = '#f66';
-		factor3 = Math.abs(factor3);
+		ctx.fillStyle = '#f00';
+		factor3 = 0.5 + Math.abs(factor3);
 		heart(ctx, qx, qy - cxy / 25 * factor3, qx, qy + cxy / 25 * factor3);
 
 		const N = 4;
@@ -1142,7 +1091,7 @@ jQuery(function($){
 			let x = qx + cxy * Math.cos(radian) * 0.3;
 			let y = qy + cxy * Math.sin(radian) * 0.3;
 			eye(ctx, x, y, cxy / 10, opened);
-			ctx.fillStyle = '#f66';
+			ctx.fillStyle = '#f00';
 			heart(ctx, x, y - cxy * opened / 50, x, y + cxy * opened / 50);
 			radian += delta;
 		}
@@ -1430,16 +1379,16 @@ jQuery(function($){
 			qy += 40 * Math.sin(count2 * 0.1);
 		}
 
-		const rotation = 8, width = dxy * 0.1;
+		const rotation = 7.8, width = dxy * 0.1;
 		let calc_point = function(radius, radian){
 			let x = qx + radius * Math.cos(radian);
 			let y = qy + radius * Math.sin(radian);
 			return [x, y];
 		}
-		const colors = ['hsl(0, 100%, 50%)', 'hsl(300, 100%, 50%)', 'hsl(270, 100%, 50%)', 'hsl(240, 100%, 50%)', 'hsl(120, 100%, 50%)', 'hsl(100, 100%, 50%)'];
-		const factor = count2 * 0.6;
-		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.28){
-			const radian1 = radian0 + 0.29;
+		const colors = ['#f00', '#ff0', '#0f0', '#0ff', '#00c', '#f0f'];
+		const factor = count2 * 0.5;
+		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.12){
+			const radian1 = radian0 + 0.15;
 			const radius0 = width * radian0 / (2 * Math.PI);
 			const radius1 = radius0 + width * 1.03;
 			const [x0, y0] = calc_point(radius0, radian0 - factor);
@@ -1447,13 +1396,13 @@ jQuery(function($){
 			const [x2, y2] = calc_point(radius1, radian1 - factor);
 			const [x3, y3] = calc_point(radius0, radian1 - factor);
 			let g = ctx.createLinearGradient(x0, y0, x1, y1);
-			g.addColorStop(0 / 6, colors[0]);
-			g.addColorStop(1 / 6, colors[1]);
-			g.addColorStop(2 / 6, colors[2]);
-			g.addColorStop(3 / 6, colors[3]);
-			g.addColorStop(4 / 6, colors[4]);
-			g.addColorStop(5 / 6, colors[5]);
-			g.addColorStop(6 / 6, colors[0]);
+			g.addColorStop(0 / 7, colors[0]);
+			g.addColorStop(1 / 7, colors[1]);
+			g.addColorStop(2 / 7, colors[2]);
+			g.addColorStop(3 / 7, colors[3]);
+			g.addColorStop(4 / 7, colors[4]);
+			g.addColorStop(5 / 7, colors[5]);
+			g.addColorStop(6 / 7, colors[0]);
 			ctx.fillStyle = g;
 			ctx.beginPath();
 			ctx.lineTo(x0, y0);
