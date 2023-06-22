@@ -137,6 +137,7 @@ jQuery(function($){
 	let speedType = 'normal';
 	let coin = new Image();
 	let rotationType = 'normal';
+	let stopping = false;
 
 	coin.src = 'images/coin5yen.png';
 
@@ -1607,6 +1608,8 @@ jQuery(function($){
 		let diff = (new_time - old_time) / 1000.0;
 		if (rotationType == 'counter')
 			diff = -diff;
+		if (stopping)
+			diff = 0;
 		counter += diff * speed;
 		old_time = new_time;
 
@@ -1980,6 +1983,10 @@ jQuery(function($){
 			}
 			if (e.key == 's' || e.key == 'S') {
 				speech_checkbox.click();
+				return;
+			}
+			if (e.key == 'x' || e.key == 'X') {
+				stopping = !stopping;
 				return;
 			}
 			//alert(e.key);
