@@ -3,10 +3,10 @@
 const NUM_TYPE = 9;
 const VERSION = '3.3.4';
 
-const NOTICE_EN = `=================================
+const NOTICE_EN = `=========================
 催眠くらくら
 Hypnosis KraKra
-=================================
+=========================
 
 This software is an application to enjoy hypnotic moving pictures.
 It generates hypnosis video in real time without using any video files.
@@ -58,10 +58,10 @@ Copyright (c) 2018 Robert Eisele
 Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
-const NOTICE_JA = `=================================
+const NOTICE_JA = `=========================
 催眠くらくら
 Hypnosis KraKra
-=================================
+=========================
 
 本ソフトウェアは、催眠っぽい映像を楽しむアプリです。
 動画ファイルを一切使わず、リアルタイムで催眠映像を生成します。
