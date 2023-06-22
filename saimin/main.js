@@ -769,6 +769,21 @@ jQuery(function($){
 		ctx.stroke();
 	}
 
+	function line2(ctx, x0, y0, x1, y1, lineWidth){
+		let dx = x1 - x0, dy = y1 - y0;
+		let len = Math.sqrt(dx * dx + dy * dy);
+		let ux = dx / len, uy = dy / len;
+		let udx = uy * lineWidth / 2, udy = -ux * lineWidth / 2;
+		ctx.beginPath();
+		ctx.moveTo(x0 - udx, y0 - udy);
+		ctx.lineTo(x0 + udx, y0 + udy);
+		ctx.lineTo(x1 + udx, y1 + udy);
+		ctx.lineTo(x1 - udx, y1 - udy);
+		ctx.fill();
+		circle(ctx, x0, y0, lineWidth / 2, true);
+		circle(ctx, x1, y1, lineWidth / 2, true);
+	}
+
 	function heart(ctx, x0, y0, x1, y1){
 		let x2 = (0.6 * x0 + 0.4 * x1);
 		let y2 = (0.6 * y0 + 0.4 * y1);
@@ -1131,18 +1146,13 @@ jQuery(function($){
 
 		let radius = 1;
 		for (let radian = 0; radian < 360;){
-			ctx.beginPath();
 			let x0 = qx + radius * Math.cos(radian - factor);
 			let y0 = qy + radius * Math.sin(radian - factor);
-			ctx.moveTo(x0, y0);
 			radius *= 1.007;
 			radian += 0.1;
 			let x1 = qx + radius * Math.cos(radian - factor);
 			let y1 = qy + radius * Math.sin(radian - factor);
-			ctx.lineTo(x1, y1);
-			ctx.lineWidth = radius * 0.2;
-			ctx.lineCap = "round";
-			ctx.stroke();
+			line2(ctx, x0, y0, x1, y1, radius * 0.2);
 		}
 
 		circle(ctx, qx, qy, dxy * 0.005, true);
