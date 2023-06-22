@@ -1,12 +1,12 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 9;
-const VERSION = '3.3.3';
+const VERSION = '3.3.4';
 const DEBUG = true;
 
 const NOTICE_EN = `=================================
-催眠くらくら ハイブリッド
-Hypnosis KraKra Hybrid
+催眠くらくら
+Hypnosis KraKra
 =================================
 
 This software is an application to enjoy hypnotic moving pictures.
@@ -40,14 +40,27 @@ How you use it is up to you.
 - The 'gear' button allows for general settings.
 - When you trace the screen, a sparkle appears to attract one's attention.
 
+[(Keyboard Operation)]
+
+When a keyboard is connected, the following operations are available.
+
+- Press "0" to "9" to switch pictures.
+- Press "G" to open the general settings.
+- Press "H" to open the version information.
+- Press "P" to open appearance settings.
+- Press "N" to play sound.
+- Press "M" to turn on/off the microphone (it needs permission).
+- Press "T" to open the message settings.
+- Press "S" to speak the current message automatically.
+
 Copyright (c) 2022 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
 Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 const NOTICE_JA = `=================================
-催眠くらくら ハイブリッド
-Hypnosis KraKra Hybrid
+催眠くらくら
+Hypnosis KraKra
 =================================
 
 本ソフトウェアは、催眠っぽい映像を楽しむアプリです。
@@ -80,6 +93,19 @@ Hypnosis KraKra Hybrid
 - 「ふきだし」ボタンでメッセージを自動音声でしゃべります。
 - 「歯車」ボタンで全般設定ができます。
 - 画面をなぞると、きらめきが表示され、相手の注意を引くことができます。
+
+【キーボード操作】
+
+キーボードを接続すると次のような操作ができます。
+
+- 「0」～「9」を押すと、映像を切り替わります。
+- 「G」を押すと全般設定が開きます。
+- 「H」を押すとバージョン情報を開きます。
+- 「P」を押すと見た目の設定を開きます。
+- 「N」を押すと音を鳴らします。
+- 「M」を押すとマイクのON/OFFを切り替えます(権限が必要です)。
+- 「T」を押すとメッセージの設定を開きます。
+- 「S」を押すと現在のメッセージを自動音声でしゃべります。
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
@@ -216,16 +242,16 @@ jQuery(function($){
 			$('#language_select2 option[value="en"]').text('English (英語)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
 			$('#appearance_type').text('映像の種類:');
-			$('#type_select option[value="0"]').text('画0');
-			$('#type_select option[value="1"]').text('画1');
-			$('#type_select option[value="2"]').text('画2');
-			$('#type_select option[value="3"]').text('画3');
-			$('#type_select option[value="4"]').text('画4');
-			$('#type_select option[value="5"]').text('画5');
-			$('#type_select option[value="6"]').text('画6');
-			$('#type_select option[value="7"]').text('画7');
-			$('#type_select option[value="8"]').text('画8');
-			$('#type_select option[value="9"]').text('画9');
+			$('#type_select option[value="0"]').text('画0: 初期画面');
+			$('#type_select option[value="1"]').text('画1: 渦巻き');
+			$('#type_select option[value="2"]').text('画2: 同心円状');
+			$('#type_select option[value="3"]').text('画3: 回る目玉');
+			$('#type_select option[value="4"]').text('画4: 広がる虹色(光)');
+			$('#type_select option[value="5"]').text('画5: 広がる虹色(ハート)');
+			$('#type_select option[value="6"]').text('画6: 五円玉');
+			$('#type_select option[value="7"]').text('画7: ぼわんぼわん');
+			$('#type_select option[value="8"]').text('画8: 狂気の色');
+			$('#type_select option[value="9"]').text('画9: ミックス渦巻き');
 			$('#appearance_division').text('分割:');
 			$('#division_select option[value="-1"]').text('自動');
 			$('#division_select option[value="1"]').text('分割なし');
@@ -279,16 +305,16 @@ jQuery(function($){
 			$('#language_select2 option[value="en"]').text('English (英語)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
 			$('#appearance_type').text('The type of picture:');
-			$('#type_select option[value="0"]').text('pic0');
-			$('#type_select option[value="1"]').text('pic1');
-			$('#type_select option[value="2"]').text('pic2');
-			$('#type_select option[value="3"]').text('pic3');
-			$('#type_select option[value="4"]').text('pic4');
-			$('#type_select option[value="5"]').text('pic5');
-			$('#type_select option[value="6"]').text('pic6');
-			$('#type_select option[value="7"]').text('pic7');
-			$('#type_select option[value="8"]').text('pic8');
-			$('#type_select option[value="9"]').text('pic9');
+			$('#type_select option[value="0"]').text('pic0: Initial Screen');
+			$('#type_select option[value="1"]').text('pic1: Spiral');
+			$('#type_select option[value="2"]').text('pic2: Concentric Circles');
+			$('#type_select option[value="3"]').text('pic3: The eyes');
+			$('#type_select option[value="4"]').text('pic4: Spreading Rainbow (Lights)');
+			$('#type_select option[value="5"]').text('pic5: Spreading Rainbow (Hearts)');
+			$('#type_select option[value="6"]').text('pic6: 5-yen coin');
+			$('#type_select option[value="7"]').text('pic7: Clamor Clamor');
+			$('#type_select option[value="8"]').text('pic8: Crazy Colors');
+			$('#type_select option[value="9"]').text('pic9: Mixed Spirals');
 			$('#appearance_division').text('Splitting:');
 			$('#division_select option[value="-1"]').text('Auto');
 			$('#division_select option[value="1"]').text('No split');
@@ -484,8 +510,6 @@ jQuery(function($){
 	}
 
 	function setType(value){
-		if (!ready)
-			return;
 		type = parseInt(value);
 		if (type == 0){
 			please_tap_here.classList.remove('invisible');
@@ -545,12 +569,6 @@ jQuery(function($){
 
 	function accepted(){
 		localStorage.setItem('saiminAdultCheck3', '1');
-		let saiminType = localStorage.getItem('saiminType');
-		if (saiminType){
-			setType(parseInt(saiminType));
-		}else{
-			setType(0);
-		}
 		microphone_label.classList.remove('invisible');
 		type_select_button.classList.remove('invisible');
 		sound_button.classList.remove('invisible');
@@ -558,13 +576,9 @@ jQuery(function($){
 		config_button.classList.remove('invisible');
 		about_button.classList.remove('invisible');
 		text_button.classList.remove('invisible');
-		if (type == 0){
-			please_tap_here.classList.remove('invisible');
-		}else{
-			please_tap_here.classList.add('invisible');
-		}
 		updateVersionDisplay();
 		if (!ready) {
+			setType(0);
 			window.requestAnimationFrame(draw);
 			ready = true;
 		}
@@ -774,8 +788,33 @@ jQuery(function($){
 		ctx.bezierCurveTo(x0 - r025, y0 - r05, x0 + r025, y0 - r05, x0 + r, y0);
 		ctx.bezierCurveTo(x0 + r025, y0 + r05, x0 - r025, y0 + r05, x0 - r, y0);
 		ctx.closePath();
+		ctx.fillStyle = "rgba(100%,100%,100%,80%)";
+		ctx.fill();
+		ctx.strokeStyle = "rgba(0%,0%,0%,80%)";
+		ctx.lineWidth = r * 0.15;
 		ctx.stroke();
 
+		ctx.fillStyle = "black";
+		ctx.save();
+		circle(ctx, x0, y0, r / 3 * opened, true);
+		ctx.restore();
+	}
+
+	function eye2(ctx, x0, y0, r, opened = 1.0){
+		ctx.beginPath();
+		ctx.moveTo(x0, y0 - r * 1.3);
+		const r025 = r * 0.25;
+		const r05 = r025 * 2 * opened;
+		ctx.bezierCurveTo(x0 - r05, y0 - r025, x0 - r05, y0 + r025, x0, y0 + r * 1.3);
+		ctx.bezierCurveTo(x0 + r05, y0 + r025, x0 + r05, y0 - r025, x0, y0 - r * 1.3);
+		ctx.closePath();
+		ctx.fillStyle = "rgba(100%,100%,100%,80%)";
+		ctx.fill();
+		ctx.strokeStyle = "rgba(0%,0%,0%,80%)";
+		ctx.lineWidth = r * 0.15;
+		ctx.stroke();
+
+		ctx.fillStyle = "black";
 		ctx.save();
 		circle(ctx, x0, y0, r / 3 * opened, true);
 		ctx.restore();
@@ -799,6 +838,7 @@ jQuery(function($){
 		ctx.fill();
 	}
 
+	// pic0: Initial Screen
 	function drawPic0(ctx, px, py, dx, dy){
 		ctx.save();
 
@@ -818,6 +858,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	// pic1: Spiral
 	function drawPic1(ctx, px, py, dx, dy){
 		ctx.save();
 
@@ -836,7 +877,7 @@ jQuery(function($){
 		ctx.fillRect(px, py, dx, dy);
 
 		let size = (dx + dy) * 2 / 5;
-		let count2 = getCount();
+		let count2 = -getCount();
 		if (isLargeDisplay()){
 			qx += 60 * Math.cos(count2 * 0.1);
 			qy += 60 * Math.sin(count2 * 0.1);
@@ -877,6 +918,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	// pic2: Concentric Circles
 	function drawPic2(ctx, px, py, dx, dy, flag=true){
 		ctx.save();
 
@@ -900,7 +942,7 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = '#f3c';
+		ctx.fillStyle = '#f6e';
 		ctx.fillRect(px, py, dx, dy);
 
 		let size = (cx + cy) * 0.4;
@@ -967,6 +1009,9 @@ jQuery(function($){
 		return [r, g, b];
 	}
 
+	let random_value = 0;
+
+	// pic3: The eyes
 	function drawPic3(ctx, px, py, dx, dy){
 		ctx.save();
 
@@ -1074,29 +1119,28 @@ jQuery(function($){
 			++i;
 		}
 
-		ctx.strokeStyle = '#633';
-		if (isLargeDisplay())
-			ctx.lineWidth = 16;
-		else
-			ctx.lineWidth = 8;
-		ctx.fillStyle = '#633';
-		eye(ctx, qx, qy, cxy / 10, 1.0);
-		ctx.fillStyle = '#f66';
-		heart(ctx, qx, qy - cxy / 50, qx, qy + cxy / 50);
-
 		let opened = 1.0;
 		let f = Math.sin(Math.abs(count2 * 0.1));
 		if (f >= 0.8){
 			opened = 0.6 + 0.4 * Math.abs(Math.sin(f * Math.PI));
 		}
 
+		if (random_value > 1.0)
+			random_value -= 0.1 * Math.random();
+		else
+			random_value += 0.2 * Math.random();
+		let factor3 = (0.3 + Math.sin(count2 * 0.05 * random_value) * 0.3);
+		eye2(ctx, qx, qy, cxy / 10, (1.0 + factor3));
+		ctx.fillStyle = '#f66';
+		factor3 = Math.abs(factor3);
+		heart(ctx, qx, qy - cxy / 25 * factor3, qx, qy + cxy / 25 * factor3);
+
 		const N = 4;
 		const delta = (2 * Math.PI) / N;
-		let radian = factor;
+		let radian = factor * 1.3;
 		for (i = 0; i < N; ++i){
 			let x = qx + cxy * Math.cos(radian) * 0.3;
 			let y = qy + cxy * Math.sin(radian) * 0.3;
-			ctx.fillStyle = '#633';
 			eye(ctx, x, y, cxy / 10, opened);
 			ctx.fillStyle = '#f66';
 			heart(ctx, x, y - cxy * opened / 50, x, y + cxy * opened / 50);
@@ -1106,6 +1150,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	// pic4/pic5: Spreading Rainbow
 	function drawPic4_5(ctx, px, py, dx, dy, t){
 		ctx.save();
 
@@ -1205,6 +1250,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	// pic6: 5-yen coin
 	function drawPic6(ctx, px, py, dx, dy, t){
 		ctx.save();
 
@@ -1291,6 +1337,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	// pic7: Clamor Clamor
 	function drawPic7(ctx, px, py, dx, dy, t){
 		ctx.save();
 
@@ -1355,6 +1402,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	// pic8: Crazy Colors
 	function drawPic8(ctx, px, py, dx, dy, t){
 		ctx.save();
 
@@ -1388,10 +1436,10 @@ jQuery(function($){
 			let y = qy + radius * Math.sin(radian);
 			return [x, y];
 		}
-		const colors = ['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f'];
+		const colors = ['hsl(0, 100%, 50%)', 'hsl(300, 100%, 50%)', 'hsl(270, 100%, 50%)', 'hsl(240, 100%, 50%)', 'hsl(120, 100%, 50%)', 'hsl(100, 100%, 50%)'];
 		const factor = count2 * 0.6;
-		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.12){
-			const radian1 = radian0 + 0.15;
+		for (let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.28){
+			const radian1 = radian0 + 0.29;
 			const radius0 = width * radian0 / (2 * Math.PI);
 			const radius1 = radius0 + width * 1.03;
 			const [x0, y0] = calc_point(radius0, radian0 - factor);
@@ -1418,6 +1466,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
+	// pic9: Mixed Spirals
 	function drawPic9(ctx, px, py, dx, dy, t){
 		ctx.save();
 
@@ -1578,7 +1627,6 @@ jQuery(function($){
 
 		window.requestAnimationFrame(draw);
 	}
-
 
 	function init(){
 		cancelSpeech();
@@ -1899,6 +1947,44 @@ jQuery(function($){
 			mic_connect();
 			microphone_label.classList.add('checked');
 		}
+
+		document.body.addEventListener('keydown', function(e){
+			if (!ready || e.ctrlKey)
+				return;
+			if ('0' <= e.key && e.key <= '9') {
+				setType(e.key);
+				return;
+			}
+			if (e.key == 'g' || e.key == 'G') {
+				config_button.click();
+				return;
+			}
+			if (e.key == 'h' || e.key == 'H') {
+				about_button.click();
+				return;
+			}
+			if (e.key == 'p' || e.key == 'P') {
+				type_select_button.click();
+				return;
+			}
+			if (e.key == 'n' || e.key == 'N') {
+				sound_button.click();
+				return;
+			}
+			if (e.key == 'm' || e.key == 'M') {
+				microphone.click();
+				return;
+			}
+			if (e.key == 't' || e.key == 'T') {
+				text_button.click();
+				return;
+			}
+			if (e.key == 's' || e.key == 'S') {
+				speech_checkbox.click();
+				return;
+			}
+			//alert(e.key);
+		});
 	}
 
 	init();
