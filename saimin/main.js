@@ -761,6 +761,23 @@ jQuery(function($){
 			ctx.stroke();
 	}
 
+	function circle2(ctx, x, y, radius, is_fill = true, N = 16){
+		ctx.beginPath();
+		for (let i = 0; i < N; ++i){
+			let x0 = x + radius * Math.cos(2 * Math.PI * i / N);
+			let y0 = y + radius * Math.sin(2 * Math.PI * i / N);
+			if (i == 0){
+				ctx.moveTo(x0, y0);
+			}else{
+				ctx.lineTo(x0, y0);
+			}
+		}
+		if (is_fill)
+			ctx.fill();
+		else
+			ctx.stroke();
+	}
+
 	function line(ctx, x0, y0, x1, y1, lineWidth){
 		ctx.lineWidth = lineWidth;
 		ctx.beginPath();
@@ -780,8 +797,7 @@ jQuery(function($){
 		ctx.lineTo(x1 + udx, y1 + udy);
 		ctx.lineTo(x1 - udx, y1 - udy);
 		ctx.fill();
-		circle(ctx, x0, y0, lineWidth / 2, true);
-		circle(ctx, x1, y1, lineWidth / 2, true);
+		circle2(ctx, x0, y0, lineWidth / 2, true, 12);
 	}
 
 	function heart(ctx, x0, y0, x1, y1){
