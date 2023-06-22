@@ -244,6 +244,7 @@ jQuery(function($){
 			$('#language_select2 option[value="en"]').text('English (英語)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
 			$('#appearance_type').text('映像の種類:');
+			$('#type_select option[value="-1"]').text('画-1: 催眠解除');
 			$('#type_select option[value="0"]').text('画0: 初期画面');
 			$('#type_select option[value="1"]').text('画1: ピンク色の渦巻き');
 			$('#type_select option[value="2"]').text('画2: 同心円状');
@@ -291,6 +292,8 @@ jQuery(function($){
 			$('#please_tap_here').text('(ここをタップして下さい)');
 			$('#version_text').text('催眠くらくら Version ' + VERSION);
 			$('#heart_img').attr('src', 'images/heart.png');
+			$('#released_hypnosis').text('催眠解除。');
+			$('#released_hypnosis2').text('すべての催眠を解除しました。');
 		}else{
 			$('#notice_text').text(NOTICE_EN);
 			$('#mic_img').attr('src', 'images/mic.png');
@@ -307,6 +310,7 @@ jQuery(function($){
 			$('#language_select2 option[value="en"]').text('English (英語)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
 			$('#appearance_type').text('The type of picture:');
+			$('#type_select option[value="-1"]').text('pic-1: Release Hypnosis');
 			$('#type_select option[value="0"]').text('pic0: Initial Screen');
 			$('#type_select option[value="1"]').text('pic1: Pink Spiral');
 			$('#type_select option[value="2"]').text('pic2: Concentric Circles');
@@ -354,6 +358,8 @@ jQuery(function($){
 			$('#please_tap_here').text('(Please tap here)');
 			$('#version_text').text('Hyponosis KraKra Version ' + VERSION);
 			$('#heart_img').attr('src', 'images/heart-en.png');
+			$('#released_hypnosis').text('Released Hypnosis.');
+			$('#released_hypnosis2').text('All hypnosis has been released.');
 		}
 		$('#notice_text').scrollTop(0);
 	}
@@ -519,6 +525,17 @@ jQuery(function($){
 		}else{
 			please_tap_here.classList.add('invisible');
 			heart_block.classList.add('invisible');
+		}
+		if (type == -1){
+			released_hypnosis.classList.remove('invisible');
+			released_hypnosis2.classList.remove('invisible');
+			sound_button.classList.add('releasing');
+			sound_button.classList.remove('navigate-button');
+		} else {
+			released_hypnosis.classList.add('invisible');
+			released_hypnosis2.classList.add('invisible');
+			sound_button.classList.remove('releasing');
+			sound_button.classList.add('navigate-button');
 		}
 		type_select.value = type.toString();
 		type_select_button.innerText = getStr('TEXT_PIC') + type.toString();
@@ -870,6 +887,36 @@ jQuery(function($){
 		ctx.lineTo(x0, y0 + r0);
 		ctx.lineTo(x0 - rmid, y0);
 		ctx.fill();
+	}
+
+	// pic-1: Release Hyponosis
+	function drawPicMinusOne(ctx, px, py, dx, dy){
+		ctx.save();
+
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let dxy = (dx + dy) / 2;
+
+		ctx.fillStyle = 'black';
+		ctx.fillRect(px, py, dx, dy);
+
+		let count2 = -getCount();
+		let factor = 1.2 * Math.abs(Math.sin(count2 * 0.05));
+
+		if (count2 % 1 > 0.5)
+			factor = 1.0;
+
+		let grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * factor);
+		grd.addColorStop(0, 'rgba(255, 255, 0, 1.0)');
+		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
+		ctx.fillStyle = grd;
+		circle(ctx, qx, qy, dxy, true);
+
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 10;
+		circle(ctx, qx, qy, (dx + dy + 10) / 5 * factor + dxy * 0.2, false);
+
+		ctx.restore();
 	}
 
 	// pic0: Initial Screen
@@ -1532,6 +1579,9 @@ jQuery(function($){
 
 	function drawPic(ctx, px, py, cx, cy){
 		switch (type){
+		case -1:
+			drawPicMinusOne(ctx, px, py, cx, cy);
+			break;
 		case 0:
 			drawPic0(ctx, px, py, cx, cy);
 			break;
@@ -1597,7 +1647,9 @@ jQuery(function($){
 			}
 		}
 
-		if (theText != ''){
+		if (type == -1){
+			floating_text.classList.add('invisible');
+		}else if (theText != ''){
 			floating_text.classList.remove('invisible');
 			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + '%';
 			floating_text.style.top = top;
@@ -1722,6 +1774,16 @@ jQuery(function($){
 		});
 
 		sound_button.addEventListener('click', function(){
+			if (type == -1) {
+				let releasing_sound = null;
+				if (localStorage.getItem('saiminLanguage3') == 'ja'){
+					releasing_sound = new Audio('sn/ReleasedHypnosis_ja.mp3');
+				}else{
+					releasing_sound = new Audio('sn/ReleasedHypnosis_en.mp3');
+				}
+				releasing_sound.play();
+				return;
+			}
 			if (soundName != ''){
 				if (sound){
 					let s = new Audio('sn/' + soundName + '.mp3');
