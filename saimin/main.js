@@ -518,23 +518,31 @@ jQuery(function($){
 	}
 
 	function setMessageSizeType(value){
-		floating_text.classList.remove('font_size_small');
-		floating_text.classList.remove('font_size_normal');
-		floating_text.classList.remove('font_size_large');
-		floating_text.classList.remove('font_size_huge');
+		floating_text1.classList.remove('font_size_small');
+		floating_text1.classList.remove('font_size_normal');
+		floating_text1.classList.remove('font_size_large');
+		floating_text1.classList.remove('font_size_huge');
+		floating_text2.classList.remove('font_size_small');
+		floating_text2.classList.remove('font_size_normal');
+		floating_text2.classList.remove('font_size_large');
+		floating_text2.classList.remove('font_size_huge');
 		switch (value){
 		case 'small':
-			floating_text.classList.add('font_size_small');
+			floating_text1.classList.add('font_size_small');
+			floating_text2.classList.add('font_size_small');
 			break;
 		case 'normal':
 		default:
-			floating_text.classList.add('font_size_normal');
+			floating_text1.classList.add('font_size_normal');
+			floating_text2.classList.add('font_size_normal');
 			break;
 		case 'large':
-			floating_text.classList.add('font_size_large');
+			floating_text1.classList.add('font_size_large');
+			floating_text2.classList.add('font_size_large');
 			break;
 		case 'huge':
-			floating_text.classList.add('font_size_huge');
+			floating_text1.classList.add('font_size_huge');
+			floating_text2.classList.add('font_size_huge');
 			break;
 		}
 		message_size_select.value = value;
@@ -616,7 +624,8 @@ jQuery(function($){
 		if (speech_checkbox.checked){
 			playSpeech(theText);
 		}
-		floating_text.innerText = theText;
+		floating_text1.innerText = theText;
+		floating_text2.innerText = theText;
 	}
 
 	function setRotation(value){
@@ -666,7 +675,7 @@ jQuery(function($){
 		updateVersionDisplay();
 		if (!ready){
 			setPicType(0);
-			window.requestAnimationFrame(draw);
+			window.requestAnimationFrame(draw_all);
 			ready = true;
 		}
 	}
@@ -1727,47 +1736,72 @@ jQuery(function($){
 		}
 	}
 
+	function setTextPos(id, px, py, cx, cy, counter){
+		let x = px + cx / 2 - id.offsetWidth / 2;
+		let y = py + (0.05 * Math.sin(counter * 0.1) + 0.8) * cy - id.offsetHeight / 2;
+		id.style.left = x + "px";
+		id.style.top = y + "px";
+	}
+
 	let FPS = 0;
 
-	function draw(){
+	function draw_all(){
 		let ctx = saimin_canvas.getContext('2d');
 
-		let x = cx / 2, y = cy / 2, delta_percent = 0;
+		let x = cx / 2, y = cy / 2;
 
+		let splitted = false;
 		if (division == 1){
 			drawPic(ctx, 0, 0, cx, cy);
+			setTextPos(floating_text1, 0, 0, cx, cy, counter);
 			y += cy / 4;
-			delta_percent = 25;
 		} else if (division == -1){
 			if (cx >= cy * 1.75){
 				drawPic(ctx, 0, 0, cx / 2, cy);
 				drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				setTextPos(floating_text1, 0, 0, cx / 2, cy, counter);
+				setTextPos(floating_text2, cx / 2, 0, cx / 2, cy, counter);
+				splitted = true;
 			}else if (cy >= cx * 1.75){
 				drawPic(ctx, 0, 0, cx, cy / 2);
 				drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				setTextPos(floating_text1, 0, 0, cx, cy / 2, counter);
+				setTextPos(floating_text2, 0, cy / 2, cx, cy / 2, counter);
+				splitted = true;
 			}else{
 				drawPic(ctx, 0, 0, cx, cy);
+				setTextPos(floating_text1, 0, 0, cx, cy, counter);
 				y += cy / 4;
-				delta_percent = 25;
 			}
 		} else {
 			if (cx >= cy){
 				drawPic(ctx, 0, 0, cx / 2, cy);
 				drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				setTextPos(floating_text1, 0, 0, cx / 2, cy, counter);
+				setTextPos(floating_text2, cx / 2, 0, cx / 2, cy, counter);
 			}else{
 				drawPic(ctx, 0, 0, cx, cy / 2);
 				drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				setTextPos(floating_text1, 0, 0, cx, cy / 2, counter);
+				setTextPos(floating_text2, 0, cy / 2, cx, cy / 2, counter);
 			}
+			splitted = true;
 		}
 
 		if (picType == -1){
-			floating_text.classList.add('invisible');
+			floating_text1.classList.add('invisible');
+			floating_text2.classList.add('invisible');
 		}else if (theText != ''){
-			floating_text.classList.remove('invisible');
-			let top = (50 + 5 * Math.sin(counter * 0.1) + delta_percent) + '%';
-			floating_text.style.top = top;
+			if (splitted){
+				floating_text1.classList.remove('invisible');
+				floating_text2.classList.remove('invisible');
+			}else{
+				floating_text1.classList.remove('invisible');
+				floating_text2.classList.add('invisible');
+			}
 		}else{
-			floating_text.classList.add('invisible');
+			floating_text1.classList.add('invisible');
+			floating_text2.classList.add('invisible');
 		}
 
 		for (let iStar = 0; iStar < stars.length; ++iStar){
@@ -1828,7 +1862,7 @@ jQuery(function($){
 			ctx.fillText(text, (cx - width) / 2, height);
 		}
 
-		window.requestAnimationFrame(draw);
+		window.requestAnimationFrame(draw_all);
 	}
 
 	function init(){
@@ -2019,7 +2053,10 @@ jQuery(function($){
 			}
 		}
 
-		floating_text.addEventListener('click', function(e){
+		floating_text1.addEventListener('click', function(e){
+			canvasClick(e);
+		}, false);
+		floating_text2.addEventListener('click', function(e){
 			canvasClick(e);
 		}, false);
 
