@@ -403,7 +403,7 @@ jQuery(function($){
 			$('#screen_brightness option[value="brighter"]').text('Brighter');
 			$('#version_text').text('Hyponosis KraKra Version ' + VERSION);
 			logo_img = new Image();
-			logo_img.src = 'images/logo-en.png';
+			logo_img.src = 'images/logo_en.png';
 			please_tap_here_img = new Image();
 			please_tap_here_img.src = 'images/please-tap-here_en.svg';
 			hypnosis_releasing_img = new Image();
