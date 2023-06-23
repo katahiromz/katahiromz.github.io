@@ -162,13 +162,13 @@ jQuery(function($){
 	let rotationType = 'normal';
 	let stopping = false;
 	let released = false;
-	let heart_img = new Image();
+	let logo_img = new Image();
 	let please_tap_here_img = new Image();
 	let hypnosis_releasing_img = new Image();
 	let all_released_img = new Image();
 
 	coin_img.src = 'images/coin5yen.png';
-	heart_img.src = 'images/heart.png';
+	logo_img.src = 'images/logo_en.png';
 	please_tap_here_img.src = 'images/please-tap-here_en.svg';
 	hypnosis_releasing_img.src = 'images/hypnosis-released_en.svg';
 	all_released_img.src = 'images/all-released_en.svg';
@@ -273,7 +273,7 @@ jQuery(function($){
 			$('#mic_img').attr('src', 'images/mic.png');
 			$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
 			$('#sound_img').attr('src', 'images/sound.png');
-			$('#char_img').attr('src', 'images/char.png');
+			$('#char_img').attr('src', 'images/text_ja.png');
 			$('#speech_img').attr('src', 'images/speak.png');
 			$('#gear_img').attr('src', 'images/gear.png');
 			$('#question_img').attr('src', 'images/question.png');
@@ -330,8 +330,8 @@ jQuery(function($){
 			$('#screen_brightness option[value="normal"]').text('普通');
 			$('#screen_brightness option[value="brighter"]').text('明るくする');
 			$('#version_text').text('催眠くらくら Version ' + VERSION);
-			heart_img = new Image();
-			heart_img.src = 'images/heart.png';
+			logo_img = new Image();
+			logo_img.src = 'images/logo_ja.png';
 			please_tap_here_img = new Image();
 			please_tap_here_img.src = 'images/please-tap-here_ja.svg';
 			hypnosis_releasing_img = new Image();
@@ -345,7 +345,7 @@ jQuery(function($){
 			$('#mic_img').attr('src', 'images/mic.png');
 			$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
 			$('#sound_img').attr('src', 'images/sound.png');
-			$('#char_img').attr('src', 'images/char-en.png');
+			$('#char_img').attr('src', 'images/text_en.png');
 			$('#speech_img').attr('src', 'images/speak.png');
 			$('#gear_img').attr('src', 'images/gear.png');
 			$('#question_img').attr('src', 'images/question.png');
@@ -402,8 +402,8 @@ jQuery(function($){
 			$('#screen_brightness option[value="normal"]').text('Normal');
 			$('#screen_brightness option[value="brighter"]').text('Brighter');
 			$('#version_text').text('Hyponosis KraKra Version ' + VERSION);
-			heart_img = new Image();
-			heart_img.src = 'images/heart-en.png';
+			logo_img = new Image();
+			logo_img.src = 'images/logo-en.png';
 			please_tap_here_img = new Image();
 			please_tap_here_img.src = 'images/please-tap-here_en.svg';
 			hypnosis_releasing_img = new Image();
@@ -1041,10 +1041,10 @@ jQuery(function($){
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
 
-		if (heart_img.complete){
-			let x = qx - heart_img.width / 2;
+		if (logo_img.complete){
+			let x = qx - logo_img.width / 2;
 			let y = py + dy * 0.3;
-			ctx.drawImage(heart_img, x, y, heart_img.width, heart_img.height);
+			ctx.drawImage(logo_img, x, y, logo_img.width, logo_img.height);
 		}
 
 		if (please_tap_here_img.complete){
@@ -2253,9 +2253,19 @@ jQuery(function($){
 					setDivision(1);
 				}
 				showButtons(division == 1);
+				return;
 			}
 			if (e.key == 'b' || e.key == 'B'){ // buttons
 				showButtons(microphone_label.classList.contains('invisible'));
+				return;
+			}
+			if (e.key == 'e' || e.key == 'E'){ // English
+				setLanguage('en');
+				return;
+			}
+			if (e.key == 'j' || e.key == 'J'){ // Japanese
+				setLanguage('ja');
+				return;
 			}
 			//alert(e.key);
 		});
