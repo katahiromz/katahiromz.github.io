@@ -1145,7 +1145,7 @@ jQuery(function($){
 		let k = factor * 5;
 		let r_delta = 30;
 		let flag = (factor % 10) / 0.5;
-		let flag2 = Math.sin(factor * 0.7) > 0.3;
+		let flag2 = Math.sin(factor * 0.7) > -0.4;
 		for (let r = 0; r < 360;){
 			let radian = r * Math.PI / 180 + factor;
 			ctx.beginPath();
@@ -1158,12 +1158,9 @@ jQuery(function($){
 			let x1 = qx + cxy * Math.cos(radian);
 			let y1 = qy + cxy * Math.sin(radian);
 			ctx.lineTo(x1, y1);
-			let factor2 = Math.abs(1 - Math.sin(factor * 2));
+			let factor2 = Math.abs(1 - Math.sin(factor * 8));
 			if (flag2){
-				let grd = ctx.createRadialGradient(qx, qy, 0, (x0 + x1) / 2, (y0 + y1) / 2, cxy);
-				grd.addColorStop(0.05 + factor2 * 0.05, `rgb(255, ${factor2 * 50 + 55}, ${factor2 * 200 + 55})`);
-				grd.addColorStop(1.0, `rgb(${(255 - factor2 * 255) % 255}, 191, ${(191 - factor2 * 191) % 191})`);
-				ctx.fillStyle = grd;
+				ctx.fillStyle = `rgb(255, ${factor2 * 50 + 55}, ${factor2 * 200 + 55})`;
 			}else{
 				ctx.fillStyle = `hsl(${(k * 60) % 360}, 100%, 50%)`
 			}
