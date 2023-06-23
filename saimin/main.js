@@ -144,7 +144,7 @@ jQuery(function($){
 	let cx = 0, cy = 0;
 	let old_cx = null, old_cy = null;
 	let old_time = (new Date()).getTime();
-	let type = 0;
+	let picType = 0;
 	let counter = 0, clock = 0;
 	let ready = false;
 	let theText = '';
@@ -236,6 +236,7 @@ jQuery(function($){
 			case 'TEXT_PERIOD': return '。';
 			case 'TEXT_PERIOD_SPACE': return '。';
 			case 'TEXT_RELEASE_HYPNOSIS': return '催眠解除';
+			case 'TEXT_HYPNOSIS_RELEASED': return '催眠解除。';
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ja.png';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ja.png';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_ja.svg';
@@ -258,6 +259,7 @@ jQuery(function($){
 			case 'TEXT_PERIOD': return '.';
 			case 'TEXT_PERIOD_SPACE': return '. ';
 			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypnosis';
+			case 'TEXT_HYPNOSIS_RELEASED': return 'Hypnosis released.';
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_en.png';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_en.png';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_en.svg';
@@ -569,9 +571,14 @@ jQuery(function($){
 		return counter;
 	}
 
-	function setType(value){
-		type = parseInt(value);
-		if (type == -1){
+	let oldText = '';
+	let oldPicType = 0;
+
+	function setPicType(value){
+		picType = parseInt(value);
+		if (picType == -1){
+			if (oldPicType != -1)
+				oldText = theText;
 			cancelSpeech();
 			speech_checkbox.checked = false;
 			speech_label.classList.remove('checked');
@@ -587,13 +594,20 @@ jQuery(function($){
 				released = true;
 			}, 3000);
 		} else {
+			if (theText == getStr('TEXT_HYPNOSIS_RELEASED')){
+				theText = oldText;
+				speech_checkbox.checked = false;
+				speech_label.classList.remove('checked');
+				cancelSpeech();
+			}
 			sound_button.classList.remove('releasing');
 			text_button.classList.remove('releasing');
 			speech_label.classList.remove('releasing');
 		}
-		type_select.value = type.toString();
-		type_select_button.innerText = getStr('TEXT_PIC') + type.toString();
-		localStorage.setItem('saiminType', type.toString());
+		type_select.value = picType.toString();
+		type_select_button.innerText = getStr('TEXT_PIC') + picType.toString();
+		localStorage.setItem('saiminType', picType.toString());
+		oldPicType = picType;
 	}
 
 	function setText(txt){
@@ -651,7 +665,7 @@ jQuery(function($){
 		text_button.classList.remove('invisible');
 		updateVersionDisplay();
 		if (!ready){
-			setType(0);
+			setPicType(0);
 			window.requestAnimationFrame(draw);
 			ready = true;
 		}
@@ -763,19 +777,19 @@ jQuery(function($){
 					text: getStr('TEXT_RELEASE_HYPNOSIS'),
 					click: function(){
 						dialogContainer.dialog('close');
-						setType(-1);
+						setPicType(-1);
 					},
 				},{
 					text: getStr('TEXT_OK'),
 					click: function(){
 						dialogContainer.dialog('close');
-						if (type == -1)
-							setType(type);
+						if (picType == -1)
+							setPicType(picType);
 					},
 				},{
 					text: getStr('TEXT_CANCEL'),
 					click: function(){
-						setType(old_type_value);
+						setPicType(old_type_value);
 						setDivision(old_division_value);
 						setSpeedType(old_speed_type_value);
 						setRotation(old_rotation_value);
@@ -1292,7 +1306,7 @@ jQuery(function($){
 	}
 
 	// pic4: Black and White Spiral
-	function drawPic4(ctx, px, py, dx, dy, t){
+	function drawPic4(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1330,7 +1344,7 @@ jQuery(function($){
 	}
 
 	// pic5: Spreading Rainbow
-	function drawPic5(ctx, px, py, dx, dy, t){
+	function drawPic5(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1398,39 +1412,26 @@ jQuery(function($){
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
 
-		if (t == 4){
-			ctx.fillStyle = `rgb(255, 255, ${(factor * 10) % 255}, 0.8)`;
-			let M = 5;
-			for (let radius = neg_mod(factor * 10, 100); radius < dxy; radius += 100){
-				for (let angle = 0; angle < 360; angle += 360 / M){
-					let radian = angle * (Math.PI / 180.0);
-					let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
-					let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
-					light(ctx, x0, y0, neg_mod(radius * 0.1, 30) + 10);
-				}
+		let value = factor * 25 + 10;
+		let value2 = neg_mod(value, 191);
+		ctx.fillStyle = `rgb(255,${value2},${value2})`;
+		let M = 5;
+		let heartSize = 30;
+		for (let radius = neg_mod((factor * 10), 100) + 30; radius < dxy; radius += 100){
+			for (let angle = 0; angle < 360; angle += 360 / M){
+				let radian = angle * (Math.PI / 180.0);
+				let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
+				let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
+				heart(ctx, x0, y0, x0, y0 + heartSize + neg_mod(value, 191) / 12);
 			}
-		} else if (t == 5){
-			let value = factor * 25 + 10;
-			let value2 = neg_mod(value, 191);
-			ctx.fillStyle = `rgb(255,${value2},${value2})`;
-			let M = 5;
-			let heartSize = 30;
-			for (let radius = neg_mod((factor * 10), 100) + 30; radius < dxy; radius += 100){
-				for (let angle = 0; angle < 360; angle += 360 / M){
-					let radian = angle * (Math.PI / 180.0);
-					let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
-					let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
-					heart(ctx, x0, y0, x0, y0 + heartSize + neg_mod(value, 191) / 12);
-				}
-				heartSize += 5;
-			}
+			heartSize += 5;
 		}
 
 		ctx.restore();
 	}
 
 	// pic6: 5-yen coin
-	function drawPic6(ctx, px, py, dx, dy, t){
+	function drawPic6(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1517,7 +1518,7 @@ jQuery(function($){
 	}
 
 	// pic7: Clamor Clamor
-	function drawPic7(ctx, px, py, dx, dy, t){
+	function drawPic7(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1582,7 +1583,7 @@ jQuery(function($){
 	}
 
 	// pic8: Crazy Colors
-	function drawPic8(ctx, px, py, dx, dy, t){
+	function drawPic8(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1646,7 +1647,7 @@ jQuery(function($){
 	}
 
 	// pic9: Mixed Spirals
-	function drawPic9(ctx, px, py, dx, dy, t){
+	function drawPic9(ctx, px, py, dx, dy){
 		ctx.save();
 
 		let qx = px + dx / 2;
@@ -1669,7 +1670,7 @@ jQuery(function($){
 		let ratio = 0.01;
 
 		counter = -counter;
-		drawPic1(ctx, px, py, dx, dy, t);
+		drawPic1(ctx, px, py, dx, dy);
 		counter = -counter;
 
 		ctx.restore();
@@ -1682,13 +1683,13 @@ jQuery(function($){
 		}
 		ctx.clip();
 
-		drawPic1(ctx, px, py, dx, dy, t);
+		drawPic1(ctx, px, py, dx, dy);
 
 		ctx.restore();
 	}
 
 	function drawPic(ctx, px, py, cx, cy){
-		switch (type){
+		switch (picType){
 		case -1:
 			drawPicMinusOne(ctx, px, py, cx, cy);
 			break;
@@ -1706,22 +1707,22 @@ jQuery(function($){
 			drawPic3(ctx, px, py, cx, cy);
 			break;
 		case 4:
-			drawPic4(ctx, px, py, cx, cy, type);
+			drawPic4(ctx, px, py, cx, cy);
 			break;
 		case 5:
-			drawPic5(ctx, px, py, cx, cy, type);
+			drawPic5(ctx, px, py, cx, cy);
 			break;
 		case 6:
-			drawPic6(ctx, px, py, cx, cy, type);
+			drawPic6(ctx, px, py, cx, cy);
 			break;
 		case 7:
-			drawPic7(ctx, px, py, cx, cy, type);
+			drawPic7(ctx, px, py, cx, cy);
 			break;
 		case 8:
-			drawPic8(ctx, px, py, cx, cy, type);
+			drawPic8(ctx, px, py, cx, cy);
 			break;
 		case 9:
-			drawPic9(ctx, px, py, cx, cy, type);
+			drawPic9(ctx, px, py, cx, cy);
 			break;
 		}
 	}
@@ -1759,7 +1760,7 @@ jQuery(function($){
 			}
 		}
 
-		if (type == -1){
+		if (picType == -1){
 			floating_text.classList.add('invisible');
 		}else if (theText != ''){
 			floating_text.classList.remove('invisible');
@@ -1885,7 +1886,7 @@ jQuery(function($){
 		}
 
 		text_button.addEventListener('click', function(){
-			if (type == -1)
+			if (picType == -1)
 				return;
 			let text = prompt(getStr('TEXT_INPUT_MESSAGE'), theText);
 			if (text !== null){
@@ -1903,7 +1904,7 @@ jQuery(function($){
 		});
 
 		sound_button.addEventListener('click', function(){
-			if (type == -1){
+			if (picType == -1){
 				let releasing_sound = null;
 				if (localStorage.getItem('saiminLanguage3') == 'ja'){
 					releasing_sound = new Audio('sn/ReleasedHypnosis_ja.mp3');
@@ -1930,12 +1931,12 @@ jQuery(function($){
 		type_select.addEventListener('change', function(){
 			if (!ready)
 				return;
-			setType(parseInt(type_select.value));
+			setPicType(parseInt(type_select.value));
 		}, false);
 		type_select.addEventListener('click', function(){
 			if (!ready)
 				return;
-			setType(parseInt(type_select.value));
+			setPicType(parseInt(type_select.value));
 		}, false);
 
 		language_select.addEventListener('change', function(){
@@ -2005,11 +2006,11 @@ jQuery(function($){
 			if (!ready)
 				return;
 			if (e.shiftKey){
-				setType((type + (NUM_TYPE + 1) - 1) % (NUM_TYPE + 1));
+				setPicType((picType + (NUM_TYPE + 1) - 1) % (NUM_TYPE + 1));
 			}else{
-				setType((type + 1) % (NUM_TYPE + 1));
+				setPicType((picType + 1) % (NUM_TYPE + 1));
 			}
-			type_select.value = type.toString();
+			type_select.value = picType.toString();
 			if (typeSound == 1){
 				if (kirakira_sound){
 					let kirakira = new Audio('sn/kirakira.mp3');
@@ -2094,8 +2095,16 @@ jQuery(function($){
 		}
 
 		speech_checkbox.addEventListener('click', function(e){
-			if (type == -1)
+			if (picType == -1) {
+				if (speech_checkbox.checked){
+					playSpeech(getStr('TEXT_HYPNOSIS_RELEASED'));
+					speech_label.classList.add('checked');
+				}else{
+					cancelSpeech();
+					speech_label.classList.remove('checked');
+				}
 				return;
+			}
 			if (speech_checkbox.checked){
 				playSpeech(theText);
 				speech_label.classList.add('checked');
@@ -2187,7 +2196,7 @@ jQuery(function($){
 			if (!ready || e.ctrlKey)
 				return;
 			if ('0' <= e.key && e.key <= '9'){ // pic0...pic9
-				setType(e.key);
+				setPicType(e.key);
 				return;
 			}
 			if (e.key == 'c' || e.key == 'C'){ // Configuration
@@ -2224,7 +2233,7 @@ jQuery(function($){
 				return;
 			}
 			if (e.key == '-' || e.key == 'k' || e.key == 'K'){ // Kill hypnosis
-				setType(-1);
+				setPicType(-1);
 				return;
 			}
 			if (e.key == 'd' || e.key == 'D'){ // Division (screen split)
