@@ -53,6 +53,7 @@ When a keyboard is connected, the following operations are available.
 - Press "T" to open the message settings.
 - Press "S" to speak the current message automatically.
 - Press "X" to pause.
+- Press "-" to kill hypnosis.
 
 Copyright (c) 2022 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
@@ -108,6 +109,7 @@ Hypnosis KraKra
 - 「T」を押すとメッセージの設定を開きます。
 - 「S」を押すと現在のメッセージを自動音声でしゃべります。
 - 「X」を押すと一時停止します。
+- 「-」を押すと催眠を消します。
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
@@ -190,7 +192,7 @@ jQuery(function($){
 		let lang = localStorage.getItem('saiminLanguage3');
 		if (!lang)
 			lang = 'en';
-		if (lang == 'ja' || lang == 'jp') {
+		if (lang == 'ja' || lang == 'jp'){
 			switch(str_id){
 			case 'TEXT_PIC': return '画';
 			case 'TEXT_OK': return 'OK';
@@ -230,10 +232,10 @@ jQuery(function($){
 			case 'TEXT_FULLWIDTH_SPACE': return '　';
 			case 'TEXT_PERIOD': return '.';
 			case 'TEXT_PERIOD_SPACE': return '. ';
-			case 'TEXT_RELEASE_HYPNOSIS': return 'Release Hypnosis';
-			case 'TEXT_RELEASING_HYPNOSIS': return 'Releasing Hypnosis...';
-			case 'TEXT_RELEASING_HYPNOSIS2': return 'Now releasing hypnosis...';
-			case 'TEXT_RELEASED_HYPNOSIS': return 'Released Hypnosis.';
+			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypno';
+			case 'TEXT_RELEASING_HYPNOSIS': return 'Killing hypnosis...';
+			case 'TEXT_RELEASING_HYPNOSIS2': return 'Now killing hypnosis......';
+			case 'TEXT_RELEASED_HYPNOSIS': return 'Hypnosis released.';
 			case 'TEXT_RELEASED_HYPNOSIS2': return 'All hypnosis has been released.';
 			}
 		}
@@ -304,6 +306,13 @@ jQuery(function($){
 			$('#please_tap_here').text('(ここをタップして下さい)');
 			$('#version_text').text('催眠くらくら Version ' + VERSION);
 			$('#heart_img').attr('src', 'images/heart.png');
+			if (released){
+				$('#released_hypnosis').text('催眠解除。');
+				$('#released_hypnosis2').text('すべての催眠を解除しました。');
+			}else{
+				$('#released_hypnosis').text('催眠中...');
+				$('#released_hypnosis2').text('催眠を解除しています...');
+			}
 		}else{
 			$('#notice_text').text(NOTICE_EN);
 			$('#mic_img').attr('src', 'images/mic.png');
@@ -368,6 +377,13 @@ jQuery(function($){
 			$('#please_tap_here').text('(Please tap here)');
 			$('#version_text').text('Hyponosis KraKra Version ' + VERSION);
 			$('#heart_img').attr('src', 'images/heart-en.png');
+			if (released){
+				$('#released_hypnosis').text('Hypnosis released.');
+				$('#released_hypnosis2').text('All hypnosis has been released.');
+			}else{
+				$('#released_hypnosis').text('Killing hypnosis...');
+				$('#released_hypnosis2').text('Now killing hypnosis...');
+			}
 		}
 		$('#notice_text').scrollTop(0);
 	}
@@ -591,7 +607,7 @@ jQuery(function($){
 			$('#about_dialog').dialog('option', 'position', position);
 		}else if (localStorage.getItem('saiminAppearanceShowing')){
 			$('#appearance_dialog').dialog('option', 'position', position);
-		}else if (localStorage.getItem('saiminConfigShowing')) {
+		}else if (localStorage.getItem('saiminConfigShowing')){
 			$('#config_dialog').dialog('option', 'position', position);
 		}
 	}
@@ -617,7 +633,7 @@ jQuery(function($){
 		about_button.classList.remove('invisible');
 		text_button.classList.remove('invisible');
 		updateVersionDisplay();
-		if (!ready) {
+		if (!ready){
 			setType(0);
 			window.requestAnimationFrame(draw);
 			ready = true;
@@ -627,7 +643,7 @@ jQuery(function($){
 	function chooseLanguage(){
 		let lang = localStorage.getItem('saiminLanguage3');
 		let first_time = false;
-		if (!lang) {
+		if (!lang){
 			if (navigator.language == 'ja' || navigator.language == 'ja-JP')
 				lang = 'ja';
 			else
@@ -651,7 +667,7 @@ jQuery(function($){
 				text: getStr('TEXT_CANCEL'),
 				click: function(){
 					dialogContainer.dialog('close');
-					if (first_time && !localStorage.getItem('saiminLanguage3')) {
+					if (first_time && !localStorage.getItem('saiminLanguage3')){
 						setLanguage('en');
 						help();
 					}
@@ -662,7 +678,7 @@ jQuery(function($){
 			resizable: false,
 		});
 		$('#choose_language_dialog').on('dialogclose', function(event){
-			if (first_time && !localStorage.getItem('saiminLanguage3')) {
+			if (first_time && !localStorage.getItem('saiminLanguage3')){
 				setLanguage('en');
 				help();
 			}
@@ -736,6 +752,8 @@ jQuery(function($){
 					text: getStr('TEXT_OK'),
 					click: function(){
 						dialogContainer.dialog('close');
+						if (type == -1)
+							setType(type);
 					},
 				},{
 					text: getStr('TEXT_CANCEL'),
@@ -1739,7 +1757,7 @@ jQuery(function($){
 		}
 
 		if (DEBUGGING){
-			if (diff != 0) {
+			if (diff != 0){
 				FPS = 1 / Math.abs(diff);
 				FPS = Math.round(FPS * 10) / 10;
 			}
@@ -1822,12 +1840,13 @@ jQuery(function($){
 			help();
 		});
 
-		type_select_button.addEventListener('click', function(){
+		type_select_button.addEventListener('click', function(e){
+			e.preventDefault();
 			apperance();
 		});
 
 		sound_button.addEventListener('click', function(){
-			if (type == -1) {
+			if (type == -1){
 				let releasing_sound = null;
 				if (localStorage.getItem('saiminLanguage3') == 'ja'){
 					releasing_sound = new Audio('sn/ReleasedHypnosis_ja.mp3');
@@ -2092,40 +2111,45 @@ jQuery(function($){
 		document.body.addEventListener('keydown', function(e){
 			if (!ready || e.ctrlKey)
 				return;
-			if ('0' <= e.key && e.key <= '9') {
+			if ('0' <= e.key && e.key <= '9'){
 				setType(e.key);
 				return;
 			}
-			if (e.key == 'g' || e.key == 'G') {
+			if (e.key == 'g' || e.key == 'G'){
 				config_button.click();
 				return;
 			}
-			if (e.key == 'h' || e.key == 'H') {
+			if (e.key == 'h' || e.key == 'H'){
 				about_button.click();
 				return;
 			}
-			if (e.key == 'p' || e.key == 'P') {
+			if (e.key == 'p' || e.key == 'P'){
+				e.preventDefault();
 				type_select_button.click();
 				return;
 			}
-			if (e.key == 'n' || e.key == 'N') {
+			if (e.key == 'n' || e.key == 'N'){
 				sound_button.click();
 				return;
 			}
-			if (e.key == 'm' || e.key == 'M') {
+			if (e.key == 'm' || e.key == 'M'){
 				microphone.click();
 				return;
 			}
-			if (e.key == 't' || e.key == 'T') {
+			if (e.key == 't' || e.key == 'T'){
 				text_button.click();
 				return;
 			}
-			if (e.key == 's' || e.key == 'S') {
+			if (e.key == 's' || e.key == 'S'){
 				speech_checkbox.click();
 				return;
 			}
-			if (e.key == 'x' || e.key == 'X') {
+			if (e.key == 'x' || e.key == 'X'){
 				stopping = !stopping;
+				return;
+			}
+			if (e.key == '-'){
+				setType(-1);
 				return;
 			}
 			//alert(e.key);
