@@ -37,31 +37,31 @@ How you use it is up to you.
 - Tapping the 'note' button makes a sound.
 - The 'Aa' button allows you to set the message to be displayed.
 - The 'bubble' button will speak the message.
-- The 'gear' button allows for general settings.
+- The 'gear' button will open Configuration.
 - When you trace the screen, a sparkle appears to attract one's attention.
 
 [(Keyboard Operation)]
 
 When a keyboard is connected, the following operations are available:
 
-- Press "0" to "9" keys to switch pictures.
-- Press "G" key to open the general settings.
-- Press "H" key to open the version information.
-- Press "P" key to open appearance settings.
-- Press "N" key to play sound.
-- Press "M" key to turn on/off the microphone (it needs permission).
-- Press "T" key to open the message settings.
-- Press "S" key to speak the current message automatically.
-- Press "X" key to pause.
-- Press "-" key to kill hypnosis.
-- Press "D" key to split the screen.
-- Press "K" key to toggle display of the buttons.
-- Press "L" key to turn on/off of Goggle Mode.
+- Press '0' to '9' keys to switch pictures.
+- Press 'C' key to open the configuration.
+- Press 'H' key to open the version information.
+- Press 'A' key to open appearance settings.
+- Press 'P' key to play sound.
+- Press 'M' key to turn on/off the microphone (it needs permission).
+- Press 'T' key to open the message settings.
+- Press 'S' key to speak the current message automatically.
+- Press 'X' key to pause.
+- Press '-' or 'K' keys to kill hypnosis.
+- Press 'D' key to split the screen.
+- Press 'B' key to toggle display of the buttons.
+- Press 'G' key to turn on/off of Goggle Mode.
 
 [(Goggle Mode)]
 
 Goggle Mode is available with a connectable keyboard and goggles.
-Goggle Mode can be toggled on and off by pressing "L" key.
+Goggle Mode can be toggled on and off by pressing 'G' key.
 Goggle Mode splits the screen in two and hides the control buttons.
 
 Copyright (c) 2022 Katayama Hirofumi MZ
@@ -110,23 +110,23 @@ Hypnosis KraKra
 キーボードを接続すると次のような操作ができます。
 
 - 「0」～「9」キーを押すと、映像が切り替わります。
-- 「G」キーを押すと全般設定が開きます。
+- 「C」キーを押すと全般設定が開きます。
 - 「H」キーを押すとバージョン情報を開きます。
-- 「P」キーを押すと見た目の設定を開きます。
-- 「N」キーを押すと音を鳴らします。
+- 「A」キーを押すと見た目の設定を開きます。
+- 「P」キーを押すと音を鳴らします。
 - 「M」キーを押すとマイクのON/OFFを切り替えます(権限が必要です)。
 - 「T」キーを押すとメッセージの設定を開きます。
 - 「S」キーを押すと現在のメッセージを自動音声でしゃべります。
 - 「X」キーを押すと一時停止します。
-- 「-」キーを押すと催眠を消します。
+- 「-」キーか「K」キーを押すと催眠を消します。
 - 「D」キーを押すと画面分割が切り替わります。
-- 「K」キーを押すとボタンの表示が切り替わります。
-- 「L」キーを押すとゴーグルモードが切り替わります。
+- 「B」キーを押すとボタンの表示が切り替わります。
+- 「G」キーを押すとゴーグルモードが切り替わります。
 
 【ゴーグルモード】
 
 接続可能なキーボードとゴーグルがあれば、ゴーグルモードを利用できます。
-「L」キーを押すとゴーグルモードのON/OFFを切り替えが可能です。
+「G」キーを押すとゴーグルモードのON/OFFの切り替えが可能です。
 ゴーグルモードは、画面を２分割し、操作ボタンを隠します。
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
@@ -2167,53 +2167,58 @@ jQuery(function($){
 				about_button.classList.add('invisible');
 				text_button.classList.add('invisible');
 			}
+			try{
+				android.showButtons(enabled);
+			}catch(error){
+				;
+			}
 		}
 
 		document.body.addEventListener('keydown', function(e){
 			if (!ready || e.ctrlKey)
 				return;
-			if ('0' <= e.key && e.key <= '9'){
+			if ('0' <= e.key && e.key <= '9'){ // pic0...pic9
 				setType(e.key);
 				return;
 			}
-			if (e.key == 'g' || e.key == 'G'){
+			if (e.key == 'c' || e.key == 'C'){ // Configuration
 				config_button.click();
 				return;
 			}
-			if (e.key == 'h' || e.key == 'H'){
+			if (e.key == 'h' || e.key == 'H'){ // Help
 				about_button.click();
 				return;
 			}
-			if (e.key == 'p' || e.key == 'P'){
+			if (e.key == 'a' || e.key == 'A'){ // Appearance
 				e.preventDefault();
 				type_select_button.click();
 				return;
 			}
-			if (e.key == 'n' || e.key == 'N'){
+			if (e.key == 'p' || e.key == 'P'){ // Play/Pause
 				sound_button.click();
 				return;
 			}
-			if (e.key == 'm' || e.key == 'M'){
+			if (e.key == 'm' || e.key == 'M'){ // Microphone
 				microphone.click();
 				return;
 			}
-			if (e.key == 't' || e.key == 'T'){
+			if (e.key == 't' || e.key == 'T'){ // Text
 				text_button.click();
 				return;
 			}
-			if (e.key == 's' || e.key == 'S'){
+			if (e.key == 's' || e.key == 'S'){ // Speech
 				speech_checkbox.click();
 				return;
 			}
-			if (e.key == 'x' || e.key == 'X'){
+			if (e.key == 'x' || e.key == 'X'){ // Pause
 				stopping = !stopping;
 				return;
 			}
-			if (e.key == '-'){
+			if (e.key == '-' || e.key == 'k' || e.key == 'K'){ // Kill hypnosis
 				setType(-1);
 				return;
 			}
-			if (e.key == 'd' || e.key == 'D'){
+			if (e.key == 'd' || e.key == 'D'){ // Division (screen split)
 				if(division == 1){
 					setDivision(2);
 				}else if(division == 2){
@@ -2223,7 +2228,7 @@ jQuery(function($){
 				}
 				return;
 			}
-			if (e.key == 'l' || e.key == 'L'){ // Goggle Mode
+			if (e.key == 'g' || e.key == 'G'){ // Goggle Mode
 				if (division == 1){
 					setDivision(2);
 				}else{
@@ -2231,7 +2236,7 @@ jQuery(function($){
 				}
 				showButtons(division == 1);
 			}
-			if (e.key == 'k' || e.key == 'K'){
+			if (e.key == 'b' || e.key == 'B'){ // buttons
 				showButtons(microphone_label.classList.contains('invisible'));
 			}
 			//alert(e.key);
