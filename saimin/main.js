@@ -44,24 +44,24 @@ How you use it is up to you.
 
 When a keyboard is connected, the following operations are available:
 
-- Press '0' to '9' keys to switch pictures.
-- Press 'C' key to open the configuration.
-- Press 'H' key to open the version information.
-- Press 'A' key to open appearance settings.
-- Press 'P' key to play sound.
-- Press 'M' key to turn on/off the microphone (it needs permission).
-- Press 'T' key to open the message settings.
-- Press 'S' key to speak the current message automatically.
-- Press 'X' key to pause.
-- Press '-' or 'K' keys to kill hypnosis.
-- Press 'D' key to split the screen.
-- Press 'B' key to toggle display of the buttons.
-- Press 'G' key to turn on/off of Goggle Mode.
+- Press [0] to [9] keys to switch pictures.
+- Press [C] key to open the configuration.
+- Press [H] key to open the version information.
+- Press [A] key to open appearance settings.
+- Press [P] key to play sound.
+- Press [M] key to turn on/off the microphone (it needs permission).
+- Press [T] key to open the message settings.
+- Press [S] key to speak the current message automatically.
+- Press [X] key to pause.
+- Press [-] or [K] keys to kill hypnosis.
+- Press [D] key to split the screen.
+- Press [B] key to toggle display of the buttons.
+- Press [G] key to turn on/off of Goggle Mode.
 
 [(Goggle Mode)]
 
 Goggle Mode is available with a connectable keyboard and goggles.
-Goggle Mode can be toggled on and off by pressing 'G' key.
+Goggle Mode can be toggled on and off by pressing [G] key.
 Goggle Mode splits the screen in two and hides the control buttons.
 
 Copyright (c) 2022 Katayama Hirofumi MZ
