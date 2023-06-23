@@ -79,7 +79,8 @@ input[type='checkbox'] {
 	width: calc(100% / 5 - 5px);
 }
 .releasing {
-	background-color: red;
+	background-color: red !important;
+	text-align: center;
 }
 #text_button {
 	position: absolute;
@@ -153,7 +154,7 @@ button.navigate-button {
 	background-color: rgba(255, 210, 230, 85%);
 }
 .checked {
-	background-color: rgba(204, 101, 198, 90%) !important;
+	background-color: rgba(204, 101, 198, 90%);
 }
 #heart_block {
 	position: absolute;

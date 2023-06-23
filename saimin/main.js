@@ -140,6 +140,7 @@ jQuery(function($){
 	let coin = new Image();
 	let rotationType = 'normal';
 	let stopping = false;
+	let released = false;
 
 	coin.src = 'images/coin5yen.png';
 
@@ -205,6 +206,11 @@ jQuery(function($){
 			case 'TEXT_FULLWIDTH_SPACE': return '　';
 			case 'TEXT_PERIOD': return '。';
 			case 'TEXT_PERIOD_SPACE': return '。';
+			case 'TEXT_RELEASE_HYPNOSIS': return '催眠解除';
+			case 'TEXT_RELEASING_HYPNOSIS': return '催眠解除中...';
+			case 'TEXT_RELEASING_HYPNOSIS2': return '催眠を解除しています...';
+			case 'TEXT_RELEASED_HYPNOSIS': return '催眠解除。';
+			case 'TEXT_RELEASED_HYPNOSIS2': return 'すべての催眠を解除しました。';
 			}
 		} else {
 			switch(str_id){
@@ -223,6 +229,11 @@ jQuery(function($){
 			case 'TEXT_FULLWIDTH_SPACE': return '　';
 			case 'TEXT_PERIOD': return '.';
 			case 'TEXT_PERIOD_SPACE': return '. ';
+			case 'TEXT_RELEASE_HYPNOSIS': return 'Release Hypnosis';
+			case 'TEXT_RELEASING_HYPNOSIS': return 'Releasing Hypnosis...';
+			case 'TEXT_RELEASING_HYPNOSIS2': return 'Now releasing hypnosis...';
+			case 'TEXT_RELEASED_HYPNOSIS': return 'Released Hypnosis.';
+			case 'TEXT_RELEASED_HYPNOSIS2': return 'All hypnosis has been released.';
 			}
 		}
 	}
@@ -292,8 +303,6 @@ jQuery(function($){
 			$('#please_tap_here').text('(ここをタップして下さい)');
 			$('#version_text').text('催眠くらくら Version ' + VERSION);
 			$('#heart_img').attr('src', 'images/heart.png');
-			$('#released_hypnosis').text('催眠解除。');
-			$('#released_hypnosis2').text('すべての催眠を解除しました。');
 		}else{
 			$('#notice_text').text(NOTICE_EN);
 			$('#mic_img').attr('src', 'images/mic.png');
@@ -358,8 +367,6 @@ jQuery(function($){
 			$('#please_tap_here').text('(Please tap here)');
 			$('#version_text').text('Hyponosis KraKra Version ' + VERSION);
 			$('#heart_img').attr('src', 'images/heart-en.png');
-			$('#released_hypnosis').text('Released Hypnosis.');
-			$('#released_hypnosis2').text('All hypnosis has been released.');
 		}
 		$('#notice_text').scrollTop(0);
 	}
@@ -527,15 +534,28 @@ jQuery(function($){
 			heart_block.classList.add('invisible');
 		}
 		if (type == -1){
+			cancelSpeech();
+			speech_checkbox.checked = false;
+			speech_label.classList.remove('checked');
+			released = false;
 			released_hypnosis.classList.remove('invisible');
 			released_hypnosis2.classList.remove('invisible');
 			sound_button.classList.add('releasing');
-			sound_button.classList.remove('navigate-button');
+			text_button.classList.add('releasing');
+			speech_label.classList.add('releasing');
+			released_hypnosis.innerText = getStr('TEXT_RELEASING_HYPNOSIS');
+			released_hypnosis2.innerText = getStr('TEXT_RELEASING_HYPNOSIS2');
+			setTimeout(function(){
+				released_hypnosis.innerText = getStr('TEXT_RELEASED_HYPNOSIS');
+				released_hypnosis2.innerText = getStr('TEXT_RELEASED_HYPNOSIS2');
+				released = true;
+			}, 3000);
 		} else {
 			released_hypnosis.classList.add('invisible');
 			released_hypnosis2.classList.add('invisible');
 			sound_button.classList.remove('releasing');
-			sound_button.classList.add('navigate-button');
+			text_button.classList.remove('releasing');
+			speech_label.classList.remove('releasing');
 		}
 		type_select.value = type.toString();
 		type_select_button.innerText = getStr('TEXT_PIC') + type.toString();
@@ -706,6 +726,12 @@ jQuery(function($){
 			title: getStr('TEXT_APPEARANCE'),
 			buttons: [
 				{
+					text: getStr('TEXT_RELEASE_HYPNOSIS'),
+					click: function(){
+						dialogContainer.dialog('close');
+						setType(-1);
+					},
+				},{
 					text: getStr('TEXT_OK'),
 					click: function(){
 						dialogContainer.dialog('close');
@@ -903,7 +929,7 @@ jQuery(function($){
 		let count2 = -getCount();
 		let factor = 1.2 * Math.abs(Math.sin(count2 * 0.05));
 
-		if (count2 % 1 > 0.5)
+		if (released)
 			factor = 1.0;
 
 		let grd = ctx.createRadialGradient(qx, qy, 0, qx, qy, dxy * factor);
@@ -1759,6 +1785,8 @@ jQuery(function($){
 		}
 
 		text_button.addEventListener('click', function(){
+			if (type == -1)
+				return;
 			let text = prompt(getStr('TEXT_INPUT_MESSAGE'), theText);
 			if (text !== null){
 				setText(text);
@@ -1972,6 +2000,8 @@ jQuery(function($){
 		}
 
 		speech_checkbox.addEventListener('click', function(e){
+			if (type == -1)
+				return;
 			if (speech_checkbox.checked){
 				playSpeech(theText);
 				speech_label.classList.add('checked');
