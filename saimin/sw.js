@@ -22,6 +22,12 @@ sw.precache('precached', [
 	'./images/question.png',
 	'./images/sound.png',
 	'./images/speak.png',
+	'./images/please-tap-here_en.png',
+	'./images/please-tap-here_ja.png',
+	'./images/hypnosis-released_en.png',
+	'./images/hypnosis-released_ja.png',
+	'./images/killing-hypnosis_en.png',
+	'./images/killing-hypnosis_ja.png',
 ]);
 
 sw.addRoute(/.*\.mp3$/, { method: 'get' }, sw.networkOnly({ timeout: 3000 }));

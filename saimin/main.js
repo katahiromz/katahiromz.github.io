@@ -44,16 +44,24 @@ How you use it is up to you.
 
 When a keyboard is connected, the following operations are available.
 
-- Press "0" to "9" to switch pictures.
-- Press "G" to open the general settings.
-- Press "H" to open the version information.
-- Press "P" to open appearance settings.
-- Press "N" to play sound.
-- Press "M" to turn on/off the microphone (it needs permission).
-- Press "T" to open the message settings.
-- Press "S" to speak the current message automatically.
-- Press "X" to pause.
-- Press "-" to kill hypnosis.
+- Press "0" to "9" keys to switch pictures.
+- Press "G" key to open the general settings.
+- Press "H" key to open the version information.
+- Press "P" key to open appearance settings.
+- Press "N" key to play sound.
+- Press "M" key to turn on/off the microphone (it needs permission).
+- Press "T" key to open the message settings.
+- Press "S" key to speak the current message automatically.
+- Press "X" key to pause.
+- Press "-" key to kill hypnosis.
+- Press "D" key to split the screen.
+- Press "L" key to turn on/off of Goggle Mode.
+
+[(Goggle Mode)]
+
+Goggle Mode is available with a connectable keyboard and goggles.
+Goggle Mode can be toggled on and off by pressing "L" key.
+Goggle Mode splits the screen in two and hides the control buttons.
 
 Copyright (c) 2022 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
@@ -100,16 +108,24 @@ Hypnosis KraKra
 
 キーボードを接続すると次のような操作ができます。
 
-- 「0」～「9」を押すと、映像が切り替わります。
-- 「G」を押すと全般設定が開きます。
-- 「H」を押すとバージョン情報を開きます。
-- 「P」を押すと見た目の設定を開きます。
-- 「N」を押すと音を鳴らします。
-- 「M」を押すとマイクのON/OFFを切り替えます(権限が必要です)。
-- 「T」を押すとメッセージの設定を開きます。
-- 「S」を押すと現在のメッセージを自動音声でしゃべります。
-- 「X」を押すと一時停止します。
-- 「-」を押すと催眠を消します。
+- 「0」～「9」キーを押すと、映像が切り替わります。
+- 「G」キーを押すと全般設定が開きます。
+- 「H」キーを押すとバージョン情報を開きます。
+- 「P」キーを押すと見た目の設定を開きます。
+- 「N」キーを押すと音を鳴らします。
+- 「M」キーを押すとマイクのON/OFFを切り替えます(権限が必要です)。
+- 「T」キーを押すとメッセージの設定を開きます。
+- 「S」キーを押すと現在のメッセージを自動音声でしゃべります。
+- 「X」キーを押すと一時停止します。
+- 「-」キーを押すと催眠を消します。
+- 「D」キーを押すと画面分割が切り替わります。
+- 「L」キーを押すとゴーグルモードが切り替わります。
+
+【ゴーグルモード】
+
+接続可能なキーボードとゴーグルがあれば、ゴーグルモードを利用できます。
+「L」キーを押すとゴーグルモードのON/OFFを切り替えが可能です。
+ゴーグルモードは、画面を２分割し、操作ボタンを隠します。
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2018 Robert Eisele
@@ -140,12 +156,18 @@ jQuery(function($){
 	let touchmoving = false;
 	let theRegistration = null;
 	let speedType = 'normal';
-	let coin = new Image();
+	let coin_img = new Image();
 	let rotationType = 'normal';
 	let stopping = false;
 	let released = false;
+	let heart_img = new Image();
+	let please_tap_here_img = new Image();
+	let hypnosis_releasing_img = new Image();
 
-	coin.src = 'images/coin5yen.png';
+	coin_img.src = 'images/coin5yen.png';
+	heart_img.src = 'images/heart.png';
+	please_tap_here_img.src = 'images/please-tap-here_en.png';
+	hypnosis_releasing_img.src = 'images/hypnosis-released_en.png';
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
@@ -210,10 +232,8 @@ jQuery(function($){
 			case 'TEXT_PERIOD': return '。';
 			case 'TEXT_PERIOD_SPACE': return '。';
 			case 'TEXT_RELEASE_HYPNOSIS': return '催眠解除';
-			case 'TEXT_RELEASING_HYPNOSIS': return '催眠解除中...';
-			case 'TEXT_RELEASING_HYPNOSIS2': return '催眠を解除しています...';
-			case 'TEXT_RELEASED_HYPNOSIS': return '催眠解除。';
-			case 'TEXT_RELEASED_HYPNOSIS2': return 'すべての催眠を解除しました。';
+			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ja.png';
+			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ja.png';
 			}
 		} else {
 			switch(str_id){
@@ -233,10 +253,8 @@ jQuery(function($){
 			case 'TEXT_PERIOD': return '.';
 			case 'TEXT_PERIOD_SPACE': return '. ';
 			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypnosis';
-			case 'TEXT_RELEASING_HYPNOSIS': return 'Killing hypnosis...';
-			case 'TEXT_RELEASING_HYPNOSIS2': return 'Now killing hypnosis......';
-			case 'TEXT_RELEASED_HYPNOSIS': return 'Hypnosis released.';
-			case 'TEXT_RELEASED_HYPNOSIS2': return 'All hypnosis has been released.';
+			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_en.png';
+			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_en.png';
 			}
 		}
 	}
@@ -303,14 +321,17 @@ jQuery(function($){
 			$('#config_brightness').text('画面の明るさ:');
 			$('#screen_brightness option[value="normal"]').text('普通');
 			$('#screen_brightness option[value="brighter"]').text('明るくする');
-			$('#please_tap_here').text('(ここをタップして下さい)');
 			$('#version_text').text('催眠くらくら Version ' + VERSION);
-			$('#heart_img').attr('src', 'images/heart.png');
+			heart_img = new Image();
+			heart_img.src = 'images/heart.png';
+			please_tap_here_img = new Image();
+			please_tap_here_img.src = 'images/please-tap-here_ja.png';
+			hypnosis_releasing_img = new Image();
 			if (released){
-				$('#released_hypnosis').text('催眠解除。');
+				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
 				$('#released_hypnosis2').text('すべての催眠を解除しました。');
 			}else{
-				$('#released_hypnosis').text('催眠中...');
+				hypnosis_releasing_img.src = getStr('TEXT_KILLING_HYPNOSIS_IMG');
 				$('#released_hypnosis2').text('催眠を解除しています...');
 			}
 		}else{
@@ -374,14 +395,17 @@ jQuery(function($){
 			$('#config_brightness').text('Brightness:');
 			$('#screen_brightness option[value="normal"]').text('Normal');
 			$('#screen_brightness option[value="brighter"]').text('Brighter');
-			$('#please_tap_here').text('(Please tap here)');
 			$('#version_text').text('Hyponosis KraKra Version ' + VERSION);
-			$('#heart_img').attr('src', 'images/heart-en.png');
+			heart_img = new Image();
+			heart_img.src = 'images/heart-en.png';
+			please_tap_here_img = new Image();
+			please_tap_here_img.src = 'images/please-tap-here_en.png';
+			hypnosis_releasing_img = new Image();
 			if (released){
-				$('#released_hypnosis').text('Hypnosis released.');
+				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
 				$('#released_hypnosis2').text('All hypnosis has been released.');
 			}else{
-				$('#released_hypnosis').text('Killing hypnosis...');
+				hypnosis_releasing_img.src = getStr('TEXT_KILLING_HYPNOSIS_IMG');
 				$('#released_hypnosis2').text('Now killing hypnosis...');
 			}
 		}
@@ -543,33 +567,21 @@ jQuery(function($){
 
 	function setType(value){
 		type = parseInt(value);
-		if (type == 0){
-			please_tap_here.classList.remove('invisible');
-			heart_block.classList.remove('invisible');
-		}else{
-			please_tap_here.classList.add('invisible');
-			heart_block.classList.add('invisible');
-		}
 		if (type == -1){
 			cancelSpeech();
 			speech_checkbox.checked = false;
 			speech_label.classList.remove('checked');
 			released = false;
-			released_hypnosis.classList.remove('invisible');
-			released_hypnosis2.classList.remove('invisible');
 			sound_button.classList.add('releasing');
 			text_button.classList.add('releasing');
 			speech_label.classList.add('releasing');
-			released_hypnosis.innerText = getStr('TEXT_RELEASING_HYPNOSIS');
-			released_hypnosis2.innerText = getStr('TEXT_RELEASING_HYPNOSIS2');
+			hypnosis_releasing_img = new Image();
+			hypnosis_releasing_img.src = getStr('TEXT_KILLING_HYPNOSIS_IMG');
 			setTimeout(function(){
-				released_hypnosis.innerText = getStr('TEXT_RELEASED_HYPNOSIS');
-				released_hypnosis2.innerText = getStr('TEXT_RELEASED_HYPNOSIS2');
+				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
 				released = true;
 			}, 3000);
 		} else {
-			released_hypnosis.classList.add('invisible');
-			released_hypnosis2.classList.add('invisible');
 			sound_button.classList.remove('releasing');
 			text_button.classList.remove('releasing');
 			speech_label.classList.remove('releasing');
@@ -939,6 +951,14 @@ jQuery(function($){
 	function drawPicMinusOne(ctx, px, py, dx, dy){
 		ctx.save();
 
+		ctx.beginPath();
+		ctx.moveTo(px, py);
+		ctx.lineTo(px + dx, py);
+		ctx.lineTo(px + dx, py + dy);
+		ctx.lineTo(px, py + dy);
+		ctx.closePath();
+		ctx.clip();
+
 		let qx = px + dx / 2;
 		let qy = py + dy / 2;
 		let dxy = (dx + dy) / 2;
@@ -962,12 +982,26 @@ jQuery(function($){
 		ctx.lineWidth = 10;
 		circle(ctx, qx, qy, (dx + dy + 10) / 5 * factor + dxy * 0.2, false);
 
+		if (hypnosis_releasing_img.complete){
+			let x = qx - hypnosis_releasing_img.width / 2;
+			let y = qy - hypnosis_releasing_img.height / 2;
+			ctx.drawImage(hypnosis_releasing_img, x, y, hypnosis_releasing_img.width, hypnosis_releasing_img.height);
+		}
+
 		ctx.restore();
 	}
 
 	// pic0: Initial Screen
 	function drawPic0(ctx, px, py, dx, dy){
 		ctx.save();
+
+		ctx.beginPath();
+		ctx.moveTo(px, py);
+		ctx.lineTo(px + dx, py);
+		ctx.lineTo(px + dx, py + dy);
+		ctx.lineTo(px, py + dy);
+		ctx.closePath();
+		ctx.clip();
 
 		let qx = px + dx / 2;
 		let qy = py + dy / 2;
@@ -981,6 +1015,18 @@ jQuery(function($){
 		grd.addColorStop(1, 'rgba(255, 0, 255, 1.0)');
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
+
+		if (heart_img.complete){
+			let x = qx - heart_img.width / 2;
+			let y = py + dy * 0.3;
+			ctx.drawImage(heart_img, x, y, heart_img.width, heart_img.height);
+		}
+
+		if (please_tap_here_img.complete){
+			let x = qx - please_tap_here_img.width / 2;
+			let y = py + dy * 0.7;
+			ctx.drawImage(please_tap_here_img, x, y, please_tap_here_img.width, please_tap_here_img.height);
+		}
 
 		ctx.restore();
 	}
@@ -1446,14 +1492,14 @@ jQuery(function($){
 			++iz;
 		}
 
-		if (coin.complete){
-			ctx.translate(qx - coin.width * 0.5, qy - coin.height * 0.75);
+		if (coin_img.complete){
+			ctx.translate(qx - coin_img.width * 0.5, qy - coin_img.height * 0.75);
 
 			let angle = Math.PI * Math.sin(count2 * 0.1 - 0.05) * 0.078;
 			ctx.rotate(angle);
 
 			let ratio = isLargeDisplay() ? 1.4 : 1;
-			ctx.drawImage(coin, 0, 0, coin.width * ratio, coin.height * ratio);
+			ctx.drawImage(coin_img, 0, 0, coin_img.width * ratio, coin_img.height * ratio);
 		}
 
 		ctx.restore();
@@ -1676,7 +1722,7 @@ jQuery(function($){
 
 		let x = cx / 2, y = cy / 2, delta_percent = 0;
 
-		if (type == 0 || division == 1){
+		if (division == 1){
 			drawPic(ctx, 0, 0, cx, cy);
 			y += cy / 4;
 			delta_percent = 25;
@@ -1969,13 +2015,6 @@ jQuery(function($){
 			canvasClick(e);
 		}, false);
 
-		please_tap_here.addEventListener('click', function(e){
-			canvasClick(e);
-		}, false);
-		heart_block.addEventListener('click', function(e){
-			canvasClick(e);
-		}, false);
-
 		saimin_canvas.addEventListener('mousemove', function(e){
 			if (!ready)
 				return;
@@ -2151,6 +2190,40 @@ jQuery(function($){
 			if (e.key == '-'){
 				setType(-1);
 				return;
+			}
+			if (e.key == 'd' || e.key == 'D'){
+				if(division == 1){
+					setDivision(2);
+				}else if(division == 2){
+					setDivision(1);
+				}else{
+					setDivision(1);
+				}
+				return;
+			}
+			if (e.key == 'l' || e.key == 'L'){ // Goggle Mode
+				if (division == 1){
+					setDivision(2);
+				}else{
+					setDivision(1);
+				}
+				if (division == 1){
+					microphone_label.classList.remove('invisible');
+					type_select_button.classList.remove('invisible');
+					sound_button.classList.remove('invisible');
+					speech_label.classList.remove('invisible');
+					config_button.classList.remove('invisible');
+					about_button.classList.remove('invisible');
+					text_button.classList.remove('invisible');
+				}else{
+					microphone_label.classList.add('invisible');
+					type_select_button.classList.add('invisible');
+					sound_button.classList.add('invisible');
+					speech_label.classList.add('invisible');
+					config_button.classList.add('invisible');
+					about_button.classList.add('invisible');
+					text_button.classList.add('invisible');
+				}
 			}
 			//alert(e.key);
 		});
