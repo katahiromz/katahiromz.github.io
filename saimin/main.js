@@ -171,7 +171,7 @@ jQuery(function($){
 	heart_img.src = 'images/heart.png';
 	please_tap_here_img.src = 'images/please-tap-here_en.png';
 	hypnosis_releasing_img.src = 'images/hypnosis-released_en.png';
-	all_released_img.src = 'images/all-released_en.png';
+	all_released_img.src = 'images/all-released_en.svg';
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
@@ -238,7 +238,7 @@ jQuery(function($){
 			case 'TEXT_RELEASE_HYPNOSIS': return '催眠解除';
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ja.png';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ja.png';
-			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_ja.png';
+			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_ja.svg';
 			}
 		} else {
 			switch(str_id){
@@ -260,7 +260,7 @@ jQuery(function($){
 			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypnosis';
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_en.png';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_en.png';
-			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_en.png';
+			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_en.svg';
 			}
 		}
 	}

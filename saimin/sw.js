@@ -28,8 +28,8 @@ sw.precache('precached', [
 	'./images/hypnosis-released_ja.png',
 	'./images/killing-hypnosis_en.png',
 	'./images/killing-hypnosis_ja.png',
-	'.images/all-released_en.png',
-	'.images/all-released_ja.png',
+	'.images/all-released_en.svg',
+	'.images/all-released_ja.svg',
 ]);
 
 sw.addRoute(/.*\.mp3$/, { method: 'get' }, sw.networkOnly({ timeout: 3000 }));
