@@ -165,11 +165,13 @@ jQuery(function($){
 	let heart_img = new Image();
 	let please_tap_here_img = new Image();
 	let hypnosis_releasing_img = new Image();
+	let all_released_img = new Image();
 
 	coin_img.src = 'images/coin5yen.png';
 	heart_img.src = 'images/heart.png';
 	please_tap_here_img.src = 'images/please-tap-here_en.png';
 	hypnosis_releasing_img.src = 'images/hypnosis-released_en.png';
+	all_released_img.src = 'images/all-released_en.png';
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
@@ -236,6 +238,7 @@ jQuery(function($){
 			case 'TEXT_RELEASE_HYPNOSIS': return '催眠解除';
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ja.png';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ja.png';
+			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_ja.png';
 			}
 		} else {
 			switch(str_id){
@@ -257,6 +260,7 @@ jQuery(function($){
 			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypnosis';
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_en.png';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_en.png';
+			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_en.png';
 			}
 		}
 	}
@@ -331,10 +335,8 @@ jQuery(function($){
 			hypnosis_releasing_img = new Image();
 			if (released){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
-				$('#released_hypnosis2').text('すべての催眠を解除しました。');
 			}else{
 				hypnosis_releasing_img.src = getStr('TEXT_KILLING_HYPNOSIS_IMG');
-				$('#released_hypnosis2').text('催眠を解除しています...');
 			}
 		}else{
 			$('#notice_text').text(NOTICE_EN);
@@ -405,12 +407,12 @@ jQuery(function($){
 			hypnosis_releasing_img = new Image();
 			if (released){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
-				$('#released_hypnosis2').text('All hypnosis has been released.');
 			}else{
 				hypnosis_releasing_img.src = getStr('TEXT_KILLING_HYPNOSIS_IMG');
-				$('#released_hypnosis2').text('Now killing hypnosis...');
 			}
 		}
+		all_released_img = new Image();
+		all_released_img.src = getStr('TEXT_ALL_RELEASED_IMG');
 		$('#notice_text').scrollTop(0);
 	}
 
@@ -581,6 +583,7 @@ jQuery(function($){
 			hypnosis_releasing_img.src = getStr('TEXT_KILLING_HYPNOSIS_IMG');
 			setTimeout(function(){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
+				all_released_img.src = getStr('TEXT_ALL_RELEASED_IMG');
 				released = true;
 			}, 3000);
 		} else {
@@ -986,8 +989,14 @@ jQuery(function($){
 
 		if (hypnosis_releasing_img.complete){
 			let x = qx - hypnosis_releasing_img.width / 2;
-			let y = qy - hypnosis_releasing_img.height / 2;
+			let y = qy - hypnosis_releasing_img.height / 2 - dy * 0.2;
 			ctx.drawImage(hypnosis_releasing_img, x, y, hypnosis_releasing_img.width, hypnosis_releasing_img.height);
+		}
+
+		if (released && all_released_img.complete){
+			let x = qx - all_released_img.width / 2;
+			let y = qy - all_released_img.height / 2 + dy * 0.2;
+			ctx.drawImage(all_released_img, x, y, all_released_img.width, all_released_img.height);
 		}
 
 		ctx.restore();
@@ -2168,7 +2177,7 @@ jQuery(function($){
 				text_button.classList.add('invisible');
 			}
 			try{
-				android.showButtons(enabled);
+				android.showNaviBar(enabled);
 			}catch(error){
 				;
 			}
