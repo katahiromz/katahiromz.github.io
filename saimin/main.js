@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 9;
-const VERSION = '3.3.4';
+const VERSION = '3.3.5';
 const DEBUGGING = false;
 
 const NOTICE_EN = `=========================
@@ -1206,6 +1206,12 @@ jQuery(function($){
 			heart(ctx, x, y - cxy * opened / 50, x, y + cxy * opened / 50);
 			radian += delta;
 		}
+
+		let grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.5);
+		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
+		grd.addColorStop(1, 'rgba(255, 255, 0, 1.0)');
+		ctx.fillStyle = grd;
+		circle(ctx, qx, qy, dxy, true);
 
 		ctx.restore();
 	}
