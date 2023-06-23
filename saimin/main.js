@@ -232,7 +232,7 @@ jQuery(function($){
 			case 'TEXT_FULLWIDTH_SPACE': return '　';
 			case 'TEXT_PERIOD': return '.';
 			case 'TEXT_PERIOD_SPACE': return '. ';
-			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypno';
+			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypnosis';
 			case 'TEXT_RELEASING_HYPNOSIS': return 'Killing hypnosis...';
 			case 'TEXT_RELEASING_HYPNOSIS2': return 'Now killing hypnosis......';
 			case 'TEXT_RELEASED_HYPNOSIS': return 'Hypnosis released.';
