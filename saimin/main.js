@@ -42,7 +42,7 @@ How you use it is up to you.
 
 [(Keyboard Operation)]
 
-When a keyboard is connected, the following operations are available.
+When a keyboard is connected, the following operations are available:
 
 - Press "0" to "9" keys to switch pictures.
 - Press "G" key to open the general settings.
@@ -55,6 +55,7 @@ When a keyboard is connected, the following operations are available.
 - Press "X" key to pause.
 - Press "-" key to kill hypnosis.
 - Press "D" key to split the screen.
+- Press "K" key to toggle display of the buttons.
 - Press "L" key to turn on/off of Goggle Mode.
 
 [(Goggle Mode)]
@@ -119,6 +120,7 @@ Hypnosis KraKra
 - 「X」キーを押すと一時停止します。
 - 「-」キーを押すと催眠を消します。
 - 「D」キーを押すと画面分割が切り替わります。
+- 「K」キーを押すとボタンの表示が切り替わります。
 - 「L」キーを押すとゴーグルモードが切り替わります。
 
 【ゴーグルモード】
@@ -2147,6 +2149,26 @@ jQuery(function($){
 			microphone_label.classList.add('checked');
 		}
 
+		function showButtons(enabled){
+			if (enabled){
+				microphone_label.classList.remove('invisible');
+				type_select_button.classList.remove('invisible');
+				sound_button.classList.remove('invisible');
+				speech_label.classList.remove('invisible');
+				config_button.classList.remove('invisible');
+				about_button.classList.remove('invisible');
+				text_button.classList.remove('invisible');
+			}else{
+				microphone_label.classList.add('invisible');
+				type_select_button.classList.add('invisible');
+				sound_button.classList.add('invisible');
+				speech_label.classList.add('invisible');
+				config_button.classList.add('invisible');
+				about_button.classList.add('invisible');
+				text_button.classList.add('invisible');
+			}
+		}
+
 		document.body.addEventListener('keydown', function(e){
 			if (!ready || e.ctrlKey)
 				return;
@@ -2207,23 +2229,10 @@ jQuery(function($){
 				}else{
 					setDivision(1);
 				}
-				if (division == 1){
-					microphone_label.classList.remove('invisible');
-					type_select_button.classList.remove('invisible');
-					sound_button.classList.remove('invisible');
-					speech_label.classList.remove('invisible');
-					config_button.classList.remove('invisible');
-					about_button.classList.remove('invisible');
-					text_button.classList.remove('invisible');
-				}else{
-					microphone_label.classList.add('invisible');
-					type_select_button.classList.add('invisible');
-					sound_button.classList.add('invisible');
-					speech_label.classList.add('invisible');
-					config_button.classList.add('invisible');
-					about_button.classList.add('invisible');
-					text_button.classList.add('invisible');
-				}
+				showButtons(division == 1);
+			}
+			if (e.key == 'k' || e.key == 'K'){
+				showButtons(microphone_label.classList.contains('invisible'));
 			}
 			//alert(e.key);
 		});
