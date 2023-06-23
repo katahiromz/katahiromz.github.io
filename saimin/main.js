@@ -2,6 +2,7 @@
 
 const NUM_TYPE = 9;
 const VERSION = '3.3.4';
+const DEBUGGING = true;
 
 const NOTICE_EN = `=========================
 催眠くらくら
@@ -815,6 +816,7 @@ jQuery(function($){
 				ctx.lineTo(x0, y0);
 			}
 		}
+		ctx.closePath();
 		if (is_fill)
 			ctx.fill();
 		else
@@ -1067,8 +1069,7 @@ jQuery(function($){
 		if (flag)
 			radius = dr0 - radius;
 
-		for (; radius < size; radius += dr0)
-		{
+		for (; radius < size; radius += dr0){
 			circle(ctx, qx, qy, radius, false);
 		}
 
@@ -1144,6 +1145,7 @@ jQuery(function($){
 		let k = factor * 5;
 		let r_delta = 30;
 		let flag = (factor % 10) / 0.5;
+		let flag2 = Math.sin(factor * 0.7) > 0.3;
 		for (let r = 0; r < 360;){
 			let radian = r * Math.PI / 180 + factor;
 			ctx.beginPath();
@@ -1156,11 +1158,15 @@ jQuery(function($){
 			let x1 = qx + cxy * Math.cos(radian);
 			let y1 = qy + cxy * Math.sin(radian);
 			ctx.lineTo(x1, y1);
-			let grd = ctx.createRadialGradient(qx, qy, 0, (x0 + x1) / 2, (y0 + y1) / 2, cxy);
 			let factor2 = Math.abs(1 - Math.sin(factor * 2));
-			grd.addColorStop(0.05 + factor2 * 0.05, `rgb(255, ${factor2 * 50 + 55}, ${factor2 * 200 + 55})`);
-			grd.addColorStop(1.0, `rgb(${(255 - factor2 * 255) % 255}, 191, ${(191 - factor2 * 191) % 191})`);
-			ctx.fillStyle = grd;
+			if (flag2){
+				let grd = ctx.createRadialGradient(qx, qy, 0, (x0 + x1) / 2, (y0 + y1) / 2, cxy);
+				grd.addColorStop(0.05 + factor2 * 0.05, `rgb(255, ${factor2 * 50 + 55}, ${factor2 * 200 + 55})`);
+				grd.addColorStop(1.0, `rgb(${(255 - factor2 * 255) % 255}, 191, ${(191 - factor2 * 191) % 191})`);
+				ctx.fillStyle = grd;
+			}else{
+				ctx.fillStyle = `hsl(${(k * 60) % 360}, 100%, 50%)`
+			}
 			ctx.fill();
 			ctx.moveTo(qx, qy);
 			ctx.lineTo((x0 + x1) / 2, (y0 + y1) / 2);
@@ -1642,6 +1648,8 @@ jQuery(function($){
 		}
 	}
 
+	let FPS = 0;
+
 	function draw(){
 		let ctx = saimin_canvas.getContext('2d');
 
@@ -1725,6 +1733,20 @@ jQuery(function($){
 				else
 					speed = MIN_VALUE + (MIDDLE - MIN_VALUE) * Math.random();
 			}
+		}
+
+		if (DEBUGGING){
+			if (diff != 0) {
+				FPS = 1 / Math.abs(diff);
+				FPS = Math.round(FPS * 10) / 10;
+			}
+			let text = Math.round(FPS).toString() + '.' + (FPS * 10 % 10).toString();
+			ctx.font = '32px san-serif';
+			let measure = ctx.measureText(text);
+			let width = measure.width;
+			let height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent;
+			ctx.fillStyle = "red";
+			ctx.fillText(text, (cx - width) / 2, height);
 		}
 
 		window.requestAnimationFrame(draw);
