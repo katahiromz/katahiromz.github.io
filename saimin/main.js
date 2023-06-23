@@ -169,8 +169,8 @@ jQuery(function($){
 
 	coin_img.src = 'images/coin5yen.png';
 	heart_img.src = 'images/heart.png';
-	please_tap_here_img.src = 'images/please-tap-here_en.png';
-	hypnosis_releasing_img.src = 'images/hypnosis-released_en.png';
+	please_tap_here_img.src = 'images/please-tap-here_en.svg';
+	hypnosis_releasing_img.src = 'images/hypnosis-released_en.svg';
 	all_released_img.src = 'images/all-released_en.svg';
 
 	function isNativeApp(){
@@ -237,8 +237,8 @@ jQuery(function($){
 			case 'TEXT_PERIOD_SPACE': return '。';
 			case 'TEXT_RELEASE_HYPNOSIS': return '催眠解除';
 			case 'TEXT_HYPNOSIS_RELEASED': return '催眠解除。';
-			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ja.png';
-			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ja.png';
+			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ja.svg';
+			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ja.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_ja.svg';
 			}
 		} else {
@@ -260,8 +260,8 @@ jQuery(function($){
 			case 'TEXT_PERIOD_SPACE': return '. ';
 			case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypnosis';
 			case 'TEXT_HYPNOSIS_RELEASED': return 'Hypnosis released.';
-			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_en.png';
-			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_en.png';
+			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_en.svg';
+			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_en.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_en.svg';
 			}
 		}
@@ -333,7 +333,7 @@ jQuery(function($){
 			heart_img = new Image();
 			heart_img.src = 'images/heart.png';
 			please_tap_here_img = new Image();
-			please_tap_here_img.src = 'images/please-tap-here_ja.png';
+			please_tap_here_img.src = 'images/please-tap-here_ja.svg';
 			hypnosis_releasing_img = new Image();
 			if (released){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
@@ -405,7 +405,7 @@ jQuery(function($){
 			heart_img = new Image();
 			heart_img.src = 'images/heart-en.png';
 			please_tap_here_img = new Image();
-			please_tap_here_img.src = 'images/please-tap-here_en.png';
+			please_tap_here_img.src = 'images/please-tap-here_en.svg';
 			hypnosis_releasing_img = new Image();
 			if (released){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
