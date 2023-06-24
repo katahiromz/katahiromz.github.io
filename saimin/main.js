@@ -168,10 +168,6 @@ jQuery(function($){
 	let all_released_img = new Image();
 
 	coin_img.src = 'images/coin5yen.png';
-	logo_img.src = 'images/logo_en.png';
-	please_tap_here_img.src = 'images/please-tap-here_en.svg';
-	hypnosis_releasing_img.src = 'images/killing-hypnosis_en.svg';
-	all_released_img.src = 'images/all-released_en.svg';
 
 	function isNativeApp(){
 		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
