@@ -267,7 +267,10 @@ jQuery(function($){
 		}
 	}
 
+	let currentLanguage = 'en';
+
 	function localizeSaimin(lang){
+		currentLanguage = lang;
 		if (lang == 'ja' || lang == 'jp'){
 			$('#notice_text').text(NOTICE_JA);
 			$('#mic_img').attr('src', 'images/mic.png');
@@ -451,10 +454,12 @@ jQuery(function($){
 			if (window.speechSynthesis){
 				text = text.repeat(32);
 				let speech = new SpeechSynthesisUtterance(text);
-				// {{language-specific}}
 				speech.pitch = 0.6;
 				speech.rate = 0.4;
-				speech.lang = 'ja-JP';
+				if (currentLanguage == 'ja')
+					speech.lang = 'ja-JP';
+				else
+					speech.lang = 'en-US';
 				window.speechSynthesis.speak(speech);
 			}
 		}
