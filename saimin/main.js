@@ -141,8 +141,8 @@ function AndroidMicrophoneOnReload(){
 }
 
 jQuery(function($){
-	let cx = 0, cy = 0;
-	let old_cx = null, old_cy = null;
+	let cxScreen = 0, cyScreen = 0;
+	let old_cxScreen = null, old_cyScreen = null;
 	let old_time = (new Date()).getTime();
 	let picType = 0;
 	let counter = 0, clock = 0;
@@ -170,7 +170,7 @@ jQuery(function($){
 	coin_img.src = 'images/coin5yen.png';
 	logo_img.src = 'images/logo_en.png';
 	please_tap_here_img.src = 'images/please-tap-here_en.svg';
-	hypnosis_releasing_img.src = 'images/hypnosis-released_en.svg';
+	hypnosis_releasing_img.src = 'images/killing-hypnosis_en.svg';
 	all_released_img.src = 'images/all-released_en.svg';
 
 	function isNativeApp(){
@@ -463,7 +463,7 @@ jQuery(function($){
 	}
 
 	function isLargeDisplay(){
-		return cx >= 1500 || cy >= 1500;
+		return cxScreen >= 1500 || cyScreen >= 1500;
 	}
 
 	let playing = null;
@@ -636,8 +636,8 @@ jQuery(function($){
 
 	function fitCanvas(){
 		let ctx = saimin_canvas.getContext('2d');
-		cx = ctx.canvas.width = window.innerWidth;
-		cy = ctx.canvas.height = window.innerHeight;
+		cxScreen = ctx.canvas.width = window.innerWidth;
+		cyScreen = ctx.canvas.height = window.innerHeight;
 	}
 
 	function fit(){
@@ -1011,15 +1011,15 @@ jQuery(function($){
 		circle(ctx, qx, qy, (dx + dy + 10) / 5 * factor + dxy * 0.2, false);
 
 		if (hypnosis_releasing_img.complete){
-			let x = qx - hypnosis_releasing_img.width / 2;
-			let y = qy - hypnosis_releasing_img.height / 2 - dy * 0.2;
-			ctx.drawImage(hypnosis_releasing_img, x, y, hypnosis_releasing_img.width, hypnosis_releasing_img.height);
+			let x = px - dx / 2 - hypnosis_releasing_img.width / 2;
+			let y = py - dy / 2 - hypnosis_releasing_img.height / 2;
+			ctx.drawImage(hypnosis_releasing_img, x, y);
 		}
 
 		if (released && all_released_img.complete){
-			let x = qx - all_released_img.width / 2;
-			let y = qy - all_released_img.height / 2 + dy * 0.2;
-			ctx.drawImage(all_released_img, x, y, all_released_img.width, all_released_img.height);
+			let x = px - (dx + all_released_img.width) / 2;
+			let y = py - (dy + all_released_img.height) / 2 + dy * 0.2;
+			ctx.drawImage(all_released_img, x, y);
 		}
 
 		ctx.restore();
@@ -1051,15 +1051,15 @@ jQuery(function($){
 		circle(ctx, qx, qy, dxy, true);
 
 		if (logo_img.complete){
-			let x = qx - logo_img.width / 2;
-			let y = py + dy * 0.3;
-			ctx.drawImage(logo_img, x, y, logo_img.width, logo_img.height);
+			let x = px + (dx - logo_img.width) / 2;
+			let y = py + (dy - logo_img.height) / 2 - dy * 0.1;
+			ctx.drawImage(logo_img, x, y);
 		}
 
 		if (please_tap_here_img.complete){
 			let x = qx - please_tap_here_img.width / 2;
 			let y = py + dy * 0.7;
-			ctx.drawImage(please_tap_here_img, x, y, please_tap_here_img.width, please_tap_here_img.height);
+			ctx.drawImage(please_tap_here_img, x, y);
 		}
 
 		ctx.restore();
@@ -1152,7 +1152,7 @@ jQuery(function($){
 		ctx.fillStyle = '#fff';
 		ctx.fillRect(px, py, dx, dy);
 
-		let size = (cx + cy) * 0.4;
+		let size = (dx + dy) * 0.4;
 
 		let dr0 = 30;
 		if (isLargeDisplay()){
@@ -1237,7 +1237,7 @@ jQuery(function($){
 		let count2 = getCount();
 		let factor = count2 * 0.03;
 
-		let cxy = ((cx >= cy) ? cy : cx) * 1.2;
+		let cxy = ((dx >= dy) ? dy : dx) * 1.2;
 		const colors = ['#f0f', '#ff0', '#0f0', '#0ff', '#00c', '#f0f'];
 
 		let k = factor * 5;
@@ -1307,7 +1307,7 @@ jQuery(function($){
 
 		let grd = ctx.createRadialGradient(qx, qy, dxy * 0.25, qx, qy, dxy * 0.5);
 		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
-		grd.addColorStop(1, 'rgba(255, 255, 0, 1.0)');
+		grd.addColorStop(1, 'rgba(255, 255, 0, 0.8)');
 		ctx.fillStyle = grd;
 		circle(ctx, qx, qy, dxy, true);
 
@@ -1737,10 +1737,10 @@ jQuery(function($){
 	}
 
 	function setTextPos(id, px, py, cx, cy, counter){
-		let x = px + cx / 2 - id.offsetWidth / 2;
-		let y = py + (0.05 * Math.sin(counter * 0.1) + 0.8) * cy - id.offsetHeight / 2;
-		id.style.left = x + "px";
-		id.style.top = y + "px";
+		let x = px + cx / 2 - id.clientWidth / 2;
+		let y = py + cy / 2 - id.clientHeight / 2 + (1 + 0.5 * Math.sin(counter * 0.1)) * cy * 0.2;
+		id.style.left = x + 'px';
+		id.style.top = y + 'px';
 	}
 
 	let FPS = 0;
@@ -1748,7 +1748,8 @@ jQuery(function($){
 	function draw_all(){
 		let ctx = saimin_canvas.getContext('2d');
 
-		let x = cx / 2, y = cy / 2;
+		let cx = cxScreen, cy = cyScreen;
+		let x = cxScreen / 2, y = cyScreen / 2;
 
 		let splitted = false;
 		if (division == 1){
@@ -1817,13 +1818,13 @@ jQuery(function($){
 		stars.shift();
 		stars.push(null);
 
-		if (old_cx !== null && old_cy !== null){
-			if (window.innerWidth != old_cx || window.innerHeight != old_cy){
+		if (old_cxScreen !== null && old_cyScreen !== null){
+			if (window.innerWidth != old_cxScreen || window.innerHeight != old_cyScreen){
 				fit();
 			}
 		}
-		old_cx = window.innerWidth;
-		old_cy = window.innerHeight;
+		old_cxScreen = window.innerWidth;
+		old_cyScreen = window.innerHeight;
 
 		let new_time = (new Date()).getTime();
 		let diff = (new_time - old_time) / 1000.0;
@@ -1859,7 +1860,7 @@ jQuery(function($){
 			let width = measure.width;
 			let height = measure.actualBoundingBoxAscent + measure.actualBoundingBoxDescent;
 			ctx.fillStyle = "red";
-			ctx.fillText(text, (cx - width) / 2, height);
+			ctx.fillText(text, (cxScreen - width) / 2, height);
 		}
 
 		window.requestAnimationFrame(draw_all);
