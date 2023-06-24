@@ -1212,7 +1212,7 @@ jQuery(function($){
 		return [r, g, b];
 	}
 
-	// pic3: The eyes
+	// pic3: The Eyes
 	function drawPic3(ctx, px, py, dx, dy){
 		ctx.save();
 
@@ -1260,11 +1260,21 @@ jQuery(function($){
 				ctx.fillStyle = `hsl(${(k * 60) % 360}, 100%, 50%)`
 			}
 			ctx.fill();
+			++k;
+		}
+		k = factor * 5;
+		for (let r = 0; r < 360;){
+			let radian = r * Math.PI / 180 + factor;
+			let x0 = qx + cxy * Math.cos(radian);
+			let y0 = qy + cxy * Math.sin(radian);
+			let factor2 = Math.abs(1 - Math.sin(factor * 8));
+			ctx.beginPath();
 			ctx.moveTo(qx, qy);
-			ctx.lineTo((x0 + x1) / 2, (y0 + y1) / 2);
+			ctx.lineTo(x0, y0);
 			ctx.strokeStyle = `rgb(255, 200, ${factor2 * 192}`;
 			ctx.lineWidth = 10;
 			ctx.stroke();
+			r += r_delta / 2;
 			++k;
 		}
 
