@@ -1008,14 +1008,14 @@ jQuery(function($){
 		circle(ctx, qx, qy, (dx + dy + 10) / 5 * factor + dxy * 0.2, false);
 
 		if (hypnosis_releasing_img.complete){
-			let x = px - dx / 2 - hypnosis_releasing_img.width / 2;
-			let y = py - dy / 2 - hypnosis_releasing_img.height / 2;
+			let x = px + (dx - hypnosis_releasing_img.width) / 2;
+			let y = py + (dy - hypnosis_releasing_img.height) / 2 - dy * 0.1;
 			ctx.drawImage(hypnosis_releasing_img, x, y);
 		}
 
 		if (released && all_released_img.complete){
-			let x = px - (dx + all_released_img.width) / 2;
-			let y = py - (dy + all_released_img.height) / 2 + dy * 0.2;
+			let x = px + (dx - all_released_img.width) / 2;
+			let y = py + (dy - all_released_img.height) / 2 + dy * 0.2;
 			ctx.drawImage(all_released_img, x, y);
 		}
 

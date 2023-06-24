@@ -12,9 +12,6 @@ body {
 	height: 100%;
 	width: 100%;
 }
-.ui-widget textarea {
-	font-size: 9pt;
-}
 label {
 	cursor: pointer;
 	font-size: 0.5cm;
@@ -173,4 +170,5 @@ button.navigate-button {
 }
 #notice_text {
 	width: 90%;
+	font-size: 9pt;
 }
