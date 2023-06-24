@@ -754,7 +754,6 @@ jQuery(function($){
 					alert(getStr('TEXT_INITTED_APP'));
 					dialogContainer.dialog('close');
 					accepted();
-					location.reload();
 				},
 			},{
 				text: getStr('TEXT_OK'),
