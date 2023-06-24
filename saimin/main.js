@@ -671,7 +671,13 @@ jQuery(function($){
 		text_button.classList.remove('invisible');
 		updateVersionDisplay();
 		if (!ready){
-			setPicType(0);
+			let reset = localStorage.getItem('saiminReset');
+			if (reset){
+				localStorage.removeItem('saiminReset');
+				setPicType(reset);
+			}else{
+				setPicType(0);
+			}
 			window.requestAnimationFrame(draw_all);
 			ready = true;
 		}
@@ -2197,11 +2203,13 @@ jQuery(function($){
 		window.addEventListener('resize', function(){
 			if (location.hostname == '' || isNativeApp()){
 				if (localStorage.getItem('saiminHelpShowing')){
+					localStorage.setItem('saiminReset', picType);
 					location.reload();
 				}else{
 					fit();
 				}
 			} else {
+				localStorage.setItem('saiminReset', picType);
 				location.reload();
 			}
 		}, false);
