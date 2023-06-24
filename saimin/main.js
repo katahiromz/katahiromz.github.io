@@ -1735,7 +1735,7 @@ jQuery(function($){
 
 	function setTextPos(id, px, py, dx, dy, counter){
 		let x = px + dx / 2 - id.clientWidth / 2;
-		let y = py + dy / 2 - id.clientHeight / 2 + (1.25 + 0.5 * Math.sin(counter * 0.1)) * dy * 0.2;
+		let y = py + dy * 0.7 - id.clientHeight / 2 + (1 + 0.4 * Math.sin(counter * 0.1)) * dy * 0.1;
 		id.style.left = x + 'px';
 		id.style.top = y + 'px';
 	}
