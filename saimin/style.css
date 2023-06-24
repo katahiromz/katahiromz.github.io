@@ -171,3 +171,6 @@ button.navigate-button {
 .ui-widget {
 	font-size: 0.9em;
 }
+#notice_text {
+	width: 90%;
+}

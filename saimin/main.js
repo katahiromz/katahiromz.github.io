@@ -334,7 +334,6 @@ jQuery(function($){
 			logo_img.src = 'images/logo_ja.png';
 			please_tap_here_img = new Image();
 			please_tap_here_img.src = 'images/please-tap-here_ja.svg';
-			hypnosis_releasing_img = new Image();
 			if (released){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
 			}else{
@@ -406,7 +405,6 @@ jQuery(function($){
 			logo_img.src = 'images/logo_en.png';
 			please_tap_here_img = new Image();
 			please_tap_here_img.src = 'images/please-tap-here_en.svg';
-			hypnosis_releasing_img = new Image();
 			if (released){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
 			}else{
@@ -594,7 +592,6 @@ jQuery(function($){
 			sound_button.classList.add('releasing');
 			text_button.classList.add('releasing');
 			speech_label.classList.add('releasing');
-			hypnosis_releasing_img = new Image();
 			hypnosis_releasing_img.src = getStr('TEXT_KILLING_HYPNOSIS_IMG');
 			setTimeout(function(){
 				hypnosis_releasing_img.src = getStr('TEXT_HYPNOSIS_RELEASED_IMG');
@@ -1697,48 +1694,48 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function drawPic(ctx, px, py, cx, cy){
+	function drawPic(ctx, px, py, dx, dy){
 		switch (picType){
 		case -1:
-			drawPicMinusOne(ctx, px, py, cx, cy);
+			drawPicMinusOne(ctx, px, py, dx, dy);
 			break;
 		case 0:
-			drawPic0(ctx, px, py, cx, cy);
+			drawPic0(ctx, px, py, dx, dy);
 			break;
 		case 1:
-			drawPic1(ctx, px, py, cx, cy);
+			drawPic1(ctx, px, py, dx, dy);
 			break;
 		case 2:
-			drawPic2(ctx, px, py, cx, cy, true);
-			drawPic2(ctx, px, py, cx, cy, false);
+			drawPic2(ctx, px, py, dx, dy, true);
+			drawPic2(ctx, px, py, dx, dy, false);
 			break;
 		case 3:
-			drawPic3(ctx, px, py, cx, cy);
+			drawPic3(ctx, px, py, dx, dy);
 			break;
 		case 4:
-			drawPic4(ctx, px, py, cx, cy);
+			drawPic4(ctx, px, py, dx, dy);
 			break;
 		case 5:
-			drawPic5(ctx, px, py, cx, cy);
+			drawPic5(ctx, px, py, dx, dy);
 			break;
 		case 6:
-			drawPic6(ctx, px, py, cx, cy);
+			drawPic6(ctx, px, py, dx, dy);
 			break;
 		case 7:
-			drawPic7(ctx, px, py, cx, cy);
+			drawPic7(ctx, px, py, dx, dy);
 			break;
 		case 8:
-			drawPic8(ctx, px, py, cx, cy);
+			drawPic8(ctx, px, py, dx, dy);
 			break;
 		case 9:
-			drawPic9(ctx, px, py, cx, cy);
+			drawPic9(ctx, px, py, dx, dy);
 			break;
 		}
 	}
 
-	function setTextPos(id, px, py, cx, cy, counter){
-		let x = px + cx / 2 - id.clientWidth / 2;
-		let y = py + cy / 2 - id.clientHeight / 2 + (1 + 0.5 * Math.sin(counter * 0.1)) * cy * 0.2;
+	function setTextPos(id, px, py, dx, dy, counter){
+		let x = px + dx / 2 - id.clientWidth / 2;
+		let y = py + dy / 2 - id.clientHeight / 2 + (1 + 0.5 * Math.sin(counter * 0.1)) * dy * 0.2;
 		id.style.left = x + 'px';
 		id.style.top = y + 'px';
 	}

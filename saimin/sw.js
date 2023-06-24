@@ -10,7 +10,7 @@ sw.precache('precached', [
 	'./jquery-ui.css',
 	'./jquery-ui.min.js',
 	'./main.js',
-	'./manifest.json',
+	'./manifest.webmanifest',
 	'./mic.js',
 	'./style.css',
 	'./images/text_en.png',
