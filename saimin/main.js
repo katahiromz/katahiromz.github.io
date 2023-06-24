@@ -577,14 +577,11 @@ jQuery(function($){
 		return counter;
 	}
 
-	let oldText = '';
 	let oldPicType = 0;
 
 	function setPicType(value){
 		picType = parseInt(value);
 		if (picType == -1){
-			if (oldPicType != -1)
-				oldText = theText;
 			cancelSpeech();
 			speech_checkbox.checked = false;
 			speech_label.classList.remove('checked');
@@ -599,8 +596,8 @@ jQuery(function($){
 				released = true;
 			}, 3000);
 		} else {
-			if (theText == getStr('TEXT_HYPNOSIS_RELEASED')){
-				theText = oldText;
+			if (oldPicType == -1){
+				theText = '';
 				speech_checkbox.checked = false;
 				speech_label.classList.remove('checked');
 				cancelSpeech();
