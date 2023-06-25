@@ -217,7 +217,7 @@ jQuery(function($){
 		let lang = localStorage.getItem('saiminLanguage3');
 		if (!lang)
 			lang = 'en';
-		if (lang == 'ja' || lang == 'jp'){
+		if (lang == 'ja' || lang == 'jp'){ // Japanese
 			switch(str_id){
 			case 'TEXT_PIC': return '画';
 			case 'TEXT_OK': return 'OK';
@@ -271,7 +271,7 @@ jQuery(function($){
 	// {{LANGUAGE_SPECIFIC}}
 	function localizeSaimin(lang){
 		currentLanguage = lang;
-		if (lang == 'ja' || lang == 'jp'){
+		if (lang == 'ja' || lang == 'jp'){ // Japanese
 			$('#notice_text').text(NOTICE_JA);
 			$('#mic_img').attr('src', 'images/mic.png');
 			$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
@@ -457,7 +457,7 @@ jQuery(function($){
 				speech.pitch = 0.6;
 				speech.rate = 0.4;
 				// {{LANGUAGE_SPECIFIC}}
-				if (currentLanguage == 'ja')
+				if (currentLanguage == 'ja') // Japanese
 					speech.lang = 'ja-JP';
 				else // English is default
 					speech.lang = 'en-US';
@@ -691,7 +691,7 @@ jQuery(function($){
 		let first_time = false;
 		if (!lang){
 			// {{LANGUAGE_SPECIFIC}}
-			if (navigator.language == 'ja' || navigator.language == 'ja-JP')
+			if (navigator.language == 'ja' || navigator.language == 'ja-JP') // Japanese
 				lang = 'ja';
 			else // English is default
 				lang = 'en';
@@ -1956,7 +1956,7 @@ jQuery(function($){
 			if (picType == -1){
 				let releasing_sound = null;
 				// {{LANGUAGE_SPECIFIC}}
-				if (localStorage.getItem('saiminLanguage3') == 'ja'){
+				if (localStorage.getItem('saiminLanguage3') == 'ja'){ // Japanese
 					releasing_sound = new Audio('sn/ReleasedHypnosis_ja.mp3');
 				}else{ // English is default
 					releasing_sound = new Audio('sn/ReleasedHypnosis_en.mp3');
