@@ -635,7 +635,7 @@ jQuery(function($){
 	}
 
 	function fitCanvas(){
-		let ctx = saimin_canvas.getContext('2d');
+		let ctx = saimin_canvas.getContext('2d', { alpha: false });
 		cxScreen = ctx.canvas.width = window.innerWidth;
 		cyScreen = ctx.canvas.height = window.innerHeight;
 	}
@@ -1760,7 +1760,7 @@ jQuery(function($){
 	let FPS = 0;
 
 	function draw_all(){
-		let ctx = saimin_canvas.getContext('2d');
+		let ctx = saimin_canvas.getContext('2d', { alpha: false });
 
 		let cx = cxScreen, cy = cyScreen;
 		let x = cxScreen / 2, y = cyScreen / 2;
