@@ -1358,30 +1358,17 @@ jQuery(function($){
 		}
 
 		let radius = 1;
-		ctx.fillStyle = '#666';
+		ctx.fillStyle = '#fff';
 		for (let radian = 0; radian < 120;){
 			const radian2 = radian - factor;
-			const x0 = qx + radius * Math.cos(radian2);
-			const y0 = qy + radius * Math.sin(radian2);
+			const x0 = qx + radius * Math.cos(-radian2);
+			const y0 = qy + radius * Math.sin(-radian2);
 			radius *= 1.009;
 			radian += 0.08;
 			const radian3 = radian - factor;
-			const x1 = qx + radius * Math.cos(radian3);
-			const y1 = qy + radius * Math.sin(radian3);
-			line2(ctx, x0, y0, x1, y1, radius * 0.325 + 3);
-		}
-		radius = 1;
-		ctx.fillStyle = 'white';
-		for (let radian = 0; radian < 120;){
-			const radian2 = radian - factor;
-			const x0 = qx + radius * Math.cos(radian2);
-			const y0 = qy + radius * Math.sin(radian2);
-			radius *= 1.009;
-			radian += 0.08;
-			const radian3 = radian - factor;
-			const x1 = qx + radius * Math.cos(radian3);
-			const y1 = qy + radius * Math.sin(radian3);
-			line2(ctx, x0, y0, x1, y1, radius * 0.29);
+			const x1 = qx + radius * Math.cos(-radian3);
+			const y1 = qy + radius * Math.sin(-radian3);
+			line2(ctx, x0, y0, x1, y1, radius * 0.325);
 		}
 
 		ctx.restore();
@@ -1775,7 +1762,6 @@ jQuery(function($){
 
 	function drawPicBlur(ctx, px, py, dx, dy){
 		switch (picType){
-		case 4:
 		case 8:
 		case 9:
 			let ratio = 0.5;
