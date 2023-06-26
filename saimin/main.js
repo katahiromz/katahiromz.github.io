@@ -2,7 +2,7 @@
 
 const NUM_TYPE = 9;
 const VERSION = '3.3.7';
-const DEBUGGING = false;
+let DEBUGGING = false;
 
 // {{LANGUAGE_SPECIFIC}}
 const NOTICE_EN = `=========================
@@ -556,7 +556,7 @@ jQuery(function($){
 	function setSpeedType(value){
 		switch (value){
 		case 'slow':
-			speed = 35.0;
+			speed = 27.5;
 			break;
 		case 'normal':
 		case 'irregular':
@@ -1090,11 +1090,11 @@ jQuery(function($){
 		let size = (dx + dy) * 2 / 5;
 		let count2 = -getCount();
 		if (isLargeDisplay()){
-			qx += 40 * Math.cos(count2 * 0.2);
-			qy += 40 * Math.sin(count2 * 0.2);
+			qx += 40 * Math.cos(count2 * 0.15);
+			qy += 40 * Math.sin(count2 * 0.15);
 		}else{
-			qx += 20 * Math.cos(count2 * 0.2);
-			qy += 20 * Math.sin(count2 * 0.2);
+			qx += 20 * Math.cos(count2 * 0.15);
+			qy += 20 * Math.sin(count2 * 0.15);
 		}
 
 		let dr0 = 15;
@@ -1347,7 +1347,7 @@ jQuery(function($){
 		ctx.fillStyle = 'black';
 		ctx.fillRect(px, py, dx, dy);
 
-		let factor = getCount() * 0.5;
+		let factor = getCount() * 0.4;
 
 		if (isLargeDisplay()){
 			qx += 20 * Math.cos(factor * 0.5);
@@ -1634,14 +1634,14 @@ jQuery(function($){
 
 		let count2 = getCount();
 		if (isLargeDisplay()){
-			qx += 60 * Math.cos(count2 * 0.1);
-			qy += 60 * Math.sin(count2 * 0.1);
+			qx += 40 * Math.cos(count2 * 0.08);
+			qy += 40 * Math.sin(count2 * 0.08);
 		}else{
-			qx += 40 * Math.cos(count2 * 0.1);
-			qy += 40 * Math.sin(count2 * 0.1);
+			qx += 20 * Math.cos(count2 * 0.08);
+			qy += 20 * Math.sin(count2 * 0.08);
 		}
 
-		const rotation = 7.8, width = dxy * 0.1;
+		const rotation = 8, width = dxy * 0.1;
 		let calc_point = function(radius, radian){
 			let x = qx + radius * Math.cos(radian);
 			let y = qy + radius * Math.sin(radian);
@@ -1690,7 +1690,7 @@ jQuery(function($){
 		let sy = qy + dxy * Math.sin(count2 * 0.01) * 0.0015;
 		let tx = qx + dxy * Math.cos(count2 * 0.01) * 0.0025;
 		let ty = qy + dxy * Math.sin(count2 * 0.01) * 0.0025;
-		let delta1 = dxy / 12;
+		let delta1 = dxy / 8;
 		ctx.beginPath();
 		for (let i = 0; i < dxy; i += 2 * delta1){
 			ctx.arc(sx, sy, i, 0, Math.PI * 2, false);
@@ -1700,9 +1700,9 @@ jQuery(function($){
 
 		let ratio = 0.01;
 
-		counter = -counter;
+		counter = -counter * 0.8;
 		drawPic1(ctx, px, py, dx, dy);
-		counter = -counter;
+		counter = -counter / 0.8;
 
 		ctx.restore();
 		ctx.save();
@@ -1714,7 +1714,9 @@ jQuery(function($){
 		}
 		ctx.clip();
 
+		counter *= 0.8;
 		drawPic1(ctx, px, py, dx, dy);
+		counter /= 0.8;
 
 		ctx.restore();
 	}
@@ -1758,6 +1760,23 @@ jQuery(function($){
 		}
 	}
 
+	function drawPicBlur(ctx, px, py, dx, dy){
+		switch (picType){
+		case 8:
+		case 9:
+			let ratio = 0.5;
+			blurring_canvas.width = dx * ratio;
+			blurring_canvas.height = dy * ratio;
+			let ctx2 = blurring_canvas.getContext('2d', { alpha: false });
+			drawPic(ctx2, 0, 0, dx * ratio, dy * ratio);
+			ctx.drawImage(blurring_canvas, 0, 0, dx * ratio, dy * ratio, px, py, dx, dy);
+			break;
+		default:
+			drawPic(ctx, px, py, dx, dy);
+			break;
+		}
+	}
+
 	function setTextPos(id, px, py, dx, dy, counter){
 		let x = px + dx / 2 - id.clientWidth / 2;
 		let y = py + dy * 0.7 - id.clientHeight / 2 + (1 + 0.4 * Math.sin(counter * 0.1)) * dy * 0.1;
@@ -1775,39 +1794,39 @@ jQuery(function($){
 
 		let splitted = false;
 		if (division == 1){
-			drawPic(ctx, 0, 0, cx, cy);
+			drawPicBlur(ctx, 0, 0, cx, cy);
 			setTextPos(floating_text1, 0, 0, cx, cy, counter);
 			y += cy / 4;
 		} else if (division == -1){
 			if (cx >= cy * 1.75){
-				drawPic(ctx, 0, 0, cx / 2, cy);
-				//drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				drawPicBlur(ctx, 0, 0, cx / 2, cy);
+				//drawPicBlur(ctx, cx / 2, 0, cx / 2, cy);
 				ctx.drawImage(saimin_canvas, 0, 0, cx / 2, cy, cx / 2, 0, cx / 2, cy);
 				setTextPos(floating_text1, 0, 0, cx / 2, cy, counter);
 				setTextPos(floating_text2, cx / 2, 0, cx / 2, cy, counter);
 				splitted = true;
 			}else if (cy >= cx * 1.75){
-				drawPic(ctx, 0, 0, cx, cy / 2);
-				//drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				drawPicBlur(ctx, 0, 0, cx, cy / 2);
+				//drawPicBlur(ctx, 0, cy / 2, cx, cy / 2);
 				ctx.drawImage(saimin_canvas, 0, 0, cx, cy / 2, 0, cy / 2, cx, cy / 2);
 				setTextPos(floating_text1, 0, 0, cx, cy / 2, counter);
 				setTextPos(floating_text2, 0, cy / 2, cx, cy / 2, counter);
 				splitted = true;
 			}else{
-				drawPic(ctx, 0, 0, cx, cy);
+				drawPicBlur(ctx, 0, 0, cx, cy);
 				setTextPos(floating_text1, 0, 0, cx, cy, counter);
 				y += cy / 4;
 			}
 		} else {
 			if (cx >= cy){
-				drawPic(ctx, 0, 0, cx / 2, cy);
-				//drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				drawPicBlur(ctx, 0, 0, cx / 2, cy);
+				//drawPicBlur(ctx, cx / 2, 0, cx / 2, cy);
 				ctx.drawImage(saimin_canvas, 0, 0, cx / 2, cy, cx / 2, 0, cx / 2, cy);
 				setTextPos(floating_text1, 0, 0, cx / 2, cy, counter);
 				setTextPos(floating_text2, cx / 2, 0, cx / 2, cy, counter);
 			}else{
-				drawPic(ctx, 0, 0, cx, cy / 2);
-				//drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				drawPicBlur(ctx, 0, 0, cx, cy / 2);
+				//drawPicBlur(ctx, 0, cy / 2, cx, cy / 2);
 				ctx.drawImage(saimin_canvas, 0, 0, cx, cy / 2, 0, cy / 2, cx, cy / 2);
 				setTextPos(floating_text1, 0, 0, cx, cy / 2, counter);
 				setTextPos(floating_text2, 0, cy / 2, cx, cy / 2, counter);
@@ -2326,7 +2345,7 @@ jQuery(function($){
 				showButtons(microphone_label.classList.contains('invisible'));
 				return;
 			}
-			if (e.key == 's' || e.key == 'S'){ // Slow
+			if (e.key == 'w' || e.key == 'W'){ // Slow
 				setSpeedType('slow');
 				return;
 			}
@@ -2340,6 +2359,10 @@ jQuery(function($){
 			}
 			if (e.key == 'i' || e.key == 'I'){ // Speed Irregular
 				setSpeedType('irregular');
+				return;
+			}
+			if (e.key == 'u' || e.key == 'U'){ // Debugging
+				DEBUGGING = !DEBUGGING;
 				return;
 			}
 			// {{LANGUAGE_SPECIFIC}}
