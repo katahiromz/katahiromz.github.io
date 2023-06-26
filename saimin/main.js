@@ -1090,11 +1090,11 @@ jQuery(function($){
 		let size = (dx + dy) * 2 / 5;
 		let count2 = -getCount();
 		if (isLargeDisplay()){
-			qx += 60 * Math.cos(count2 * 0.1);
-			qy += 60 * Math.sin(count2 * 0.1);
+			qx += 40 * Math.cos(count2 * 0.2);
+			qy += 40 * Math.sin(count2 * 0.2);
 		}else{
-			qx += 30 * Math.cos(count2 * 0.1);
-			qy += 30 * Math.sin(count2 * 0.1);
+			qx += 20 * Math.cos(count2 * 0.2);
+			qy += 20 * Math.sin(count2 * 0.2);
 		}
 
 		let dr0 = 15;
@@ -1348,6 +1348,14 @@ jQuery(function($){
 		ctx.fillRect(px, py, dx, dy);
 
 		let factor = getCount() * 0.5;
+
+		if (isLargeDisplay()){
+			qx += 20 * Math.cos(factor * 0.5);
+			qy += 20 * Math.sin(factor * 0.5);
+		}else{
+			qx += 10 * Math.cos(factor * 0.5);
+			qy += 10 * Math.sin(factor * 0.5);
+		}
 
 		let radius = 1;
 		ctx.fillStyle = 'white';
@@ -1773,13 +1781,15 @@ jQuery(function($){
 		} else if (division == -1){
 			if (cx >= cy * 1.75){
 				drawPic(ctx, 0, 0, cx / 2, cy);
-				drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				//drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				ctx.drawImage(saimin_canvas, 0, 0, cx / 2, cy, cx / 2, 0, cx / 2, cy);
 				setTextPos(floating_text1, 0, 0, cx / 2, cy, counter);
 				setTextPos(floating_text2, cx / 2, 0, cx / 2, cy, counter);
 				splitted = true;
 			}else if (cy >= cx * 1.75){
 				drawPic(ctx, 0, 0, cx, cy / 2);
-				drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				//drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				ctx.drawImage(saimin_canvas, 0, 0, cx, cy / 2, 0, cy / 2, cx, cy / 2);
 				setTextPos(floating_text1, 0, 0, cx, cy / 2, counter);
 				setTextPos(floating_text2, 0, cy / 2, cx, cy / 2, counter);
 				splitted = true;
@@ -1791,12 +1801,14 @@ jQuery(function($){
 		} else {
 			if (cx >= cy){
 				drawPic(ctx, 0, 0, cx / 2, cy);
-				drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				//drawPic(ctx, cx / 2, 0, cx / 2, cy);
+				ctx.drawImage(saimin_canvas, 0, 0, cx / 2, cy, cx / 2, 0, cx / 2, cy);
 				setTextPos(floating_text1, 0, 0, cx / 2, cy, counter);
 				setTextPos(floating_text2, cx / 2, 0, cx / 2, cy, counter);
 			}else{
 				drawPic(ctx, 0, 0, cx, cy / 2);
-				drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				//drawPic(ctx, 0, cy / 2, cx, cy / 2);
+				ctx.drawImage(saimin_canvas, 0, 0, cx, cy / 2, 0, cy / 2, cx, cy / 2);
 				setTextPos(floating_text1, 0, 0, cx, cy / 2, counter);
 				setTextPos(floating_text2, 0, cy / 2, cx, cy / 2, counter);
 			}
@@ -2312,6 +2324,22 @@ jQuery(function($){
 			}
 			if (e.key == 'b' || e.key == 'B'){ // buttons
 				showButtons(microphone_label.classList.contains('invisible'));
+				return;
+			}
+			if (e.key == 's' || e.key == 'S'){ // Slow
+				setSpeedType('slow');
+				return;
+			}
+			if (e.key == 'n' || e.key == 'N'){ // Speed Normal
+				setSpeedType('normal');
+				return;
+			}
+			if (e.key == 'f' || e.key == 'F'){ // Fast
+				setSpeedType('fast');
+				return;
+			}
+			if (e.key == 'i' || e.key == 'I'){ // Speed Irregular
+				setSpeedType('irregular');
 				return;
 			}
 			// {{LANGUAGE_SPECIFIC}}
