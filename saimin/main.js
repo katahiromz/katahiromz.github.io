@@ -1762,6 +1762,7 @@ jQuery(function($){
 
 	function drawPicBlur(ctx, px, py, dx, dy){
 		switch (picType){
+		case 4:
 		case 8:
 		case 9:
 			let ratio = 0.5;
