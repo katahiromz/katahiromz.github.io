@@ -1349,14 +1349,6 @@ jQuery(function($){
 
 		let factor = getCount() * 0.4;
 
-		if (isLargeDisplay()){
-			qx += 20 * Math.cos(factor * 0.5);
-			qy += 20 * Math.sin(factor * 0.5);
-		}else{
-			qx += 10 * Math.cos(factor * 0.5);
-			qy += 10 * Math.sin(factor * 0.5);
-		}
-
 		let radius = 1;
 		ctx.fillStyle = '#fff';
 		for (let radian = 0; radian < 120;){
