@@ -1358,6 +1358,19 @@ jQuery(function($){
 		}
 
 		let radius = 1;
+		ctx.fillStyle = '#666';
+		for (let radian = 0; radian < 60;){
+			const radian2 = radian - factor;
+			const x0 = qx + radius * Math.cos(radian2);
+			const y0 = qy + radius * Math.sin(radian2);
+			radius *= 1.009;
+			radian += 0.08;
+			const radian3 = radian - factor;
+			const x1 = qx + radius * Math.cos(radian3);
+			const y1 = qy + radius * Math.sin(radian3);
+			line2(ctx, x0, y0, x1, y1, radius * 0.25 + 4);
+		}
+		radius = 1;
 		ctx.fillStyle = 'white';
 		for (let radian = 0; radian < 60;){
 			const radian2 = radian - factor;
@@ -1368,7 +1381,7 @@ jQuery(function($){
 			const radian3 = radian - factor;
 			const x1 = qx + radius * Math.cos(radian3);
 			const y1 = qy + radius * Math.sin(radian3);
-			line2(ctx, x0, y0, x1, y1, radius * 0.3);
+			line2(ctx, x0, y0, x1, y1, radius * 0.25);
 		}
 
 		ctx.restore();
@@ -2346,7 +2359,7 @@ jQuery(function($){
 				showButtons(microphone_label.classList.contains('invisible'));
 				return;
 			}
-			if (e.key == 'w' || e.key == 'W'){ // Slow
+			if (e.key == 'w' || e.key == 'W'){ // Speed Slow
 				setSpeedType('slow');
 				return;
 			}
@@ -2354,7 +2367,7 @@ jQuery(function($){
 				setSpeedType('normal');
 				return;
 			}
-			if (e.key == 'f' || e.key == 'F'){ // Fast
+			if (e.key == 'f' || e.key == 'F'){ // Speed Fast
 				setSpeedType('fast');
 				return;
 			}
