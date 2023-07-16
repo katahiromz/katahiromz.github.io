@@ -777,8 +777,6 @@ jQuery(function($){
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="Miracle"]').text('Miracle');
 			$('#config_switch_sound').text('切り替え音:');
-			$('#type_sound_select option[value="0"]').text('なし');
-			$('#type_sound_select option[value="1"]').text('あり');
 			$('#config_brightness').text('画面の明るさ:');
 			$('#screen_brightness option[value="normal"]').text('普通');
 			$('#screen_brightness option[value="brighter"]').text('明るくする');
@@ -850,8 +848,6 @@ jQuery(function($){
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="Miracle"]').text('Miracle');
 			$('#config_switch_sound').text('开关声音：');
-			$('#type_sound_select option[value="0"]').text('无');
-			$('#type_sound_select option[value="1"]').text('有');
 			$('#config_brightness').text('屏幕亮度：');
 			$('#screen_brightness option[value="normal"]').text('通常');
 			$('#screen_brightness option[value="brighter"]').text('明亮');
@@ -923,8 +919,6 @@ jQuery(function($){
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="Miracle"]').text('Miracle');
 			$('#config_switch_sound').text('開關聲音：');
-			$('#type_sound_select option[value="0"]').text('無');
-			$('#type_sound_select option[value="1"]').text('有');
 			$('#config_brightness').text('屏幕亮度：');
 			$('#screen_brightness option[value="normal"]').text('正常亮度');
 			$('#screen_brightness option[value="brighter"]').text('提亮');
@@ -996,8 +990,6 @@ jQuery(function($){
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="Miracle"]').text('Miracle');
 			$('#config_switch_sound').text('전환 사운드:');
-			$('#type_sound_select option[value="0"]').text('없음');
-			$('#type_sound_select option[value="1"]').text('있음');
 			$('#config_brightness').text('화면 밝기:');
 			$('#screen_brightness option[value="normal"]').text('일반 밝기');
 			$('#screen_brightness option[value="brighter"]').text('밝게 하다');
@@ -1069,8 +1061,6 @@ jQuery(function($){
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="Miracle"]').text('Miracle');
 			$('#config_switch_sound').text('Suono cambio foto:');
-			$('#type_sound_select option[value="0"]').text('No');
-			$('#type_sound_select option[value="1"]').text('Sì');
 			$('#config_brightness').text('Luminosità:');
 			$('#screen_brightness option[value="normal"]').text('Normale');
 			$('#screen_brightness option[value="brighter"]').text('Più luminoso');
@@ -1142,8 +1132,6 @@ jQuery(function($){
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="Miracle"]').text('Miracle');
 			$('#config_switch_sound').text('Bildwechselton:');
-			$('#type_sound_select option[value="0"]').text('Nein');
-			$('#type_sound_select option[value="1"]').text('Ja');
 			$('#config_brightness').text('Helligkeit:');
 			$('#screen_brightness option[value="normal"]').text('Normal');
 			$('#screen_brightness option[value="brighter"]').text('Heller');
@@ -1215,8 +1203,6 @@ jQuery(function($){
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="Miracle"]').text('Miracle');
 			$('#config_switch_sound').text('Pic change sound:');
-			$('#type_sound_select option[value="0"]').text('No');
-			$('#type_sound_select option[value="1"]').text('Yes');
 			$('#config_brightness').text('Brightness:');
 			$('#screen_brightness option[value="normal"]').text('Normal');
 			$('#screen_brightness option[value="brighter"]').text('Brighter');
@@ -1330,8 +1316,12 @@ jQuery(function($){
 	}
 
 	function setTypeSound(value, test = false){
+		if (value === true)
+			value = 1;
+		if (value === false)
+			value = 0;
 		typeSound = parseInt(value);
-		type_sound_select.value = value;
+		type_sound_select.checked = !!value;
 		localStorage.setItem('saiminTypeSound', value);
 		if(test && typeSound == 1 && kirakira_sound){
 			kirakira_sound.play();
@@ -1740,7 +1730,7 @@ jQuery(function($){
 		let old_language = localStorage.getItem('saiminLanguage3');
 		let old_message_size_value = message_size_select.value;
 		let old_sound_value = sound_select.value;
-		let old_type_sound_value = type_sound_select.value;
+		let old_type_sound_value = type_sound_select.checked;
 		let old_screen_brightness = screen_brightness.value;
 		localStorage.setItem('saiminConfigShowing', '1');
 		let dialogContainer = $('#config_dialog');
@@ -2972,12 +2962,12 @@ jQuery(function($){
 		type_sound_select.addEventListener('change', function(){
 			if(!ready)
 				return;
-			setTypeSound(type_sound_select.value, true);
+			setTypeSound(type_sound_select.checked, true);
 		}, false);
 		type_sound_select.addEventListener('click', function(){
 			if(!ready)
 				return;
-			setTypeSound(type_sound_select.value, true);
+			setTypeSound(type_sound_select.checked, true);
 		}, false);
 
 		division_select.addEventListener('change', function(){

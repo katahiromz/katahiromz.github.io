@@ -143,10 +143,11 @@
 	</div>
 	<div class="ui_line">
 		<span id="config_switch_sound">Pic change sound:</span>
-		<select id="type_sound_select" title="type_sound_select">
-			<option value="0">No</option>
-			<option value="1" selected>Yes</option>
-		</select>
+		<label class="toggle">
+			<input type="checkbox" id="type_sound_select">
+			<span class="slider"></span>
+			<span class="labels" data-on="ON" data-off="OFF"></span>
+		</label>
 	</div>
 	<div class="ui_line">
 		<span id="config_brightness">Brightness:</span>
