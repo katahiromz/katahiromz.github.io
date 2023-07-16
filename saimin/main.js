@@ -749,7 +749,7 @@ jQuery(function($){
 			$('#type_select option[value="0"]').text('画0: 初期画面');
 			$('#type_select option[value="1"]').text('画1: ピンク色の渦巻き');
 			$('#type_select option[value="2"]').text('画2: 同心円状');
-			$('#type_select option[value="3"]').text('画3: 回る目玉');
+			$('#type_select option[value="3"]').text('画3: 目が回る');
 			$('#type_select option[value="4"]').text('画4: 白黒の渦巻き');
 			$('#type_select option[value="5"]').text('画5: 広がるハート');
 			$('#type_select option[value="6"]').text('画6: 五円玉');
