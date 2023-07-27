@@ -1411,23 +1411,37 @@ jQuery(function($){
 			hz = 0;
 			break;
 		case 1:
-			hz = 8.25;
-			text = "8.2Hz";
+			hz = 4.0;
+			text = "4.0Hz";
 			break;
 		case 2:
-			hz = 10.875;
-			text = "10.9Hz";
+			hz = 5.0;
+			text = "5.0Hz";
 			break;
 		case 3:
-			hz = 12.375;
-			text = "12.4Hz";
+			hz = 6.0;
+			text = "6.0Hz";
 			break;
 		case 4:
-			hz = 16.5;
-			text = "16.5Hz";
+			hz = 7.0;
+			text = "7.0Hz";
+			break;
+		case 5:
+			hz = 8.0;
+			text = "8.0Hz";
+			break;
+		case 6:
+			hz = 9.0;
+			text = "9.0Hz";
+			break;
+		case 7:
+			hz = 10.0;
+			text = "10Hz";
 			break;
 		}
 		blinking_interval = (hz > 0) ? (1.0 / hz) : 0;
+		if (blinking_type.value != value.toString())
+			blinking_type.value = value.toString();
 		blinking_output.innerText = text;
 		localStorage.setItem('saiminBlinkType', value);
 	}
@@ -2721,7 +2735,7 @@ jQuery(function($){
 
 	function drawPicBlur(ctx, px, py, dx, dy){
 		if(blinking_interval != 0){
-			if(mod(old_time, blinking_interval) > (blinking_interval / 2)){
+			if(mod(old_time / 1000, blinking_interval) > (blinking_interval / 2)){
 				fillBlack(ctx, px, py, dx, dy);
 				return;
 			}
