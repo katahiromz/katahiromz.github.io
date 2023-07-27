@@ -3381,6 +3381,10 @@ jQuery(function($){
 				DEBUGGING = !DEBUGGING;
 				return;
 			}
+			if(e.key == 'l' || e.key == 'L'){ // Blinking
+				setBlinkingType((parseInt(blinking_type.value) + 1) % 8);
+				return;
+			}
 			if(e.key == 'r' || e.key == 'R'){ // Reload
 				localStorage.setItem('saiminType', picType);
 				location.reload();
