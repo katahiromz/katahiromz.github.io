@@ -501,6 +501,7 @@ jQuery(function($){
 	let all_released_img = new Image();
 	let speedIrregular = false;
 	let picType = 0;
+	let blinking_interval = 0;
 
 	coin_img.src = 'images/coin5yen.png';
 
@@ -571,6 +572,7 @@ jQuery(function($){
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ja.svg';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ja.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_ja.svg';
+			case 'TEXT_NO_BLINKING': return '点滅なし';
 			}
 		}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
 			switch(str_id){
@@ -594,6 +596,7 @@ jQuery(function($){
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_zh-CN.svg';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_zh-CN.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_zh-CN.svg';
+			case 'TEXT_NO_BLINKING': return '无闪光灯';
 			}
 		}else if(lang == 'zh-TW'){ // Chinese (Traditional)
 			switch(str_id){
@@ -617,6 +620,7 @@ jQuery(function($){
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_zh-TW.svg';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_zh-TW.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_zh-TW.svg';
+			case 'TEXT_NO_BLINKING': return '無閃光燈';
 			}
 		}else if(lang == 'ko' || lang == 'kr' || lang == 'ko-KR'){ // Korean
 			switch(str_id){
@@ -640,6 +644,7 @@ jQuery(function($){
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_ko-KR.svg';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_ko-KR.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_ko-KR.svg';
+			case 'TEXT_NO_BLINKING': return '깜박임 없음';
 			}
 		}else if(lang == 'it' || lang == 'it-IT'){ // Italian
 			switch(str_id){
@@ -663,6 +668,7 @@ jQuery(function($){
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_it.svg';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_it.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_it.svg';
+			case 'TEXT_NO_BLINKING': return 'Senza il flash';
 			}
 		}else if(lang == 'de' || lang == 'de-DE'){ // German
 			switch(str_id){
@@ -686,6 +692,7 @@ jQuery(function($){
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_de.svg';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_de.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_de.svg';
+			case 'TEXT_NO_BLINKING': return 'Kein Blitz';
 			}
 		}else{ // English is default
 			switch(str_id){
@@ -709,6 +716,7 @@ jQuery(function($){
 			case 'TEXT_KILLING_HYPNOSIS_IMG': return 'images/killing-hypnosis_en.svg';
 			case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'images/hypnosis-released_en.svg';
 			case 'TEXT_ALL_RELEASED_IMG': return 'images/all-released_en.svg';
+			case 'TEXT_NO_BLINKING': return 'No blinking';
 			}
 		}
 	}
@@ -759,6 +767,7 @@ jQuery(function($){
 			$('#appearance_speed').text('スピード:');
 			$('#speed_irregular_label').text('不規則');
 			$('#appearance_rotation').text('逆回転:');
+			$('#appearance_blinking').text('点滅:');
 			$('#config_size').text('メッセージの大きさ:');
 			$('#config_note').text('音符ボタン:');
 			$('#sound_select option[value=""]').text('(なし)');
@@ -826,6 +835,7 @@ jQuery(function($){
 			$('#appearance_speed').text('速度：');
 			$('#speed_irregular_label').text('不规律的');
 			$('#appearance_rotation').text('反向旋转：');
+			$('#appearance_blinking').text('闪烁：');
 			$('#config_size').text('消息大小：');
 			$('#config_note').text('声音按钮：');
 			$('#sound_select option[value=""]').text('(无)');
@@ -893,6 +903,7 @@ jQuery(function($){
 			$('#appearance_speed').text('速度：');
 			$('#speed_irregular_label').text('不規律的');
 			$('#appearance_rotation').text('反向旋轉：');
+			$('#appearance_blinking').text('閃爍：');
 			$('#config_size').text('消息大小：');
 			$('#config_note').text('聲音按鈕：');
 			$('#sound_select option[value=""]').text('(無)');
@@ -960,6 +971,7 @@ jQuery(function($){
 			$('#appearance_speed').text('속도:');
 			$('#speed_irregular_label').text('불규칙');
 			$('#appearance_rotation').text('역회전:');
+			$('#appearance_blinking').text('깜박임:');
 			$('#config_size').text('메시지 크기:');
 			$('#config_note').text('사운드 버튼:');
 			$('#sound_select option[value=""]').text('(없음)');
@@ -1027,6 +1039,7 @@ jQuery(function($){
 			$('#appearance_speed').text('Velocità:');
 			$('#speed_irregular_label').text('Irregolare');
 			$('#appearance_rotation').text('Controrotazione:');
+			$('#appearance_blinking').text('Lampeggiante:');
 			$('#config_size').text('Dimensione del messaggio:');
 			$('#config_note').text('Pulsante audio:');
 			$('#sound_select option[value=""]').text('(Nessuno)');
@@ -1094,6 +1107,7 @@ jQuery(function($){
 			$('#appearance_speed').text('Geschwindigkeit:');
 			$('#speed_irregular_label').text('Irregulär');
 			$('#appearance_rotation').text('Gegenrotation:');
+			$('#appearance_blinking').text('Blinken:');
 			$('#config_size').text('Größe der Nachricht:');
 			$('#config_note').text('Sound-Taste:');
 			$('#sound_select option[value=""]').text('(Kein)');
@@ -1161,6 +1175,7 @@ jQuery(function($){
 			$('#appearance_speed').text('Speed:');
 			$('#speed_irregular_label').text('Irregular');
 			$('#appearance_rotation').text('Counterrotation:');
+			$('#appearance_blinking').text('Blinking:');
 			$('#config_size').text('Size of message:');
 			$('#config_note').text('Sound button:');
 			$('#sound_select option[value=""]').text('(None)');
@@ -1384,6 +1399,37 @@ jQuery(function($){
 			speed_irregular.checked = speedIrregular;
 		}
 		localStorage.setItem('saiminSpeedType', speed);
+	}
+
+	function setBlinkingType(value){
+		value = parseInt(value);
+		let text, hz;
+		switch(value){
+		case 0:
+		default:
+			text = getStr('TEXT_NO_BLINKING');
+			hz = 0;
+			break;
+		case 1:
+			hz = 8.25;
+			text = "8.2Hz";
+			break;
+		case 2:
+			hz = 10.875;
+			text = "10.9Hz";
+			break;
+		case 3:
+			hz = 12.375;
+			text = "12.4Hz";
+			break;
+		case 4:
+			hz = 16.5;
+			text = "16.5Hz";
+			break;
+		}
+		blinking_interval = (hz > 0) ? (1.0 / hz) : 0;
+		blinking_output.innerText = text;
+		localStorage.setItem('saiminBlinkType', value);
 	}
 
 	function setDivision(value){
@@ -1874,6 +1920,21 @@ jQuery(function($){
 		ctx.fill();
 	}
 
+	function fillBlack(ctx, px, py, dx, dy){
+		ctx.save();
+
+		ctx.beginPath();
+		ctx.moveTo(px, py);
+		ctx.lineTo(px + dx, py);
+		ctx.lineTo(px + dx, py + dy);
+		ctx.lineTo(px, py + dy);
+		ctx.closePath();
+		ctx.clip();
+
+		ctx.fillStyle = 'black';
+		ctx.fillRect(px, py, dx, dy);
+	}
+
 	// pic-1: Release Hyponosis
 	function drawPicMinusOne(ctx, px, py, dx, dy){
 		ctx.save();
@@ -2073,8 +2134,7 @@ jQuery(function($){
 		ctx.restore();
 	}
 
-	function hsv2rgb(h, s, v)
-	{
+	function hsv2rgb(h, s, v){
 		let r, g, b;
 		r = g = b = v;
 		if(s > 0)
@@ -2660,6 +2720,12 @@ jQuery(function($){
 	}
 
 	function drawPicBlur(ctx, px, py, dx, dy){
+		if(blinking_interval != 0){
+			if(mod(old_time, blinking_interval) > (blinking_interval / 2)){
+				fillBlack(ctx, px, py, dx, dy);
+				return;
+			}
+		}
 		switch (picType){
 		case 8:
 		case 9:
@@ -2843,6 +2909,13 @@ jQuery(function($){
 			setSpeedType('normal');
 		}
 
+		let saiminBlinkType = localStorage.getItem('saiminBlinkType');
+		if(saiminBlinkType){
+			setBlinkingType(saiminBlinkType);
+		}else{
+			setBlinkingType(0);
+		}
+
 		let saiminRotation = localStorage.getItem('saiminRotation');
 		if(saiminRotation){
 			setRotation(saiminRotation);
@@ -3001,6 +3074,12 @@ jQuery(function($){
 			if(!ready)
 				return;
 			setRotation(rotation_select.checked);
+		}, false);
+
+		blinking_type.addEventListener('input', function(){
+			if(!ready)
+				return;
+			setBlinkingType(blinking_type.value);
 		}, false);
 
 		function canvasClick(e){
