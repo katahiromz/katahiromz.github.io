@@ -1727,6 +1727,7 @@ jQuery(function($){
 		let old_division_value = division_select.checked;
 		let old_speed_type_value = speed_type_value.value;
 		let old_rotation_value = rotation_select.checked;
+		let old_blinking_value = blinking_type.value;
 		localStorage.setItem('saiminAppearanceShowing', '1');
 		let dialogContainer = $('#appearance_dialog');
 		dialogContainer.dialog({
@@ -1753,6 +1754,7 @@ jQuery(function($){
 						setDivision(old_division_value);
 						setSpeedType(old_speed_type_value);
 						setRotation(old_rotation_value);
+						setBlinkingType(old_blinking_value);
 						dialogContainer.dialog('close');
 					},
 				}
