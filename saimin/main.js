@@ -1447,15 +1447,14 @@ jQuery(function($){
 	}
 
 	function setDivision(value){
+		value = parseInt(value);
 		switch(value){
-		case -1:
-		case true:
 		case 2:
 			division_select.checked = true;
 			division = 2;
 			break;
-		case false:
 		case 1:
+		default:
 			division_select.checked = false;
 			division = 1;
 			break;
@@ -1724,7 +1723,7 @@ jQuery(function($){
 
 	function apperance(){
 		let old_type_value = type_select.value;
-		let old_division_value = division_select.checked;
+		let old_division_value = division_select.checked ? 2 : 1;
 		let old_speed_type_value = speed_type_value.value;
 		let old_rotation_value = rotation_select.checked;
 		let old_blinking_value = blinking_type.value;
@@ -1949,6 +1948,8 @@ jQuery(function($){
 
 		ctx.fillStyle = 'black';
 		ctx.fillRect(px, py, dx, dy);
+
+		ctx.restore();
 	}
 
 	// pic-1: Release Hyponosis
@@ -2736,7 +2737,7 @@ jQuery(function($){
 	}
 
 	function drawPicBlur(ctx, px, py, dx, dy){
-		if(blinking_interval != 0){
+		if(blinking_interval != 0 && picType != -1){
 			if(mod(old_time / 1000, blinking_interval) > (blinking_interval / 2)){
 				fillBlack(ctx, px, py, dx, dy);
 				return;
@@ -3062,12 +3063,12 @@ jQuery(function($){
 		division_select.addEventListener('change', function(){
 			if(!ready)
 				return;
-			setDivision(division_select.checked);
+			setDivision(division_select.checked ? 2 : 1);
 		}, false);
 		division_select.addEventListener('click', function(){
 			if(!ready)
 				return;
-			setDivision(division_select.checked);
+			setDivision(division_select.checked ? 2 : 1);
 		}, false);
 
 		speed_type_value.addEventListener('input', function(){
