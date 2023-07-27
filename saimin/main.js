@@ -738,7 +738,7 @@ jQuery(function($){
 			$('#config_language').text('Language:');
 			$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select option[value="en"]').text('English');
+			$('#language_select option[value="en"]').text('English (英語)');
 			$('#language_select option[value="de"]').text('German (Deutsch)');
 			$('#language_select option[value="it"]').text('Italian (Italiano)');
 			$('#language_select option[value="ja"]').text('Japanese (日本語)');
@@ -746,7 +746,7 @@ jQuery(function($){
 			$('#config_language2').text('Language:');
 			$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select2 option[value="en"]').text('English');
+			$('#language_select2 option[value="en"]').text('English (英語)');
 			$('#language_select2 option[value="de"]').text('German (Deutsch)');
 			$('#language_select2 option[value="it"]').text('Italian (Italiano)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
@@ -806,7 +806,7 @@ jQuery(function($){
 			$('#config_language').text('Language:');
 			$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select option[value="en"]').text('English');
+			$('#language_select option[value="en"]').text('English (英语)');
 			$('#language_select option[value="de"]').text('German (Deutsch)');
 			$('#language_select option[value="it"]').text('Italian (Italiano)');
 			$('#language_select option[value="ja"]').text('Japanese (日本語)');
@@ -814,7 +814,7 @@ jQuery(function($){
 			$('#config_language2').text('Language:');
 			$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select2 option[value="en"]').text('English');
+			$('#language_select2 option[value="en"]').text('English (英语)');
 			$('#language_select2 option[value="de"]').text('German (Deutsch)');
 			$('#language_select2 option[value="it"]').text('Italian (Italiano)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
@@ -874,7 +874,7 @@ jQuery(function($){
 			$('#config_language').text('Language:');
 			$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select option[value="en"]').text('English');
+			$('#language_select option[value="en"]').text('English (英語)');
 			$('#language_select option[value="de"]').text('German (Deutsch)');
 			$('#language_select option[value="it"]').text('Italian (Italiano)');
 			$('#language_select option[value="ja"]').text('Japanese (日本語)');
@@ -882,7 +882,7 @@ jQuery(function($){
 			$('#config_language2').text('Language:');
 			$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select2 option[value="en"]').text('English');
+			$('#language_select2 option[value="en"]').text('English (英語)');
 			$('#language_select2 option[value="de"]').text('German (Deutsch)');
 			$('#language_select2 option[value="it"]').text('Italian (Italiano)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
@@ -942,7 +942,7 @@ jQuery(function($){
 			$('#config_language').text('Language:');
 			$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select option[value="en"]').text('English');
+			$('#language_select option[value="en"]').text('English (영어)');
 			$('#language_select option[value="de"]').text('German (Deutsch)');
 			$('#language_select option[value="it"]').text('Italian (Italiano)');
 			$('#language_select option[value="ja"]').text('Japanese (日本語)');
@@ -950,7 +950,7 @@ jQuery(function($){
 			$('#config_language2').text('Language:');
 			$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select2 option[value="en"]').text('English');
+			$('#language_select2 option[value="en"]').text('English (영어)');
 			$('#language_select2 option[value="de"]').text('German (Deutsch)');
 			$('#language_select2 option[value="it"]').text('Italian (Italiano)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
@@ -1010,7 +1010,7 @@ jQuery(function($){
 			$('#config_language').text('Language:');
 			$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select option[value="en"]').text('English');
+			$('#language_select option[value="en"]').text('English (Inglese)');
 			$('#language_select option[value="de"]').text('German (Deutsch)');
 			$('#language_select option[value="it"]').text('Italian (Italiano)');
 			$('#language_select option[value="ja"]').text('Japanese (日本語)');
@@ -1018,7 +1018,7 @@ jQuery(function($){
 			$('#config_language2').text('Language:');
 			$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select2 option[value="en"]').text('English');
+			$('#language_select2 option[value="en"]').text('English (Inglese)');
 			$('#language_select2 option[value="de"]').text('German (Deutsch)');
 			$('#language_select2 option[value="it"]').text('Italian (Italiano)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
@@ -1078,7 +1078,7 @@ jQuery(function($){
 			$('#config_language').text('Language:');
 			$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select option[value="en"]').text('English');
+			$('#language_select option[value="en"]').text('English (Englisch)');
 			$('#language_select option[value="de"]').text('German (Deutsch)');
 			$('#language_select option[value="it"]').text('Italian (Italiano)');
 			$('#language_select option[value="ja"]').text('Japanese (日本語)');
@@ -1086,7 +1086,7 @@ jQuery(function($){
 			$('#config_language2').text('Language:');
 			$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
 			$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-			$('#language_select2 option[value="en"]').text('English');
+			$('#language_select2 option[value="en"]').text('English (Englisch)');
 			$('#language_select2 option[value="de"]').text('German (Deutsch)');
 			$('#language_select2 option[value="it"]').text('Italian (Italiano)');
 			$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
