@@ -1905,9 +1905,9 @@ jQuery(function($){
 		ctx.bezierCurveTo(x0 - r05, y0 - r025, x0 - r05, y0 + r025, x0, y0 + r * 1.3);
 		ctx.bezierCurveTo(x0 + r05, y0 + r025, x0 + r05, y0 - r025, x0, y0 - r * 1.3);
 		ctx.closePath();
-		ctx.fillStyle = "#fcc";
+		ctx.fillStyle = "#faa";
 		ctx.fill();
-		ctx.strokeStyle = "#c66";
+		ctx.strokeStyle = "#c00";
 		ctx.lineWidth = r * 0.15;
 		ctx.stroke();
 
