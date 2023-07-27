@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 9;
-const VERSION = '3.3.9';
+const VERSION = '3.4.0';
 let DEBUGGING = false;
 
 function savePicType(type){
@@ -515,9 +515,8 @@ jQuery(function($){
 		return false;
 	}
 
-	function neg_mod(x, y){
-		if(x > 0) return x % y;
-		return neg_mod(x + 99999 * y, y);
+	function mod(x, y){
+		return (x*y < 0) * b + a % b;
 	}
 
 	function addStar(x, y){
@@ -2000,7 +1999,7 @@ jQuery(function($){
 			ctx.lineWidth = 15;
 		}
 		let dr = dr0 / 2 * factor;
-		let radius = neg_mod(count2 * 4, dr0);
+		let radius = mod(count2 * 4, dr0);
 		if(flag)
 			radius = dr0 - radius;
 
@@ -2123,7 +2122,7 @@ jQuery(function($){
 		ctx.lineWidth = 10;
 		let i = 0;
 		ctx.strokeStyle = 'rgba(255, 0, 0, 50%)';
-		for (let r = neg_mod(count2 * 2, 100); r < cxy; r += 100){
+		for (let r = mod(count2 * 2, 100); r < cxy; r += 100){
 			circle(ctx, qx, qy, r, false);
 			++i;
 		}
@@ -2281,16 +2280,16 @@ jQuery(function($){
 		circle(ctx, qx, qy, dxy, true);
 
 		let value = factor * 25 + 10;
-		let value2 = neg_mod(value, 191);
+		let value2 = mod(value, 191);
 		ctx.fillStyle = `rgb(255,${value2},${value2})`;
 		let M = 5;
 		let heartSize = 30;
-		for (let radius = neg_mod((factor * 10), 100) + 30; radius < dxy; radius += 100){
+		for (let radius = mod((factor * 10), 100) + 30; radius < dxy; radius += 100){
 			for (let angle = 0; angle < 360; angle += 360 / M){
 				let radian = angle * (Math.PI / 180.0);
 				let x0 = qx + radius * Math.cos(radian + factor * 0.1 + radius / 100);
 				let y0 = qy + radius * Math.sin(radian + factor * 0.1 + radius / 100);
-				heart(ctx, x0, y0, x0, y0 + heartSize + neg_mod(value, 191) / 12);
+				heart(ctx, x0, y0, x0, y0 + heartSize + mod(value, 191) / 12);
 			}
 			heartSize += 5;
 		}
