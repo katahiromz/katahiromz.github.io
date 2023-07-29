@@ -32,6 +32,7 @@ sw.precache('precached', [
 	'./images/question.png',
 	'./images/sound.png',
 	'./images/speak.png',
+	'./images/play.png',
 	'./images/please-tap-here_en.svg',
 	'./images/please-tap-here_de.svg',
 	'./images/please-tap-here_it.svg',
