@@ -1341,7 +1341,8 @@ jQuery(function($){
 		if (value === false)
 			value = 0;
 		typeSound = parseInt(value);
-		type_sound_select.checked = !!value;
+		if (type_sound_select.checked != !!value)
+			type_sound_select.checked = !!value;
 		localStorage.setItem('saiminTypeSound', value);
 		if(test && typeSound == 1 && kirakira_sound){
 			kirakira_sound.play();
@@ -3140,11 +3141,9 @@ jQuery(function($){
 				setPicType((picType + 1) % (NUM_TYPE + 1));
 			}
 			type_select.value = picType.toString();
-			if(typeSound == 1){
-				if(kirakira_sound){
-					let kirakira = new Audio('sn/kirakira.mp3');
-					kirakira.play();
-				}
+			if(typeSound == 1 && kirakira_sound && type_sound_select.checked){
+				let kirakira = new Audio('sn/kirakira.mp3');
+				kirakira.play();
 			}
 		}
 
