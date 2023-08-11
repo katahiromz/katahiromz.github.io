@@ -776,7 +776,6 @@ jQuery(function($){
 			$('#sound_select option[value="Lovely"]').text('愛らしい');
 			$('#sound_select option[value="Magic"]').text('魔術');
 			$('#sound_select option[value="OraSaimin"]').text('おら! 催眠!');
-			$('#sound_select option[value="Zako"]').text('雑魚');
 			$('#config_switch_sound').text('切り替え音:');
 			$('#config_brightness').text('画面の明るさ:');
 			$('#screen_brightness option[value="normal"]').text('普通');
@@ -845,7 +844,6 @@ jQuery(function($){
 			$('#sound_select option[value="Lovely"]').text('可爱的');
 			$('#sound_select option[value="Magic"]').text('巫术');
 			$('#sound_select option[value="OraSaimin"]').text('天啊！ 催眠！');
-			$('#sound_select option[value="Zako"]').text('小人物');
 			$('#config_switch_sound').text('开关声音：');
 			$('#config_brightness').text('屏幕亮度：');
 			$('#screen_brightness option[value="normal"]').text('通常');
@@ -914,7 +912,6 @@ jQuery(function($){
 			$('#sound_select option[value="Lovely"]').text('可愛的');
 			$('#sound_select option[value="Magic"]').text('巫術');
 			$('#sound_select option[value="OraSaimin"]').text('天啊！ 催眠！');
-			$('#sound_select option[value="Zako"]').text('小人物');
 			$('#config_switch_sound').text('開關聲音：');
 			$('#config_brightness').text('屏幕亮度：');
 			$('#screen_brightness option[value="normal"]').text('正常亮度');
@@ -983,7 +980,6 @@ jQuery(function($){
 			$('#sound_select option[value="Lovely"]').text('사랑스러운');
 			$('#sound_select option[value="Magic"]').text('마술');
 			$('#sound_select option[value="OraSaimin"]').text('오! 최면!');
-			$('#sound_select option[value="Zako"]').text('조금');
 			$('#config_switch_sound').text('전환 사운드:');
 			$('#config_brightness').text('화면 밝기:');
 			$('#screen_brightness option[value="normal"]').text('일반 밝기');
@@ -1052,7 +1048,6 @@ jQuery(function($){
 			$('#sound_select option[value="Lovely"]').text('Adorabile');
 			$('#sound_select option[value="Magic"]').text('Stregoneria');
 			$('#sound_select option[value="OraSaimin"]').text('Ora! Saimin!');
-			$('#sound_select option[value="Zako"]').text('Un po\'');
 			$('#config_switch_sound').text('Suono cambio foto:');
 			$('#config_brightness').text('Luminosità:');
 			$('#screen_brightness option[value="normal"]').text('Normale');
@@ -1121,7 +1116,6 @@ jQuery(function($){
 			$('#sound_select option[value="Lovely"]').text('Liebenswert');
 			$('#sound_select option[value="Magic"]').text('Hexerei');
 			$('#sound_select option[value="OraSaimin"]').text('Ora! Saimin!');
-			$('#sound_select option[value="Zako"]').text('Klein');
 			$('#config_switch_sound').text('Bildwechselton:');
 			$('#config_brightness').text('Helligkeit:');
 			$('#screen_brightness option[value="normal"]').text('Normal');
@@ -1190,7 +1184,6 @@ jQuery(function($){
 			$('#sound_select option[value="Lovely"]').text('Lovely');
 			$('#sound_select option[value="Magic"]').text('Magic');
 			$('#sound_select option[value="OraSaimin"]').text('Ora! Saimin!');
-			$('#sound_select option[value="Zako"]').text('Little');
 			$('#config_switch_sound').text('Pic change sound:');
 			$('#config_brightness').text('Brightness:');
 			$('#screen_brightness option[value="normal"]').text('Normal');
