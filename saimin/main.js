@@ -1,7 +1,7 @@
 /* jshint esversion: 8 */
 
 const NUM_TYPE = 9;
-const VERSION = '3.4.0';
+const VERSION = '3.4.1';
 let DEBUGGING = false;
 
 // {{LANGUAGE_SPECIFIC}}
@@ -1948,7 +1948,7 @@ jQuery(function($){
 		ctx.fill();
 	}
 
-	function fillBlack(ctx, px, py, dx, dy){
+	function drawSubliminal(ctx, px, py, dx, dy){
 		ctx.save();
 
 		ctx.beginPath();
@@ -1959,8 +1959,19 @@ jQuery(function($){
 		ctx.closePath();
 		ctx.clip();
 
-		ctx.fillStyle = 'black';
+		let count = getCount();
+		let factor1 = Math.sin(count * 0.1);
+		let factor2 = Math.abs(Math.cos(count * 0.03));
+
+		ctx.fillStyle = `rgb(${factor2 * 30 + 40}%, 20%, ${40}%)`;
 		ctx.fillRect(px, py, dx, dy);
+
+		let mxy = Math.min(dx, dy) * (0.7 + 0.2 * factor1);
+		let cx = px + dx / 2;
+		let cy = py + dy / 2;
+
+		ctx.fillStyle = '#f03';
+		heart(ctx, cx, cy - mxy / 2, cx, cy + mxy / 2);
 
 		ctx.restore();
 	}
@@ -2751,8 +2762,8 @@ jQuery(function($){
 
 	function drawPicBlur(ctx, px, py, dx, dy){
 		if(blinking_interval != 0 && picType != -1){
-			if(mod(old_time / 1000, blinking_interval) < (blinking_interval / 3)){
-				fillBlack(ctx, px, py, dx, dy);
+			if(mod(old_time / 1000, blinking_interval) < (blinking_interval * 0.3)){
+				drawSubliminal(ctx, px, py, dx, dy);
 				return;
 			}
 		}
