@@ -1,9 +1,9 @@
 // translation.js --- Hypnosis KraKra tranlation
 
-let currentLanguage = 'en';
+let trans_currentLanguage = 'en';
 
 // {{LANGUAGE_SPECIFIC}}
-const NOTICE_EN = `=========================
+const trans_NOTICE_EN = `=========================
 催眠くらくら
 Hypnosis KraKra
 =========================
@@ -69,7 +69,7 @@ Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 // {{LANGUAGE_SPECIFIC}}
-const NOTICE_KO_KR = `=========================
+const trans_NOTICE_KO_KR = `=========================
 최면 크라크라
 Hypnosis KraKra
 =========================
@@ -135,7 +135,7 @@ Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 // {{LANGUAGE_SPECIFIC}}
-const NOTICE_JA = `=========================
+const trans_NOTICE_JA = `=========================
 催眠くらくら
 Hypnosis KraKra
 =========================
@@ -201,7 +201,7 @@ Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 // {{LANGUAGE_SPECIFIC}}
-const NOTICE_ZW_CN = `=========================
+const trans_NOTICE_ZW_CN = `=========================
 催眠克拉克拉
 Hypnosis KraKra
 =========================
@@ -267,7 +267,7 @@ Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 // {{LANGUAGE_SPECIFIC}}
-const NOTICE_TW_CN = `=========================
+const trans_NOTICE_TW_CN = `=========================
 催眠克拉克拉
 Hypnosis KraKra
 =========================
@@ -333,7 +333,7 @@ Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 // {{LANGUAGE_SPECIFIC}}
-const NOTICE_IT = `=========================
+const trans_NOTICE_IT = `=========================
 Ipnosi KraKra
 Hypnosis KraKra
 =========================
@@ -399,7 +399,7 @@ Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 // {{LANGUAGE_SPECIFIC}}
-const NOTICE_DE = `=========================
+const trans_NOTICE_DE = `=========================
 Hypnose KraKra
 Hypnosis KraKra
 =========================
@@ -465,7 +465,7 @@ Copyright (c) 2007-2022 Akshay Nair
 Copyright 2022 OpenJS Foundation and jQuery contributors.`;
 
 // {{LANGUAGE_SPECIFIC}}
-function getStr(str_id){
+function trans_getText(str_id){
 	let lang = localStorage.getItem('saiminLanguage3');
 	if(!lang)
 		lang = 'en';
@@ -494,6 +494,7 @@ function getStr(str_id){
 		case 'TEXT_NO_BLINKING': return '点滅なし';
 		case 'TEXT_LOGO': return 'images/logo_ja.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_ja.svg';
+		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_ja.mp3';
 		}
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
 		switch(str_id){
@@ -520,6 +521,7 @@ function getStr(str_id){
 		case 'TEXT_NO_BLINKING': return '无闪光灯';
 		case 'TEXT_LOGO': return 'images/logo_zh-CN.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_zh-CN.svg';
+		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_zh-CN.mp3';
 		}
 	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
 		switch(str_id){
@@ -546,6 +548,7 @@ function getStr(str_id){
 		case 'TEXT_NO_BLINKING': return '無閃光燈';
 		case 'TEXT_LOGO': return 'images/logo_zh-TW.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_zh-TW.svg';
+		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_zh-TW.mp3';
 		}
 	}else if(lang == 'ko' || lang == 'kr' || lang == 'ko-KR'){ // Korean
 		switch(str_id){
@@ -572,6 +575,7 @@ function getStr(str_id){
 		case 'TEXT_NO_BLINKING': return '깜박임 없음';
 		case 'TEXT_LOGO': return 'images/logo_ko-KR.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_ko-KR.svg';
+		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_ko-KR.mp3';
 		}
 	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
 		switch(str_id){
@@ -598,6 +602,7 @@ function getStr(str_id){
 		case 'TEXT_NO_BLINKING': return 'Senza il flash';
 		case 'TEXT_LOGO': return 'images/logo_it.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_it.svg';
+		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_it.mp3';
 		}
 	}else if(lang == 'de' || lang == 'de-DE'){ // German
 		switch(str_id){
@@ -624,6 +629,7 @@ function getStr(str_id){
 		case 'TEXT_NO_BLINKING': return 'Kein Blitz';
 		case 'TEXT_LOGO': return 'images/logo_de.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_de.svg';
+		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_de.mp3';
 		}
 	}else{ // English is default
 		switch(str_id){
@@ -650,427 +656,453 @@ function getStr(str_id){
 		case 'TEXT_NO_BLINKING': return 'No blinking';
 		case 'TEXT_LOGO': return 'images/logo_en.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_en.svg';
+		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_en.mp3';
 		}
 	}
 }
 
-// {{LANGUAGE_SPECIFIC}}
-function localizeSaimin(lang){
-	localStorage.setItem('saiminLanguage3', lang);
-	currentLanguage = lang;
-	if(lang == 'ja' || lang == 'jp'){ // Japanese
-		$('#notice_text').text(NOTICE_JA);
-		$('#mic_img').attr('src', 'images/mic.png');
-		$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
-		$('#sound_img').attr('src', 'images/sound.png');
-		$('#char_img').attr('src', 'images/text_ja.png');
-		$('#speech_img').attr('src', 'images/speak.png');
-		$('#gear_img').attr('src', 'images/gear.png');
-		$('#question_img').attr('src', 'images/question.png');
-		$('#config_language').text('言語 (Language):');
-		$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select option[value="en"]').text('English (英語)');
-		$('#language_select option[value="de"]').text('German (Deutsch)');
-		$('#language_select option[value="it"]').text('Italian (Italiano)');
-		$('#language_select option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select option[value="ko-KR"]').text('Korean (한국어)');
-		$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select2 option[value="en"]').text('English (英語)');
-		$('#language_select2 option[value="de"]').text('German (Deutsch)');
-		$('#language_select2 option[value="it"]').text('Italian (Italiano)');
-		$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select2 option[value="ko-KR"]').text('Korean (한국어)');
-		$('#appearance_type').text('映像の種類:');
-		$('#type_select option[value="-1"]').text('画-1: 催眠解除');
-		$('#type_select option[value="0"]').text('画0: 初期画面');
-		$('#type_select option[value="1"]').text('画1: ピンク色の渦巻き');
-		$('#type_select option[value="2"]').text('画2: 同心円状');
-		$('#type_select option[value="3"]').text('画3: 目が回る');
-		$('#type_select option[value="4"]').text('画4: 白黒の渦巻き');
-		$('#type_select option[value="5"]').text('画5: 広がるハート');
-		$('#type_select option[value="6"]').text('画6: 五円玉');
-		$('#type_select option[value="7"]').text('画7: ぼわんぼわん');
-		$('#type_select option[value="8"]').text('画8: クレージーな色');
-		$('#type_select option[value="9"]').text('画9: ミックス渦巻き');
-		$('#appearance_division').text('画面分割:');
-		$('#appearance_speed').text('スピード:');
-		$('#speed_irregular_label').text('不規則');
-		$('#appearance_rotation').text('逆回転:');
-		$('#appearance_blinking').text('点滅:');
-		$('#config_size').text('メッセージの大きさ:');
-		$('#config_note').text('音符ボタン:');
-		$('#sound_select option[value=""]').text('(なし)');
-		$('#sound_select option[value="Cattish"]').text('ネコっぽい');
-		$('#sound_select option[value="Drill"]').text('ドリル');
-		$('#sound_select option[value="Exciting"]').text('興奮');
-		$('#sound_select option[value="Horror"]').text('恐怖');
-		$('#sound_select option[value="Hunting"]').text('狩人');
-		$('#sound_select option[value="Lonely"]').text('さびしさ');
-		$('#sound_select option[value="Longing"]').text('あこがれ');
-		$('#sound_select option[value="Lovely"]').text('愛らしい');
-		$('#sound_select option[value="Magic"]').text('魔術');
-		$('#sound_select option[value="OraSaimin"]').text('おら! 催眠!');
-		$('#config_switch_sound').text('切り替え音:');
-		$('#config_brightness').text('画面の明るさ:');
-		$('#screen_brightness option[value="normal"]').text('普通');
-		$('#screen_brightness option[value="brighter"]').text('明るくする');
-		$('#version_text').text('催眠くらくら Version ' + VERSION);
-	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
-		$('#notice_text').text(NOTICE_ZW_CN);
-		$('#mic_img').attr('src', 'images/mic.png');
-		$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
-		$('#sound_img').attr('src', 'images/sound.png');
-		$('#char_img').attr('src', 'images/text_zh-CN.png');
-		$('#speech_img').attr('src', 'images/speak.png');
-		$('#gear_img').attr('src', 'images/gear.png');
-		$('#question_img').attr('src', 'images/question.png');
-		$('#config_language').text('语言 (Language):');
-		$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select option[value="en"]').text('English (英语)');
-		$('#language_select option[value="de"]').text('German (Deutsch)');
-		$('#language_select option[value="it"]').text('Italian (Italiano)');
-		$('#language_select option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select option[value="ko-KR"]').text('Korean (한국어)');
-		$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select2 option[value="en"]').text('English (英语)');
-		$('#language_select2 option[value="de"]').text('German (Deutsch)');
-		$('#language_select2 option[value="it"]').text('Italian (Italiano)');
-		$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select2 option[value="ko-KR"]').text('Korean (한국어)');
-		$('#appearance_type').text('视频类型：');
-		$('#type_select option[value="-1"]').text('图-1: 释放催眠');
-		$('#type_select option[value="0"]').text('图0: 初始屏幕');
-		$('#type_select option[value="1"]').text('图1: 粉红色漩涡');
-		$('#type_select option[value="2"]').text('图2: 同心圆');
-		$('#type_select option[value="3"]').text('图3: 旋转的眼');
-		$('#type_select option[value="4"]').text('图4: 黑色和白色的漩涡');
-		$('#type_select option[value="5"]').text('图5: 扩展的心');
-		$('#type_select option[value="6"]').text('图6: 5日元硬币');
-		$('#type_select option[value="7"]').text('图7: 头晕 头晕');
-		$('#type_select option[value="8"]').text('图8: 疯狂的颜色');
-		$('#type_select option[value="9"]').text('图9: 混合漩涡');
-		$('#appearance_division').text('分屏：');
-		$('#appearance_speed').text('速度：');
-		$('#speed_irregular_label').text('不规律的');
-		$('#appearance_rotation').text('反向旋转：');
-		$('#appearance_blinking').text('闪烁：');
-		$('#config_size').text('消息大小：');
-		$('#config_note').text('声音按钮：');
-		$('#sound_select option[value=""]').text('(无)');
-		$('#sound_select option[value="Cattish"]').text('像猫一样');
-		$('#sound_select option[value="Drill"]').text('钻头');
-		$('#sound_select option[value="Exciting"]').text('激发');
-		$('#sound_select option[value="Horror"]').text('害怕');
-		$('#sound_select option[value="Hunting"]').text('猎人');
-		$('#sound_select option[value="Lonely"]').text('孤独');
-		$('#sound_select option[value="Longing"]').text('渴望');
-		$('#sound_select option[value="Lovely"]').text('可爱的');
-		$('#sound_select option[value="Magic"]').text('巫术');
-		$('#sound_select option[value="OraSaimin"]').text('天啊！ 催眠！');
-		$('#config_switch_sound').text('开关声音：');
-		$('#config_brightness').text('屏幕亮度：');
-		$('#screen_brightness option[value="normal"]').text('通常');
-		$('#screen_brightness option[value="brighter"]').text('明亮');
-		$('#version_text').text('催眠克拉克拉 Version ' + VERSION);
-	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
-		$('#notice_text').text(NOTICE_TW_CN);
-		$('#mic_img').attr('src', 'images/mic.png');
-		$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
-		$('#sound_img').attr('src', 'images/sound.png');
-		$('#char_img').attr('src', 'images/text_zh-TW.png');
-		$('#speech_img').attr('src', 'images/speak.png');
-		$('#gear_img').attr('src', 'images/gear.png');
-		$('#question_img').attr('src', 'images/question.png');
-		$('#config_language').text('語言 (Language):');
-		$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select option[value="en"]').text('English (英語)');
-		$('#language_select option[value="de"]').text('German (Deutsch)');
-		$('#language_select option[value="it"]').text('Italian (Italiano)');
-		$('#language_select option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select option[value="ko-KR"]').text('Korean (한국어)');
-		$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select2 option[value="en"]').text('English (英語)');
-		$('#language_select2 option[value="de"]').text('German (Deutsch)');
-		$('#language_select2 option[value="it"]').text('Italian (Italiano)');
-		$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select2 option[value="ko-KR"]').text('Korean (한국어)');
-		$('#appearance_type').text('視頻類型：');
-		$('#type_select option[value="-1"]').text('圖-1: 催眠釋放');
-		$('#type_select option[value="0"]').text('圖0: 初始屏幕');
-		$('#type_select option[value="1"]').text('圖1: 粉紅色漩渦');
-		$('#type_select option[value="2"]').text('圖2: 同心圆');
-		$('#type_select option[value="3"]').text('圖3: 旋轉的眼');
-		$('#type_select option[value="4"]').text('圖4: 黑色和白色漩渦');
-		$('#type_select option[value="5"]').text('圖5: 擴展的心');
-		$('#type_select option[value="6"]').text('圖6: 5日元硬幣');
-		$('#type_select option[value="7"]').text('圖7: 頭暈 頭暈');
-		$('#type_select option[value="8"]').text('圖8: 瘋狂的顏色');
-		$('#type_select option[value="9"]').text('圖9: 混合漩渦');
-		$('#appearance_division').text('分屏：');
-		$('#appearance_speed').text('速度：');
-		$('#speed_irregular_label').text('不規律的');
-		$('#appearance_rotation').text('反向旋轉：');
-		$('#appearance_blinking').text('閃爍：');
-		$('#config_size').text('消息大小：');
-		$('#config_note').text('聲音按鈕：');
-		$('#sound_select option[value=""]').text('(無)');
-		$('#sound_select option[value="Cattish"]').text('像貓一樣');
-		$('#sound_select option[value="Drill"]').text('鑽頭');
-		$('#sound_select option[value="Exciting"]').text('激發');
-		$('#sound_select option[value="Horror"]').text('害怕');
-		$('#sound_select option[value="Hunting"]').text('獵人');
-		$('#sound_select option[value="Lonely"]').text('孤獨');
-		$('#sound_select option[value="Longing"]').text('渴望');
-		$('#sound_select option[value="Lovely"]').text('可愛的');
-		$('#sound_select option[value="Magic"]').text('巫術');
-		$('#sound_select option[value="OraSaimin"]').text('天啊！ 催眠！');
-		$('#config_switch_sound').text('開關聲音：');
-		$('#config_brightness').text('屏幕亮度：');
-		$('#screen_brightness option[value="normal"]').text('正常亮度');
-		$('#screen_brightness option[value="brighter"]').text('提亮');
-		$('#version_text').text('催眠克拉克拉 Version ' + VERSION);
-	}else if(lang == 'kr' || lang == 'ko' || lang == 'ko-KR'){ // Korean
-		$('#notice_text').text(NOTICE_KO_KR);
-		$('#mic_img').attr('src', 'images/mic.png');
-		$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
-		$('#sound_img').attr('src', 'images/sound.png');
-		$('#char_img').attr('src', 'images/text_ko-KR.png');
-		$('#speech_img').attr('src', 'images/speak.png');
-		$('#gear_img').attr('src', 'images/gear.png');
-		$('#question_img').attr('src', 'images/question.png');
-		$('#config_language').text('언어 (Language):');
-		$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select option[value="en"]').text('English (영어)');
-		$('#language_select option[value="de"]').text('German (Deutsch)');
-		$('#language_select option[value="it"]').text('Italian (Italiano)');
-		$('#language_select option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select option[value="ko-KR"]').text('Korean (한국어)');
-		$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select2 option[value="en"]').text('English (영어)');
-		$('#language_select2 option[value="de"]').text('German (Deutsch)');
-		$('#language_select2 option[value="it"]').text('Italian (Italiano)');
-		$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select2 option[value="ko-KR"]').text('Korean (한국어)');
-		$('#appearance_type').text('그림 유형:');
-		$('#type_select option[value="-1"]').text('pic-1: 최면 해제');
-		$('#type_select option[value="0"]').text('pic0: 초기 화면');
-		$('#type_select option[value="1"]').text('pic1: 핑크색 소용돌이');
-		$('#type_select option[value="2"]').text('pic2: 동심원형');
-		$('#type_select option[value="3"]').text('pic3: 회전하는 눈');
-		$('#type_select option[value="4"]').text('pic4: 흑백 소용돌이');
-		$('#type_select option[value="5"]').text('pic5: 퍼지는 하트들');
-		$('#type_select option[value="6"]').text('pic6: 오엔 구슬');
-		$('#type_select option[value="7"]').text('pic7: 보완 보완');
-		$('#type_select option[value="8"]').text('pic8: 미친 색');
-		$('#type_select option[value="9"]').text('pic9: 믹스 소용돌이');
-		$('#appearance_division').text('화면 분할:');
-		$('#appearance_speed').text('속도:');
-		$('#speed_irregular_label').text('불규칙');
-		$('#appearance_rotation').text('역회전:');
-		$('#appearance_blinking').text('깜박임:');
-		$('#config_size').text('메시지 크기:');
-		$('#config_note').text('사운드 버튼:');
-		$('#sound_select option[value=""]').text('(없음)');
-		$('#sound_select option[value="Cattish"]').text('고양이 같은');
-		$('#sound_select option[value="Drill"]').text('드릴');
-		$('#sound_select option[value="Exciting"]').text('일으키다');
-		$('#sound_select option[value="Horror"]').text('공포');
-		$('#sound_select option[value="Hunting"]').text('사냥꾼');
-		$('#sound_select option[value="Lonely"]').text('녹슬다');
-		$('#sound_select option[value="Longing"]').text('동경');
-		$('#sound_select option[value="Lovely"]').text('사랑스러운');
-		$('#sound_select option[value="Magic"]').text('마술');
-		$('#sound_select option[value="OraSaimin"]').text('오! 최면!');
-		$('#config_switch_sound').text('전환 사운드:');
-		$('#config_brightness').text('화면 밝기:');
-		$('#screen_brightness option[value="normal"]').text('일반 밝기');
-		$('#screen_brightness option[value="brighter"]').text('밝게 하다');
-		$('#version_text').text('최면 크라크라 Version ' + VERSION);
-	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
-		$('#notice_text').text(NOTICE_IT);
-		$('#mic_img').attr('src', 'images/mic.png');
-		$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
-		$('#sound_img').attr('src', 'images/sound.png');
-		$('#char_img').attr('src', 'images/text_it.png');
-		$('#speech_img').attr('src', 'images/speak.png');
-		$('#gear_img').attr('src', 'images/gear.png');
-		$('#question_img').attr('src', 'images/question.png');
-		$('#config_language').text('Lingua (Language):');
-		$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select option[value="en"]').text('English (Inglese)');
-		$('#language_select option[value="de"]').text('German (Deutsch)');
-		$('#language_select option[value="it"]').text('Italian (Italiano)');
-		$('#language_select option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select option[value="ko-KR"]').text('Korean (한국어)');
-		$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select2 option[value="en"]').text('English (Inglese)');
-		$('#language_select2 option[value="de"]').text('German (Deutsch)');
-		$('#language_select2 option[value="it"]').text('Italian (Italiano)');
-		$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select2 option[value="ko-KR"]').text('Korean (한국어)');
-		$('#appearance_type').text('Il tipo di immagine:');
-		$('#type_select option[value="-1"]').text('pic-1: Liberare l\'ipnosi');
-		$('#type_select option[value="0"]').text('pic0: Schermata iniziale');
-		$('#type_select option[value="1"]').text('pic1: Spirale Rosa');
-		$('#type_select option[value="2"]').text('pic2: Cerchi concentrici');
-		$('#type_select option[value="3"]').text('pic3: Gli occhi');
-		$('#type_select option[value="4"]').text('pic4: Spirale in bianco e nero');
-		$('#type_select option[value="5"]').text('pic5: Cuori che si diffondono');
-		$('#type_select option[value="6"]').text('pic6: Moneta da 5 Yen');
-		$('#type_select option[value="7"]').text('pic7: Clamore Clamore');
-		$('#type_select option[value="8"]').text('pic8: Colori pazzi');
-		$('#type_select option[value="9"]').text('pic9: Spirali miste');
-		$('#appearance_division').text('Divisione dello schermo:');
-		$('#appearance_speed').text('Velocità:');
-		$('#speed_irregular_label').text('Irregolare');
-		$('#appearance_rotation').text('Controrotazione:');
-		$('#appearance_blinking').text('Lampeggiante:');
-		$('#config_size').text('Dimensione del messaggio:');
-		$('#config_note').text('Pulsante audio:');
-		$('#sound_select option[value=""]').text('(Nessuno)');
-		$('#sound_select option[value="Cattish"]').text('Simile a un gatto');
-		$('#sound_select option[value="Drill"]').text('Trapano');
-		$('#sound_select option[value="Exciting"]').text('Eccitare');
-		$('#sound_select option[value="Horror"]').text('Paura');
-		$('#sound_select option[value="Hunting"]').text('A caccia');
-		$('#sound_select option[value="Lonely"]').text('Solitudine');
-		$('#sound_select option[value="Longing"]').text('Desiderio');
-		$('#sound_select option[value="Lovely"]').text('Adorabile');
-		$('#sound_select option[value="Magic"]').text('Stregoneria');
-		$('#sound_select option[value="OraSaimin"]').text('Ora! Saimin!');
-		$('#config_switch_sound').text('Suono cambio foto:');
-		$('#config_brightness').text('Luminosità:');
-		$('#screen_brightness option[value="normal"]').text('Normale');
-		$('#screen_brightness option[value="brighter"]').text('Più luminoso');
-		$('#version_text').text('Ipnosi KraKra Version ' + VERSION);
-	}else if(lang == 'de' || lang == 'de-DE'){ // German
-		$('#notice_text').text(NOTICE_DE);
-		$('#mic_img').attr('src', 'images/mic.png');
-		$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
-		$('#sound_img').attr('src', 'images/sound.png');
-		$('#char_img').attr('src', 'images/text_de.png');
-		$('#speech_img').attr('src', 'images/speak.png');
-		$('#gear_img').attr('src', 'images/gear.png');
-		$('#question_img').attr('src', 'images/question.png');
-		$('#config_language').text('Sprache (Language):');
-		$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select option[value="en"]').text('English (Englisch)');
-		$('#language_select option[value="de"]').text('German (Deutsch)');
-		$('#language_select option[value="it"]').text('Italian (Italiano)');
-		$('#language_select option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select option[value="ko-KR"]').text('Korean (한국어)');
-		$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select2 option[value="en"]').text('English (Englisch)');
-		$('#language_select2 option[value="de"]').text('German (Deutsch)');
-		$('#language_select2 option[value="it"]').text('Italian (Italiano)');
-		$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select2 option[value="ko-KR"]').text('Korean (한국어)');
-		$('#appearance_type').text('Die Art des Bildes:');
-		$('#type_select option[value="-1"]').text('pic-1: Hypnose loslassen');
-		$('#type_select option[value="0"]').text('pic0: Einstiegsbild');
-		$('#type_select option[value="1"]').text('pic1: Rosa Spirale');
-		$('#type_select option[value="2"]').text('pic2: Konzentrische Kreise');
-		$('#type_select option[value="3"]').text('pic3: Die Augen');
-		$('#type_select option[value="4"]').text('pic4: Schwarz-Weiß-Spirale');
-		$('#type_select option[value="5"]').text('pic5: Herzen verbreiten');
-		$('#type_select option[value="6"]').text('pic6: 5-Yen-Münze');
-		$('#type_select option[value="7"]').text('pic7: Lärm, Lärm');
-		$('#type_select option[value="8"]').text('pic8: Verrückte Farben');
-		$('#type_select option[value="9"]').text('pic9: Gemischte Spiralen');
-		$('#appearance_division').text('Bildschirmaufteilung:');
-		$('#appearance_speed').text('Geschwindigkeit:');
-		$('#speed_irregular_label').text('Irregulär');
-		$('#appearance_rotation').text('Gegenrotation:');
-		$('#appearance_blinking').text('Blinken:');
-		$('#config_size').text('Größe der Nachricht:');
-		$('#config_note').text('Sound-Taste:');
-		$('#sound_select option[value=""]').text('(Kein)');
-		$('#sound_select option[value="Cattish"]').text('Katzenartig');
-		$('#sound_select option[value="Drill"]').text('Bohren');
-		$('#sound_select option[value="Exciting"]').text('Anregen');
-		$('#sound_select option[value="Horror"]').text('Furcht');
-		$('#sound_select option[value="Hunting"]').text('Jagd');
-		$('#sound_select option[value="Lonely"]').text('Einsamkeit');
-		$('#sound_select option[value="Longing"]').text('Sehnsucht');
-		$('#sound_select option[value="Lovely"]').text('Liebenswert');
-		$('#sound_select option[value="Magic"]').text('Hexerei');
-		$('#sound_select option[value="OraSaimin"]').text('Ora! Saimin!');
-		$('#config_switch_sound').text('Bildwechselton:');
-		$('#config_brightness').text('Helligkeit:');
-		$('#screen_brightness option[value="normal"]').text('Normal');
-		$('#screen_brightness option[value="brighter"]').text('Heller');
-		$('#version_text').text('Hypnose KraKra Version ' + VERSION);
-	}else{ // English is default
-		$('#notice_text').text(NOTICE_EN);
-		$('#mic_img').attr('src', 'images/mic.png');
-		$('#type_select_button').text(getStr('TEXT_PIC') + type_select.value);
-		$('#sound_img').attr('src', 'images/sound.png');
-		$('#char_img').attr('src', 'images/text_en.png');
-		$('#speech_img').attr('src', 'images/speak.png');
-		$('#gear_img').attr('src', 'images/gear.png');
-		$('#question_img').attr('src', 'images/question.png');
-		$('#config_language').text('Language (言語):');
-		$('#language_select option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select option[value="en"]').text('English (英語)');
-		$('#language_select option[value="de"]').text('German (Deutsch)');
-		$('#language_select option[value="it"]').text('Italian (Italiano)');
-		$('#language_select option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select option[value="ko-KR"]').text('Korean (한국어)');
-		$('#language_select2 option[value="zh-CN"]').text('Chinese (Simplified) (简体中文)');
-		$('#language_select2 option[value="zh-TW"]').text('Chinese (Traditional) (繁體中文)');
-		$('#language_select2 option[value="en"]').text('English');
-		$('#language_select2 option[value="de"]').text('German (Deutsch)');
-		$('#language_select2 option[value="it"]').text('Italian (Italiano)');
-		$('#language_select2 option[value="ja"]').text('Japanese (日本語)');
-		$('#language_select2 option[value="ko-KR"]').text('Korean (한국어)');
-		$('#appearance_type').text('The type of picture:');
-		$('#type_select option[value="-1"]').text('pic-1: Release Hypnosis');
-		$('#type_select option[value="0"]').text('pic0: Initial Screen');
-		$('#type_select option[value="1"]').text('pic1: Pink Spiral');
-		$('#type_select option[value="2"]').text('pic2: Concentric Circles');
-		$('#type_select option[value="3"]').text('pic3: The Eyes');
-		$('#type_select option[value="4"]').text('pic4: Black and White Spiral');
-		$('#type_select option[value="5"]').text('pic5: Spreading Hearts');
-		$('#type_select option[value="6"]').text('pic6: 5-Yen Coin');
-		$('#type_select option[value="7"]').text('pic7: Clamor Clamor');
-		$('#type_select option[value="8"]').text('pic8: Crazy Colors');
-		$('#type_select option[value="9"]').text('pic9: Mixed Spirals');
-		$('#appearance_division').text('Screen splitting:');
-		$('#appearance_speed').text('Speed:');
-		$('#speed_irregular_label').text('Irregular');
-		$('#appearance_rotation').text('Counterrotation:');
-		$('#appearance_blinking').text('Blinking:');
-		$('#config_size').text('Size of message:');
-		$('#config_note').text('Sound button:');
-		$('#sound_select option[value=""]').text('(None)');
-		$('#sound_select option[value="Cattish"]').text('Cattish');
-		$('#sound_select option[value="Drill"]').text('Drill');
-		$('#sound_select option[value="Exciting"]').text('Exciting');
-		$('#sound_select option[value="Horror"]').text('Horror');
-		$('#sound_select option[value="Hunting"]').text('Hunting');
-		$('#sound_select option[value="Lonely"]').text('Lonely');
-		$('#sound_select option[value="Longing"]').text('Longing');
-		$('#sound_select option[value="Lovely"]').text('Lovely');
-		$('#sound_select option[value="Magic"]').text('Magic');
-		$('#sound_select option[value="OraSaimin"]').text('Ora! Saimin!');
-		$('#config_switch_sound').text('Pic change sound:');
-		$('#config_brightness').text('Brightness:');
-		$('#screen_brightness option[value="normal"]').text('Normal');
-		$('#screen_brightness option[value="brighter"]').text('Brighter');
-		$('#version_text').text('Hyponosis KraKra Version ' + VERSION);
+function trans_setHtmlText(id, text){
+	if(typeof(id) == 'string')
+		id = document.getElementById(id);
+	id.textContent = text;
+}
+
+function trans_setSelectOptionText(id, value, text){
+	if(typeof(id) == 'string')
+		id = document.getElementById(id);
+	value = value.toString();
+	let options = id.options;
+	for(let i = 0; i < options.length; ++i){
+		if(options[i].value == value){
+			options[i].text = text;
+			break;
+		}
 	}
-	$('#notice_text').scrollTop(0);
+}
+
+function trans_setImageSrc(id, src){
+	if(typeof(id) == 'string')
+		id = document.getElementById(id);
+	id.src = src;
+}
+
+// {{LANGUAGE_SPECIFIC}}
+function trans_localize(lang){
+	localStorage.setItem('saiminLanguage3', lang);
+	trans_currentLanguage = lang;
+	if(lang == 'ja' || lang == 'jp'){ // Japanese
+		trans_setHtmlText(notice_text, trans_NOTICE_JA);
+		trans_setImageSrc(mic_img, 'images/mic.png');
+		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
+		trans_setImageSrc(sound_img, 'images/sound.png');
+		trans_setImageSrc(char_img, 'images/text_ja.png');
+		trans_setImageSrc(speech_img, 'images/speak.png');
+		trans_setImageSrc(gear_img, 'images/gear.png');
+		trans_setImageSrc(question_img, 'images/question.png');
+		trans_setHtmlText(config_language, '言語 (Language):');
+		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select, 'en', 'English (英語)');
+		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select2, 'en', 'English (英語)');
+		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(appearance_type, '映像の種類:');
+		trans_setSelectOptionText(type_select, '-1', '画-1: 催眠解除');
+		trans_setSelectOptionText(type_select, '0', '画0: 初期画面');
+		trans_setSelectOptionText(type_select, '1', '画1: ピンク色の渦巻き');
+		trans_setSelectOptionText(type_select, '2', '画2: 同心円状');
+		trans_setSelectOptionText(type_select, '3', '画3: 目が回る');
+		trans_setSelectOptionText(type_select, '4', '画4: 白黒の渦巻き');
+		trans_setSelectOptionText(type_select, '5', '画5: 広がるハート');
+		trans_setSelectOptionText(type_select, '6', '画6: 五円玉');
+		trans_setSelectOptionText(type_select, '7', '画7: ぼわんぼわん');
+		trans_setSelectOptionText(type_select, '8', '画8: クレージーな色');
+		trans_setSelectOptionText(type_select, '9', '画9: ミックス渦巻き');
+		trans_setHtmlText(appearance_division, '画面分割:');
+		trans_setHtmlText(appearance_speed, 'スピード:');
+		trans_setHtmlText(speed_irregular_label, '不規則');
+		trans_setHtmlText(appearance_rotation, '逆回転:');
+		trans_setHtmlText(appearance_blinking, '点滅:');
+		trans_setHtmlText(config_size, 'メッセージの大きさ:');
+		trans_setHtmlText(config_note, '音符ボタン:');
+		trans_setSelectOptionText(sound_select, '', '(なし)');
+		trans_setSelectOptionText(sound_select, 'Cattish', 'ネコっぽい');
+		trans_setSelectOptionText(sound_select, 'Drill', 'ドリル');
+		trans_setSelectOptionText(sound_select, 'Exciting', '興奮');
+		trans_setSelectOptionText(sound_select, 'Horror', '恐怖');
+		trans_setSelectOptionText(sound_select, 'Hunting', '狩人');
+		trans_setSelectOptionText(sound_select, 'Lonely', 'さびしさ');
+		trans_setSelectOptionText(sound_select, 'Longing', 'あこがれ');
+		trans_setSelectOptionText(sound_select, 'Lovely', '愛らしい');
+		trans_setSelectOptionText(sound_select, 'Magic', '魔術');
+		trans_setSelectOptionText(sound_select, 'OraSaimin', 'おら! 催眠!');
+		trans_setHtmlText(config_switch_sound, '切り替え音:');
+		trans_setHtmlText(config_brightness, '画面の明るさ:');
+		trans_setSelectOptionText(screen_brightness, 'normal', '普通');
+		trans_setSelectOptionText(screen_brightness, 'brighter', '明るくする');
+		trans_setHtmlText(version_text, '催眠くらくら Version ' + VERSION);
+	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
+		trans_setHtmlText(notice_text, trans_NOTICE_ZW_CN);
+		trans_setImageSrc(mic_img, 'images/mic.png');
+		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
+		trans_setImageSrc(sound_img, 'images/sound.png');
+		trans_setImageSrc(char_img, 'images/text_zh-CN.png');
+		trans_setImageSrc(speech_img, 'images/speak.png');
+		trans_setImageSrc(gear_img, 'images/gear.png');
+		trans_setImageSrc(question_img, 'images/question.png');
+		trans_setHtmlText(config_language, '语言 (Language):');
+		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select, 'en', 'English (英语)');
+		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select2, 'en', 'English (英语)');
+		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(appearance_type, '视频类型：');
+		trans_setSelectOptionText(type_select, '-1', '图-1: 释放催眠');
+		trans_setSelectOptionText(type_select, '0', '图0: 初始屏幕');
+		trans_setSelectOptionText(type_select, '1', '图1: 粉红色漩涡');
+		trans_setSelectOptionText(type_select, '2', '图2: 同心圆');
+		trans_setSelectOptionText(type_select, '3', '图3: 旋转的眼');
+		trans_setSelectOptionText(type_select, '4', '图4: 黑色和白色的漩涡');
+		trans_setSelectOptionText(type_select, '5', '图5: 扩展的心');
+		trans_setSelectOptionText(type_select, '6', '图6: 5日元硬币');
+		trans_setSelectOptionText(type_select, '7', '图7: 头晕 头晕');
+		trans_setSelectOptionText(type_select, '8', '图8: 疯狂的颜色');
+		trans_setSelectOptionText(type_select, '9', '图9: 混合漩涡');
+		trans_setHtmlText(appearance_division, '分屏：');
+		trans_setHtmlText(appearance_speed, '速度：');
+		trans_setHtmlText(speed_irregular_label, '不规律的');
+		trans_setHtmlText(appearance_rotation, '反向旋转：');
+		trans_setHtmlText(appearance_blinking, '闪烁：');
+		trans_setHtmlText(config_size, '消息大小：');
+		trans_setHtmlText(config_note, '声音按钮：');
+		trans_setSelectOptionText(sound_select, '', '(无)');
+		trans_setSelectOptionText(sound_select, 'Cattish', '像猫一样');
+		trans_setSelectOptionText(sound_select, 'Drill', '钻头');
+		trans_setSelectOptionText(sound_select, 'Exciting', '激发');
+		trans_setSelectOptionText(sound_select, 'Horror', '害怕');
+		trans_setSelectOptionText(sound_select, 'Hunting', '猎人');
+		trans_setSelectOptionText(sound_select, 'Lonely', '孤独');
+		trans_setSelectOptionText(sound_select, 'Longing', '渴望');
+		trans_setSelectOptionText(sound_select, 'Lovely', '可爱的');
+		trans_setSelectOptionText(sound_select, 'Magic', '巫术');
+		trans_setSelectOptionText(sound_select, 'OraSaimin', '天啊！ 催眠！');
+		trans_setHtmlText(config_switch_sound, '开关声音：');
+		trans_setHtmlText(config_brightness, '屏幕亮度：');
+		trans_setSelectOptionText(screen_brightness, 'normal', '通常');
+		trans_setSelectOptionText(screen_brightness, 'brighter', '明亮');
+		trans_setHtmlText(version_text, '催眠克拉克拉 Version ' + VERSION);
+	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
+		trans_setHtmlText(notice_text, trans_NOTICE_TW_CN);
+		trans_setImageSrc(mic_img, 'images/mic.png');
+		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
+		trans_setImageSrc(sound_img, 'images/sound.png');
+		trans_setImageSrc(char_img, 'images/text_zh-TW.png');
+		trans_setImageSrc(speech_img, 'images/speak.png');
+		trans_setImageSrc(gear_img, 'images/gear.png');
+		trans_setImageSrc(question_img, 'images/question.png');
+		trans_setHtmlText(config_language, '語言 (Language):');
+		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select, 'en', 'English (英語)');
+		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select2, 'en', 'English (英語)');
+		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(appearance_type, '視頻類型：');
+		trans_setSelectOptionText(type_select, '-1', '圖-1: 催眠釋放');
+		trans_setSelectOptionText(type_select, '0', '圖0: 初始屏幕');
+		trans_setSelectOptionText(type_select, '1', '圖1: 粉紅色漩渦');
+		trans_setSelectOptionText(type_select, '2', '圖2: 同心圆');
+		trans_setSelectOptionText(type_select, '3', '圖3: 旋轉的眼');
+		trans_setSelectOptionText(type_select, '4', '圖4: 黑色和白色漩渦');
+		trans_setSelectOptionText(type_select, '5', '圖5: 擴展的心');
+		trans_setSelectOptionText(type_select, '6', '圖6: 5日元硬幣');
+		trans_setSelectOptionText(type_select, '7', '圖7: 頭暈 頭暈');
+		trans_setSelectOptionText(type_select, '8', '圖8: 瘋狂的顏色');
+		trans_setSelectOptionText(type_select, '9', '圖9: 混合漩渦');
+		trans_setHtmlText(appearance_division, '分屏：');
+		trans_setHtmlText(appearance_speed, '速度：');
+		trans_setHtmlText(speed_irregular_label, '不規律的');
+		trans_setHtmlText(appearance_rotation, '反向旋轉：');
+		trans_setHtmlText(appearance_blinking, '閃爍：');
+		trans_setHtmlText(config_size, '消息大小：');
+		trans_setHtmlText(config_note, '聲音按鈕：');
+		trans_setSelectOptionText(sound_select, '', '(無)');
+		trans_setSelectOptionText(sound_select, 'Cattish', '像貓一樣');
+		trans_setSelectOptionText(sound_select, 'Drill', '鑽頭');
+		trans_setSelectOptionText(sound_select, 'Exciting', '激發');
+		trans_setSelectOptionText(sound_select, 'Horror', '害怕');
+		trans_setSelectOptionText(sound_select, 'Hunting', '獵人');
+		trans_setSelectOptionText(sound_select, 'Lonely', '孤獨');
+		trans_setSelectOptionText(sound_select, 'Longing', '渴望');
+		trans_setSelectOptionText(sound_select, 'Lovely', '可愛的');
+		trans_setSelectOptionText(sound_select, 'Magic', '巫術');
+		trans_setSelectOptionText(sound_select, 'OraSaimin', '天啊！ 催眠！');
+		trans_setHtmlText(config_switch_sound, '開關聲音：');
+		trans_setHtmlText(config_brightness, '屏幕亮度：');
+		trans_setSelectOptionText(screen_brightness, 'normal', '正常亮度');
+		trans_setSelectOptionText(screen_brightness, 'brighter', '提亮');
+		trans_setHtmlText(version_text, '催眠克拉克拉 Version ' + VERSION);
+	}else if(lang == 'kr' || lang == 'ko' || lang == 'ko-KR'){ // Korean
+		trans_setHtmlText(notice_text, trans_NOTICE_KO_KR);
+		trans_setImageSrc(mic_img, 'images/mic.png');
+		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
+		trans_setImageSrc(sound_img, 'images/sound.png');
+		trans_setImageSrc(char_img, 'images/text_ko-KR.png');
+		trans_setImageSrc(speech_img, 'images/speak.png');
+		trans_setImageSrc(gear_img, 'images/gear.png');
+		trans_setImageSrc(question_img, 'images/question.png');
+		trans_setHtmlText(config_language, '언어 (Language):');
+		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select, 'en', 'English (영어)');
+		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select2, 'en', 'English (영어)');
+		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(appearance_type, '그림 유형:');
+		trans_setSelectOptionText(type_select, '-1', 'pic-1: 최면 해제');
+		trans_setSelectOptionText(type_select, '0', 'pic0: 초기 화면');
+		trans_setSelectOptionText(type_select, '1', 'pic1: 핑크색 소용돌이');
+		trans_setSelectOptionText(type_select, '2', 'pic2: 동심원형');
+		trans_setSelectOptionText(type_select, '3', 'pic3: 회전하는 눈');
+		trans_setSelectOptionText(type_select, '4', 'pic4: 흑백 소용돌이');
+		trans_setSelectOptionText(type_select, '5', 'pic5: 퍼지는 하트들');
+		trans_setSelectOptionText(type_select, '6', 'pic6: 오엔 구슬');
+		trans_setSelectOptionText(type_select, '7', 'pic7: 보완 보완');
+		trans_setSelectOptionText(type_select, '8', 'pic8: 미친 색');
+		trans_setSelectOptionText(type_select, '9', 'pic9: 믹스 소용돌이');
+		trans_setHtmlText(appearance_division, '화면 분할:');
+		trans_setHtmlText(appearance_speed, '속도:');
+		trans_setHtmlText(speed_irregular_label, '불규칙');
+		trans_setHtmlText(appearance_rotation, '역회전:');
+		trans_setHtmlText(appearance_blinking, '깜박임:');
+		trans_setHtmlText(config_size, '메시지 크기:');
+		trans_setHtmlText(config_note, '사운드 버튼:');
+		trans_setSelectOptionText(sound_select, '', '(없음)');
+		trans_setSelectOptionText(sound_select, 'Cattish', '고양이 같은');
+		trans_setSelectOptionText(sound_select, 'Drill', '드릴');
+		trans_setSelectOptionText(sound_select, 'Exciting', '일으키다');
+		trans_setSelectOptionText(sound_select, 'Horror', '공포');
+		trans_setSelectOptionText(sound_select, 'Hunting', '사냥꾼');
+		trans_setSelectOptionText(sound_select, 'Lonely', '녹슬다');
+		trans_setSelectOptionText(sound_select, 'Longing', '동경');
+		trans_setSelectOptionText(sound_select, 'Lovely', '사랑스러운');
+		trans_setSelectOptionText(sound_select, 'Magic', '마술');
+		trans_setSelectOptionText(sound_select, 'OraSaimin', '오! 최면!');
+		trans_setHtmlText(config_switch_sound, '전환 사운드:');
+		trans_setHtmlText(config_brightness, '화면 밝기:');
+		trans_setSelectOptionText(screen_brightness, 'normal', '일반 밝기');
+		trans_setSelectOptionText(screen_brightness, 'brighter', '밝게 하다');
+		trans_setHtmlText(version_text, '최면 크라크라 Version ' + VERSION);
+	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
+		trans_setHtmlText(notice_text, trans_NOTICE_IT);
+		trans_setImageSrc(mic_img, 'images/mic.png');
+		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
+		trans_setImageSrc(sound_img, 'images/sound.png');
+		trans_setImageSrc(char_img, 'images/text_it.png');
+		trans_setImageSrc(speech_img, 'images/speak.png');
+		trans_setImageSrc(gear_img, 'images/gear.png');
+		trans_setImageSrc(question_img, 'images/question.png');
+		trans_setHtmlText(config_language, 'Lingua (Language):');
+		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select, 'en', 'English (Inglese)');
+		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select2, 'en', 'English (Inglese)');
+		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(appearance_type, 'Il tipo di immagine:');
+		trans_setSelectOptionText(type_select, '-1', 'pic-1: Liberare l\'ipnosi');
+		trans_setSelectOptionText(type_select, '0', 'pic0: Schermata iniziale');
+		trans_setSelectOptionText(type_select, '1', 'pic1: Spirale Rosa');
+		trans_setSelectOptionText(type_select, '2', 'pic2: Cerchi concentrici');
+		trans_setSelectOptionText(type_select, '3', 'pic3: Gli occhi');
+		trans_setSelectOptionText(type_select, '4', 'pic4: Spirale in bianco e nero');
+		trans_setSelectOptionText(type_select, '5', 'pic5: Cuori che si diffondono');
+		trans_setSelectOptionText(type_select, '6', 'pic6: Moneta da 5 Yen');
+		trans_setSelectOptionText(type_select, '7', 'pic7: Clamore Clamore');
+		trans_setSelectOptionText(type_select, '8', 'pic8: Colori pazzi');
+		trans_setSelectOptionText(type_select, '9', 'pic9: Spirali miste');
+		trans_setHtmlText(appearance_division, 'Divisione dello schermo:');
+		trans_setHtmlText(appearance_speed, 'Velocità:');
+		trans_setHtmlText(speed_irregular_label, 'Irregolare');
+		trans_setHtmlText(appearance_rotation, 'Controrotazione:');
+		trans_setHtmlText(appearance_blinking, 'Lampeggiante:');
+		trans_setHtmlText(config_size, 'Dimensione del messaggio:');
+		trans_setHtmlText(config_note, 'Pulsante audio:');
+		trans_setSelectOptionText(sound_select, '', '(Nessuno)');
+		trans_setSelectOptionText(sound_select, 'Cattish', 'Simile a un gatto');
+		trans_setSelectOptionText(sound_select, 'Drill', 'Trapano');
+		trans_setSelectOptionText(sound_select, 'Exciting', 'Eccitare');
+		trans_setSelectOptionText(sound_select, 'Horror', 'Paura');
+		trans_setSelectOptionText(sound_select, 'Hunting', 'A caccia');
+		trans_setSelectOptionText(sound_select, 'Lonely', 'Solitudine');
+		trans_setSelectOptionText(sound_select, 'Longing', 'Desiderio');
+		trans_setSelectOptionText(sound_select, 'Lovely', 'Adorabile');
+		trans_setSelectOptionText(sound_select, 'Magic', 'Stregoneria');
+		trans_setSelectOptionText(sound_select, 'OraSaimin', 'Ora! Saimin!');
+		trans_setHtmlText(config_switch_sound, 'Suono cambio foto:');
+		trans_setHtmlText(config_brightness, 'Luminosità:');
+		trans_setSelectOptionText(screen_brightness, 'normal', 'Normale');
+		trans_setSelectOptionText(screen_brightness, 'brighter', 'Più luminoso');
+		trans_setHtmlText(version_text, 'Ipnosi KraKra Version ' + VERSION);
+	}else if(lang == 'de' || lang == 'de-DE'){ // German
+		trans_setHtmlText(notice_text, trans_NOTICE_DE);
+		trans_setImageSrc(mic_img, 'images/mic.png');
+		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
+		trans_setImageSrc(sound_img, 'images/sound.png');
+		trans_setImageSrc(char_img, 'images/text_de.png');
+		trans_setImageSrc(speech_img, 'images/speak.png');
+		trans_setImageSrc(gear_img, 'images/gear.png');
+		trans_setImageSrc(question_img, 'images/question.png');
+		trans_setHtmlText(config_language, 'Sprache (Language):');
+		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select, 'en', 'English (Englisch)');
+		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select2, 'en', 'English (Englisch)');
+		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(appearance_type, 'Die Art des Bildes:');
+		trans_setSelectOptionText(type_select, '-1', 'pic-1: Hypnose loslassen');
+		trans_setSelectOptionText(type_select, '0', 'pic0: Einstiegsbild');
+		trans_setSelectOptionText(type_select, '1', 'pic1: Rosa Spirale');
+		trans_setSelectOptionText(type_select, '2', 'pic2: Konzentrische Kreise');
+		trans_setSelectOptionText(type_select, '3', 'pic3: Die Augen');
+		trans_setSelectOptionText(type_select, '4', 'pic4: Schwarz-Weiß-Spirale');
+		trans_setSelectOptionText(type_select, '5', 'pic5: Herzen verbreiten');
+		trans_setSelectOptionText(type_select, '6', 'pic6: 5-Yen-Münze');
+		trans_setSelectOptionText(type_select, '7', 'pic7: Lärm, Lärm');
+		trans_setSelectOptionText(type_select, '8', 'pic8: Verrückte Farben');
+		trans_setSelectOptionText(type_select, '9', 'pic9: Gemischte Spiralen');
+		trans_setHtmlText(appearance_division, 'Bildschirmaufteilung:');
+		trans_setHtmlText(appearance_speed, 'Geschwindigkeit:');
+		trans_setHtmlText(speed_irregular_label, 'Irregulär');
+		trans_setHtmlText(appearance_rotation, 'Gegenrotation:');
+		trans_setHtmlText(appearance_blinking, 'Blinken:');
+		trans_setHtmlText(config_size, 'Größe der Nachricht:');
+		trans_setHtmlText(config_note, 'Sound-Taste:');
+		trans_setSelectOptionText(sound_select, '', '(Kein)');
+		trans_setSelectOptionText(sound_select, 'Cattish', 'Katzenartig');
+		trans_setSelectOptionText(sound_select, 'Drill', 'Bohren');
+		trans_setSelectOptionText(sound_select, 'Exciting', 'Anregen');
+		trans_setSelectOptionText(sound_select, 'Horror', 'Furcht');
+		trans_setSelectOptionText(sound_select, 'Hunting', 'Jagd');
+		trans_setSelectOptionText(sound_select, 'Lonely', 'Einsamkeit');
+		trans_setSelectOptionText(sound_select, 'Longing', 'Sehnsucht');
+		trans_setSelectOptionText(sound_select, 'Lovely', 'Liebenswert');
+		trans_setSelectOptionText(sound_select, 'Magic', 'Hexerei');
+		trans_setSelectOptionText(sound_select, 'OraSaimin', 'Ora! Saimin!');
+		trans_setHtmlText(config_switch_sound, 'Bildwechselton:');
+		trans_setHtmlText(config_brightness, 'Helligkeit:');
+		trans_setSelectOptionText(screen_brightness, 'normal', 'Normal');
+		trans_setSelectOptionText(screen_brightness, 'brighter', 'Heller');
+		trans_setHtmlText(version_text, 'Hypnose KraKra Version ' + VERSION);
+	}else{ // English is default
+		trans_setHtmlText(notice_text, trans_NOTICE_EN);
+		trans_setImageSrc(mic_img, 'images/mic.png');
+		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
+		trans_setImageSrc(sound_img, 'images/sound.png');
+		trans_setImageSrc(char_img, 'images/text_en.png');
+		trans_setImageSrc(speech_img, 'images/speak.png');
+		trans_setImageSrc(gear_img, 'images/gear.png');
+		trans_setImageSrc(question_img, 'images/question.png');
+		trans_setHtmlText(config_language, 'Language (言語):');
+		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select, 'en', 'English (英語)');
+		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(language_select2, 'en', 'English');
+		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(appearance_type, 'The type of picture:');
+		trans_setSelectOptionText(type_select, '-1', 'pic-1: Release Hypnosis');
+		trans_setSelectOptionText(type_select, '0', 'pic0: Initial Screen');
+		trans_setSelectOptionText(type_select, '1', 'pic1: Pink Spiral');
+		trans_setSelectOptionText(type_select, '2', 'pic2: Concentric Circles');
+		trans_setSelectOptionText(type_select, '3', 'pic3: The Eyes');
+		trans_setSelectOptionText(type_select, '4', 'pic4: Black and White Spiral');
+		trans_setSelectOptionText(type_select, '5', 'pic5: Spreading Hearts');
+		trans_setSelectOptionText(type_select, '6', 'pic6: 5-Yen Coin');
+		trans_setSelectOptionText(type_select, '7', 'pic7: Clamor Clamor');
+		trans_setSelectOptionText(type_select, '8', 'pic8: Crazy Colors');
+		trans_setSelectOptionText(type_select, '9', 'pic9: Mixed Spirals');
+		trans_setHtmlText(appearance_division, 'Screen splitting:');
+		trans_setHtmlText(appearance_speed, 'Speed:');
+		trans_setHtmlText(speed_irregular_label, 'Irregular');
+		trans_setHtmlText(appearance_rotation, 'Counterrotation:');
+		trans_setHtmlText(appearance_blinking, 'Blinking:');
+		trans_setHtmlText(config_size, 'Size of message:');
+		trans_setHtmlText(config_note, 'Sound button:');
+		trans_setSelectOptionText(sound_select, '', '(None)');
+		trans_setSelectOptionText(sound_select, 'Cattish', 'Cattish');
+		trans_setSelectOptionText(sound_select, 'Drill', 'Drill');
+		trans_setSelectOptionText(sound_select, 'Exciting', 'Exciting');
+		trans_setSelectOptionText(sound_select, 'Horror', 'Horror');
+		trans_setSelectOptionText(sound_select, 'Hunting', 'Hunting');
+		trans_setSelectOptionText(sound_select, 'Lonely', 'Lonely');
+		trans_setSelectOptionText(sound_select, 'Longing', 'Longing');
+		trans_setSelectOptionText(sound_select, 'Lovely', 'Lovely');
+		trans_setSelectOptionText(sound_select, 'Magic', 'Magic');
+		trans_setSelectOptionText(sound_select, 'OraSaimin', 'Ora! Saimin!');
+		trans_setHtmlText(config_switch_sound, 'Pic change sound:');
+		trans_setHtmlText(config_brightness, 'Brightness:');
+		trans_setSelectOptionText(screen_brightness, 'normal', 'Normal');
+		trans_setSelectOptionText(screen_brightness, 'brighter', 'Brighter');
+		trans_setHtmlText(version_text, 'Hyponosis KraKra Version ' + VERSION);
+	}
+	notice_text.scrollLeft = notice_text.scrollTop = 0;
 }
