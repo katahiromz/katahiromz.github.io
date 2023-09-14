@@ -10,6 +10,7 @@ sw.precache('precached', [
 	'./jquery-ui.css',
 	'./jquery-ui.min.js',
 	'./main.js',
+	'./translation.js',
 	'./manifest.json',
 	'./mic.js',
 	'./style.css',
