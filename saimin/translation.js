@@ -30,11 +30,8 @@ How you use it is up to you.
 [(How to use)]
 
 - Basically, it is an application to enjoy looking at the screen.
-- Tap/click on the screen to switch pictures.
-- The 'pic' button allows you to set the video settings.
 - Tap the 'microphone' button to use the microphone (it needs permission).
 - Tapping the '♪' button makes a sound.
-- The 'Aa' button allows you to set the message to be displayed.
 - The 'bubble' button will speak the message.
 - The 'gear' button will open Configuration.
 - When you run your finger on the screen, the screen sparks to attract their attention.
@@ -55,18 +52,11 @@ When a keyboard is connected, the following operations are available:
 - Press [-] or [K] keys to kill hypnosis.
 - Press [D] key to split the screen.
 - Press [B] key to toggle display of the buttons.
-- Press [G] key to turn on/off of Goggle Mode.
-
-[(Goggle Mode)]
-
-Goggle Mode is available with a connectable keyboard and goggles.
-Goggle Mode can be toggled on and off by pressing [G] key.
-Goggle Mode splits the screen in two and hides the control buttons.
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
+Copyright (c) 2023 Murayama Akira
 Copyright (c) 2018 Robert Eisele
-Copyright (c) 2007-2022 Akshay Nair
-Copyright 2022 OpenJS Foundation and jQuery contributors.`;
+`
 
 // {{LANGUAGE_SPECIFIC}}
 const trans_NOTICE_KO_KR = `=========================
@@ -96,8 +86,6 @@ Hypnosis KraKra
 【사용법】
 
 - 기본적으로 화면을보고 즐길 수있는 응용 프로그램입니다.
-- 화면을 탭/클릭하면 영상이 전환됩니다.
-- "pic"버튼으로 영상을 설정할 수 있습니다.
 - "마이크" 버튼으로 마이크를 사용할 수 있습니다 (권한이 필요합니다).
 - 「♪」버튼으로 소리가 울립니다.
 - "글자" 버튼으로 표시할 메시지를 설정할 수 있습니다.
@@ -121,18 +109,11 @@ Hypnosis KraKra
 - "-" 키 또는 "K" 키를 누르면 최면을 끕니다.
 - "D" 키를 누르면 화면 분할이 전환됩니다.
 - "B" 키를 누르면 버튼 표시가 전환됩니다.
-- "G" 키를 누르면 고글 모드가 전환됩니다.
-
-【고글 모드】
-
-연결 가능한 키보드와 고글이 있으면 고글 모드를 사용할 수 있습니다.
-「G」키를 누르면 고글 모드의 ON/OFF의 전환이 가능합니다.
-고글 모드는 화면을 2분할하고 조작 버튼을 숨깁니다.
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
+Copyright (c) 2023 Murayama Akira
 Copyright (c) 2018 Robert Eisele
-Copyright (c) 2007-2022 Akshay Nair
-Copyright 2022 OpenJS Foundation and jQuery contributors.`;
+`
 
 // {{LANGUAGE_SPECIFIC}}
 const trans_NOTICE_JA = `=========================
@@ -162,11 +143,8 @@ Hypnosis KraKra
 【使い方】
 
 - 基本的に画面を見て楽しむためのアプリです。
-- 画面をタップ／クリックすると映像が切り替わります。
-- 「画」ボタンで映像の設定ができます。
 - 「マイク」ボタンでマイクが使えます(権限が必要です)。
 - 「♪」ボタンで音が鳴ります。
-- 「字」ボタンで表示するメッセージを設定できます。
 - 「ふきだし」ボタンでメッセージを自動音声でしゃべります。
 - 「歯車」ボタンで全般設定ができます。
 - 画面を指でなぞると、きらめきが表示され、相手の注意を引くことができます。
@@ -187,18 +165,11 @@ Hypnosis KraKra
 - 「-」キーか「K」キーを押すと催眠を消します。
 - 「D」キーを押すと画面分割が切り替わります。
 - 「B」キーを押すとボタンの表示が切り替わります。
-- 「G」キーを押すとゴーグルモードが切り替わります。
-
-【ゴーグルモード】
-
-接続可能なキーボードとゴーグルがあれば、ゴーグルモードを利用できます。
-「G」キーを押すとゴーグルモードのON/OFFの切り替えが可能です。
-ゴーグルモードは、画面を２分割し、操作ボタンを隠します。
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
+Copyright (c) 2023 Murayama Akira
 Copyright (c) 2018 Robert Eisele
-Copyright (c) 2007-2022 Akshay Nair
-Copyright 2022 OpenJS Foundation and jQuery contributors.`;
+`
 
 // {{LANGUAGE_SPECIFIC}}
 const trans_NOTICE_ZW_CN = `=========================
@@ -228,11 +199,8 @@ Hypnosis KraKra
 【如何使用】
 
 - 基本上，它是一个享受观看屏幕的应用程序。
-- 点击/单击屏幕来切换图片。
-- “图”按钮允许您设置视频设置。
 - 点击“麦克风”按钮使用麦克风（需要许可）。
 - 点击“♪”按钮会发出声音。
-- “Aa”按钮允许您设置要显示的消息。
 - “气泡”按钮将说出该消息。
 - “齿轮”按钮将打开配置。
 - 当你的手指在屏幕上运行时，屏幕会产生火花，吸引他们的注意力。
@@ -253,18 +221,11 @@ Hypnosis KraKra
 - 按[-]或[K]键终止催眠。
 - 按[D]键分割屏幕。
 - 按[B]键切换按钮的显示。
-- 按[G]键打开/关闭护目镜模式。
-
-【护目镜模式】
-
-护目镜模式可通过可连接的键盘和护目镜使用。
-按 [G] 键可以打开和关闭护目镜模式。
-护目镜模式将屏幕一分为二并隐藏控制按钮。
 
 Copyright (c) 2022-2023 片山博文MZ
+Copyright (c) 2023 Murayama Akira
 Copyright (c) 2018 Robert Eisele
-Copyright (c) 2007-2022 Akshay Nair
-Copyright 2022 OpenJS Foundation and jQuery contributors.`;
+`
 
 // {{LANGUAGE_SPECIFIC}}
 const trans_NOTICE_TW_CN = `=========================
@@ -294,11 +255,8 @@ Hypnosis KraKra
 【用法】
 
 - 它基本上是一個欣賞屏幕的應用程序。
-- 點擊/單擊屏幕切換視頻。
-- 您可以使用“圖”按鈕設置圖像。
 - 您可以通過“麥克風”按鈕使用麥克風（需要許可）。
 - “♪”按鈕會發出聲音。
-- 您可以設置要使用“字母”按鈕顯示的消息。
 - 使用“語音氣泡”按鈕通過自動語音說出消息。
 - 用於常規設置的“齒輪”按鈕。
 - 在屏幕上滑動手指即可顯示閃爍的光芒，吸引對手的注意力。
@@ -319,18 +277,11 @@ Hypnosis KraKra
 - 按“-”或“K”關閉催眠。
 - 按“D”鍵在屏幕分割之間切換。
 - 按“B”鍵切換按鈕顯示。
-- 按“G”鍵切換護目鏡模式。
-
-【護目鏡模式】
-
-如果您有可連接的鍵盤和護目鏡，則可以使用護目鏡模式。
-按“G”鍵可打開/關閉護目鏡模式。
-護目鏡模式將屏幕分為兩部分並隱藏操作按鈕。
 
 Copyright (c) 2022-2023 片山博文MZ
+Copyright (c) 2023 Murayama Akira
 Copyright (c) 2018 Robert Eisele
-Copyright (c) 2007-2022 Akshay Nair
-Copyright 2022 OpenJS Foundation and jQuery contributors.`;
+`
 
 // {{LANGUAGE_SPECIFIC}}
 const trans_NOTICE_IT = `=========================
@@ -360,11 +311,8 @@ Come lo usi dipende da te.
 [(Come usare)]
 
 - Fondamentalmente, è un'applicazione per divertirsi guardando lo schermo.
-- Tocca / fai clic sullo schermo per cambiare le immagini.
-- Il pulsante 'pic' consente di configurare le impostazioni video.
 - Tocca il pulsante "microfono" per utilizzare il microfono (è necessaria l'autorizzazione).
 - Toccando il pulsante '♪' si emette un suono.
-- Il pulsante 'Aa' consente di impostare il messaggio da visualizzare.
 - Il pulsante "bolla" pronuncerà il messaggio.
 - Il pulsante "ingranaggio" aprirà Configurazione.
 - Quando fai scorrere il dito sullo schermo, lo schermo si illumina per attirare la loro attenzione.
@@ -385,18 +333,11 @@ Quando è collegata una tastiera, sono disponibili le seguenti operazioni:
 - Premi i tasti [-] o [K] per eliminare l'ipnosi.
 - Premere il tasto [D] per dividere lo schermo.
 - Premere il tasto [B] per alternare la visualizzazione dei pulsanti.
-- Premere il tasto [G] per attivare/disattivare la modalità Goggle.
-
-[(Modalità occhiali)]
-
-La modalità Goggle è disponibile con tastiera e occhiali collegabili.
-La modalità Goggle può essere attivata e disattivata premendo il tasto [G].
-La modalità Goggle divide lo schermo in due e nasconde i pulsanti di controllo.
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
+Copyright (c) 2023 Murayama Akira
 Copyright (c) 2018 Robert Eisele
-Copyright (c) 2007-2022 Akshay Nair
-Copyright 2022 OpenJS Foundation and jQuery contributors.`;
+`
 
 // {{LANGUAGE_SPECIFIC}}
 const trans_NOTICE_DE = `=========================
@@ -426,11 +367,8 @@ Wie Sie es nutzen, bleibt Ihnen überlassen.
 [(Wie benutzt man)]
 
 - Im Grunde handelt es sich um eine Anwendung, mit der man gerne auf den Bildschirm schaut.
-- Tippen/klicken Sie auf den Bildschirm, um die Bilder zu wechseln.
-- Mit der Schaltfläche „pic“ können Sie die Videoeinstellungen festlegen.
 - Tippen Sie auf die Schaltfläche „Mikrofon“, um das Mikrofon zu verwenden (es erfordert eine Genehmigung).
 - Durch Tippen auf die Schaltfläche „♪“ ertönt ein Ton.
-- Mit der Schaltfläche „Aa“ können Sie die anzuzeigende Meldung festlegen.
 - Mit der „Sprechblase“-Taste wird die Nachricht vorgelesen.
 - Die Schaltfläche „Zahnrad“ öffnet die Konfiguration.
 - Wenn Sie mit dem Finger über den Bildschirm fahren, erzeugt der Bildschirm Funken, um ihre Aufmerksamkeit zu erregen.
@@ -451,18 +389,11 @@ Wenn eine Tastatur angeschlossen ist, stehen folgende Vorgänge zur Verfügung:
 - Drücken Sie die Tasten [-] oder [K], um die Hypnose zu beenden.
 - Drücken Sie die Taste [D], um den Bildschirm zu teilen.
 - Drücken Sie die Taste [B], um die Anzeige der Schaltflächen umzuschalten.
-- Drücken Sie die Taste [G], um den Brillenmodus ein-/auszuschalten.
-
-[(Brillenmodus)]
-
-Der Goggle-Modus ist mit einer anschließbaren Tastatur und einer Schutzbrille verfügbar.
-Der Brillenmodus kann durch Drücken der Taste [G] ein- und ausgeschaltet werden.
-Der Goggle-Modus teilt den Bildschirm in zwei Teile und verbirgt die Steuertasten.
 
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
+Copyright (c) 2023 Murayama Akira
 Copyright (c) 2018 Robert Eisele
-Copyright (c) 2007-2022 Akshay Nair
-Copyright 2022 OpenJS Foundation and jQuery contributors.`;
+`
 
 // {{LANGUAGE_SPECIFIC}}
 function trans_getText(str_id){
@@ -495,6 +426,17 @@ function trans_getText(str_id){
 		case 'TEXT_LOGO': return 'images/logo_ja.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_ja.svg';
 		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_ja.mp3';
+		case 'TEXT_I_AGREE': return '私は同意します';
+		case 'TEXT_SIZE_SMALL': return '小さい';
+		case 'TEXT_SIZE_NORMAL': return '普通';
+		case 'TEXT_SIZE_LARGE': return '大きい';
+		case 'TEXT_SIZE_HUGE': return '巨大';
+		case 'TEXT_SPEED_ZERO': return '停止';
+		case 'TEXT_SPEED_SLOW': return '遅い';
+		case 'TEXT_SPEED_NORMAL': return '普通';
+		case 'TEXT_SPEED_FAST': return '速い';
+		case 'TEXT_SPEED_SUPER_FAST': return '超速い';
+		case 'TEXT_SPEED_IRREGULAR': return '不規則';
 		}
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
 		switch(str_id){
@@ -522,6 +464,17 @@ function trans_getText(str_id){
 		case 'TEXT_LOGO': return 'images/logo_zh-CN.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_zh-CN.svg';
 		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_zh-CN.mp3';
+		case 'TEXT_I_AGREE': return '我同意';
+		case 'TEXT_SIZE_SMALL': return '小的';
+		case 'TEXT_SIZE_NORMAL': return '普通的';
+		case 'TEXT_SIZE_LARGE': return '大的';
+		case 'TEXT_SIZE_HUGE': return '巨大的';
+		case 'TEXT_SPEED_ZERO': return '停止';
+		case 'TEXT_SPEED_SLOW': return '慢的';
+		case 'TEXT_SPEED_NORMAL': return '普通的';
+		case 'TEXT_SPEED_FAST': return '快速地';
+		case 'TEXT_SPEED_SUPER_FAST': return '超级快';
+		case 'TEXT_SPEED_IRREGULAR': return '不规律的';
 		}
 	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
 		switch(str_id){
@@ -549,6 +502,17 @@ function trans_getText(str_id){
 		case 'TEXT_LOGO': return 'images/logo_zh-TW.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_zh-TW.svg';
 		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_zh-TW.mp3';
+		case 'TEXT_I_AGREE': return '我同意';
+		case 'TEXT_SIZE_SMALL': return '小的';
+		case 'TEXT_SIZE_NORMAL': return '普通的';
+		case 'TEXT_SIZE_LARGE': return '大的';
+		case 'TEXT_SIZE_HUGE': return '巨大的';
+		case 'TEXT_SPEED_ZERO': return '停止';
+		case 'TEXT_SPEED_SLOW': return '慢的';
+		case 'TEXT_SPEED_NORMAL': return '普通的';
+		case 'TEXT_SPEED_FAST': return '快速地';
+		case 'TEXT_SPEED_SUPER_FAST': return '超快';
+		case 'TEXT_SPEED_IRREGULAR': return '不規律的';
 		}
 	}else if(lang == 'ko' || lang == 'kr' || lang == 'ko-KR'){ // Korean
 		switch(str_id){
@@ -576,6 +540,17 @@ function trans_getText(str_id){
 		case 'TEXT_LOGO': return 'images/logo_ko-KR.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_ko-KR.svg';
 		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_ko-KR.mp3';
+		case 'TEXT_I_AGREE': return '동의합니다';
+		case 'TEXT_SIZE_SMALL': return '작은';
+		case 'TEXT_SIZE_NORMAL': return '정상';
+		case 'TEXT_SIZE_LARGE': return '크기가 큰';
+		case 'TEXT_SIZE_HUGE': return '거대한';
+		case 'TEXT_SPEED_ZERO': return '정지중';
+		case 'TEXT_SPEED_SLOW': return '느린';
+		case 'TEXT_SPEED_NORMAL': return '정상';
+		case 'TEXT_SPEED_FAST': return '빠른';
+		case 'TEXT_SPEED_SUPER_FAST': return '매우 빠른';
+		case 'TEXT_SPEED_IRREGULAR': return '불규칙한';
 		}
 	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
 		switch(str_id){
@@ -585,7 +560,7 @@ function trans_getText(str_id){
 		case 'TEXT_YES': return 'SÌ';
 		case 'TEXT_NO': return 'No';
 		case 'TEXT_CHOOSE_LANGUAGE': return 'Scegli una lingua (Choose a language)';
-		case 'TEXT_ABOUT_APP': return 'Informazioni su questa app';
+		case 'TEXT_ABOUT_APP': return 'Informazioni sull\'app';
 		case 'TEXT_INIT_APP': return 'Inizializza l\'app';
 		case 'TEXT_INITTED_APP': return 'Inizializzata l\'app.';
 		case 'TEXT_CONFIGURATION': return 'Configurazione';
@@ -603,6 +578,17 @@ function trans_getText(str_id){
 		case 'TEXT_LOGO': return 'images/logo_it.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_it.svg';
 		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_it.mp3';
+		case 'TEXT_I_AGREE': return 'Sono d\'accordo';
+		case 'TEXT_SIZE_SMALL': return 'Piccola';
+		case 'TEXT_SIZE_NORMAL': return 'Normale';
+		case 'TEXT_SIZE_LARGE': return 'Grande';
+		case 'TEXT_SIZE_HUGE': return 'Enorme';
+		case 'TEXT_SPEED_ZERO': return 'Fermato';
+		case 'TEXT_SPEED_SLOW': return 'Lento';
+		case 'TEXT_SPEED_NORMAL': return 'Normale';
+		case 'TEXT_SPEED_FAST': return 'Veloce';
+		case 'TEXT_SPEED_SUPER_FAST': return 'Super Veloce';
+		case 'TEXT_SPEED_IRREGULAR': return 'Irregolare';
 		}
 	}else if(lang == 'de' || lang == 'de-DE'){ // German
 		switch(str_id){
@@ -630,6 +616,17 @@ function trans_getText(str_id){
 		case 'TEXT_LOGO': return 'images/logo_de.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_de.svg';
 		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_de.mp3';
+		case 'TEXT_I_AGREE': return 'Ich stimme zu';
+		case 'TEXT_SIZE_SMALL': return 'Klein';
+		case 'TEXT_SIZE_NORMAL': return 'Normal';
+		case 'TEXT_SIZE_LARGE': return 'Groß';
+		case 'TEXT_SIZE_HUGE': return 'Riesig';
+		case 'TEXT_SPEED_ZERO': return 'Gestoppt';
+		case 'TEXT_SPEED_SLOW': return 'Langsam';
+		case 'TEXT_SPEED_NORMAL': return 'Normal';
+		case 'TEXT_SPEED_FAST': return 'Schnell';
+		case 'TEXT_SPEED_SUPER_FAST': return 'Super Schnell';
+		case 'TEXT_SPEED_IRREGULAR': return 'Irregulär';
 		}
 	}else{ // English is default
 		switch(str_id){
@@ -657,6 +654,17 @@ function trans_getText(str_id){
 		case 'TEXT_LOGO': return 'images/logo_en.svg';
 		case 'TEXT_TAP_HERE': return 'images/please-tap-here_en.svg';
 		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_en.mp3';
+		case 'TEXT_I_AGREE': return 'I agree';
+		case 'TEXT_SIZE_SMALL': return 'Small';
+		case 'TEXT_SIZE_NORMAL': return 'Normal';
+		case 'TEXT_SIZE_LARGE': return 'Large';
+		case 'TEXT_SIZE_HUGE': return 'Huge';
+		case 'TEXT_SPEED_ZERO': return 'Stopped';
+		case 'TEXT_SPEED_SLOW': return 'Slow';
+		case 'TEXT_SPEED_NORMAL': return 'Normal';
+		case 'TEXT_SPEED_FAST': return 'Fast';
+		case 'TEXT_SPEED_SUPER_FAST': return 'Super Fast';
+		case 'TEXT_SPEED_IRREGULAR': return 'Irregular';
 		}
 	}
 }
@@ -678,6 +686,19 @@ function trans_setSelectOptionText(id, value, text){
 			break;
 		}
 	}
+}
+
+function trans_getSelectOptionText(id, value){
+	if(typeof(id) == 'string')
+		id = document.getElementById(id);
+	value = value.toString();
+	let options = id.options;
+	for(let i = 0; i < options.length; ++i){
+		if(options[i].value == value){
+			return options[i].text;
+		}
+	}
+	return "";
 }
 
 function trans_setImageSrc(id, src){
@@ -729,417 +750,454 @@ function trans_localize(lang){
 	localStorage.setItem('saiminLanguage3', lang);
 	trans_currentLanguage = lang;
 	if(lang == 'ja' || lang == 'jp'){ // Japanese
-		trans_setHtmlText(notice_text, trans_NOTICE_JA);
-		trans_setImageSrc(mic_img, 'images/mic.png');
-		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
-		trans_setImageSrc(sound_img, 'images/sound.png');
-		trans_setImageSrc(char_img, 'images/text_ja.png');
-		trans_setImageSrc(speech_img, 'images/speak.png');
-		trans_setImageSrc(gear_img, 'images/gear.png');
-		trans_setImageSrc(question_img, 'images/question.png');
-		trans_setHtmlText(config_language, '言語 (Language):');
-		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select, 'en', 'English (英語)');
-		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select2, 'en', 'English (英語)');
-		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
-		trans_setHtmlText(appearance_type, '映像の種類:');
-		trans_setSelectOptionText(type_select, '-1', '画-1: 催眠解除');
-		trans_setSelectOptionText(type_select, '0', '画0: 初期画面');
-		trans_setSelectOptionText(type_select, '1', '画1: ピンク色の渦巻き');
-		trans_setSelectOptionText(type_select, '2', '画2: 同心円状');
-		trans_setSelectOptionText(type_select, '3', '画3: 目が回る');
-		trans_setSelectOptionText(type_select, '4', '画4: 白黒の渦巻き');
-		trans_setSelectOptionText(type_select, '5', '画5: 広がるハート');
-		trans_setSelectOptionText(type_select, '6', '画6: 五円玉');
-		trans_setSelectOptionText(type_select, '7', '画7: ぼわんぼわん');
-		trans_setSelectOptionText(type_select, '8', '画8: クレージーな色');
-		trans_setSelectOptionText(type_select, '9', '画9: ミックス渦巻き');
-		trans_setHtmlText(appearance_division, '画面分割:');
-		trans_setHtmlText(appearance_speed, 'スピード:');
+		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_JA);
+		trans_setImageSrc(sai_id_img_mic, 'images/mic.png');
+		trans_setImageSrc(sai_id_img_sound, 'images/sound.png');
+		trans_setImageSrc(sai_id_img_speech, 'images/speak.png');
+		trans_setImageSrc(sai_id_img_gear, 'images/gear.png');
+		trans_setImageSrc(sai_id_img_question, 'images/question.png');
+		trans_setHtmlText(sai_id_text_language, '言語 (Language):');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (英語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(sai_id_pic_type, '映像の種類:');
+		trans_setSelectOptionText(sai_id_select_pic_type, '-1', '画-1: 催眠解除');
+		trans_setSelectOptionText(sai_id_select_pic_type, '0', '画0: ダミー画面(練習用)');
+		trans_setSelectOptionText(sai_id_select_pic_type, '1', '画1: ピンク色の渦巻き');
+		trans_setSelectOptionText(sai_id_select_pic_type, '2', '画2: 同心円状');
+		trans_setSelectOptionText(sai_id_select_pic_type, '3', '画3: 目が回る');
+		trans_setSelectOptionText(sai_id_select_pic_type, '4', '画4: 白黒の渦巻き');
+		trans_setSelectOptionText(sai_id_select_pic_type, '5', '画5: 広がるハート');
+		trans_setSelectOptionText(sai_id_select_pic_type, '6', '画6: 五円玉');
+		trans_setSelectOptionText(sai_id_select_pic_type, '7', '画7: ぼわんぼわん');
+		trans_setSelectOptionText(sai_id_select_pic_type, '8', '画8: クレージーな色');
+		trans_setSelectOptionText(sai_id_select_pic_type, '9', '画9: ミックス渦巻き');
+		trans_setHtmlText(sai_id_text_split, '画面分割:');
+		trans_setHtmlText(sai_id_text_speed, 'スピード:');
 		trans_setHtmlText(speed_irregular_label, '不規則');
-		trans_setHtmlText(appearance_rotation, '逆回転:');
-		trans_setHtmlText(appearance_blinking, '点滅:');
-		trans_setHtmlText(config_size, 'メッセージの大きさ:');
-		trans_setHtmlText(config_note, '音符ボタン:');
-		trans_setSelectOptionText(sound_select, '', '(なし)');
-		trans_setSelectOptionText(sound_select, 'Cattish', 'ネコっぽい');
-		trans_setSelectOptionText(sound_select, 'Drill', 'ドリル');
-		trans_setSelectOptionText(sound_select, 'Exciting', '興奮');
-		trans_setSelectOptionText(sound_select, 'Horror', '恐怖');
-		trans_setSelectOptionText(sound_select, 'Hunting', '狩人');
-		trans_setSelectOptionText(sound_select, 'Lonely', 'さびしさ');
-		trans_setSelectOptionText(sound_select, 'Longing', 'あこがれ');
-		trans_setSelectOptionText(sound_select, 'Lovely', '愛らしい');
-		trans_setSelectOptionText(sound_select, 'Magic', '魔術');
-		trans_setSelectOptionText(sound_select, 'OraSaimin', 'おら! 催眠!');
-		trans_setHtmlText(config_switch_sound, '切り替え音:');
-		trans_setHtmlText(config_brightness, '画面の明るさ:');
-		trans_setSelectOptionText(screen_brightness, 'normal', '普通');
-		trans_setSelectOptionText(screen_brightness, 'brighter', '明るくする');
-		trans_setHtmlText(version_text, '催眠くらくら Version ' + VERSION);
+		trans_setHtmlText(sai_id_text_rotation, '逆回転:');
+		trans_setHtmlText(sai_id_text_blinking, '点滅:');
+		trans_setHtmlText(sai_id_text_message_size, 'メッセージの大きさ:');
+		trans_setHtmlText(sai_id_text_note, '音符ボタン:');
+		trans_setSelectOptionText(sai_id_select_sound, '', '(なし)');
+		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'ネコっぽい');
+		trans_setSelectOptionText(sai_id_select_sound, 'Drill', 'ドリル');
+		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '興奮');
+		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '恐怖');
+		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '狩人');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lonely', 'さびしさ');
+		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'あこがれ');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '愛らしい');
+		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '魔術');
+		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'おら! 催眠!');
+		trans_setHtmlText(sai_id_text_switch_sound, '切り替え音:');
+		trans_setHtmlText(sai_id_text_brightness, '画面の明るさ:');
+		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '普通');
+		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '明るくする');
+		trans_setHtmlText(sai_id_page_config_header_1, '設定');
+		trans_setHtmlText(sai_id_text_label_message_text, 'メッセージ テキスト:');
+		trans_setHtmlText(sai_id_button_message, 'メッセージ...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, '催眠開始...');
+		trans_setHtmlText(sai_id_button_release_hypnosis, '催眠解除');
+		trans_setHtmlText(sai_id_text_count_down, 'カウントダウン:');
+		trans_setHtmlText(sai_id_text_label_message_speech, 'メッセージをしゃべる:');
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
-		trans_setHtmlText(notice_text, trans_NOTICE_ZW_CN);
-		trans_setImageSrc(mic_img, 'images/mic.png');
-		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
-		trans_setImageSrc(sound_img, 'images/sound.png');
-		trans_setImageSrc(char_img, 'images/text_zh-CN.png');
-		trans_setImageSrc(speech_img, 'images/speak.png');
-		trans_setImageSrc(gear_img, 'images/gear.png');
-		trans_setImageSrc(question_img, 'images/question.png');
-		trans_setHtmlText(config_language, '语言 (Language):');
-		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select, 'en', 'English (英语)');
-		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select2, 'en', 'English (英语)');
-		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
-		trans_setHtmlText(appearance_type, '视频类型：');
-		trans_setSelectOptionText(type_select, '-1', '图-1: 释放催眠');
-		trans_setSelectOptionText(type_select, '0', '图0: 初始屏幕');
-		trans_setSelectOptionText(type_select, '1', '图1: 粉红色漩涡');
-		trans_setSelectOptionText(type_select, '2', '图2: 同心圆');
-		trans_setSelectOptionText(type_select, '3', '图3: 旋转的眼');
-		trans_setSelectOptionText(type_select, '4', '图4: 黑色和白色的漩涡');
-		trans_setSelectOptionText(type_select, '5', '图5: 扩展的心');
-		trans_setSelectOptionText(type_select, '6', '图6: 5日元硬币');
-		trans_setSelectOptionText(type_select, '7', '图7: 头晕 头晕');
-		trans_setSelectOptionText(type_select, '8', '图8: 疯狂的颜色');
-		trans_setSelectOptionText(type_select, '9', '图9: 混合漩涡');
-		trans_setHtmlText(appearance_division, '分屏：');
-		trans_setHtmlText(appearance_speed, '速度：');
+		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ZW_CN);
+		trans_setImageSrc(sai_id_img_mic, 'images/mic.png');
+		trans_setImageSrc(sai_id_img_sound, 'images/sound.png');
+		trans_setImageSrc(sai_id_img_speech, 'images/speak.png');
+		trans_setImageSrc(sai_id_img_gear, 'images/gear.png');
+		trans_setImageSrc(sai_id_img_question, 'images/question.png');
+		trans_setHtmlText(sai_id_text_language, '语言 (Language):');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英语)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (英语)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(sai_id_pic_type, '视频类型：');
+		trans_setSelectOptionText(sai_id_select_pic_type, '-1', '图-1: 释放催眠');
+		trans_setSelectOptionText(sai_id_select_pic_type, '0', '图0: 虚拟屏幕（用于练习）');
+		trans_setSelectOptionText(sai_id_select_pic_type, '1', '图1: 粉红色漩涡');
+		trans_setSelectOptionText(sai_id_select_pic_type, '2', '图2: 同心圆');
+		trans_setSelectOptionText(sai_id_select_pic_type, '3', '图3: 旋转的眼');
+		trans_setSelectOptionText(sai_id_select_pic_type, '4', '图4: 黑色和白色的漩涡');
+		trans_setSelectOptionText(sai_id_select_pic_type, '5', '图5: 扩展的心');
+		trans_setSelectOptionText(sai_id_select_pic_type, '6', '图6: 5日元硬币');
+		trans_setSelectOptionText(sai_id_select_pic_type, '7', '图7: 头晕 头晕');
+		trans_setSelectOptionText(sai_id_select_pic_type, '8', '图8: 疯狂的颜色');
+		trans_setSelectOptionText(sai_id_select_pic_type, '9', '图9: 混合漩涡');
+		trans_setHtmlText(sai_id_text_split, '分屏：');
+		trans_setHtmlText(sai_id_text_speed, '速度：');
 		trans_setHtmlText(speed_irregular_label, '不规律的');
-		trans_setHtmlText(appearance_rotation, '反向旋转：');
-		trans_setHtmlText(appearance_blinking, '闪烁：');
-		trans_setHtmlText(config_size, '消息大小：');
-		trans_setHtmlText(config_note, '声音按钮：');
-		trans_setSelectOptionText(sound_select, '', '(无)');
-		trans_setSelectOptionText(sound_select, 'Cattish', '像猫一样');
-		trans_setSelectOptionText(sound_select, 'Drill', '钻头');
-		trans_setSelectOptionText(sound_select, 'Exciting', '激发');
-		trans_setSelectOptionText(sound_select, 'Horror', '害怕');
-		trans_setSelectOptionText(sound_select, 'Hunting', '猎人');
-		trans_setSelectOptionText(sound_select, 'Lonely', '孤独');
-		trans_setSelectOptionText(sound_select, 'Longing', '渴望');
-		trans_setSelectOptionText(sound_select, 'Lovely', '可爱的');
-		trans_setSelectOptionText(sound_select, 'Magic', '巫术');
-		trans_setSelectOptionText(sound_select, 'OraSaimin', '天啊！ 催眠！');
-		trans_setHtmlText(config_switch_sound, '开关声音：');
-		trans_setHtmlText(config_brightness, '屏幕亮度：');
-		trans_setSelectOptionText(screen_brightness, 'normal', '通常');
-		trans_setSelectOptionText(screen_brightness, 'brighter', '明亮');
-		trans_setHtmlText(version_text, '催眠克拉克拉 Version ' + VERSION);
+		trans_setHtmlText(sai_id_text_rotation, '反向旋转：');
+		trans_setHtmlText(sai_id_text_blinking, '闪烁：');
+		trans_setHtmlText(sai_id_text_message_size, '消息大小：');
+		trans_setHtmlText(sai_id_text_note, '声音按钮：');
+		trans_setSelectOptionText(sai_id_select_sound, '', '(无)');
+		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像猫一样');
+		trans_setSelectOptionText(sai_id_select_sound, 'Drill', '钻头');
+		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '激发');
+		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
+		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '猎人');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lonely', '孤独');
+		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '渴望');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '可爱的');
+		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '巫术');
+		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', '天啊！ 催眠！');
+		trans_setHtmlText(sai_id_text_switch_sound, '开关声音：');
+		trans_setHtmlText(sai_id_text_brightness, '屏幕亮度：');
+		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '通常');
+		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '明亮');
+		trans_setHtmlText(sai_id_page_config_header_1, '配置');
+		trans_setHtmlText(sai_id_text_label_message_text, '留言内容：');
+		trans_setHtmlText(sai_id_button_message, '信息...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, '开始催眠...');
+		trans_setHtmlText(sai_id_button_release_hypnosis, '释放催眠');
+		trans_setHtmlText(sai_id_text_count_down, '倒数：');
+		trans_setHtmlText(sai_id_text_label_message_speech, '留言演讲：');
 	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
-		trans_setHtmlText(notice_text, trans_NOTICE_TW_CN);
-		trans_setImageSrc(mic_img, 'images/mic.png');
-		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
-		trans_setImageSrc(sound_img, 'images/sound.png');
-		trans_setImageSrc(char_img, 'images/text_zh-TW.png');
-		trans_setImageSrc(speech_img, 'images/speak.png');
-		trans_setImageSrc(gear_img, 'images/gear.png');
-		trans_setImageSrc(question_img, 'images/question.png');
-		trans_setHtmlText(config_language, '語言 (Language):');
-		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select, 'en', 'English (英語)');
-		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select2, 'en', 'English (英語)');
-		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
-		trans_setHtmlText(appearance_type, '視頻類型：');
-		trans_setSelectOptionText(type_select, '-1', '圖-1: 催眠釋放');
-		trans_setSelectOptionText(type_select, '0', '圖0: 初始屏幕');
-		trans_setSelectOptionText(type_select, '1', '圖1: 粉紅色漩渦');
-		trans_setSelectOptionText(type_select, '2', '圖2: 同心圆');
-		trans_setSelectOptionText(type_select, '3', '圖3: 旋轉的眼');
-		trans_setSelectOptionText(type_select, '4', '圖4: 黑色和白色漩渦');
-		trans_setSelectOptionText(type_select, '5', '圖5: 擴展的心');
-		trans_setSelectOptionText(type_select, '6', '圖6: 5日元硬幣');
-		trans_setSelectOptionText(type_select, '7', '圖7: 頭暈 頭暈');
-		trans_setSelectOptionText(type_select, '8', '圖8: 瘋狂的顏色');
-		trans_setSelectOptionText(type_select, '9', '圖9: 混合漩渦');
-		trans_setHtmlText(appearance_division, '分屏：');
-		trans_setHtmlText(appearance_speed, '速度：');
+		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_TW_CN);
+		trans_setImageSrc(sai_id_img_mic, 'images/mic.png');
+		trans_setImageSrc(sai_id_img_sound, 'images/sound.png');
+		trans_setImageSrc(sai_id_img_speech, 'images/speak.png');
+		trans_setImageSrc(sai_id_img_gear, 'images/gear.png');
+		trans_setImageSrc(sai_id_img_question, 'images/question.png');
+		trans_setHtmlText(sai_id_text_language, '語言 (Language):');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (英語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(sai_id_pic_type, '視頻類型：');
+		trans_setSelectOptionText(sai_id_select_pic_type, '-1', '圖-1: 催眠釋放');
+		trans_setSelectOptionText(sai_id_select_pic_type, '0', '圖0: 虛擬螢幕（用於練習）');
+		trans_setSelectOptionText(sai_id_select_pic_type, '1', '圖1: 粉紅色漩渦');
+		trans_setSelectOptionText(sai_id_select_pic_type, '2', '圖2: 同心圆');
+		trans_setSelectOptionText(sai_id_select_pic_type, '3', '圖3: 旋轉的眼');
+		trans_setSelectOptionText(sai_id_select_pic_type, '4', '圖4: 黑色和白色漩渦');
+		trans_setSelectOptionText(sai_id_select_pic_type, '5', '圖5: 擴展的心');
+		trans_setSelectOptionText(sai_id_select_pic_type, '6', '圖6: 5日元硬幣');
+		trans_setSelectOptionText(sai_id_select_pic_type, '7', '圖7: 頭暈 頭暈');
+		trans_setSelectOptionText(sai_id_select_pic_type, '8', '圖8: 瘋狂的顏色');
+		trans_setSelectOptionText(sai_id_select_pic_type, '9', '圖9: 混合漩渦');
+		trans_setHtmlText(sai_id_text_split, '分屏：');
+		trans_setHtmlText(sai_id_text_speed, '速度：');
 		trans_setHtmlText(speed_irregular_label, '不規律的');
-		trans_setHtmlText(appearance_rotation, '反向旋轉：');
-		trans_setHtmlText(appearance_blinking, '閃爍：');
-		trans_setHtmlText(config_size, '消息大小：');
-		trans_setHtmlText(config_note, '聲音按鈕：');
-		trans_setSelectOptionText(sound_select, '', '(無)');
-		trans_setSelectOptionText(sound_select, 'Cattish', '像貓一樣');
-		trans_setSelectOptionText(sound_select, 'Drill', '鑽頭');
-		trans_setSelectOptionText(sound_select, 'Exciting', '激發');
-		trans_setSelectOptionText(sound_select, 'Horror', '害怕');
-		trans_setSelectOptionText(sound_select, 'Hunting', '獵人');
-		trans_setSelectOptionText(sound_select, 'Lonely', '孤獨');
-		trans_setSelectOptionText(sound_select, 'Longing', '渴望');
-		trans_setSelectOptionText(sound_select, 'Lovely', '可愛的');
-		trans_setSelectOptionText(sound_select, 'Magic', '巫術');
-		trans_setSelectOptionText(sound_select, 'OraSaimin', '天啊！ 催眠！');
-		trans_setHtmlText(config_switch_sound, '開關聲音：');
-		trans_setHtmlText(config_brightness, '屏幕亮度：');
-		trans_setSelectOptionText(screen_brightness, 'normal', '正常亮度');
-		trans_setSelectOptionText(screen_brightness, 'brighter', '提亮');
-		trans_setHtmlText(version_text, '催眠克拉克拉 Version ' + VERSION);
+		trans_setHtmlText(sai_id_text_rotation, '反向旋轉：');
+		trans_setHtmlText(sai_id_text_blinking, '閃爍：');
+		trans_setHtmlText(sai_id_text_message_size, '消息大小：');
+		trans_setHtmlText(sai_id_text_note, '聲音按鈕：');
+		trans_setSelectOptionText(sai_id_select_sound, '', '(無)');
+		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像貓一樣');
+		trans_setSelectOptionText(sai_id_select_sound, 'Drill', '鑽頭');
+		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '激發');
+		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
+		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '獵人');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lonely', '孤獨');
+		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '渴望');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '可愛的');
+		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '巫術');
+		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', '天啊！ 催眠！');
+		trans_setHtmlText(sai_id_text_switch_sound, '開關聲音：');
+		trans_setHtmlText(sai_id_text_brightness, '屏幕亮度：');
+		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '正常亮度');
+		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '提亮');
+		trans_setHtmlText(sai_id_page_config_header_1, '配置');
+		trans_setHtmlText(sai_id_text_label_message_text, '留言內容：');
+		trans_setHtmlText(sai_id_button_message, '訊息...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, '開始催眠...');
+		trans_setHtmlText(sai_id_button_release_hypnosis, '釋放催眠');
+		trans_setHtmlText(sai_id_text_count_down, '倒數：');
+		trans_setHtmlText(sai_id_text_label_message_speech, '留言演講：');
 	}else if(lang == 'kr' || lang == 'ko' || lang == 'ko-KR'){ // Korean
-		trans_setHtmlText(notice_text, trans_NOTICE_KO_KR);
-		trans_setImageSrc(mic_img, 'images/mic.png');
-		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
-		trans_setImageSrc(sound_img, 'images/sound.png');
-		trans_setImageSrc(char_img, 'images/text_ko-KR.png');
-		trans_setImageSrc(speech_img, 'images/speak.png');
-		trans_setImageSrc(gear_img, 'images/gear.png');
-		trans_setImageSrc(question_img, 'images/question.png');
-		trans_setHtmlText(config_language, '언어 (Language):');
-		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select, 'en', 'English (영어)');
-		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select2, 'en', 'English (영어)');
-		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
-		trans_setHtmlText(appearance_type, '그림 유형:');
-		trans_setSelectOptionText(type_select, '-1', 'pic-1: 최면 해제');
-		trans_setSelectOptionText(type_select, '0', 'pic0: 초기 화면');
-		trans_setSelectOptionText(type_select, '1', 'pic1: 핑크색 소용돌이');
-		trans_setSelectOptionText(type_select, '2', 'pic2: 동심원형');
-		trans_setSelectOptionText(type_select, '3', 'pic3: 회전하는 눈');
-		trans_setSelectOptionText(type_select, '4', 'pic4: 흑백 소용돌이');
-		trans_setSelectOptionText(type_select, '5', 'pic5: 퍼지는 하트들');
-		trans_setSelectOptionText(type_select, '6', 'pic6: 오엔 구슬');
-		trans_setSelectOptionText(type_select, '7', 'pic7: 보완 보완');
-		trans_setSelectOptionText(type_select, '8', 'pic8: 미친 색');
-		trans_setSelectOptionText(type_select, '9', 'pic9: 믹스 소용돌이');
-		trans_setHtmlText(appearance_division, '화면 분할:');
-		trans_setHtmlText(appearance_speed, '속도:');
+		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_KO_KR);
+		trans_setImageSrc(sai_id_img_mic, 'images/mic.png');
+		trans_setImageSrc(sai_id_img_sound, 'images/sound.png');
+		trans_setImageSrc(sai_id_img_speech, 'images/speak.png');
+		trans_setImageSrc(sai_id_img_gear, 'images/gear.png');
+		trans_setImageSrc(sai_id_img_question, 'images/question.png');
+		trans_setHtmlText(sai_id_text_language, '언어 (Language):');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (영어)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (영어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(sai_id_pic_type, '그림 유형:');
+		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: 최면 해제');
+		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: 더미 화면 (연습용)');
+		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: 핑크색 소용돌이');
+		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: 동심원형');
+		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'pic3: 회전하는 눈');
+		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'pic4: 흑백 소용돌이');
+		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'pic5: 퍼지는 하트들');
+		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'pic6: 오엔 구슬');
+		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'pic7: 보완 보완');
+		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'pic8: 미친 색');
+		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'pic9: 믹스 소용돌이');
+		trans_setHtmlText(sai_id_text_split, '화면 분할:');
+		trans_setHtmlText(sai_id_text_speed, '속도:');
 		trans_setHtmlText(speed_irregular_label, '불규칙');
-		trans_setHtmlText(appearance_rotation, '역회전:');
-		trans_setHtmlText(appearance_blinking, '깜박임:');
-		trans_setHtmlText(config_size, '메시지 크기:');
-		trans_setHtmlText(config_note, '사운드 버튼:');
-		trans_setSelectOptionText(sound_select, '', '(없음)');
-		trans_setSelectOptionText(sound_select, 'Cattish', '고양이 같은');
-		trans_setSelectOptionText(sound_select, 'Drill', '드릴');
-		trans_setSelectOptionText(sound_select, 'Exciting', '일으키다');
-		trans_setSelectOptionText(sound_select, 'Horror', '공포');
-		trans_setSelectOptionText(sound_select, 'Hunting', '사냥꾼');
-		trans_setSelectOptionText(sound_select, 'Lonely', '녹슬다');
-		trans_setSelectOptionText(sound_select, 'Longing', '동경');
-		trans_setSelectOptionText(sound_select, 'Lovely', '사랑스러운');
-		trans_setSelectOptionText(sound_select, 'Magic', '마술');
-		trans_setSelectOptionText(sound_select, 'OraSaimin', '오! 최면!');
-		trans_setHtmlText(config_switch_sound, '전환 사운드:');
-		trans_setHtmlText(config_brightness, '화면 밝기:');
-		trans_setSelectOptionText(screen_brightness, 'normal', '일반 밝기');
-		trans_setSelectOptionText(screen_brightness, 'brighter', '밝게 하다');
-		trans_setHtmlText(version_text, '최면 크라크라 Version ' + VERSION);
+		trans_setHtmlText(sai_id_text_rotation, '역회전:');
+		trans_setHtmlText(sai_id_text_blinking, '깜박임:');
+		trans_setHtmlText(sai_id_text_message_size, '메시지 크기:');
+		trans_setHtmlText(sai_id_text_note, '사운드 버튼:');
+		trans_setSelectOptionText(sai_id_select_sound, '', '(없음)');
+		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '고양이 같은');
+		trans_setSelectOptionText(sai_id_select_sound, 'Drill', '드릴');
+		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '일으키다');
+		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '공포');
+		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '사냥꾼');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lonely', '녹슬다');
+		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '동경');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '사랑스러운');
+		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '마술');
+		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', '오! 최면!');
+		trans_setHtmlText(sai_id_text_switch_sound, '전환 사운드:');
+		trans_setHtmlText(sai_id_text_brightness, '화면 밝기:');
+		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '일반 밝기');
+		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '밝게 하다');
+		trans_setHtmlText(sai_id_page_config_header_1, '구성');
+		trans_setHtmlText(sai_id_text_label_message_text, '메시지 텍스트:');
+		trans_setHtmlText(sai_id_button_message, '메시지...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, '최면 시작...');
+		trans_setHtmlText(sai_id_button_release_hypnosis, '최면 해제');
+		trans_setHtmlText(sai_id_text_count_down, '카운트다운:');
+		trans_setHtmlText(sai_id_text_label_message_speech, '메시지 연설:');
 	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
-		trans_setHtmlText(notice_text, trans_NOTICE_IT);
-		trans_setImageSrc(mic_img, 'images/mic.png');
-		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
-		trans_setImageSrc(sound_img, 'images/sound.png');
-		trans_setImageSrc(char_img, 'images/text_it.png');
-		trans_setImageSrc(speech_img, 'images/speak.png');
-		trans_setImageSrc(gear_img, 'images/gear.png');
-		trans_setImageSrc(question_img, 'images/question.png');
-		trans_setHtmlText(config_language, 'Lingua (Language):');
-		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select, 'en', 'English (Inglese)');
-		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select2, 'en', 'English (Inglese)');
-		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
-		trans_setHtmlText(appearance_type, 'Il tipo di immagine:');
-		trans_setSelectOptionText(type_select, '-1', 'pic-1: Liberare l\'ipnosi');
-		trans_setSelectOptionText(type_select, '0', 'pic0: Schermata iniziale');
-		trans_setSelectOptionText(type_select, '1', 'pic1: Spirale Rosa');
-		trans_setSelectOptionText(type_select, '2', 'pic2: Cerchi concentrici');
-		trans_setSelectOptionText(type_select, '3', 'pic3: Gli occhi');
-		trans_setSelectOptionText(type_select, '4', 'pic4: Spirale in bianco e nero');
-		trans_setSelectOptionText(type_select, '5', 'pic5: Cuori che si diffondono');
-		trans_setSelectOptionText(type_select, '6', 'pic6: Moneta da 5 Yen');
-		trans_setSelectOptionText(type_select, '7', 'pic7: Clamore Clamore');
-		trans_setSelectOptionText(type_select, '8', 'pic8: Colori pazzi');
-		trans_setSelectOptionText(type_select, '9', 'pic9: Spirali miste');
-		trans_setHtmlText(appearance_division, 'Divisione dello schermo:');
-		trans_setHtmlText(appearance_speed, 'Velocità:');
+		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_IT);
+		trans_setImageSrc(sai_id_img_mic, 'images/mic.png');
+		trans_setImageSrc(sai_id_img_sound, 'images/sound.png');
+		trans_setImageSrc(sai_id_img_speech, 'images/speak.png');
+		trans_setImageSrc(sai_id_img_gear, 'images/gear.png');
+		trans_setImageSrc(sai_id_img_question, 'images/question.png');
+		trans_setHtmlText(sai_id_text_language, 'Lingua (Language):');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (Inglese)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (Inglese)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(sai_id_pic_type, 'Il tipo di immagine:');
+		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: Liberare l\'ipnosi');
+		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: Schermata fittizia (per esercitarsi)');
+		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: Spirale Rosa');
+		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: Cerchi concentrici');
+		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'pic3: Gli occhi');
+		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'pic4: Spirale in bianco e nero');
+		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'pic5: Cuori che si diffondono');
+		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'pic6: Moneta da 5 Yen');
+		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'pic7: Clamore Clamore');
+		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'pic8: Colori pazzi');
+		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'pic9: Spirali miste');
+		trans_setHtmlText(sai_id_text_split, 'Divisione dello schermo:');
+		trans_setHtmlText(sai_id_text_speed, 'Velocità:');
 		trans_setHtmlText(speed_irregular_label, 'Irregolare');
-		trans_setHtmlText(appearance_rotation, 'Controrotazione:');
-		trans_setHtmlText(appearance_blinking, 'Lampeggiante:');
-		trans_setHtmlText(config_size, 'Dimensione del messaggio:');
-		trans_setHtmlText(config_note, 'Pulsante audio:');
-		trans_setSelectOptionText(sound_select, '', '(Nessuno)');
-		trans_setSelectOptionText(sound_select, 'Cattish', 'Simile a un gatto');
-		trans_setSelectOptionText(sound_select, 'Drill', 'Trapano');
-		trans_setSelectOptionText(sound_select, 'Exciting', 'Eccitare');
-		trans_setSelectOptionText(sound_select, 'Horror', 'Paura');
-		trans_setSelectOptionText(sound_select, 'Hunting', 'A caccia');
-		trans_setSelectOptionText(sound_select, 'Lonely', 'Solitudine');
-		trans_setSelectOptionText(sound_select, 'Longing', 'Desiderio');
-		trans_setSelectOptionText(sound_select, 'Lovely', 'Adorabile');
-		trans_setSelectOptionText(sound_select, 'Magic', 'Stregoneria');
-		trans_setSelectOptionText(sound_select, 'OraSaimin', 'Ora! Saimin!');
-		trans_setHtmlText(config_switch_sound, 'Suono cambio foto:');
-		trans_setHtmlText(config_brightness, 'Luminosità:');
-		trans_setSelectOptionText(screen_brightness, 'normal', 'Normale');
-		trans_setSelectOptionText(screen_brightness, 'brighter', 'Più luminoso');
-		trans_setHtmlText(version_text, 'Ipnosi KraKra Version ' + VERSION);
+		trans_setHtmlText(sai_id_text_rotation, 'Controrotazione:');
+		trans_setHtmlText(sai_id_text_blinking, 'Lampeggiante:');
+		trans_setHtmlText(sai_id_text_message_size, 'Dimensione del messaggio:');
+		trans_setHtmlText(sai_id_text_note, 'Pulsante audio:');
+		trans_setSelectOptionText(sai_id_select_sound, '', '(Nessuno)');
+		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Simile a un gatto');
+		trans_setSelectOptionText(sai_id_select_sound, 'Drill', 'Trapano');
+		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Eccitare');
+		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Paura');
+		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'A caccia');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lonely', 'Solitudine');
+		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Desiderio');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Adorabile');
+		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Stregoneria');
+		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
+		trans_setHtmlText(sai_id_text_switch_sound, 'Suono cambio foto:');
+		trans_setHtmlText(sai_id_text_brightness, 'Luminosità:');
+		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Normale');
+		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Più luminoso');
+		trans_setHtmlText(sai_id_page_config_header_1, 'Configurazione');
+		trans_setHtmlText(sai_id_text_label_message_text, 'Messaggio di testo:');
+		trans_setHtmlText(sai_id_button_message, 'Messaggio...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, 'Inizia l\'ipnosi...');
+		trans_setHtmlText(sai_id_button_release_hypnosis, 'Rilascia l\'ipnosi');
+		trans_setHtmlText(sai_id_text_count_down, 'Conto alla rovescia:');
+		trans_setHtmlText(sai_id_text_label_message_speech, 'Discorso del messaggio:');
 	}else if(lang == 'de' || lang == 'de-DE'){ // German
-		trans_setHtmlText(notice_text, trans_NOTICE_DE);
-		trans_setImageSrc(mic_img, 'images/mic.png');
-		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
-		trans_setImageSrc(sound_img, 'images/sound.png');
-		trans_setImageSrc(char_img, 'images/text_de.png');
-		trans_setImageSrc(speech_img, 'images/speak.png');
-		trans_setImageSrc(gear_img, 'images/gear.png');
-		trans_setImageSrc(question_img, 'images/question.png');
-		trans_setHtmlText(config_language, 'Sprache (Language):');
-		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select, 'en', 'English (Englisch)');
-		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select2, 'en', 'English (Englisch)');
-		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
-		trans_setHtmlText(appearance_type, 'Die Art des Bildes:');
-		trans_setSelectOptionText(type_select, '-1', 'pic-1: Hypnose loslassen');
-		trans_setSelectOptionText(type_select, '0', 'pic0: Einstiegsbild');
-		trans_setSelectOptionText(type_select, '1', 'pic1: Rosa Spirale');
-		trans_setSelectOptionText(type_select, '2', 'pic2: Konzentrische Kreise');
-		trans_setSelectOptionText(type_select, '3', 'pic3: Die Augen');
-		trans_setSelectOptionText(type_select, '4', 'pic4: Schwarz-Weiß-Spirale');
-		trans_setSelectOptionText(type_select, '5', 'pic5: Herzen verbreiten');
-		trans_setSelectOptionText(type_select, '6', 'pic6: 5-Yen-Münze');
-		trans_setSelectOptionText(type_select, '7', 'pic7: Lärm, Lärm');
-		trans_setSelectOptionText(type_select, '8', 'pic8: Verrückte Farben');
-		trans_setSelectOptionText(type_select, '9', 'pic9: Gemischte Spiralen');
-		trans_setHtmlText(appearance_division, 'Bildschirmaufteilung:');
-		trans_setHtmlText(appearance_speed, 'Geschwindigkeit:');
+		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_DE);
+		trans_setImageSrc(sai_id_img_mic, 'images/mic.png');
+		trans_setImageSrc(sai_id_img_sound, 'images/sound.png');
+		trans_setImageSrc(sai_id_img_speech, 'images/speak.png');
+		trans_setImageSrc(sai_id_img_gear, 'images/gear.png');
+		trans_setImageSrc(sai_id_img_question, 'images/question.png');
+		trans_setHtmlText(sai_id_text_language, 'Sprache (Language):');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (Englisch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (Englisch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(sai_id_pic_type, 'Die Art des Bildes:');
+		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: Hypnose loslassen');
+		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: Dummy-Bildschirm (zum Üben)');
+		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: Rosa Spirale');
+		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: Konzentrische Kreise');
+		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'pic3: Die Augen');
+		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'pic4: Schwarz-Weiß-Spirale');
+		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'pic5: Herzen verbreiten');
+		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'pic6: 5-Yen-Münze');
+		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'pic7: Lärm, Lärm');
+		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'pic8: Verrückte Farben');
+		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'pic9: Gemischte Spiralen');
+		trans_setHtmlText(sai_id_text_split, 'Bildschirmaufteilung:');
+		trans_setHtmlText(sai_id_text_speed, 'Geschwindigkeit:');
 		trans_setHtmlText(speed_irregular_label, 'Irregulär');
-		trans_setHtmlText(appearance_rotation, 'Gegenrotation:');
-		trans_setHtmlText(appearance_blinking, 'Blinken:');
-		trans_setHtmlText(config_size, 'Größe der Nachricht:');
-		trans_setHtmlText(config_note, 'Sound-Taste:');
-		trans_setSelectOptionText(sound_select, '', '(Kein)');
-		trans_setSelectOptionText(sound_select, 'Cattish', 'Katzenartig');
-		trans_setSelectOptionText(sound_select, 'Drill', 'Bohren');
-		trans_setSelectOptionText(sound_select, 'Exciting', 'Anregen');
-		trans_setSelectOptionText(sound_select, 'Horror', 'Furcht');
-		trans_setSelectOptionText(sound_select, 'Hunting', 'Jagd');
-		trans_setSelectOptionText(sound_select, 'Lonely', 'Einsamkeit');
-		trans_setSelectOptionText(sound_select, 'Longing', 'Sehnsucht');
-		trans_setSelectOptionText(sound_select, 'Lovely', 'Liebenswert');
-		trans_setSelectOptionText(sound_select, 'Magic', 'Hexerei');
-		trans_setSelectOptionText(sound_select, 'OraSaimin', 'Ora! Saimin!');
-		trans_setHtmlText(config_switch_sound, 'Bildwechselton:');
-		trans_setHtmlText(config_brightness, 'Helligkeit:');
-		trans_setSelectOptionText(screen_brightness, 'normal', 'Normal');
-		trans_setSelectOptionText(screen_brightness, 'brighter', 'Heller');
-		trans_setHtmlText(version_text, 'Hypnose KraKra Version ' + VERSION);
+		trans_setHtmlText(sai_id_text_rotation, 'Gegenrotation:');
+		trans_setHtmlText(sai_id_text_blinking, 'Blinken:');
+		trans_setHtmlText(sai_id_text_message_size, 'Größe der Nachricht:');
+		trans_setHtmlText(sai_id_text_note, 'Sound-Taste:');
+		trans_setSelectOptionText(sai_id_select_sound, '', '(Kein)');
+		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Katzenartig');
+		trans_setSelectOptionText(sai_id_select_sound, 'Drill', 'Bohren');
+		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Anregen');
+		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Furcht');
+		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Jagd');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lonely', 'Einsamkeit');
+		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Sehnsucht');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Liebenswert');
+		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Hexerei');
+		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
+		trans_setHtmlText(sai_id_text_switch_sound, 'Bildwechselton:');
+		trans_setHtmlText(sai_id_text_brightness, 'Helligkeit:');
+		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Normal');
+		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Heller');
+		trans_setHtmlText(sai_id_page_config_header_1, 'Aufbau');
+		trans_setHtmlText(sai_id_text_label_message_text, 'Nachrichtentext:');
+		trans_setHtmlText(sai_id_button_message, 'Nachricht...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, 'Beginnen Sie mit der Hypnose...');
+		trans_setHtmlText(sai_id_button_release_hypnosis, 'Hypnose loslassen');
+		trans_setHtmlText(sai_id_text_count_down, 'Countdown:');
+		trans_setHtmlText(sai_id_text_label_message_speech, 'Nachrichtenansprache:');
 	}else{ // English is default
-		trans_setHtmlText(notice_text, trans_NOTICE_EN);
-		trans_setImageSrc(mic_img, 'images/mic.png');
-		trans_setHtmlText(type_select_button, trans_getText('TEXT_PIC') + type_select.value);
-		trans_setImageSrc(sound_img, 'images/sound.png');
-		trans_setImageSrc(char_img, 'images/text_en.png');
-		trans_setImageSrc(speech_img, 'images/speak.png');
-		trans_setImageSrc(gear_img, 'images/gear.png');
-		trans_setImageSrc(question_img, 'images/question.png');
-		trans_setHtmlText(config_language, 'Language (言語):');
-		trans_setSelectOptionText(language_select, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select, 'en', 'English (英語)');
-		trans_setSelectOptionText(language_select, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(language_select2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(language_select2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(language_select2, 'en', 'English');
-		trans_setSelectOptionText(language_select2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(language_select2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(language_select2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(language_select2, 'ko-KR', 'Korean (한국어)');
-		trans_setHtmlText(appearance_type, 'The type of picture:');
-		trans_setSelectOptionText(type_select, '-1', 'pic-1: Release Hypnosis');
-		trans_setSelectOptionText(type_select, '0', 'pic0: Initial Screen');
-		trans_setSelectOptionText(type_select, '1', 'pic1: Pink Spiral');
-		trans_setSelectOptionText(type_select, '2', 'pic2: Concentric Circles');
-		trans_setSelectOptionText(type_select, '3', 'pic3: The Eyes');
-		trans_setSelectOptionText(type_select, '4', 'pic4: Black and White Spiral');
-		trans_setSelectOptionText(type_select, '5', 'pic5: Spreading Hearts');
-		trans_setSelectOptionText(type_select, '6', 'pic6: 5-Yen Coin');
-		trans_setSelectOptionText(type_select, '7', 'pic7: Clamor Clamor');
-		trans_setSelectOptionText(type_select, '8', 'pic8: Crazy Colors');
-		trans_setSelectOptionText(type_select, '9', 'pic9: Mixed Spirals');
-		trans_setHtmlText(appearance_division, 'Screen splitting:');
-		trans_setHtmlText(appearance_speed, 'Speed:');
+		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_EN);
+		trans_setImageSrc(sai_id_img_mic, 'images/mic.png');
+		trans_setImageSrc(sai_id_img_sound, 'images/sound.png');
+		trans_setImageSrc(sai_id_img_speech, 'images/speak.png');
+		trans_setImageSrc(sai_id_img_gear, 'images/gear.png');
+		trans_setImageSrc(sai_id_img_question, 'images/question.png');
+		trans_setHtmlText(sai_id_text_language, 'Language (言語):');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English');
+		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
+		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
+		trans_setHtmlText(sai_id_pic_type, 'The type of picture:');
+		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: Release Hypnosis');
+		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: Dummy Screen (for practice)');
+		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: Pink Spiral');
+		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: Concentric Circles');
+		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'pic3: The Eyes');
+		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'pic4: Black and White Spiral');
+		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'pic5: Spreading Hearts');
+		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'pic6: 5-Yen Coin');
+		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'pic7: Clamor Clamor');
+		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'pic8: Crazy Colors');
+		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'pic9: Mixed Spirals');
+		trans_setHtmlText(sai_id_text_split, 'Screen splitting:');
+		trans_setHtmlText(sai_id_text_speed, 'Speed:');
 		trans_setHtmlText(speed_irregular_label, 'Irregular');
-		trans_setHtmlText(appearance_rotation, 'Counterrotation:');
-		trans_setHtmlText(appearance_blinking, 'Blinking:');
-		trans_setHtmlText(config_size, 'Size of message:');
-		trans_setHtmlText(config_note, 'Sound button:');
-		trans_setSelectOptionText(sound_select, '', '(None)');
-		trans_setSelectOptionText(sound_select, 'Cattish', 'Cattish');
-		trans_setSelectOptionText(sound_select, 'Drill', 'Drill');
-		trans_setSelectOptionText(sound_select, 'Exciting', 'Exciting');
-		trans_setSelectOptionText(sound_select, 'Horror', 'Horror');
-		trans_setSelectOptionText(sound_select, 'Hunting', 'Hunting');
-		trans_setSelectOptionText(sound_select, 'Lonely', 'Lonely');
-		trans_setSelectOptionText(sound_select, 'Longing', 'Longing');
-		trans_setSelectOptionText(sound_select, 'Lovely', 'Lovely');
-		trans_setSelectOptionText(sound_select, 'Magic', 'Magic');
-		trans_setSelectOptionText(sound_select, 'OraSaimin', 'Ora! Saimin!');
-		trans_setHtmlText(config_switch_sound, 'Pic change sound:');
-		trans_setHtmlText(config_brightness, 'Brightness:');
-		trans_setSelectOptionText(screen_brightness, 'normal', 'Normal');
-		trans_setSelectOptionText(screen_brightness, 'brighter', 'Brighter');
-		trans_setHtmlText(version_text, 'Hyponosis KraKra Version ' + VERSION);
+		trans_setHtmlText(sai_id_text_rotation, 'Counterrotation:');
+		trans_setHtmlText(sai_id_text_blinking, 'Blinking:');
+		trans_setHtmlText(sai_id_text_message_size, 'Size of message:');
+		trans_setHtmlText(sai_id_text_note, 'Sound button:');
+		trans_setSelectOptionText(sai_id_select_sound, '', '(None)');
+		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Cattish');
+		trans_setSelectOptionText(sai_id_select_sound, 'Drill', 'Drill');
+		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Exciting');
+		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Horror');
+		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Hunting');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lonely', 'Lonely');
+		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Longing');
+		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Lovely');
+		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Magic');
+		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
+		trans_setHtmlText(sai_id_text_switch_sound, 'Pic change sound:');
+		trans_setHtmlText(sai_id_text_brightness, 'Brightness:');
+		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Normal');
+		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Brighter');
+		trans_setHtmlText(sai_id_page_config_header_1, 'Configuration');
+		trans_setHtmlText(sai_id_text_label_message_text, 'Message Text:');
+		trans_setHtmlText(sai_id_button_message, 'Message...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, 'Start Hypnosis...');
+		trans_setHtmlText(sai_id_button_release_hypnosis, 'Release Hypnosis');
+		trans_setHtmlText(sai_id_text_count_down, 'Count Down:');
+		trans_setHtmlText(sai_id_text_label_message_speech, 'Message Speech:');
+	}
+
+	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
+	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
+
+	// 設定画面のロゴ画像をセットする。
+	let logo_imgs = document.getElementsByClassName('sai_class_img_config_logo');
+	for (let img of logo_imgs){
+		trans_setImageSrc(img, trans_getText('TEXT_LOGO'));
 	}
 }
