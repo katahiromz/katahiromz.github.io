@@ -1,22 +1,39 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-// 【KraKra JavaScript 命名規則】
-// ☆ 関数名の頭に SAI_ を付ける。
-// ☆ 変数名の頭に sai_ を付ける。
-// ☆ 要素IDの頭に sai_id_ を付ける。
-// ☆ CSSクラスの頭に sai_class_ を付ける。
-//
-// 言語特有の記述が必要な個所は「{{LANGUAGE_SPECIFIC}}」というコメントを付けること。
-
 const sai_VERSION = '3.4.6'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
+
+// 【KraKra JavaScript 命名規則】
+//
+// - 関数名の頭に SAI_ を付ける。
+// - 変数名・定数名の頭に sai_ を付ける。
+// - 要素IDの頭に sai_id_ を付ける。
+// - CSSクラスの頭に sai_class_ を付ける。
+//
+// ※ 言語特有の記述が必要な個所は「{{LANGUAGE_SPECIFIC}}」というコメントを付けること。
 
 // マイクロホン設定変更時にAndroid側から呼び出される関数。再ロードする。
 function SAI_AndroidMicrophoneOnReload(){
 	localStorage.setItem('saiminAndroidMicrophoneOnReload', '1');
 	location.reload();
+}
+
+// システムバーの表示・非表示が切り替わるときに呼ばれる。
+function SAI_AndroidOnSystemBars(barsVisible){
+	let tool_buttons = document.getElementsByClassName('sai_tool_button');
+	if (barsVisible){
+		for (let button of tool_buttons){
+			button.classList.remove('sai_class_invisible');
+		}
+	}else{
+		if(sai_id_checkbox_fullscreen.checked){
+			for (let button of tool_buttons){
+				button.classList.add('sai_class_invisible');
+			}
+		}
+	}
 }
 
 // ドキュメントの読み込みが完了（DOMContentLoaded）されたら無名関数が呼び出される。
@@ -689,6 +706,28 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// ローカルストレージに記憶。
 		localStorage.setItem('saiminRotation', sai_rotation_type.toString());
+	}
+
+	// フルスクリーンモード。
+	function SAI_screen_set_fullscreen_mode(value){
+		switch(value){
+		case '1':
+		case 'true':
+		case true:
+			value = 1;
+			break;
+		case '0':
+		case 'false':
+		case false:
+		case null:
+			value = 0;
+			break;
+		}
+
+		sai_id_checkbox_fullscreen.checked = (value == 1);
+
+		// ローカルストレージに記憶。
+		localStorage.setItem('saiminFullscreen', value.toString());
 	}
 
 	// スクリーンのサイズをセットする。必要ならキャンバスのサイズも変更する。
@@ -1789,7 +1828,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	// 必要ならサブリミナルやぼかしなどをつけて映像を描画。
 	function SAI_draw_pic_blur(ctx, px, py, dx, dy){
 		// 一定の条件で画面点滅（サブリミナル）を表示。
-		if(!sai_stopping && sai_blinking_interval != 0 && sai_pic_type != -1){
+		if(!sai_stopping && !sai_count_down && sai_blinking_interval != 0 && sai_pic_type != -1){
 			if(SAI_mod(sai_old_time / 1000, sai_blinking_interval) < (sai_blinking_interval * 0.3)){
 				SAI_draw_subliminal(ctx, px, py, dx, dy);
 				return;
@@ -2466,6 +2505,11 @@ document.addEventListener('DOMContentLoaded', function(){
 				SAI_help_and_agreement();
 			}
 		});
+
+		// フルスクリーンモード。
+		sai_id_checkbox_fullscreen.addEventListener('click', function(e){
+			SAI_screen_set_fullscreen_mode(sai_id_checkbox_fullscreen.checked);
+		});
 	}
 
 	// キーボード操作を実装。
@@ -2572,19 +2616,33 @@ document.addEventListener('DOMContentLoaded', function(){
 	// メインのボタン群を表示または非表示にする。
 	function SAI_show_main_controls(show){
 		let main_controls = document.getElementsByClassName('sai_class_button_main_control');
+		let tool_buttons = document.getElementsByClassName('sai_tool_button');
 		if(show){
 			for(let control of main_controls){
 				control.classList.remove('sai_class_invisible');
+			}
+			for (let button of tool_buttons){
+				button.classList.remove('sai_class_invisible');
+			}
+			try{
+				android.showNaviBar(true);
+			}catch(error){
+				;
 			}
 		}else{
 			for(let control of main_controls){
 				control.classList.add('sai_class_invisible');
 			}
-		}
-		try{
-			android.showNaviBar(show);
-		}catch(error){
-			;
+			if (sai_id_checkbox_fullscreen.checked){
+				for (let button of tool_buttons){
+					button.classList.add('sai_class_invisible');
+				}
+				try{
+					android.showNaviBar(false);
+				}catch(error){
+					;
+				}
+			}
 		}
 	}
 
@@ -2610,9 +2668,13 @@ document.addEventListener('DOMContentLoaded', function(){
 		// イベントリスナー群を登録する。
 		SAI_register_event_listeners();
 
-		// ネイティブアプリでなければ画面の明るさの設定を隠す。
-		if (!SAI_is_native_app())
-			sai_id_brightness_show_or_hide.classList.add('sai_class_invisible');
+		// ネイティブアプリでなければネイティブオンリーの要素を隠す。
+		if (!SAI_is_native_app()){
+			let items = document.getElementsByClassName('sai_class_native_app_only');
+			for(let item of items){
+				item.classList.add('sai_class_invisible');
+			}
+		}
 
 		// ローカルストレージに応じて処理を行う。
 		let saiminAdultCheck3 = localStorage.getItem('saiminAdultCheck3');
@@ -2644,6 +2706,14 @@ document.addEventListener('DOMContentLoaded', function(){
 			SAI_config();
 		}
 
+		// フルスクリーンモードを復元する。
+		let saiminFullscreen = localStorage.getItem('saiminFullscreen');
+		if(saiminFullscreen == '0' || saiminFullscreen == '1'){
+			SAI_screen_set_fullscreen_mode(saiminFullscreen);
+		}else{
+			SAI_screen_set_fullscreen_mode(false);
+		}
+
 		// service worker
 		if(location.host != '' && 'serviceWorker' in navigator){
 			navigator.serviceWorker.register('./sw.js', {scope: './'})
@@ -2655,8 +2725,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// マイクロホン用の再読み込みなら、マイクを有効にする。
 		if(localStorage.getItem('saiminAndroidMicrophoneOnReload')){
-			localStorage.removeItem('saiminAndroidMicrophoneOnReload');
 			mic_connect();
+			localStorage.removeItem('saiminAndroidMicrophoneOnReload');
 			sai_id_label_mic.classList.add('sai_class_checked');
 		}
 
