@@ -14,28 +14,6 @@ let sai_FPS = 0; // 実測フレームレート。
 //
 // ※ 言語特有の記述が必要な個所は「{{LANGUAGE_SPECIFIC}}」というコメントを付けること。
 
-// マイクロホン設定変更時にAndroid側から呼び出される関数。再ロードする。
-function SAI_AndroidMicrophoneOnReload(){
-	localStorage.setItem('saiminAndroidMicrophoneOnReload', '1');
-	location.reload();
-}
-
-// システムバーの表示・非表示が切り替わるときに呼ばれる。
-function SAI_AndroidOnSystemBars(barsVisible){
-	let tool_buttons = document.getElementsByClassName('sai_tool_button');
-	if (barsVisible){
-		for (let button of tool_buttons){
-			button.classList.remove('sai_class_invisible');
-		}
-	}else{
-		if(sai_id_checkbox_fullscreen.checked){
-			for (let button of tool_buttons){
-				button.classList.add('sai_class_invisible');
-			}
-		}
-	}
-}
-
 // ドキュメントの読み込みが完了（DOMContentLoaded）されたら無名関数が呼び出される。
 document.addEventListener('DOMContentLoaded', function(){
 	// 変数を保護するため、関数内部に閉じ込める。
