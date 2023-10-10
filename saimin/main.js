@@ -32,7 +32,7 @@ function SAI_OnAndroidSystemBarsChanged(sysBarsVisible){
 // ドキュメントの読み込みが完了（DOMContentLoaded）されたら無名関数が呼び出される。
 document.addEventListener('DOMContentLoaded', function(){
 	// 変数を保護するため、関数内部に閉じ込める。
-	const sai_NUM_TYPE = 10; // 「画」の個数。
+	const sai_NUM_TYPE = 11; // 「画」の個数。
 	let sai_screen_width = 0; // スクリーンの幅（ピクセル単位）を覚えておく。
 	let sai_screen_height = 0; // スクリーンの高さ（ピクセル単位）を覚えておく。
 	let sai_old_time = (new Date()).getTime(); // 処理フレームの時刻を覚えておく。
@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	let sai_first_time = false; // 初回か？
 	let sai_request_anime = null; // アニメーションの要求。
 	let sai_count_down = null; // カウントダウンの時刻またはnull。
+	let sai_spiral_img = new Image();
 
 	// このアプリはネイティブアプリか？
 	function SAI_is_native_app(){
@@ -261,6 +262,10 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 「催眠解除成功」の画像も更新。
 		sai_all_released_img = new Image();
 		sai_all_released_img.src = trans_getText('TEXT_ALL_RELEASED_IMG');
+
+		// スパイラルの画像も更新。
+		sai_spiral_img = new Image();
+		sai_spiral_img.src = "images/spiral.svg";
 
 		// 言語<select>の値も更新。
 		sai_id_select_language_1.value = lang;
@@ -1104,46 +1109,39 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 長方形領域(px, py, dx, dy)をクリッピングする。
 		SAI_clip_rect(ctx, px, py, dx, dy);
 
-		// ショッキングピンクで長方形領域を塗りつぶす。
-		ctx.fillStyle = '#f0f';
+		ctx.fillStyle = '#000';
 		ctx.fillRect(px, py, dx, dy);
 
-		let size = (dx + dy) * 2 / 5;
+		let minxy = Math.min(dx, dy);
+		let maxxy = Math.min(dx, dy);
+		let avgxy = (minxy + maxxy) / 2;
 		let count2 = -SAI_get_tick_count();
-		if(SAI_display_is_large()){
-			qx += 40 * Math.cos(count2 * 0.15);
-			qy += 40 * Math.sin(count2 * 0.15);
-		}else{
-			qx += 20 * Math.cos(count2 * 0.15);
-			qy += 20 * Math.sin(count2 * 0.15);
-		}
 
-		let dr0 = 15;
-		let dr = dr0 / 2;
+		ctx.translate(qx, qy);
+		ctx.rotate(-count2 * 0.12);
+		ctx.translate(25 * Math.cos(count2 * 0.02), 25 * Math.sin(count2 * 0.05));
+		ctx.rotate(count2 * 0.0333);
+
 		let flag2 = -1;
-		let ci = 6;
+		let ci = 8;
 
-		ctx.strokeStyle = '#000';
+		ctx.strokeStyle = '#f0f';
 		ctx.lineCap = 'square';
 
 		for(let i = 0; i <= ci; ++i){
 			let count = 0;
-			let x, y, oldx = qx, oldy = qy, f = 0.5;
-			for(let radius = 0; radius < size; radius += f){
-				let theta = dr0 * count * 0.375;
-				let value = 0.3 * Math.sin(count2 * 0.04) + 0.7;
-
-				let radian = theta * (Math.PI / 180.0) + i * (2 * Math.PI) / ci;
-				let comp = new Complex({abs:radius, arg:flag2 * radian - count2 * (Math.PI * 0.03)});
-				x = qx + comp.re;
-				y = qy + comp.im;
-			
-				SAI_draw_line(ctx, oldx, oldy, x, y, dr * f * 0.666);
+			let x, y, oldx = 0, oldy = 0, f = 2;
+			for(let radius = 0; radius < maxxy * 1.5; radius += f){
+				let radian = radius * 0.01 + i * (2 * Math.PI) / ci;
+				let comp = new Complex({abs:radius, arg:flag2 * radian});
+				x = comp.re;
+				y = comp.im;
+				SAI_draw_line(ctx, oldx, oldy, x, y, f * 8);
 
 				oldx = x;
 				oldy = y;
 				count += 1;
-				f *= 1.02;
+				f *= 1.01;
 			}
 		}
 
@@ -1724,6 +1722,34 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore();
 	}
 
+	// 映像の描画。pic10: Analog Disc
+	function SAI_draw_pic_10(ctx, px, py, dx, dy){
+		ctx.save();
+
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let maxxy = Math.max(dx, dy);
+		let minxy = Math.min(dx, dy);
+
+		let count2 = SAI_get_tick_count();
+
+		ctx.translate(qx, qy);
+
+		if (sai_spiral_img.complete){
+			let x = -sai_spiral_img.width / 2;
+			let y = -sai_spiral_img.height / 2;
+			ctx.rotate(-count2 * 0.3);
+			let ratio = 2.5 * maxxy / (sai_spiral_img.width + sai_spiral_img.height);
+			ratio *= 1 + (count2 * 0.008) % 0.8;
+			ctx.scale(ratio, ratio);
+			ctx.globalAlpha = 0.5;
+			ctx.drawImage(sai_spiral_img, x, y);
+			ctx.globalAlpha = 1.0;
+		}
+
+		ctx.restore();
+	}
+
 	// カウントダウン映像の描画。
 	function SAI_draw_pic_count_down(ctx, px, py, dx, dy){
 		ctx.save();
@@ -1813,6 +1839,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			break;
 		case 9:
 			SAI_draw_pic_9(ctx, px, py, dx, dy);
+			break;
+		case 10:
+			SAI_draw_pic_10(ctx, px, py, dx, dy);
 			break;
 		}
 	}
