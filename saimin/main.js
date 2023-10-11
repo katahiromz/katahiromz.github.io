@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.4.7'; // KraKraバージョン番号。
+const sai_VERSION = '3.4.8'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 let sai_stopping = true; // 停止中か？
@@ -1082,7 +1082,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		if(sai_logo_img.complete){ // ロゴイメージの読み込みが完了されたか？
 			// 寸法を調整する。
-			let width = sai_logo_img.width, height = sai_logo_img.height;
+			let wid
+			th = sai_logo_img.width, height = sai_logo_img.height;
 			if (width > sai_screen_width){
 				width *= 0.75;
 				height *= 0.75;
@@ -1348,7 +1349,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
 
-	// 映像の描画。pic4: Black and White Spiral
+	// 映像の描画。pic4: Black/White Spiral
 	function SAI_draw_pic_4(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
@@ -1694,12 +1695,10 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 座標計算用のヘルパー関数。
 		const rotation = 8, width = dxy * 0.1;
 		let calc_point = function(radius, radian){
-			let x = radius * Math.cos(radian);
-			let y = radius * Math.sin(radian);
-			return [x, y];
+			return [radius * Math.cos(radian), radius * Math.sin(radian)];
 		}
 
-		// 虹色の渦巻きを描画する。
+		// 虹色の渦巻きを描画する。アルキメデスのらせんの公式に従う。
 		const colors = ['#f00', '#ff0', '#0f0', '#0ff', '#00c', '#f0f'];
 		const factor = count2 * 0.5;
 		for(let radian0 = -4.5; radian0 < rotation * 2 * Math.PI; radian0 += 0.12){
@@ -1936,8 +1935,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 	}
 
-	// 必要ならサブリミナルやぼかしなどをつけて映像を描画。
-	function SAI_draw_pic_blur(ctx, px, py, dx, dy){
+	// 必要なら映像効果をつけて映像を描画。
+	function SAI_draw_pic_with_effects(ctx, px, py, dx, dy){
 		// 一定の条件で画面点滅（サブリミナル）を表示。
 		if(!sai_stopping && !sai_count_down && sai_blinking_interval != 0 && sai_pic_type != -1){
 			if(SAI_mod(sai_old_time / 1000, sai_blinking_interval) < (sai_blinking_interval * 0.3)){
@@ -1946,9 +1945,8 @@ document.addEventListener('DOMContentLoaded', function(){
 			}
 		}
 
-		switch (sai_pic_type){
-		case 8:
-			// 特定の映像で解像度を下げて描画する。
+		if(sai_pic_type == 8){
+			// pic8の場合は描画に時間がかかるので、解像度の低い映像としてレンダリングする。
 			if(!sai_count_down){
 				let ratio = 0.5;
 				sai_id_canvas_02.width = dx * ratio;
@@ -1959,9 +1957,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			}else{
 				SAI_draw_pic(ctx, px, py, dx, dy);
 			}
-			break;
-
-		default:
+		}else{
 			// それ以外は普通に描画する。
 			SAI_draw_pic(ctx, px, py, dx, dy);
 			break;
@@ -1986,42 +1982,42 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		let splitted = false; // 画面分割したか？
 		if(sai_screen_split == 1){ // 画面分割なし。
-			SAI_draw_pic_blur(ctx, 0, 0, cx, cy);
+			SAI_draw_pic_with_effects(ctx, 0, 0, cx, cy);
 			SAI_message_set_position(sai_id_text_floating_1, 0, 0, cx, cy, sai_counter);
 		}else if(sai_screen_split == -1){ // 画面分割自動。
-			if(cx >= cy * 1.75){
-				SAI_draw_pic_blur(ctx, 0, 0, cx / 2, cy);
-				//SAI_draw_pic_blur(ctx, cx / 2, 0, cx / 2, cy);
+			if(cx >= cy * 1.75){ // 充分に横長。
+				SAI_draw_pic_with_effects(ctx, 0, 0, cx / 2, cy);
+				//SAI_draw_pic_with_effects(ctx, cx / 2, 0, cx / 2, cy); // drawImageで描画時間を節約。
 				ctx.drawImage(sai_id_canvas_01, 0, 0, cx / 2, cy, cx / 2, 0, cx / 2, cy);
 				SAI_message_set_position(sai_id_text_floating_1, 0, 0, cx / 2, cy, sai_counter);
 				SAI_message_set_position(sai_id_text_floating_2, cx / 2, 0, cx / 2, cy, sai_counter);
-				splitted = true;
-			}else if(cy >= cx * 1.75){
-				SAI_draw_pic_blur(ctx, 0, 0, cx, cy / 2);
-				//SAI_draw_pic_blur(ctx, 0, cy / 2, cx, cy / 2);
+				splitted = true; // 画面分割した。
+			}else if(cy >= cx * 1.75){ // 充分に縦長。
+				SAI_draw_pic_with_effects(ctx, 0, 0, cx, cy / 2);
+				//SAI_draw_pic_with_effects(ctx, 0, cy / 2, cx, cy / 2); // drawImageで描画時間を節約。
 				ctx.drawImage(sai_id_canvas_01, 0, 0, cx, cy / 2, 0, cy / 2, cx, cy / 2);
 				SAI_message_set_position(sai_id_text_floating_1, 0, 0, cx, cy / 2, sai_counter);
 				SAI_message_set_position(sai_id_text_floating_2, 0, cy / 2, cx, cy / 2, sai_counter);
-				splitted = true;
-			}else{
-				SAI_draw_pic_blur(ctx, 0, 0, cx, cy);
+				splitted = true; // 画面分割した。
+			}else{ // それ以外は分割しない。
+				SAI_draw_pic_with_effects(ctx, 0, 0, cx, cy);
 				SAI_message_set_position(sai_id_text_floating_1, 0, 0, cx, cy, sai_counter);
 			}
 		}else{ // 画面２分割。
-			if(cx >= cy){
-				SAI_draw_pic_blur(ctx, 0, 0, cx / 2, cy);
-				//SAI_draw_pic_blur(ctx, cx / 2, 0, cx / 2, cy);
+			if(cx >= cy){ // 横長。
+				SAI_draw_pic_with_effects(ctx, 0, 0, cx / 2, cy);
+				//SAI_draw_pic_with_effects(ctx, cx / 2, 0, cx / 2, cy); // drawImageで描画時間を節約。
 				ctx.drawImage(sai_id_canvas_01, 0, 0, cx / 2, cy, cx / 2, 0, cx / 2, cy);
 				SAI_message_set_position(sai_id_text_floating_1, 0, 0, cx / 2, cy, sai_counter);
 				SAI_message_set_position(sai_id_text_floating_2, cx / 2, 0, cx / 2, cy, sai_counter);
-			}else{
-				SAI_draw_pic_blur(ctx, 0, 0, cx, cy / 2);
-				//SAI_draw_pic_blur(ctx, 0, cy / 2, cx, cy / 2);
+			}else{ // 縦長。
+				SAI_draw_pic_with_effects(ctx, 0, 0, cx, cy / 2);
+				//SAI_draw_pic_with_effects(ctx, 0, cy / 2, cx, cy / 2); // drawImageで描画時間を節約。
 				ctx.drawImage(sai_id_canvas_01, 0, 0, cx, cy / 2, 0, cy / 2, cx, cy / 2);
 				SAI_message_set_position(sai_id_text_floating_1, 0, 0, cx, cy / 2, sai_counter);
 				SAI_message_set_position(sai_id_text_floating_2, 0, cy / 2, cx, cy / 2, sai_counter);
 			}
-			splitted = true;
+			splitted = true; // 画面分割した。
 		}
 
 		// 浮遊するテキストを処理する。
