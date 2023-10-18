@@ -51,6 +51,7 @@ sw.precache('precached', [
 	'./images/please-tap-here_zh-TW.svg',
 	'./images/question.png',
 	'./images/sound.png',
+	'./images/stop.svg',
 	'./images/speak.png',
 	'./images/spiral.svg',
 ]);
