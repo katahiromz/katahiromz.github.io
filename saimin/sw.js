@@ -50,7 +50,7 @@ sw.precache('precached', [
 	'./images/please-tap-here_ko-KR.svg',
 	'./images/please-tap-here_zh-CN.svg',
 	'./images/please-tap-here_zh-TW.svg',
-	'./images/question.png',
+	'./images/question.svg',
 	'./images/sound.png',
 	'./images/stop.svg',
 	'./images/speak.png',
