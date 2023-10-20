@@ -53,7 +53,7 @@ sw.precache('precached', [
 	'./images/question.svg',
 	'./images/sound.svg',
 	'./images/stop.svg',
-	'./images/speak.png',
+	'./images/speak.svg',
 	'./images/spiral.svg',
 ]);
 
