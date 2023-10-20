@@ -19,7 +19,7 @@ sw.precache('precached', [
 	'./images/all-released_zh-CN.svg',
 	'./images/all-released_zh-TW.svg',
 	'./images/back.svg',
-	'./images/gear.png',
+	'./images/gear.svg',
 	'./images/hypnosis-released_de.svg',
 	'./images/hypnosis-released_en.svg',
 	'./images/hypnosis-released_it.svg',
