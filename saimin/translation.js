@@ -860,7 +860,7 @@ function trans_getText(str_id){
 		case 'TEXT_NO': return 'いいえ';
 		case 'TEXT_CHOOSE_LANGUAGE': return '言語選択 (Choose a language)';
 		case 'TEXT_ABOUT_APP': return 'バージョン情報';
-		case 'TEXT_INIT_APP': return 'アプリの初期化';
+		case 'TEXT_INIT_APP': return 'このアプリを初期化しますか？';
 		case 'TEXT_INITTED_APP': return 'アプリを初期化しました。';
 		case 'TEXT_CONFIGURATION': return '全般設定';
 		case 'TEXT_APPEARANCE': return '見た目の設定';
@@ -898,7 +898,7 @@ function trans_getText(str_id){
 		case 'TEXT_NO': return '否';
 		case 'TEXT_CHOOSE_LANGUAGE': return '语言选择 (Choose a language)';
 		case 'TEXT_ABOUT_APP': return '关于这个应用程序';
-		case 'TEXT_INIT_APP': return '初始化应用程序';
+		case 'TEXT_INIT_APP': return '您想初始化这个应用程序吗？';
 		case 'TEXT_INITTED_APP': return '初始化了应用程序。';
 		case 'TEXT_CONFIGURATION': return '配置';
 		case 'TEXT_APPEARANCE': return '外貌';
@@ -936,7 +936,7 @@ function trans_getText(str_id){
 		case 'TEXT_NO': return '否';
 		case 'TEXT_CHOOSE_LANGUAGE': return '語言選擇 (Choose a language)';
 		case 'TEXT_ABOUT_APP': return '版本信息';
-		case 'TEXT_INIT_APP': return '應用程序初始化';
+		case 'TEXT_INIT_APP': return '您想初始化這個應用程式嗎？';
 		case 'TEXT_INITTED_APP': return '初始化了應用程序。';
 		case 'TEXT_CONFIGURATION': return '常規設置';
 		case 'TEXT_APPEARANCE': return '外觀設置';
@@ -974,7 +974,7 @@ function trans_getText(str_id){
 		case 'TEXT_NO': return '아니오';
 		case 'TEXT_CHOOSE_LANGUAGE': return '언어 선택 (Choose a language)';
 		case 'TEXT_ABOUT_APP': return '버전 정보';
-		case 'TEXT_INIT_APP': return '앱 초기화';
+		case 'TEXT_INIT_APP': return '이 앱을 초기화하시겠습니까?';
 		case 'TEXT_INITTED_APP': return '앱을 초기화했습니다.';
 		case 'TEXT_CONFIGURATION': return '구성';
 		case 'TEXT_APPEARANCE': return '모습';
@@ -1012,7 +1012,7 @@ function trans_getText(str_id){
 		case 'TEXT_NO': return 'No';
 		case 'TEXT_CHOOSE_LANGUAGE': return 'Scegli una lingua (Choose a language)';
 		case 'TEXT_ABOUT_APP': return 'Informazioni sull\'app';
-		case 'TEXT_INIT_APP': return 'Inizializza l\'app';
+		case 'TEXT_INIT_APP': return 'Vuoi inizializzare questa app?';
 		case 'TEXT_INITTED_APP': return 'Inizializzata l\'app.';
 		case 'TEXT_CONFIGURATION': return 'Configurazione';
 		case 'TEXT_APPEARANCE': return 'Aspetto';
@@ -1050,7 +1050,7 @@ function trans_getText(str_id){
 		case 'TEXT_NO': return 'Nein';
 		case 'TEXT_CHOOSE_LANGUAGE': return 'Wähle eine Sprache (Choose a language)';
 		case 'TEXT_ABOUT_APP': return 'Über diese App';
-		case 'TEXT_INIT_APP': return 'App initialisieren';
+		case 'TEXT_INIT_APP': return 'Möchten Sie diese App initialisieren?';
 		case 'TEXT_INITTED_APP': return 'Initialisierte die App.';
 		case 'TEXT_CONFIGURATION': return 'Aufbau';
 		case 'TEXT_APPEARANCE': return 'Aussehen';
@@ -1088,7 +1088,7 @@ function trans_getText(str_id){
 		case 'TEXT_NO': return 'No';
 		case 'TEXT_CHOOSE_LANGUAGE': return 'Choose a language (言語選択)';
 		case 'TEXT_ABOUT_APP': return 'About this app';
-		case 'TEXT_INIT_APP': return 'Initialize app';
+		case 'TEXT_INIT_APP': return 'Do you want to initialize this app?';
 		case 'TEXT_INITTED_APP': return 'Initialized the app.';
 		case 'TEXT_CONFIGURATION': return 'Configuration';
 		case 'TEXT_APPEARANCE': return 'Appearance';
@@ -1277,6 +1277,7 @@ function trans_localize(lang){
 		trans_setHtmlText(sai_id_text_label_message_speech, 'メッセージをしゃべる:');
 		trans_setHtmlText(sai_id_text_color_1st, "1番目の色:");
 		trans_setHtmlText(sai_id_text_color_2nd, "2番目の色:");
+		trans_setHtmlText(sai_id_button_init_app, "初期化");
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ZW_CN);
 		trans_setHtmlText(sai_id_text_language, '语言 (Language):');
@@ -1354,6 +1355,7 @@ function trans_localize(lang){
 		trans_setHtmlText(sai_id_text_label_message_speech, '留言演讲：');
 		trans_setHtmlText(sai_id_text_color_1st, "第一种颜色：");
 		trans_setHtmlText(sai_id_text_color_2nd, "第二种颜色：");
+		trans_setHtmlText(sai_id_button_init_app, "初始化");
 	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ZH_TW);
 		trans_setHtmlText(sai_id_text_language, '語言 (Language):');
@@ -1431,6 +1433,7 @@ function trans_localize(lang){
 		trans_setHtmlText(sai_id_text_label_message_speech, '留言演講：');
 		trans_setHtmlText(sai_id_text_color_1st, "第一種顏色：");
 		trans_setHtmlText(sai_id_text_color_2nd, "第二種顏色：");
+		trans_setHtmlText(sai_id_button_init_app, "初始化");
 	}else if(lang == 'kr' || lang == 'ko' || lang == 'ko-KR'){ // Korean
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_KO_KR);
 		trans_setHtmlText(sai_id_text_language, '언어 (Language):');
@@ -1508,6 +1511,7 @@ function trans_localize(lang){
 		trans_setHtmlText(sai_id_text_label_message_speech, '메시지 연설:');
 		trans_setHtmlText(sai_id_text_color_1st, "첫 번째 색상:");
 		trans_setHtmlText(sai_id_text_color_2nd, "두 번째 색상:");
+		trans_setHtmlText(sai_id_button_init_app, "앱 재설정");
 	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_IT);
 		trans_setHtmlText(sai_id_text_language, 'Lingua (Language):');
@@ -1585,6 +1589,7 @@ function trans_localize(lang){
 		trans_setHtmlText(sai_id_text_label_message_speech, 'Discorso del messaggio:');
 		trans_setHtmlText(sai_id_text_color_1st, "1° colore:");
 		trans_setHtmlText(sai_id_text_color_2nd, "2° colore:");
+		trans_setHtmlText(sai_id_button_init_app, "Inizializzare");
 	}else if(lang == 'de' || lang == 'de-DE'){ // German
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_DE);
 		trans_setHtmlText(sai_id_text_language, 'Sprache (Language):');
@@ -1662,6 +1667,7 @@ function trans_localize(lang){
 		trans_setHtmlText(sai_id_text_label_message_speech, 'Nachrichtenansprache:');
 		trans_setHtmlText(sai_id_text_color_1st, "1. Farbe:");
 		trans_setHtmlText(sai_id_text_color_2nd, "2. Farbe:");
+		trans_setHtmlText(sai_id_button_init_app, "Initialisieren");
 	}else{ // English is default
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_EN);
 		trans_setHtmlText(sai_id_text_language, 'Language (言語):');
@@ -1739,6 +1745,7 @@ function trans_localize(lang){
 		trans_setHtmlText(sai_id_text_label_message_speech, 'Message Speech:');
 		trans_setHtmlText(sai_id_text_color_1st, "1st color:");
 		trans_setHtmlText(sai_id_text_color_2nd, "2nd color:");
+		trans_setHtmlText(sai_id_button_init_app, "Initialize");
 	}
 
 	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
