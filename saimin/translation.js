@@ -888,6 +888,7 @@ function trans_getText(str_id){
 		case 'TEXT_SPEED_FAST': return '速い';
 		case 'TEXT_SPEED_SUPER_FAST': return '超速い';
 		case 'TEXT_SPEED_IRREGULAR': return '不規則';
+		case 'TEXT_RAINBOW': return '虹色';
 		}
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
 		switch(str_id){
@@ -926,6 +927,7 @@ function trans_getText(str_id){
 		case 'TEXT_SPEED_FAST': return '快速地';
 		case 'TEXT_SPEED_SUPER_FAST': return '超级快';
 		case 'TEXT_SPEED_IRREGULAR': return '不规律的';
+		case 'TEXT_RAINBOW': return '彩虹色';
 		}
 	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
 		switch(str_id){
@@ -964,6 +966,7 @@ function trans_getText(str_id){
 		case 'TEXT_SPEED_FAST': return '快速地';
 		case 'TEXT_SPEED_SUPER_FAST': return '超快';
 		case 'TEXT_SPEED_IRREGULAR': return '不規律的';
+		case 'TEXT_RAINBOW': return '彩虹色';
 		}
 	}else if(lang == 'ko' || lang == 'kr' || lang == 'ko-KR'){ // Korean
 		switch(str_id){
@@ -1002,6 +1005,7 @@ function trans_getText(str_id){
 		case 'TEXT_SPEED_FAST': return '빠른';
 		case 'TEXT_SPEED_SUPER_FAST': return '매우 빠른';
 		case 'TEXT_SPEED_IRREGULAR': return '불규칙한';
+		case 'TEXT_RAINBOW': return '무지개 색';
 		}
 	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
 		switch(str_id){
@@ -1040,6 +1044,7 @@ function trans_getText(str_id){
 		case 'TEXT_SPEED_FAST': return 'Veloce';
 		case 'TEXT_SPEED_SUPER_FAST': return 'Super Veloce';
 		case 'TEXT_SPEED_IRREGULAR': return 'Irregolare';
+		case 'TEXT_RAINBOW': return 'Arcobaleno';
 		}
 	}else if(lang == 'de' || lang == 'de-DE'){ // German
 		switch(str_id){
@@ -1078,6 +1083,7 @@ function trans_getText(str_id){
 		case 'TEXT_SPEED_FAST': return 'Schnell';
 		case 'TEXT_SPEED_SUPER_FAST': return 'Super Schnell';
 		case 'TEXT_SPEED_IRREGULAR': return 'Irregulär';
+		case 'TEXT_RAINBOW': return 'Regenbogen';
 		}
 	}else{ // English is default
 		switch(str_id){
@@ -1116,6 +1122,7 @@ function trans_getText(str_id){
 		case 'TEXT_SPEED_FAST': return 'Fast';
 		case 'TEXT_SPEED_SUPER_FAST': return 'Super Fast';
 		case 'TEXT_SPEED_IRREGULAR': return 'Irregular';
+		case 'TEXT_RAINBOW': return 'Rainbow';
 		}
 	}
 }
@@ -1263,6 +1270,7 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'ヘリコプター');
 		trans_setSelectOptionText(sai_id_select_sound, 'HeliPlus432Hz', 'ヘリ+432Hz');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量:');
+		trans_setHtmlText(sai_id_text_auto_play_sound, '音声の自動再生:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '音声の自動繰り返し:');
 		trans_setHtmlText(sai_id_text_switch_sound, '切り替え音:');
 		trans_setHtmlText(sai_id_text_brightness, '画面の明るさ:');
@@ -1341,6 +1349,7 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Heli', '直升机');
 		trans_setSelectOptionText(sai_id_select_sound, 'HeliPlus432Hz', '直升机+432Hz');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
+		trans_setHtmlText(sai_id_text_auto_play_sound, '自动播放音频：');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自动重复音频：');
 		trans_setHtmlText(sai_id_text_switch_sound, '切换声音');
 		trans_setHtmlText(sai_id_text_brightness, '屏幕亮度：');
@@ -1419,6 +1428,7 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Heli', '直升機');
 		trans_setSelectOptionText(sai_id_select_sound, 'HeliPlus432Hz', '直升機+432Hz');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
+		trans_setHtmlText(sai_id_text_auto_play_sound, '自動播放音訊：');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自動重複音訊：');
 		trans_setHtmlText(sai_id_text_switch_sound, '切換聲音：');
 		trans_setHtmlText(sai_id_text_brightness, '屏幕亮度：');
@@ -1497,6 +1507,7 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Heli', '헬리콥터');
 		trans_setSelectOptionText(sai_id_select_sound, 'HeliPlus432Hz', '헬리콥터+432Hz');
 		trans_setHtmlText(sai_id_text_sound_volume, '사운드 볼륨:');
+		trans_setHtmlText(sai_id_text_auto_play_sound, '오디오 자동 재생:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '음성 자동 반복:');
 		trans_setHtmlText(sai_id_text_switch_sound, '전환음:');
 		trans_setHtmlText(sai_id_text_brightness, '화면 밝기:');
@@ -1575,6 +1586,7 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Elicottero');
 		trans_setSelectOptionText(sai_id_select_sound, 'HeliPlus432Hz', 'Elicottero+432Hz');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Volume del suono:');
+		trans_setHtmlText(sai_id_text_auto_play_sound, 'Riproduzione automatica dell\'audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Ripetere l\'audio:');
 		trans_setHtmlText(sai_id_text_switch_sound, 'Suono di commutazione:');
 		trans_setHtmlText(sai_id_text_brightness, 'Luminosità:');
@@ -1653,6 +1665,7 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Hubschrauber');
 		trans_setSelectOptionText(sai_id_select_sound, 'HeliPlus432Hz', 'Hubschrauber+432Hz');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Lautstärke:');
+		trans_setHtmlText(sai_id_text_auto_play_sound, 'Audio automatisch abspielen:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Sich Wiederholender Ton:');
 		trans_setHtmlText(sai_id_text_switch_sound, 'Schaltgeräusch:');
 		trans_setHtmlText(sai_id_text_brightness, 'Helligkeit:');
@@ -1731,6 +1744,7 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Helicopter');
 		trans_setSelectOptionText(sai_id_select_sound, 'HeliPlus432Hz', 'Heli+432Hz');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Sound volume:');
+		trans_setHtmlText(sai_id_text_auto_play_sound, 'Auto-play audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Repeating audio:');
 		trans_setHtmlText(sai_id_text_switch_sound, 'Switching sound:');
 		trans_setHtmlText(sai_id_text_brightness, 'Brightness:');
@@ -1755,5 +1769,10 @@ function trans_localize(lang){
 	let logo_imgs = document.getElementsByClassName('sai_class_img_config_logo');
 	for (let img of logo_imgs){
 		trans_setImageSrc(img, trans_getText('TEXT_LOGO'));
+	}
+
+	let rainbows = document.getElementsByClassName('sai_class_rainbow');
+	for (let span of rainbows){
+		trans_setHtmlText(span, trans_getText('TEXT_RAINBOW'));
 	}
 }
