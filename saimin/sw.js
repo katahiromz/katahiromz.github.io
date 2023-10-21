@@ -18,6 +18,8 @@ sw.precache('precached', [
 	'./img/all-released_ko-KR.svg',
 	'./img/all-released_zh-CN.svg',
 	'./img/all-released_zh-TW.svg',
+	'./img/arrow_right.svg',
+	'./img/arrow_left.svg',
 	'./img/back.svg',
 	'./img/coin5yen.png',
 	'./img/gear.svg',
