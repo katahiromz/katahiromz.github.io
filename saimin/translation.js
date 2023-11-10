@@ -417,7 +417,7 @@ const trans_DEFAULT_MESSAGE_LIST_DE = [
 	"Wie wäre es mit heute Nacht?",
 ];
 
-function trans_message_list(){
+const trans_message_list = function(){
 	// {{LANGUAGE_SPECIFIC}}
 	if(trans_currentLanguage == 'ja' || trans_currentLanguage == 'ja-JP') // Japanese
 		return trans_DEFAULT_MESSAGE_LIST_JA;
@@ -435,7 +435,7 @@ function trans_message_list(){
 		return trans_DEFAULT_MESSAGE_LIST_EN;
 }
 
-function trans_message_placefolder(){
+const trans_message_placefolder = function(){
 	// {{LANGUAGE_SPECIFIC}}
 	if(trans_currentLanguage == 'ja' || trans_currentLanguage == 'ja-JP') // Japanese
 		return "メッセージを入力";
@@ -854,7 +854,7 @@ Copyright (c) 2018 Robert Eisele
 `
 
 // {{LANGUAGE_SPECIFIC}}
-function trans_getText(str_id){
+const trans_getText = function(str_id){
 	let lang = localStorage.getItem('saiminLanguage3');
 	if(!lang)
 		lang = 'en';
@@ -1134,13 +1134,13 @@ function trans_getText(str_id){
 	}
 }
 
-function trans_setHtmlText(id, text){
+const trans_setHtmlText = function(id, text){
 	if(typeof(id) == 'string')
 		id = document.getElementById(id);
 	id.textContent = text;
 }
 
-function trans_setSelectOptionText(id, value, text){
+const trans_setSelectOptionText = function(id, value, text){
 	if(typeof(id) == 'string')
 		id = document.getElementById(id);
 	value = value.toString();
@@ -1153,7 +1153,7 @@ function trans_setSelectOptionText(id, value, text){
 	}
 }
 
-function trans_getSelectOptionText(id, value){
+const trans_getSelectOptionText = function(id, value){
 	if(typeof(id) == 'string')
 		id = document.getElementById(id);
 	value = value.toString();
@@ -1166,14 +1166,14 @@ function trans_getSelectOptionText(id, value){
 	return "";
 }
 
-function trans_setImageSrc(id, src){
+const trans_setImageSrc = function(id, src){
 	if(typeof(id) == 'string')
 		id = document.getElementById(id);
 	id.src = src;
 }
 
 // {{LANGUAGE_SPECIFIC}}
-function trans_getDefaultLanguage(){
+const trans_getDefaultLanguage = function(){
 	switch (navigator.language){
 	case 'zh':
 	case 'zh-CN':
@@ -1211,7 +1211,7 @@ function trans_getDefaultLanguage(){
 }
 
 // {{LANGUAGE_SPECIFIC}}
-function trans_localize(lang){
+const trans_localize = function(lang){
 	localStorage.setItem('saiminLanguage3', lang);
 	trans_currentLanguage = lang;
 	if(lang == 'ja' || lang == 'jp'){ // Japanese
@@ -1232,7 +1232,6 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
 		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
 		trans_setHtmlText(sai_id_pic_type, '映像の種類:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '-1', '画-1: 催眠解除');
 		trans_setSelectOptionText(sai_id_select_pic_type, '0', '画0: ダミー画面（練習用）');
 		trans_setSelectOptionText(sai_id_select_pic_type, '1', '画1: 対数らせん');
 		trans_setSelectOptionText(sai_id_select_pic_type, '2', '画2: 同心円状');
@@ -1312,7 +1311,6 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
 		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
 		trans_setHtmlText(sai_id_pic_type, '视频类型：');
-		trans_setSelectOptionText(sai_id_select_pic_type, '-1', '图-1: 释放催眠');
 		trans_setSelectOptionText(sai_id_select_pic_type, '0', '图0: 虚拟屏幕（用于练习）');
 		trans_setSelectOptionText(sai_id_select_pic_type, '1', '图1: 对数螺线');
 		trans_setSelectOptionText(sai_id_select_pic_type, '2', '图2: 同心圆');
@@ -1392,7 +1390,6 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
 		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
 		trans_setHtmlText(sai_id_pic_type, '視頻類型：');
-		trans_setSelectOptionText(sai_id_select_pic_type, '-1', '圖-1: 催眠釋放');
 		trans_setSelectOptionText(sai_id_select_pic_type, '0', '圖0: 虛擬螢幕（用於練習）');
 		trans_setSelectOptionText(sai_id_select_pic_type, '1', '圖1: 對數螺線');
 		trans_setSelectOptionText(sai_id_select_pic_type, '2', '圖2: 同心圆');
@@ -1472,7 +1469,6 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
 		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
 		trans_setHtmlText(sai_id_pic_type, '그림 유형:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: 최면 해제');
 		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: 더미 화면 (연습용)');
 		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: 로그 나선');
 		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: 동심원형');
@@ -1552,7 +1548,6 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
 		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
 		trans_setHtmlText(sai_id_pic_type, 'Il tipo di immagine:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: Liberare l\'ipnosi');
 		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: Schermata fittizia (per esercitarsi)');
 		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: Spirale Logaritmica');
 		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: Cerchi concentrici');
@@ -1632,7 +1627,6 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
 		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
 		trans_setHtmlText(sai_id_pic_type, 'Die Art des Bildes:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: Hypnose loslassen');
 		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: Dummy-Bildschirm (zum Üben)');
 		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: Logarithmische Spirale');
 		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: Konzentrische Kreise');
@@ -1712,7 +1706,6 @@ function trans_localize(lang){
 		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
 		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
 		trans_setHtmlText(sai_id_pic_type, 'The type of picture:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '-1', 'pic-1: Release Hypnosis');
 		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'pic0: Dummy Screen (for practice)');
 		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'pic1: Logarithmic Spiral');
 		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'pic2: Concentric Circles');
