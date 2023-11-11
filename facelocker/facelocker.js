@@ -242,6 +242,11 @@ const facelocker_set_side = function(side){
 		facelocker_side = 'user';
 
 	facelocker_camvas.cancelAnimation();
+	if(facelocker_camvas.video){
+		facelocker_camvas.video.srcObject.getVideoTracks().forEach(function(camera){
+			camera.stop();
+		});
+	}
 	if(facelocker_camvas.streamContainer){
 		facelocker_camvas.streamContainer.parentNode.removeChild(facelocker_camvas.streamContainer);
 		facelocker_camvas.streamContainer = null;

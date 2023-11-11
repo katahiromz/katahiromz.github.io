@@ -17,6 +17,7 @@ function camvas(ctx, callback, facingMode) {
   var self = this
   this.ctx = ctx
   this.callback = callback
+  console.log(facingMode);
 
   // We can't `new Video()` yet, so we'll resort to the vintage
   // "hidden div" hack for dynamic loading.
@@ -38,17 +39,25 @@ function camvas(ctx, callback, facingMode) {
 
   // The callback happens when we are starting to stream the video.
   navigator.mediaDevices.getUserMedia({
-    video: true,
     audio: false,
-    facingMode: facingMode,
+    video: {
+      facingMode: facingMode,
+    },
   }).then(function(stream) {
-    // Yay, now our webcam input is treated as a normal video and
-    // we can start having fun
     self.video.srcObject = stream
     // Let's start drawing the canvas!
     self.update()
   }, function(err) {
-    throw err
+    navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: true,
+    }).then(function(stream) {
+      self.video.srcObject = stream
+      // Let's start drawing the canvas!
+      self.update()
+    }, function(err) {
+      throw err
+    });
   })
 
   let last = Date.now()
