@@ -1,7 +1,6 @@
 // facelocker.js by katahiromz
 // License: MIT
 let facelocker_initialized = false;
-let facelocker_video = null;
 let facelocker_canvas = null;
 let facelocker_camvas = null;
 let facelocker_dets = null;
@@ -10,6 +9,7 @@ let facelocker_target = -1;
 let facelocker_target_candidate = -1;
 let facelocker_update_memory = null;
 let facefinder_classify_region = null;
+let facelocker_side = 'user';
 
 function facelocker_rgba_to_grayscale(rgba, nrows, ncols) {
 	let gray = new Uint8Array(nrows*ncols);
@@ -169,7 +169,8 @@ const facelocker_init = function(canvas){
 	}
 
 	// Instantiate camera handling (see https://github.com/cbrandolino/camvas)
-	facelocker_camvas = new camvas(ctx, processfn, facelocker_video);
+	let side = (facelocker_side == 'user' ? 'user' : {exact: 'environment'});
+	facelocker_camvas = new camvas(ctx, processfn, side);
 
 	facelocker_initialized = true;
 }
@@ -230,4 +231,23 @@ const facelocker_on_click = function(e){
 		sai_id_button_lock_on.innerText = "Lock on";
 		break;
 	}
+}
+
+const facelocker_set_side = function(side){
+	if(side)
+		facelocker_side = side;
+	else if(facelocker_side == 'user')
+		facelocker_side = 'environment';
+	else
+		facelocker_side = 'user';
+
+	facelocker_camvas.cancelAnimation();
+	if(facelocker_camvas.streamContainer){
+		facelocker_camvas.streamContainer.parentNode.removeChild(facelocker_camvas.streamContainer);
+		facelocker_camvas.streamContainer = null;
+		facelocker_camvas.video = null;
+	}
+
+	facelocker_initialized = false;
+	facelocker_init(sai_id_canvas_1);
 }

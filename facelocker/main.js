@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', function(){
 			else
 				facelocker_resume();
 		});
+
+		sai_id_button_side.addEventListener('click', function(){
+			facelocker_set_side(null);
+		});
 	}
 	main();
 });
