@@ -1,254 +1,333 @@
 // facelocker.js by katahiromz
 // License: MIT
-let facelocker_initialized = false;
-let facelocker_canvas = null;
-let facelocker_camvas = null;
-let facelocker_dets = null;
-let facelocker_image = null;
-let facelocker_target = -1;
-let facelocker_target_candidate = -1;
-let facelocker_update_memory = null;
-let facefinder_classify_region = null;
-let facelocker_side = 'user';
 
-function facelocker_rgba_to_grayscale(rgba, nrows, ncols) {
-	let gray = new Uint8Array(nrows*ncols);
-	for(let r = 0; r < nrows; ++r) {
-		for(let c = 0; c < ncols; ++c) {
-			// gray = 0.2*red + 0.7*green + 0.1*blue
-			gray[r*ncols + c] = (2*rgba[r*4*ncols+4*c+0]+7*rgba[r*4*ncols+4*c+1]+1*rgba[r*4*ncols+4*c+2])/10;
+const facelocker = function(canvas, on_lock){
+	this.initialized = false;
+	this.canvas = null;
+	this.camvas = null;
+	this.dets = null;
+	this.imageData = null;
+	this.target = null;
+	this.target_candidate = null;
+	this.update_memory = null;
+	this.classify_region = null;
+
+	let self = this;
+
+	this.rgba_to_grayscale = function(rgba, nrows, ncols){
+		let gray = new Uint8Array(nrows * ncols);
+		for(let r = 0; r < nrows; ++r){
+			for(let c = 0; c < ncols; ++c){
+				// gray = 0.2*red + 0.7*green + 0.1*blue
+				gray[r*ncols + c] = (2 * rgba[r*4*ncols + 4*c + 0] +
+				                     7 * rgba[r*4*ncols + 4*c + 1] +
+				                     1 * rgba[r*4*ncols + 4*c + 2]) / 10;
+			}
 		}
-	}
-	return gray;
-}
+		return gray;
+	};
 
-const facelocker_draw_detect = function(ctx, det, color, type){
-	let x = det[1], y = det[0], radius = det[2] / 2;
-	ctx.beginPath();
-	ctx.rect(x - radius, y - radius, radius * 2, radius * 2);
-	ctx.lineWidth = 5;
-	ctx.strokeStyle = 'black';
-	ctx.stroke();
-	ctx.lineWidth = 3;
-	ctx.strokeStyle = color;
-	ctx.stroke();
-	if(type == "locked"){
-		ctx.font = "bold 20px san-serif";
-		ctx.fillStyle = "#f99";
-		ctx.textAlign = "center";
-		ctx.fillText("LOCKED ON", x, y - radius);
-
-		let value = (new Date().getTime() % 1000) / 1000;
-		let cx = x + radius * Math.cos(value * (2 * Math.PI));
-		let cy = y + radius * Math.sin(value * (2 * Math.PI));
+	this.draw_target = function(ctx, target, status){
+		let x = target.x, y = target.y, radius = target.radius;
 		ctx.beginPath();
-		ctx.arc(cx, cy, 10, 0, 2 * Math.PI, false);
-		ctx.fillStyle = "red";
-		ctx.fill();
-		return;
-	}
-	if(type == "lock-ready"){
-		ctx.font = "bold 20px san-serif";
-		ctx.fillStyle = "#ff0";
-		ctx.textAlign = "center";
-		ctx.fillText("LOCK ON?", x, y - radius);
-		return;
-	}
-}
+		ctx.rect(x - radius, y - radius, radius * 2, radius * 2);
+		ctx.lineWidth = 5;
+		ctx.strokeStyle = 'black';
+		ctx.stroke();
+		ctx.lineWidth = 3;
+		switch(status){
+		case 0:
+			ctx.strokeStyle = 'green';
+			ctx.stroke();
+			break;
+		case 1:
+			ctx.strokeStyle = 'cyan';
+			ctx.stroke();
+			ctx.font = "bold 20px san-serif";
+			ctx.fillStyle = "#ff0";
+			ctx.textAlign = "center";
+			ctx.fillText("LOCK ON?", x, y - radius);
+			break;
+		case 2:
+			ctx.strokeStyle = 'red';
+			ctx.stroke();
+			ctx.font = "bold 20px san-serif";
+			ctx.fillStyle = "#f99";
+			ctx.textAlign = "center";
+			ctx.fillText("LOCKED ON", x, y - radius);
 
-const facelocker_draw_detections = function(ctx, dets){
-	if(!dets)
-		return;
-	if(facelocker_target >= 0){
-		let i = facelocker_target;
-		if (i < dets.length){
-			facelocker_draw_detect(ctx, dets[i], "red", "locked");
-			return;
-		}
-	}
-	if(facelocker_target_candidate >= 0){
-		let i = facelocker_target_candidate;
-		if (i < dets.length){
-			facelocker_draw_detect(ctx, dets[i], "cyan", "lock-ready");
-			return;
-		}
-	}
-	for(let i = 0; i < dets.length; ++i) {
-		if(dets[i][3] > 50.0){
-			facelocker_draw_detect(ctx, dets[i], "lightgreen", "not ready");
-		}
-	}
-}
-
-const facelocker_detection = function(rgba, width, height){
-	if (!facefinder_classify_region)
-		return;
-
-	let image = {
-		"pixels": facelocker_rgba_to_grayscale(rgba, height, width),
-		"nrows": height,
-		"ncols": width,
-		"ldim": width
-	}
-	let params = {
-		"shiftfactor": 0.1, // move the detection window by 10% of its size
-		"minsize": 25,     // minimum size of a face
-		"maxsize": 1000,    // maximum size of a face
-		"scalefactor": 1.1  // for multiscale processing: resize the detection window by 10% when moving to the higher scale
-	}
-
-	// run the cascade over the frame and cluster the obtained detections
-	// dets is an array that contains (r, c, s, q) quadruplets
-	// (representing row, column, scale and detection score)
-	let dets = pico.run_cascade(image, facefinder_classify_region, params);
-	dets = facelocker_update_memory(dets);
-	dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
-	return dets;
-}
-
-const facelocker_init = function(canvas){
-	if(typeof canvas == 'string')
-		canvas = document.getElementById(canvas);
-	facelocker_canvas = canvas;
-
-	sai_id_button_lock_on.disabled = true;
-
-	if(facelocker_initialized)
-		return;
-
-	// Initialize pico.js face detector
-	facelocker_update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
-	let cascadeurl = 'https://raw.githubusercontent.com/nenadmarkus/pico/c2e81f9d23cc11d1a612fd21e4f9de0921a5d0d9/rnt/cascades/facefinder';
-	fetch(cascadeurl).then(function(response) {
-		response.arrayBuffer().then(function(buffer) {
-			let bytes = new Int8Array(buffer);
-			facefinder_classify_region = pico.unpack_cascade(bytes);
-			console.log('* facefinder loaded');
-		})
-	})
-
-	// Get the drawing context on the canvas and define a function to transform an RGBA image to grayscale
-	let ctx = facelocker_canvas.getContext('2d', {
-		willReadFrequently: true,
-		antialias: false,
-		alpha: false,
-	});
-
-	// This function is called each time a video frame becomes available
-	let processfn = function(video, dt) {
-		// The canvas size
-		ctx.canvas.width = window.innerWidth;
-		ctx.canvas.height = window.innerHeight;
-		let width = ctx.canvas.width, height = ctx.canvas.height;
-
-		if (facelocker_target >= 0) {
-			ctx.putImageData(facelocker_image, 0, 0);
-			facelocker_draw_detections(ctx, facelocker_dets, true);
-			return;
-		}
-
-		ctx.drawImage(video, 0, 0, width, height);
-		facelocker_image = ctx.getImageData(0, 0, width, height);
-		facelocker_dets = facelocker_detection(facelocker_image.data, width, height);
-		facelocker_draw_detections(ctx, facelocker_dets, false);
-
-		if (facelocker_target_candidate != -1 && facelocker_target_candidate >= facelocker_dets.length){
-			facelocker_target_candidate = -1;
-			facelocker_target = -1;
-		}
-
-		ctx.font = "bold 20px san-serif";
-		if (facelocker_target_candidate == -1){
+			let value = (new Date().getTime() % 1000) / 1000;
+			let cx = x + radius * Math.cos(value * (2 * Math.PI));
+			let cy = y + radius * Math.sin(value * (2 * Math.PI));
+			ctx.beginPath();
+			ctx.arc(cx, cy, 10, 0, 2 * Math.PI, false);
 			ctx.fillStyle = "red";
-			ctx.textAlign = "center";
-			ctx.fillText("Please tap on the target", width / 2, height - 20 / 2);
-			ctx.fillText("Face recognition", width / 2, + 20);
-		}else{
-			ctx.fillStyle = "#f0f";
-			ctx.textAlign = "center";
-			ctx.fillText("Ready to lock on", width / 2, height - 20 / 2);
+			ctx.fill();
+			break;
+		}
+	};
+
+	this.draw_detections = function(ctx, dets){
+		if(!dets)
+			return;
+		if(self.target){
+			self.draw_target(ctx, self.target, 2);
+			return;
+		}
+		for(let det of dets){
+			let x = det[1], y = det[0], radius = det[2] / 2;
+			if(det[3] > 50.0){
+				let target = {x: x, y: y, radius: radius};
+				self.draw_target(ctx, target, 0);
+			}
+		}
+		if(self.target_candidate){
+			self.draw_target(ctx, self.target_candidate, 1);
+		}
+	};
+
+	this.track_candidate = function(dets){
+		let candidate = self.target_candidate;
+		if(!candidate)
+			return;
+		let nearest_candidate = null;
+		let nearest_distance = 1000000000;
+		for(let det of dets){
+			let x = det[1], y = det[0], radius = det[2] / 2;
+			let dx = candidate.x - x;
+			let dy = candidate.y - y;
+			let dist = dx * dx + dy * dy;
+			if (dist < nearest_distance){
+				nearest_distance = dist;
+				nearest_candidate = {x: x, y: y, radius: radius};
+			}
+		}
+		if (nearest_candidate){
+			self.target_candidate = nearest_candidate;
 		}
 	}
 
-	// Instantiate camera handling (see https://github.com/cbrandolino/camvas)
-	facelocker_camvas = new camvas(ctx, processfn);
-	facelocker_camvas.connect(facelocker_side, function(side){
-		facelocker_side = side;
-	});
+	this.get_detections = function(rgba, width, height){
+		if (!self.classify_region || !self.update_memory)
+			return;
 
-	facelocker_initialized = true;
-}
+		let image = {
+			pixels: self.rgba_to_grayscale(rgba, height, width),
+			nrows: height,
+			ncols: width,
+			ldim: width
+		};
 
-const facelocker_stop = function(){
-	if(!facelocker_initialized)
-		return;
+		let params = {
+			shiftfactor: 0.1, // move the detection window by 10% of its size
+			minsize: 25,     // minimum size of a face
+			maxsize: 1000,    // maximum size of a face
+			scalefactor: 1.1  // for multiscale processing: resize the detection window by 10% when moving to the higher scale
+		};
 
-	facelocker_camvas.cancelAnimation();
-}
+		let dets = pico.run_cascade(image, self.classify_region, params);
+		dets = self.update_memory(dets);
+		dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
+		return dets;
+	};
 
-const facelocker_resume = function(){
-	if(!facelocker_initialized)
-		return;
+	this.stop = function(){
+		if(!self.initialized)
+			return;
 
-	facelocker_camvas.requestAnimation();
-}
+		self.camvas.cancelAnimation();
+	};
 
-const facelocker_lock_unlock = function(){
-	if(!facelocker_initialized)
-		return;
+	this.resume = function(){
+		if(!self.initialized)
+			return;
 
-	if(facelocker_target >= 0){
-		facelocker_target = -1;
-		sai_id_button_lock_on.innerText = "Lock on";
-	}else{
-		if(facelocker_target_candidate >= 0){
-			facelocker_target = facelocker_target_candidate;
-			sai_id_button_lock_on.disabled = false;
-			sai_id_button_lock_on.innerText = "Unlock";
-		}else{
-			sai_id_button_lock_on.disabled = true;
-			sai_id_button_lock_on.innerText = "Lock on";
+		self.camvas.requestAnimation();
+	};
+
+	this.lock_unlock = function(do_lock){
+		if(!self.initialized)
+			return;
+
+		if(self.target){
+			self.target = null;
+			if (self.on_lock)
+				self.on_lock(0);
+		}else if(self.target_candidate){
+			self.target = self.target_candidate;
+			self.target_candidate = null;
+			if (self.on_lock)
+				self.on_lock(2);
 		}
+	};
+
+	this.intersect_rectangle = function(rect1, rect2){
+		if(rect1.width <= 0 || rect1.height <= 0 || rect2.width <= 0 || rect2.height <= 0)
+			return false;
+		let x0 = Math.max(rect1.x, rect2.x);
+		let y0 = Math.max(rect1.y, rect2.y);
+		let x1 = Math.min(rect1.x + rect1.width, rect2.x + rect2.width);
+		let y1 = Math.min(rect1.y + rect1.height, rect2.y + rect2.height);
+		let width = x1 - x0, height = y1 - y0;
+		if(width <= 0 || height <= 0)
+			return false;
+		return {x:x0, y:y0, width:width, height:height};
 	}
-}
 
-const facelocker_on_click = function(e){
-	if(facelocker_target != -1)
-		return;
-	facelocker_target_candidate = -1;
-	sai_id_button_lock_on.disabled = true;
+	this.is_same_target = function(target1, target2){
+		let rect1 = {
+			x: target1.x - target1.radius,
+			y: target1.y - target1.radius,
+			width: 2 * target1.radius,
+			height: 2 * target1.radius
+		};
+		let rect2 = {
+			x: target2.x - target2.radius,
+			y: target2.y - target2.radius,
+			width: 2 * target2.radius,
+			height: 2 * target2.radius
+		};
+		return self.intersect_rectangle(rect1, rect2);
+	};
 
-	let pageX = e.pageX, pageY = e.pageY;
-	let dets = facelocker_dets;
-	if(!dets)
-		return;
+	this.on_click = function(e){
+		if(self.target)
+			return;
 
-	for(let i = 0; i < dets.length; ++i) {
-		let x = dets[i][1], y = dets[i][0], radius = dets[i][2];
-		let rect = {x: x - radius/2, y: y - radius/2, width: radius, height: radius};
-		if (pageX < rect.x || pageY < rect.y)
-			continue;
-		if (rect.x + rect.width < pageX || rect.y + rect.height < pageY)
-			continue;
-		facelocker_target_candidate = i;
-		sai_id_button_lock_on.disabled = false;
-		sai_id_button_lock_on.innerText = "Lock on";
-		break;
-	}
-}
+		let dets = self.dets;
+		if(!dets)
+			return;
 
-const facelocker_set_side = function(side){
-	if(side)
-		facelocker_side = side;
-	else if(facelocker_side == 'user')
-		facelocker_side = 'environment';
-	else
-		facelocker_side = 'user';
+		let found = null;
+		let nearest_distance = 100000000;
+		let pageX = e.pageX, pageY = e.pageY;
+		for(let det of dets){
+			let x = det[1], y = det[0], radius = det[2];
+			let rect = {x: x - radius/2, y: y - radius/2, width: radius, height: radius};
+			if (pageX < rect.x || pageY < rect.y)
+				continue;
+			if (rect.x + rect.width < pageX || rect.y + rect.height < pageY)
+				continue;
+			let dx = pageX - x, dy = pageY - y;
+			let dist = dx * dx + dy * dy;
+			if (dist < nearest_distance){
+				nearest_distance = dist;
+				found = {x: x, y: y, radius: radius};
+			}
+		}
 
-	if(facelocker_camvas.connecting){
-		facelocker_camvas.disconnect();
-		facelocker_camvas.connect(facelocker_side, function(side){
-			facelocker_side = side;
+		if(found){
+			if(self.target_candidate && self.is_same_target(found, self.target_candidate)){
+				self.target = self.target_candidate;
+				self.target_candidate = null;
+				if (self.on_lock)
+					self.on_lock(2);
+			}else{
+				self.target_candidate = found;
+				if (self.on_lock)
+					self.on_lock(1);
+			}
+		}else{
+			self.target_candidate = null;
+			if (self.on_lock)
+				self.on_lock(0);
+		}
+	};
+
+	this.set_side = function(side = null){
+		if(side)
+			self.side = side;
+		else if(self.side == 'user')
+			self.side = 'environment';
+		else
+			self.side = 'user';
+
+		if(self.camvas.connecting){
+			self.camvas.disconnect();
+			self.camvas.connect(self.side, function(side){
+				self.side = side;
+				localStorage.setItem('saiminCameraSide', side);
+			});
+		}
+	};
+
+	this.init = function(canvas, on_lock){
+		if(typeof canvas == 'string')
+			canvas = document.getElementById(canvas);
+		self.canvas = canvas;
+
+		self.on_lock = on_lock;
+
+		let saiminCameraSide = localStorage.getItem('saiminCameraSide');
+		if(saiminCameraSide){
+			self.side = saiminCameraSide;
+		}else{
+			self.side = 'user';
+		}
+
+		if(self.initialized)
+			return;
+
+		// Initialize pico.js face detector
+		self.update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
+		let cascadeurl = 'https://raw.githubusercontent.com/nenadmarkus/pico/c2e81f9d23cc11d1a612fd21e4f9de0921a5d0d9/rnt/cascades/facefinder';
+		fetch(cascadeurl).then(function(response){
+			response.arrayBuffer().then(function(buffer){
+				let bytes = new Int8Array(buffer);
+				self.classify_region = pico.unpack_cascade(bytes);
+				console.log('* facefinder loaded');
+			})
+		})
+
+		// Get the drawing context on the canvas and define a function to transform an RGBA image to grayscale
+		let ctx = self.canvas.getContext('2d', {
+			willReadFrequently: true,
+			antialias: false,
+			alpha: false,
 		});
+
+		// This function is called each time a video frame becomes available
+		let processfn = function(video, dt){
+			// The canvas size
+			ctx.canvas.width = window.innerWidth;
+			ctx.canvas.height = window.innerHeight;
+			let width = ctx.canvas.width, height = ctx.canvas.height;
+
+			if (self.target != null){
+				ctx.putImageData(self.imageData, 0, 0);
+				self.draw_detections(ctx, self.dets);
+				return;
+			}
+
+			ctx.drawImage(video, 0, 0, width, height);
+			self.imageData = ctx.getImageData(0, 0, width, height);
+			self.dets = self.get_detections(self.imageData.data, width, height);
+			self.track_candidate(self.dets);
+			self.draw_detections(ctx, self.dets);
+
+			ctx.font = "bold 20px san-serif";
+			if (self.target_candidate == null){
+				ctx.fillStyle = "red";
+				ctx.textAlign = "center";
+				ctx.fillText("Please tap on the target", width / 2, height - 20 / 2);
+				ctx.fillText("Face recognition", width / 2, + 20);
+			}else{
+				ctx.fillStyle = "#f0f";
+				ctx.textAlign = "center";
+				ctx.fillText("Ready to lock on", width / 2, height - 20 / 2);
+			}
+		}
+
+		// Instantiate camera handling (see https://github.com/cbrandolino/camvas)
+		self.camvas = new camvas(ctx, processfn);
+		self.camvas.connect(self.side, function(side){
+			self.side = side;
+		});
+
+		self.initialized = true;
+
+		self.on_lock(0);
 	}
-}
+
+	this.init(canvas, on_lock);
+};

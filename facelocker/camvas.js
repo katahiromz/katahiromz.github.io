@@ -1,4 +1,4 @@
-const camvas = function(ctx, callback) {
+const camvas = function(ctx, callback){
 	let self = this;
 	this.ctx = ctx;
 	this.callback = callback;

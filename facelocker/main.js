@@ -2,25 +2,40 @@
 document.addEventListener('DOMContentLoaded', function(){
 	const main = function(){
 		const argc = arguments.length, argv = arguments;
-		facelocker_init(sai_id_canvas_1);
+		let locker = new facelocker(sai_id_canvas_1, function(status){
+			switch(status){
+			case 0:
+				sai_id_button_lock_on.innerText = "Lock on";
+				sai_id_button_lock_on.disabled = true;
+				break;
+			case 1:
+				sai_id_button_lock_on.innerText = "Lock on";
+				sai_id_button_lock_on.disabled = false;
+				break;
+			case 2:
+				sai_id_button_lock_on.innerText = "Unlock";
+				sai_id_button_lock_on.disabled = false;
+				break;
+			}
+		});
 
 		sai_id_canvas_1.addEventListener('click', function(e){
-			facelocker_on_click(e);
+			locker.on_click(e);
 		});
 
 		sai_id_button_lock_on.addEventListener('click', function(e){
-			facelocker_lock_unlock();
+			locker.lock_unlock();
 		});
 
 		sai_id_button_close.addEventListener('click', function(e){
 			if(facelocker_camvas.animation)
-				facelocker_stop();
+				locker.stop();
 			else
-				facelocker_resume();
+				locker.resume();
 		});
 
 		sai_id_button_side.addEventListener('click', function(){
-			facelocker_set_side(null);
+			locker.set_side();
 		});
 	}
 	main();
