@@ -2,17 +2,18 @@
 document.addEventListener('DOMContentLoaded', function(){
 	const main = function(){
 		const argc = arguments.length, argv = arguments;
+
 		let locker = new facelocker(sai_id_canvas_1, function(status){
 			switch(status){
-			case 0:
+			case 0: // Unlocked
 				sai_id_button_lock_on.innerText = "Lock on";
 				sai_id_button_lock_on.disabled = true;
 				break;
-			case 1:
+			case 1: // Candidate
 				sai_id_button_lock_on.innerText = "Lock on";
 				sai_id_button_lock_on.disabled = false;
 				break;
-			case 2:
+			case 2: // Locked
 				sai_id_button_lock_on.innerText = "Unlock";
 				sai_id_button_lock_on.disabled = false;
 				break;

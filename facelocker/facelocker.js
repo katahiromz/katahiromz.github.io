@@ -11,6 +11,7 @@ const facelocker = function(canvas, on_lock){
 	this.target_candidate = null;
 	this.update_memory = null;
 	this.classify_region = null;
+	this.threshold = 50.0;
 
 	let self = this;
 
@@ -75,11 +76,12 @@ const facelocker = function(canvas, on_lock){
 			return;
 		}
 		for(let det of dets){
+			if(det[3] <= self.threshold)
+				continue;
+
 			let x = det[1], y = det[0], radius = det[2] / 2;
-			if(det[3] > 50.0){
-				let target = {x: x, y: y, radius: radius};
-				self.draw_target(ctx, target, 0);
-			}
+			let target = {x: x, y: y, radius: radius};
+			self.draw_target(ctx, target, 0);
 		}
 		if(self.target_candidate){
 			self.draw_target(ctx, self.target_candidate, 1);
@@ -93,6 +95,9 @@ const facelocker = function(canvas, on_lock){
 		let nearest_candidate = null;
 		let nearest_distance = 1000000000;
 		for(let det of dets){
+			if(det[3] <= self.threshold)
+				continue;
+
 			let x = det[1], y = det[0], radius = det[2] / 2;
 			let dx = candidate.x - x;
 			let dy = candidate.y - y;
@@ -199,9 +204,12 @@ const facelocker = function(canvas, on_lock){
 			return;
 
 		let found = null;
-		let nearest_distance = 100000000;
+		let nearest_distance = 1000000000;
 		let pageX = e.pageX, pageY = e.pageY;
 		for(let det of dets){
+			if(det[3] <= self.threshold)
+				continue;
+
 			let x = det[1], y = det[0], radius = det[2];
 			let rect = {x: x - radius/2, y: y - radius/2, width: radius, height: radius};
 			if (pageX < rect.x || pageY < rect.y)
