@@ -13,10 +13,12 @@ let facelocker_side = 'user';
 
 function facelocker_rgba_to_grayscale(rgba, nrows, ncols) {
 	let gray = new Uint8Array(nrows*ncols);
-	for(let r = 0; r < nrows; ++r)
-		for(let c = 0; c < ncols; ++c)
+	for(let r = 0; r < nrows; ++r) {
+		for(let c = 0; c < ncols; ++c) {
 			// gray = 0.2*red + 0.7*green + 0.1*blue
 			gray[r*ncols + c] = (2*rgba[r*4*ncols+4*c+0]+7*rgba[r*4*ncols+4*c+1]+1*rgba[r*4*ncols+4*c+2])/10;
+		}
+	}
 	return gray;
 }
 
@@ -169,8 +171,10 @@ const facelocker_init = function(canvas){
 	}
 
 	// Instantiate camera handling (see https://github.com/cbrandolino/camvas)
-	let side = (facelocker_side == 'user' ? 'user' : {exact: 'environment'});
-	facelocker_camvas = new camvas(ctx, processfn, side);
+	facelocker_camvas = new camvas(ctx, processfn);
+	facelocker_camvas.connect(facelocker_side, function(side){
+		facelocker_side = side;
+	});
 
 	facelocker_initialized = true;
 }
@@ -241,18 +245,10 @@ const facelocker_set_side = function(side){
 	else
 		facelocker_side = 'user';
 
-	facelocker_camvas.cancelAnimation();
-	if(facelocker_camvas.video){
-		facelocker_camvas.video.srcObject.getVideoTracks().forEach(function(camera){
-			camera.stop();
+	if(facelocker_camvas.connecting){
+		facelocker_camvas.disconnect();
+		facelocker_camvas.connect(facelocker_side, function(side){
+			facelocker_side = side;
 		});
 	}
-	if(facelocker_camvas.streamContainer){
-		facelocker_camvas.streamContainer.parentNode.removeChild(facelocker_camvas.streamContainer);
-		facelocker_camvas.streamContainer = null;
-		facelocker_camvas.video = null;
-	}
-
-	facelocker_initialized = false;
-	facelocker_init(sai_id_canvas_1);
 }

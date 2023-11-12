@@ -1,93 +1,126 @@
-/*
-	This code was taken from https://github.com/cbrandolino/camvas and modified to suit our needs
-*/
-/*
-Copyright (c) 2012 Claudio Brandolino
+const camvas = function(ctx, callback) {
+	let self = this;
+	this.ctx = ctx;
+	this.callback = callback;
+	this.animation = null;
+	this.connecting = false;
+	this.forbidden_side = null;
+	this.allowed_side = null;
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+	let last = Date.now();
+	this.loop = function() {
+		if (!self.animation)
+			return;
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+		self.callback(self.video, Date.now() - last);
+		last = Date.now();
+		self.animation = requestAnimationFrame(self.loop);
+	};
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
-// The function takes a canvas context and a `drawFunc` function.
-// `drawFunc` receives two parameters, the video and the time since
-// the last time it was called.
-function camvas(ctx, callback, facingMode) {
-  var self = this
-  this.ctx = ctx
-  this.callback = callback
-  console.log(facingMode);
+	this.cancelAnimation = function(){
+		if (self.animation){
+			cancelAnimationFrame(self.animation);
+			self.animation = null;
+		}
+	};
+	this.requestAnimation = function(){
+		if (self.animation == null){
+			self.animation = requestAnimationFrame(self.loop)
+		}
+	};
 
-  // We can't `new Video()` yet, so we'll resort to the vintage
-  // "hidden div" hack for dynamic loading.
-  this.streamContainer = document.createElement('div')
-  this.video = document.createElement('video')
+	this.connect = function(side = null, callback = null){
+		if(side && side == self.forbidden_side)
+			side = self.allowed_side;
 
-  // If we don't do this, the stream will not be played.
-  // By the way, the play and pause controls work as usual 
-  // for streamed videos.
-  this.video.setAttribute('autoplay', '1')
-  this.video.setAttribute('playsinline', '1') // important for iPhones
+		let facingMode = null;
+		if(side == 'user')
+			facingMode = 'user';
+		else if(side == 'environment')
+			facingMode = {exact: 'environment'};
 
-  // The video should fill out all of the canvas
-  this.video.setAttribute('width', 1)
-  this.video.setAttribute('height', 1)
+		// We can't `new Video()` yet, so we'll resort to the vintage
+		// "hidden div" hack for dynamic loading.
+		self.streamContainer = document.createElement('div');
+		self.video = document.createElement('video');
 
-  this.streamContainer.appendChild(this.video)
-  document.body.appendChild(this.streamContainer)
+		self.video.setAttribute('autoplay', '1');
+		self.video.setAttribute('playsinline', '1'); // important for iPhones
 
-  // The callback happens when we are starting to stream the video.
-  navigator.mediaDevices.getUserMedia({
-    audio: false,
-    video: {
-      facingMode: facingMode,
-    },
-  }).then(function(stream) {
-    self.video.srcObject = stream
-    // Let's start drawing the canvas!
-    self.update()
-  }, function(err) {
-    navigator.mediaDevices.getUserMedia({
-      audio: false,
-      video: true,
-    }).then(function(stream) {
-      self.video.srcObject = stream
-      // Let's start drawing the canvas!
-      self.update()
-    }, function(err) {
-      throw err
-    });
-  })
+		// The video should fill out all of the canvas
+		self.video.setAttribute('width', 1);
+		self.video.setAttribute('height', 1);
 
-  let last = Date.now()
-  this.loop = function() {
-    if (!self.animation)
-      return;
-    // For some effects, you might want to know how much time is passed
-    // since the last frame; that's why we pass along a Delta time `dt`
-    // variable (expressed in milliseconds)
-    var dt = Date.now() - last
-    self.callback(self.video, dt)
-    last = Date.now()
-    self.animation = requestAnimationFrame(self.loop)
-  }
-  this.animation = null;
-  this.cancelAnimation = function(){
-    if (self.animation){
-      cancelAnimationFrame(self.animation);
-      self.animation = null;
-    }
-  }
-  this.requestAnimation = function(){
-    if (self.animation == null){
-      self.update();
-    }
-  }
+		self.streamContainer.appendChild(self.video);
+		document.body.appendChild(self.streamContainer);
 
-  // As soon as we can draw a new frame on the canvas, we call the `draw` function 
-  // we passed as a parameter.
-  this.update = function() {
-    self.animation = requestAnimationFrame(self.loop)
-  }
-}
+		if(facingMode){
+			navigator.mediaDevices.getUserMedia({
+				audio: false,
+				video: {
+					facingMode: facingMode,
+				},
+			}).then(function(stream) {
+				self.video.srcObject = stream;
+				self.connecting = true;
+				if(callback){
+					callback(side);
+				}
+				self.requestAnimation();
+			}, function(err) {
+				self.forbidden_side = side;
+				if(side == 'user')
+					self.allowed_side = side = 'environment';
+				else
+					self.allowed_side = side = 'user';
+				// Retry with looser contraint
+				navigator.mediaDevices.getUserMedia({
+					audio: false,
+					video: true,
+				}).then(function(stream) {
+					self.video.srcObject = stream;
+					self.connecting = true;
+					if(callback){
+						callback(side);
+					}
+					self.requestAnimation();
+				}, function(err) {
+					throw err;
+				});
+			})
+		}else{
+			navigator.mediaDevices.getUserMedia({
+				audio: false,
+				video: true,
+			}).then(function(stream) {
+				self.video.srcObject = stream;
+				self.connecting = true;
+				if(callback){
+					callback(side);
+				}
+				self.requestAnimation();
+			}, function(err) {
+				throw err;
+			});
+		}
+	};
+
+	this.disconnect = function(){
+		self.connecting = false;
+		if(self.video){
+			self.video.srcObject.getVideoTracks().forEach(function(camera){
+				camera.stop();
+			});
+			self.video = null;
+		}
+		if(self.streamContainer && self.streamContainer.parentNode){
+			self.streamContainer.parentNode.removeChild(self.streamContainer);
+			self.streamContainer = null;
+		}
+	};
+
+	this.destroy = function() {
+		self.cancelAnimation();
+		self.disconnect();
+	};
+};
