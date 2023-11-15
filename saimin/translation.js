@@ -459,9 +459,14 @@ const trans_NOTICE_EN = `=========================
 Hypnosis KraKra
 =========================
 
-This software is an application to enjoy hypnotic moving pictures.
-It generates hypnosis video in real time without using any video files.
-How you use it is up to you.
+"Hypnosis KraKra" is a full-fledged joke app equipped with 16 types of videos, 20 types of audio, microphone input, and face recognition.
+We provide real entertainment where you can enjoy hypnotic images and sounds.
+
+- It displays captivating images to fill the entire screen. There are no annoying ads.
+- You can lock on to the target with face recognition.
+- It delivers your voice to the target with microphone input.
+- Let's shake up your target's emotions by playing audio.
+- It displays the message you want to convey on the screen, and the app itself will speak.
 
 * Source: https://github.com/katahiromz/KraKra_ja_jp
 * Some OtoLogic audio material is used.
@@ -488,25 +493,10 @@ How you use it is up to you.
 - The 'gear' button will open Configuration.
 - When you run your finger on the screen, the screen sparks to attract their attention.
 
-[(Keyboard Operation)]
-
-When a keyboard is connected, the following operations are available:
-
-- Press [0] to [9] keys to switch pictures.
-- Press [C] key to open the configuration.
-- Press [H] key to open the version information.
-- Press [P] key to play sound.
-- Press [M] key to turn on/off the microphone (it needs permission).
-- Press [T] key to open the message settings.
-- Press [S] key to speak the current message automatically.
-- Press [X] key to pause.
-- Press [-] or [K] keys to kill hypnosis.
-- Press [D] key to split the screen.
-- Press [B] key to toggle display of the buttons.
-
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2023 Murayama Akira
 Copyright (c) 2023 TT
+Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
 
@@ -516,9 +506,14 @@ const trans_NOTICE_KO_KR = `=========================
 Hypnosis KraKra
 =========================
 
-이 소프트웨어는 최면 같은 영상을 즐기는 응용 프로그램입니다.
-동영상 파일을 일절 사용하지 않고 실시간으로 최면 영상을 생성합니다.
-사용법은 당신에게 달려 있습니다.
+"최면 크라크라" 는 16종의 동영상, 20종의 오디오, 마이크 입력, 얼굴 인식 기능을 갖춘 본격적인 농담 앱입니다.
+최면에 걸린 영상과 사운드를 즐길 수 있는 리얼 엔터테인먼트를 제공합니다.
+
+- 전체 화면이 가득한 매력적인 이미지를 표시합니다. 성가신 광고는 없습니다.
+- 얼굴인식으로 대상을 락온할 수 있습니다.
+- 마이크 입력을 통해 대상에게 음성을 전달합니다.
+- 오디오를 재생하여 대상의 감정을 움직입니다.
+- 전달하고 싶은 메시지를 화면에 표시하고, 앱 자체가 말을 하게 됩니다.
 
 ※ 소스 코드: https://github.com/katahiromz/KraKra_ja_jp
 ※ 일부, OtoLogic의 음성 소재를 사용.
@@ -546,25 +541,10 @@ Hypnosis KraKra
 - '기어' 버튼으로 일반 설정을 할 수 있습니다.
 - 화면을 손가락으로 추적하면 반짝임이 표시되어 상대방의 주의를 끌 수 있습니다.
 
-【키보드 조작】
-
-키보드를 연결하면 다음과 같은 조작을 할 수 있습니다.
-
-- "0"~"9" 키를 누르면 영상이 전환됩니다.
-- "C" 키를 누르면 일반 설정이 열립니다.
-- "H" 키를 누르면 버전 정보가 열립니다.
-- "P" 키를 누르면 소리가 납니다.
-- "M" 키를 누르면 마이크의 ON/OFF를 전환합니다(권한이 필요합니다).
-- "T" 키를 누르면 메시지 설정이 열립니다.
-- "S" 키를 누르면 현재 메시지를 자동 음성으로 말합니다.
-- "X" 키를 누르면 일시정지됩니다.
-- "-" 키 또는 "K" 키를 누르면 최면을 끕니다.
-- "D" 키를 누르면 화면 분할이 전환됩니다.
-- "B" 키를 누르면 버튼 표시가 전환됩니다.
-
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2023 Murayama Akira
 Copyright (c) 2023 TT
+Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
 
@@ -574,9 +554,14 @@ const trans_NOTICE_JA = `=========================
 Hypnosis KraKra
 =========================
 
-本ソフトウェアは、催眠っぽい映像を楽しむアプリです。
-動画ファイルを一切使わず、リアルタイムで催眠映像を生成します。
-使い方はあなた次第。
+「催眠くらくら」は、16種類の映像と20種類の音声、マイク入力、顔認証を搭載した本格的なジョークアプリです。
+催眠っぽい映像や音声を楽しめる本物のエンターテインメントを提供します。
+
+- 画面いっぱいに魅惑の映像を表示します。邪魔な広告はありません。
+- 顔認証でターゲットをロックオンできます。
+- マイク入力であなたの声をターゲットに届けます。
+- 音声再生でターゲットの気持ちを揺さぶります。
+- 伝えたいメッセージを画面に表示し、アプリ自身がしゃべります。
 
 ※ ソース: https://github.com/katahiromz/KraKra_ja_jp
 ※ 一部、OtoLogicの音声素材を使用。
@@ -603,25 +588,10 @@ Hypnosis KraKra
 - 「歯車」ボタンで全般設定ができます。
 - 画面を指でなぞると、きらめきが表示され、相手の注意を引くことができます。
 
-【キーボード操作】
-
-キーボードを接続すると次のような操作ができます。
-
-- 「0」～「9」キーを押すと、映像が切り替わります。
-- 「C」キーを押すと全般設定が開きます。
-- 「H」キーを押すとバージョン情報を開きます。
-- 「P」キーを押すと音を鳴らします。
-- 「M」キーを押すとマイクのON/OFFを切り替えます(権限が必要です)。
-- 「T」キーを押すとメッセージの設定を開きます。
-- 「S」キーを押すと現在のメッセージを自動音声でしゃべります。
-- 「X」キーを押すと一時停止します。
-- 「-」キーか「K」キーを押すと催眠を消します。
-- 「D」キーを押すと画面分割が切り替わります。
-- 「B」キーを押すとボタンの表示が切り替わります。
-
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2023 Murayama Akira
 Copyright (c) 2023 TT
+Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
 
@@ -631,9 +601,14 @@ const trans_NOTICE_ZW_CN = `=========================
 Hypnosis KraKra
 =========================
 
-本软件是一款欣赏催眠动态图片的应用程序。
-它无需使用任何视频文件即可实时生成催眠视频。
-如何使用它取决于您。
+《催眠克拉克拉》是一款成熟的笑话应用程序，配备16种视频、20种音频、麦克风输入和面部识别。
+我们提供真正的娱乐，您可以享受催眠的图像和声音。
+
+- 它显示迷人的图像以填满整个屏幕。 没有烦人的广告。
+- 您可以通过人脸识别锁定目标。
+- 它通过麦克风输入将您的声音传递给目标。
+- 让我们通过播放音频来动摇目标的情绪。
+- 它会在屏幕上显示您想要传达的消息，并且应用程序本身会说话。
 
 * 来源: https://github.com/katahiromz/KraKra_ja_jp
 * 使用了一些 OtoLogic 音频材料。
@@ -660,25 +635,10 @@ Hypnosis KraKra
 - “齿轮”按钮将打开配置。
 - 当你的手指在屏幕上运行时，屏幕会产生火花，吸引他们的注意力。
 
-【键盘操作】
-
-当连接键盘时，可以进行以下操作：
-
-- 按[0]至[9]键切换图像。
-- 按[C]键打开配置。
-- 按[H]键打开版本信息。
-- 按[P]键播放声音。
-- 按[M]键打开/关闭麦克风（需要许可）。
-- 按[T]键打开消息设置。
-- 按[S]键自动说出当前消息。
-- 按[X]键暂停。
-- 按[-]或[K]键终止催眠。
-- 按[D]键分割屏幕。
-- 按[B]键切换按钮的显示。
-
 Copyright (c) 2022-2023 片山博文MZ
 Copyright (c) 2023 Murayama Akira
 Copyright (c) 2023 TT
+Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
 
@@ -688,9 +648,14 @@ const trans_NOTICE_ZH_TW = `=========================
 Hypnosis KraKra
 =========================
 
-該軟件是一款可以讓您享受催眠圖像的應用程序。
-無需使用任何視頻文件即可實時生成催眠視頻。
-如何使用它取決於您。
+《催眠克拉克拉》是一款成熟的笑話應用程序，配備16種視頻、20種音頻、麥克風輸入和麵部識別。
+我們提供真正的娛樂，您可以享受催眠的圖像和聲音。
+
+- 它顯示迷人的圖像以填滿整個螢幕。 沒有煩人的廣告。
+- 您可以透過人臉辨識鎖定目標。
+- 它透過麥克風輸入將您的聲音傳遞給目標。
+- 讓我們透過播放音訊來動搖目標的情緒。
+- 它會在螢幕上顯示您想要傳達的訊息，並且應用程式本身會說話。
 
 ※ 源代碼: https://github.com/katahiromz/KraKra_ja_jp
 ※ 部分使用 OtoLogic 音頻材料。
@@ -717,25 +682,10 @@ Hypnosis KraKra
 - 用於常規設置的“齒輪”按鈕。
 - 在屏幕上滑動手指即可顯示閃爍的光芒，吸引對手的注意力。
 
-【鍵盤操作】
-
-連接鍵盤後，您可以執行以下操作。
-
-- 按“0”至“9”鍵切換圖像。
-- 按“C”鍵打開常規設置。
-- 按“H”鍵打開版本信息。
-- 按“P”鍵播放聲音。
-- 按“M”鍵打開/關閉麥克風（需要許可）。
-- 按“T”鍵打開消息設置。
-- 按“S”鍵以自動語音說出當前消息。
-- 按“X”鍵暫停。
-- 按“-”或“K”關閉催眠。
-- 按“D”鍵在屏幕分割之間切換。
-- 按“B”鍵切換按鈕顯示。
-
 Copyright (c) 2022-2023 片山博文MZ
 Copyright (c) 2023 Murayama Akira
 Copyright (c) 2023 TT
+Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
 
@@ -745,9 +695,14 @@ Ipnosi KraKra
 Hypnosis KraKra
 =========================
 
-Questo software è un'applicazione per godere di immagini in movimento ipnotiche.
-Genera video di ipnosi in tempo reale senza utilizzare alcun file video.
-Come lo usi dipende da te.
+"Ipnosi KraKra" è un'app per scherzi completa dotata di 16 tipi di video, 20 tipi di audio, ingresso microfono e riconoscimento facciale.
+Forniamo un vero intrattenimento in cui puoi goderti immagini e suoni ipnotici.
+
+- Visualizza immagini accattivanti per riempire l'intero schermo. Non ci sono annunci fastidiosi.
+- Puoi agganciare il bersaglio con il riconoscimento facciale.
+- Fornisce la tua voce al bersaglio con l'ingresso del microfono.
+- Scuotiamo le emozioni del tuo bersaglio riproducendo l'audio.
+- Visualizza sullo schermo il messaggio che vuoi trasmettere e l'app stessa parlerà.
 
 * Codice sorgente: https://github.com/katahiromz/KraKra_ja_jp
 * Viene utilizzato del materiale audio OtoLogic.
@@ -774,25 +729,10 @@ Come lo usi dipende da te.
 - Il pulsante "ingranaggio" aprirà Configurazione.
 - Quando fai scorrere il dito sullo schermo, lo schermo si illumina per attirare la loro attenzione.
 
-[(Funzionamento della tastiera)]
-
-Quando è collegata una tastiera, sono disponibili le seguenti operazioni:
-
-- Premere i tasti da [0] a [9] per cambiare immagine.
-- Premere il tasto [C] per aprire la configurazione.
-- Premere il tasto [H] per aprire le informazioni sulla versione.
-- Premere il tasto [P] per riprodurre il suono.
-- Premere il tasto [M] per accendere/spegnere il microfono (è necessario il permesso).
-- Premere il tasto [T] per aprire le impostazioni del messaggio.
-- Premere il tasto [S] per pronunciare automaticamente il messaggio corrente.
-- Premere il tasto [X] per mettere in pausa.
-- Premi i tasti [-] o [K] per eliminare l'ipnosi.
-- Premere il tasto [D] per dividere lo schermo.
-- Premere il tasto [B] per alternare la visualizzazione dei pulsanti.
-
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2023 Murayama Akira
 Copyright (c) 2023 TT
+Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
 
@@ -802,9 +742,14 @@ Hypnose KraKra
 Hypnosis KraKra
 =========================
 
-Diese Software ist eine Anwendung zum Genießen hypnotischer bewegter Bilder.
-Es generiert Hypnosevideos in Echtzeit, ohne dass Videodateien verwendet werden müssen.
-Wie Sie es nutzen, bleibt Ihnen überlassen.
+„Hypnose KraKra“ ist eine vollwertige Scherz-App, die mit 16 Arten von Videos, 20 Arten von Audio, Mikrofoneingang und Gesichtserkennung ausgestattet ist.
+Wir bieten echte Unterhaltung, bei der Sie hypnotische Bilder und Töne genießen können.
+
+- Es zeigt fesselnde Bilder an, die den gesamten Bildschirm ausfüllen. Es gibt keine störende Werbung.
+- Sie können das Ziel mithilfe der Gesichtserkennung erfassen.
+- Es überträgt Ihre Stimme über den Mikrofoneingang an das Ziel.
+- Lassen Sie uns die Emotionen Ihres Ziels wecken, indem wir Audio abspielen.
+- Die Nachricht, die Sie übermitteln möchten, wird auf dem Bildschirm angezeigt und die App selbst spricht.
 
 * Quellcode: https://github.com/katahiromz/KraKra_ja_jp
 * Es wird teilweise Audiomaterial von OtoLogic verwendet.
@@ -831,25 +776,10 @@ Wie Sie es nutzen, bleibt Ihnen überlassen.
 - Die Schaltfläche „Zahnrad“ öffnet die Konfiguration.
 - Wenn Sie mit dem Finger über den Bildschirm fahren, erzeugt der Bildschirm Funken, um ihre Aufmerksamkeit zu erregen.
 
-[(Tastaturbedienung)]
-
-Wenn eine Tastatur angeschlossen ist, stehen folgende Vorgänge zur Verfügung:
-
-- Drücken Sie die Tasten [0] bis [9], um zwischen den Bildern zu wechseln.
-- Drücken Sie die Taste [C], um die Konfiguration zu öffnen.
-- Drücken Sie die Taste [H], um die Versionsinformationen zu öffnen.
-- Drücken Sie die Taste [P], um den Ton abzuspielen.
-- Drücken Sie die Taste [M], um das Mikrofon ein-/auszuschalten (es erfordert eine Genehmigung).
-- Drücken Sie die Taste [T], um die Nachrichteneinstellungen zu öffnen.
-- Drücken Sie die Taste [S], um die aktuelle Nachricht automatisch vorzulesen.
-- Drücken Sie die Taste [X], um zu pausieren.
-- Drücken Sie die Tasten [-] oder [K], um die Hypnose zu beenden.
-- Drücken Sie die Taste [D], um den Bildschirm zu teilen.
-- Drücken Sie die Taste [B], um die Anzeige der Schaltflächen umzuschalten.
-
 Copyright (c) 2022-2023 Katayama Hirofumi MZ
 Copyright (c) 2023 Murayama Akira
 Copyright (c) 2023 TT
+Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
 
@@ -896,6 +826,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_SUPER_FAST': return '超速い';
 		case 'TEXT_SPEED_IRREGULAR': return '不規則';
 		case 'TEXT_RAINBOW': return '虹色';
+		case 'TEXT_FACE_GETTER': return '顔認識';
+		case 'TEXT_TAP_ON_TARGET': return 'ターゲットをタップして下さい';
+		case 'TEXT_CAN_LOCK_ON': return 'ロックオンできます';
+		case 'TEXT_CANT_FIND_FACE': return '顔が見つかりません';
+		case 'TEXT_LOCK_ON': return 'ロックオン';
+		case 'TEXT_UNLOCK': return 'ロック解除';
+		case 'TEXT_CLOSE': return '閉じる';
 		}
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
 		switch(str_id){
@@ -935,6 +872,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_SUPER_FAST': return '超级快';
 		case 'TEXT_SPEED_IRREGULAR': return '不规律的';
 		case 'TEXT_RAINBOW': return '彩虹色';
+		case 'TEXT_FACE_GETTER': return '人脸识别';
+		case 'TEXT_TAP_ON_TARGET': return '请点击目标';
+		case 'TEXT_CAN_LOCK_ON': return '可以锁定';
+		case 'TEXT_CANT_FIND_FACE': return '未找到面孔';
+		case 'TEXT_LOCK_ON': return '锁上';
+		case 'TEXT_UNLOCK': return '开锁';
+		case 'TEXT_CLOSE': return '关闭';
 		}
 	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
 		switch(str_id){
@@ -974,6 +918,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_SUPER_FAST': return '超快';
 		case 'TEXT_SPEED_IRREGULAR': return '不規律的';
 		case 'TEXT_RAINBOW': return '彩虹色';
+		case 'TEXT_FACE_GETTER': return '人臉辨識';
+		case 'TEXT_TAP_ON_TARGET': return '請點選目標';
+		case 'TEXT_CAN_LOCK_ON': return '可以鎖定';
+		case 'TEXT_CANT_FIND_FACE': return '未找到臉孔';
+		case 'TEXT_LOCK_ON': return '鎖上';
+		case 'TEXT_UNLOCK': return '開鎖';
+		case 'TEXT_CLOSE': return '關閉';
 		}
 	}else if(lang == 'ko' || lang == 'kr' || lang == 'ko-KR'){ // Korean
 		switch(str_id){
@@ -1013,6 +964,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_SUPER_FAST': return '매우 빠른';
 		case 'TEXT_SPEED_IRREGULAR': return '불규칙한';
 		case 'TEXT_RAINBOW': return '무지개 색';
+		case 'TEXT_FACE_GETTER': return '얼굴 인식';
+		case 'TEXT_TAP_ON_TARGET': return '타겟을 탭해주세요';
+		case 'TEXT_CAN_LOCK_ON': return '잠글 수 있습니다';
+		case 'TEXT_CANT_FIND_FACE': return '얼굴을 찾을 수 없음';
+		case 'TEXT_LOCK_ON': return '잠금';
+		case 'TEXT_UNLOCK': return '잠금 해제';
+		case 'TEXT_CLOSE': return '닫다';
 		}
 	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
 		switch(str_id){
@@ -1052,6 +1010,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_SUPER_FAST': return 'Super Veloce';
 		case 'TEXT_SPEED_IRREGULAR': return 'Irregolare';
 		case 'TEXT_RAINBOW': return 'Arcobaleno';
+		case 'TEXT_FACE_GETTER': return 'Riconoscimento Facciale';
+		case 'TEXT_TAP_ON_TARGET': return 'Per favore tocca il bersaglio';
+		case 'TEXT_CAN_LOCK_ON': return 'Può essere bloccato';
+		case 'TEXT_CANT_FIND_FACE': return 'Volto non trovato';
+		case 'TEXT_LOCK_ON': return 'Blocco su';
+		case 'TEXT_UNLOCK': return 'Sbloccare';
+		case 'TEXT_CLOSE': return 'Vicino';
 		}
 	}else if(lang == 'de' || lang == 'de-DE'){ // German
 		switch(str_id){
@@ -1091,6 +1056,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_SUPER_FAST': return 'Super Schnell';
 		case 'TEXT_SPEED_IRREGULAR': return 'Irregulär';
 		case 'TEXT_RAINBOW': return 'Regenbogen';
+		case 'TEXT_FACE_GETTER': return 'Gesichtserkennung';
+		case 'TEXT_TAP_ON_TARGET': return 'Bitte tippen Sie auf das Ziel';
+		case 'TEXT_CAN_LOCK_ON': return 'Abschließbar';
+		case 'TEXT_CANT_FIND_FACE': return 'Gesicht nicht gefunden';
+		case 'TEXT_LOCK_ON': return 'Sperren';
+		case 'TEXT_UNLOCK': return 'Freischalten';
+		case 'TEXT_CLOSE': return 'Schließen';
 		}
 	}else{ // English is default
 		switch(str_id){
@@ -1130,6 +1102,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_SUPER_FAST': return 'Super Fast';
 		case 'TEXT_SPEED_IRREGULAR': return 'Irregular';
 		case 'TEXT_RAINBOW': return 'Rainbow';
+		case 'TEXT_FACE_GETTER': return 'Face Recognition';
+		case 'TEXT_TAP_ON_TARGET': return 'Please tap on the target';
+		case 'TEXT_CAN_LOCK_ON': return 'Ready to lock on';
+		case 'TEXT_CANT_FIND_FACE': return 'Face not found';
+		case 'TEXT_LOCK_ON': return 'Lock on';
+		case 'TEXT_UNLOCK': return 'Unlock';
+		case 'TEXT_CLOSE': return 'Close';
 		}
 	}
 }
