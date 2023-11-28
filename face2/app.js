@@ -2,19 +2,46 @@ document.addEventListener('DOMContentLoaded', () => {
   const video = document.getElementById('video');
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d', { alpha: false, willReadFrequently: true });
+  let isAudioEnabled = false;
+  let isFrontCamera = false;
+
+  // カメラが取得できたときに呼び出される関数。
+  const gotCamera = (stream) => {
+    video.srcObject = stream;
+  };
+
+  // カメラの制約を取得する関数。
+  const getCameraConstraints = () => {
+    if (isFrontCamera) {
+      return {
+        video: {
+          facingMode: 'user',
+        },
+        audio: isAudioEnabled,
+      }
+    } else {
+      return {
+        video: {
+          facingMode: { exact: 'environment' },
+        },
+        audio: isAudioEnabled,
+      }
+    }
+  };
 
   // カメラにアクセスするためのメソッド
   const initCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      video.srcObject = stream;
-      video.addEventListener('loadedmetadata', () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        processVideo();
-      });
+      const stream = await navigator.mediaDevices.getUserMedia(getCameraConstraints());
+      gotCamera(stream);
     } catch (error) {
-      console.error('Error accessing the camera:', error);
+      try {
+        isFrontCamera = !isFrontCamera;
+        const stream = await navigator.mediaDevices.getUserMedia(getCameraConstraints());
+        gotCamera(stream);
+      } catch (error) {
+        console.error('Error accessing the camera:', error);
+      }
     }
   };
 
@@ -43,6 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ctx.putImageData(imageData, 0, 0);
   };
+
+  sai_id_button_side.addEventListener('click', () => {
+    isFrontCamera = !isFrontCamera;
+    initCamera();
+  });
+
+  video.addEventListener('loadedmetadata', () => {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    processVideo();
+  });
 
   // カメラの初期化
   initCamera();

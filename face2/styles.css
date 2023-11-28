@@ -29,3 +29,27 @@ body {
 	height: 100dvh;
 	object-fit: contain;
 }
+
+#sai_id_button_side {
+	position: absolute;
+	right: 3px;
+	top: 3px;
+}
+.sai_class_rounded_button {
+	width: 1.3cm;
+	height: 1.3cm;
+	background-color: rgba(255, 181, 230, 0%);
+	border: 0;
+	border-radius: 100%;
+	padding: 0;
+	margin: 0;
+}
+.sai_class_rounded_button img {
+	width: 1.3cm;
+	height: 1.3cm;
+}
+#sai_id_button_side {
+	position: absolute;
+	right: 3px;
+	top: 3px;
+}
