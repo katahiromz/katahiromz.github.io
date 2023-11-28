@@ -90,6 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	sai_id_button_side.addEventListener('click', () => {
 		if (anime)
 			cancelAnimationFrame(anime);
+		video.srcObject.getVideoTracks().forEach(function(camera){
+			camera.stop();
+		});
 		isFrontCamera = !isFrontCamera;
 		video.srcObject = null;
 		initCamera();
