@@ -9,15 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		let isCameraRunning = false;
 		let isFrontCamera = false;
 
-		let cameraWidth = myCanvas.width = window.innerWidth;
-		let cameraHeight = myCanvas.height = window.innerHeight;
-
+		let cameraWidth, cameraHeight;
 		const setCameraSize = (width, height) => {
-			cameraWidth = myCanvas.width = window.innerWidth;
-			cameraHeight = myCanvas.height = window.innerHeight;
+			cameraWidth = myCanvas.width = myVideo.width = width;
+			cameraHeight = myCanvas.height = myVideo.height = height;
 			if(isCameraRunning)
 				startCamera();
 		};
+		setCameraSize(window.innerWidth, window.innerHeight);
 
 		const stopAnime = () => {
 			if(anime){
