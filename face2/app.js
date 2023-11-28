@@ -18,23 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
           facingMode: 'user',
         },
         audio: isAudioEnabled,
-      }
+      };
     } else {
       return {
         video: {
           facingMode: { exact: 'environment' },
         },
         audio: isAudioEnabled,
-      }
+      };
     }
   };
 
   // カメラにアクセスするためのメソッド
   const initCamera = async () => {
+    video.srcObject = null;
     try {
       const stream = await navigator.mediaDevices.getUserMedia(getCameraConstraints());
       gotCamera(stream);
     } catch (error) {
+      console.log(error);
       try {
         isFrontCamera = !isFrontCamera;
         const stream = await navigator.mediaDevices.getUserMedia(getCameraConstraints());
