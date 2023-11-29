@@ -278,7 +278,7 @@ const facelocker = function(canvas, on_lock){
 
 		// Initialize pico.js face detector
 		self.update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
-		let cascadeurl = 'https://raw.githubusercontent.com/nenadmarkus/pico/c2e81f9d23cc11d1a612fd21e4f9de0921a5d0d9/rnt/cascades/facefinder';
+		let cascadeurl = 'https://katahiromz.github.io/facelocker/facefinder';
 		fetch(cascadeurl).then(function(response){
 			response.arrayBuffer().then(function(buffer){
 				let bytes = new Int8Array(buffer);

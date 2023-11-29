@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// 顔認識。
 	const detectFaces = async () => {
 		// face-api.js を使用して顔認識を行う
-		const detections = await faceapi.detectAllFaces(canvas)
+		const detections = await faceapi.detectAllFaces(canvas);
 		const displaySize = { width: canvas.width, height: canvas.height };
 		const resizedDetections = faceapi.resizeResults(detections, displaySize);
 		faceapi.draw.drawDetections(canvas, resizedDetections);
