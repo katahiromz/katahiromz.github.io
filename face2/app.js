@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	const ctx = canvas.getContext('2d', { alpha: false, willReadFrequently: true });
 	let isAudioEnabled = false;
 	let isFrontCamera = false;
-	let isVideoInit = false;
 	let anime = null;
 
 	// カメラの制約を取得する関数。
@@ -31,17 +30,26 @@ document.addEventListener('DOMContentLoaded', () => {
 		return navigator.mediaDevices.getUserMedia(getCameraConstraints());
 	};
 
+	// カメラ映像を加工するメソッド
+	const processVideo = () => {
+		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+		// ここに加工処理を追加
+		applyGrayscaleFilter();
+
+		// 加工された映像を表示
+		if (anime)
+			anime = requestAnimationFrame(processVideo);
+	};
+
 	// カメラが取得できたときの処理。
 	const gotCamera = (stream) => {
 		video.srcObject = stream;
-		if (!isVideoInit) {
-			video.addEventListener('loadedmetadata', () => {
-				canvas.width = video.videoWidth;
-				canvas.height = video.videoHeight;
-				anime = requestAnimationFrame(processVideo);
-			});
-			isVideoInit = true;
-		}
+		video.addEventListener('loadedmetadata', () => {
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
+			anime = requestAnimationFrame(processVideo);
+		});
 	};
 
 	const initCamera = async () => {
@@ -60,18 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	};
 
-	// カメラ映像を加工するメソッド
-	const processVideo = () => {
-		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-		// ここに加工処理を追加
-		applyGrayscaleFilter();
-
-		// 加工された映像を表示
-		if (anime)
-			anime = requestAnimationFrame(processVideo);
-	};
-
 	// グレースケールフィルターを適用するメソッド
 	const applyGrayscaleFilter = () => {
 		const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -87,14 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		ctx.putImageData(imageData, 0, 0);
 	};
 
+	// 前面・背面カメラの切り替えボタン。
 	sai_id_button_side.addEventListener('click', () => {
 		if (anime)
 			cancelAnimationFrame(anime);
-		video.srcObject.getVideoTracks().forEach(function(camera){
-			camera.stop();
-		});
+		if(video.srcObject){
+			video.srcObject.getVideoTracks().forEach(function(camera){
+				camera.stop();
+			});
+			video.srcObject = null;
+		}
 		isFrontCamera = !isFrontCamera;
-		video.srcObject = null;
 		initCamera();
 	});
 
