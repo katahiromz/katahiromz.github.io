@@ -1,10 +1,15 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	const video = document.getElementById('video');
 	const canvas = document.getElementById('canvas');
 	const ctx = canvas.getContext('2d', { alpha: false, willReadFrequently: true });
 	let isAudioEnabled = false;
 	let isFrontCamera = false;
 	let anime = null;
+
+	// face-api.js の初期化
+	await faceapi.loadSsdMobilenetv1Model('./models');
+	await faceapi.loadFaceLandmarkModel('./models');
+	await faceapi.loadFaceRecognitionModel('./models');
 
 	// カメラの制約を取得する関数。
 	const getCameraConstraints = () => {
@@ -35,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
 		// ここに加工処理を追加
-		applyGrayscaleFilter();
+		detectFaces();
 
 		// 加工された映像を表示
 		if (anime)
@@ -68,28 +73,24 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	};
 
-	// グレースケールフィルターを適用するメソッド
-	const applyGrayscaleFilter = () => {
-		const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-		const data = imageData.data;
-
-		for (let i = 0; i < data.length; i += 4) {
-			const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-			data[i] = avg;
-			data[i + 1] = avg;
-			data[i + 2] = avg;
-		}
-
-		ctx.putImageData(imageData, 0, 0);
+	// 顔認識。
+	const detectFaces = async () => {
+		// face-api.js を使用して顔認識を行う
+		const detections = await faceapi.detectAllFaces(canvas)
+		const displaySize = { width: canvas.width, height: canvas.height };
+		const resizedDetections = faceapi.resizeResults(detections, displaySize);
+		faceapi.draw.drawDetections(canvas, resizedDetections);
 	};
 
 	// 前面・背面カメラの切り替えボタン。
 	sai_id_button_side.addEventListener('click', () => {
-		if (anime)
+		if (anime) {
 			cancelAnimationFrame(anime);
+			anime = null;
+		}
 		if(video.srcObject){
-			video.srcObject.getVideoTracks().forEach(function(camera){
-				camera.stop();
+			video.srcObject.getVideoTracks().forEach(function(track){
+				track.stop();
 			});
 			video.srcObject = null;
 		}
