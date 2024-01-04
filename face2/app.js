@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let isAudioEnabled = false;
 	let isFrontCamera = false;
 	let anime = null;
-	const threshold = 10.0;
+	const threshold = 3.0;
 
 	// Initialize pico.js face detector
 	let update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
