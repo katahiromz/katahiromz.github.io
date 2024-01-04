@@ -27,7 +27,7 @@ body {
 	width: 100dvw;
 	height: 100vh;
 	height: 100dvh;
-	object-fit: contain;
+	object-fit: cover;
 }
 
 #sai_id_button_side {
