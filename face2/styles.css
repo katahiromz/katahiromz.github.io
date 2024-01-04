@@ -20,7 +20,7 @@ body {
 	width: 100dvw;
 	height: 100vh;
 	height: 100dvh;
-	object-fit: contain;
+	object-fit: cover;
 }
 #canvas {
 	width: 100vw;
