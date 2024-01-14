@@ -3,7 +3,7 @@ body {
 	overflow: hidden;
 }
 
-#video-container {
+#sai_id_video_container {
 	width: 100vw;
 	width: 100dvw;
 	height: 100vh;
@@ -15,14 +15,18 @@ body {
 	align-items: center;
 }
 
-#video {
+.sai_class_invisible {
+	display: none;
+}
+
+#sai_id_video_1 {
 	width: 100vw;
 	width: 100dvw;
 	height: 100vh;
 	height: 100dvh;
 	object-fit: cover;
 }
-#canvas {
+#sai_id_canvas_1 {
 	width: 100vw;
 	width: 100dvw;
 	height: 100vh;

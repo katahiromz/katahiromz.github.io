@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const video = document.getElementById('video');
-	const canvas = document.getElementById('canvas');
+	const video = document.getElementById('sai_id_video_1');
+	const canvas = document.getElementById('sai_id_canvas_1');
 	const ctx = canvas.getContext('2d', {
 		alpha: false,
 		antialias: false,
@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	let isAudioEnabled = false;
 	let isFrontCamera = false;
 	let anime = null;
-	const threshold = 3.0;
+	const threshold = 10.0;
 
 	// Initialize pico.js face detector
 	let update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
-	let cascadeurl = 'https://katahiromz.github.io/face2/facefindermz';
+	let cascadeurl = 'https://katahiromz.github.io/face2/facefinder';
 	let classify_region = null;
 	fetch(cascadeurl).then(function(response){
 		response.arrayBuffer().then(function(buffer){
