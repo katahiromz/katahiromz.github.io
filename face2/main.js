@@ -1,3 +1,16 @@
+const rgba_to_grayscale = function(rgba, nrows, ncols){
+	let gray = new Uint8Array(nrows * ncols);
+	for(let r = 0; r < nrows; ++r){
+		for(let c = 0; c < ncols; ++c){
+			// gray = 0.2*red + 0.7*green + 0.1*blue
+			gray[r*ncols + c] = (2 * rgba[r*4*ncols + 4*c + 0] +
+			                     7 * rgba[r*4*ncols + 4*c + 1] +
+			                     1 * rgba[r*4*ncols + 4*c + 2]) / 10;
+		}
+	}
+	return gray;
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 	const video = document.getElementById('sai_id_video_1');
 	const canvas = document.getElementById('sai_id_canvas_1');
@@ -83,19 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				console.error('Error accessing the camera:', error);
 			}
 		}
-	};
-
-	const rgba_to_grayscale = function(rgba, nrows, ncols){
-		let gray = new Uint8Array(nrows * ncols);
-		for(let r = 0; r < nrows; ++r){
-			for(let c = 0; c < ncols; ++c){
-				// gray = 0.2*red + 0.7*green + 0.1*blue
-				gray[r*ncols + c] = (2 * rgba[r*4*ncols + 4*c + 0] +
-				                     7 * rgba[r*4*ncols + 4*c + 1] +
-				                     1 * rgba[r*4*ncols + 4*c + 2]) / 10;
-			}
-		}
-		return gray;
 	};
 
 	const get_detections = function(rgba, width, height){

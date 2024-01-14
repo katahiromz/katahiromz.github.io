@@ -4,17 +4,38 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>WebRTC Camera</title>
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="main.css">
 	<script src="pico.js" delay></script>
-	<script src="app.js" delay></script>
+	<script src="main.js" delay></script>
 </head>
 <body>
-	<div id="sai_id_video_container">
-		<button id="sai_id_button_side" class="sai_class_rounded_button">
-			<img src="side.svg" alt="" />
+	<!-- 【顔認識のページ】ここから -->
+	<div id="sai_id_page_face_getter" class="sai_class_page sai_class_invisible">
+		<!-- 【顔認識のページの戻るボタン】ここから -->
+		<button type="button" id="sai_id_button_face_getter_back" class="sai_class_rounded_button">
+			<img src="img/back.svg" alt="back" loading="lazy" />
 		</button>
-		<video id="sai_id_video_1" playsinline autoplay class="sai_class_invisible"></video>
+		<!-- 【顔認識のページの戻るボタン】ここまで -->
+		<!-- 【顔認識のページの裏表ボタン】ここから -->
+		<button type="button" id="sai_id_button_side" class="sai_class_rounded_button">
+			<img src="img/side.svg" alt="" />
+		</button>
+		<!-- 【顔認識のページの裏表ボタン】ここまで -->
+		<!-- 【顔認識のページのロックオンボタン】ここから -->
+		<button id="sai_id_button_lock_on" type="button" class="sai_class_face_button">
+			Lock on
+		</button>
+		<!-- 【顔認識のページのロックオンボタン】ここまで -->
+		<!-- 【顔認識のページの閉じるボタン】ここから -->
+		<button id="sai_id_button_close" type="button" class="sai_class_face_button">
+			Close
+		</button>
+		<!-- 【顔認識のページの閉じるボタン】ここまで -->
+		<!-- 【顔認識のページのキャンバス】ここから -->
 		<canvas id="sai_id_canvas_1"></canvas>
+		<!-- 【顔認識のページのキャンバス】ここまで -->
+		<video id="sai_id_video_1" playsinline autoplay class="sai_class_invisible"></video>
 	</div>
+	<!-- 【顔認識のページ】ここまで -->
 </body>
 </html>
