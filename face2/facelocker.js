@@ -2,19 +2,18 @@
 // License: MIT
 
 const facelocker = function(canvas, video, on_lock){
-	this.initialized = false;
 	this.canvas = null;
 	this.video = null;
 	this.dets = null;
-	this.imageData = null;
 	this.target = null;
-	this.target_candidate = null;
-	this.update_memory = null;
-	this.classify_region = null;
-	this.threshold = 10.0;
 	this.side = null;
+	let initialized = false;
+	let target_candidate = null;
 	let self = this;
+	let classify_region = null;
+	const threshold = 10.0;
 	let anime = null;
+	let update_memory = null;
 
 	// 長方形の交わり。
 	const intersect_rectangle = function(rect1, rect2){
@@ -63,7 +62,12 @@ const facelocker = function(canvas, video, on_lock){
 
 	// カメラの制約を取得する関数。
 	const getCameraConstraints = () => {
-		if (!self.side || self.side == 'user'){
+		if (self.side == null){
+			return {
+				video: true,
+				audio: false,
+			};
+		}else if (self.side == 'user'){
 			return {
 				video: {
 					facingMode: 'user',
@@ -78,11 +82,6 @@ const facelocker = function(canvas, video, on_lock){
 				audio: false,
 			};
 		}
-	};
-
-	// カメラストリームを取得するメソッド。
-	const getCameraStream = async () => {
-		return navigator.mediaDevices.getUserMedia(getCameraConstraints());
 	};
 
 	// ターゲットを描画する。
@@ -132,7 +131,7 @@ const facelocker = function(canvas, video, on_lock){
 			return;
 		}
 		for(let det of dets){
-			if(det[3] <= self.threshold)
+			if(det[3] <= threshold)
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2] / 2;
@@ -143,13 +142,13 @@ const facelocker = function(canvas, video, on_lock){
 
 	// 候補を追跡する。
 	this.track_candidate = function(dets){
-		let candidate = self.target_candidate;
+		let candidate = target_candidate;
 		if(!candidate)
 			return;
 		let nearest_candidate = null;
 		let nearest_distance = 1000000000;
 		for(let det of dets){
-			if(det[3] <= self.threshold)
+			if(det[3] <= threshold)
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2] / 2;
@@ -162,13 +161,13 @@ const facelocker = function(canvas, video, on_lock){
 			}
 		}
 		if (nearest_candidate){
-			self.target_candidate = nearest_candidate;
+			target_candidate = nearest_candidate;
 		}
 	};
 
 	// 顔認識する。
 	this.get_detections = function(rgba, width, height){
-		if (!self.classify_region || !self.update_memory){
+		if (!classify_region || !update_memory){
 			return;
 		}
 
@@ -186,14 +185,14 @@ const facelocker = function(canvas, video, on_lock){
 			scalefactor: 1.1  // for multiscale processing: resize the detection window by 10% when moving to the higher scale
 		};
 
-		let dets = pico.run_cascade(image, self.classify_region, params);
-		dets = self.update_memory(dets);
+		let dets = pico.run_cascade(image, classify_region, params);
+		self.dets = dets = update_memory(dets);
 		dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
 		return dets;
 	};
 
 	this.stop = function(){
-		if(!self.initialized)
+		if(!initialized)
 			return;
 
 		if(anime){
@@ -210,23 +209,23 @@ const facelocker = function(canvas, video, on_lock){
 	};
 
 	this.resume = function(){
-		if(!self.initialized)
+		if(!initialized)
 			return;
 
 		initCamera();
 	};
 
 	this.lock_unlock = function(do_lock){
-		if(!self.initialized)
+		if(!initialized)
 			return;
 
 		if(self.target){
 			self.target = null;
 			if (self.on_lock)
 				self.on_lock(0);
-		}else if(self.target_candidate){
-			self.target = self.target_candidate;
-			self.target_candidate = null;
+		}else if(target_candidate){
+			self.target = target_candidate;
+			target_candidate = null;
 			if (self.on_lock)
 				self.on_lock(2);
 		}
@@ -245,7 +244,7 @@ const facelocker = function(canvas, video, on_lock){
 		let nearest_distance = 1000000000;
 		let pageX = e.pageX, pageY = e.pageY;
 		for(let det of dets){
-			if(det[3] <= self.threshold)
+			if(det[3] <= threshold)
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2];
@@ -263,25 +262,25 @@ const facelocker = function(canvas, video, on_lock){
 		}
 
 		if(found){
-			if(self.target_candidate && self.is_same_target(found, self.target_candidate)){
-				self.target = self.target_candidate;
-				self.target_candidate = null;
+			if(target_candidate && self.is_same_target(found, target_candidate)){
+				self.target = target_candidate;
+				target_candidate = null;
 				if (self.on_lock)
 					self.on_lock(2);
 			}else{
-				self.target_candidate = found;
+				target_candidate = found;
 				if (self.on_lock)
 					self.on_lock(1);
 			}
 		}else{
-			self.target_candidate = null;
+			target_candidate = null;
 			if (self.on_lock)
 				self.on_lock(0);
 		}
 	};
 
 	this.set_side = function(side = null){
-		if(!self.initialized)
+		if(!initialized)
 			return;
 
 		self.stop();
@@ -329,20 +328,23 @@ const facelocker = function(canvas, video, on_lock){
 	};
 
 	// カメラを初期化。
-	const initCamera = async () => {
-		try {
-			const stream = await getCameraStream();
+	const initCamera = () => {
+		// カメラとの接続を試みる。
+		navigator.mediaDevices.getUserMedia(getCameraConstraints())
+		.then((stream) => {
 			gotCamera(stream);
-		} catch (error) {
-			console.log('Error accessing the camera:', error);
-			try {
-				self.set_side();
-				const stream = await getCameraStream();
+		})
+		.catch((error) => {
+			self.side = null;
+			// もう一度カメラとの接続を試みる。
+			navigator.mediaDevices.getUserMedia(getCameraConstraints())
+			.then((stream) => {
 				gotCamera(stream);
-			} catch (error) {
-				console.error('Error accessing the camera:', error);
-			}
-		}
+			})
+			.catch((error) => {
+				console.log('Error accessing the camera:', error);
+			});
+		});
 	};
 
 	// 初期化。
@@ -356,14 +358,10 @@ const facelocker = function(canvas, video, on_lock){
 		self.video = video;
 
 		// カメラの向きを読み込む。
-		let saiminCameraSide = localStorage.getItem('saiminCameraSide');
 		self.side = null;
-		if(saiminCameraSide){
-			if(saiminCameraSide == 'user'){
-				self.side = 'user';
-			}else if(saiminCameraSide == 'environment'){
-				self.side = 'environment';
-			}
+		let saiminCameraSide = localStorage.getItem('saiminCameraSide');
+		if(saiminCameraSide == 'user' || saiminCameraSide == 'environment'){
+			self.side = saiminCameraSide;
 		}
 
 		// コンテキストを取得。
@@ -377,18 +375,18 @@ const facelocker = function(canvas, video, on_lock){
 		initCamera();
 
 		// Initialize pico.js face detector
-		self.update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
+		update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
 		let cascadeurl = 'https://katahiromz.github.io/face2/facefinder';
-		self.classify_region = null;
+		classify_region = null;
 		fetch(cascadeurl).then(function(response){
 			response.arrayBuffer().then(function(buffer){
 				let bytes = new Int8Array(buffer);
-				self.classify_region = pico.unpack_cascade(bytes);
+				classify_region = pico.unpack_cascade(bytes);
 				console.log('* facefinder loaded');
 			})
 		})
 
-		self.initialized = true;
+		initialized = true;
 	};
 
 	this.init(canvas, video, on_lock);
