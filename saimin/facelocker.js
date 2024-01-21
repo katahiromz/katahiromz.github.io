@@ -225,7 +225,7 @@ const facelocker = function(canvas, on_lock){
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2];
-			let rect = {x: x - radius/2, y: y - radius/2, width: radius, height: radius};
+			let rect = {x: x - radius/2, y: y - radius/2 * 1.3, width: radius, height: radius * 1.3};
 			if (pageX < rect.x || pageY < rect.y)
 				continue;
 			if (rect.x + rect.width < pageX || rect.y + rect.height < pageY)
