@@ -4,7 +4,10 @@ let sw = new ServiceWorkerJS();
 
 sw.precache('precached', [
 	'./',
+	'./camvas.js',
 	'./complex.min.js',
+	'./css/ja-JP.css',
+	'./facelocker.js',
 	'./favicon.ico',
 	'./img/aim.svg',
 	'./img/all-released_de.svg',
@@ -18,10 +21,7 @@ sw.precache('precached', [
 	'./img/arrow_right.svg',
 	'./img/back.svg',
 	'./img/coin5yen.png',
-	'./camvas.js',
-	'./facelocker.js',
 	'./kaleido.js',
-	'./main.css',
 	'./main.js',
 	'./manifest.json',
 	'./mic.js',
