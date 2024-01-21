@@ -17,6 +17,9 @@ const camvas = function(ctx, callback){
 		self.callback(self.video, Date.now() - last);
 		last = Date.now();
 		self.animation = requestAnimationFrame(self.loop);
+
+		self.videoWidth = self.video.videoWidth;
+		self.videoHeight = self.video.videoHeight;
 	};
 
 	this.cancelAnimation = function(){
