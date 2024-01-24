@@ -17,13 +17,13 @@ label { /* ラベル */
 	cursor: pointer;
 }
 select { /* コンボボックス */
-	background-color: #300;
-	color: #fcf;
+	background-color: #003;
+	color: #99c;
 }
 button { /* 通常のボタン */
 	font-weight: bold;
-	background-color: #f9f;
-	color: #003;
+	background-color: #39f;
+	color: #00f;
 }
 .sai_class_page { /* ページ */
 	margin: 0;
@@ -32,7 +32,7 @@ button { /* 通常のボタン */
 	width: 100dvw;
 	height: 100vh;
 	height: 100dvh;
-	background-color: #c09;
+	background-color: #90f;
 	color: #fff;
 }
 #sai_id_main_page { /* メインページ */
@@ -47,8 +47,8 @@ button { /* 通常のボタン */
 .sai_class_page h1 { /* ページの見出し */
 	font-size: 1.25rem; /* ① */
 	line-height: 1.25rem; /* ① */
-	background-color: #c0c;
-	color: white;
+	background-color: #f0f;
+	color: black;
 	margin: 0;
 }
 .sai_class_page select { /* ページ内部のコンボボックス*/
@@ -167,7 +167,7 @@ input[type='color'] { /* 色選択ボタン */
 .sai_class_rounded_button { /* 丸いボタン */
 	width: 1.3cm;
 	height: 1.3cm;
-	background-color: rgba(255, 181, 230, 75%);
+	background-color: rgba(191, 191, 255, 75%);
 	border: 0;
 	border-radius: 100%;
 	padding: 0;
@@ -215,7 +215,7 @@ input[type='color'] { /* 色選択ボタン */
 	outline: 1px solid white;
 	border-radius: 4px;
 	text-align: center;
-	background-color: rgba(255, 181, 230, 75%);
+	background-color: rgba(80, 80, 255, 50%);
 	top: calc(50vh - 2.5rem / 2);
 	top: calc(50dvh - 2.5rem / 2);
 }
@@ -280,7 +280,7 @@ input[type='color'] { /* 色選択ボタン */
 .sai_class_navi_button { /* ナビゲーションボタン */
 	outline: 1px solid white;
 	border-radius: 4px;
-	background-color: rgba(255, 181, 230, 75%);
+	background-color: rgba(191, 181, 230, 50%);
 	color: black;
 	padding: 4px;
 	height: 1.2cm;
@@ -318,7 +318,7 @@ input[type='color'] { /* 色選択ボタン */
 	border: solid 1px black;
 	padding: 0.2cm;
 	min-height: 0.8cm;
-	background-image: linear-gradient(to bottom, #313, #f06);
+	background-image: linear-gradient(to bottom, #99c, #00f);
 }
 #sai_id_message_list div:hover { /* メッセージリスト */
 	background-color: #c0c;
@@ -518,7 +518,7 @@ input[type='color'] { /* 色選択ボタン */
 	}
 }
 .sai_class_face_button { /* 顔認識のアクションボタン */
-	background: rgba(255, 255, 255, 50%);
+	background: rgba(80, 80, 255, 50%);
 	border-radius: 8px;
 }
 .sai_class_face_button:disabled { /* 顔認識の無効のアクションボタン */

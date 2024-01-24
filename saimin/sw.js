@@ -6,6 +6,8 @@ sw.precache('precached', [
 	'./',
 	'./camvas.js',
 	'./complex.min.js',
+	'./css/blue.css',
+	'./css/darkgreen.css',
 	'./css/golden.css',
 	'./css/pink.css',
 	'./css/purple.css',

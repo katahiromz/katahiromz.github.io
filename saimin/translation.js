@@ -1,64 +1,87 @@
 // translation.js --- Hypnosis KraKra tranlation
 
 let trans_currentLanguage = 'en';
+let trans_skin = 'purple';
+
+// {{LANGUAGE_SPECIFIC}} {{COLOR_SPECIFIC}}
+const trans_getDefaultSkin = function(){
+	switch (trans_currentLanguage){
+	case 'zh-CN':
+	case 'zh-TW':
+		return 'golden';
+	case 'en':
+		return 'blue';
+	case 'de':
+	case 'it':
+	default:
+		return 'purple';
+	case 'ja':
+	case 'ko-KR':
+		return 'pink';
+	}
+};
 
 // {{LANGUAGE_SPECIFIC}} {{COLOR_SPECIFIC}}
 const trans_getStyleSheet = function(){
-	switch (trans_currentLanguage){
-		case 'zh-CN':
-		case 'zh-TW':
-			return 'css/golden.css';
-		case 'en':
-		case 'de':
-		case 'it':
-			return 'css/purple.css';
-		case 'ja':
-		case 'ko-KR':
-		default:
-			return 'css/pink.css';
+	switch (trans_skin){
+	case 'golden':
+		return 'css/golden.css';
+	case 'purple':
+	default:
+		return 'css/purple.css';
+	case 'blue':
+		return 'css/blue.css';
+	case 'pink':
+		return 'css/pink.css';
+	case 'darkgreen':
+		return 'css/darkgreen.css';
 	}
 };
 
 // {{LANGUAGE_SPECIFIC}} {{COLOR_SPECIFIC}}
 const trans_getColor = function(colorName){
-	switch (trans_currentLanguage){
-		case 'en':
-			switch (colorName){
-			case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(255, 30, 92, 0.0)';
-			case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(92, 30, 255, 1.0)';
-			case 'COLOR_1ST': return '#3300ff';
-			case 'COLOR_2ND': return '#f01966';
-			}
-			break;
-		case 'de':
-		case 'it':
-			switch (colorName){
-			case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(255, 30, 92, 0.0)';
-			case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(192, 30, 255, 1.0)';
-			case 'COLOR_1ST': return '#cc19bb';
-			case 'COLOR_2ND': return '#330099';
-			}
-			break;
-		case 'zh-CN':
-		case 'zh-TW':
-			switch (colorName){
-			case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(91, 91, 91, 0.0)';
-			case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(255, 255, 0, 1.0)';
-			case 'COLOR_1ST': return '#ffff00';
-			case 'COLOR_2ND': return '#666600';
-			}
-			break;
-		case 'ja':
-		case 'ko-KR':
-			switch (colorName){
-			case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(255, 0, 255, 0.0)';
-			case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(255, 0, 255, 1.0)';
-			case 'COLOR_1ST': return '#990034';
-			case 'COLOR_2ND': return '#ff00ff';
-			}
-			break;
-		default:
-			return trans_getColor('en', colorName);
+	switch (trans_skin){
+	case 'blue':
+		switch (colorName){
+		case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(255, 30, 92, 0.0)';
+		case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(92, 30, 255, 1.0)';
+		case 'COLOR_1ST': return '#3300ff';
+		case 'COLOR_2ND': return '#f01966';
+		}
+		break;
+	case 'purple':
+	default:
+		switch (colorName){
+		case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(255, 30, 92, 0.0)';
+		case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(192, 30, 255, 1.0)';
+		case 'COLOR_1ST': return '#cc19bb';
+		case 'COLOR_2ND': return '#330099';
+		}
+		break;
+	case 'golden':
+		switch (colorName){
+		case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(91, 91, 91, 0.0)';
+		case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(255, 255, 0, 1.0)';
+		case 'COLOR_1ST': return '#ffff00';
+		case 'COLOR_2ND': return '#666600';
+		}
+		break;
+	case 'pink':
+		switch (colorName){
+		case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(255, 0, 255, 0.0)';
+		case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(255, 0, 255, 1.0)';
+		case 'COLOR_1ST': return '#990034';
+		case 'COLOR_2ND': return '#ff00ff';
+		}
+		break;
+	case 'darkgreen':
+		switch (colorName){
+		case 'COLOR_DUMMYPAGECOLOR0': return 'rgba(0, 0, 0, 0.0)';
+		case 'COLOR_DUMMYPAGECOLOR1': return 'rgba(0, 191, 0, 1.0)';
+		case 'COLOR_1ST': return '#003300';
+		case 'COLOR_2ND': return '#009900';
+		}
+		break;
 	}
 };
 
@@ -543,6 +566,9 @@ We provide real entertainment where you can enjoy hypnotic images and sounds.
 - If you experience symptoms such as headache, dizzy, hyperpnea, nausea, gastrointestinal problems, or abnormal emotions, discontinue use immediately and consult a specialist.
 - The Operator may terminate the Service at any time if any reason arises that makes it difficult to continue the Service.
 - Please do not hypnotize others without their consent.
+- This app is not for medical use. We recommend medically effective standard care for sick people.
+- This app is not for sleeping. If you are not feeling well, please refrain from using the facility.
+- Hypnosis that attempts to make the subject do something that he or she does not know the meaning of or how to do or is unable to do is ineffective.
 
 [(How to use)]
 
@@ -590,6 +616,9 @@ Hypnosis KraKra
 - 두통, 현기증, 과호흡, 메스꺼움, 위장 장애, 이상한 감정 등의 증상이 발생한 경우에는 신속하게 사용을 중지하고 전문의의 진단을 받으십시오.
 - 운영자는 본 서비스의 계속이 곤란해지는 사유가 발생한 경우 언제든지 본 서비스를 종료할 수 있는 것으로 합니다.
 - 타인에게 동의없이 최면을 걸지 마십시오.
+- 이 응용 프로그램은 의료용이 아닙니다. 아픈 사람에게는 의학적으로 효과적인 표준 의료를 권장합니다.
+- 이 앱은 수면용이 아닙니다. 컨디션이 뛰어나지 않는 사람은 이용을 돌려주세요.
+- 피험자가 의미나 방법을 모르는 것, 실행의 불가능한 일을 하려고 하는 최면은 효과가 없습니다.
 
 【사용법】
 
@@ -638,6 +667,9 @@ Hypnosis KraKra
 - 頭痛、めまい、過呼吸、吐き気、胃腸の不具合、異常な感情などの症状が生じた場合は、速やかに使用を中止し、専門医の診断を受けて下さい。
 - 運営者は、本サービスの継続が困難となる事由が生じた場合、いつでも本サービスを終了することができるものとします。
 - 他人に同意なく催眠を掛けないで下さい。
+- このアプリは医療用ではありません。病気の人には医学的に効果のある標準医療を推奨します。
+- このアプリは睡眠用ではありません。体調がすぐれない人はご利用をひかえて下さい。
+- 被験者が意味または方法を知らないこと、実行の不可能なことをさせようとする催眠は効果がありません。
 
 【使い方】
 
@@ -685,6 +717,9 @@ Hypnosis KraKra
 - 如果出现头痛、头晕、呼吸急促、恶心、肠胃问题或情绪异常等症状，请立即停止使用并咨询专科医生。
 - 如果出现任何原因导致难以继续提供服务，运营商可以随时终止服务。
 - 未经他人同意，请勿催眠他人。
+- 此应用程序不用于医疗用途。 我们建议对病人进行有效的标准护理。
+- 这个应用程序不适合睡觉。 如果您感觉不舒服，请不要使用该设施。
+- 试图让受试者做一些他或她不知道其含义或如何做或无法做的事情的催眠是无效的。
 
 【如何使用】
 
@@ -732,6 +767,9 @@ Hypnosis KraKra
 - 如果出現頭痛、頭暈、換氣過度、噁心、腸胃不適或情緒異常等症狀，請立即停止使用並諮詢專科醫生。
 - 如果有理由難以繼續提供該服務，運營商可以隨時終止該服務。
 - 未經他人同意，請勿催眠他人。
+- 此應用程式不用於醫療用途。 我們建議對病人進行有效的標準護理。
+- 這個應用程式不適合睡覺。 如果您感覺不舒服，請不要使用該設施。
+- 試圖讓受試者做一些他或她不知道其含義或如何做或無法做的事情的催眠是無效的。
 
 【用法】
 
@@ -779,6 +817,9 @@ Forniamo un vero intrattenimento in cui puoi goderti immagini e suoni ipnotici.
 - Se si verificano sintomi come mal di testa, vertigini, iperpnea, nausea, problemi gastrointestinali o emozioni anormali, interrompere immediatamente l'uso e consultare uno specialista.
 - L'Operatore può interrompere il Servizio in qualsiasi momento se si verifica un motivo che rende difficile continuare il Servizio.
 - Per favore non ipnotizzare gli altri senza il loro consenso.
+- Questa app non è per uso medico. Raccomandiamo cure standard efficaci dal punto di vista medico per i malati.
+- Questa app non è per dormire. Se non ti senti bene, ti preghiamo di astenerti dall'utilizzare la struttura.
+- L'ipnosi che tenta di far fare al soggetto qualcosa di cui non conosce il significato o come fare o non è in grado di fare è inefficace.
 
 [(Come usare)]
 
@@ -826,6 +867,9 @@ Wir bieten echte Unterhaltung, bei der Sie hypnotische Bilder und Töne genieße
 - Wenn bei Ihnen Symptome wie Kopfschmerzen, Schwindel, Hyperpnoe, Übelkeit, Magen-Darm-Probleme oder abnormale Emotionen auftreten, brechen Sie die Anwendung sofort ab und konsultieren Sie einen Spezialisten.
 - Der Betreiber kann den Dienst jederzeit beenden, wenn ein Grund vorliegt, der die Fortsetzung des Dienstes erschwert.
 - Bitte hypnotisieren Sie andere nicht ohne deren Zustimmung.
+- Diese App ist nicht für medizinische Zwecke bestimmt. Für erkrankte Menschen empfehlen wir eine medizinisch wirksame Regelversorgung.
+- Diese App ist nicht zum Schlafen gedacht. Wenn Sie sich nicht wohl fühlen, sehen Sie bitte von der Nutzung der Einrichtung ab.
+- Hypnose, die versucht, den Probanden dazu zu bringen, etwas zu tun, dessen Bedeutung er oder sie nicht kennt oder wie er oder sie es tun soll oder zu dem er nicht in der Lage ist, ist wirkungslos.
 
 [(Wie benutzt man)]
 
@@ -1340,6 +1384,12 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_color_2nd, "2番目の色:");
 		trans_setHtmlText(sai_id_button_init_app, "初期化");
 		trans_setHtmlText(sai_id_text_label_message_volume, "メッセージボイスの音量:");
+		trans_setHtmlText(sai_id_text_skin, "スキン:");
+		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金色');
+		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色');
+		trans_setSelectOptionText(sai_id_select_skin, 'blue', '青色');
+		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'ピンク色');
+		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '深緑色');
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ZW_CN);
 		trans_setHtmlText(sai_id_text_language, '语言 (Language):');
@@ -1420,6 +1470,12 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_color_2nd, "第二种颜色：");
 		trans_setHtmlText(sai_id_button_init_app, "初始化");
 		trans_setHtmlText(sai_id_text_label_message_volume, "留言音量：");
+		trans_setHtmlText(sai_id_text_skin, "皮肤：");
+		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金的');
+		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色的');
+		trans_setSelectOptionText(sai_id_select_skin, 'blue', '蓝色的');
+		trans_setSelectOptionText(sai_id_select_skin, 'pink', '粉色');
+		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '深绿色');
 	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ZH_TW);
 		trans_setHtmlText(sai_id_text_language, '語言 (Language):');
@@ -1500,6 +1556,12 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_color_2nd, "第二種顏色：");
 		trans_setHtmlText(sai_id_button_init_app, "初始化");
 		trans_setHtmlText(sai_id_text_label_message_volume, "留言音量：");
+		trans_setHtmlText(sai_id_text_skin, "皮膚：");
+		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金的');
+		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色的');
+		trans_setSelectOptionText(sai_id_select_skin, 'blue', '藍色的');
+		trans_setSelectOptionText(sai_id_select_skin, 'pink', '粉紅色');
+		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '深綠色');
 	}else if(lang == 'kr' || lang == 'ko' || lang == 'ko-KR'){ // Korean
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_KO_KR);
 		trans_setHtmlText(sai_id_text_language, '언어 (Language):');
@@ -1580,6 +1642,12 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_color_2nd, "두 번째 색상:");
 		trans_setHtmlText(sai_id_button_init_app, "앱 재설정");
 		trans_setHtmlText(sai_id_text_label_message_volume, "메시지 음성 음량:");
+		trans_setHtmlText(sai_id_text_skin, "스킨:");
+		trans_setSelectOptionText(sai_id_select_skin, 'golden', '황금');
+		trans_setSelectOptionText(sai_id_select_skin, 'purple', '보라색');
+		trans_setSelectOptionText(sai_id_select_skin, 'blue', '청색');
+		trans_setSelectOptionText(sai_id_select_skin, 'pink', '핑크색');
+		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '다크 그린');
 	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_IT);
 		trans_setHtmlText(sai_id_text_language, 'Lingua (Language):');
@@ -1660,6 +1728,12 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_color_2nd, "2° colore:");
 		trans_setHtmlText(sai_id_button_init_app, "Inizializzare");
 		trans_setHtmlText(sai_id_text_label_message_volume, "Volume della voce:");
+		trans_setHtmlText(sai_id_text_skin, "Pelle:");
+		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'd\'Oro');
+		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Viola');
+		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blu');
+		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Colore Rosa');
+		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Verde Scuro');
 	}else if(lang == 'de' || lang == 'de-DE'){ // German
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_DE);
 		trans_setHtmlText(sai_id_text_language, 'Sprache (Language):');
@@ -1732,7 +1806,7 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_page_config_header, 'Aufbau');
 		trans_setHtmlText(sai_id_text_label_message_text, 'Nachrichtentext:');
 		trans_setHtmlText(sai_id_button_message, 'Nachricht...');
-		trans_setHtmlText(sai_id_button_start_hypnosis, 'Beginnen Sie mit der Hypnose...');
+		trans_setHtmlText(sai_id_button_start_hypnosis, 'Hypnose beginnen...');
 		trans_setHtmlText(sai_id_button_release_hypnosis, 'Hypnose loslassen');
 		trans_setHtmlText(sai_id_text_count_down, 'Countdown:');
 		trans_setHtmlText(sai_id_text_label_message_speech, 'Nachrichtenansprache:');
@@ -1740,6 +1814,12 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_color_2nd, "2. Farbe:");
 		trans_setHtmlText(sai_id_button_init_app, "Initialisieren");
 		trans_setHtmlText(sai_id_text_label_message_volume, "Stimmen Lautstärke:");
+		trans_setHtmlText(sai_id_text_skin, "Haut:");
+		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Golden');
+		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Lila');
+		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blau');
+		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Pinke Farbe');
+		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Dunkelgrün');
 	}else{ // English is default
 		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_EN);
 		trans_setHtmlText(sai_id_text_language, 'Language (言語):');
@@ -1820,6 +1900,12 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_color_2nd, "2nd color:");
 		trans_setHtmlText(sai_id_button_init_app, "Initialize");
 		trans_setHtmlText(sai_id_text_label_message_volume, "Message voice volume:");
+		trans_setHtmlText(sai_id_text_skin, "Skin:");
+		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Golden');
+		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Purple');
+		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blue');
+		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Pink');
+		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Darkgreen');
 	}
 
 	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));

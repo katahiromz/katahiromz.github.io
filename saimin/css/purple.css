@@ -318,6 +318,7 @@ input[type='color'] { /* 色選択ボタン */
 	border: solid 1px black;
 	padding: 0.2cm;
 	min-height: 0.8cm;
+	background-image: linear-gradient(to bottom, #613, #f0c);
 }
 #sai_id_message_list div:hover { /* メッセージリスト */
 	background-color: #c0c;
@@ -466,7 +467,7 @@ input[type='color'] { /* 色選択ボタン */
 	left: 3px;
 	top: 3px;
 }
-#sai_id_canvas_1 { /* 顔認識のページのキャンバス */
+#sai_id_canvas_face { /* 顔認識のページのキャンバス */
 	z-index: 1;
 	background-color: #222;
 	top: 0;
@@ -480,7 +481,7 @@ input[type='color'] { /* 色選択ボタン */
 	position: absolute;
 	width: 50vw;
 	width: 50dvw;
-	height: 1cm;
+	height: 1.2cm;
 	left: calc(50vw - 50vw / 2);
 	left: calc(50dvw - 50dvw / 2);
 	top: calc(80vh - 1cm / 2);
@@ -491,7 +492,7 @@ input[type='color'] { /* 色選択ボタン */
 	position: absolute;
 	width: 50vw;
 	width: 50dvw;
-	height: 1cm;
+	height: 1.2cm;
 	left: calc(50vw - 50vw / 2);
 	left: calc(50dvw - 50dvw / 2);
 	top: calc(90vh - 1cm / 2);
@@ -502,7 +503,6 @@ input[type='color'] { /* 色選択ボタン */
 	#sai_id_button_lock_on { /* ロックオンボタン */
 		width: 20vw;
 		width: 20dvw;
-		height: 1cm;
 		left: calc(30vw - 20vw / 2);
 		left: calc(30dvw - 20dvw / 2);
 		top: calc(80vh - 1cm / 2);
@@ -511,7 +511,6 @@ input[type='color'] { /* 色選択ボタン */
 	#sai_id_button_close { /* 顔認識を閉じるボタン */
 		width: 20vw;
 		width: 20dvw;
-		height: 1cm;
 		left: calc(70vw - 20vw / 2);
 		left: calc(70dvw - 20dvw / 2);
 		top: calc(80vh - 1cm / 2);
@@ -519,7 +518,8 @@ input[type='color'] { /* 色選択ボタン */
 	}
 }
 .sai_class_face_button { /* 顔認識のアクションボタン */
-	background: rgba(255, 255, 255, 60%);
+	background: rgba(255, 255, 255, 50%);
+	border-radius: 8px;
 }
 .sai_class_face_button:disabled { /* 顔認識の無効のアクションボタン */
 	color: rgb(191, 191, 191);

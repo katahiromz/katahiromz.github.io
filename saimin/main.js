@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.5.7'; // KraKraバージョン番号。
+const sai_VERSION = '3.5.8'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 
@@ -159,34 +159,40 @@ document.addEventListener('DOMContentLoaded', function(){
 			SAI_sound_pause();
 		}
 
+		// 顔認識の状態をUIに反映する。
+		const face_update_status = function(status){
+			switch(status){
+			case 0: // Unlocked
+				sai_id_button_lock_on.innerText = trans_getText('TEXT_LOCK_ON');
+				sai_id_button_lock_on.disabled = true;
+				break;
+			case 1: // Candidate
+				sai_id_button_lock_on.innerText = trans_getText('TEXT_LOCK_ON');
+				sai_id_button_lock_on.disabled = false;
+				break;
+			case 2: // Locked
+				sai_id_button_lock_on.innerText = trans_getText('TEXT_UNLOCK');
+				sai_id_button_lock_on.disabled = false;
+				if(sai_id_checkbox_auto_play_sound.checked){
+					let lockon_sound = new Audio('sn/LockOn.mp3');
+					if(lockon_sound){
+						lockon_sound.volume = sai_id_range_sound_volume.value / 100.0;
+						lockon_sound.play();
+					}
+				}
+				break;
+			}
+			sai_id_button_close.innerText = trans_getText('TEXT_CLOSE');
+		};
+
 		// 顔認識のページか？
 		if(page_id == sai_id_page_face_getter){
 			if (!sai_face_getter) {
-				sai_face_getter = new facelocker(sai_id_canvas_1, function(status){
-					switch(status){
-					case 0: // Unlocked
-						sai_id_button_lock_on.innerText = trans_getText('TEXT_LOCK_ON');
-						sai_id_button_lock_on.disabled = true;
-						break;
-					case 1: // Candidate
-						sai_id_button_lock_on.innerText = trans_getText('TEXT_LOCK_ON');
-						sai_id_button_lock_on.disabled = false;
-						break;
-					case 2: // Locked
-						sai_id_button_lock_on.innerText = trans_getText('TEXT_UNLOCK');
-						sai_id_button_lock_on.disabled = false;
-						if(sai_id_checkbox_auto_play_sound.checked){
-							let lockon_sound = new Audio('sn/LockOn.mp3');
-							if(lockon_sound){
-								lockon_sound.volume = sai_id_range_sound_volume.value / 100.0;
-								lockon_sound.play();
-							}
-						}
-						break;
-					}
-					sai_id_button_close.innerText = trans_getText('TEXT_CLOSE');
+				sai_face_getter = new facelocker(sai_id_canvas_face, function(status){
+					face_update_status(status);
 				});
 			}
+			face_update_status(sai_face_getter.get_status());
 			sai_face_getter.resume();
 		}else{
 			if(sai_face_getter){
@@ -391,9 +397,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 映像のスピードの種類のUIも更新。
 		SAI_speed_set_type(localStorage.getItem('saiminSpeedType'));
 
-		// スタイルシートも更新。
-		stylesheet_1.href = trans_getStyleSheet();
-
 		// Android側にも言語変更を通知する。
 		try{
 			android.setLanguage(lang);
@@ -401,6 +404,31 @@ document.addEventListener('DOMContentLoaded', function(){
 			;
 		}
 	}
+
+	// KraKraのスキンをセットする。
+	const SAI_set_skin = function(skin, reset_colors = false){
+		// スキン設定がなければデフォルトを使う。
+		if(!skin)
+			skin = trans_getDefaultSkin();
+
+		// 設定をUIに反映する。
+		trans_skin = skin = skin.toString();
+		sai_id_select_skin.value = skin;
+
+		// ローカルストレージに記憶。
+		localStorage.setItem('saiminSkin', skin);
+
+		// スタイルシートも更新。
+		stylesheet_1.href = trans_getStyleSheet();
+
+		// 色をリセットするか？
+		if (reset_colors){
+			sai_id_color_1st.value = trans_getColor('COLOR_1ST');
+			sai_id_color_2nd.value = trans_getColor('COLOR_2ND');
+			localStorage.setItem('saimin1stColor', sai_id_color_1st.value);
+			localStorage.setItem('saimin2ndColor', sai_id_color_2nd.value);
+		}
+	};
 
 	// スピーチに対応するために、テキストを調整する。
 	const SAI_adjust_text_for_speech = function(text){
@@ -3374,10 +3402,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 言語選択のOKボタン。
 		sai_id_button_choose_language.addEventListener('click', function(e){
 			SAI_set_language(sai_id_select_language_2.value);
-			sai_id_color_1st.value = trans_getColor('COLOR_1ST');
-			sai_id_color_2nd.value = trans_getColor('COLOR_2ND');
-			localStorage.setItem('saimin1stColor', sai_id_color_1st.value);
-			localStorage.setItem('saimin2ndColor', sai_id_color_2nd.value);
+			SAI_set_skin(trans_getDefaultSkin(), true);
 			if(localStorage.getItem('saiminUserAccepted'))
 				SAI_choose_page(sai_id_page_main);
 			else
@@ -3502,7 +3527,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			localStorage.setItem('saiminFaceGetterShowing', "1");
 			SAI_choose_page(sai_id_page_face_getter);
 		});
-		sai_id_canvas_1.addEventListener('click', function(e){
+		sai_id_canvas_face.addEventListener('click', function(e){
 			if(sai_face_getter)
 				sai_face_getter.on_click(e);
 		});
@@ -3521,6 +3546,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		sai_id_button_close.addEventListener('click', function(){
 			localStorage.removeItem('saiminFaceGetterShowing');
 			SAI_choose_page(sai_id_page_main);
+		});
+
+		// スキン。
+		sai_id_select_skin.addEventListener('change', function(){
+			SAI_set_skin(sai_id_select_skin.value, true);
 		});
 	}
 
@@ -3698,9 +3728,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		// ローカルストレージに応じて処理を行う。
 		let saiminUserAccepted = localStorage.getItem('saiminUserAccepted');
 		let saiminLanguage3 = localStorage.getItem('saiminLanguage3');
+		let saiminSkin = localStorage.getItem('saiminSkin');
 		if(saiminUserAccepted && saiminLanguage3){ // すでにアダルトチェックが完了しているか？
 			// 言語をセット。
 			SAI_set_language(saiminLanguage3);
+			// スキンをセット。
+			SAI_set_skin(saiminSkin);
 
 			// ユーザを受け入れる。
 			SAI_user_accepted();
@@ -3713,6 +3746,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		}else{ // 合意が必要。
 			// 言語をセット。
 			SAI_set_language(saiminLanguage3);
+			// スキンをセット。
+			SAI_set_skin(saiminSkin);
 
 			// 合意ページに移動。
 			SAI_help_and_agreement();
