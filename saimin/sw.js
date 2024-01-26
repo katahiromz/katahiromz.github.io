@@ -11,6 +11,7 @@ sw.precache('precached', [
 	'./css/golden.css',
 	'./css/pink.css',
 	'./css/purple.css',
+	'./css/red.css',
 	'./facelocker.js',
 	'./favicon.ico',
 	'./img/aim.svg',
