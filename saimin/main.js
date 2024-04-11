@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.6.0'; // KraKraバージョン番号。
+const sai_VERSION = '3.6.1'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 
@@ -1901,8 +1901,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
 
-	// 映像「画7: ぼわんぼわん」の描画。
-	// pic7: Clamor Clamor
+	// 映像「画7: 奇妙な渦巻き」の描画。
+	// pic7: Strange Swirl
 	const SAI_draw_pic_07 = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
@@ -1917,61 +1917,52 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// 映像の進行を表す変数。
 		let count2 = SAI_get_tick_count();
-		let factor1 = count2 * 0.13, factor2 = count2 * 0.075;
-
-		// 画面中央を少しずらす。
-		if(SAI_screen_is_large(ctx)){
-			qx += 60 * Math.cos(count2 * 0.1);
-			qy += 60 * Math.sin(count2 * 0.1);
-		}else{
-			qx += 30 * Math.cos(count2 * 0.1);
-			qy += 30 * Math.sin(count2 * 0.1);
-		}
+		let factor1 = count2 * 0.01, factor2 = count2 * 0.07;
 
 		// 黒で長方形領域を塗りつぶす。
-		ctx.fillStyle = '#000';
+		ctx.fillStyle = SAI_color_get_1st(); // 1番目の色で塗りつぶす。
 		ctx.fillRect(px, py, dx, dy);
 
 		// 画面中央を原点とする。
 		ctx.translate(qx, qy);
 
-		// アスタリスクのような星形？を描画する。外側から順番に描画する。
-		let i = 0;
-		const delta = dxy * 0.015 + 1;
-		for(let radius = (Math.floor(dxy * 0.35 / delta) + 1) * delta; radius > 0; radius -= delta){
-			// 塗りつぶしの色を選ぶ。
-			switch (i % 2){
-			case 0: ctx.fillStyle = SAI_color_get_1st(); break;
-			case 1: ctx.fillStyle = SAI_color_get_2nd(); break;
+		const num_lines = 10; // これは偶数でなければならない。
+		const a = 1, b = 1.1; // らせんの係数。
+
+		// 発散する渦巻きを表す多角形の頂点を構築する。
+		let lines = [];
+		for(let i = 0; i < num_lines; ++i){
+			let delta_theta = 2 * Math.PI * i / num_lines;
+			let line = [[0, 0]];
+			for(let theta = 0; theta <= 2 * Math.PI * 1.2; theta += 0.02){
+				let r = a * Math.exp(b * theta);
+				let t = delta_theta + Math.sqrt(Math.sqrt(r)) * Math.sin(theta - factor2) + factor1;
+				let comp = new Complex({abs:r, arg:t});
+				let x = comp.re, y = comp.im;
+				line.push([x, y]);
 			}
-
-			// パスを構築する。
-			ctx.beginPath();
-			for(let angle = 0; angle <= 360; angle += 5){
-				let radian = angle * (Math.PI / 180);
-				let zoom = (1.0 * Math.abs(Math.sin(radian * 3)) + Math.cos(factor1) + 2);
-				let x = (radius + 2) * Math.cos(radian + factor2) * zoom;
-				let y = (radius + 2) * Math.sin(radian + factor2) * zoom;
-				if(angle == 0){ // 角度がゼロなら最初の点。
-					ctx.moveTo(x, y);
-				}else{
-					ctx.lineTo(x, y);
-				}
-			}
-
-			// 出来たパスを塗りつぶす。
-			ctx.fill();
-
-			// 色選択に使う変数を更新する。
-			++i;
+			lines.push(line);
 		}
 
-		// 外側に行くほど白くなる円形グラデーションを掛ける。
-		let grd = ctx.createRadialGradient(0, 0, 0, 0, 0, dxy * 0.75);
-		grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
-		grd.addColorStop(1, 'rgba(255, 255, 255, 1.0)');
-		ctx.fillStyle = grd;
-		SAI_draw_circle(ctx, 0, 0, dxy, true);
+		// 多角形を描画する。
+		let even = true;
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		for(let i = 0; i < num_lines; ++i){
+			let line = lines[i];
+			if(even){ // 偶数回目はそのままの向き。
+				for(let k = 0; k < line.length; ++k){
+					ctx.lineTo(line[k][0], line[k][1]);
+				}
+			}else{ // 奇数回目は逆向き。
+				for(let k = line.length - 1; k >= 0; --k)
+					ctx.lineTo(line[k][0], line[k][1]);
+			}
+			even = !even;
+		}
+		ctx.closePath();
+		ctx.fillStyle = SAI_color_get_2nd(); // 2番目の色で塗りつぶす。
+		ctx.fill();
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
@@ -2169,80 +2160,83 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
 
-	// 映像「画11: ミックス渦巻き」の描画。
-	// pic11: Mixed Spiral
+	// 映像「画11: 奇妙な渦巻き 2」の描画。
+	// pic11: Strange Swirl 2
 	const SAI_draw_pic_11 = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
+
+		// 画面中央の座標を計算する。
+		let qx = px + dx / 2, qy = py + dy / 2;
+
+		// 画面の辺の平均の長さ。
+		let dxy = (dx + dy) / 2;
 
 		// 長方形領域(px, py, dx, dy)をクリッピングする。
 		SAI_clip_rect(ctx, px, py, dx, dy);
 
-		// 2番目の色で塗りつぶす。
-		ctx.fillStyle = SAI_color_get_2nd();
+		// 映像の進行を表す変数。
+		let count2 = SAI_get_tick_count();
+		let factor1 = count2 * 0.08, factor2 = count2 * 0.02;
+
+		// 黒で長方形領域を塗りつぶす。
+		ctx.fillStyle = SAI_color_get_1st(); // 1番目の色で塗りつぶす。
 		ctx.fillRect(px, py, dx, dy);
 
 		// 画面中央を原点とする。
-		let qx = px + dx / 2, qy = py + dy / 2;
 		ctx.translate(qx, qy);
 
-		// 映像の進行を表す変数。
-		let count2 = -SAI_get_tick_count();
+		const num_lines = 12; // これは偶数でなければならない。
+		const a = 1, b = 1.01; // らせんの係数。
 
-		const num_lines = 24; // これは偶数でなければならない。
-
-		// らせんの係数。
-		let a = (1 + Math.sin(count2 * 0.1) * 0.2);
-		let b = (1 + Math.cos(count2 * 0.1) * 0.1);
+		// 酩酊感を出すために、上下に振動する。
+		ctx.translate(0, -dxy * 0.02 * Math.abs(Math.sin(factor1 * 2)));
 
 		// 発散する渦巻きを表す多角形の頂点を構築する。
 		let lines = [];
 		for(let i = 0; i < num_lines; ++i){
 			let delta_theta = 2 * Math.PI * i / num_lines;
-			// 対数らせんの公式に従って頂点を追加していく。ただし偏角はdelta_thetaだけずらす。
 			let line = [[0, 0]];
-			for(let theta = 0; theta <= Math.PI * 3; theta += 0.1){
+			for(let theta = 0; theta <= 2 * Math.PI * 1.2; theta += 0.02){
 				let r = a * Math.exp(b * theta);
-				let comp = new Complex({abs:r, arg:theta + delta_theta});
+				let t = delta_theta - Math.sqrt(Math.sqrt(r)) * Math.abs(Math.sin(theta * 2 - factor2)) + factor1;
+				let comp = new Complex({abs:r, arg:t});
 				let x = comp.re, y = comp.im;
 				line.push([x, y]);
 			}
 			lines.push(line);
 		}
 
-		// 原点を中心として、これから描画する図形を回転する。
-		ctx.rotate(count2 * 0.035);
-
-		// 多角形を描画する。逆回転で二重にする。
+		// 多角形を描画する。
+		let even = true;
 		ctx.beginPath();
-		for(let m = 0; m < 2; ++m){
-			let even = true;
-			ctx.moveTo(0, 0);
-			for(let i = 0; i < num_lines; ++i){
-				let line = lines[i];
-				if(m == 0){
-					if(even){ // 偶数回目はそのままの向き。
-						for(let k = 0; k < line.length; ++k){
-							ctx.lineTo(line[k][0], line[k][1]);
-						}
-					}else{ // 奇数回目は逆向き。
-						for(let k = line.length - 1; k >= 0; --k)
-							ctx.lineTo(line[k][0], line[k][1]);
-					}
-				}else{
-					if(even){ // 偶数回目はそのままの向き。
-						for(let k = 0; k < line.length; ++k){
-							ctx.lineTo(line[k][0], -line[k][1]);
-						}
-					}else{ // 奇数回目は逆向き。
-						for(let k = line.length - 1; k >= 0; --k)
-							ctx.lineTo(line[k][0], -line[k][1]);
-					}
+		ctx.moveTo(0, 0);
+		for(let i = 0; i < num_lines; ++i){
+			let line = lines[i];
+			if(even){ // 偶数回目はそのままの向き。
+				for(let k = 0; k < line.length; ++k){
+					ctx.lineTo(line[k][0], line[k][1]);
 				}
-				even = !even;
+			}else{ // 奇数回目は逆向き。
+				for(let k = line.length - 1; k >= 0; --k)
+					ctx.lineTo(line[k][0], line[k][1]);
 			}
+			even = !even;
 		}
-		ctx.fillStyle = SAI_color_get_1st(); // 1番目の色で塗りつぶす。
+		ctx.closePath();
+		ctx.fillStyle = SAI_color_get_2nd(); // 2番目の色で塗りつぶす。
 		ctx.fill();
+
+		// 中央に赤い丸を描く。
+		ctx.fillStyle = 'red';
+		SAI_draw_circle(ctx, 0, Math.sin(factor1 * 4) * dxy * 0.02, dxy * 0.01);
+		ctx.fill();
+		ctx.strokeStyle = '#f66';
+		ctx.lineWidth = 3;
+		SAI_draw_circle(ctx, 0, 0, dxy * 0.05, false);
+		ctx.lineWidth = 4;
+		ctx.strokeStyle = 'red';
+		SAI_draw_circle(ctx, 0, 0, dxy * 0.1 * Math.abs(0.9 + 0.2 * Math.sin(factor1)), false);
+		ctx.stroke();
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
