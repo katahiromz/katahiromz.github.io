@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.6.2'; // KraKraバージョン番号。
+const sai_VERSION = '3.6.3'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 
@@ -984,8 +984,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	// スクリーンのサイズをセットする。必要ならキャンバスのサイズも変更する。
 	const SAI_screen_fit_canvas = function(){
 		console.log('SAI_screen_fit_canvas');
-		sai_screen_width = sai_id_canvas_01.width = window.innerWidth;
-		sai_screen_height = sai_id_canvas_01.height = window.innerHeight;
+		sai_screen_width = sai_id_canvas_01.width = sai_id_canvas_02.width = window.innerWidth;
+		sai_screen_height = sai_id_canvas_01.height = sai_id_canvas_02.height = window.innerHeight;
 	}
 
 	// スクリーンのサイズをセットし、必要なら画面を復帰する。
@@ -1391,18 +1391,19 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 長方形領域(px, py, dx, dy)をクリッピングする。
 		SAI_clip_rect(ctx, px, py, dx, dy);
 
-		// 画面中央を原点とする。
-		let qx = px + dx / 2, qy = py + dy / 2;
-		ctx.translate(qx, qy);
-
 		// 映像の進行を表す変数。
 		let count2 = -SAI_get_tick_count();
 
 		// 画面の寸法を使って計算する。
+		let qx = px + dx / 2, qy = py + dy / 2;
 		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
 		let mxy = (maxxy + minxy) * 0.04;
 
-		const num_lines = 24; // これは偶数でなければならない。
+		// 視覚的な酩酊感をもたらすために回転運動の中心点をすりこぎ運動させる。
+		qx += mxy * Math.cos(count2 * 0.07);
+		qy += mxy * Math.sin(count2 * 0.15);
+
+		const num_lines = 20; // これは偶数でなければならない。
 		const a = 1, b = 1.1; // らせんの係数。
 
 		// 発散する渦巻きを表す多角形の頂点を構築する。
@@ -1410,7 +1411,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		for(let i = 0; i < num_lines; ++i){
 			let delta_theta = 2 * Math.PI * i / num_lines;
 			// 対数らせんの公式に従って頂点を追加していく。ただし偏角はdelta_thetaだけずらす。
-			let line = [[0, 0]];
+			let line = [[qx, qy]];
 			for(let theta = 0; theta <= 2 * Math.PI * 1.2; theta += 0.1){
 				let r = a * Math.exp(b * theta);
 				let t = theta + delta_theta;
@@ -1418,9 +1419,9 @@ document.addEventListener('DOMContentLoaded', function(){
 				t += -count2 * 0.12;
 				let comp = new Complex({abs:r, arg:t});
 				let x = comp.re, y = comp.im;
-				// 視覚的な酩酊感をもたらすために回転運動の中心点をすりこぎ運動させる。
-				x += mxy * Math.cos(count2 * 0.07);
-				y += mxy * Math.sin(count2 * 0.15);
+				// 画面中央を原点とする。
+				x += qx;
+				y += qy;
 				line.push([x, y]);
 			}
 			lines.push(line);
@@ -1429,7 +1430,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 多角形を描画する。
 		let even = true;
 		ctx.beginPath();
-		ctx.moveTo(0, 0);
+		ctx.moveTo(qx, qy);
 		for(let i = 0; i < num_lines; ++i){
 			let line = lines[i];
 			if(even){ // 偶数回目はそのままの向き。
@@ -1446,7 +1447,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
 		ctx.fillStyle = SAI_color_get_1st(); // 1番目の色で塗りつぶす。
 		ctx.fill('evenodd');
-		ctx.rect(-dx/2, -dy/2, dx, dy);
+		ctx.rect(px, py, dx, dy);
 		ctx.fillStyle = SAI_color_get_2nd(); // 2番目の色で塗りつぶす。
 		ctx.fill('evenodd');
 		ctx.globalAlpha = 1; // 元に戻す。
@@ -1480,6 +1481,11 @@ document.addEventListener('DOMContentLoaded', function(){
 			ctx.clip();
 		}
 
+		// 1番目の色で塗りつぶす。
+		ctx.beginPath();
+		ctx.fillStyle = SAI_color_get_1st();
+		ctx.fillRect(px, py, dx, dy);
+
 		// さまざまな計算をする。
 		let dr0 = 30;
 		if(SAI_screen_is_large(ctx)){
@@ -1502,12 +1508,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			ctx.arc(qx, qy, Math.abs(radius + ctx.lineWidth*0.5), 0, 2 * Math.PI);
 		}
 		ctx.fillStyle = SAI_color_get_2nd();
-		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
 		ctx.fill('evenodd');
-		ctx.rect(0, 0, dx, dy);
-		ctx.fillStyle = SAI_color_get_1st();
-		ctx.fill('evenodd');
-		ctx.globalAlpha = 1; // 元に戻す。
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
@@ -1515,13 +1516,18 @@ document.addEventListener('DOMContentLoaded', function(){
 	// 映像「画2: 同心円状」の描画。
 	// pic2: Concentric Circles
 	const SAI_draw_pic_02 = function(ctx, px, py, dx, dy){
-		SAI_draw_pic_2_sub(ctx, px, py, dx, dy, true);
-		SAI_draw_pic_2_sub(ctx, px, py, dx, dy, false);
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+
+		SAI_draw_pic_2_sub(ctx2, px, py, dx, dy, true);
+		SAI_draw_pic_2_sub(ctx2, px, py, dx, dy, false);
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
 	}
 
 	// 映像「画3: 目が回る」の描画。
 	// pic3: The Eyes
-	const SAI_draw_pic_03 = function(ctx, px, py, dx, dy){
+	const SAI_draw_pic_03_sub = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		// 画面中央の座標を計算する。
@@ -1621,15 +1627,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		const N = 4;
 		let radian = factor * 1.3;
 		for(i = 0; i < N; ++i){
-			let x = cxy * Math.cos(radian + 0.4) * 0.3, y = cxy * Math.sin(radian + 0.4) * 0.3;
-			SAI_draw_eye(ctx, x, y, cxy / 10, opened, 0.25); // アルファ値0.25により透過する。
-
-			x = cxy * Math.cos(radian + 0.2) * 0.3;
-			y = cxy * Math.sin(radian + 0.2) * 0.3;
-			SAI_draw_eye(ctx, x, y, cxy / 10, opened, 0.65); // アルファ値0.65により透過する。
-
-			x = cxy * Math.cos(radian) * 0.3;
-			y = cxy * Math.sin(radian) * 0.3;
+			let x = cxy * Math.cos(radian) * 0.3;
+			let y = cxy * Math.sin(radian) * 0.3;
 			SAI_draw_eye(ctx, x, y, cxy / 10, opened); // 透過しない。
 
 			// 目の中にハート型を描画する。
@@ -1647,6 +1646,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		SAI_draw_circle(ctx, 0, 0, dxy, true);
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
+	}
+
+	// 映像「画3: 目が回る」の描画。
+	// pic3: The Eyes
+	const SAI_draw_pic_03 = function(ctx, px, py, dx, dy){
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+		SAI_draw_pic_03_sub(ctx2, px, py, dx, dy, true);
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
 	}
 
 	// 映像「画4: アルキメデスのらせん」の描画。
@@ -1725,7 +1734,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// 映像「画5: 広がるハート」の描画。
 	// pic5: Spreading Rainbow
-	const SAI_draw_pic_05 = function(ctx, px, py, dx, dy){
+	const SAI_draw_pic_05_sub = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		// 画面中央の座標を計算する。
@@ -1821,9 +1830,19 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
 
+	// 映像「画5: 広がるハート」の描画。
+	// pic5: Spreading Rainbow
+	const SAI_draw_pic_05 = function(ctx, px, py, dx, dy){
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+		SAI_draw_pic_05_sub(ctx2, px, py, dx, dy, true);
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
+	}
+
 	// 映像「画6: 五円玉」の描画。
 	// pic6: 5-yen coin
-	const SAI_draw_pic_06 = function(ctx, px, py, dx, dy){
+	const SAI_draw_pic_06_sub = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		// 画面中央の座標を計算する。
@@ -1916,6 +1935,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
 
+	// 映像「画6: 五円玉」の描画。
+	// pic6: 5-yen coin
+	const SAI_draw_pic_06 = function(ctx, px, py, dx, dy){
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+		SAI_draw_pic_06_sub(ctx2, px, py, dx, dy, true);
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
+	}
+
 	// 映像「画7: 奇妙な渦巻き」の描画。
 	// pic7: Strange Swirl
 	const SAI_draw_pic_07 = function(ctx, px, py, dx, dy){
@@ -1985,7 +2014,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// 映像「画8: クレージーな色」の描画。
 	// pic8: Crazy Colors
-	const SAI_draw_pic_08 = function(ctx, px, py, dx, dy){
+	const SAI_draw_pic_08_sub = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		// 画面中央の座標を計算する。
@@ -2128,6 +2157,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.globalAlpha = 1; // 元に戻す。
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
+	}
+
+	// 映像「画8: クレージーな色」の描画。
+	// pic8: Crazy Colors
+	const SAI_draw_pic_08 = function(ctx, px, py, dx, dy){
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+		SAI_draw_pic_08_sub(ctx2, px, py, dx, dy, true);
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
 	}
 
 	// 映像「画10: アナログディスク」の描画。
@@ -2335,7 +2374,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// 映像「画12: 万華鏡」の描画。
 	// pic12: Kaleidoscope
-	const SAI_draw_pic_12 = function(ctx, px, py, dx, dy){
+	const SAI_draw_pic_12_sub = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		if(false){
@@ -2363,6 +2402,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
+	}
+
+	// 映像「画12: 万華鏡」の描画。
+	// pic12: Kaleidoscope
+	const SAI_draw_pic_12 = function(ctx, px, py, dx, dy){
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+		SAI_draw_pic_12_sub(ctx2, px, py, dx, dy, true);
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
 	}
 
 	// 映像「画13: 1番目の色の画面」の描画。
@@ -2845,7 +2894,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		if(saiminMotionBlur){
 			SAI_set_motion_blur(saiminMotionBlur);
 		}else{
-			SAI_set_motion_blur(2);
+			SAI_set_motion_blur(6);
 		}
 
 		// ローカルストレージに映像切り替えの種類があれば読み込む。
