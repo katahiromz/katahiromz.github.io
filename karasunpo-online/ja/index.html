@@ -25,7 +25,7 @@
 	<script defer src="pushy.min.js"></script>
 	<link rel="stylesheet" href="pushy.css">
 	<!-- PDF.js -->
-	<script defer src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<script defer src="pdf.js"></script>
 	<!-- main.css -->
 	<link rel="stylesheet" href="main.css">
 	<!-- main.js -->
@@ -424,6 +424,7 @@
 2022-07-08 Ver.0.9.2 サイドメニューを実装。
 2022-07-09 Ver.0.9.3 'アプリの初期化'メニュー項目を追加。
 2022-07-10 Ver.0.9.4 顕微鏡を追加。
+2024-04-22 Ver.0.9.5 ローカルのpdf.jsを参照するように修正。
 </pre>
 				</div>
 				<div id="about-dialog" class="invisible">
@@ -434,7 +435,7 @@
 <!-- TODO: Please sync this text to LICENSE.TXT. -->
 					<textarea class="license" readonly="readonly">
 Main part of Karasunpo Online:
-	Copyright (C) 2021-2022 Katayama Hirofumi MZ.
+	Copyright (C) 2021-2024 Katayama Hirofumi MZ.
 jQuery v3.6.0:
 	(c) JS Foundation and other contributors.
 jQuery UI Touch Punch:
@@ -676,7 +677,7 @@ DEALINGS IN THE SOFTWARE.
 					</textarea>
 				</div>
 				<hr />
-				<div class="smaller">&copy; 2021-2022 katahiromz</div>
+				<div class="smaller">&copy; 2021-2024 katahiromz</div>
 			</footer>
 		</section>
 		<canvas id="image-screen"></canvas>
