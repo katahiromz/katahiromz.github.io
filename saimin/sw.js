@@ -30,6 +30,8 @@ sw.precache('precached', [
 	'./img/arrow_right.svg',
 	'./img/back.svg',
 	'./img/coin5yen.png',
+	'./img/eye-left.svg',
+	'./img/eye-right.svg',
 	'./img/gear.svg',
 	'./img/hypnosis-released_de.svg',
 	'./img/hypnosis-released_en.svg',
