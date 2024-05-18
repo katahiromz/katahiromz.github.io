@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.6.8'; // KraKraバージョン番号。
+const sai_VERSION = '3.6.9'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 
@@ -610,6 +610,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		default: value = 'clockwise';
 		}
 		sai_id_select_vortex_direction.value = value;
+		// スパイラルの画像も更新。
+		if (value == 'counterclockwise')
+			sai_spiral_img.src = 'img/spiral2.svg';
+		else
+			sai_spiral_img.src = 'img/spiral.svg';
 		// ローカルストレージに記憶する。
 		localStorage.setItem('saiminVortexDirection', value);
 	};
@@ -2075,13 +2080,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		let count2 = SAI_get_tick_count();
 
 		// 画面中央を少しずらす。
-		if(SAI_screen_is_large(ctx)){
-			qx += 40 * Math.cos(count2 * 0.08);
-			qy += 40 * Math.sin(count2 * 0.08);
-		}else{
-			qx += 20 * Math.cos(count2 * 0.08);
-			qy += 20 * Math.sin(count2 * 0.08);
-		}
+		qx += dxy * 0.1 * Math.cos(count2 * 0.08);
+		qy += dxy * 0.1 * Math.sin(count2 * 0.08);
 
 		// 画面中央を原点とする。
 		ctx.translate(qx, qy);
@@ -3836,7 +3836,10 @@ document.addEventListener('DOMContentLoaded', function(){
 		sai_coin_img.src = 'img/coin5yen.png';
 
 		// スパイラルの画像も更新。
-		sai_spiral_img.src = "img/spiral.svg";
+		if (sai_id_select_vortex_direction.value == 'counterclockwise')
+			sai_spiral_img.src = 'img/spiral2.svg';
+		else
+			sai_spiral_img.src = 'img/spiral.svg';
 
 		// 設定をローカルストレージから読み込む。
 		SAI_load_local_storage();

@@ -74,6 +74,7 @@ sw.precache('precached', [
 	'./img/sound.svg',
 	'./img/speak.svg',
 	'./img/spiral.svg',
+	'./img/spiral2.svg',
 	'./img/stop.svg',
 	'./kaleido.js',
 	'./main.js',
