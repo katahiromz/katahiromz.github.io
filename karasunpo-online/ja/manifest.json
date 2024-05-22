@@ -1,5 +1,6 @@
 {
 	"name": "カラスンポ Online",
+	"type": "module",
 	"short_name": "カラスンポ",
 	"description": "画像上の２点間の名目の距離や角度を測定。",
 	"lang": "ja-JP",

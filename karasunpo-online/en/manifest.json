@@ -1,5 +1,6 @@
 {
 	"name": "Karasunpo Online",
+	"type": "module",
 	"short_name": "Karasunpo",
 	"description": "Measures the nominal distance/angle on an image file.",
 	"lang": "en-US",
