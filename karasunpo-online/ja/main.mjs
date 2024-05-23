@@ -1,11 +1,11 @@
-// main.js -- Karasunpo Online (Japanese)
+// main.mjs -- Karasunpo Online (Japanese)
 // Copyright (C) 2021-2024 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
 const KARASUNPO_VERSION = "0.9.6"; // カラスンポのバージョン番号。
 
 import * as pdfjsLib from './pdfjs-dist';
-pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc = './pdfjs-dist/build/pdf.worker.mjs';
 
 (function($){
 	// 厳密に。

@@ -5,7 +5,7 @@
 const KARASUNPO_VERSION = "0.9.6"; // カラスンポのバージョン番号。
 
 import * as pdfjsLib from './pdfjs-dist';
-pdfjsLib.GlobalWorkerOptions.workerSrc = './build/pdf.worker.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc = './pdfjs-dist/build/pdf.worker.mjs';
 
 (function($){
 	// 厳密に。
