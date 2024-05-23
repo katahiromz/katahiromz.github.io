@@ -38,6 +38,10 @@ textarea.license {
 	font-family: monospace;
 }
 
+.mode5-numeric-text {
+	width: 5rem;
+}
+
 .invisible {
 	display: none;
 }
