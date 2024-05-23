@@ -1,1 +1,1 @@
-{ "type": "module" }
+{"type":"module","dependencies":{"pdfjs-dist":"^4.2.67"}}
