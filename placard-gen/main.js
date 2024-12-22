@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.5";                        // バージョン
+    VERSION = "0.5.1";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -210,23 +210,33 @@ class PlacardGenerator {
         const style = document.querySelector('#pla_choose_page_style');
         style.type = 'text/css';
         style.media = 'print';
-        style.innerHTML = `
-            @page {
-                size: ${width_mm}mm ${height_mm}mm;
-                margin: 0;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            * {
-                -webkit-print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-            @media print (orientation: landscape) {
+        if (this.is_mobile()) {
+            style.innerHTML = `
                 @page {
-                    size: ${height_mm}mm ${width_mm}mm;
+                    size: ${page_info.name} ${orientation};
+                    margin: 0;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
                 }
-            }
-        `;
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    color-adjust: exact !important;
+                }
+            `;
+        } else {
+            style.innerHTML = `
+                @page {
+                    size: ${width_mm}mm ${height_mm}mm;
+                    margin: 0;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    color-adjust: exact !important;
+                }
+            `;
+        }
 
         const dpi = 96; // デフォルトのDPI
 
