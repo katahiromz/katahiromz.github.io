@@ -1,4 +1,4 @@
-/* version: 0.6.3 */
+/* version: 0.6.5 */
 body {
     background-color: #ff9;
 }
@@ -12,9 +12,6 @@ h1 {
 #pla_version {
     font-size: 2vh;
 }
-#pla_user_agent {
-    font-size: 2vh;
-}
 @media print {
     @page {
         size: landscape;
@@ -23,11 +20,13 @@ h1 {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
+    #pla_canvas_for_print {
+        width: 99.9%;
+        height: 99.9%;
+    }
     * {
         margin: 0;
         padding: 0;
-        width: 99.9%;
-        height: 99.9%;
         text-align: center;
         vertical-align: middle;
     }
