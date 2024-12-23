@@ -61,6 +61,7 @@ input[type=button] {
     border: 2px solid black;
     background: #ccc;
     border-radius: 1vh;
+    padding: 0.5vh;
 }
 input[type=button]:hover {
     background: #cfc;
@@ -106,7 +107,7 @@ textarea {
     position: relative;
     display: inline-block;
     background-color: #fff;
-    vertical-align: middle;
+    vertical-align: top;
 }
 .custom-checkbox:checked + span {
     background-color: #0f0;
@@ -124,7 +125,7 @@ textarea {
     position: relative;
     display: inline-block;
     background-color: #fff;
-    vertical-align: middle;
+    vertical-align: top;
     border-radius: 50%;
 }
 .custom-radio:checked + span {
