@@ -58,10 +58,10 @@ class PlacardGenerator {
     }
 
     set_version() {
-        document.querySelector('#pla_version').innerText = "Version " + this.VERSION;
+        document.querySelector('#pla_version').textContent = "Ver. " + this.VERSION;
     }
     set_user_agent() {
-        document.querySelector('#pla_user_agent').innerText = navigator.userAgent;
+        document.querySelector('#pla_user_agent').textContent = navigator.userAgent;
     }
 
     is_mobile() {
@@ -274,7 +274,7 @@ class PlacardGenerator {
             this.pla_canvas_for_print.height = long;
         }
 
-        this.pla_div_page_info.innerText = `${Math.floor(width_mm)}mm x ${Math.floor(height_mm)}mm`;
+        this.pla_div_page_info.textContent = `${Math.floor(width_mm)}mm x ${Math.floor(height_mm)}mm`;
 
         this.redraw();
     }
