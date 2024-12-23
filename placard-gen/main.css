@@ -76,6 +76,11 @@ input[type=number] {
 input[type=radio] {
     border: 2px solid black;
 }
+input[type=color] {
+    width: 6vh;
+    height: 5vh;
+    vertical-align: middle;
+}
 input[type=file] {
     display: none;
 }
