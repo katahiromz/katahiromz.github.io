@@ -20,6 +20,10 @@ h1 img {
     font-family: "ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif;
     font-size: 2.5vh;
 }
+#pla_canvas_for_display {
+    border: 2px solid black;
+    background-color: white;
+}
 @media print {
     @page {
         size: landscape;

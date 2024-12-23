@@ -645,14 +645,6 @@ class PlacardGenerator {
 		if (text.length == 0)
 			return; // テキストが空ならもう何もしない
 
-		if (for_display) { // ページ境界線を描画する（画面表示用のみ）
-			ctx.beginPath();
-			ctx.rect(x, y, width, height);
-			ctx.strokeStyle = "black";
-			ctx.lineWidth = 3;
-			ctx.stroke();
-		}
-
 		// 余白を計算
 		let margin_mm = this.pla_number_margin.value; // 余白(mm)
 		let dpi;
