@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.5.3";                      // バージョン
+    VERSION = "0.5.4";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -48,11 +48,20 @@ class PlacardGenerator {
         this.pla_radio_orientation_landscape = document.querySelector('#pla_radio_orientation_landscape');
         this.pla_radio_orientation_portrait = document.querySelector('#pla_radio_orientation_portrait');
 
+        this.set_version();
+        this.set_user_agent();
         this.populate_fonts();
         this.populate_page_sizes();
         this.load_settings();
         this.update_page_size();
         this.add_event_listers();
+    }
+
+    set_version() {
+        document.querySelector('#pla_version').innerText = "Version " + this.VERSION;
+    }
+    set_user_agent() {
+        document.querySelector('#pla_user_agent').innerText = navigator.userAgent;
     }
 
     is_mobile() {
