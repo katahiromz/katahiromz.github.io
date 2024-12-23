@@ -136,7 +136,7 @@ textarea {
     position: relative;
     display: inline-block;
     background-color: #fff;
-    vertical-align: middle;
+    vertical-align: sub;
     border-radius: 50%;
 }
 .custom-radio:checked + span {
