@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "1.0.7";                      // バージョン
+    VERSION = "1.0.8";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -162,11 +162,9 @@ class PlacardGenerator {
 
         this.pla_radio_orientation_landscape.addEventListener('click', (event) => {
             self.update_page_size();
-            self.redraw();
         });
         this.pla_radio_orientation_portrait.addEventListener('click', (event) => {
             self.update_page_size();
-            self.redraw();
         });
         this.pla_checkbox_bold.addEventListener('click', (event) => {
             self.redraw();
@@ -234,62 +232,74 @@ class PlacardGenerator {
 
     // 設定のリセット
     reset() {
-        localStorage.removeItem('pla_select_page_size');
-        localStorage.removeItem('pla_textbox');
-        localStorage.removeItem('pla_checkbox_line_break');
-        localStorage.removeItem('pla_number_margin');
-        localStorage.removeItem('pla_number_adjust_y');
-        localStorage.removeItem('pla_select_font');
-        localStorage.removeItem('pla_text_color');
-        localStorage.removeItem('pla_back_color');
-        localStorage.removeItem('pla_radio_orientation');
-        localStorage.removeItem('pla_checkbox_bold');
+        try {
+            localStorage.removeItem('pla_select_page_size');
+            localStorage.removeItem('pla_textbox');
+            localStorage.removeItem('pla_checkbox_line_break');
+            localStorage.removeItem('pla_number_margin');
+            localStorage.removeItem('pla_number_adjust_y');
+            localStorage.removeItem('pla_select_font');
+            localStorage.removeItem('pla_text_color');
+            localStorage.removeItem('pla_back_color');
+            localStorage.removeItem('pla_radio_orientation');
+            localStorage.removeItem('pla_checkbox_bold');
+        } catch (error) {
+            console.log(error);
+        }
         location.reload();
     }
 
     // 設定を読み込む
     load_settings() {
-        if (localStorage.getItem('pla_select_page_size') != null)
-            this.pla_select_page_size.selectedIndex = parseInt(localStorage.getItem('pla_select_page_size'));
-        if (localStorage.getItem('pla_textbox') != null)
-            this.pla_textbox.value = localStorage.getItem('pla_textbox');
-        if (localStorage.getItem('pla_checkbox_line_break') != null)
-            this.pla_checkbox_line_break.checked = localStorage.getItem('pla_checkbox_line_break') == "yes";
-        if (localStorage.getItem('pla_number_margin') != null)
-            this.pla_number_margin.value = parseInt(localStorage.getItem('pla_number_margin'));
-        if (localStorage.getItem('pla_number_adjust_y') != null)
-            this.pla_number_adjust_y.value = parseInt(localStorage.getItem('pla_number_adjust_y'));
-        if (localStorage.getItem('pla_select_font') != null)
-            this.combobox_select_by_text(this.pla_select_font, localStorage.getItem('pla_select_font'));
-        if (localStorage.getItem('pla_text_color') != null)
-            this.pla_text_color.value = localStorage.getItem('pla_text_color');
-        if (localStorage.getItem('pla_back_color') != null)
-            this.pla_back_color.value = localStorage.getItem('pla_back_color');
-        if (localStorage.getItem('pla_radio_orientation') != null) {
-            let orientation = localStorage.getItem('pla_radio_orientation');
-            if (orientation == 'portrait') {
-                this.pla_radio_orientation_portrait.checked = true;
-                this.pla_radio_orientation_landscape.checked = false;
-            } else {
-                this.pla_radio_orientation_portrait.checked = false;
-                this.pla_radio_orientation_landscape.checked = true;
+        try {
+            if (localStorage.getItem('pla_select_page_size') != null)
+                this.pla_select_page_size.selectedIndex = parseInt(localStorage.getItem('pla_select_page_size'));
+            if (localStorage.getItem('pla_textbox') != null)
+                this.pla_textbox.value = localStorage.getItem('pla_textbox');
+            if (localStorage.getItem('pla_checkbox_line_break') != null)
+                this.pla_checkbox_line_break.checked = localStorage.getItem('pla_checkbox_line_break') == "yes";
+            if (localStorage.getItem('pla_number_margin') != null)
+                this.pla_number_margin.value = parseInt(localStorage.getItem('pla_number_margin'));
+            if (localStorage.getItem('pla_number_adjust_y') != null)
+                this.pla_number_adjust_y.value = parseInt(localStorage.getItem('pla_number_adjust_y'));
+            if (localStorage.getItem('pla_select_font') != null)
+                this.combobox_select_by_text(this.pla_select_font, localStorage.getItem('pla_select_font'));
+            if (localStorage.getItem('pla_text_color') != null)
+                this.pla_text_color.value = localStorage.getItem('pla_text_color');
+            if (localStorage.getItem('pla_back_color') != null)
+                this.pla_back_color.value = localStorage.getItem('pla_back_color');
+            if (localStorage.getItem('pla_radio_orientation') != null) {
+                let orientation = localStorage.getItem('pla_radio_orientation');
+                if (orientation == 'portrait') {
+                    this.pla_radio_orientation_portrait.checked = true;
+                    this.pla_radio_orientation_landscape.checked = false;
+                } else {
+                    this.pla_radio_orientation_portrait.checked = false;
+                    this.pla_radio_orientation_landscape.checked = true;
+                }
             }
+            if (localStorage.getItem('pla_checkbox_bold') != null)
+                this.pla_checkbox_bold.checked = localStorage.getItem('pla_checkbox_bold') == "yes";
+        } catch (error) {
+            console.log(error);
         }
-        if (localStorage.getItem('pla_checkbox_bold') != null)
-            this.pla_checkbox_bold.checked = localStorage.getItem('pla_checkbox_bold') == "yes";
     }
     // 設定を保存
     save_settings() {
-        localStorage.setItem('pla_select_page_size', this.pla_select_page_size.selectedIndex.toString());
-        localStorage.setItem('pla_textbox', this.pla_textbox.value);
-        localStorage.setItem('pla_checkbox_line_break', this.pla_checkbox_line_break.checked ? "yes" : "no");
-        localStorage.setItem('pla_number_margin', this.pla_number_margin.value.toString());
-        localStorage.setItem('pla_number_adjust_y', this.pla_number_adjust_y.value.toString());
-        localStorage.setItem('pla_select_font', this.pla_select_font.options[this.pla_select_font.selectedIndex].text);
-        localStorage.setItem('pla_text_color', this.pla_text_color.value);
-        localStorage.setItem('pla_back_color', this.pla_back_color.value);
-        localStorage.setItem('pla_radio_orientation', this.orientation);
-        localStorage.setItem('pla_checkbox_bold', this.pla_checkbox_bold.checked ? "yes" : "no");
+        try {
+            localStorage.setItem('pla_select_page_size', this.pla_select_page_size.selectedIndex.toString());
+            localStorage.setItem('pla_textbox', this.pla_textbox.value);
+            localStorage.setItem('pla_checkbox_line_break', this.pla_checkbox_line_break.checked ? "yes" : "no");
+            localStorage.setItem('pla_number_margin', this.pla_number_margin.value.toString());
+            localStorage.setItem('pla_number_adjust_y', this.pla_number_adjust_y.value.toString());
+            localStorage.setItem('pla_select_font', this.pla_select_font.options[this.pla_select_font.selectedIndex].text);
+            localStorage.setItem('pla_text_color', this.pla_text_color.value);
+            localStorage.setItem('pla_back_color', this.pla_back_color.value);
+            localStorage.setItem('pla_radio_orientation', this.orientation);
+            localStorage.setItem('pla_checkbox_bold', this.pla_checkbox_bold.checked ? "yes" : "no");
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // テキストでコンボボックス項目を選択
@@ -313,47 +323,51 @@ class PlacardGenerator {
 
     // 印刷設定をセットする
     set_print_settings(page_info, orientation) {
-        let width_mm, height_mm;
-        if (orientation == 'landscape') {
-            width_mm = page_info.long_mm;
-            height_mm = page_info.short_mm;
-        } else {
-            width_mm = page_info.short_mm;
-            height_mm = page_info.long_mm;
-        }
+        try {
+            let width_mm, height_mm;
+            if (orientation == 'landscape') {
+                width_mm = page_info.long_mm;
+                height_mm = page_info.short_mm;
+            } else {
+                width_mm = page_info.short_mm;
+                height_mm = page_info.long_mm;
+            }
 
-        const style = document.querySelector('#pla_choose_page_style');
-        style.type = 'text/css';
-        style.media = 'print';
-        if (0) {
-            style.innerHTML = `
-                @page {
-                    size: ${width_mm}mm ${height_mm}mm;
-                    margin: 0;
-                }
-            `;
-        } else {
-            style.innerHTML = `
-                @page {
-                    size: ${orientation};
-                    margin: 0;
-                }
-            `;
-        }
+            const style = document.querySelector('#pla_choose_page_style');
+            style.type = 'text/css';
+            style.media = 'print';
+            if (0) {
+                style.innerHTML = `
+                    @page {
+                        size: ${width_mm}mm ${height_mm}mm;
+                        margin: 0;
+                    }
+                `;
+            } else {
+                style.innerHTML = `
+                    @page {
+                        size: ${orientation};
+                        margin: 0;
+                    }
+                `;
+            }
 
-        let short = this.mm_to_px(page_info.short_mm);
-        let long = this.mm_to_px(page_info.long_mm);
+            let short = this.mm_to_px(page_info.short_mm);
+            let long = this.mm_to_px(page_info.long_mm);
 
-        if (orientation == 'landscape') {
-            this.pla_canvas_for_print.width = long;
-            this.pla_canvas_for_print.height = short;
-            this.width_mm = page_info.long_mm;
-            this.height_mm = page_info.short_mm;
-        } else {
-            this.pla_canvas_for_print.width = short;
-            this.pla_canvas_for_print.height = long;
-            this.width_mm = page_info.short_mm;
-            this.height_mm = page_info.long_mm;
+            if (orientation == 'landscape') {
+                this.pla_canvas_for_print.width = long;
+                this.pla_canvas_for_print.height = short;
+                this.width_mm = page_info.long_mm;
+                this.height_mm = page_info.short_mm;
+            } else {
+                this.pla_canvas_for_print.width = short;
+                this.pla_canvas_for_print.height = long;
+                this.width_mm = page_info.short_mm;
+                this.height_mm = page_info.long_mm;
+            }
+        } catch (error) {
+            alert('set_print_settings: ' + error);
         }
 
         this.redraw();
@@ -361,43 +375,45 @@ class PlacardGenerator {
 
     // ページサイズを更新する
     update_page_size() {
-        let page_info = pla_page_size_info[this.pla_select_page_size.selectedIndex];
-        this.page_info = page_info;
+        try {
+            let page_info = pla_page_size_info[this.pla_select_page_size.selectedIndex];
+            this.page_info = page_info;
 
-        let short_mm = page_info.short_mm, long_mm = page_info.long_mm;
-        if (short_mm > long_mm) {
-            [short_mm, long_mm] = [long_mm, short_mm]; // 短辺と長辺を入れ替え
+            let short_mm = page_info.short_mm, long_mm = page_info.long_mm;
+            if (short_mm > long_mm) {
+                [short_mm, long_mm] = [long_mm, short_mm]; // 短辺と長辺を入れ替え
+            }
+
+            console.assert(short_mm <= long_mm);
+            let average = (short_mm + long_mm) / 2;
+            let short_for_display_mm = short_mm * 150 / average;
+            let long_for_display_mm = long_mm * 150 / average;
+
+            let orientation;
+            if (this.pla_radio_orientation_portrait.checked)
+                orientation = "portrait";
+            else
+                orientation = "landscape";
+
+            let width_mm, height_mm;
+            switch (orientation) {
+            case 'landscape':
+                width_mm = long_for_display_mm;
+                height_mm = short_for_display_mm;
+                break;
+            case 'portrait':
+                width_mm = short_for_display_mm;
+                height_mm = long_for_display_mm;
+                break;
+            }
+            this.pla_canvas_for_display.width = width_mm;
+            this.pla_canvas_for_display.height = height_mm;
+            this.orientation = orientation;
+        } catch (error) {
+            alert('update_page_size: ' + error);
         }
-
-        console.assert(short_mm <= long_mm);
-        let average = (short_mm + long_mm) / 2;
-        let short_for_display_mm = short_mm * 150 / average;
-        let long_for_display_mm = long_mm * 150 / average;
-
-        let orientation;
-        if (this.pla_radio_orientation_portrait.checked)
-            orientation = "portrait";
-        else
-            orientation = "landscape";
-
-        let width_mm, height_mm;
-        switch (orientation) {
-        case 'landscape':
-            width_mm = long_for_display_mm;
-            height_mm = short_for_display_mm;
-            break;
-        case 'portrait':
-            width_mm = short_for_display_mm;
-            height_mm = long_for_display_mm;
-            break;
-        }
-        this.pla_canvas_for_display.width = width_mm;
-        this.pla_canvas_for_display.height = height_mm;
-        this.orientation = orientation;
 
         this.set_print_settings(page_info, orientation);
-
-        this.redraw();
     }
 
     // 用紙の向きを選択する
@@ -452,12 +468,16 @@ class PlacardGenerator {
 
     // フォント項目を入植
     populate_fonts() {
-        for (let entry of fonts) {
-            if (!this.is_font_available(entry))
-                continue;
-            let option = document.createElement('option');
-            option.text = entry;
-            this.pla_select_font.add(option);
+        try {
+            for (let entry of fonts) {
+                if (!this.is_font_available(entry))
+                    continue;
+                let option = document.createElement('option');
+                option.text = entry;
+                this.pla_select_font.add(option);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -475,8 +495,16 @@ class PlacardGenerator {
 
     // 再描画
     redraw() {
-        this.render(this.pla_canvas_for_display, true);
-        this.render(this.pla_canvas_for_print, false);
+        try {
+            this.render(this.pla_canvas_for_display, true);
+        } catch (error) {
+            alert('pla_canvas_for_display: ' + error);
+        }
+        try {
+            this.render(this.pla_canvas_for_print, false);
+        } catch (error) {
+            alert('pla_canvas_for_print: ' + error);
+        }
         this.save_settings();
     }
 
