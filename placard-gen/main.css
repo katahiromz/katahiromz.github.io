@@ -61,6 +61,7 @@ select {
     font-weight: bold;
     margin-top: 0.5vh;
     margin-bottom: 0.5vh;
+    vertical-align: middle;
 }
 input {
     border: 2px solid black;
