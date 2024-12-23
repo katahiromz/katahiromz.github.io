@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.5.8";                      // バージョン
+    VERSION = "0.5.9";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -204,6 +204,11 @@ class PlacardGenerator {
         }
     }
 
+    mm_to_px(mm) {
+        const dpi = 96; // デフォルトのDPI
+        return mm * dpi / 25.4; // mm -> px
+    }
+
     // 印刷設定をセットする
     set_print_settings(page_info, orientation) {
         let width_mm, height_mm;
@@ -218,40 +223,17 @@ class PlacardGenerator {
         const style = document.querySelector('#pla_choose_page_style');
         style.type = 'text/css';
         style.media = 'print';
-        if (this.is_mobile()) {
-            style.innerHTML = `
-                @page {
-                    /* size: ${page_info.value} ${orientation}; */
-                    size: ${orientation};
-                    margin: 0;
-                    -webkit-print-color-adjust: exact;
-                    print-color-adjust: exact;
-                }
-                * {
-                    -webkit-print-color-adjust: exact !important;
-                    color-adjust: exact !important;
-                }
-            `;
-        } else {
-            style.innerHTML = `
-                @page {
-                    /* size: ${width_mm}mm ${height_mm}mm; */
-                    size: ${orientation};
-                    margin: 0;
-                    -webkit-print-color-adjust: exact;
-                    print-color-adjust: exact;
-                }
-                * {
-                    -webkit-print-color-adjust: exact !important;
-                    color-adjust: exact !important;
-                }
-            `;
-        }
+        style.innerHTML = `
+            @page {
+                size: ${width_mm}mm ${height_mm}mm;
+                margin: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        `;
 
-        const dpi = 96; // デフォルトのDPI
-
-        let short = page_info.short_mm * dpi / 25.4; // mm -> px
-        let long = page_info.long_mm * dpi / 25.4;
+        let short = this.mm_to_px(page_info.short_mm);
+        let long = this.mm_to_px(page_info.long_mm);
 
         if (orientation == 'landscape') {
             this.pla_canvas_for_print.width = long;
@@ -422,14 +404,11 @@ class PlacardGenerator {
             return;
 
         let adjust_y_mm = this.pla_number_adjust_y.value;
-        let dpi;
+        let scale = 1;
         if (for_display) {
-            let scale = this.pla_canvas_for_print.width / this.pla_canvas_for_display.width;
-            dpi = 96 / scale;
-        } else {
-            dpi = 96;
+            scale = this.pla_canvas_for_print.width / this.pla_canvas_for_display.width;
         }
-        let adjust_y_px = adjust_y_mm * dpi / 25.4; // mmをpxに変換
+        let adjust_y_px = this.mm_to_px(adjust_y_mm * scale);
 
         ctx.font = `20px ${this.get_font()}`;
         ctx.fillStyle = this.pla_text_color.value;
