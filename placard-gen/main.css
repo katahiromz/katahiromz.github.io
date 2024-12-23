@@ -24,6 +24,10 @@ h1 img {
     border: 2px solid black;
     background-color: white;
 }
+textarea.pla_class_text_resize {
+    field-sizing: content;
+    min-height: min-content;
+}
 @media print {
     @page {
         size: landscape;
