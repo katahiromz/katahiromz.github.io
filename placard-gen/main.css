@@ -5,6 +5,10 @@ body {
 }
 h1 {
     font-size: 3vh;
+    line-height: 3vh;
+}
+h1 img {
+    vertical-align: middle;
 }
 #pla_textbox {
     font-family: "ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif;
@@ -24,12 +28,6 @@ p {
     #pla_canvas_for_print {
         width: 99.5%;
         height: 99.5%;
-    }
-    * {
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        vertical-align: middle;
     }
     .display_only {
         display: none;
@@ -109,7 +107,7 @@ textarea {
     position: relative;
     display: inline-block;
     background-color: #fff;
-    vertical-align: middle;
+    vertical-align: sub;
 }
 .custom-checkbox:checked + span {
     background-color: #0f0;
@@ -129,7 +127,7 @@ textarea {
     position: relative;
     display: inline-block;
     background-color: #fff;
-    vertical-align: middle;
+    vertical-align: sub;
 }
 .custom-radio:checked + span {
     background-color: #0f0;
