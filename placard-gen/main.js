@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.6.5";                      // バージョン
+    VERSION = "0.6.6";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -16,12 +16,12 @@ class PlacardGenerator {
     pla_radio_orientation_landscape = null; // 用紙横向き
     pla_radio_orientation_portrait = null;  // 用紙縦向き
     pla_checkbox_bold = null;               // 「太字」チェックボックス
+    page_info = null;                       // 印刷情報
+    orientation = 'landscape';              // 用紙の向き('portrait' or 'landscape')
+    width_mm = 0;                           // 用紙の幅(mm)
+    height_mm = 0;                          // 用紙の高さ(mm)
     DEF_MONOSPACE_FONT = "(標準の等幅フォント)";
     DEF_PROPORTIONAL_FONT = "(標準のプロポーショナルフォント)";
-    page_info = null;           // 印刷情報
-    orientation = 'landscape';  // 用紙の向き('portrait' or 'landscape')
-    width_mm = 0;
-    height_mm = 0;
 
     // コンストラクタ
     constructor() {
@@ -48,6 +48,10 @@ class PlacardGenerator {
         this.pla_radio_orientation_portrait = document.querySelector('#pla_radio_orientation_portrait');
         this.pla_checkbox_bold = document.querySelector('#pla_checkbox_bold');
 
+        if (!this.is_android()) {
+            document.querySelector('#android_notice').classList.add('hidden');
+        }
+
         this.set_version();
         this.populate_fonts();
         this.populate_page_sizes();
@@ -62,6 +66,9 @@ class PlacardGenerator {
 
     is_mobile() {
         return /Mobile|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+    is_android() {
+        return /Android/i.test(navigator.userAgent);
     }
 
     // イベントリスナーを追加
