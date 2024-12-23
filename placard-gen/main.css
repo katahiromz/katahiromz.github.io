@@ -64,6 +64,7 @@ input[type=button] {
     border-radius: 1vh;
     padding: 0.5vh;
     font-size: 2.5vh;
+    vertical-align: middle;
 }
 input[type=button]:hover {
     background: #cfc;
@@ -92,6 +93,8 @@ input[type=file] {
     cursor: pointer;
     border-radius: 1vh;
     padding: 0.5vh;
+    font-size: 2.5vh;
+    vertical-align: middle;
 }
 .custom-file-upload:hover {
     background: #cfc;
