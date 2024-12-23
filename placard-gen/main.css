@@ -1,3 +1,4 @@
+/* version: 0.5.3 */
 body {
     background-color: #ff9;
 }
@@ -8,22 +9,25 @@ h1 {
     font-family: "ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif;
     font-size: 2.5vh;
 }
+@page {
+    size: A4 landscape;
+    margin: 0;
+}
 @media print {
     * {
         margin: 0;
         padding: 0;
-    }
-    @page {
-        margin: 0;
+        width: 99.9%;
+        height: 99.9%;
+        text-align: center;
+        vertical-align: middle;
     }
     .display_only {
         display: none;
     }
     .print_only {
-        display: block;
         margin: 0;
         padding: 0;
-        text-align: center;
     }
 }
 @media screen {

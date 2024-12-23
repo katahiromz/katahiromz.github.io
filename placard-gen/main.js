@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.5.1";                      // バージョン
+    VERSION = "0.5.3";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -20,6 +20,8 @@ class PlacardGenerator {
     DEF_PROPORTIONAL_FONT = "(標準のプロポーショナルフォント)";
     page_info = null;           // 印刷情報
     orientation = 'landscape';  // 用紙の向き('portrait' or 'landscape')
+    width_mm = 0;
+    height_mm = 0;
 
     // コンストラクタ
     constructor() {
@@ -51,10 +53,6 @@ class PlacardGenerator {
         this.load_settings();
         this.update_page_size();
         this.add_event_listers();
-
-        if (this.is_mobile()) {
-            document.getElementById('pla_page_size_div').style.display = 'none';
-        }
     }
 
     is_mobile() {
@@ -75,7 +73,23 @@ class PlacardGenerator {
         });
 
         this.pla_button_print.addEventListener('click', (event) => {
+            self.update_page_size();
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @page {
+                    size: ${self.page_info.value}mm ${self.orientation};
+                    margin: 0;
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    color-adjust: exact !important;
+                }
+            `;
+            document.head.appendChild(style);
             window.print();
+            document.head.removeChild(style);
         });
 
         this.pla_button_text_clear.addEventListener('click', (event) => {
@@ -213,7 +227,7 @@ class PlacardGenerator {
         if (this.is_mobile()) {
             style.innerHTML = `
                 @page {
-                    size: ${page_info.name} ${orientation};
+                    size: ${page_info.value} ${orientation};
                     margin: 0;
                     -webkit-print-color-adjust: exact;
                     print-color-adjust: exact;
@@ -276,7 +290,6 @@ class PlacardGenerator {
             orientation = "portrait";
         else
             orientation = "landscape";
-        console.log(orientation);
 
         let width_mm, height_mm;
         switch (orientation) {
@@ -292,6 +305,8 @@ class PlacardGenerator {
         this.pla_canvas_for_display.width = width_mm;
         this.pla_canvas_for_display.height = height_mm;
         this.orientation = orientation;
+        this.width_mm = width_mm;
+        this.height_mm = height_mm;
 
         this.set_print_settings(page_info, orientation);
 
@@ -388,8 +403,8 @@ class PlacardGenerator {
     populate_page_sizes() {
         for (let item of pla_page_size_info) {
             let option = document.createElement('option');
-            option.text = item.name;
-            if (item.name == "A4") {
+            option.text = item.text;
+            if (item.text == "A4") {
                 option.selected = true;
             }
             this.pla_select_page_size.add(option);
