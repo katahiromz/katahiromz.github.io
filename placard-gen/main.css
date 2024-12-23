@@ -133,5 +133,5 @@ textarea {
     display: none;
 }
 .dragover {
-    border: 10px solid blue;
+    border: 10px dotted blue;
 }
