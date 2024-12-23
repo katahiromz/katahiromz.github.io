@@ -229,10 +229,8 @@ class PlacardGenerator {
         style.media = 'print';
         style.innerHTML = `
             @page {
-                size: ${this.mm_to_inch(width_mm)}in ${this.mm_to_inch(height_mm)}in;
+                size: ${width_mm}mm ${height_mm}mm;
                 margin: 0;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
         `;
 
