@@ -1,4 +1,4 @@
-/* version: 0.5.6 */
+/* version: 0.6.3 */
 body {
     background-color: #ff9;
 }
@@ -15,14 +15,14 @@ h1 {
 #pla_user_agent {
     font-size: 2vh;
 }
-@page {
-    size: A4 landscape;
-    margin: 0;
-    padding: 0;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-}
 @media print {
+    @page {
+        size: landscape;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
     * {
         margin: 0;
         padding: 0;
