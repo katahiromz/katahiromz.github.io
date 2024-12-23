@@ -1,4 +1,4 @@
-/* version: 0.6.6 */
+/* version: 0.6.7 */
 body {
     background-color: #ff9;
 }
@@ -9,7 +9,7 @@ h1 {
     font-family: "ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif;
     font-size: 2.5vh;
 }
-#pla_version {
+p {
     font-size: 2vh;
 }
 @media print {

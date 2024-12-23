@@ -15,14 +15,16 @@
 
 <!-- 画面表示用 -->
 <div class="display_only">
-	<h1>プラカード ジェネレータ</h1>
+	<header>
+		<h1>プラカード ジェネレータ</h1>
+	</header>
 
 	<canvas id="pla_canvas_for_display"></canvas><br />
 
 	<div class="pla_class_gui_line">
 		<label>
 			テキスト(複数行可):<br />
-			<textarea id="pla_textbox" placeholder="テキスト入力" cols="32" rows="4">用紙いっぱいに文字を配置します</textarea>
+			<textarea id="pla_textbox" placeholder="テキスト入力" cols="31" rows="4">用紙いっぱいに文字を配置します</textarea>
 		</label>
 	</div>
 
@@ -98,10 +100,11 @@
 		<input type="button" id="pla_button_print" value="印刷" />
 	</div>
 
-	<hr />
-	<p><span id="pla_version"></span> &copy; katahiromz 2024</p>
-	<p id="android_notice">※Androidの場合は、「印刷」ボタンを押した後「プリンタを選択」をタップし、「PDF形式で保存」を選んだ後、「Ｖ」をタップし、「方向」を設定してください。</p>
-	<h2></h2>
+	<footer>
+		<hr />
+		<p><span id="pla_version"></span> &copy; katahiromz 2024</p>
+		<p id="android_notice">※Androidの場合は、「印刷」ボタンを押した後「プリンタを選択」をタップし、「PDF形式で保存」を選んだ後、「Ｖ」をタップし、「方向」を設定してください。</p>
+	</footer>
 </div>
 
 <!-- 印刷用 -->
