@@ -10,12 +10,12 @@ class PlacardGenerator {
     pla_select_font = null;                 // 「フォント」コンボボックス
     pla_number_margin = null;               // 「余白の幅(mm)」テキストボックス
     pla_number_adjust_y = null;             // 「垂直位置の調整(mm)」テキストボックス
-    pla_div_page_info = null;               // ページ情報
     pla_button_reset = null;                // 「リセット」ボタン
     pla_text_color = null;                  // テキストの色
     pla_back_color = null;                  // 背景の色
     pla_radio_orientation_landscape = null; // 用紙横向き
     pla_radio_orientation_portrait = null;  // 用紙縦向き
+    pla_checkbox_bold = null;               // 「太字」チェックボックス
     DEF_MONOSPACE_FONT = "(標準の等幅フォント)";
     DEF_PROPORTIONAL_FONT = "(標準のプロポーショナルフォント)";
     page_info = null;           // 印刷情報
@@ -41,15 +41,14 @@ class PlacardGenerator {
         this.pla_select_font = document.querySelector('#pla_select_font');
         this.pla_number_margin = document.querySelector('#pla_number_margin');
         this.pla_number_adjust_y = document.querySelector('#pla_number_adjust_y');
-        this.pla_div_page_info = document.querySelector('#pla_div_page_info');
         this.pla_button_reset = document.querySelector('#pla_button_reset');
         this.pla_text_color = document.querySelector('#pla_text_color');
         this.pla_back_color = document.querySelector('#pla_back_color');
         this.pla_radio_orientation_landscape = document.querySelector('#pla_radio_orientation_landscape');
         this.pla_radio_orientation_portrait = document.querySelector('#pla_radio_orientation_portrait');
+        this.pla_checkbox_bold = document.querySelector('#pla_checkbox_bold');
 
         this.set_version();
-        this.set_user_agent();
         this.populate_fonts();
         this.populate_page_sizes();
         this.load_settings();
@@ -59,9 +58,6 @@ class PlacardGenerator {
 
     set_version() {
         document.querySelector('#pla_version').textContent = "Ver. " + this.VERSION;
-    }
-    set_user_agent() {
-        document.querySelector('#pla_user_agent').textContent = navigator.userAgent;
     }
 
     is_mobile() {
@@ -132,6 +128,9 @@ class PlacardGenerator {
             self.update_page_size();
             self.redraw();
         });
+        this.pla_checkbox_bold.addEventListener('click', (event) => {
+            self.redraw();
+        });
 
         this.pla_button_reset.addEventListener('click', (event) => {
             self.reset();
@@ -149,6 +148,7 @@ class PlacardGenerator {
         localStorage.removeItem('pla_text_color');
         localStorage.removeItem('pla_back_color');
         localStorage.removeItem('pla_radio_orientation');
+        localStorage.removeItem('pla_checkbox_bold');
         location.reload();
     }
 
@@ -180,6 +180,8 @@ class PlacardGenerator {
                 this.pla_radio_orientation_landscape.checked = true;
             }
         }
+        if (localStorage.getItem('pla_checkbox_bold') != null)
+            this.pla_checkbox_bold.checked = localStorage.getItem('pla_checkbox_bold') == "yes";
     }
     // 設定を保存
     save_settings() {
@@ -192,6 +194,7 @@ class PlacardGenerator {
         localStorage.setItem('pla_text_color', this.pla_text_color.value);
         localStorage.setItem('pla_back_color', this.pla_back_color.value);
         localStorage.setItem('pla_radio_orientation', this.orientation);
+        localStorage.setItem('pla_checkbox_bold', this.pla_checkbox_bold.checked ? "yes" : "no");
     }
 
     // テキストでコンボボックス項目を選択
@@ -227,12 +230,21 @@ class PlacardGenerator {
         const style = document.querySelector('#pla_choose_page_style');
         style.type = 'text/css';
         style.media = 'print';
-        style.innerHTML = `
-            @page {
-                size: ${width_mm}mm ${height_mm}mm;
-                margin: 0;
-            }
-        `;
+        if (0) {
+            style.innerHTML = `
+                @page {
+                    size: ${width_mm}mm ${height_mm}mm;
+                    margin: 0;
+                }
+            `;
+        } else {
+            style.innerHTML = `
+                @page {
+                    size: ${orientation};
+                    margin: 0;
+                }
+            `;
+        }
 
         let short = this.mm_to_px(page_info.short_mm);
         let long = this.mm_to_px(page_info.long_mm);
@@ -248,8 +260,6 @@ class PlacardGenerator {
             this.width_mm = page_info.short_mm;
             this.height_mm = page_info.long_mm;
         }
-
-        this.pla_div_page_info.textContent = `${Math.floor(width_mm)}mm × ${Math.floor(height_mm)}mm`;
 
         this.redraw();
     }
@@ -347,31 +357,6 @@ class PlacardGenerator {
 
     // フォント項目を入植
     populate_fonts() {
-        const fonts = [
-            "ＭＳ ゴシック",
-            "ＭＳ 明朝",
-            "ＭＳ Ｐゴシック",
-            "ＭＳ Ｐ明朝",
-            "Osaka-Mono",
-            "Osaka",
-            "Hiragino Sans",
-            "ヒラギノ角ゴシック",
-            "游明朝",
-            "游ゴシック",
-            "Noto Sans Mono CJK JP",
-            "Noto Sans JP",
-            "Roboto",
-            "Meiryo",
-            "Meiryo UI",
-            "MS UI Gothic",
-            "Yu Gothic",
-            "Arial",
-            "Helvetica",
-            "Times New Roman",
-            "Courier New",
-            "Comic Sans MS",
-            "Source Han Sans",
-        ];
         for (let entry of fonts) {
             if (!this.is_font_available(entry))
                 continue;
@@ -407,12 +392,17 @@ class PlacardGenerator {
 
         let adjust_y_mm = this.pla_number_adjust_y.value;
         let scale = 1;
-        if (for_display) {
+        if (!for_display) {
             scale = this.pla_canvas_for_print.width / this.pla_canvas_for_display.width;
         }
         let adjust_y_px = this.mm_to_px(adjust_y_mm * scale);
 
-        ctx.font = `20px ${this.get_font()}`;
+        if (this.pla_checkbox_bold.checked) {
+            ctx.font = `bold 16px ${this.get_font()}`;
+        } else {
+            ctx.font = `16px ${this.get_font()}`;
+        }
+
         ctx.fillStyle = this.pla_text_color.value;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -510,15 +500,6 @@ class PlacardGenerator {
         let height = canvas.height;
         let ctx = canvas.getContext('2d', { alpha: false });
         let text = this.pla_textbox.value;
-        if (!for_display) {
-            if ((this.orientation == 'landscape' && width < height) ||
-                (this.orientation == 'portrait' && width > height))
-            {
-                this.pla_canvas_for_print.style.rotate = "-90deg";
-                this.render_page(ctx, text, 0, 0, height, width, for_display);
-                return;
-            }
-        }
         this.render_page(ctx, text, 0, 0, width, height, for_display);
     }
 };

@@ -18,6 +18,7 @@ h1 {
 @page {
     size: A4 landscape;
     margin: 0;
+    padding: 0;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
 }
@@ -109,4 +110,7 @@ textarea {
 }
 .custom-radio:checked + span {
     background-color: #0f0;
+}
+.hidden {
+    display: none;
 }
