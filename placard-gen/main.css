@@ -104,8 +104,8 @@ textarea {
     height: 2vh;
     line-height: 2vh;
     border: 2px solid #000;
-    display: inline-block;
     position: relative;
+    display: inline-block;
     background-color: #fff;
     vertical-align: middle;
 }
@@ -121,8 +121,8 @@ textarea {
     line-height: 2vh;
     border: 2px solid #000;
     border-radius: 50%;
-    display: inline-block;
     position: relative;
+    display: inline-block;
     background-color: #fff;
     vertical-align: middle;
 }
