@@ -1,3 +1,5 @@
+"use strict";
+
 // 用紙サイズ情報
 const pla_page_size_info = [
     // A0....A10

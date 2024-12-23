@@ -1,3 +1,5 @@
+"use strict";
+
 class PlacardGenerator {
 	VERSION = '1.0.8'; // バージョン
 	pla_select_page_size = null; // 用紙サイズ選択コンボボックス
