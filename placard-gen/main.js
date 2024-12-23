@@ -29,8 +29,16 @@ class PlacardGenerator {
 
     // コンストラクタ
     constructor() {
-        this.init_controls();
-        this.redraw();
+        try {
+            this.init_controls();
+        } catch (error) {
+            alert('constructor #1: ' + error);
+        }
+        try {
+            this.redraw();
+        } catch (error) {
+            alert('constructor #2: ' + error);
+        }
     }
 
     // ファイルを処理する
@@ -59,40 +67,53 @@ class PlacardGenerator {
 
     // コントロールを初期化
     init_controls() {
-        this.pla_select_page_size = document.querySelector('#pla_select_page_size');
-        this.pla_canvas_for_display = document.querySelector('#pla_canvas_for_display');
-        this.pla_canvas_for_print = document.querySelector('#pla_canvas_for_print');
-        this.pla_textbox = document.querySelector('#pla_textbox');
-        this.pla_button_print = document.querySelector('#pla_button_print');
-        this.pla_button_text_clear = document.querySelector('#pla_button_text_clear');
-        this.pla_checkbox_line_break = document.querySelector('#pla_checkbox_line_break');
-        this.pla_select_font = document.querySelector('#pla_select_font');
-        this.pla_number_margin = document.querySelector('#pla_number_margin');
-        this.pla_number_adjust_y = document.querySelector('#pla_number_adjust_y');
-        this.pla_button_reset = document.querySelector('#pla_button_reset');
-        this.pla_text_color = document.querySelector('#pla_text_color');
-        this.pla_back_color = document.querySelector('#pla_back_color');
-        this.pla_radio_orientation_landscape = document.querySelector('#pla_radio_orientation_landscape');
-        this.pla_radio_orientation_portrait = document.querySelector('#pla_radio_orientation_portrait');
-        this.pla_checkbox_bold = document.querySelector('#pla_checkbox_bold');
-        this.pla_button_back_image = document.querySelector('#pla_button_back_image');
-        this.pla_button_back_image_close = document.querySelector('#pla_button_back_image_close');
-        this.pla_display_div = document.querySelector('#pla_display_div');
-
-        if (!this.is_android()) {
-            document.querySelector('#android_notice').classList.add('hidden');
+        try {
+            this.pla_select_page_size = document.getElementById('pla_select_page_size');
+            this.pla_canvas_for_display = document.getElementById('pla_canvas_for_display');
+            this.pla_canvas_for_print = document.getElementById('pla_canvas_for_print');
+            this.pla_textbox = document.getElementById('pla_textbox');
+            this.pla_button_print = document.getElementById('pla_button_print');
+            this.pla_button_text_clear = document.getElementById('pla_button_text_clear');
+            this.pla_checkbox_line_break = document.getElementById('pla_checkbox_line_break');
+            this.pla_select_font = document.getElementById('pla_select_font');
+            this.pla_number_margin = document.getElementById('pla_number_margin');
+            this.pla_number_adjust_y = document.getElementById('pla_number_adjust_y');
+            this.pla_button_reset = document.getElementById('pla_button_reset');
+            this.pla_text_color = document.getElementById('pla_text_color');
+            this.pla_back_color = document.getElementById('pla_back_color');
+            this.pla_radio_orientation_landscape = document.getElementById('pla_radio_orientation_landscape');
+            this.pla_radio_orientation_portrait = document.getElementById('pla_radio_orientation_portrait');
+            this.pla_checkbox_bold = document.getElementById('pla_checkbox_bold');
+            this.pla_button_back_image = document.getElementById('pla_button_back_image');
+            this.pla_button_back_image_close = document.getElementById('pla_button_back_image_close');
+            this.pla_display_div = document.getElementById('pla_display_div');
+        } catch (error) {
+            alert("init_controls第1段階: " + error);
         }
 
-        this.set_version();
-        this.populate_fonts();
-        this.populate_page_sizes();
-        this.load_settings();
+        try {
+            if (!this.is_android()) {
+                document.getElementById('android_notice').classList.add('hidden');
+            }
+            this.set_version();
+            this.populate_fonts();
+            this.populate_page_sizes();
+        } catch (error) {
+            alert("init_controls第2段階: " + error);
+        }
+
+        try {
+            this.load_settings();
+            this.add_event_listers();
+        } catch (error) {
+            alert("init_controls第3段階: " + error);
+        }
+
         this.update_page_size();
-        this.add_event_listers();
     }
 
     set_version() {
-        document.querySelector('#pla_version').textContent = "Ver. " + this.VERSION;
+        document.getElementById('pla_version').textContent = "Ver." + this.VERSION;
     }
 
     is_mobile() {
@@ -333,24 +354,15 @@ class PlacardGenerator {
                 height_mm = page_info.long_mm;
             }
 
-            const style = document.querySelector('#pla_choose_page_style');
+            const style = document.getElementById('pla_choose_page_style');
             style.type = 'text/css';
             style.media = 'print';
-            if (0) {
-                style.innerHTML = `
-                    @page {
-                        size: ${width_mm}mm ${height_mm}mm;
-                        margin: 0;
-                    }
-                `;
-            } else {
-                style.innerHTML = `
-                    @page {
-                        size: ${orientation};
-                        margin: 0;
-                    }
-                `;
-            }
+            style.innerHTML = `
+                @page {
+                    size: ${orientation};
+                    margin: 0;
+                }
+            `;
 
             let short = this.mm_to_px(page_info.short_mm);
             let long = this.mm_to_px(page_info.long_mm);
@@ -375,9 +387,15 @@ class PlacardGenerator {
 
     // ページサイズを更新する
     update_page_size() {
+        let page_info, orientation;
         try {
-            let page_info = pla_page_size_info[this.pla_select_page_size.selectedIndex];
+            page_info = pla_page_size_info[this.pla_select_page_size.selectedIndex];
             this.page_info = page_info;
+
+            if (this.pla_radio_orientation_portrait.checked)
+                orientation = "portrait";
+            else
+                orientation = "landscape";
 
             let short_mm = page_info.short_mm, long_mm = page_info.long_mm;
             if (short_mm > long_mm) {
@@ -388,12 +406,6 @@ class PlacardGenerator {
             let average = (short_mm + long_mm) / 2;
             let short_for_display_mm = short_mm * 150 / average;
             let long_for_display_mm = long_mm * 150 / average;
-
-            let orientation;
-            if (this.pla_radio_orientation_portrait.checked)
-                orientation = "portrait";
-            else
-                orientation = "landscape";
 
             let width_mm, height_mm;
             switch (orientation) {
@@ -637,6 +649,6 @@ document.addEventListener('DOMContentLoaded', function(){
     try {
         const placard = new PlacardGenerator();
     } catch (error) {
-        alert(error);
+        alert('onload: ' + error);
     }
 });
