@@ -107,7 +107,7 @@ textarea {
     position: relative;
     display: inline-block;
     background-color: #fff;
-    vertical-align: top;
+    vertical-align: text-top;
 }
 .custom-checkbox:checked + span {
     background-color: #0f0;
@@ -125,7 +125,7 @@ textarea {
     position: relative;
     display: inline-block;
     background-color: #fff;
-    vertical-align: top;
+    vertical-align: text-top;
     border-radius: 50%;
 }
 .custom-radio:checked + span {
