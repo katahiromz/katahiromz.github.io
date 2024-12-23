@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.5.4";                      // バージョン
+    VERSION = "0.5.5";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -234,12 +234,20 @@ class PlacardGenerator {
         style.type = 'text/css';
         style.media = 'print';
         if (this.is_mobile()) {
+            let rotate = `
+                -webkit-transform: rotate(-90deg);
+                -moz-transform: rotate(-90deg);
+                -ms-transform: rotate(-90deg);
+                -o-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+            `;
             style.innerHTML = `
                 @page {
                     size: ${page_info.value} ${orientation};
                     margin: 0;
                     -webkit-print-color-adjust: exact;
                     print-color-adjust: exact;
+                    ${orientation ? rotate : ''}
                 }
                 * {
                     -webkit-print-color-adjust: exact !important;
@@ -269,12 +277,16 @@ class PlacardGenerator {
         if (orientation == 'landscape') {
             this.pla_canvas_for_print.width = long;
             this.pla_canvas_for_print.height = short;
+            this.width_mm = page_info.long_mm;
+            this.height_mm = page_info.short_mm;
         } else {
             this.pla_canvas_for_print.width = short;
             this.pla_canvas_for_print.height = long;
+            this.width_mm = page_info.short_mm;
+            this.height_mm = page_info.long_mm;
         }
 
-        this.pla_div_page_info.textContent = `${Math.floor(width_mm)}mm x ${Math.floor(height_mm)}mm`;
+        this.pla_div_page_info.textContent = `${Math.floor(width_mm)}mm × ${Math.floor(height_mm)}mm`;
 
         this.redraw();
     }
@@ -314,8 +326,6 @@ class PlacardGenerator {
         this.pla_canvas_for_display.width = width_mm;
         this.pla_canvas_for_display.height = height_mm;
         this.orientation = orientation;
-        this.width_mm = width_mm;
-        this.height_mm = height_mm;
 
         this.set_print_settings(page_info, orientation);
 
