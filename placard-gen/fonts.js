@@ -77,6 +77,7 @@ const fonts = [
     "Times New Roman",
     "Courier New",
     "Comic Sans MS",
+    "Impact",
     "Roboto",
     "Source Han Sans",
 ];
