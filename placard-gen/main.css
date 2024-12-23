@@ -20,9 +20,6 @@ h1 img {
     font-family: "ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif;
     font-size: 2.5vh;
 }
-p {
-    font-size: 2vh;
-}
 @media print {
     @page {
         size: landscape;
@@ -49,17 +46,14 @@ p {
     }
 }
 select {
-    line-height: 4vh;
-    font-size: 2vh;
     padding: 1vh;
 }
 .pla_class_gui_line {
-    line-height: 4vh;
     font-weight: bold;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
 }
 input {
-    line-height: 4vh;
-    font-size: 2vh;
     border: 2px solid black;
 }
 input[type=button] {
@@ -103,14 +97,11 @@ textarea {
     display: none;
     width: 2vh;
     height: 2vh;
-    line-height: 2vh;
 }
 .custom-checkbox + span {
     width: 2vh;
     height: 2vh;
     padding: 0;
-    font-size: 3vh;
-    line-height: 3vh;
     border: 2px solid #000;
     position: relative;
     display: inline-block;
@@ -124,14 +115,11 @@ textarea {
     display: none;
     width: 2vh;
     height: 2vh;
-    line-height: 2vh;
 }
 .custom-radio + span {
     width: 2vh;
     height: 2vh;
     padding: 0;
-    font-size: 3vh;
-    line-height: 3vh;
     border: 2px solid #000;
     position: relative;
     display: inline-block;
