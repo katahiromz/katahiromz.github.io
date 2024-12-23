@@ -184,6 +184,8 @@ class PlacardGenerator {
 		this.pla_button_back_image.addEventListener('change', (event) => {
 			let file = event.target.files[0];
 			self.do_image_file(file);
+		    // 続けて同じファイルを選んでも change を発火する
+		    self.pla_button_back_image.value = '';
 		});
 		// 設定のリセットボタンが押された？
 		this.pla_button_reset.addEventListener('click', (event) => {
