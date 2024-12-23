@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.5.9";                      // バージョン
+    VERSION = "0.6.0";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -248,6 +248,7 @@ class PlacardGenerator {
         }
 
         this.pla_div_page_info.textContent = `${Math.floor(width_mm)}mm × ${Math.floor(height_mm)}mm`;
+        alert(long + ", " + short);
 
         this.redraw();
     }
