@@ -91,6 +91,7 @@ input[type=file] {
     padding: 3px;
     cursor: pointer;
     border-radius: 1vh;
+    padding: 0.5vh;
 }
 .custom-file-upload:hover {
     background: #cfc;
