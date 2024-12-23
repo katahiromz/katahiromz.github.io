@@ -50,7 +50,6 @@ select {
 }
 .pla_class_gui_line {
     line-height: 4vh;
-    font-size: 2vh;
     font-weight: bold;
 }
 input {
@@ -72,7 +71,6 @@ input[type=number] {
     border: 2px solid black;
 }
 input[type=radio] {
-    font-weight: bold;
     border: 2px solid black;
 }
 input[type=file] {
@@ -98,11 +96,14 @@ textarea {
 }
 .custom-checkbox {
     display: none;
+    width: 2vh;
+    height: 2vh;
+    line-height: 2vh;
 }
 .custom-checkbox + span {
     width: 2vh;
     height: 2vh;
-    line-height: 2vh;
+    line-height: 4vh;
     border: 2px solid #000;
     position: relative;
     display: inline-block;
@@ -114,11 +115,14 @@ textarea {
 }
 .custom-radio {
     display: none;
+    width: 2vh;
+    height: 2vh;
+    line-height: 2vh;
 }
 .custom-radio + span {
     width: 2vh;
     height: 2vh;
-    line-height: 2vh;
+    line-height: 4vh;
     border: 2px solid #000;
     border-radius: 50%;
     position: relative;
