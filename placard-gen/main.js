@@ -1,5 +1,5 @@
 class PlacardGenerator {
-    VERSION = "0.6.1";                      // バージョン
+    VERSION = "0.6.2";                      // バージョン
     pla_select_page_size = null;            // 用紙サイズ選択コンボボックス
     pla_canvas_for_display = null;          // 画面表示用キャンバス
     pla_canvas_for_print = null;            // 印刷用キャンバス
@@ -209,6 +209,10 @@ class PlacardGenerator {
         return mm * dpi / 25.4; // mm -> px
     }
 
+    mm_to_inch(mm) {
+        return mm / 25.4;
+    }
+
     // 印刷設定をセットする
     set_print_settings(page_info, orientation) {
         let width_mm, height_mm;
@@ -225,7 +229,7 @@ class PlacardGenerator {
         style.media = 'print';
         style.innerHTML = `
             @page {
-                size: ${width_mm}mm ${height_mm}mm;
+                size: ${this.mm_to_inch(width_mm)}in ${this.mm_to_inch(height_mm)}in;
                 margin: 0;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
@@ -248,7 +252,6 @@ class PlacardGenerator {
         }
 
         this.pla_div_page_info.textContent = `${Math.floor(width_mm)}mm × ${Math.floor(height_mm)}mm`;
-        alert(orientation + ", " + long + ", " + short);
 
         this.redraw();
     }
