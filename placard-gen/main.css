@@ -56,6 +56,7 @@ textarea.pla_class_text_resize {
 select {
     padding: 0.5vh;
     font-size: 2.5vh;
+    width: 90%;
 }
 .pla_class_gui_line {
     font-weight: bold;
