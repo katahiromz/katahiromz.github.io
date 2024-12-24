@@ -56,6 +56,7 @@ select {
     padding: 0;
     font-size: 2.5vh;
     max-width: 65%;
+    cursor: pointer;
 }
 .pla_class_gui_line {
     font-weight: bold;
@@ -74,6 +75,7 @@ input[type=button] {
     padding: 0.5vh;
     font-size: 2.5vh;
     vertical-align: middle;
+    cursor: pointer;
 }
 input[type=button]:hover {
     background: #cfc;
@@ -83,6 +85,9 @@ input[type=number] {
     border: 2px solid black;
     font-size: 2.5vh;
 }
+input[type=number]:hover {
+    background: #cfc;
+}
 input[type=radio] {
     border: 2px solid black;
 }
@@ -90,6 +95,7 @@ input[type=color] {
     width: 6vh;
     height: 4vh;
     vertical-align: middle;
+    cursor: pointer;
 }
 input[type=file] {
     display: none;
@@ -112,8 +118,14 @@ select {
     font-weight: bold;
     border: 2px solid black;
 }
+select:hover {
+    background: #cfc;
+}
 textarea {
     border: 2px solid black;
+}
+textarea:hover {
+    background: #cfc;
 }
 .custom-checkbox {
     display: none;
@@ -129,6 +141,7 @@ textarea {
     display: inline-block;
     background-color: #fff;
     vertical-align: text-top;
+    cursor: pointer;
 }
 .custom-checkbox:checked + span {
     background-color: #0f0;
@@ -148,6 +161,7 @@ textarea {
     background-color: #fff;
     vertical-align: text-top;
     border-radius: 50%;
+    cursor: pointer;
 }
 .custom-radio:checked + span {
     background-color: #0f0;
