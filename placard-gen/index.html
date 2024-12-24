@@ -54,23 +54,23 @@
 	<div class="pla_class_gui_line">
 		<label>
 			テキスト(複数行可):<br />
-			<textarea id="pla_textbox" placeholder="テキストを入力してください" cols="31" rows="1" class="pla_class_text_resize">用紙いっぱいに文字を配置します</textarea>
+			<textarea id="pla_textbox" placeholder="テキストを入力してください" cols="30" rows="2" class="pla_class_text">用紙いっぱいに文字を配置します</textarea>
 		</label>
 	</div>
 
 	<!-- 「テキストのクリア」と「太字」と「自動改行」 -->
 	<div class="pla_class_gui_line">
 		<input type="button" id="pla_button_text_clear" value="テキストのクリア" />
-		　<label><input type="checkbox" id="pla_checkbox_bold" class="custom-checkbox" /> <span></span> 太字</label>
-		　<label><input type="checkbox" id="pla_checkbox_line_break" checked="checked" class="custom-checkbox" /> <span></span> 自動改行</label>
+		　<label class="nowrap"><input type="checkbox" id="pla_checkbox_bold" class="custom-checkbox" /> <span></span> 太字</label>
+		　<label class="nowrap"><input type="checkbox" id="pla_checkbox_line_break" checked="checked" class="custom-checkbox" /> <span></span> 自動改行</label>
 	</div>
 
 	<!-- テキストの色と背景 -->
 	<div class="pla_class_gui_line">
-		<label>
+		<label class="nowrap">
 			文字の色:
 			<input type="color" id="pla_text_color" value="#000000" />
-		</label> <label>
+		</label> <label class="nowrap">
 			背景色:
 			<input type="color" id="pla_back_color" value="#ffffff" />
 		</label> <input type="file" id="pla_button_back_image" accept="image/*" />
@@ -103,11 +103,11 @@
 	<!-- 用紙の方向ラジオボタン -->
 	<div class="pla_class_gui_line">
 		用紙の方向:
-		<label>
+		<label class="nowrap">
 			<input type="radio" name="pla_radio_orientation" id="pla_radio_orientation_landscape" value="landscape" checked="checked" class="custom-radio">
 			<span></span> 横向き
 		</label>
-		<label>
+		<label class="nowrap">
 			<input type="radio" name="pla_radio_orientation" id="pla_radio_orientation_portrait" value="portrait" class="custom-radio">
 			<span></span> 縦向き
 		</label>
@@ -116,9 +116,9 @@
 	<!-- 余白の幅 -->
 	<div class="pla_class_gui_line">
 		<label>
-			余白の幅(mm):
+			ページ余白(mm):
 			<input type="number" id="pla_number_margin" min="0" max="100" value="10" />
-			(0～100)
+			<span class="nowrap">(0～100)</span>
 		</label>
 	</div>
 
@@ -127,14 +127,14 @@
 		<label>
 			垂直位置の微調整:
 			<input type="number" id="pla_number_adjust_y" min="-50" max="50" value="0" />
-			(-50～+50)
+			<span class="nowrap">(-50～+50)</span>
 		</label>
 	</div>
 
 	<!-- ボタン -->
 	<div class="pla_class_gui_line">
 		<input type="button" id="pla_button_reset" value="すべてリセット" />
-		　　
+		　
 		<input type="button" id="pla_button_print" value="印刷..." />
 	</div>
 
@@ -171,7 +171,7 @@
 
 	<ul>
 		<li>2024-12-13 Ver.1.0.0 - 初公開。</li>
-		<li>2024-12-14 Ver.1.0.9 - カラー絵文字をサポート。</li>
+		<li>2024-12-14 Ver.1.0.9 - Google Fontsでカラー絵文字をサポート。</li>
 	</ul>
 
 	<!-- 水平線 -->
