@@ -163,7 +163,7 @@ class PlacardGenerator {
 
 	// バージョン情報を表示
 	show_version() {
-		document.getElementById('pla_version').textContent = "Ver." + this.VERSION;
+		document.getElementById('pla_version').textContent = "Ver." + VERSION;
 	}
 
 	// スマホかタブレットか？
