@@ -752,13 +752,13 @@ class PlacardGenerator {
 	}
 
 	// 描画する
-	render(canvas, for_display) {
+	async render(canvas, for_display) {
 		// テキストを取得
 		let text = this.pla_textbox.value;
 
 		// カラー絵文字を取得
 		try {
-			fetchGoogleFont('Noto Color Emoji', text);
+			await fetchGoogleFont('Noto Color Emoji', text);
 		} catch (error) {
 			console.log(error);
 		}
