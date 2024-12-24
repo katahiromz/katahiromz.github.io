@@ -1,5 +1,7 @@
 "use strict";
 
+const VERSION = '1.0.9'; // バージョン
+
 // 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
 // https://qiita.com/yoya/items/636e3992ec45c1c40c14
 function textCharaSplit(text) {
@@ -70,7 +72,6 @@ function window_mm_to_px(mm) {
 }
 
 class PlacardGenerator {
-	VERSION = '1.0.8'; // バージョン
 	pla_select_page_size = null; // 用紙サイズ選択コンボボックス
 	pla_canvas_for_display = null; // 画面表示用キャンバス
 	pla_canvas_for_print = null; // 印刷用キャンバス
@@ -137,10 +138,6 @@ class PlacardGenerator {
 
 		// 必要なデータをセットする
 		try {
-			// Android用に注意を表示
-			if (this.is_android()) {
-				document.getElementById('android_notice').textContent = "※Androidの場合は、「印刷」ボタンを押した後「プリンタを選択」をタップし、「PDF形式で保存」を選んだ後、「Ｖ」をタップし、「方向」を設定してください。";
-			}
 			// バージョン情報を表示
 			this.show_version();
 			// フォント群を入植
