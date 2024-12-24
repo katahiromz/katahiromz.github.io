@@ -1,5 +1,74 @@
 "use strict";
 
+// 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
+// https://qiita.com/yoya/items/636e3992ec45c1c40c14
+function textCharaSplit(text) {
+	const charArr = []
+	let chara = []
+	let needCode = 0;
+	for (const c of text) {
+		const cp = c.codePointAt(0);
+		if (cp === 0x200d) { // ZWJ (Zero Width Joiner)
+			needCode += 1;
+		} else if (((0xfe00 <= cp) && (cp <= 0xfe0f)) ||
+				   ((0xe0100 <= cp) && (cp <= 0xe01fe))) {
+				; // Variation Selector
+		} else if ((0x1f3fb <= cp) && (cp <= 0x1f3ff)) {
+				; // Emoji Modifier
+		} else if (needCode > 0) {
+			needCode -= 1;
+		} else if (chara.length > 0) {
+			charArr.push(chara.join(''));
+			chara = [];
+		}
+		chara.push(c);
+	}
+	if (chara.length > 0) {
+		charArr.push(chara.join(''));
+		chara = [];
+	}
+	return charArr;
+}
+
+// Google フォントを取得する
+async function fetchGoogleFont(fontName, text = null) {
+	// URLでは空白を+に置き換える
+	const urlFamilyName = fontName.replace(/ /g, "+");
+	// Google Fonts APIのURL
+	let googleApiUrl;
+	if (text != null) {
+		let uri_comp = encodeURIComponent(text);
+		googleApiUrl = `https://fonts.googleapis.com/css?family=${urlFamilyName}&text=${uri_comp}`;
+	} else {
+		googleApiUrl = `https://fonts.googleapis.com/css?family=${urlFamilyName}`;
+	}
+
+	const response = await fetch(googleApiUrl);
+	if (!response.ok) {
+		console.log(response);
+		return false;
+	}
+
+	// url()の中身のURLだけ抽出
+	const cssFontFace = await response.text();
+	const matchUrls = cssFontFace.match(/url\(.+?\)/g);
+	if (!matchUrls)
+		return false;
+
+	for (const url of matchUrls) {
+		// 後は普通にFontFaceを追加
+		const font = new FontFace(fontName, url);
+		await font.load();
+		document.fonts.add(font);
+	}
+	return true;
+}
+
+function window_mm_to_px(mm) {
+	const dpi = window.devicePixelRatio * 96; // 96はCSSピクセルの標準DPI
+	return mm * dpi / 25.4;
+}
+
 class PlacardGenerator {
 	VERSION = '1.0.8'; // バージョン
 	pla_select_page_size = null; // 用紙サイズ選択コンボボックス
@@ -184,8 +253,8 @@ class PlacardGenerator {
 		this.pla_button_back_image.addEventListener('change', (event) => {
 			let file = event.target.files[0];
 			self.do_image_file(file);
-		    // 続けて同じファイルを選んでも change を発火する
-		    self.pla_button_back_image.value = '';
+			// 続けて同じファイルを選んでも change を発火する
+			self.pla_button_back_image.value = '';
 		});
 		// 設定のリセットボタンが押された？
 		this.pla_button_reset.addEventListener('click', (event) => {
@@ -442,21 +511,21 @@ class PlacardGenerator {
 
 			// 表示用のサイズをセット
 			let average = (short_mm + long_mm) / 2;
-			let short_for_display_mm = short_mm * 150 / average;
-			let long_for_display_mm = long_mm * 150 / average;
-			let width_mm, height_mm;
+			let short_for_display_px = short_mm * 150 / average;
+			let long_for_display_px = long_mm * 150 / average;
+			let width_px, height_px;
 			switch (orientation) {
 			case 'landscape':
-				width_mm = long_for_display_mm;
-				height_mm = short_for_display_mm;
+				width_px = long_for_display_px;
+				height_px = short_for_display_px;
 				break;
 			case 'portrait':
-				width_mm = short_for_display_mm;
-				height_mm = long_for_display_mm;
+				width_px = short_for_display_px;
+				height_px = long_for_display_px;
 				break;
 			}
-			this.pla_canvas_for_display.width = width_mm;
-			this.pla_canvas_for_display.height = height_mm;
+			this.pla_canvas_for_display.width = width_px;
+			this.pla_canvas_for_display.height = height_px;
 		} catch (error) {
 			alert('update_page_size: ' + error);
 		}
@@ -505,13 +574,14 @@ class PlacardGenerator {
 
 	// 現在のフォント名を取得
 	get_font_names() {
+		// カラー絵文字を優先
 		if (this.pla_select_font.value == this.DEF_MONOSPACE_FONT) {
-			return `"ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif`;
+			return `"Noto Color Emoji", "ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif`;
 		}
 		if (this.pla_select_font.value == this.DEF_PROPORTIONAL_FONT) {
-			return `"ＭＳ Ｐゴシック", "Yu Gothic", "Meiryo", "Hiragino Sans", "Noto Sans JP", "Roboto", san-serif`;
+			return `"Noto Color Emoji", "ＭＳ Ｐゴシック", "Yu Gothic", "Meiryo", "Hiragino Sans", "Noto Sans JP", "Roboto", san-serif`;
 		}
-		return `"${this.pla_select_font.value}`;
+		return `"Noto Color Emoji", "${this.pla_select_font.value}`;
 	}
 
 	// フォント項目を入植
@@ -602,14 +672,11 @@ class PlacardGenerator {
 
 	// 行の折り返し処理
 	line_break(text, width, height) {
-		// テキストをコードポイントに変換
-		let codes = [];
-		for (let ch of text) {
-			codes.push(ch.codePointAt(0));
-		}
+		// テキストを1文字ずつ分割
+		let chars = textCharaSplit(text);
 
 		// 縦横比と分割数を取得
-		let char_width = width / codes.length;
+		let char_width = width / chars.length;
 		let aspect_ratio = height / char_width;
 		let division = 1;
 		while (aspect_ratio / division > 6) {
@@ -618,14 +685,14 @@ class PlacardGenerator {
 
 		// コードからテキストを再構築しつつ、いい感じに改行文字を挿入する
 		text = '';
-		let length = codes.length;
+		let length = chars.length;
 		let step = length / division;
-		let icode = 0;
-		for (let code of codes) {
-			if (icode != 0 && Math.floor(icode % step) == 0)
+		let ich = 0;
+		for (let ch of chars) {
+			if (ich != 0 && Math.floor(ich % step) == 0)
 				text += "\n";
-			text += String.fromCharCode(code);
-			++icode;
+			text += ch;
+			++ich;
 		}
 		return text;
 	}
@@ -686,12 +753,20 @@ class PlacardGenerator {
 
 	// 描画する
 	render(canvas, for_display) {
+		// テキストを取得
+		let text = this.pla_textbox.value;
+
+		// カラー絵文字を取得
+		try {
+			fetchGoogleFont('Noto Color Emoji', text);
+		} catch (error) {
+			console.log(error);
+		}
+
 		// キャンバスのサイズを取得
 		let width = canvas.width, height = canvas.height;
 		// 描画コンテキストを取得
 		let ctx = canvas.getContext('2d', { alpha: false });
-		// テキストを取得
-		let text = this.pla_textbox.value;
 		// ページを描画
 		this.render_page(ctx, text, 0, 0, width, height, for_display);
 	}
