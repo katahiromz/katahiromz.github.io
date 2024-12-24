@@ -80,6 +80,14 @@ input[type=button] {
 input[type=button]:hover {
     background: #cfc;
 }
+.pla_check_label:hover {
+    background: #cfc;
+    cursor: pointer;
+}
+.pla_radio_label:hover {
+    background: #cfc;
+    cursor: pointer;
+}
 input[type=number] {
     font-weight: bold;
     border: 2px solid black;
@@ -141,7 +149,6 @@ textarea:hover {
     display: inline-block;
     background-color: #fff;
     vertical-align: text-top;
-    cursor: pointer;
 }
 .custom-checkbox:checked + span {
     background-color: #0f0;
@@ -161,7 +168,6 @@ textarea:hover {
     background-color: #fff;
     vertical-align: text-top;
     border-radius: 50%;
-    cursor: pointer;
 }
 .custom-radio:checked + span {
     background-color: #0f0;

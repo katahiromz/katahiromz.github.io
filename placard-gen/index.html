@@ -61,8 +61,8 @@
 	<!-- 「テキストのクリア」と「太字」と「自動改行」 -->
 	<div class="pla_class_gui_line">
 		<input type="button" id="pla_button_text_clear" value="テキストのクリア" />
-		　<label class="nowrap"><input type="checkbox" id="pla_checkbox_bold" class="custom-checkbox" /> <span></span> 太字</label>
-		　<label class="nowrap"><input type="checkbox" id="pla_checkbox_line_break" checked="checked" class="custom-checkbox" /> <span></span> 自動改行</label>
+		　<label class="nowrap pla_check_label"><input type="checkbox" id="pla_checkbox_bold" class="custom-checkbox" /> <span></span> 太字</label>
+		　<label class="nowrap pla_check_label"><input type="checkbox" id="pla_checkbox_line_break" checked="checked" class="custom-checkbox" /> <span></span> 自動改行</label>
 	</div>
 
 	<!-- テキストの色と背景 -->
@@ -70,10 +70,10 @@
 		<label class="nowrap">
 			文字の色:
 			<input type="color" id="pla_text_color" value="#000000" />
-		</label> <label class="nowrap">
+		</label>　<label class="nowrap">
 			背景色:
 			<input type="color" id="pla_back_color" value="#ffffff" />
-		</label> <input type="file" id="pla_button_back_image" accept="image/*" />
+		</label>　<input type="file" id="pla_button_back_image" accept="image/*" />
 		<label class="custom-file-upload" for="pla_button_back_image">
 			画像...
 		</label>
@@ -103,11 +103,11 @@
 	<!-- 用紙の方向ラジオボタン -->
 	<div class="pla_class_gui_line">
 		用紙の方向:
-		<label class="nowrap">
+		<label class="nowrap pla_radio_label">
 			<input type="radio" name="pla_radio_orientation" id="pla_radio_orientation_landscape" value="landscape" checked="checked" class="custom-radio">
 			<span></span> 横向き
 		</label>
-		<label class="nowrap">
+		<label class="nowrap pla_radio_label">
 			<input type="radio" name="pla_radio_orientation" id="pla_radio_orientation_portrait" value="portrait" class="custom-radio">
 			<span></span> 縦向き
 		</label>
