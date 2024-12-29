@@ -188,8 +188,8 @@ class PlacardGenerator {
 			self.redraw();
 		});
 		// 印刷ボタンが押された？
-		this.pla_button_print.addEventListener('click', (event) => {
-			self.update_page_size();
+		this.pla_button_print.addEventListener('click', async (event) => {
+			await self.update_page_size();
 			window.print();
 		});
 		// テキストのクリアボタンが押された？
@@ -437,7 +437,7 @@ class PlacardGenerator {
 	}
 
 	// 印刷設定をセットする
-	set_print_settings(page_info, orientation) {
+	async set_print_settings(page_info, orientation) {
 		try {
 			// ページ情報からサイズをmmで取得
 			let width_mm, height_mm;
@@ -480,11 +480,11 @@ class PlacardGenerator {
 			alert('set_print_settings: ' + error);
 		}
 
-		this.redraw(); // 再描画
+		await this.redraw(); // 再描画
 	}
 
 	// ページサイズを更新する
-	update_page_size() {
+	async update_page_size() {
 		let page_info, orientation;
 		try {
 			// ページ情報を取得
@@ -527,7 +527,7 @@ class PlacardGenerator {
 			alert('update_page_size: ' + error);
 		}
 
-		this.set_print_settings(page_info, orientation);
+		await this.set_print_settings(page_info, orientation);
 	}
 
 	// 用紙の向きを選択する
@@ -615,16 +615,16 @@ class PlacardGenerator {
 	}
 
 	// 再描画
-	redraw() {
+	async redraw() {
 		// 画面表示用の描画
 		try {
-			this.render(this.pla_canvas_for_display, true);
+			await this.render(this.pla_canvas_for_display, true);
 		} catch (error) {
 			alert('pla_canvas_for_display: ' + error);
 		}
 		// 印刷用の描画
 		try {
-			this.render(this.pla_canvas_for_print, false);
+			await this.render(this.pla_canvas_for_print, false);
 		} catch (error) {
 			alert('pla_canvas_for_print: ' + error);
 		}
