@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION = '1.1.0'; // バージョン
+const VERSION = '1.1.1'; // バージョン
 
 // 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
 // https://qiita.com/yoya/items/636e3992ec45c1c40c14
@@ -590,6 +590,11 @@ class PlacardGenerator {
 				option.text = entry;
 				this.pla_select_font.add(option);
 			}
+			for (let entry of google_fonts) {
+				let option = document.createElement('option');
+				option.text = entry;
+				this.pla_select_font.add(option);
+			}
 		} catch (error) {
 			alert('populate_fonts: ' + error);
 		}
@@ -756,6 +761,16 @@ class PlacardGenerator {
 			await fetchGoogleFont('Noto Color Emoji', text);
 		} catch (error) {
 			console.log(error);
+		}
+
+		// Googleフォントを取得
+		let font_name = this.pla_select_font.options[this.pla_select_font.selectedIndex].text
+		if (google_fonts.includes(font_name)) {
+			try {
+				await fetchGoogleFont(font_name, text);
+			} catch (error) {
+				console.log(error);
+			}
 		}
 
 		// キャンバスのサイズを取得
