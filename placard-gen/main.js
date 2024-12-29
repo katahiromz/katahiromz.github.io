@@ -170,10 +170,6 @@ class PlacardGenerator {
 	is_mobile() {
 		return /Mobile|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 	}
-	// Androidか？
-	is_android() {
-		return /Android/i.test(navigator.userAgent);
-	}
 
 	// イベントリスナーを追加
 	add_event_listers() {
@@ -256,6 +252,13 @@ class PlacardGenerator {
 			self.reset();
 		});
 
+		// 画像を閉じるボタンが押された？
+		this.pla_button_back_image_close.addEventListener('click', (event) => {
+			self.pla_button_back_image_close.classList.add('hidden');
+			self.back_image = null;
+			self.redraw();
+		});
+
 		//////////////////////////////////////////////////////////////////
 		// ドラッグ＆ドロップ
 
@@ -307,13 +310,6 @@ class PlacardGenerator {
 				}
 			}
 		};
-
-		// 画像を閉じるボタンが押された？
-		this.pla_button_back_image_close.addEventListener('click', (event) => {
-			self.pla_button_back_image_close.classList.add('hidden');
-			self.back_image = null;
-			self.redraw();
-		});
 	}
 
 	// 画像ファイルを処理する
@@ -399,6 +395,7 @@ class PlacardGenerator {
 			console.log(error);
 		}
 	}
+
 	// 設定を保存
 	save_settings() {
 		// localStorageを使用して設定を保存する
@@ -609,6 +606,7 @@ class PlacardGenerator {
 	populate_page_sizes() {
 		try {
 			// コンボボックスにページサイズを追加していく
+			this.pla_select_page_size.options.length = 0;
 			for (let item of pla_page_size_info) {
 				let option = document.createElement('option');
 				option.text = item.text;
@@ -730,8 +728,7 @@ class PlacardGenerator {
 
 		// 余白を除いた印刷範囲を計算
 		const content_x = x + margin_px, content_y = y + margin_px;
-		const content_width = width - (margin_px * 2);
-		const content_height = height - (margin_px * 2);
+		const content_width = width - (margin_px * 2), content_height = height - (margin_px * 2);
 
 		// 改行文字で分割
 		let lines = text.split("\n");
@@ -748,8 +745,7 @@ class PlacardGenerator {
 		for (let line of lines) {
 			// テキストの座標を計算
 			let text_x = content_x, text_y = content_y + content_height * irow / rows;
-			let text_width = content_width;
-			let text_height = content_height / rows;
+			let text_width = content_width, text_height = content_height / rows;
 			// 指定した座標に行を描画
 			this.render_line(ctx, line, text_x, text_y, text_width, text_height, for_display);
 			++irow; // 行番号を加算
