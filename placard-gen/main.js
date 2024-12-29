@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION = '1.1.1'; // バージョン
+const VERSION = '1.1.2'; // バージョン
 
 // 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
 // https://qiita.com/yoya/items/636e3992ec45c1c40c14
@@ -90,6 +90,7 @@ class PlacardGenerator {
 	pla_checkbox_bold = null; // 「太字」チェックボックス
 	pla_button_back_image = null; // 背景画像ボタン
 	pla_button_back_image_close = null; // 背景画像を閉じるボタン
+	pla_select_font_subsets = null; // フォントサブセット
 	page_info = null; // 印刷情報
 	orientation = 'landscape'; // 用紙の向き('portrait' or 'landscape')
 	width_mm = 0; // 用紙の幅(mm)
@@ -132,6 +133,7 @@ class PlacardGenerator {
 			this.pla_button_back_image = document.getElementById('pla_button_back_image');
 			this.pla_button_back_image_close = document.getElementById('pla_button_back_image_close');
 			this.pla_display_div = document.getElementById('pla_display_div');
+			this.pla_select_font_subsets = document.getElementById('pla_select_font_subsets');
 		} catch (error) {
 			alert("init_controls第1段階: " + error);
 		}
@@ -140,6 +142,8 @@ class PlacardGenerator {
 		try {
 			// バージョン情報を表示
 			this.show_version();
+			// フォントサブセットを入植
+			this.populate_font_subsets();
 			// フォント群を入植
 			this.populate_fonts();
 			// ページサイズを入植
@@ -259,6 +263,12 @@ class PlacardGenerator {
 			self.redraw();
 		});
 
+		// フォントサブセットが変更された？
+		this.pla_select_font_subsets.addEventListener('change', (event) => {
+			self.populate_fonts();
+			self.redraw();
+		});
+
 		//////////////////////////////////////////////////////////////////
 		// ドラッグ＆ドロップ
 
@@ -349,6 +359,7 @@ class PlacardGenerator {
 			localStorage.removeItem('pla_number_margin');
 			localStorage.removeItem('pla_number_adjust_y');
 			localStorage.removeItem('pla_select_font');
+			localStorage.removeItem('pla_select_font_subsets');
 			localStorage.removeItem('pla_text_color');
 			localStorage.removeItem('pla_back_color');
 			localStorage.removeItem('pla_radio_orientation');
@@ -375,6 +386,8 @@ class PlacardGenerator {
 				this.pla_number_adjust_y.value = parseFloat(localStorage.getItem('pla_number_adjust_y'));
 			if (localStorage.getItem('pla_select_font') != null)
 				this.combobox_select_by_text(this.pla_select_font, localStorage.getItem('pla_select_font'));
+			if (localStorage.getItem('pla_select_font_subsets') != null)
+				this.combobox_select_by_text(this.pla_select_font_subsets, localStorage.getItem('pla_select_font_subsets'));
 			if (localStorage.getItem('pla_text_color') != null)
 				this.pla_text_color.value = localStorage.getItem('pla_text_color');
 			if (localStorage.getItem('pla_back_color') != null)
@@ -406,6 +419,7 @@ class PlacardGenerator {
 			localStorage.setItem('pla_number_margin', this.pla_number_margin.value.toString());
 			localStorage.setItem('pla_number_adjust_y', this.pla_number_adjust_y.value.toString());
 			localStorage.setItem('pla_select_font', this.pla_select_font.options[this.pla_select_font.selectedIndex].text);
+			localStorage.setItem('pla_select_font_subsets', this.pla_select_font_subsets.options[this.pla_select_font_subsets.selectedIndex].text);
 			localStorage.setItem('pla_text_color', this.pla_text_color.value);
 			localStorage.setItem('pla_back_color', this.pla_back_color.value);
 			localStorage.setItem('pla_radio_orientation', this.orientation);
@@ -574,9 +588,37 @@ class PlacardGenerator {
 		return `"Noto Color Emoji", "${this.pla_select_font.value}`;
 	}
 
+	// フォントサブセットを入植
+	populate_font_subsets(default_subset = 'japanese') {
+		try {
+			// コンボボックスにフォント項目を追加していく
+			this.pla_select_font_subsets.options.length = 0;
+			// 'all' は特別
+			let option = document.createElement('option');
+			option.text = 'all';
+			this.pla_select_font_subsets.add(option);
+			for (let entry of font_subsets) {
+				let option = document.createElement('option');
+				option.text = entry;
+				if (default_subset == entry)
+					option.selected = true;
+				this.pla_select_font_subsets.add(option);
+			}
+		} catch (error) {
+			alert('populate_font_subsets: ' + error);
+		}
+	}
+
+	// フォントサブセットを取得
+	get_font_subset() {
+		return this.pla_select_font_subsets.options[this.pla_select_font_subsets.selectedIndex].text;
+	}
+
 	// フォント項目を入植
 	populate_fonts() {
 		try {
+			// サブセットを取得
+			const subset = this.get_font_subset();
 			// コンボボックスにフォント項目を追加していく
 			this.pla_select_font.options.length = 0;
 			// 標準のフォント
@@ -585,16 +627,22 @@ class PlacardGenerator {
 			this.pla_select_font.add(option);
 			// インストール済みフォント
 			for (let entry of fonts) {
-				if (!this.is_font_available(entry))
+				let subsets = entry.subsets.split('/');
+				if (!subsets.includes(subset) && subset != 'all')
+					continue;
+				if (!this.is_font_available(entry.family))
 					continue;
 				let option = document.createElement('option');
-				option.text = entry;
+				option.text = entry.family;
 				this.pla_select_font.add(option);
 			}
 			// Google Fonts
 			for (let entry of google_fonts) {
+				let subsets = entry.subsets.split('/');
+				if (!subsets.includes(subset) && subset != 'all')
+					continue;
 				let option = document.createElement('option');
-				option.text = entry;
+				option.text = entry.family;
 				this.pla_select_font.add(option);
 			}
 		} catch (error) {
@@ -752,6 +800,15 @@ class PlacardGenerator {
 		}
 	}
 
+	// Googleフォントか？
+	is_google_font(family_name) {
+		for (let entry of google_fonts) {
+			if (entry.family_name == family_name)
+				return true;
+		}
+		return false;
+	}
+
 	// 描画する
 	async render(canvas, for_display) {
 		// テキストを取得
@@ -771,7 +828,7 @@ class PlacardGenerator {
 
 		// Googleフォントを取得
 		let font_name = this.pla_select_font.options[this.pla_select_font.selectedIndex].text;
-		if (google_fonts.includes(font_name)) {
+		if (this.is_google_font(font_name)) {
 			try {
 				await fetchGoogleFont(font_name, text);
 			} catch (error) {
