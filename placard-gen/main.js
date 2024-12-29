@@ -774,7 +774,7 @@ class PlacardGenerator {
 		}
 
 		// Googleフォントを取得
-		let font_name = this.pla_select_font.options[this.pla_select_font.selectedIndex].text
+		let font_name = this.pla_select_font.options[this.pla_select_font.selectedIndex].text;
 		if (google_fonts.includes(font_name)) {
 			try {
 				await fetchGoogleFont(font_name, text);
