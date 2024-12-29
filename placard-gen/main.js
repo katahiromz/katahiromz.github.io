@@ -96,8 +96,7 @@ class PlacardGenerator {
 	height_mm = 0; // 用紙の高さ(mm)
 	back_image = null; // 背景イメージ
 	pla_display_div = null; // 画面表示用の<DIV>
-	DEF_MONOSPACE_FONT = '(標準の等幅フォント)';
-	DEF_PROPORTIONAL_FONT = '(標準のプロポーショナルフォント)';
+	DEF_FONT = '(標準のフォント)';
 	DEF_TEXT = 'テキストを入力してください';
 
 	// コンストラクタ
@@ -424,9 +423,10 @@ class PlacardGenerator {
 		for (let option of select.options) {
 			if (option.text == text) {
 				select.selectedIndex = option.index;
-				break;
+				return;
 			}
 		}
+		select.selectedIndex = 0;
 	}
 
 	// mmからピクセルへ変換
@@ -571,10 +571,7 @@ class PlacardGenerator {
 	// 現在のフォント名を取得
 	get_font_names() {
 		// カラー絵文字を優先
-		if (this.pla_select_font.value == this.DEF_MONOSPACE_FONT) {
-			return `"Noto Color Emoji", "ＭＳ ゴシック", "ヒラギノ角ゴシック", "Osaka-Mono", "MS Gothic", "Hiragino Sans", "Noto Sans Mono CJK JP", "MS Mincho", monospace, san-serif`;
-		}
-		if (this.pla_select_font.value == this.DEF_PROPORTIONAL_FONT) {
+		if (this.pla_select_font.value == this.DEF_FONT) {
 			return `"Noto Color Emoji", "ＭＳ Ｐゴシック", "Yu Gothic", "Meiryo", "Hiragino Sans", "Noto Sans JP", "Roboto", san-serif`;
 		}
 		return `"Noto Color Emoji", "${this.pla_select_font.value}`;
@@ -584,6 +581,12 @@ class PlacardGenerator {
 	populate_fonts() {
 		try {
 			// コンボボックスにフォント項目を追加していく
+			this.pla_select_font.options.length = 0;
+			// 標準のフォント
+			let option = document.createElement('option');
+			option.text = this.DEF_FONT;
+			this.pla_select_font.add(option);
+			// インストール済みフォント
 			for (let entry of fonts) {
 				if (!this.is_font_available(entry))
 					continue;
@@ -591,6 +594,7 @@ class PlacardGenerator {
 				option.text = entry;
 				this.pla_select_font.add(option);
 			}
+			// Google Fonts
 			for (let entry of google_fonts) {
 				let option = document.createElement('option');
 				option.text = entry;
