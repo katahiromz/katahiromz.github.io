@@ -1,4 +1,4 @@
-/* version: 1.0.9 */
+/* version: 1.1.0 */
 body {
     background-color: #ff9;
     font-size: 2vh;
@@ -28,6 +28,9 @@ textarea.pla_class_textarea {
     width: 95%;
 }
 @media print {
+    body {
+        background-color: transparent;
+    }
     @page {
         size: landscape;
         margin: 0;

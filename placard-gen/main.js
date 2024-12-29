@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION = '1.0.9'; // バージョン
+const VERSION = '1.1.0'; // バージョン
 
 // 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
 // https://qiita.com/yoya/items/636e3992ec45c1c40c14
@@ -228,11 +228,9 @@ class PlacardGenerator {
 		});
 		// 背景色が変更された？
 		this.pla_back_color.addEventListener('change', (event) => {
-			self.back_image = null;
 			self.redraw();
 		});
 		this.pla_back_color.addEventListener('input', (event) => {
-			self.back_image = null;
 			self.redraw();
 		});
 		// 用紙の向きが変更された？
@@ -376,9 +374,9 @@ class PlacardGenerator {
 			if (localStorage.getItem('pla_checkbox_line_break') != null)
 				this.pla_checkbox_line_break.checked = localStorage.getItem('pla_checkbox_line_break') == "yes";
 			if (localStorage.getItem('pla_number_margin') != null)
-				this.pla_number_margin.value = parseInt(localStorage.getItem('pla_number_margin'));
+				this.pla_number_margin.value = parseFloat(localStorage.getItem('pla_number_margin'));
 			if (localStorage.getItem('pla_number_adjust_y') != null)
-				this.pla_number_adjust_y.value = parseInt(localStorage.getItem('pla_number_adjust_y'));
+				this.pla_number_adjust_y.value = parseFloat(localStorage.getItem('pla_number_adjust_y'));
 			if (localStorage.getItem('pla_select_font') != null)
 				this.combobox_select_by_text(this.pla_select_font, localStorage.getItem('pla_select_font'));
 			if (localStorage.getItem('pla_text_color') != null)

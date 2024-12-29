@@ -1,6 +1,6 @@
 "use strict";
 
-// VERSION 1.0.9
+// VERSION 1.1.0
 const fonts = [
 	"ＭＳ ゴシック",
 	"ＭＳ 明朝",
