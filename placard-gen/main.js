@@ -801,9 +801,9 @@ class PlacardGenerator {
 	}
 
 	// Googleフォントか？
-	is_google_font(family_name) {
+	is_google_font(font_name) {
 		for (let entry of google_fonts) {
-			if (entry.family_name == family_name)
+			if (entry.family == font_name)
 				return true;
 		}
 		return false;
