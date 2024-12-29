@@ -98,6 +98,7 @@ class PlacardGenerator {
 	pla_display_div = null; // 画面表示用の<DIV>
 	DEF_MONOSPACE_FONT = '(標準の等幅フォント)';
 	DEF_PROPORTIONAL_FONT = '(標準のプロポーショナルフォント)';
+	DEF_TEXT = 'テキストを入力してください';
 
 	// コンストラクタ
 	constructor() {
@@ -755,6 +756,11 @@ class PlacardGenerator {
 	async render(canvas, for_display) {
 		// テキストを取得
 		let text = this.pla_textbox.value;
+
+		// テキストが空なら、デフォルトのテキストにする
+		if (text.length == 0) {
+			text = this.DEF_TEXT;
+		}
 
 		// カラー絵文字を取得
 		try {
