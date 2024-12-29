@@ -66,11 +66,6 @@ async function fetchGoogleFont(fontName, text = null) {
 	return true;
 }
 
-function window_mm_to_px(mm) {
-	const dpi = window.devicePixelRatio * 96; // 96はCSSピクセルの標準DPI
-	return mm * dpi / 25.4;
-}
-
 class PlacardGenerator {
 	pla_select_page_size = null; // 用紙サイズ選択コンボボックス
 	pla_canvas_for_display = null; // 画面表示用キャンバス
@@ -441,8 +436,7 @@ class PlacardGenerator {
 	}
 
 	// mmからピクセルへ変換
-	mm_to_px(mm) {
-		const dpi = 96; // デフォルトのDPI
+	mm_to_px(mm, dpi = 96) {
 		return mm * dpi / 25.4; // mm -> px
 	}
 
@@ -686,19 +680,21 @@ class PlacardGenerator {
 		this.save_settings();
 	}
 
+	// テキストを描画
+	draw_text(ctx, text, fore_color, dpi) {
+		ctx.fillStyle = fore_color; // テキストの色
+		ctx.fillText(text, 0, 0); // テキストを描画
+	}
+
 	// 行を描画
-	render_line(ctx, text, x, y, width, height, for_display) {
+	render_line(ctx, text, x, y, width, height, dpi) {
 		// テキストが空なら問題が起こるので何もしない
 		if (text.length == 0)
 			return;
 
 		// 垂直位置調整
 		let adjust_y_mm = this.pla_number_adjust_y.value;
-		let scale = 1;
-		if (!for_display) {
-			scale = this.pla_canvas_for_print.width / this.pla_canvas_for_display.width;
-		}
-		let adjust_y_px = this.mm_to_px(adjust_y_mm * scale);
+		let adjust_y_px = this.mm_to_px(adjust_y_mm, dpi);
 
 		// フォント
 		if (this.pla_checkbox_bold.checked) {
@@ -708,7 +704,6 @@ class PlacardGenerator {
 		}
 
 		// テキストを描画する
-		ctx.fillStyle = this.pla_text_color.value; // テキストの色
 		ctx.textAlign = "center"; // 水平位置は中央
 		ctx.textBaseline = "middle"; // 垂直位置は中央
 		const metrics = ctx.measureText(text); // テキストの寸法を取得
@@ -717,7 +712,7 @@ class PlacardGenerator {
 		ctx.save(); // 描画コンテキストを保存
 		ctx.translate(x + width / 2, y + height / 2 - adjust_y_px); // 座標変換で水平移動
 		ctx.scale(width / text_width, height / text_height); // 座標変換で拡大縮小
-		ctx.fillText(text, 0, 0); // テキストを描画
+		this.draw_text(ctx, text, this.pla_text_color.value, dpi); // テキストを描画
 		ctx.restore(); // 描画コンテキストを復元
 	}
 
@@ -749,7 +744,7 @@ class PlacardGenerator {
 	}
 
 	// ページを描画する
-	render_page(ctx, text, x, y, width, height, for_display) {
+	render_page(ctx, text, x, y, width, height, dpi) {
 		// 背景を塗りつぶす
 		ctx.fillStyle = this.pla_back_color.value;
 		ctx.fillRect(x, y, width, height);
@@ -765,14 +760,7 @@ class PlacardGenerator {
 
 		// 余白を計算
 		let margin_mm = this.pla_number_margin.value; // 余白(mm)
-		let dpi;
-		if (for_display) {
-			let scale = this.pla_canvas_for_print.width / this.pla_canvas_for_display.width;
-			dpi = 96 / scale;
-		} else {
-			dpi = 96;
-		}
-		const margin_px = margin_mm * dpi / 25.4; // mmをpxに変換
+		const margin_px = this.mm_to_px(margin_mm, dpi); // mmをpxに変換
 
 		// 余白を除いた印刷範囲を計算
 		const content_x = x + margin_px, content_y = y + margin_px;
@@ -795,7 +783,7 @@ class PlacardGenerator {
 			let text_x = content_x, text_y = content_y + content_height * irow / rows;
 			let text_width = content_width, text_height = content_height / rows;
 			// 指定した座標に行を描画
-			this.render_line(ctx, line, text_x, text_y, text_width, text_height, for_display);
+			this.render_line(ctx, line, text_x, text_y, text_width, text_height, dpi);
 			++irow; // 行番号を加算
 		}
 	}
@@ -840,8 +828,14 @@ class PlacardGenerator {
 		let width = canvas.width, height = canvas.height;
 		// 描画コンテキストを取得
 		let ctx = canvas.getContext('2d', { alpha: false });
+		// DPIを計算
+		let dpi = 96;
+		if (for_display) {
+			let scale = this.pla_canvas_for_display.width / this.pla_canvas_for_print.width
+			dpi *= scale;
+		}
 		// ページを描画
-		this.render_page(ctx, text, 0, 0, width, height, for_display);
+		this.render_page(ctx, text, 0, 0, width, height, dpi);
 	}
 };
 
