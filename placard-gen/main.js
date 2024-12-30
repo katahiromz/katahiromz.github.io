@@ -724,7 +724,7 @@ class PlacardGenerator {
 	}
 
 	// 特殊効果付きでテキストを描画
-	draw_text_with_effect(ctx, text, fore_color, back_color, effect, scale_x, scale_y, dpi) {
+	draw_text_with_effect(ctx, text, fore_color, back_color, effect, scale_x, scale_y, text_width, text_height, adjust_y_px, metrics, dpi) {
 		ctx.lineJoin = 'round';
 		ctx.miterLimit = 3;
 
@@ -791,7 +791,7 @@ class PlacardGenerator {
 		ctx.scale(scale_x, scale_y);
 		// 特殊効果付きでテキストを描画
 		this.draw_text_with_effect(ctx, text, this.pla_text_color.value, this.pla_back_color.value,
-		                           this.get_effect(), scale_x, scale_y, dpi);
+		                           this.get_effect(), scale_x, scale_y, text_width, text_height, adjust_y_px, metrics, dpi);
 		ctx.restore(); // 描画コンテキストを復元
 	}
 
