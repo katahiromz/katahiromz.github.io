@@ -724,7 +724,7 @@ class PlacardGenerator {
 	}
 
 	// 特殊効果付きでテキストを描画
-	draw_text_with_effect(ctx, text, fore_color, back_color, effect, dpi) {
+	draw_text_with_effect(ctx, text, fore_color, back_color, effect, scale_x, scale_y, dpi) {
 		ctx.lineJoin = 'round';
 		ctx.miterLimit = 3;
 
@@ -786,9 +786,12 @@ class PlacardGenerator {
 		const text_height = metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
 		ctx.save(); // 描画コンテキストを保存
 		ctx.translate(x + width / 2, y + height / 2 - adjust_y_px); // 座標変換で水平移動
-		ctx.scale(width / text_width, height / text_height); // 座標変換で拡大縮小
+		// 座標変換で拡大縮小
+		let scale_x = width / text_width, scale_y = height / text_height;
+		ctx.scale(scale_x, scale_y);
 		// 特殊効果付きでテキストを描画
-		this.draw_text_with_effect(ctx, text, this.pla_text_color.value, this.pla_back_color.value, this.get_effect(), dpi);
+		this.draw_text_with_effect(ctx, text, this.pla_text_color.value, this.pla_back_color.value,
+		                           this.get_effect(), scale_x, scale_y, dpi);
 		ctx.restore(); // 描画コンテキストを復元
 	}
 
