@@ -733,6 +733,9 @@ class PlacardGenerator {
 			ctx.fillText(text, 0, 0);
 			break;
 		case '白枠':
+			ctx.strokeStyle = '#555';
+			ctx.lineWidth = 4;
+			ctx.strokeText(text, 0, 0);
 			ctx.strokeStyle = 'white';
 			ctx.lineWidth = 3;
 			ctx.strokeText(text, 0, 0);
