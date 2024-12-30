@@ -95,6 +95,8 @@ class PlacardGenerator {
 	pla_display_div = null; // 画面表示用の<DIV>
 	DEF_FONT = '(標準のフォント)';
 	DEF_TEXT = 'テキストを入力してください';
+	DPI_FOR_DISPLAY = 13; // 画面表示用のDPI
+	DPI_FOR_PRINTING = 96; // 印刷用のDPI
 
 	// コンストラクタ
 	constructor() {
@@ -524,9 +526,8 @@ class PlacardGenerator {
 			console.assert(short_mm <= long_mm);
 
 			// 表示用のサイズをセット
-			const dpi_for_display = 15;
-			let short_for_display_px = this.mm_to_px(short_mm, dpi_for_display);
-			let long_for_display_px = this.mm_to_px(long_mm, dpi_for_display);
+			let short_for_display_px = this.mm_to_px(short_mm, this.DPI_FOR_DISPLAY);
+			let long_for_display_px = this.mm_to_px(long_mm, this.DPI_FOR_DISPLAY);
 			let width_px, height_px;
 			switch (orientation) {
 			case 'landscape':
@@ -894,11 +895,8 @@ class PlacardGenerator {
 		let width = canvas.width, height = canvas.height;
 		// 描画コンテキストを取得
 		let ctx = canvas.getContext('2d', { alpha: false });
-		// DPIを計算
-		let dpi = 96;
-		if (for_display) {
-			dpi = 15;
-		}
+		// DPIを取得
+		let dpi = for_display ? this.DPI_FOR_DISPLAY : this.DPI_FOR_PRINTING;
 		// ページを描画
 		this.render_page(ctx, text, 0, 0, width, height, dpi);
 	}
