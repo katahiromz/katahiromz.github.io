@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION = '1.1.3'; // バージョン
+const VERSION = '1.1.4'; // バージョン
 
 // 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
 // https://qiita.com/yoya/items/636e3992ec45c1c40c14
@@ -85,6 +85,7 @@ class PlacardGenerator {
 	pla_checkbox_bold = null; // 「太字」チェックボックス
 	pla_button_back_image = null; // 背景画像ボタン
 	pla_button_back_image_close = null; // 背景画像を閉じるボタン
+	pla_button_image_download = null; // 画像DLボタン
 	pla_select_font_subsets = null; // フォントサブセット
 	pla_select_effects = null; // 特殊効果
 	page_info = null; // 印刷情報
@@ -130,6 +131,7 @@ class PlacardGenerator {
 			this.pla_checkbox_bold = document.getElementById('pla_checkbox_bold');
 			this.pla_button_back_image = document.getElementById('pla_button_back_image');
 			this.pla_button_back_image_close = document.getElementById('pla_button_back_image_close');
+			this.pla_button_image_download = document.getElementById('pla_button_image_download');
 			this.pla_display_div = document.getElementById('pla_display_div');
 			this.pla_select_font_subsets = document.getElementById('pla_select_font_subsets');
 			this.pla_select_effects = document.getElementById('pla_select_effects');
@@ -264,6 +266,11 @@ class PlacardGenerator {
 			self.redraw();
 		});
 
+		// 画像DLボタンが押された？
+		this.pla_button_image_download.addEventListener('click', (event) => {
+			self.image_download();
+		});
+
 		// フォントサブセットが変更された？
 		this.pla_select_font_subsets.addEventListener('change', (event) => {
 			self.populate_fonts();
@@ -353,6 +360,16 @@ class PlacardGenerator {
 		} catch (error) {
 			alert('画像を読み込めませんでした: ' + error);
 		}
+	}
+
+	// 画像ダウンロード
+	image_download() {
+		this.redraw();
+
+		let link = document.createElement('a');
+		link.download = 'image.png';
+		link.href = this.pla_canvas_for_print.toDataURL();
+		link.click();
 	}
 
 	// 設定のリセット

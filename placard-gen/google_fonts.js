@@ -1,6 +1,6 @@
 "use strict";
 
-// VERSION 1.1.3
+// VERSION 1.1.4
 const google_fonts = [
 {family:'ABeeZee', subsets:'latin/latin-ext'},
 {family:'ADLaM Display', subsets:'adlam/latin/latin-ext'},
