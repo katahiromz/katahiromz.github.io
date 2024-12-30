@@ -1,6 +1,6 @@
 'use strict';
 
-// VERSION 1.1.2
+// VERSION 1.1.3
 const fonts = [
 {family:'ＭＳ ゴシック', subsets:'japanese'},
 {family:'ＭＳ 明朝', subsets:'japanese'},

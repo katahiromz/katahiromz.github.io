@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION = '1.1.2'; // バージョン
+const VERSION = '1.1.3'; // バージョン
 
 // 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
 // https://qiita.com/yoya/items/636e3992ec45c1c40c14
@@ -86,6 +86,7 @@ class PlacardGenerator {
 	pla_button_back_image = null; // 背景画像ボタン
 	pla_button_back_image_close = null; // 背景画像を閉じるボタン
 	pla_select_font_subsets = null; // フォントサブセット
+	pla_select_effects = null; // 特殊効果
 	page_info = null; // 印刷情報
 	orientation = 'landscape'; // 用紙の向き('portrait' or 'landscape')
 	width_mm = 0; // 用紙の幅(mm)
@@ -129,6 +130,7 @@ class PlacardGenerator {
 			this.pla_button_back_image_close = document.getElementById('pla_button_back_image_close');
 			this.pla_display_div = document.getElementById('pla_display_div');
 			this.pla_select_font_subsets = document.getElementById('pla_select_font_subsets');
+			this.pla_select_effects = document.getElementById('pla_select_effects');
 		} catch (error) {
 			alert("init_controls第1段階: " + error);
 		}
@@ -137,6 +139,8 @@ class PlacardGenerator {
 		try {
 			// バージョン情報を表示
 			this.show_version();
+			// 特殊効果を入植
+			this.populate_effects();
 			// フォントサブセットを入植
 			this.populate_font_subsets();
 			// フォント群を入植
@@ -264,6 +268,11 @@ class PlacardGenerator {
 			self.redraw();
 		});
 
+		// 特殊効果が変更された？
+		this.pla_select_effects.addEventListener('change', (event) => {
+			self.redraw();
+		});
+
 		//////////////////////////////////////////////////////////////////
 		// ドラッグ＆ドロップ
 
@@ -355,6 +364,7 @@ class PlacardGenerator {
 			localStorage.removeItem('pla_number_adjust_y');
 			localStorage.removeItem('pla_select_font');
 			localStorage.removeItem('pla_select_font_subsets');
+			localStorage.removeItem('pla_select_effects');
 			localStorage.removeItem('pla_text_color');
 			localStorage.removeItem('pla_back_color');
 			localStorage.removeItem('pla_radio_orientation');
@@ -383,6 +393,8 @@ class PlacardGenerator {
 				this.combobox_select_by_text(this.pla_select_font, localStorage.getItem('pla_select_font'));
 			if (localStorage.getItem('pla_select_font_subsets') != null)
 				this.combobox_select_by_text(this.pla_select_font_subsets, localStorage.getItem('pla_select_font_subsets'));
+			if (localStorage.getItem('pla_select_effects') != null)
+				this.combobox_select_by_text(this.pla_select_effects, localStorage.getItem('pla_select_effects'));
 			if (localStorage.getItem('pla_text_color') != null)
 				this.pla_text_color.value = localStorage.getItem('pla_text_color');
 			if (localStorage.getItem('pla_back_color') != null)
@@ -415,6 +427,7 @@ class PlacardGenerator {
 			localStorage.setItem('pla_number_adjust_y', this.pla_number_adjust_y.value.toString());
 			localStorage.setItem('pla_select_font', this.pla_select_font.options[this.pla_select_font.selectedIndex].text);
 			localStorage.setItem('pla_select_font_subsets', this.pla_select_font_subsets.options[this.pla_select_font_subsets.selectedIndex].text);
+			localStorage.setItem('pla_select_effects', this.pla_select_effects.options[this.pla_select_effects.selectedIndex].text);
 			localStorage.setItem('pla_text_color', this.pla_text_color.value);
 			localStorage.setItem('pla_back_color', this.pla_back_color.value);
 			localStorage.setItem('pla_radio_orientation', this.orientation);
@@ -511,9 +524,9 @@ class PlacardGenerator {
 			console.assert(short_mm <= long_mm);
 
 			// 表示用のサイズをセット
-			let average = (short_mm + long_mm) / 2;
-			let short_for_display_px = short_mm * 150 / average;
-			let long_for_display_px = long_mm * 150 / average;
+			const dpi_for_display = 15;
+			let short_for_display_px = this.mm_to_px(short_mm, dpi_for_display);
+			let long_for_display_px = this.mm_to_px(long_mm, dpi_for_display);
 			let width_px, height_px;
 			switch (orientation) {
 			case 'landscape':
@@ -582,6 +595,29 @@ class PlacardGenerator {
 		return `"Noto Color Emoji", "${this.pla_select_font.value}`;
 	}
 
+	// 特殊効果を入植
+	populate_effects(default_effect = '(なし)') {
+		const effects = [
+			'(なし)',
+			'白枠',
+			'黒枠',
+			'白抜き',
+		];
+		try {
+			// コンボボックスにフォント項目を追加していく
+			this.pla_select_effects.options.length = 0;
+			for (let entry of effects) {
+				let option = document.createElement('option');
+				option.text = entry;
+				if (default_effect == entry)
+					option.selected = true;
+				this.pla_select_effects.add(option);
+			}
+		} catch (error) {
+			alert('populate_effects: ' + error);
+		}
+	}
+
 	// フォントサブセットを入植
 	populate_font_subsets(default_subset = 'japanese') {
 		try {
@@ -606,6 +642,11 @@ class PlacardGenerator {
 	// フォントサブセットを取得
 	get_font_subset() {
 		return this.pla_select_font_subsets.options[this.pla_select_font_subsets.selectedIndex].text;
+	}
+
+	// 特殊効果を取得
+	get_effect() {
+		return this.pla_select_effects.options[this.pla_select_effects.selectedIndex].text;
 	}
 
 	// フォント項目を入植
@@ -681,9 +722,34 @@ class PlacardGenerator {
 	}
 
 	// テキストを描画
-	draw_text(ctx, text, fore_color, dpi) {
-		ctx.fillStyle = fore_color; // テキストの色
-		ctx.fillText(text, 0, 0); // テキストを描画
+	draw_text(ctx, text, fore_color, back_color, effect, dpi) {
+		switch (effect) {
+		case '(なし)':
+			ctx.fillStyle = fore_color;
+			ctx.fillText(text, 0, 0);
+			break;
+		case '白枠':
+			ctx.strokeStyle = 'white';
+			ctx.lineWidth = 3;
+			ctx.strokeText(text, 0, 0);
+			ctx.fillStyle = fore_color;
+			ctx.fillText(text, 0, 0);
+			break;
+		case '黒枠':
+			ctx.strokeStyle = 'black';
+			ctx.lineWidth = 3;
+			ctx.strokeText(text, 0, 0);
+			ctx.fillStyle = fore_color;
+			ctx.fillText(text, 0, 0);
+			break;
+		case '白抜き':
+			ctx.strokeStyle = fore_color;
+			ctx.lineWidth = 3;
+			ctx.strokeText(text, 0, 0);
+			ctx.fillStyle = 'white';
+			ctx.fillText(text, 0, 0);
+			break;
+		}
 	}
 
 	// 行を描画
@@ -712,7 +778,7 @@ class PlacardGenerator {
 		ctx.save(); // 描画コンテキストを保存
 		ctx.translate(x + width / 2, y + height / 2 - adjust_y_px); // 座標変換で水平移動
 		ctx.scale(width / text_width, height / text_height); // 座標変換で拡大縮小
-		this.draw_text(ctx, text, this.pla_text_color.value, dpi); // テキストを描画
+		this.draw_text(ctx, text, this.pla_text_color.value, this.pla_back_color.value, this.get_effect(), dpi); // テキストを描画
 		ctx.restore(); // 描画コンテキストを復元
 	}
 
@@ -831,8 +897,7 @@ class PlacardGenerator {
 		// DPIを計算
 		let dpi = 96;
 		if (for_display) {
-			let scale = this.pla_canvas_for_display.width / this.pla_canvas_for_print.width
-			dpi *= scale;
+			dpi = 15;
 		}
 		// ページを描画
 		this.render_page(ctx, text, 0, 0, width, height, dpi);
