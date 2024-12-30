@@ -724,6 +724,9 @@ class PlacardGenerator {
 
 	// テキストを描画
 	draw_text(ctx, text, fore_color, back_color, effect, dpi) {
+		ctx.lineJoin = 'round';
+		ctx.miterLimit = 3;
+
 		switch (effect) {
 		case '(なし)':
 			ctx.fillStyle = fore_color;
