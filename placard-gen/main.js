@@ -598,6 +598,7 @@ class PlacardGenerator {
 
 	// 特殊効果を入植
 	populate_effects(default_effect = '(なし)') {
+		// TODO: もっと特殊効果を追加したい
 		const effects = [
 			'(なし)',
 			'白枠',
@@ -722,11 +723,12 @@ class PlacardGenerator {
 		this.save_settings();
 	}
 
-	// テキストを描画
-	draw_text(ctx, text, fore_color, back_color, effect, dpi) {
+	// 特殊効果付きでテキストを描画
+	draw_text_with_effect(ctx, text, fore_color, back_color, effect, dpi) {
 		ctx.lineJoin = 'round';
 		ctx.miterLimit = 3;
 
+		// TODO: もっと特殊効果を追加したい
 		switch (effect) {
 		case '(なし)':
 			ctx.fillStyle = fore_color;
@@ -785,7 +787,8 @@ class PlacardGenerator {
 		ctx.save(); // 描画コンテキストを保存
 		ctx.translate(x + width / 2, y + height / 2 - adjust_y_px); // 座標変換で水平移動
 		ctx.scale(width / text_width, height / text_height); // 座標変換で拡大縮小
-		this.draw_text(ctx, text, this.pla_text_color.value, this.pla_back_color.value, this.get_effect(), dpi); // テキストを描画
+		// 特殊効果付きでテキストを描画
+		this.draw_text_with_effect(ctx, text, this.pla_text_color.value, this.pla_back_color.value, this.get_effect(), dpi);
 		ctx.restore(); // 描画コンテキストを復元
 	}
 
