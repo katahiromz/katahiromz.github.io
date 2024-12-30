@@ -93,7 +93,7 @@ class PlacardGenerator {
 	height_mm = 0; // 用紙の高さ(mm)
 	back_image = null; // 背景イメージ
 	pla_display_div = null; // 画面表示用の<DIV>
-	DEF_FONT = '(標準のフォント)';
+	DEF_FONT = '(標準フォント)';
 	DEF_TEXT = 'テキストを入力してください';
 	DPI_FOR_DISPLAY = 13; // 画面表示用のDPI
 	DPI_FOR_PRINTING = 96; // 印刷用のDPI
@@ -658,7 +658,7 @@ class PlacardGenerator {
 			const subset = this.get_font_subset();
 			// コンボボックスにフォント項目を追加していく
 			this.pla_select_font.options.length = 0;
-			// 標準のフォント
+			// 標準フォント
 			let option = document.createElement('option');
 			option.text = this.DEF_FONT;
 			this.pla_select_font.add(option);
