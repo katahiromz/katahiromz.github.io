@@ -391,7 +391,9 @@ class PlacardGenerator {
 		} catch (error) {
 			console.log(error);
 		}
-		location.reload();
+
+		let url = location.protocol + location.pathname;
+		location.href = url;
 	}
 
 	// 設定を読み込む
@@ -433,7 +435,38 @@ class PlacardGenerator {
 		} catch (error) {
 			console.log(error);
 		}
+
+		// URLからパラメータを取得
+		let params = new URL(document.location.toString()).searchParams;
+		if (params.get('bold')) {
+			let text = params.get('text');
+			let bold = params.get('bold') == 'yes';
+			let line_break = params.get('line_break') == 'yes';
+			let text_color = params.get('text_color');
+			let back_color = params.get('back_color');
+			let font = params.get('font');
+			let portrait = params.get('portrait') == 'yes';
+			let margin = parseFloat(params.get('margin'));
+			let adjust_y = parseFloat(params.get('adjust_y'));
+			let subset = params.get('subset');
+			let effect = params.get('effect');
+
+			this.pla_textbox.value = text;
+			this.pla_checkbox_bold.checked = bold;
+			this.pla_checkbox_line_break.checked = line_break;
+			this.pla_text_color.value = text_color;
+			this.pla_back_color.value = back_color;
+			this.combobox_select_by_text(this.pla_select_font, font);
+			this.pla_radio_orientation_portrait.checked = portrait;
+			this.pla_radio_orientation_landscape.checked = !portrait;
+			this.pla_number_margin.value = margin;
+			this.pla_number_adjust_y.value = adjust_y;
+			this.combobox_select_by_text(this.pla_select_font_subsets, subset);
+			this.combobox_select_by_text(this.pla_select_effects, effect);
+		}
 	}
+
+	refreshing = false; // 更新フラグ
 
 	// 設定を保存
 	save_settings() {
@@ -454,7 +487,54 @@ class PlacardGenerator {
 		} catch (error) {
 			console.log(error);
 		}
+
+		// 8秒待ってからURLを更新する
+		let self = this;
+		self.refreshing = true;
+		setTimeout(() => {
+			if (self.refreshing) {
+				self.refreshing = false;
+				// URLの更新
+				self.refresh_url();
+			}
+		}, 8000);
 	}
+
+	// URLの更新
+	refresh_url() {
+		// パラメータを取得する
+		let text = this.pla_textbox.value;
+		let bold = this.pla_checkbox_bold.checked ? 'yes' : 'no';
+		let line_break = this.pla_checkbox_line_break.checked ? 'yes' : 'no';
+		let text_color = this.pla_text_color.value;
+		let back_color = this.pla_back_color.value;
+		let font = this.get_font();
+		let portrait = this.pla_radio_orientation_portrait.checked ? 'yes' : 'no';
+		let margin = this.pla_number_margin.value.toString();
+		let adjust_y = this.pla_number_adjust_y.value.toString();
+		let subset = this.get_font_subset();
+		let effect = this.get_effect();
+
+		// 問合せを構築
+		let query = '?text=' + encodeURIComponent(text);
+		query += '&bold=' + encodeURIComponent(bold);
+		query += '&line_break=' + encodeURIComponent(line_break);
+		query += '&text_color=' + encodeURIComponent(text_color);
+		query += '&back_color=' + encodeURIComponent(back_color);
+		query += '&font=' + encodeURIComponent(font);
+		query += '&portrait=' + encodeURIComponent(portrait);
+		query += '&margin=' + encodeURIComponent(margin);
+		query += '&adjust_y=' + encodeURIComponent(adjust_y);
+		query += '&subset=' + encodeURIComponent(subset);
+		query += '&effect=' + encodeURIComponent(effect);
+
+		// URLを更新
+		if (query != location.search) {
+			let url = location.protocol + location.pathname + query;
+			location.replace(url);
+		}
+	}
+
 
 	// テキストでコンボボックス項目を選択
 	combobox_select_by_text(select, text) {
@@ -565,13 +645,6 @@ class PlacardGenerator {
 		await this.set_print_settings(page_info, orientation);
 	}
 
-	// 用紙の向きを選択する
-	select_orientation(orientation) {
-		console.assert(orientation == 'landscape' || orientation == 'portrait');
-		this.orientation = orientation;
-		this.update_page_size(); // ページサイズを更新
-	}
-
 	// ページサイズを選択
 	select_page_size(index) {
 		console.assert(0 <= index && index < this.pla_select_page_size.options.length);
@@ -611,6 +684,11 @@ class PlacardGenerator {
 			return `"Noto Color Emoji", "ＭＳ Ｐゴシック", "Yu Gothic", "Meiryo", "Hiragino Sans", "Noto Sans JP", "Roboto", san-serif`;
 		}
 		return `"Noto Color Emoji", "${this.pla_select_font.value}`;
+	}
+
+	// 現在のフォント名を取得
+	get_font() {
+		return this.pla_select_font.value;
 	}
 
 	// 特殊効果を入植
