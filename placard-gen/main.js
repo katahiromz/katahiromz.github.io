@@ -520,12 +520,14 @@ class PlacardGenerator {
 			console.log(error);
 		}
 
-		// 8秒待ってからURLを更新する
-		let self = this;
-		self.refreshing_timeout = setTimeout(() => {
-			// URLの更新
-			self.refresh_url();
-		}, 8000);
+		if (0) { // 自動URL更新は無効化した
+			// 8秒待ってからURLを更新する
+			let self = this;
+			self.refreshing_timeout = setTimeout(() => {
+				// URLの更新
+				self.refresh_url();
+			}, 8000);
+		}
 	}
 
 	// URLの更新
