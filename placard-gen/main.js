@@ -497,6 +497,7 @@ class PlacardGenerator {
 			this.pla_number_margin.value = margin;
 			this.pla_number_adjust_y.value = adjust_y;
 			this.combobox_select_by_text(this.pla_select_font_subsets, subset);
+			this.populate_fonts();
 			this.combobox_select_by_text(this.pla_select_effects, effect);
 			this.combobox_select_by_text(this.pla_select_font, font);
 		}
