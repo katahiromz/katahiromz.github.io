@@ -206,6 +206,7 @@ class PlacardGenerator {
 			self.cancel_refresh();
 			await self.update_page_size();
 			window.print();
+			self.refresh_url();
 		});
 		// テキストのクリアボタンが押された？
 		this.pla_button_text_clear.addEventListener('click', (event) => {
@@ -299,6 +300,7 @@ class PlacardGenerator {
 		this.pla_button_image_download.addEventListener('click', (event) => {
 			self.cancel_refresh();
 			self.image_download();
+			self.refresh_url();
 		});
 
 		// フォントサブセットが変更された？
