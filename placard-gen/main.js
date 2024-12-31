@@ -444,8 +444,10 @@ class PlacardGenerator {
 				this.pla_number_margin.value = parseFloat(localStorage.getItem('pla_number_margin'));
 			if (localStorage.getItem('pla_number_adjust_y') != null)
 				this.pla_number_adjust_y.value = parseFloat(localStorage.getItem('pla_number_adjust_y'));
-			if (localStorage.getItem('pla_select_font_subsets') != null)
+			if (localStorage.getItem('pla_select_font_subsets') != null) {
 				this.combobox_select_by_text(this.pla_select_font_subsets, localStorage.getItem('pla_select_font_subsets'));
+				this.populate_fonts();
+			}
 			if (localStorage.getItem('pla_select_effects') != null)
 				this.combobox_select_by_text(this.pla_select_effects, localStorage.getItem('pla_select_effects'));
 			if (localStorage.getItem('pla_select_font') != null)
@@ -498,8 +500,6 @@ class PlacardGenerator {
 			this.combobox_select_by_text(this.pla_select_effects, effect);
 			this.combobox_select_by_text(this.pla_select_font, font);
 		}
-
-		this.populate_fonts();
 	}
 
 	// 設定を保存
