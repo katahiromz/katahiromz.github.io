@@ -1,6 +1,6 @@
 "use strict";
 
-const VERSION = '1.1.4'; // バージョン
+const VERSION = '1.1.5'; // バージョン
 
 // 絵文字やサロゲートペアなどを考慮して、文字列を１つずつ文字に分割する
 // https://qiita.com/yoya/items/636e3992ec45c1c40c14
@@ -710,11 +710,11 @@ class PlacardGenerator {
 
 	// 現在のフォント名を取得
 	get_font_names() {
-		// カラー絵文字を優先
+		// SpaceOnlyFontとカラー絵文字を優先
 		if (this.pla_select_font.value == this.DEF_FONT) {
-			return `"Noto Color Emoji", "ＭＳ Ｐゴシック", "Yu Gothic", "Meiryo", "Hiragino Sans", "Noto Sans JP", "Roboto", san-serif`;
+			return `SpaceOnlyFont, "Noto Color Emoji", "ＭＳ Ｐゴシック", "Yu Gothic", "Meiryo", "Hiragino Sans", "Noto Sans JP", "Roboto", san-serif`;
 		}
-		return `"Noto Color Emoji", "${this.pla_select_font.value}`;
+		return `SpaceOnlyFont, "Noto Color Emoji", "${this.pla_select_font.value}`;
 	}
 
 	// 現在のフォント名を取得
@@ -1010,6 +1010,13 @@ class PlacardGenerator {
 		// テキストが空なら、デフォルトのテキストにする
 		if (text.length == 0) {
 			text = this.DEF_TEXT;
+		}
+
+		// スペースが含まれていればSpaceOnlyFontを読み込む
+		if (text.indexOf(' ') >= 0) {
+			const font = new FontFace('SpaceOnlyFont', 'url(./SpaceOnlyFont.woff2)');
+			await font.load();
+			document.fonts.add(font);
 		}
 
 		// カラー絵文字を取得
