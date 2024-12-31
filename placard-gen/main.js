@@ -415,9 +415,9 @@ class PlacardGenerator {
 			localStorage.removeItem('pla_checkbox_line_break');
 			localStorage.removeItem('pla_number_margin');
 			localStorage.removeItem('pla_number_adjust_y');
-			localStorage.removeItem('pla_select_font');
 			localStorage.removeItem('pla_select_font_subsets');
 			localStorage.removeItem('pla_select_effects');
+			localStorage.removeItem('pla_select_font');
 			localStorage.removeItem('pla_text_color');
 			localStorage.removeItem('pla_back_color');
 			localStorage.removeItem('pla_radio_orientation');
@@ -444,12 +444,12 @@ class PlacardGenerator {
 				this.pla_number_margin.value = parseFloat(localStorage.getItem('pla_number_margin'));
 			if (localStorage.getItem('pla_number_adjust_y') != null)
 				this.pla_number_adjust_y.value = parseFloat(localStorage.getItem('pla_number_adjust_y'));
-			if (localStorage.getItem('pla_select_font') != null)
-				this.combobox_select_by_text(this.pla_select_font, localStorage.getItem('pla_select_font'));
 			if (localStorage.getItem('pla_select_font_subsets') != null)
 				this.combobox_select_by_text(this.pla_select_font_subsets, localStorage.getItem('pla_select_font_subsets'));
 			if (localStorage.getItem('pla_select_effects') != null)
 				this.combobox_select_by_text(this.pla_select_effects, localStorage.getItem('pla_select_effects'));
+			if (localStorage.getItem('pla_select_font') != null)
+				this.combobox_select_by_text(this.pla_select_font, localStorage.getItem('pla_select_font'));
 			if (localStorage.getItem('pla_text_color') != null)
 				this.pla_text_color.value = localStorage.getItem('pla_text_color');
 			if (localStorage.getItem('pla_back_color') != null)
@@ -490,14 +490,16 @@ class PlacardGenerator {
 			this.pla_checkbox_line_break.checked = line_break;
 			this.pla_text_color.value = text_color;
 			this.pla_back_color.value = back_color;
-			this.combobox_select_by_text(this.pla_select_font, font);
 			this.pla_radio_orientation_portrait.checked = portrait;
 			this.pla_radio_orientation_landscape.checked = !portrait;
 			this.pla_number_margin.value = margin;
 			this.pla_number_adjust_y.value = adjust_y;
 			this.combobox_select_by_text(this.pla_select_font_subsets, subset);
 			this.combobox_select_by_text(this.pla_select_effects, effect);
+			this.combobox_select_by_text(this.pla_select_font, font);
 		}
+
+		this.populate_fonts();
 	}
 
 	// 設定を保存
@@ -509,9 +511,9 @@ class PlacardGenerator {
 			localStorage.setItem('pla_checkbox_line_break', this.pla_checkbox_line_break.checked ? "yes" : "no");
 			localStorage.setItem('pla_number_margin', this.pla_number_margin.value.toString());
 			localStorage.setItem('pla_number_adjust_y', this.pla_number_adjust_y.value.toString());
-			localStorage.setItem('pla_select_font', this.pla_select_font.options[this.pla_select_font.selectedIndex].text);
 			localStorage.setItem('pla_select_font_subsets', this.pla_select_font_subsets.options[this.pla_select_font_subsets.selectedIndex].text);
 			localStorage.setItem('pla_select_effects', this.pla_select_effects.options[this.pla_select_effects.selectedIndex].text);
+			localStorage.setItem('pla_select_font', this.pla_select_font.options[this.pla_select_font.selectedIndex].text);
 			localStorage.setItem('pla_text_color', this.pla_text_color.value);
 			localStorage.setItem('pla_back_color', this.pla_back_color.value);
 			localStorage.setItem('pla_radio_orientation', this.orientation);
@@ -564,7 +566,6 @@ class PlacardGenerator {
 			location.replace(url);
 		}
 	}
-
 
 	// テキストでコンボボックス項目を選択
 	combobox_select_by_text(select, text) {
