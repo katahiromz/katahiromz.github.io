@@ -94,6 +94,7 @@ class PlacardGenerator {
 	height_mm = 0; // 用紙の高さ(mm)
 	back_image = null; // 背景イメージ
 	pla_display_div = null; // 画面表示用の<DIV>
+	refreshing_timeout = null; // 更新タイムアウト
 	DEF_FONT = '(標準フォント)';
 	DEF_TEXT = 'テキストを入力してください';
 	DPI_FOR_DISPLAY = 13; // 画面表示用のDPI
@@ -178,77 +179,103 @@ class PlacardGenerator {
 		return /Mobile|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 	}
 
+	// 更新をキャンセルする
+	cancel_refresh() {
+		if (this.refreshing_timeout) {
+			clearTimeout(this.refreshing_timeout);
+			this.refreshing_timeout = null;
+		}
+	}
+
 	// イベントリスナーを追加
 	add_event_listers() {
 		let self = this; // 関数内からthisを参照するためにselfとして覚えておく
 
 		// ページサイズの選択か？
 		this.pla_select_page_size.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.select_page_size(self.pla_select_page_size.selectedIndex);
 		});
 		// テキストボックスの入力があった？
 		this.pla_textbox.addEventListener('input', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// 印刷ボタンが押された？
 		this.pla_button_print.addEventListener('click', async (event) => {
+			self.cancel_refresh();
 			await self.update_page_size();
 			window.print();
 		});
 		// テキストのクリアボタンが押された？
 		this.pla_button_text_clear.addEventListener('click', (event) => {
+			self.cancel_refresh();
 			self.pla_textbox.value = "";
 			self.redraw();
 		});
 		// 自動改行チェックボックスがクリックされた？
 		this.pla_checkbox_line_break.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// フォント選択が変更された？
 		this.pla_select_font.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// 余白テキストボックスが変更された？
 		this.pla_number_margin.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		this.pla_number_margin.addEventListener('input', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// 垂直位置調整テキストボックスが変更された？
 		this.pla_number_adjust_y.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		this.pla_number_adjust_y.addEventListener('input', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// テキストの色が変更された？
 		this.pla_text_color.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		this.pla_text_color.addEventListener('input', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// 背景色が変更された？
 		this.pla_back_color.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		this.pla_back_color.addEventListener('input', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// 用紙の向きが変更された？
 		this.pla_radio_orientation_landscape.addEventListener('click', (event) => {
+			self.cancel_refresh();
 			self.update_page_size();
 		});
 		this.pla_radio_orientation_portrait.addEventListener('click', (event) => {
+			self.cancel_refresh();
 			self.update_page_size();
 		});
 		// 太字かどうかが変更された？
 		this.pla_checkbox_bold.addEventListener('click', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 		// 背景画像ファイルが変更された？
 		this.pla_button_back_image.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			let file = event.target.files[0];
 			self.do_image_file(file);
 			// 続けて同じファイルを選んでも change を発火する
@@ -256,11 +283,13 @@ class PlacardGenerator {
 		});
 		// 設定のリセットボタンが押された？
 		this.pla_button_reset.addEventListener('click', (event) => {
+			self.cancel_refresh();
 			self.reset();
 		});
 
 		// 画像を閉じるボタンが押された？
 		this.pla_button_back_image_close.addEventListener('click', (event) => {
+			self.cancel_refresh();
 			self.pla_button_back_image_close.classList.add('hidden');
 			self.back_image = null;
 			self.redraw();
@@ -268,17 +297,20 @@ class PlacardGenerator {
 
 		// 画像DLボタンが押された？
 		this.pla_button_image_download.addEventListener('click', (event) => {
+			self.cancel_refresh();
 			self.image_download();
 		});
 
 		// フォントサブセットが変更された？
 		this.pla_select_font_subsets.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.populate_fonts();
 			self.redraw();
 		});
 
 		// 特殊効果が変更された？
 		this.pla_select_effects.addEventListener('change', (event) => {
+			self.cancel_refresh();
 			self.redraw();
 		});
 
@@ -466,8 +498,6 @@ class PlacardGenerator {
 		}
 	}
 
-	refreshing = false; // 更新フラグ
-
 	// 設定を保存
 	save_settings() {
 		// localStorageを使用して設定を保存する
@@ -490,13 +520,9 @@ class PlacardGenerator {
 
 		// 8秒待ってからURLを更新する
 		let self = this;
-		self.refreshing = true;
-		setTimeout(() => {
-			if (self.refreshing) {
-				self.refreshing = false;
-				// URLの更新
-				self.refresh_url();
-			}
+		self.refreshing_timeout = setTimeout(() => {
+			// URLの更新
+			self.refresh_url();
 		}, 8000);
 	}
 
