@@ -527,10 +527,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// 音声オブジェクトを作成する。
 	const SAI_sound_create = function(){
+		// 音があった場合、まずは止める。
+		if(sai_sound_object)
+			sai_sound_object.pause();
 		// 音声名がなければ音声オブジェクトなし。
 		if(!sai_sound_name){
-			if(sai_sound_object)
-				sai_sound_object.pause();
 			sai_sound_object = null;
 			return;
 		}
@@ -550,16 +551,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 音声のバリデーション。
 		if(value.indexOf('sn') == 0)
 			value = '';
-
 		// 変数に音声の名前を記憶。
 		sai_sound_name = value;
-
 		// 必要なら音声オブジェクトを作成するか、破棄する。
 		SAI_sound_create();
-
 		// 音声の選択を更新。
 		sai_id_select_sound.value = value;
-
 		// ローカルストレージに記憶する。
 		localStorage.setItem('saiminSoundName', sai_sound_name);
 	}
@@ -3867,7 +3864,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		sai_id_button_speech.addEventListener('click', function(e){
 			if(sai_hypnosis_releasing_time)
 				return; // 催眠解除中のときは反応しない。
-
 			// メッセージリストダイアログを表示。
 			SAI_choose_page(sai_id_page_message);
 		});
