@@ -1118,7 +1118,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// ローカルストレージに表示状態を記憶。
 		localStorage.setItem('saiminHelpShowing', '1');
-
+		// 画面遷移前に音声の停止。
+		if(sai_sound_object && !sai_sound_object.paused)
+			sai_sound_object.pause();
 		// 同意ページに移動。
 		SAI_choose_page(sai_id_page_agreement);
 	}
@@ -1127,7 +1129,9 @@ document.addEventListener('DOMContentLoaded', function(){
 	const SAI_config = function(){
 		// ローカルストレージに表示状態を記憶。
 		localStorage.setItem('saiminConfigShowing', '1');
-
+		// 画面遷移前に音声の停止。
+		if(sai_sound_object && !sai_sound_object.paused)
+			sai_sound_object.pause();
 		// 「設定」ページに飛ばす。
 		SAI_choose_page(sai_id_page_config);
 	}
