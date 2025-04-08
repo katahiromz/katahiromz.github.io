@@ -3530,7 +3530,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// 「設定」画面のOKボタン。
 		sai_id_button_config_ok.addEventListener('click', function(e){
+			// 再生中なら音を止める。
+			if(sai_sound_object)
+    			sai_sound_object.pause();
+			// 設定を閉じたことを覚えておく。
 			localStorage.removeItem('saiminConfigShowing');
+			// 画面遷移。
 			SAI_choose_page(sai_id_page_main);
 			// 必要ならば切り替え音を再生する。
 			SAI_sound_play_switch();
@@ -3952,7 +3957,12 @@ document.addEventListener('DOMContentLoaded', function(){
 			sai_id_button_mesage_ok.click();
 		});
 		sai_id_button_config_back.addEventListener('click', function(e){
+			// 再生中なら音を止める。
+			if(sai_sound_object)
+    			sai_sound_object.pause();
+			// 設定を閉じたことを覚えておく。
 			localStorage.removeItem('saiminConfigShowing');
+			// 画面遷移。
 			SAI_choose_page(sai_id_page_main);
 		});
 		sai_id_button_agreement_back.addEventListener('click', function(e){
