@@ -8,6 +8,7 @@ sw.precache('precached', [
 	'./complex.min.js',
 	'./css/black.css',
 	'./css/blue.css',
+	'./css/common.css',
 	'./css/darkgreen.css',
 	'./css/golden.css',
 	'./css/pink.css',

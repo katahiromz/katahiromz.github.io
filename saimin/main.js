@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		sai_sound_object = new Audio('sn/' + sai_sound_name + '.mp3');
 		sai_sound_object.addEventListener('ended', function(e){ // 音声が停止した？
 			// 音声再生ボタンのイメージを更新する。
-			sai_id_image_play_pause.src = 'img/play.svg';
+			sai_id_image_config_play_pause.src = 'img/play.svg';
 
 			// チェックを外す。
 			sai_id_button_sound_play.classList.remove('sai_class_checked');
@@ -3707,12 +3707,12 @@ document.addEventListener('DOMContentLoaded', function(){
 				sai_sound_object.currentTime = 0;
 				sai_sound_object.play();
 				// 再生ボタンのイメージを更新する。
-				sai_id_image_play_pause.src = 'img/stop.svg';
+				sai_id_image_config_play_pause.classList.add('playing');
 			}else{ // 再生中なら
 				// 停止する。
 				sai_sound_object.pause();
 				// 再生ボタンのイメージを更新する。
-				sai_id_image_play_pause.src = 'img/play.svg';
+				sai_id_image_config_play_pause.classList.remove('playing');
 			}
 		}, false);
 
