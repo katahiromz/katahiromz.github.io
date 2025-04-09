@@ -539,10 +539,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		sai_sound_object = new Audio('sn/' + sai_sound_name + '.mp3');
 		sai_sound_object.addEventListener('ended', function(e){ // 音声が停止した？
-			// 音声再生ボタンのイメージを更新する。
-			sai_id_image_config_play_pause.src = 'img/play.svg';
-
-			// チェックを外す。
+			// UIを更新する。
+			sai_id_image_config_play_pause.classList.remove('playing');
 			sai_id_button_sound_play.classList.remove('sai_class_checked');
 		});
 	}
@@ -2882,7 +2880,7 @@ document.addEventListener('DOMContentLoaded', function(){
 					sai_sound_object.volume = sai_id_range_sound_volume.value / 100.0;
 				// 必要なら再開する。
 				if(sai_id_checkbox_auto_play_sound.checked)
-					SAI_sound_start(false, false);
+					SAI_sound_start(false, true);
 			}else{
 				// 数字を画面中央に描画する。
 				let value = Math.floor(diff_time);
@@ -3446,6 +3444,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 必要ならループする。
 		if(is_loop)
 			sai_sound_object.loop = sai_id_checkbox_auto_repeat_sound.checked;
+		else
+			sai_sound_object.loop = false;
 
 		// 再生を開始する。
 		sai_sound_object.play();
@@ -3585,7 +3585,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				// 再生中ではなく、自動再生なら
 				if(!SAI_sound_is_playing() && sai_id_checkbox_auto_play_sound.checked){
 					// 音声を再生する。
-					SAI_sound_start(false, false);
+					SAI_sound_start(false, true);
 				}
 			}
 		});
