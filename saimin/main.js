@@ -2880,7 +2880,7 @@ document.addEventListener('DOMContentLoaded', function(){
 					sai_sound_object.volume = sai_id_range_sound_volume.value / 100.0;
 				// 必要なら再開する。
 				if(sai_id_checkbox_auto_play_sound.checked)
-					SAI_sound_start(false, true);
+					SAI_sound_start(true);
 			}else{
 				// 数字を画面中央に描画する。
 				let value = Math.floor(diff_time);
@@ -3422,7 +3422,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	// 音声を再生開始。
-	const SAI_sound_start = function(is_mute = false, is_loop = false){
+	const SAI_sound_start = function(is_loop = false){
 		// 必要ならば音声を作成。
 		if(!sai_sound_object)
 			SAI_sound_create();
@@ -3435,10 +3435,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 
 		// 音量と再生位置の設定。
-		if(is_mute)
-			sai_sound_object.volume = 0;
-		else
-			sai_sound_object.volume = sai_id_range_sound_volume.value / 100.0;
+		sai_sound_object.volume = sai_id_range_sound_volume.value / 100.0;
 		sai_sound_object.currentTime = 0;
 
 		// 必要ならループする。
@@ -3456,11 +3453,11 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	// 音声の再生と停止を切り替える。
-	const SAI_sound_toggle = function(is_mute = false, is_loop = false){
+	const SAI_sound_toggle = function(is_loop = false){
 		if(SAI_sound_is_playing()){
 			SAI_sound_pause();
 		}else{
-			SAI_sound_start(is_mute, is_loop);
+			SAI_sound_start(is_loop);
 		}
 	}
 
@@ -3585,7 +3582,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				// 再生中ではなく、自動再生なら
 				if(!SAI_sound_is_playing() && sai_id_checkbox_auto_play_sound.checked){
 					// 音声を再生する。
-					SAI_sound_start(false, true);
+					SAI_sound_start(true);
 				}
 			}
 		});
@@ -3621,7 +3618,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				if(!sai_sound_object)
 					SAI_sound_create();
 				// 再生と停止を切り替える。
-				SAI_sound_toggle(false, true);
+				SAI_sound_toggle(true);
 			}else{
 				SAI_config();
 			}
@@ -3692,7 +3689,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 設定の音声再生ボタン。
 		sai_id_button_sound_config_play.addEventListener('click', function(){
 			// 再生停止を切り替える。
-			SAI_sound_toggle(false, false);
+			SAI_sound_toggle(false);
 		}, false);
 
 		// 映像切り替えの音声の有無に関するボタン。
