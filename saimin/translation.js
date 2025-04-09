@@ -1760,7 +1760,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, 'モーション ブラー:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(なし)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'ネコっぽい');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '興奮');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '恐怖');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '狩人');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'あこがれ');
@@ -1861,7 +1860,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, '运动模糊：');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(无)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像猫一样');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '激发');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '猎人');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '渴望');
@@ -1962,7 +1960,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, '運動模糊：');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(無)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像貓一樣');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '激發');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '獵人');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '渴望');
@@ -2063,7 +2060,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, '모션 블러:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(없음)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '고양이 같은');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', '일으키다');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '공포');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '사냥꾼');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '동경');
@@ -2164,7 +2160,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, 'Sfocatura movimento:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Nessuno)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Simile a un gatto');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Eccitare');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Paura');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'A caccia');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Desiderio');
@@ -2265,7 +2260,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, 'Bewegungsunschärfe:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Kein)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Katzenartig');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Anregen');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Furcht');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Jagd');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Sehnsucht');
@@ -2366,7 +2360,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, 'Desenfoque de movimiento:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Ninguno)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Felino');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Excitación');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Miedo');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Cazador');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Anhelar');
@@ -2467,7 +2460,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, 'Размытость:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Никто)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Кошачий');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Возбуждение');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Страх');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Охотник');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Стремятся к');
@@ -2568,7 +2560,6 @@ const trans_localize = function(lang){
 		trans_setHtmlText(sai_id_text_motion_blur, 'Motion Blur:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(None)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Cattish');
-		trans_setSelectOptionText(sai_id_select_sound, 'Exciting', 'Exciting');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Horror');
 		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Hunting');
 		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Longing');
