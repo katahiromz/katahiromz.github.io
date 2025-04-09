@@ -21,17 +21,12 @@ button { /* 通常のボタン */
 	background-color: #222;
 }
 .sai_class_floating_text { /* 浮遊するテキスト */
-	pointer-events: none; // click-transparent
 	color: white;
 	background-color: black;
-	max-width: 80%;
-	word-break: break-all;
-	padding: 4px;
 	border: 1px solid white;
 }
 .sai_class_releasing { /* 催眠解除中の強調表示 */
 	background-color: red !important;
-	text-align: center;
 }
 .sai_class_rounded_button { /* 丸いボタン */
 	background-color: rgba(191, 191, 255, 75%);
@@ -45,17 +40,12 @@ button { /* 通常のボタン */
 }
 #sai_id_message_list div { /* メッセージリスト */
 	border: solid 1px black;
-	padding: 0.2cm;
-	min-height: 0.8cm;
 	background-image: linear-gradient(to bottom, #99c, #00f);
 }
 #sai_id_message_list div:hover { /* メッセージリスト */
 	background-color: #c0c;
 }
 #sai_id_text_notice { /* 同意契約書 */
-	font-size: 10.5pt;
-	white-space: pre-line;
-	text-align: left;
 	background-color: #fcf;
 	color: black;
 }
@@ -142,79 +132,11 @@ button { /* 通常のボタン */
 }
 /* 【トグルスイッチ】ここまで */
 /* 【顔認識のページ】ここから */
-#sai_id_button_side { /* 顔認識の裏表ボタン */
-	position: absolute;
-	right: 3px;
-	top: 3px;
-}
-#sai_id_button_face_getter_back { /* 顔認識のページの戻るボタン */
-	position: absolute;
-	left: 3px;
-	top: 3px;
-}
 #sai_id_canvas_face { /* 顔認識のページのキャンバス */
-	z-index: 1;
 	background-color: #222;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	width: 100dvw;
-	height: 100vh;
-	height: 100dvh;
-}
-#sai_id_button_lock_on { /* ロックオンボタン */
-	position: absolute;
-	width: 50vw;
-	width: 50dvw;
-	height: 1.2cm;
-	left: calc(50vw - 50vw / 2);
-	left: calc(50dvw - 50dvw / 2);
-	top: calc(70vh - 1cm / 2);
-	top: calc(70dvh - 1cm / 2);
-	font-size: 0.6cm;
-}
-#sai_id_button_close { /* 顔認識を閉じるボタン */
-	position: absolute;
-	width: 50vw;
-	width: 50dvw;
-	height: 1.2cm;
-	left: calc(50vw - 50vw / 2);
-	left: calc(50dvw - 50dvw / 2);
-	top: calc(85vh - 1cm / 2);
-	top: calc(85dvh - 1cm / 2);
-	font-size: 0.6cm;
-}
-@media screen and (orientation: portrait) { /* 端末が縦向きの場合 */
-	#sai_id_button_lock_on { /* ロックオンボタン */
-		height: 1.5cm;
-		top: calc(75vh - 1.5cm / 2);
-		top: calc(75dvh - 1.5cm / 2);
-	}
-	#sai_id_button_close { /* 顔認識を閉じるボタン */
-		height: 1.5cm;
-	}
-}
-@media screen and (orientation: landscape) { /* 端末が横向きの場合 */
-	#sai_id_button_lock_on { /* ロックオンボタン */
-		width: 20vw;
-		width: 20dvw;
-		left: calc(30vw - 20vw / 2);
-		left: calc(30dvw - 20dvw / 2);
-		top: calc(80vh - 1cm / 2);
-		top: calc(80dvh - 1cm / 2);
-	}
-	#sai_id_button_close { /* 顔認識を閉じるボタン */
-		width: 20vw;
-		width: 20dvw;
-		left: calc(70vw - 20vw / 2);
-		left: calc(70dvw - 20dvw / 2);
-		top: calc(80vh - 1cm / 2);
-		top: calc(80dvh - 1cm / 2);
-	}
 }
 .sai_class_face_button { /* 顔認識のアクションボタン */
 	background: rgba(80, 80, 255, 50%);
-	border-radius: 10%;
 }
 .sai_class_face_button:disabled { /* 顔認識の無効のアクションボタン */
 	color: rgb(191, 191, 191);
