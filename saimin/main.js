@@ -3620,11 +3620,8 @@ document.addEventListener('DOMContentLoaded', function(){
 				// 必要ならば音声を作成。
 				if(!sai_sound_object)
 					SAI_sound_create();
-				// 音声ありなら
-				if(sai_sound_object){
-					// 再生と停止を切り替える。
-					SAI_sound_toggle(false, false);
-				}
+				// 再生と停止を切り替える。
+				SAI_sound_toggle(false, true);
 			}else{
 				SAI_config();
 			}
