@@ -1772,6 +1772,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'パチ');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'ワウワウ');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '機械音');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'サイコ');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'みゃんみゃん');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '音声の自動再生:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '音声の自動繰り返し:');
@@ -1872,6 +1874,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', '弹珠');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', '哇哇');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '机械声');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', '惊魂记');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', '缅缅');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '自动播放音频：');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自动重复音频：');
@@ -1972,6 +1976,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', '彈珠');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', '哇哇');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '機械聲');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', '驚魂記');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', '緬緬');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '自動播放音訊：');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自動重複音訊：');
@@ -2072,6 +2078,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', '파칭');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', '와와');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '기계음');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', '사이코');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', '미안');
 		trans_setHtmlText(sai_id_text_sound_volume, '사운드 볼륨:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '오디오 자동 재생:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '음성 자동 반복:');
@@ -2172,6 +2180,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'WahWah');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Meccanico');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psicopatico');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myan Myan');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Volume del suono:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Riproduzione automatica dell\'audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Ripetere l\'audio:');
@@ -2272,6 +2282,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'WahWah');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Mechanischer');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psycho');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myan Myan');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Lautstärke:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Audio automatisch abspielen:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Sich Wiederholender Ton:');
@@ -2372,6 +2384,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'Wah Wah');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Mecánico');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psicópata');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myanmar Myanmar');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Volumen:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Reproducción automática de audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Audio de repetición automática:');
@@ -2472,6 +2486,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Пачи');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'ВахВах');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Механический');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Психо');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Мьян Мьян');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Объем:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Автовоспроизведение звука:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Автоповтор аудио:');
@@ -2572,6 +2588,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
 		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'WahWah');
 		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Mechanical');
+		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psycho');
+		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myan Myan');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Sound volume:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Auto-play audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Repeating audio:');
