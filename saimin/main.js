@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.7.6'; // KraKraバージョン番号。
+const sai_VERSION = '3.7.7'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 
@@ -80,14 +80,14 @@ document.addEventListener('DOMContentLoaded', function(){
 	let sai_kaleido_canvas_2 = null; // 万華鏡用の一時的なキャンバス2。
 	let sai_face_getter = null; // 顔認識。
 
-	// このアプリはネイティブアプリか？
-	const SAI_is_native_app = function(){
-		return navigator.userAgent.indexOf('/KraKra-native-app/') != -1;
+	// このアプリはAndroidアプリか？
+	const SAI_is_android_app = function(){
+		return navigator.userAgent.indexOf('/KraKra-android-app/') != -1;
 	}
 
-	// ネイティブアプリならバージョン番号を取得する。
-	const SAI_get_native_app_version = function(){
-		let results = navigator.userAgent.match(/\/KraKra-native-app\/([\d\.]+)\//);
+	// Androidアプリならバージョン番号を取得する。
+	const SAI_get_android_app_version = function(){
+		let results = navigator.userAgent.match(/\/KraKra-android-app\/([\d\.]+)\//);
 		if(results)
 			return results[1];
 		return false;
@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// 効果音の音量。
 	const SAI_sound_set_volume = function(value){
-		value = parseInt(value);
+		value = parseInt(value); // 整数化。
 
 		// 音量をセットする。
 		sai_id_range_sound_volume.value = value;
@@ -524,6 +524,41 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// ローカルストレージに記憶する。
 		localStorage.setItem('saiminSoundVolume', value.toString());
+	}
+
+	// 振動を開始する。
+	const SAI_vibrator_start = function(){
+		try{
+			android.startVibrator(sai_id_range_vibrator_strength.value.toString());
+			console.log("SAI_vibrator_start: " + sai_id_range_vibrator_strength.value);
+		}catch(error){ // Androidではない。
+			console.log("SAI_vibrator_start: failed");
+		}
+	}
+
+	// 振動を停止する。
+	const SAI_vibrator_stop = function(){
+		try{
+			android.stopVibrator();
+			console.log("SAI_vibrator_stop: stopped");
+		}catch(error){ // Androidではない。
+			console.log("SAI_vibrator_stop: failed");
+		}
+	}
+
+	// 振動の強さ。
+	const SAI_vibrator_set_strength = function(value){
+		value = parseInt(value); // 整数化。
+
+		// 振動の強さをセットする。
+		sai_id_range_vibrator_strength.value = value;
+		sai_id_text_vibrator_output.textContent = value.toString();
+
+		// ローカルストレージに記憶する。
+		localStorage.setItem('saiminVibratorStrength', value.toString());
+
+		// 振動を開始。
+		SAI_vibrator_start();
 	}
 
 	// 音声オブジェクトを作成する。
@@ -1050,10 +1085,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// 「バージョン情報」にバージョン番号をセットする。
 	const SAI_update_version_display = function(){
-		let nativeVersion = SAI_get_native_app_version();
+		let androidVersion = SAI_get_android_app_version();
 		let text = sai_id_text_version.textContent;
-		if(nativeVersion){
-			text = text.replace('[[VERSION]]', nativeVersion + '(native)');
+		if(androidVersion){
+			text = text.replace('[[VERSION]]', androidVersion + '(android)');
 		}else{
 			text = text.replace('[[VERSION]]', sai_VERSION + '(web)');
 		}
@@ -1206,20 +1241,29 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	// ハート形の描画。
-	const SAI_draw_heart = function(ctx, x0, y0, x1, y1){
-		let x2 = (0.6 * x0 + 0.4 * x1);
-		let y2 = (0.6 * y0 + 0.4 * y1);
-		let comp = new Complex({re:x1 - x0, im:y1 - y0});
-		let comp0 = new Complex({abs:1.0, arg:Math.PI * 0.5});
-		let p0 = comp.mul(comp0.div(16)).add({re:x0, im:y0});
-		let p1 = comp.div(comp0.mul(16)).add({re:x0, im:y0});
-		let p2 = comp.mul(comp0).add({re:x0, im:y0});
-		let p3 = comp.div(comp0).add({re:x0, im:y0});
+	const SAI_draw_heart_0 = function(ctx, cx, cy, size, color = 'red') {
 		ctx.beginPath();
-		ctx.moveTo(x2, y2);
-		ctx.bezierCurveTo(p0.re, p0.im, p2.re, p2.im, x1, y1);
-		ctx.bezierCurveTo(p3.re, p3.im, p1.re, p1.im, x2, y2);
+		cy -= size * 0.15;
+		size *= 0.007;
+		// https://www.asobou.co.jp/blog/web/canvas-curve
+		ctx.moveTo(cx, cy);
+		ctx.bezierCurveTo(cx - 10 * size, cy - 25 * size, cx - 30 * size, cy - 40 * size, cx - 50 * size, cy - 40 * size);
+		ctx.bezierCurveTo(cx - 60 * size, cy - 40 * size, cx - 100 * size, cy - 40 * size, cx - 100 * size, cy + 10 * size);
+		ctx.bezierCurveTo(cx - 100 * size, cy + 80 * size, cx - 10 * size, cy + 105 * size, cx, cy + 125 * size);
+		ctx.bezierCurveTo(cx + 10 * size, cy + 105 * size, cx + 100 * size, cy + 80 * size, cx + 100 * size, cy + 10 * size);
+		ctx.bezierCurveTo(cx + 100 * size, cy - 40 * size, cx + 60 * size, cy - 40 * size, cx + 50 * size, cy - 40 * size);
+		ctx.bezierCurveTo(cx + 30 * size, cy - 40 * size, cx + 10 * size, cy - 25 * size, cx, cy);
+		ctx.closePath();
+		ctx.fillStyle = color;
 		ctx.fill();
+	}
+
+	// ハート形の描画。
+	const SAI_draw_heart = function(ctx, x0, y0, x1, y1){
+		let centerX = (x0 + x1) / 2;
+		let centerY = (y0 + y1) / 2;
+		let size = y1 - y0;
+		SAI_draw_heart_0(ctx, centerX, centerY, size);
 	}
 
 	// 目の描画。
@@ -3258,6 +3302,14 @@ document.addEventListener('DOMContentLoaded', function(){
 			SAI_sound_set_volume(100);
 		}
 
+		// ローカルストレージに振動の強さの設定があれば読み込む。
+		let saiminVibratorStrength = localStorage.getItem('saiminVibratorStrength');
+		if(saiminVibratorStrength){
+			SAI_vibrator_set_strength(saiminVibratorStrength);
+		}else{
+			SAI_vibrator_set_strength(0);
+		}
+
 		// ローカルストレージにスピーチの音量の設定があれば読み込む。
 		let saiminMessageVolume = localStorage.getItem('saiminMessageVolume');
 		if(saiminMessageVolume){
@@ -3727,6 +3779,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 映像スピードの選択。
 		sai_id_range_speed_type.addEventListener('input', function(){
 			SAI_speed_set_type(sai_id_range_speed_type.value);
+		}, false);
+
+		// 振動の強さの設定。
+		sai_id_range_vibrator_strength.addEventListener('input', function(){
+			SAI_vibrator_set_strength(sai_id_range_vibrator_strength.value);
 		}, false);
 
 		// 映像スピードの「不規則」チェックボックス。
@@ -4218,9 +4275,9 @@ document.addEventListener('DOMContentLoaded', function(){
 		// イベントリスナー群を登録する。
 		SAI_register_event_listeners();
 
-		// ネイティブアプリでなければネイティブオンリーの要素を隠す。
-		if(!SAI_is_native_app()){
-			let items = document.getElementsByClassName('sai_class_native_app_only');
+		// AndroidアプリでなければAndroidオンリーの要素を隠す。
+		if(!SAI_is_android_app()){
+			let items = document.getElementsByClassName('sai_class_android_app_only');
 			for(let item of items){
 				item.classList.add('sai_class_invisible');
 			}
