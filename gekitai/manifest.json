@@ -4,7 +4,6 @@
   "short_name": "撃退君",
   "name": "撃退君",
   "start_url": "https://katahiromz.github.io/gekitai/index.html",
-  "scope": "https://katahiromz.github.io/gekitai/",
   "background_color": "#FFFF00",
   "theme_color": "#FFFF00",
   "display": "standalone",
