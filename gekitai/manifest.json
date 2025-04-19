@@ -2,7 +2,7 @@
   "id": "gekitai",
   "lang": "ja-JP",
   "short_name": "撃退君",
-  "name": "痴漢撃退アプリ【撃退君】",
+  "name": "撃退君",
   "start_url": "./index.html",
   "scope": ".",
   "background_color": "#FFFF00",
