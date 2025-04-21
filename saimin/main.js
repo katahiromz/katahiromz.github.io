@@ -532,7 +532,10 @@ document.addEventListener('DOMContentLoaded', function(){
 			android.startVibrator(sai_id_range_vibrator_strength.value.toString());
 			console.log("SAI_vibrator_start: " + sai_id_range_vibrator_strength.value);
 		}catch(error){ // Androidではない。
-			console.log("SAI_vibrator_start: failed");
+			if('vibrate' in navigator){
+				navigator.vibrate(0); // 振動を停止。
+				navigator.vibrate([20 * 60 * 1000]); // 20分間振動。
+			}
 		}
 	}
 
@@ -542,7 +545,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			android.stopVibrator();
 			console.log("SAI_vibrator_stop: stopped");
 		}catch(error){ // Androidではない。
-			console.log("SAI_vibrator_stop: failed");
+			if('vibrate' in navigator){
+				navigator.vibrate(0); // 振動を停止。
+			}
 		}
 	}
 
@@ -4278,6 +4283,13 @@ document.addEventListener('DOMContentLoaded', function(){
 		// AndroidアプリでなければAndroidオンリーの要素を隠す。
 		if(!SAI_is_android_app()){
 			let items = document.getElementsByClassName('sai_class_android_app_only');
+			for(let item of items){
+				item.classList.add('sai_class_invisible');
+			}
+		}
+		// バイブレーターが有効でなければバイブレーターのみの要素を隠す。
+		if(!SAI_is_android_app() && !('vibrate' in navigator)){
+			let items = document.getElementsByClassName('sai_class_vibrator_only');
 			for(let item of items){
 				item.classList.add('sai_class_invisible');
 			}
