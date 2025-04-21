@@ -1,8 +1,10 @@
 {
+	"manifest_version": "3",
 	"id": "hyponosis-krakra-web-app-ja-JP",
 	"lang": "ja-JP",
 	"short_name": "催眠くらくら",
 	"name": "催眠アプリ【くらくら】",
+	"version": "3.7.8",
 	"start_url": "https://katahiromz.github.io/saimin/index.html",
 	"background_color": "#FFB5E6",
 	"theme_color": "#FFB5E6",
