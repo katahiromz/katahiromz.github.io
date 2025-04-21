@@ -545,12 +545,12 @@ document.addEventListener('DOMContentLoaded', function(){
 			android.stopVibrator();
 		}catch(error){ // Androidではない。
 			if(had_action && 'vibrate' in navigator){
-				navigator.vibrate([0]); // 振動を停止。
+				navigator.vibrate([]); // 振動を停止。
 			}
 		}
 	}
 
-	// 振動の強さ。
+	// 振動を開始または停止する。
 	const SAI_vibrator_start_stop = function(value, had_action){
 		// ローカルストレージに記憶する。
 		localStorage.setItem('saiminVibratorOn', value ? 'yes' : 'no');
