@@ -52,12 +52,14 @@
 		{
 			"src": "screenshots/screenshot-750x1334.png",
 			"sizes": "750x1334",
-			"type": "image/png"
+			"type": "image/png",
+			"form_factor": "narrow"
 		},
 		{
 			"src": "screenshots/screenshot-1334x750.png",
 			"sizes": "1334x750",
-			"type": "image/png"
+			"type": "image/png",
+			"form_factor": "wide"
 		}
 	]
 }
