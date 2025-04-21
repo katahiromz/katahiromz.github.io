@@ -60,13 +60,13 @@
 	],
 	"screenshots": [
 		{
-			"src": "screenshots/screenshot-750x1334.png",
+			"src": "https://katahiromz.github.io/gekitai/screenshots/screenshot-750x1334.png",
 			"sizes": "750x1334",
 			"type": "image/png",
 			"form_factor": "narrow"
 		},
 		{
-			"src": "screenshots/screenshot-1334x750.png",
+			"src": "https://katahiromz.github.io/gekitai/screenshots/screenshot-1334x750.png",
 			"sizes": "1334x750",
 			"type": "image/png",
 			"form_factor": "wide"
