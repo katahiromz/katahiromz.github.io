@@ -83,8 +83,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// Androidか？
 	const SAI_is_android_app = function(){
-		alert(navigator.userAgent);
-		return navigator.userAgent.indexOf('/Android/') != -1;
+		return navigator.userAgent.indexOf('Android') != -1;
 	}
 
 	// Androidのネイティブアプリか？
