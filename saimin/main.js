@@ -2992,6 +2992,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// 真ん中に赤い円盤を描く。
 		ctx.fillStyle = "red";
+		let cnt = SAI_get_tick_count() * 0.02;
+		unit *= (3 + Math.sin(cnt * 4.0)) * 0.2;
 		SAI_draw_circle(ctx, qx, qy, unit * 0.25, true);
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
@@ -3014,7 +3016,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		// フォーカス矢印を描画する。
 		let qx = px + dx / 2;
 		let qy = py + dy / 2;
-		let count2 = -SAI_get_tick_count();
 		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
 	}
 
