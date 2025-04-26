@@ -2917,7 +2917,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		const num_colors = 3;
 		let i, ci = Math.ceil(radius / num_colors / 8) * num_colors;
-		let count3 = count2 * 0.9 * Math.sqrt(0.5 / di);
+		let count3 = count2 * Math.pow(di, -0.8) * 1.3;
 		const ratio = 1.5;
 		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
 		const value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
