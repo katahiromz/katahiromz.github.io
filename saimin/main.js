@@ -2913,7 +2913,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		let mxy = (maxxy + minxy) * 0.5;
 
 		// 映像の進行を表す変数。
-		let count2 = -SAI_get_tick_count() * 0.08 * (direction ? -1 : 1);
+		let count2 = -SAI_get_tick_count() * 0.09 * (direction ? -1 : 1);
 
 		const num_colors = 3;
 		let i, ci = Math.ceil(radius / num_colors / 2) * num_colors;
