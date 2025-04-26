@@ -2928,7 +2928,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			// クリッピングする。
 			let old_x, old_y, old_radian;
 			{
-				let radian = 2 * Math.PI * (i - 1 * (direction ? 1 : -1)) / ci;
+				let radian = 2 * Math.PI * (i - (direction ? +1 : -1)) / ci;
 				let x = radius * Math.cos(radian + count3);
 				let y = radius * Math.sin(radian + count3);
 				ctx.beginPath();
