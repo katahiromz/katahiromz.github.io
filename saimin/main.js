@@ -2906,7 +2906,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	// ヘビの描画。
-	const SAI_draw_snake = function(ctx, px, py, dx, dy, radius, radius2, direction, di){
+	const SAI_draw_snake = function(ctx, px, py, dx, dy, radius, radius2, direction, di, ei){
 		// 画面の寸法を使って計算する。
 		let qx = px + dx / 2, qy = py + dy / 2;
 		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
@@ -2923,6 +2923,9 @@ document.addEventListener('DOMContentLoaded', function(){
 		const value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
 		const color1 = `hsl(${value1 * 360 % 360}, 100%, 50%)`;
 		const color2 = `hsl(${value2 * 360 % 360}, 100%, 50%)`;
+		let cnt1 = SAI_get_tick_count() * 0.02;
+		let cnt2 = Math.sin(cnt1 * 4.0) * 0.3;
+		let cnt3 = Math.sin(cnt1 * 8.0) * 0.3;
 		for(let i = 0; i < ci; ++i){
 			ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 			let old_x, old_y, old_radian;
@@ -2933,6 +2936,8 @@ document.addEventListener('DOMContentLoaded', function(){
 				// パスの開始。
 				ctx.beginPath();
 				// 座標変換。
+				//ctx.translate((ei - di) * cnt2 * mxy * 0.1, 0);
+				ctx.translate((ei - di) * cnt2 * mxy * 0.1, (ei - di) * cnt3 * mxy * 0.02);
 				ctx.translate(qx, qy);
 				ctx.translate(x, y);
 				ctx.rotate(radian + count3);
@@ -2966,7 +2971,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				ctx.fill();
 			}
 			ctx.restore(); // ctx.saveで保存した情報で元に戻す。
-			//break;
 		}
 	}
 
@@ -2982,11 +2986,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		let mxy = (maxxy + minxy) * 0.5;
 
 		// ヘビを描画。
-		let flag = SAI_mod(SAI_get_tick_count() * 0.003, 1) < 0.5;
+		let flag = false;
 		let unit = mxy * 0.1;
 		let factor = 1;
+		let ei = 8;
 		for(let i = 0; i < 8; ++i){
-			SAI_draw_snake(ctx, px, py, dx, dy, unit * (i - 0.25), unit * factor / 2, flag, i);
+			SAI_draw_snake(ctx, px, py, dx, dy, unit * (i - 0.25), unit * factor / 2, flag, i, ei);
 			flag = !flag;
 		}
 
@@ -2994,7 +2999,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillStyle = "red";
 		let cnt = SAI_get_tick_count() * 0.02;
 		unit *= (3 + Math.sin(cnt * 4.0)) * 0.2;
+		let cnt1 = SAI_get_tick_count() * 0.02;
+		let cnt2 = Math.sin(cnt1 * 4.0) * 0.3;
+		let cnt3 = Math.sin(cnt1 * 8.0) * 0.3;
+		ctx.translate(ei * cnt2 * mxy * 0.1, ei * cnt3 * mxy * 0.02);
 		SAI_draw_circle(ctx, qx, qy, unit * 0.25, true);
+
+		// フォーカス矢印を描画する。
+		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
@@ -3012,11 +3024,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
 		ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
 		ctx.globalAlpha = 1; // 元に戻す。
-
-		// フォーカス矢印を描画する。
-		let qx = px + dx / 2;
-		let qy = py + dy / 2;
-		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
 	}
 
 	// カウントダウン映像の描画。
