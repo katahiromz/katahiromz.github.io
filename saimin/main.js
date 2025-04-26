@@ -2915,16 +2915,17 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 映像の進行を表す変数。
 		let count2 = -SAI_get_tick_count() * 0.08 * (direction ? -1 : 1);
 
-		let num_colors = 3;
+		const num_colors = 3;
 		let i, ci = Math.ceil(radius / num_colors / 2) * num_colors;
 		let count3 = count2 * 0.7 * Math.sqrt(0.5 / di);
-		let ratio = 1.5;
-		let value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
-		let value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
-		let color1 = `hsl(${value1 * 360 % 360}, 100%, 50%)`;
-		let color2 = `hsl(${value2 * 360 % 360}, 100%, 50%)`;
+		const ratio = 1.5;
+		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
+		const value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
+		const color1 = `hsl(${value1 * 360 % 360}, 100%, 50%)`;
+		const color2 = `hsl(${value2 * 360 % 360}, 100%, 50%)`;
 		for(let i = 0; i < ci; ++i){
-			ctx.save();
+			ctx.save(); // 現在の座標系やクリッピングなどを保存する。
+			// クリッピングする。
 			let old_x, old_y, old_radian;
 			{
 				let radian = 2 * Math.PI * (i - 1 * (direction ? 1 : -1)) / ci;
@@ -2942,6 +2943,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				old_y = y;
 				old_radian = radian;
 			}
+			// 実際に描画する。
 			{
 				let radian = 2 * Math.PI * i / ci;
 				let x = radius * Math.cos(radian + count3);
@@ -2961,7 +2963,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				}
 				ctx.fill();
 			}
-			ctx.restore();
+			ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 		}
 	}
 
@@ -2997,13 +2999,13 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 別のキャンバスに普通に描画する。
 		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
 		ctx2.save();
-		let dx4 = dx / 4, dy4 = dy / 4;
-		SAI_draw_pic_17_sub(ctx2, 0, 0, dx4, dy4);
+		let dx3 = dx / 3, dy3 = dy / 3;
+		SAI_draw_pic_17_sub(ctx2, 0, 0, dx3, dy3);
 		ctx2.restore();
 
 		// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
 		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
-		ctx.drawImage(sai_id_canvas_02, 0, 0, dx4, dy4, px, py, dx, dy);
+		ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
 		ctx.globalAlpha = 1; // 元に戻す。
 
 		// フォーカス矢印を描画する。
