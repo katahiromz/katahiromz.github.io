@@ -2916,7 +2916,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		let count2 = -SAI_get_tick_count() * 0.09 * (direction ? -1 : 1);
 
 		const num_colors = 3;
-		let i, ci = Math.ceil(radius / num_colors / 2) * num_colors;
+		let i, ci = Math.ceil(radius / num_colors / 8) * num_colors;
 		let count3 = count2 * 0.9 * Math.sqrt(0.5 / di);
 		const ratio = 1.5;
 		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
@@ -2925,37 +2925,39 @@ document.addEventListener('DOMContentLoaded', function(){
 		const color2 = `hsl(${value2 * 360 % 360}, 100%, 50%)`;
 		for(let i = 0; i < ci; ++i){
 			ctx.save(); // 現在の座標系やクリッピングなどを保存する。
-			// クリッピングする。
 			let old_x, old_y, old_radian;
 			{
 				let radian = 2 * Math.PI * (i - (direction ? +1 : -1)) / ci;
 				let x = radius * Math.cos(radian + count3);
 				let y = radius * Math.sin(radian + count3);
+				// パスの開始。
 				ctx.beginPath();
-				ctx.rect(px, py, dx, dy);
+				// 座標変換。
 				ctx.translate(qx, qy);
 				ctx.translate(x, y);
 				ctx.rotate(radian + count3);
 				ctx.scale(1, ratio);
-				ctx.arc(0, 0, radius2, 0, 2 * Math.PI);
-				ctx.clip("evenodd");
+				// 円弧を描画。
+				ctx.arc(0, 0, radius2, 0, 1 * Math.PI, true);
 				old_x = x;
 				old_y = y;
 				old_radian = radian;
 			}
-			// 実際に描画する。
 			{
 				let radian = 2 * Math.PI * i / ci;
 				let x = radius * Math.cos(radian + count3);
 				let y = radius * Math.sin(radian + count3);
-				ctx.beginPath();
+				// 一部、変換を元に戻すため、一部逆変換。
 				ctx.scale(1, 1/ratio);
 				ctx.rotate(-(old_radian + count3));
 				ctx.translate(-old_x, -old_y);
+				// さらに変換。
 				ctx.translate(x, y);
 				ctx.rotate(radian + count3);
 				ctx.scale(1, ratio);
-				ctx.arc(0, 0, radius2, 0, 2 * Math.PI);
+				// 円弧を描画。
+				ctx.arc(0, 0, radius2, 1 * Math.PI, 0);
+				// 色を選んで塗りつぶし。
 				switch(i % num_colors){
 				case 0: ctx.fillStyle = color1; break;
 				case 1: ctx.fillStyle = color2; break;
@@ -2964,6 +2966,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				ctx.fill();
 			}
 			ctx.restore(); // ctx.saveで保存した情報で元に戻す。
+			//break;
 		}
 	}
 
@@ -2999,7 +3002,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 別のキャンバスに普通に描画する。
 		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
 		ctx2.save();
-		let dx3 = dx / 3, dy3 = dy / 3;
+		let dx3 = dx, dy3 = dy;
 		SAI_draw_pic_17_sub(ctx2, 0, 0, dx3, dy3);
 		ctx2.restore();
 
