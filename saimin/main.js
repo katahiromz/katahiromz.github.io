@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.7.8'; // KraKraバージョン番号。
+const sai_VERSION = '3.7.9'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 let sai_vibrating = false; // 振動中か？
@@ -35,7 +35,7 @@ const SAI_on_keydown_message = function(e){
 // ドキュメントの読み込みが完了（DOMContentLoaded）されたら無名関数が呼び出される。
 document.addEventListener('DOMContentLoaded', function(){
 	// 変数を保護するため、関数内部に閉じ込める。
-	const sai_NUM_TYPE = 17; // 「画」の個数。
+	const sai_NUM_TYPE = 18; // 「画」の個数。
 	let sai_screen_width = 0; // スクリーンの幅（ピクセル単位）を覚えておく。
 	let sai_screen_height = 0; // スクリーンの高さ（ピクセル単位）を覚えておく。
 	let sai_pic_type = 0; // 映像の種類を表す整数値。
@@ -2905,6 +2905,113 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(px, py, dx, dy);
 	}
 
+	// ヘビの描画。
+	const SAI_draw_snake = function(ctx, px, py, dx, dy, radius, radius2, direction, di){
+		// 画面の寸法を使って計算する。
+		let qx = px + dx / 2, qy = py + dy / 2;
+		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
+		let mxy = (maxxy + minxy) * 0.5;
+
+		// 映像の進行を表す変数。
+		let count2 = -SAI_get_tick_count() * 0.08 * (direction ? -1 : 1);
+
+		let i, ci = Math.ceil(radius / 3 / 2) * 3;
+		let count3 = count2 * 0.7 * Math.sqrt(0.5 / di);
+		let ratio = 1.5;
+		let value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
+		let value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
+		let color1 = `hsl(${value1 * 360 % 360}, 100%, 50%)`;
+		let color2 = `hsl(${value2 * 360 % 360}, 100%, 50%)`;
+		for(let i = 0; i < ci; ++i){
+			ctx.save();
+			let old_x, old_y, old_radian;
+			{
+				let radian = 2 * Math.PI * (i - 1 * (direction ? 1 : -1)) / ci;
+				let x = radius * Math.cos(radian + count3);
+				let y = radius * Math.sin(radian + count3);
+				ctx.beginPath();
+				ctx.rect(px, py, dx, dy);
+				ctx.translate(qx, qy);
+				ctx.translate(x, y);
+				ctx.rotate(radian + count3);
+				ctx.scale(1, ratio);
+				ctx.arc(0, 0, radius2, 0, 2 * Math.PI);
+				ctx.clip("evenodd");
+				old_x = x;
+				old_y = y;
+				old_radian = radian;
+			}
+			{
+				let radian = 2 * Math.PI * i / ci;
+				let x = radius * Math.cos(radian + count3);
+				let y = radius * Math.sin(radian + count3);
+				ctx.beginPath();
+				ctx.scale(1, 1/ratio);
+				ctx.rotate(-(old_radian + count3));
+				ctx.translate(-old_x, -old_y);
+				ctx.translate(x, y);
+				ctx.rotate(radian + count3);
+				ctx.scale(1, ratio);
+				ctx.arc(0, 0, radius2, 0, 2 * Math.PI);
+				switch(i % 3){
+				case 0: ctx.fillStyle = color1; break;
+				case 1: ctx.fillStyle = color2; break;
+				case 2: ctx.fillStyle = "black"; break;
+				}
+				ctx.fill();
+			}
+			ctx.restore();
+		}
+	}
+
+	// 映像「画17: ヘビの回転」の描画。
+	const SAI_draw_pic_17_sub = function(ctx, px, py, dx, dy){
+		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
+
+		// 黒で長方形領域を塗りつぶす。
+		ctx.clearRect(px, py, dx, dy);
+
+		let qx = px + dx / 2, qy = py + dy / 2;
+		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
+		let mxy = (maxxy + minxy) * 0.5;
+
+		// ヘビを描画。
+		let flag = SAI_mod(SAI_get_tick_count() * 0.003, 1) < 0.5;
+		let unit = mxy * 0.17;
+		let factor = 1;
+		for(let i = 0; i < 5; ++i){
+			SAI_draw_snake(ctx, px, py, dx, dy, unit * (i - 0.25), unit * factor / 2, flag, i);
+			flag = !flag;
+		}
+
+		// 真ん中に赤い円盤を描く。
+		ctx.fillStyle = "red";
+		SAI_draw_circle(ctx, qx, qy, unit * 0.25, true);
+
+		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
+	}
+
+	// 映像「画17: ヘビの回転」の描画。
+	const SAI_draw_pic_17 = function(ctx, px, py, dx, dy){
+		// 別のキャンバスに普通に描画する。
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+		ctx2.save();
+		let dx4 = dx / 4, dy4 = dy / 4;
+		SAI_draw_pic_17_sub(ctx2, 0, 0, dx4, dy4);
+		ctx2.restore();
+
+		// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, 0, 0, dx4, dy4, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
+
+		// フォーカス矢印を描画する。
+		let qx = px + dx / 2;
+		let qy = py + dy / 2;
+		let count2 = -SAI_get_tick_count();
+		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
+	}
+
 	// カウントダウン映像の描画。
 	const SAI_draw_pic_count_down = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
@@ -3025,6 +3132,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			break;
 		case 16:
 			SAI_draw_pic_16(ctx, px, py, dx, dy);
+			break;
+		case 17:
+			SAI_draw_pic_17(ctx, px, py, dx, dy);
 			break;
 		}
 	}
