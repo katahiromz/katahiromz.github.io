@@ -2916,7 +2916,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		let count2 = -SAI_get_tick_count() * 0.09 * (direction ? -1 : 1);
 
 		const num_colors = 3;
-		let i, ci = Math.ceil(radius / num_colors / 8) * num_colors;
+		let i, ci = Math.ceil(radius / num_colors * 0.15) * num_colors;
 		let count3 = count2 * Math.pow(di, -0.8) * 1.3;
 		const ratio = 1.5;
 		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
@@ -2983,9 +2983,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// ヘビを描画。
 		let flag = SAI_mod(SAI_get_tick_count() * 0.003, 1) < 0.5;
-		let unit = mxy * 0.17;
+		let unit = mxy * 0.1;
 		let factor = 1;
-		for(let i = 0; i < 5; ++i){
+		for(let i = 0; i < 8; ++i){
 			SAI_draw_snake(ctx, px, py, dx, dy, unit * (i - 0.25), unit * factor / 2, flag, i);
 			flag = !flag;
 		}
