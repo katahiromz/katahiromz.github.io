@@ -2915,7 +2915,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 映像の進行を表す変数。
 		let count2 = -SAI_get_tick_count() * 0.08 * (direction ? -1 : 1);
 
-		let i, ci = Math.ceil(radius / 3 / 2) * 3;
+		let num_colors = 3;
+		let i, ci = Math.ceil(radius / num_colors / 2) * num_colors;
 		let count3 = count2 * 0.7 * Math.sqrt(0.5 / di);
 		let ratio = 1.5;
 		let value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
@@ -2953,7 +2954,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				ctx.rotate(radian + count3);
 				ctx.scale(1, ratio);
 				ctx.arc(0, 0, radius2, 0, 2 * Math.PI);
-				switch(i % 3){
+				switch(i % num_colors){
 				case 0: ctx.fillStyle = color1; break;
 				case 1: ctx.fillStyle = color2; break;
 				case 2: ctx.fillStyle = "black"; break;
