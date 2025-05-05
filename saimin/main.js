@@ -2916,13 +2916,13 @@ document.addEventListener('DOMContentLoaded', function(){
 		let count2 = -SAI_get_tick_count() * 0.09 * (direction ? -1 : 1);
 
 		const num_colors = 3;
-		let i, ci = Math.ceil(radius / num_colors * 0.15) * num_colors;
+		let i, ci = Math.ceil(radius / num_colors * 0.15) * num_colors * 2;
 		let count3 = count2 * Math.pow(di, -0.8) * 1.3;
 		const ratio = 1.5;
 		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
 		const value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
-		const color1 = `hsl(${value1 * 360 % 360}, 100%, 50%)`;
-		const color2 = `hsl(${value2 * 360 % 360}, 100%, 50%)`;
+		const color1 = SAI_color_get_1st();
+		const color2 = SAI_color_get_2nd();
 		let cnt1 = SAI_get_tick_count() * 0.02;
 		let cnt2 = Math.sin(cnt1 * 4.0) * 0.3;
 		let cnt3 = Math.sin(cnt1 * 8.0) * 0.3;
@@ -2936,7 +2936,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				// パスの開始。
 				ctx.beginPath();
 				// 座標変換。
-				//ctx.translate((ei - di) * cnt2 * mxy * 0.1, 0);
 				ctx.translate((ei - di) * cnt2 * mxy * 0.1, (ei - di) * cnt3 * mxy * 0.02);
 				ctx.translate(qx, qy);
 				ctx.translate(x, y);
@@ -2986,13 +2985,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		let mxy = (maxxy + minxy) * 0.5;
 
 		// ヘビを描画。
-		let flag = false;
-		let unit = mxy * 0.1;
-		let factor = 1;
+		let flag = true;
+		let unit = mxy * 0.05;
+		let factor = 0.8;
 		let ei = 8;
-		for(let i = 0; i < 8; ++i){
+		for(let i = 0; i < 20; ++i){
 			SAI_draw_snake(ctx, px, py, dx, dy, unit * (i - 0.25), unit * factor / 2, flag, i, ei);
-			flag = !flag;
 		}
 
 		// 真ん中に赤い円盤を描く。
