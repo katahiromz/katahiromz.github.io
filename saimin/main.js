@@ -2917,7 +2917,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		const num_colors = 3;
 		let i, ci = Math.ceil(radius / num_colors * 0.15) * num_colors * 2;
-		let count3 = count2 * Math.pow(di, -0.8) * 1.3;
+		let count3 = count2 * 0.25 * Math.pow(1.02, di);
 		const ratio = 1.5;
 		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
 		const value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
@@ -2993,7 +2993,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			SAI_draw_snake(ctx, px, py, dx, dy, unit * (i - 0.25), unit * factor / 2, flag, i, ei);
 		}
 
-		// 真ん中に赤い円盤を描く。
+		// 真ん中に赤い円盤をいくつか描く。
 		ctx.fillStyle = "red";
 		let cnt = SAI_get_tick_count() * 0.02;
 		unit *= (3 + Math.sin(cnt * 4.0)) * 0.2;
@@ -3001,7 +3001,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		let cnt2 = Math.sin(cnt1 * 4.0) * 0.3;
 		let cnt3 = Math.sin(cnt1 * 8.0) * 0.3;
 		ctx.translate(ei * cnt2 * mxy * 0.1, ei * cnt3 * mxy * 0.02);
-		SAI_draw_circle(ctx, qx, qy, unit * 0.25, true);
+		ctx.lineWidth = unit * 0.5;
+		ctx.strokeStyle = "red";
+		SAI_draw_circle(ctx, qx - mxy * 0.1, qy, mxy * 0.08, false);
+		SAI_draw_circle(ctx, qx + mxy * 0.1, qy, mxy * 0.08, false);
+		SAI_draw_circle(ctx, qx, qy - mxy * 0.1, mxy * 0.08, false);
+		SAI_draw_circle(ctx, qx, qy + mxy * 0.1, mxy * 0.08, false);
 
 		// フォーカス矢印を描画する。
 		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
