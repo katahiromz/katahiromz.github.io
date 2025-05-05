@@ -2917,20 +2917,20 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		const num_colors = 3;
 		let i, ci = Math.ceil(radius / num_colors * 0.15) * num_colors * 2;
-		let count3 = count2 * 0.25 * Math.pow(1.02, di);
+		let count3 = -count2 * 0.25 * Math.pow(1.02, di);
 		const ratio = 1.5;
 		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
 		const value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
 		const color1 = SAI_color_get_1st();
 		const color2 = SAI_color_get_2nd();
-		let cnt1 = SAI_get_tick_count() * 0.02;
+		let cnt1 = -SAI_get_tick_count() * 0.02;
 		let cnt2 = Math.sin(cnt1 * 4.0) * 0.3;
 		let cnt3 = Math.sin(cnt1 * 8.0) * 0.3;
 		for(let i = 0; i < ci; ++i){
 			ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 			let old_x, old_y, old_radian;
 			{
-				let radian = 2 * Math.PI * (i - (direction ? +1 : -1)) / ci;
+				let radian = 2 * Math.PI * i / ci;
 				let x = radius * Math.cos(radian + count3);
 				let y = radius * Math.sin(radian + count3);
 				// パスの開始。
@@ -2948,7 +2948,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				old_radian = radian;
 			}
 			{
-				let radian = 2 * Math.PI * i / ci;
+				let radian = 2 * Math.PI * (i + (direction ? +1 : -1)) / ci;
 				let x = radius * Math.cos(radian + count3);
 				let y = radius * Math.sin(radian + count3);
 				// 一部、変換を元に戻すため、一部逆変換。
@@ -2985,7 +2985,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		let mxy = (maxxy + minxy) * 0.5;
 
 		// ヘビを描画。
-		let flag = true;
+		let flag = sai_id_select_vortex_direction.value == "counterclockwise";
 		let unit = mxy * 0.05;
 		let factor = 0.8;
 		let ei = 8;
