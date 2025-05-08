@@ -3084,15 +3084,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		let mxy = (maxxy + minxy) * 0.5;
 
 		let counter = SAI_get_tick_count();
-
-		qx += mxy * 0.02 * Math.cos(counter * 0.1);
-		qy += mxy * 0.02 * Math.sin(counter * 0.1);
-
 		ctx.translate(qx, qy);
-		ctx.rotate(counter * 0.03);
-		let scale_x = Math.abs(1 + 0.25 * Math.sin(counter * 0.03));
-		let scale_y = Math.abs(1 + 0.25 * Math.cos(counter * 0.03));
-		ctx.scale(scale_x, scale_y);
+		ctx.rotate(counter * 0.05);
 
 		let dr = mxy * 0.1;
 		let max_i = 10;
@@ -3101,6 +3094,11 @@ document.addEventListener('DOMContentLoaded', function(){
 			let j1 = Math.pow((i + 1) / max_i, 4);
 			SAI_draw_strain_ring(ctx, mxy * j0, mxy * j1);
 		}
+
+		// フォーカス矢印を描画する。
+		ctx.rotate(-counter * 0.05);
+		ctx.translate(-qx, -qy);
+		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
