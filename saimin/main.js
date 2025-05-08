@@ -3031,8 +3031,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	const SAI_strained_line = function(ctx, x0, y0, x1, y1){
 		let max_i = 20;
+		let counter = SAI_get_tick_count() * 0.02;
 		for(let i = 0; i <= max_i; ++i){
-			let strain = Math.sin(i / max_i * Math.PI);
+			let strain = Math.sin(i / max_i * Math.PI) * Math.abs(1.5 + 1.0 * Math.sin(counter));
 			let x = x0 * i / max_i + x1 * (max_i - i) / max_i;
 			let y = y0 * i / max_i + y1 * (max_i - i) / max_i;
 			ctx.rotate(strain);
