@@ -3044,7 +3044,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	const SAI_draw_strain_ring = function(ctx, radius1, radius2){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
-		let counter = SAI_get_tick_count() * 0.01;
+		let counter = SAI_get_tick_count() * 0.02;
 
 		let da = 360 / 20;
 		let flag = false;
@@ -3085,8 +3085,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		let counter = SAI_get_tick_count();
 
-		qx += mxy * 0.03 * Math.cos(counter * 0.1);
-		qy += mxy * 0.03 * Math.sin(counter * 0.1);
+		qx += mxy * 0.02 * Math.cos(counter * 0.1);
+		qy += mxy * 0.02 * Math.sin(counter * 0.1);
 
 		ctx.translate(qx, qy);
 		ctx.rotate(counter * 0.03);
