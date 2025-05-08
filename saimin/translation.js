@@ -1743,6 +1743,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', '画15: ただの黒い画面');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', '画16: ただの白い画面');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', '画17: ヘビの回転');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', '画18: ひずみ放射');
 		trans_setHtmlText(sai_id_text_split, '画面分割:');
 		trans_setHtmlText(sai_id_text_speed, 'スピード:');
 		trans_setHtmlText(speed_irregular_label, '不規則');
@@ -1848,6 +1849,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', '图15：只是黑屏');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', '图16：只是白屏');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', '图17: 旋转蛇');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', '图18: 畸变辐射');
 		trans_setHtmlText(sai_id_text_split, '分屏：');
 		trans_setHtmlText(sai_id_text_speed, '速度：');
 		trans_setHtmlText(speed_irregular_label, '不规律的');
@@ -1953,6 +1955,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', '圖15: 只是黑屏');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', '圖16: 只是白屏');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', '圖17: 旋轉蛇');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', '圖18: 畸變輻射');
 		trans_setHtmlText(sai_id_text_split, '分屏：');
 		trans_setHtmlText(sai_id_text_speed, '速度：');
 		trans_setHtmlText(speed_irregular_label, '不規律的');
@@ -2058,6 +2061,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'pic15: 그냥 검은 화면');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'pic16: 그냥 흰색 화면');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'pic17: 뱀 회전');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'pic18: 스트레인 방사');
 		trans_setHtmlText(sai_id_text_split, '화면 분할:');
 		trans_setHtmlText(sai_id_text_speed, '속도:');
 		trans_setHtmlText(speed_irregular_label, '불규칙');
@@ -2163,6 +2167,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'pic15: Solo uno schermo nero');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'pic16: Solo uno schermo bianco');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'pic17: Serpente rotante');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'pic18: Radiazione di distorsione');
 		trans_setHtmlText(sai_id_text_split, 'Divisione dello schermo:');
 		trans_setHtmlText(sai_id_text_speed, 'Velocità:');
 		trans_setHtmlText(speed_irregular_label, 'Irregolare');
@@ -2268,6 +2273,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'pic15: Nur ein schwarzer Bildschirm');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'pic16: Nur ein weißer Bildschirm');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'pic17: Rotierende Schlange');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'pic18: Verzerrungsstrahlung');
 		trans_setHtmlText(sai_id_text_split, 'Bildschirmaufteilung:');
 		trans_setHtmlText(sai_id_text_speed, 'Geschwindigkeit:');
 		trans_setHtmlText(speed_irregular_label, 'Irregulär');
@@ -2373,6 +2379,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'Imagen 15: Sólo una pantalla negra');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'Imagen 16: Sólo una pantalla blanca');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'Imagen 17: Serpiente giratoria');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'Imagen 18: Radiación de distorsión');
 		trans_setHtmlText(sai_id_text_split, 'Pantalla dividida:');
 		trans_setHtmlText(sai_id_text_speed, 'Velocidad:');
 		trans_setHtmlText(speed_irregular_label, 'Irregular');
@@ -2478,6 +2485,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'Рисунок 15: Просто черный экран');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'Рисунок 16: Просто белый экран');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'Рисунок 17: Вращающаяся змея');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'Рисунок 18: Искажающее излучение');
 		trans_setHtmlText(sai_id_text_split, 'Разделенный экран:');
 		trans_setHtmlText(sai_id_text_speed, 'Скорость:');
 		trans_setHtmlText(speed_irregular_label, 'Нерегулярный');
@@ -2583,6 +2591,7 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'pic15: Just a black screen');
 		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'pic16: Just a white screen');
 		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'pic17: Rotating snake');
+		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'pic18: Distortion Radiation');
 		trans_setHtmlText(sai_id_text_split, 'Screen splitting:');
 		trans_setHtmlText(sai_id_text_speed, 'Speed:');
 		trans_setHtmlText(speed_irregular_label, 'Irregular');

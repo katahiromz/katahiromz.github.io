@@ -35,7 +35,7 @@ const SAI_on_keydown_message = function(e){
 // ドキュメントの読み込みが完了（DOMContentLoaded）されたら無名関数が呼び出される。
 document.addEventListener('DOMContentLoaded', function(){
 	// 変数を保護するため、関数内部に閉じ込める。
-	const sai_NUM_TYPE = 18; // 「画」の個数。
+	const sai_NUM_TYPE = 19; // 「画」の個数。
 	let sai_screen_width = 0; // スクリーンの幅（ピクセル単位）を覚えておく。
 	let sai_screen_height = 0; // スクリーンの高さ（ピクセル単位）を覚えておく。
 	let sai_pic_type = 0; // 映像の種類を表す整数値。
@@ -3029,6 +3029,97 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.globalAlpha = 1; // 元に戻す。
 	}
 
+	const SAI_strained_line = function(ctx, x0, y0, x1, y1){
+		let max_i = 20;
+		for(let i = 0; i <= max_i; ++i){
+			let strain = Math.sin(i / max_i * Math.PI);
+			let x = x0 * i / max_i + x1 * (max_i - i) / max_i;
+			let y = y0 * i / max_i + y1 * (max_i - i) / max_i;
+			ctx.rotate(strain);
+			ctx.lineTo(x, y);
+			ctx.rotate(-strain);
+		}
+	};
+
+	const SAI_draw_strain_ring = function(ctx, radius1, radius2){
+		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
+
+		let counter = SAI_get_tick_count() * 0.01;
+
+		let da = 360 / 20;
+		let flag = false;
+		for(let angle1 = 0; angle1 < 360; angle1 += da){
+			flag = !flag;
+			if(flag)continue;
+			let radian1 = angle1 * Math.PI / 180;
+			let radian2 = (angle1 + da) * Math.PI / 180;
+			ctx.beginPath();
+			let x0 = radius1 * Math.cos(radian1 + counter);
+			let y0 = radius1 * Math.sin(radian1 + counter);
+			let x1 = radius2 * Math.cos(radian1 + counter);
+			let y1 = radius2 * Math.sin(radian1 + counter);
+			let x2 = radius2 * Math.cos(radian2 + counter);
+			let y2 = radius2 * Math.sin(radian2 + counter);
+			let x3 = radius1 * Math.cos(radian2 + counter);
+			let y3 = radius1 * Math.sin(radian2 + counter);
+			SAI_strained_line(ctx, x0, y0, x1, y1);
+			SAI_strained_line(ctx, x2, y2, x3, y3);
+			ctx.fillStyle = SAI_color_get_2nd();
+			ctx.fill();
+		}
+
+		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
+	};
+
+	// 映像「画18: ひずみ放射」の描画。
+	const SAI_draw_pic_18_sub = function(ctx, px, py, dx, dy){
+		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
+
+		// 1番目の色で長方形領域を塗りつぶす。
+		ctx.fillStyle = SAI_color_get_1st();
+		ctx.fillRect(px, py, dx, dy);
+
+		let qx = px + dx / 2, qy = py + dy / 2;
+		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
+		let mxy = (maxxy + minxy) * 0.5;
+
+		let counter = SAI_get_tick_count();
+
+		qx += mxy * 0.03 * Math.cos(counter * 0.1);
+		qy += mxy * 0.03 * Math.sin(counter * 0.1);
+
+		ctx.translate(qx, qy);
+		ctx.rotate(counter * 0.03);
+		let scale_x = Math.abs(1 + 0.25 * Math.sin(counter * 0.03));
+		let scale_y = Math.abs(1 + 0.25 * Math.cos(counter * 0.03));
+		ctx.scale(scale_x, scale_y);
+
+		let dr = mxy * 0.1;
+		let max_i = 10;
+		for(let i = 0; i < max_i; ++i){
+			let j0 = Math.pow(i / max_i, 4);
+			let j1 = Math.pow((i + 1) / max_i, 4);
+			SAI_draw_strain_ring(ctx, mxy * j0, mxy * j1);
+		}
+
+		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
+	}
+
+	// 映像「画18: ひずみ放射」の描画。
+	const SAI_draw_pic_18 = function(ctx, px, py, dx, dy){
+		// 別のキャンバスに普通に描画する。
+		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
+		ctx2.save();
+		let dx3 = dx, dy3 = dy;
+		SAI_draw_pic_18_sub(ctx2, 0, 0, dx3, dy3);
+		ctx2.restore();
+
+		// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
+		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+		ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
+		ctx.globalAlpha = 1; // 元に戻す。
+	}
+
 	// カウントダウン映像の描画。
 	const SAI_draw_pic_count_down = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
@@ -3152,6 +3243,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			break;
 		case 17:
 			SAI_draw_pic_17(ctx, px, py, dx, dy);
+			break;
+		case 18:
+			SAI_draw_pic_18(ctx, px, py, dx, dy);
 			break;
 		}
 	}
