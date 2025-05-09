@@ -1179,7 +1179,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return 'このアプリを初期化しますか？';
 		case 'TEXT_INITTED_APP': return 'アプリを初期化しました。';
 		case 'TEXT_CONFIGURATION': return '全般設定';
-		case 'TEXT_APPEARANCE': return '見た目の設定';
 		case 'TEXT_INPUT_MESSAGE': return 'メッセージ文字列を入力して下さい。';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '。';
@@ -1226,7 +1225,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return '您想初始化这个应用程序吗？';
 		case 'TEXT_INITTED_APP': return '初始化了应用程序。';
 		case 'TEXT_CONFIGURATION': return '配置';
-		case 'TEXT_APPEARANCE': return '外貌';
 		case 'TEXT_INPUT_MESSAGE': return '请输入消息文本。';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '。';
@@ -1273,7 +1271,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return '您想初始化這個應用程式嗎？';
 		case 'TEXT_INITTED_APP': return '初始化了應用程序。';
 		case 'TEXT_CONFIGURATION': return '常規設置';
-		case 'TEXT_APPEARANCE': return '外觀設置';
 		case 'TEXT_INPUT_MESSAGE': return '請輸入消息字符串。';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '。';
@@ -1320,7 +1317,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return '이 앱을 초기화하시겠습니까?';
 		case 'TEXT_INITTED_APP': return '앱을 초기화했습니다.';
 		case 'TEXT_CONFIGURATION': return '구성';
-		case 'TEXT_APPEARANCE': return '모습';
 		case 'TEXT_INPUT_MESSAGE': return '메시지 문자열을 입력하십시오.';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '. ';
@@ -1367,7 +1363,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return 'Vuoi inizializzare questa app?';
 		case 'TEXT_INITTED_APP': return 'Inizializzata l\'app.';
 		case 'TEXT_CONFIGURATION': return 'Configurazione';
-		case 'TEXT_APPEARANCE': return 'Aspetto';
 		case 'TEXT_INPUT_MESSAGE': return 'Inserisci il testo del messaggio.';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '.';
@@ -1414,7 +1409,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return 'Möchten Sie diese App initialisieren?';
 		case 'TEXT_INITTED_APP': return 'Initialisierte die App.';
 		case 'TEXT_CONFIGURATION': return 'Aufbau';
-		case 'TEXT_APPEARANCE': return 'Aussehen';
 		case 'TEXT_INPUT_MESSAGE': return 'Bitte geben Sie einen Nachrichtentext ein.';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '.';
@@ -1461,7 +1455,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return '¿Quieres inicializar esta aplicación?';
 		case 'TEXT_INITTED_APP': return 'La aplicación se ha inicializado.';
 		case 'TEXT_CONFIGURATION': return 'Configuración general';
-		case 'TEXT_APPEARANCE': return 'Configuración de la apariencia';
 		case 'TEXT_INPUT_MESSAGE': return 'Por favor ingrese la cadena del mensaje.';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '. ';
@@ -1508,7 +1501,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return 'Вы хотите инициализировать это приложение?';
 		case 'TEXT_INITTED_APP': return 'Приложение инициализировано.';
 		case 'TEXT_CONFIGURATION': return 'Общие настройки';
-		case 'TEXT_APPEARANCE': return 'Настройки внешнего вида';
 		case 'TEXT_INPUT_MESSAGE': return 'Пожалуйста, введите строку сообщения.';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '.';
@@ -1555,7 +1547,6 @@ const trans_getText = function(str_id){
 		case 'TEXT_INIT_APP': return 'Do you want to initialize this app?';
 		case 'TEXT_INITTED_APP': return 'Initialized the app.';
 		case 'TEXT_CONFIGURATION': return 'Configuration';
-		case 'TEXT_APPEARANCE': return 'Appearance';
 		case 'TEXT_INPUT_MESSAGE': return 'Please enter a message text.';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '.';
