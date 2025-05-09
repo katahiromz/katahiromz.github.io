@@ -1178,7 +1178,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_ABOUT_APP': return 'バージョン情報';
 		case 'TEXT_INIT_APP': return 'このアプリを初期化しますか？';
 		case 'TEXT_INITTED_APP': return 'アプリを初期化しました。';
-		case 'TEXT_INPUT_MESSAGE': return 'メッセージ文字列を入力して下さい。';
+		case 'TEXT_INPUT_MESSAGE': return 'メッセージ文字列を入力してください。';
 		case 'TEXT_FULLWIDTH_SPACE': return '　';
 		case 'TEXT_PERIOD': return '。';
 		case 'TEXT_PERIOD_SPACE': return '。';
@@ -1204,13 +1204,13 @@ const trans_getText = function(str_id){
 		case 'TEXT_SPEED_IRREGULAR': return '不規則';
 		case 'TEXT_RAINBOW': return '虹色';
 		case 'TEXT_FACE_GETTER': return '顔認識';
-		case 'TEXT_TAP_ON_TARGET': return 'ターゲットをタップして下さい';
+		case 'TEXT_TAP_ON_TARGET': return 'ターゲットをタップしてください';
 		case 'TEXT_CAN_LOCK_ON': return 'ロックオンできます';
 		case 'TEXT_CANT_FIND_FACE': return '顔が見つかりません';
 		case 'TEXT_LOCK_ON': return 'ロックオン';
 		case 'TEXT_UNLOCK': return 'ロック解除';
 		case 'TEXT_CLOSE': return '閉じる';
-		case 'TEXT_NO_WEBCONNECT': return 'ネット接続が利用できません。';
+		case 'TEXT_NO_WEBCONNECT': return 'ネット接続が利用できません';
 		case 'TEXT_INPUTMESSAGE': return "メッセージを入力";
 		}
 	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
