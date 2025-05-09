@@ -718,7 +718,7 @@ const trans_NOTICE_EN = `=========================
 Hypnosis KraKra
 =========================
 
-"Hypnosis KraKra" is a full-fledged joke app equipped with 16 types of videos, 20 types of audio, microphone input, and face recognition.
+"Hypnosis KraKra" is a full-fledged joke app equipped with 18 types of videos, 20 types of audio, microphone input, and face recognition.
 We provide real entertainment where you can enjoy hypnotic images and sounds.
 
 - It displays captivating images to fill the entire screen. There are no annoying ads.
@@ -768,7 +768,7 @@ const trans_NOTICE_KO_KR = `=========================
 Hypnosis KraKra
 =========================
 
-"최면 크라크라" 는 16종의 동영상, 20종의 오디오, 마이크 입력, 얼굴 인식 기능을 갖춘 본격적인 농담 앱입니다.
+"최면 크라크라" 는 18종의 동영상, 20종의 오디오, 마이크 입력, 얼굴 인식 기능을 갖춘 본격적인 농담 앱입니다.
 최면에 걸린 영상과 사운드를 즐길 수 있는 리얼 엔터테인먼트를 제공합니다.
 
 - 전체 화면이 가득한 매력적인 이미지를 표시합니다. 성가신 광고는 없습니다.
@@ -819,7 +819,7 @@ const trans_NOTICE_JA = `=========================
 Hypnosis KraKra
 =========================
 
-「催眠くらくら」は、16種類の映像と20種類の音声、マイク入力、顔認証を搭載した本格的なジョークアプリです。
+「催眠くらくら」は、18種類の映像と20種類の音声、マイク入力、顔認証を搭載した本格的なジョークアプリです。
 催眠っぽい映像や音声を楽しめる本物のエンターテインメントを提供します。
 
 - 画面いっぱいに魅惑の映像を表示します。邪魔な広告はありません。
@@ -869,7 +869,7 @@ const trans_NOTICE_ZH_CN = `=========================
 Hypnosis KraKra
 =========================
 
-《催眠克拉克拉》是一款成熟的笑话应用程序，配备16种视频、20种音频、麦克风输入和面部识别。
+《催眠克拉克拉》是一款成熟的笑话应用程序，配备18种视频、20种音频、麦克风输入和面部识别。
 我们提供真正的娱乐，您可以享受催眠的图像和声音。
 
 - 它显示迷人的图像以填满整个屏幕。 没有烦人的广告。
@@ -919,7 +919,7 @@ const trans_NOTICE_ZH_TW = `=========================
 Hypnosis KraKra
 =========================
 
-《催眠克拉克拉》是一款成熟的笑話應用程序，配備16種視頻、20種音頻、麥克風輸入和麵部識別。
+《催眠克拉克拉》是一款成熟的笑話應用程序，配備18種視頻、20種音頻、麥克風輸入和麵部識別。
 我們提供真正的娛樂，您可以享受催眠的圖像和聲音。
 
 - 它顯示迷人的圖像以填滿整個螢幕。 沒有煩人的廣告。
@@ -969,7 +969,7 @@ Ipnosi KraKra
 Hypnosis KraKra
 =========================
 
-"Ipnosi KraKra" è un'app per scherzi completa dotata di 16 tipi di video, 20 tipi di audio, ingresso microfono e riconoscimento facciale.
+"Ipnosi KraKra" è un'app per scherzi completa dotata di 18 tipi di video, 20 tipi di audio, ingresso microfono e riconoscimento facciale.
 Forniamo un vero intrattenimento in cui puoi goderti immagini e suoni ipnotici.
 
 - Visualizza immagini accattivanti per riempire l'intero schermo. Non ci sono annunci fastidiosi.
@@ -1019,7 +1019,7 @@ Hypnose KraKra
 Hypnosis KraKra
 =========================
 
-„Hypnose KraKra“ ist eine vollwertige Scherz-App, die mit 16 Arten von Videos, 20 Arten von Audio, Mikrofoneingang und Gesichtserkennung ausgestattet ist.
+„Hypnose KraKra“ ist eine vollwertige Scherz-App, die mit 18 Arten von Videos, 20 Arten von Audio, Mikrofoneingang und Gesichtserkennung ausgestattet ist.
 Wir bieten echte Unterhaltung, bei der Sie hypnotische Bilder und Töne genießen können.
 
 - Es zeigt fesselnde Bilder an, die den gesamten Bildschirm ausfüllen. Es gibt keine störende Werbung.
@@ -1069,7 +1069,7 @@ Hipnótico KraKra
 Hypnosis KraKra
 =========================
 
-"Hipnótico KraKra" es una aplicación de broma completa equipada con 16 tipos de vídeos, 20 tipos de audio, entrada de micrófono y reconocimiento facial.
+"Hipnótico KraKra" es una aplicación de broma completa equipada con 18 tipos de vídeos, 20 tipos de audio, entrada de micrófono y reconocimiento facial.
 Brindamos entretenimiento real donde podrás disfrutar de imágenes y sonidos hipnóticos.
 
 - Muestra imágenes cautivadoras para llenar toda la pantalla. No hay anuncios molestos.
@@ -1119,7 +1119,7 @@ const trans_NOTICE_RU = `=========================
 Hypnosis KraKra
 =========================
 
-«Гипнотическая КраКра» — полноценное приложение-шутка, оснащенное 16 типами видео, 20 типами звука, микрофонным входом и распознаванием лиц.
+«Гипнотическая КраКра» — полноценное приложение-шутка, оснащенное 18 типами видео, 20 типами звука, микрофонным входом и распознаванием лиц.
 Мы предоставляем настоящее развлечение, где вы сможете насладиться гипнотическими изображениями и звуками.
 
 - Отображение захватывающих изображений на весь экран. Назойливой рекламы нет.
