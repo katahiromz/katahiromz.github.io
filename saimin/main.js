@@ -3086,7 +3086,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		let counter = SAI_get_tick_count();
 		ctx.translate(qx, qy);
-		ctx.rotate(counter * 0.05);
+		ctx.rotate(counter * 0.07);
 
 		let scale = Math.abs(3.4 + 1.2 * Math.sin(counter * 0.05)) * 0.8;
 		ctx.scale(scale, scale);
@@ -3101,7 +3101,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// フォーカス矢印を描画する。
 		ctx.scale(1/scale, 1/scale);
-		ctx.rotate(-counter * 0.05);
+		ctx.rotate(-counter * 0.07);
 		ctx.translate(-qx, -qy);
 		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
 
