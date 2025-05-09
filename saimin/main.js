@@ -3088,7 +3088,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.translate(qx, qy);
 		ctx.rotate(counter * 0.05);
 
-		let scale = Math.abs(3 + 1.6 * Math.sin(counter * 0.05)) * 0.8;
+		let scale = Math.abs(3.4 + 1.2 * Math.sin(counter * 0.05)) * 0.8;
 		ctx.scale(scale, scale);
 
 		let dr = mxy * 0.1;
