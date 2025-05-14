@@ -19,6 +19,24 @@ const facelocker = function(canvas, on_lock){
 	let error_message = null; // エラーメッセ－ジ（もしあれば）。
 	let self = this;
 
+	// ハート形の描画。
+	const SAI_draw_heart_2 = function(ctx, cx, cy, size, color = 'red') {
+		ctx.beginPath();
+		cy -= size * 0.15;
+		size *= 0.007;
+		// https://www.asobou.co.jp/blog/web/canvas-curve
+		ctx.moveTo(cx, cy);
+		ctx.bezierCurveTo(cx - 10 * size, cy - 25 * size, cx - 30 * size, cy - 40 * size, cx - 50 * size, cy - 40 * size);
+		ctx.bezierCurveTo(cx - 60 * size, cy - 40 * size, cx - 100 * size, cy - 40 * size, cx - 100 * size, cy + 10 * size);
+		ctx.bezierCurveTo(cx - 100 * size, cy + 80 * size, cx - 10 * size, cy + 105 * size, cx, cy + 125 * size);
+		ctx.bezierCurveTo(cx + 10 * size, cy + 105 * size, cx + 100 * size, cy + 80 * size, cx + 100 * size, cy + 10 * size);
+		ctx.bezierCurveTo(cx + 100 * size, cy - 40 * size, cx + 60 * size, cy - 40 * size, cx + 50 * size, cy - 40 * size);
+		ctx.bezierCurveTo(cx + 30 * size, cy - 40 * size, cx + 10 * size, cy - 25 * size, cx, cy);
+		ctx.closePath();
+		ctx.fillStyle = color;
+		ctx.fill();
+	}
+
 	// RGBAデータをグレースケールに変換する関数。
 	const rgba_to_grayscale = function(rgba, nrows, ncols){
 		let gray = new Uint8Array(nrows * ncols);
@@ -90,6 +108,14 @@ const facelocker = function(canvas, on_lock){
 					let cy = y - heart_height / 2 + radius * Math.sin(radian) * face_aspect;
 					ctx.drawImage(self.heart_img, cx, cy, heart_width, heart_height);
 				}
+			}
+
+			// 目の部分にハートを描画する。
+			{
+				let value = Math.sin(new Date().getTime() * 0.01) * radius * 0.1;
+				let color = "rgba(255, 0, 0, 0.6)";
+				SAI_draw_heart_2(ctx, x - radius * 0.5, y, radius * 0.5 + value, color);
+				SAI_draw_heart_2(ctx, x + radius * 0.5, y, radius * 0.5 + value, color);
 			}
 
 			// 中央から離れるにつれ黄色を深めるグラデーション。
