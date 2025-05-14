@@ -18,6 +18,7 @@ const facelocker = function(canvas, on_lock){
 	const face_aspect = 1.3; // 一般的な顔の縦横比。
 	let error_message = null; // エラーメッセ－ジ（もしあれば）。
 	let self = this;
+	let attacked_time = null; // 攻撃時刻。
 
 	// ハート形の描画。
 	const SAI_draw_heart_2 = function(ctx, cx, cy, size, color = 'red') {
@@ -121,9 +122,14 @@ const facelocker = function(canvas, on_lock){
 			// 中央から離れるにつれ黄色を深めるグラデーション。
 			let dxy = (ctx.canvas.width + ctx.canvas.height) / 2;
 			let grd = ctx.createRadialGradient(x, y, dxy * 0.25, x, y, dxy * 0.5);
-			let value2 = (new Date().getTime() % 400) / 400;
+			let nowTime = new Date().getTime();
+			let value2 = (nowTime % 400) / 400;
+			let value3 = 0;
+			if(attacked_time && attacked_time + 200 > nowTime){
+				value3 = nowTime - attacked_time;
+			}
 			grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
-			grd.addColorStop(1, `rgba(255, 255, 0, ${0.65 + 0.20 * Math.sin(value2 * 2 * Math.PI)})`);
+			grd.addColorStop(1, `rgba(255, 255, 0, ${0.35 + value3 * 0.07 + 0.05 * Math.sin(value2 * 2 * Math.PI)})`);
 			ctx.fillStyle = grd;
 			ctx.beginPath();
 			ctx.arc(x, y, dxy, 0, 2 * Math.PI);
@@ -279,8 +285,13 @@ const facelocker = function(canvas, on_lock){
 
 	// 顔認識のキャンバスがクリックされた。
 	this.on_click = function(e){
-		if(self.target)
+		if(self.target){
+			if (self.on_lock){
+				self.on_lock(3);
+				attacked_time = (new Date()).getTime();
+			}
 			return;
+		}
 
 		let dets = self.dets;
 		if(!dets)

@@ -199,6 +199,15 @@ document.addEventListener('DOMContentLoaded', function(){
 					}
 				}
 				break;
+			case 3: // Attack
+				if(sai_id_checkbox_auto_play_sound.checked){
+					let sound = new Audio('sn/Attack.mp3');
+					if(sound){
+						sound.volume = sai_id_range_sound_volume.value / 100.0;
+						sound.play();
+					}
+				}
+				break;
 			}
 			sai_id_button_face_go_back.innerText = trans_getText('TEXT_GO_BACK');
 		};
