@@ -1209,7 +1209,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return '顔が見つかりません';
 		case 'TEXT_LOCK_ON': return 'ロックオン';
 		case 'TEXT_UNLOCK': return 'ロック解除';
-		case 'TEXT_CLOSE': return '閉じる';
+		case 'TEXT_GO_BACK': return '戻る';
 		case 'TEXT_NO_WEBCONNECT': return 'ネット接続が利用できません';
 		case 'TEXT_INPUTMESSAGE': return "メッセージを入力";
 		}
@@ -1254,7 +1254,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return '未找到面孔';
 		case 'TEXT_LOCK_ON': return '锁上';
 		case 'TEXT_UNLOCK': return '开锁';
-		case 'TEXT_CLOSE': return '关闭';
+		case 'TEXT_GO_BACK': return '返回';
 		case 'TEXT_NO_WEBCONNECT': return '无法连接互联网。';
 		case 'TEXT_INPUTMESSAGE': return "输入您的留言";
 		}
@@ -1299,7 +1299,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return '未找到臉孔';
 		case 'TEXT_LOCK_ON': return '鎖上';
 		case 'TEXT_UNLOCK': return '開鎖';
-		case 'TEXT_CLOSE': return '關閉';
+		case 'TEXT_GO_BACK': return '返回';
 		case 'TEXT_NO_WEBCONNECT': return '無法連接網路。';
 		case 'TEXT_INPUTMESSAGE': return "輸入您的留言";
 		}
@@ -1344,7 +1344,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return '얼굴을 찾을 수 없음';
 		case 'TEXT_LOCK_ON': return '잠금';
 		case 'TEXT_UNLOCK': return '잠금 해제';
-		case 'TEXT_CLOSE': return '닫다';
+		case 'TEXT_GO_BACK': return '뒤로';
 		case 'TEXT_NO_WEBCONNECT': return '인터넷 연결을 사용할 수 없습니다.';
 		case 'TEXT_INPUTMESSAGE': return "메시지 입력";
 		}
@@ -1389,7 +1389,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return 'Volto non trovato';
 		case 'TEXT_LOCK_ON': return 'Blocco su';
 		case 'TEXT_UNLOCK': return 'Sbloccare';
-		case 'TEXT_CLOSE': return 'Vicino';
+		case 'TEXT_GO_BACK': return 'Ritorno';
 		case 'TEXT_NO_WEBCONNECT': return 'La connessione Internet non è disponibile.';
 		case 'TEXT_INPUTMESSAGE': return "Inserisci il tuo messaggio";
 		}
@@ -1434,7 +1434,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return 'Gesicht nicht gefunden';
 		case 'TEXT_LOCK_ON': return 'Sperren';
 		case 'TEXT_UNLOCK': return 'Freischalten';
-		case 'TEXT_CLOSE': return 'Schließen';
+		case 'TEXT_GO_BACK': return 'Zurückkehren';
 		case 'TEXT_NO_WEBCONNECT': return 'Die Internetverbindung ist nicht verfügbar.';
 		case 'TEXT_INPUTMESSAGE': return "Gib deine Nachricht ein";
 		}
@@ -1479,7 +1479,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return 'Cara no encontrada';
 		case 'TEXT_LOCK_ON': return 'Bloqueo';
 		case 'TEXT_UNLOCK': return 'Desbloquear';
-		case 'TEXT_CLOSE': return 'Cerca';
+		case 'TEXT_GO_BACK': return 'Devolver';
 		case 'TEXT_NO_WEBCONNECT': return 'La conexión a Internet no está disponible.';
 		case 'TEXT_INPUTMESSAGE': return "Ingrese su mensaje";
 		}
@@ -1524,7 +1524,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return 'Лицо не найдено';
 		case 'TEXT_LOCK_ON': return 'Блокировка';
 		case 'TEXT_UNLOCK': return 'Разблокировать';
-		case 'TEXT_CLOSE': return 'Закрывать';
+		case 'TEXT_GO_BACK': return 'Возвращаться';
 		case 'TEXT_NO_WEBCONNECT': return 'Подключение к Интернету недоступно.';
 		case 'TEXT_INPUTMESSAGE': return "Введите ваше сообщение";
 		}
@@ -1569,7 +1569,7 @@ const trans_getText = function(str_id){
 		case 'TEXT_CANT_FIND_FACE': return 'Face not found';
 		case 'TEXT_LOCK_ON': return 'Lock on';
 		case 'TEXT_UNLOCK': return 'Unlock';
-		case 'TEXT_CLOSE': return 'Close';
+		case 'TEXT_GO_BACK': return 'Go back';
 		case 'TEXT_NO_WEBCONNECT': return 'Internet connection is unavailable.';
 		case 'TEXT_INPUTMESSAGE': return "Input message";
 		}

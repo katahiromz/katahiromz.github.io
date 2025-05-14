@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				}
 				break;
 			}
-			sai_id_button_close.innerText = trans_getText('TEXT_CLOSE');
+			sai_id_button_face_go_back.innerText = trans_getText('TEXT_GO_BACK');
 		};
 
 		// 顔認識のページか？
@@ -4330,7 +4330,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 
 		// 顔認識のページの「閉じる」ボタン。
-		sai_id_button_close.addEventListener('click', function(){
+		sai_id_button_face_go_back.addEventListener('click', function(){
 			localStorage.removeItem('saiminFaceGetterShowing');
 			SAI_choose_page(sai_id_page_main);
 		});
