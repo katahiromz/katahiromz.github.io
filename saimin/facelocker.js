@@ -78,7 +78,7 @@ const facelocker = function(canvas, on_lock){
 			let value1 = value0 * 1.5;
 			let srcx = x0, srcy = y + radius * (0.20 + factor * value0);
 			let sWidth = 1, sHeight = radius * 0.6;
-			let destx = srcx, desty = y + radius * (0.15 + 0.91 * value1) - radius * value1 * 0.6;
+			let destx = srcx, desty = y + radius * (0.15 + 0.90 * value1) - radius * value1 * 0.6;
 			let dWidth = 1, dHeight = sHeight - radius * value1 * 0.05;
 			if(sai_flag && false){
 				// テスト用コード。
