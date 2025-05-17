@@ -13,8 +13,6 @@ const facelocker = function(canvas, on_lock){
 	this.classify_region = null; // pico.jsの顔検出器。
 	this.threshold = 50.0; // 顔検出の閾値。
 	this.zoomRatio = 1.0; // ズーム比率。
-	this.heart_img = new Image(); // ハート画像。
-	this.heart_img.src = 'img/heart.svg';
 	const face_aspect = 1.3; // 一般的な顔の縦横比。
 	let error_message = null; // エラーメッセ－ジ（もしあれば）。
 	let self = this;
@@ -132,17 +130,15 @@ const facelocker = function(canvas, on_lock){
 			myFillText(ctx, "LOCKED ON", x, y - radius);
 
 			// 回転するハート群を描画する。
-			if (self.heart_img.complete){
-				let value = (new Date().getTime() % 2500) / 2500;
-				const num = 8;
-				for (let i = 0; i < num; ++i){
-					let radian = (value + i / num) * (2 * Math.PI);
-					let heart_width = self.heart_img.width * (4 + Math.sin(value * 2 * Math.PI)) * 0.3;
-					let heart_height = self.heart_img.height * (4 + Math.sin(value * 2 * Math.PI)) * 0.3;
-					let cx = x - heart_width / 2 + radius * Math.cos(radian);
-					let cy = y - heart_height / 2 + radius * Math.sin(radian) * face_aspect;
-					ctx.drawImage(self.heart_img, cx, cy, heart_width, heart_height);
-				}
+			let value = (new Date().getTime() % 2500) / 2500;
+			const num = 8;
+			for (let i = 0; i < num; ++i){
+				let radian = (value + i / num) * (2 * Math.PI);
+				let heart_width = radius * (4 + Math.sin(value * 2 * Math.PI)) * 0.2;
+				let heart_height = radius * (4 + Math.sin(value * 2 * Math.PI)) * 0.2;
+				let cx = x + radius * Math.cos(radian);
+				let cy = y + radius * Math.sin(radian) * face_aspect;
+				SAI_draw_heart_2(ctx, cx, cy, (heart_width + heart_height) * 0.2, "rgba(255, 0, 255, 0.5)");
 			}
 
 			// 目の部分にハートを描画する。
@@ -530,7 +526,7 @@ const facelocker = function(canvas, on_lock){
 
 		self.initialized = true; // 初期化された。
 		self.on_lock(0); // 最初はターゲットなし。
-	}
+	};
 
 	this.init(canvas, on_lock);
 };
