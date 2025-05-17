@@ -3,20 +3,20 @@
 
 const facelocker = function(canvas, on_lock){
 	this.initialized = false;
-	this.canvas = null; // キャンバス。
-	this.camvas = null; // カメラとキャンバスを取り扱う。
-	this.dets = null; // 検出されたオブジェクト群。
-	this.imageData = null; // ロックオン時のイメージ。
-	this.target = null; // ターゲット。
-	this.target_candidate = null; // ターゲットの候補。
-	this.update_memory = null; // pico.js用のデータ。
-	this.classify_region = null; // pico.jsの顔検出器。
-	this.threshold = 50.0; // 顔検出の閾値。
-	this.zoomRatio = 1.0; // ズーム比率。
-	const face_aspect = 1.3; // 一般的な顔の縦横比。
-	let error_message = null; // エラーメッセ－ジ（もしあれば）。
+	let sai_canvas = null; // キャンバス。
+	let sai_camvas = null; // カメラとキャンバスを取り扱う。
+	let sai_dets = null; // 検出されたオブジェクト群。
+	let sai_imageData = null; // ロックオン時のイメージ。
+	let sai_target = null; // ターゲット。
+	let sai_target_candidate = null; // ターゲットの候補。
+	let sai_update_memory = null; // pico.js用のデータ。
+	let sai_classify_region = null; // pico.jsの顔検出器。
+	let sai_threshold = 50.0; // 顔検出の閾値。
+	let sai_zoomRatio = 1.0; // ズーム比率。
+	const sai_face_aspect = 1.3; // 一般的な顔の縦横比。
+	let sai_error_message = null; // エラーメッセ－ジ（もしあれば）。
 	let self = this;
-	let attacked_time = null; // 攻撃時刻。
+	let sai_attacked_time = null; // 最終攻撃時刻。
 
 	// ハート形の描画。
 	const SAI_draw_heart_2 = function(ctx, cx, cy, size, color = 'red') {
@@ -89,7 +89,7 @@ const facelocker = function(canvas, on_lock){
 					ctx.globalAlpha = 1;
 				}
 			}else{
-				ctx.drawImage(self.canvas, srcx, srcy, sWidth, sHeight, destx, desty, dWidth, dHeight);
+				ctx.drawImage(sai_canvas, srcx, srcy, sWidth, sHeight, destx, desty, dWidth, dHeight);
 			}
 		}
 	};
@@ -102,7 +102,7 @@ const facelocker = function(canvas, on_lock){
 		SAI_make_smile_face(ctx, x, y, radius);
 
 		ctx.beginPath();
-		ctx.ellipse(x, y, radius, radius * face_aspect, 0, 0, 2 * Math.PI);
+		ctx.ellipse(x, y, radius, radius * sai_face_aspect, 0, 0, 2 * Math.PI);
 		ctx.lineWidth = 5;
 		ctx.strokeStyle = 'black';
 		ctx.stroke();
@@ -137,7 +137,7 @@ const facelocker = function(canvas, on_lock){
 				let heart_width = radius * (4 + Math.sin(value * 2 * Math.PI)) * 0.2;
 				let heart_height = radius * (4 + Math.sin(value * 2 * Math.PI)) * 0.2;
 				let cx = x + radius * Math.cos(radian);
-				let cy = y + radius * Math.sin(radian) * face_aspect;
+				let cy = y + radius * Math.sin(radian) * sai_face_aspect;
 				SAI_draw_heart_2(ctx, cx, cy, (heart_width + heart_height) * 0.2, "rgba(255, 0, 255, 0.5)");
 			}
 
@@ -155,8 +155,8 @@ const facelocker = function(canvas, on_lock){
 			let nowTime = new Date().getTime();
 			let value2 = (nowTime % 400) / 400;
 			let value3 = 0;
-			if(attacked_time && attacked_time + 200 > nowTime){
-				value3 = nowTime - attacked_time;
+			if(sai_attacked_time && sai_attacked_time + 200 > nowTime){
+				value3 = nowTime - sai_attacked_time;
 			}
 			grd.addColorStop(0, 'rgba(255, 255, 255, 0.0)');
 			grd.addColorStop(1, `rgba(255, 255, 0, ${0.35 + value3 * 0.07 + 0.05 * Math.sin(value2 * 2 * Math.PI)})`);
@@ -172,32 +172,32 @@ const facelocker = function(canvas, on_lock){
 	const draw_detections = function(ctx, dets){
 		if(!dets)
 			return;
-		if(self.target){
-			draw_target(ctx, self.target, 2);
+		if(sai_target){
+			draw_target(ctx, sai_target, 2);
 			return;
 		}
 		for(let det of dets){
-			if(det[3] <= self.threshold)
+			if(det[3] <= sai_threshold)
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2] / 2;
 			let target = {x: x, y: y, radius: radius };
 			draw_target(ctx, target, 0);
 		}
-		if(self.target_candidate){
-			draw_target(ctx, self.target_candidate, 1);
+		if(sai_target_candidate){
+			draw_target(ctx, sai_target_candidate, 1);
 		}
 	};
 
 	// ターゲット候補を追跡する。
 	const track_candidate = function(dets){
-		let candidate = self.target_candidate;
+		let candidate = sai_target_candidate;
 		if(!candidate)
 			return;
 		let nearest_candidate = null;
 		let nearest_distance = 1000000000;
 		for(let det of dets){
-			if(det[3] <= self.threshold)
+			if(det[3] <= sai_threshold)
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2] / 2;
@@ -210,13 +210,13 @@ const facelocker = function(canvas, on_lock){
 			}
 		}
 		if (nearest_candidate){
-			self.target_candidate = nearest_candidate;
+			sai_target_candidate = nearest_candidate;
 		}
 	}
 
 	// 顔認識で顔を検出する関数。
 	this.get_detections = function(rgba, width, height){
-		if (!self.classify_region || !self.update_memory)
+		if (!sai_classify_region || !sai_update_memory)
 			return;
 
 		let image = {
@@ -233,8 +233,8 @@ const facelocker = function(canvas, on_lock){
 			scalefactor: 1.1  // for multiscale processing: resize the detection window by 10% when moving to the higher scale
 		};
 
-		let dets = pico.run_cascade(image, self.classify_region, params);
-		dets = self.update_memory(dets);
+		let dets = pico.run_cascade(image, sai_classify_region, params);
+		dets = sai_update_memory(dets);
 		dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
 		return dets;
 	};
@@ -244,7 +244,7 @@ const facelocker = function(canvas, on_lock){
 		if(!self.initialized)
 			return;
 
-		self.camvas.cancelAnimation();
+		sai_camvas.cancelAnimation();
 	};
 
 	// 顔認識を再開する。
@@ -252,7 +252,7 @@ const facelocker = function(canvas, on_lock){
 		if(!self.initialized)
 			return;
 
-		self.camvas.requestAnimation();
+		sai_camvas.requestAnimation();
 	};
 
 	// 顔認識のロック・アンロックを切り替える。
@@ -260,13 +260,13 @@ const facelocker = function(canvas, on_lock){
 		if(!self.initialized)
 			return;
 
-		if(self.target){
-			self.target = null;
+		if(sai_target){
+			sai_target = null;
 			if (self.on_lock)
 				self.on_lock(0);
-		}else if(self.target_candidate){
-			self.target = self.target_candidate;
-			self.target_candidate = null;
+		}else if(sai_target_candidate){
+			sai_target = sai_target_candidate;
+			sai_target_candidate = null;
 			if (self.on_lock)
 				self.on_lock(2);
 		}
@@ -305,9 +305,9 @@ const facelocker = function(canvas, on_lock){
 
 	// 顔認識の状態を返す。
 	this.get_status = function(){
-		if (self.target)
+		if (sai_target)
 			return 2;
-		else if(self.target_candidate)
+		else if(sai_target_candidate)
 			return 1;
 		else
 			return 0;
@@ -315,15 +315,15 @@ const facelocker = function(canvas, on_lock){
 
 	// 顔認識のキャンバスがクリックされた。
 	this.on_click = function(e){
-		if(self.target){
+		if(sai_target){
 			if (self.on_lock){
 				self.on_lock(3);
-				attacked_time = (new Date()).getTime();
+				sai_attacked_time = (new Date()).getTime();
 			}
 			return;
 		}
 
-		let dets = self.dets;
+		let dets = sai_dets;
 		if(!dets)
 			return;
 
@@ -331,11 +331,11 @@ const facelocker = function(canvas, on_lock){
 		let nearest_distance = 1000000000;
 		let pageX = e.pageX, pageY = e.pageY;
 		for(let det of dets){
-			if(det[3] <= self.threshold)
+			if(det[3] <= sai_threshold)
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2];
-			let rect = {x: x - radius/2, y: y - radius/2 * face_aspect, width: radius, height: radius * face_aspect};
+			let rect = {x: x - radius/2, y: y - radius/2 * sai_face_aspect, width: radius, height: radius * sai_face_aspect};
 			if (pageX < rect.x || pageY < rect.y)
 				continue;
 			if (rect.x + rect.width < pageX || rect.y + rect.height < pageY)
@@ -349,18 +349,18 @@ const facelocker = function(canvas, on_lock){
 		}
 
 		if(found){
-			if(self.target_candidate && self.is_same_target(found, self.target_candidate)){
-				self.target = self.target_candidate;
-				self.target_candidate = null;
+			if(sai_target_candidate && self.is_same_target(found, sai_target_candidate)){
+				sai_target = sai_target_candidate;
+				sai_target_candidate = null;
 				if (self.on_lock)
 					self.on_lock(2);
 			}else{
-				self.target_candidate = found;
+				sai_target_candidate = found;
 				if (self.on_lock)
 					self.on_lock(1);
 			}
 		}else{
-			self.target_candidate = null;
+			sai_target_candidate = null;
 			if (self.on_lock)
 				self.on_lock(0);
 		}
@@ -368,11 +368,11 @@ const facelocker = function(canvas, on_lock){
 
 	// 顔が見つかったか？
 	this.found_face = function(){
-		let dets = self.dets;
+		let dets = sai_dets;
 		if(!dets)
 			return false;
 		for(let det of dets){
-			if(det[3] <= self.threshold)
+			if(det[3] <= sai_threshold)
 				continue;
 			return true;
 		}
@@ -388,10 +388,10 @@ const facelocker = function(canvas, on_lock){
 		else
 			self.side = 'user';
 
-		if(self.camvas.connecting){
+		if(sai_camvas.connecting){
 			// camvasに接続されていれば再接続する。
-			self.camvas.disconnect();
-			self.camvas.connect(self.side, function(side){
+			sai_camvas.disconnect();
+			sai_camvas.connect(self.side, function(side){
 				self.side = side;
 				// ローカルストレージにカメラの裏表の設定を保存する。
 				localStorage.setItem('saiminCameraSide', side);
@@ -408,12 +408,12 @@ const facelocker = function(canvas, on_lock){
 		.then(function(response){
 			response.arrayBuffer().then(function(buffer){
 				let bytes = new Int8Array(buffer);
-				self.classify_region = pico.unpack_cascade(bytes);
-				error_message = null;
+				sai_classify_region = pico.unpack_cascade(bytes);
+				sai_error_message = null;
 				console.log('* facefinder loaded');
 			})
 		}).catch((e) => {
-			error_message = trans_getText('TEXT_NO_WEBCONNECT');
+			sai_error_message = trans_getText('TEXT_NO_WEBCONNECT');
 			setTimeout(load_facefinder, 10 * 1000);
 		});
 	};
@@ -422,7 +422,7 @@ const facelocker = function(canvas, on_lock){
 	this.init = function(canvas, on_lock){
 		if(typeof canvas == 'string')
 			canvas = document.getElementById(canvas);
-		self.canvas = canvas;
+		sai_canvas = canvas;
 
 		self.on_lock = on_lock;
 
@@ -443,13 +443,13 @@ const facelocker = function(canvas, on_lock){
 		});
 
 		// Initialize pico.js face detector
-		self.update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
+		sai_update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
 
 		// 顔検出器を読み込む。
 		load_facefinder();
 
 		// Get the drawing context on the canvas and define a function to transform an RGBA image to grayscale
-		let ctx = self.canvas.getContext('2d', {
+		let ctx = sai_canvas.getContext('2d', {
 			willReadFrequently: true,
 			antialias: false,
 			alpha: false,
@@ -472,34 +472,34 @@ const facelocker = function(canvas, on_lock){
 			let width = ctx.canvas.width, height = ctx.canvas.height;
 
 			// ターゲットがあるか？
-			if (self.target != null){
-				ctx.putImageData(self.imageData, 0, 0);
-				draw_detections(ctx, self.dets);
+			if (sai_target != null){
+				ctx.putImageData(sai_imageData, 0, 0);
+				draw_detections(ctx, sai_dets);
 				return;
 			}
 
 			// カメラと画面のアスペクト比に応じてズームする。
-			let camvas = self.camvas;
+			let camvas = sai_camvas;
 			let videoWidth = camvas.videoWidth, videoHeight = camvas.videoHeight;
-			self.zoomRatio = get_best_zoom(width, height, videoWidth, videoHeight);
+			sai_zoomRatio = get_best_zoom(width, height, videoWidth, videoHeight);
 			ctx.drawImage(video, 0, 0, videoWidth, videoHeight,
-			              width / 2 - self.zoomRatio * videoWidth / 2,
-			              height / 2 - self.zoomRatio * videoHeight / 2,
-			              self.zoomRatio * videoWidth, self.zoomRatio * videoHeight);
-			self.imageData = ctx.getImageData(0, 0, width, height);
-			self.dets = self.get_detections(self.imageData.data, width, height);
-			track_candidate(self.dets);
-			draw_detections(ctx, self.dets);
+			              width / 2 - sai_zoomRatio * videoWidth / 2,
+			              height / 2 - sai_zoomRatio * videoHeight / 2,
+			              sai_zoomRatio * videoWidth, sai_zoomRatio * videoHeight);
+			sai_imageData = ctx.getImageData(0, 0, width, height);
+			sai_dets = self.get_detections(sai_imageData.data, width, height);
+			track_candidate(sai_dets);
+			draw_detections(ctx, sai_dets);
 
 			// 顔認識のキャンバスに文字列を表示する。
 			ctx.font = "bold 20px san-serif";
 			let text;
-			if (error_message !== null){
+			if (sai_error_message !== null){
 				ctx.fillStyle = "red";
 				ctx.textAlign = "center";
-				text = error_message;
+				text = sai_error_message;
 				myFillText(ctx, text, width / 2, height - 20 / 2);
-			}else if (self.target_candidate == null){
+			}else if (sai_target_candidate == null){
 				ctx.fillStyle = "red";
 				ctx.textAlign = "center";
 				text = trans_getText('TEXT_FACE_GETTER');
@@ -519,8 +519,8 @@ const facelocker = function(canvas, on_lock){
 		}
 
 		// Instantiate camera handling (see https://github.com/cbrandolino/camvas)
-		self.camvas = new camvas(ctx, processfn);
-		self.camvas.connect(self.side, function(side){
+		sai_camvas = new camvas(ctx, processfn);
+		sai_camvas.connect(self.side, function(side){
 			self.side = side;
 		});
 
