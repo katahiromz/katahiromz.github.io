@@ -131,8 +131,6 @@ const facelocker = function(canvas, on_lock){
 			ctx.textAlign = "center";
 			myFillText(ctx, "LOCKED ON", x, y - radius);
 
-			return;
-
 			// 回転するハート群を描画する。
 			if (self.heart_img.complete){
 				let value = (new Date().getTime() % 2500) / 2500;
