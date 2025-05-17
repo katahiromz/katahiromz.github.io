@@ -66,9 +66,43 @@ const facelocker = function(canvas, on_lock){
 		ctx.fillText(text, x, y);
 	};
 
+	let sai_flag = false;
+
+	// 笑顔にする関数。
+	const SAI_make_smile_face = function(ctx, x, y, radius){
+		let dx = radius * 0.5;
+		let factor = 0.35;
+		for(let x0 = x - dx; x0 < x + dx; ++x0){
+			let delta = (x0 - x) / radius;
+			let value0 = Math.cos(delta * Math.PI);
+			let value1 = value0 * 1.5;
+			let srcx = x0, srcy = y + radius * (0.20 + factor * value0);
+			let sWidth = 1, sHeight = radius * 0.6;
+			let destx = srcx, desty = y + radius * (0.15 + 0.91 * value1) - radius * value1 * 0.6;
+			let dWidth = 1, dHeight = sHeight - radius * value1 * 0.05;
+			if(sai_flag && false){
+				// テスト用コード。
+				if(false){
+					ctx.globalAlpha = 0.5;
+					ctx.fillStyle = "black";
+					ctx.fillRect(destx, desty, dWidth, dHeight);
+					ctx.fillStyle = "yellow";
+					ctx.fillRect(srcx, srcy, sWidth, sHeight);
+					ctx.globalAlpha = 1;
+				}
+			}else{
+				ctx.drawImage(self.canvas, srcx, srcy, sWidth, sHeight, destx, desty, dWidth, dHeight);
+			}
+		}
+	};
+
 	// ターゲットを描画する関数。
 	const draw_target = function(ctx, target, status){
 		let x = target.x, y = target.y, radius = target.radius;
+
+		// 笑顔にする。
+		SAI_make_smile_face(ctx, x, y, radius);
+
 		ctx.beginPath();
 		ctx.ellipse(x, y, radius, radius * face_aspect, 0, 0, 2 * Math.PI);
 		ctx.lineWidth = 5;
@@ -96,6 +130,8 @@ const facelocker = function(canvas, on_lock){
 			ctx.fillStyle = "#f99";
 			ctx.textAlign = "center";
 			myFillText(ctx, "LOCKED ON", x, y - radius);
+
+			return;
 
 			// 回転するハート群を描画する。
 			if (self.heart_img.complete){
@@ -151,7 +187,7 @@ const facelocker = function(canvas, on_lock){
 				continue;
 
 			let x = det[1], y = det[0], radius = det[2] / 2;
-			let target = {x: x, y: y, radius: radius};
+			let target = {x: x, y: y, radius: radius };
 			draw_target(ctx, target, 0);
 		}
 		if(self.target_candidate){
@@ -407,6 +443,10 @@ const facelocker = function(canvas, on_lock){
 		// 初期化済みか？
 		if(self.initialized)
 			return;
+
+		canvas.addEventListener('click', function(e){
+			sai_flag = !sai_flag;
+		});
 
 		// Initialize pico.js face detector
 		self.update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
