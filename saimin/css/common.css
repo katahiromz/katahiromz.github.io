@@ -363,8 +363,8 @@ input[type='color'] { /* 色選択ボタン */
 @media screen and (orientation: portrait) { /* 端末が縦向きの場合 */
 	#sai_id_button_lock_on { /* ロックオンボタン */
 		height: 1.5cm;
-		top: calc(10vh + 1.5cm / 2);
-		top: calc(10dvh + 1.5cm / 2);
+		top: calc(75vh - 1.5cm / 2);
+		top: calc(75dvh - 1.5cm / 2);
 	}
 	#sai_id_button_face_go_back { /* 顔認識から戻るボタン */
 		height: 1.5cm;
