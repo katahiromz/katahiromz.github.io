@@ -224,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}else{
 			if(sai_face_getter){
 				sai_face_getter.stop();
+				sai_face_getter = null;
 			}
 		}
 
