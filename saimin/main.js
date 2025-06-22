@@ -3181,7 +3181,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				let i = 0;
 				for(let wave_data of sai_pic_19_wave_data){
 					let distance = Math.sqrt((x - wave_data.x)**2 + (y - wave_data.y)**2);
-					height += Math.cos(distance / wave_data.radius * strength - counter * 0.0002);
+					height += Math.cos(distance / wave_data.radius * strength - counter * 0.03);
 					++i;
 				}
 				image_data[(x + y * sai_pic_19_image_data.width) * 4 + 0] = Math.cos(height * strength + Math.PI * 0.2) * 255;
