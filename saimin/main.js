@@ -3145,15 +3145,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	const SAI_draw_pic_19_sub = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
-		// 黒で塗りつぶす。
-		ctx.fillStyle = "black";
-		ctx.fillRect(px, py, dx, dy);
-
-		// 画面の辺の平均の長さ。
-		let dxy = (dx + dy) / 2;
-
-		// 画面中央の座標を計算する。
-		let qx = px + dx / 2, qy = py + dy / 2;
+		let dxy = (dx + dy) / 2; // 画面の辺の平均の長さ。
+		let qx = px + dx / 2, qy = py + dy / 2; // 画面中央の座標。
 
 		// イメージデータを作成。
 		if(!sai_pic_19_image_data || dx != sai_pic_19_dx || dy != sai_pic_19_dy){
@@ -3162,18 +3155,24 @@ document.addEventListener('DOMContentLoaded', function(){
 			sai_pic_19_dy = dy;
 		}
 
-		// 波形データを作成。
 		const ci = 3; // 波の個数。
+
+		// 波形データを作成。
 		let counter = SAI_get_tick_count();
 		if(!sai_pic_19_wave_data){
 			sai_pic_19_wave_data = [];
 			for (let i = 0; i < ci; ++i){
-				let x = qx + dx * Math.cos(counter + i * 2 * Math.PI / ci);
-				let y = qy + dy * Math.sin(counter + i * 2 * Math.PI / ci);
-				let radius = dxy * 0.3;
-				let wave_data = { x: x, y: y, radius: radius };
+				let wave_data = { x: 0, y: 0, radius: dxy * 0.3 }; // x, yは後で計算する。
 				sai_pic_19_wave_data.push(wave_data);
 			}
+		}
+
+		// 各波形の中央点のx, yを計算。
+		let i = 0;
+		for (let wave_data of sai_pic_19_wave_data){
+			wave_data.x = qx + Math.cos(counter * 0.0005 + i * 2 * Math.PI / ci) * wave_data.radius;
+			wave_data.y = qy + Math.sin(counter * 0.02 + i * 2 * Math.PI / ci) * wave_data.radius;
+			++i;
 		}
 
 		// 波形データを元にイメージデータを作成。
@@ -3181,29 +3180,23 @@ document.addEventListener('DOMContentLoaded', function(){
 		let strength = 6, ib = 0;
 		for(let y = 0; y < sai_pic_19_image_data.height; ++y){
 			for(let x = 0; x < sai_pic_19_image_data.width; ++x){
-				let i = 0, wave_height = 0;
+				// 各ピクセル位置(x, y)に対して波の高さを計算する。
+				let wave_height = 0;
 				for(let wave_data of sai_pic_19_wave_data){
+					// 距離。
 					let distance = Math.sqrt((x - wave_data.x)**2 + (y - wave_data.y)**2);
+					// 距離に応じて波の高さを決定し、加算する。
 					wave_height += Math.cos(distance / wave_data.radius * strength - counter * 0.03);
-					++i;
 				}
+				// 波の高さに応じてピクセル値を決定する。各ピクセルは4バイトデータ。
 				image_data[ib++] = 255 + Math.cos(wave_height * strength + Math.PI) * 127;
 				image_data[ib++] = 127 + Math.sin(wave_height * strength * 1.2) * 127;
 				image_data[ib++] = Math.abs(Math.cos(wave_height + counter * 0.5) * 255 - 200, 255);
 				image_data[ib++] = 0xFF;
 			}
 		}
-
 		// イメージデータをセット。
 		ctx.putImageData(sai_pic_19_image_data, px, py);
-
-		// 次の位置を計算。
-		let i = 0;
-		for (let wave_data of sai_pic_19_wave_data){
-			wave_data.x = qx + Math.cos(counter * 0.0005 + i * 2 * Math.PI / ci) * wave_data.radius;
-			wave_data.y = qy + Math.sin(counter * 0.02 + i * 2 * Math.PI / ci) * wave_data.radius;
-			++i;
-		}
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
