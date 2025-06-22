@@ -3178,7 +3178,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// 波形データを元にイメージデータを作成。
 		let image_data = sai_pic_19_image_data.data;
-		let strength = 6;
+		let strength = 6, ib = 0;
 		for(let y = 0; y < sai_pic_19_image_data.height; ++y){
 			for(let x = 0; x < sai_pic_19_image_data.width; ++x){
 				let height = 0;
@@ -3188,10 +3188,10 @@ document.addEventListener('DOMContentLoaded', function(){
 					height += Math.cos(distance / wave_data.radius * strength - counter * 0.03);
 					++i;
 				}
-				image_data[(x + y * sai_pic_19_image_data.width) * 4 + 0] = Math.cos(height * strength + Math.PI * 0.2) * 255;
-				image_data[(x + y * sai_pic_19_image_data.width) * 4 + 1] = Math.sin(height * strength * 1.2) * 255;
-				image_data[(x + y * sai_pic_19_image_data.width) * 4 + 2] = Math.cos(height * strength * 0.63 + Math.PI * 0.5) * 255;
-				image_data[(x + y * sai_pic_19_image_data.width) * 4 + 3] = 0xFF;
+				image_data[ib++] = Math.cos(height * strength + Math.PI * 0.2) * 255;
+				image_data[ib++] = Math.sin(height * strength * 1.2) * 255;
+				image_data[ib++] = Math.cos(height * strength * 0.63 + Math.PI * 0.5) * 255;
+				image_data[ib++] = 0xFF;
 			}
 		}
 
