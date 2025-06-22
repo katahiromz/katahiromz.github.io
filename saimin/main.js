@@ -3187,9 +3187,9 @@ document.addEventListener('DOMContentLoaded', function(){
 					wave_height += Math.cos(distance / wave_data.radius * strength - counter * 0.03);
 					++i;
 				}
-				image_data[ib++] = Math.cos(wave_height * strength + Math.PI * 0.2) * 255;
-				image_data[ib++] = Math.sin(wave_height * strength * 1.2) * 255;
-				image_data[ib++] = Math.cos(wave_height * strength * 0.63 + Math.PI * 0.5) * 255;
+				image_data[ib++] = 255 + Math.cos(wave_height * strength + Math.PI) * 127;
+				image_data[ib++] = 127 + Math.sin(wave_height * strength * 1.2) * 127;
+				image_data[ib++] = Math.abs(Math.cos(wave_height + counter * 0.5) * 255 - 200, 255);
 				image_data[ib++] = 0xFF;
 			}
 		}
