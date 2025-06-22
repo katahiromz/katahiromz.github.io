@@ -3205,9 +3205,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			++i;
 		}
 
-		// フォーカス矢印を描画する。
-		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
-
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 	}
 
@@ -3228,6 +3225,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		}else{
 			ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
 		}
+
+		// 画面中央の座標を計算する。
+		let qx = px + dx / 2, qy = py + dy / 2;
+		// フォーカス矢印を描画する。
+		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
 	}
 
 	// カウントダウン映像の描画。
