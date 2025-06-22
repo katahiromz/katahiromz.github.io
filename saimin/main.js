@@ -3175,8 +3175,8 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 波形データを元にイメージデータを作成。
 		let image_data = sai_pic_19_image_data.data;
 		let strength = 6;
-		for(let y = 0; y < sai_pic_19_image_data.height; ++y) {
-			for(let x = 0; x < sai_pic_19_image_data.width; ++x) {
+		for(let y = 0; y < sai_pic_19_image_data.height; ++y){
+			for(let x = 0; x < sai_pic_19_image_data.width; ++x){
 				let height = 0;
 				let i = 0;
 				for(let wave_data of sai_pic_19_wave_data){
@@ -3217,10 +3217,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		SAI_draw_pic_19_sub(ctx2, 0, 0, dx3, dy3);
 		ctx2.restore();
 
-		// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
-		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
-		ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
-		ctx.globalAlpha = 1; // 元に戻す。
+		if(0){ // この映像についてはモーションブラーを適用しない。
+			// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
+			ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+			ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
+			ctx.globalAlpha = 1; // 元に戻す。
+		}else{
+			ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
+		}
 	}
 
 	// カウントダウン映像の描画。
