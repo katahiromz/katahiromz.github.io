@@ -3213,13 +3213,13 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 別のキャンバスに普通に描画する。
 		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
 		ctx2.save();
-		let dx2 = dx / 2, dy2 = dy / 2;
-		SAI_draw_pic_19_sub(ctx2, 0, 0, dx2, dy2);
+		let dx3 = dx / 3, dy3 = dy / 3;
+		SAI_draw_pic_19_sub(ctx2, 0, 0, dx3, dy3);
 		ctx2.restore();
 
 		// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
 		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
-		ctx.drawImage(sai_id_canvas_02, 0, 0, dx2, dy2, px, py, dx, dy);
+		ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
 		ctx.globalAlpha = 1; // 元に戻す。
 	}
 
