@@ -4450,13 +4450,15 @@ document.addEventListener('DOMContentLoaded', function(){
 			SAI_set_skin(sai_id_select_skin.value, true);
 		});
 
-		// Android標準の「戻る」ボタン。
+		// ブラウザの「戻る」ボタン。
+		history.replaceState(null, null, null); // 「戻る」イベントを有効にするためのおまじない。
 		window.addEventListener('popstate', function(e){
-			if (sai_current_page == sai_id_page_main){
+			if (sai_current_page === sai_id_page_main){
 				return; // メインページなら何もしない。
 			}else{ // さもなくばメインページに移動。
 				e.preventDefault();
 				SAI_choose_page(sai_id_page_main);
+				history.replaceState(null, null, null); // 「戻る」イベントを有効にするためのおまじない。
 			}
 		});
 	}
