@@ -165,7 +165,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		// 現在のページをセット。
 		sai_current_page = page_id;
 
-		if(page_id == sai_id_page_main || page_id == sai_id_page_config){ // メインページか設定ページなら
+		if(page_id === sai_id_page_main){ // メインページなら
+			// 開いている状態を削除。
+			localStorage.removeItem('saiminFaceGetterShowing');
+			localStorage.removeItem('saiminHelpShowing');
+			localStorage.removeItem('saiminConfigShowing');
+		}else{ // さもなければ
+			history.pushState('back', null, '?'); // 「戻る」ボタンを有効にするためのおまじない。
+		}
+
+		if(page_id === sai_id_page_main || page_id === sai_id_page_config){ // メインページか設定ページなら
 			// 必要ならアニメーションを要求する。
 			if(!sai_request_anime){
 				sai_request_anime = window.requestAnimationFrame(SAI_draw_all);
@@ -4452,7 +4461,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 
 		// ブラウザの「戻る」ボタン。
-		history.pushState('back', null, '?'); // 「戻る」ボタンを有効にするためのおまじない。
 		window.addEventListener('popstate', function(e){
 			if (!localStorage.getItem('saiminUserAccepted'))
 				return; // 合意が取れていない場合は何もしない。
@@ -4460,13 +4468,8 @@ document.addEventListener('DOMContentLoaded', function(){
 				return; // メインページなら何もしない。
 			// イベントのデフォルトの処理をスキップ。
 			e.preventDefault();
-			// 開いている状態を削除。
-			localStorage.removeItem('saiminFaceGetterShowing');
-			localStorage.removeItem('saiminHelpShowing');
-			localStorage.removeItem('saiminConfigShowing');
 			// メインページに移動。
 			SAI_choose_page(sai_id_page_main);
-			history.pushState('back', null, '?'); // 「戻る」ボタンを有効にするためのおまじない。
 		});
 	}
 
