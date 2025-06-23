@@ -3142,7 +3142,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	// 「画19」で使用するデータ。
-	let sai_pic_19_dx = 0, sai_pic_19_dy = 0;
+	let sai_pic_19_dx = null, sai_pic_19_dy = null;
 	let sai_pic_19_image_data = null;
 	let sai_pic_19_wave_data = null;
 
@@ -3154,10 +3154,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		let qx = px + dx / 2, qy = py + dy / 2; // 画面中央の座標。
 
 		// イメージデータを作成。
-		if(!sai_pic_19_image_data || dx != sai_pic_19_dx || dy != sai_pic_19_dy){
+		if(!sai_pic_19_image_data || dx !== sai_pic_19_dx || dy !== sai_pic_19_dy){
 			sai_pic_19_image_data = new ImageData(dx, dy);
 			sai_pic_19_dx = dx;
 			sai_pic_19_dy = dy;
+			sai_pic_19_wave_data = null;
 		}
 
 		const ci = 3; // 波の個数。
@@ -4451,15 +4452,19 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 
 		// ブラウザの「戻る」ボタン。
-		history.replaceState(null, null, null); // 「戻る」イベントを有効にするためのおまじない。
+		history.pushState('back', null, '?'); // 「戻る」イベントを有効にするためのおまじない。
 		window.addEventListener('popstate', function(e){
-			if (sai_current_page === sai_id_page_main){
-				; // メインページなら何もしない。
-			}else{ // さもなくばメインページに移動。
-				e.preventDefault();
+			if (sai_current_page === sai_id_page_main){ // メインページか？
+				;
+			}else{ // さもなくば
+				// 開いている状態を削除。
+				localStorage.removeItem('saiminFaceGetterShowing');
+				localStorage.removeItem('saiminHelpShowing');
+				localStorage.removeItem('saiminConfigShowing');
+				// メインページに移動。
 				SAI_choose_page(sai_id_page_main);
-			}
-			history.replaceState(null, null, null); // 「戻る」イベントを有効にするためのおまじない。
+		}
+			history.pushState('back', null, '?'); // 「戻る」イベントを有効にするためのおまじない。
 		});
 	}
 
