@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.8.1'; // KraKraバージョン番号。
+const sai_VERSION = '3.8.2'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 let sai_vibrating = false; // 振動中か？
@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	let sai_kaleido_canvas_1 = null; // 万華鏡用の一時的なキャンバス1。
 	let sai_kaleido_canvas_2 = null; // 万華鏡用の一時的なキャンバス2。
 	let sai_face_getter = null; // 顔認識。
+	let sai_current_page = null; // 現在のページ。
 
 	// Androidか？
 	const SAI_is_android_app = function(){
@@ -160,6 +161,9 @@ document.addEventListener('DOMContentLoaded', function(){
 		if(typeof(page_id) == 'string')
 			page_id = document.getElementById(page_id);
 		page_id.classList.remove('sai_class_invisible');
+
+		// 現在のページをセット。
+		sai_current_page = page_id;
 
 		if(page_id == sai_id_page_main || page_id == sai_id_page_config){ // メインページか設定ページなら
 			// 必要ならアニメーションを要求する。
@@ -4444,6 +4448,16 @@ document.addEventListener('DOMContentLoaded', function(){
 		// スキン。
 		sai_id_select_skin.addEventListener('change', function(){
 			SAI_set_skin(sai_id_select_skin.value, true);
+		});
+
+		// Android標準の「戻る」ボタン。
+		window.addEventListener('popstate', function(e){
+			if (sai_current_page == sai_id_page_main){
+				return; // メインページなら何もしない。
+			}else{ // さもなくばメインページに移動。
+				e.preventDefault();
+				SAI_choose_page(sai_id_page_main);
+			}
 		});
 	}
 
