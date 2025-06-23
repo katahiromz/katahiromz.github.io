@@ -173,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			}else if(sai_current_page === sai_id_page_message){
 				localStorage.removeItem('saiminMessageListShowing');
 			}
-			history.pushState('back', null, '?'); // 「戻る」ボタンを有効にするためのおまじない。
 		}
 
 		// 現在のページをセット。
