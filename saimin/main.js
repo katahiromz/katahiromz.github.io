@@ -4452,19 +4452,21 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 
 		// ブラウザの「戻る」ボタン。
-		history.pushState('back', null, '?'); // 「戻る」イベントを有効にするためのおまじない。
+		history.pushState('back', null, '?'); // 「戻る」ボタンを有効にするためのおまじない。
 		window.addEventListener('popstate', function(e){
-			if (sai_current_page === sai_id_page_main){ // メインページか？
-				;
-			}else{ // さもなくば
-				// 開いている状態を削除。
-				localStorage.removeItem('saiminFaceGetterShowing');
-				localStorage.removeItem('saiminHelpShowing');
-				localStorage.removeItem('saiminConfigShowing');
-				// メインページに移動。
-				SAI_choose_page(sai_id_page_main);
-		}
-			history.pushState('back', null, '?'); // 「戻る」イベントを有効にするためのおまじない。
+			if (!localStorage.getItem('saiminUserAccepted'))
+				return; // 合意が取れていない場合は何もしない。
+			if (sai_current_page === sai_id_page_main)
+				return; // メインページなら何もしない。
+			// イベントのデフォルトの処理をスキップ。
+			e.preventDefault();
+			// 開いている状態を削除。
+			localStorage.removeItem('saiminFaceGetterShowing');
+			localStorage.removeItem('saiminHelpShowing');
+			localStorage.removeItem('saiminConfigShowing');
+			// メインページに移動。
+			SAI_choose_page(sai_id_page_main);
+			history.pushState('back', null, '?'); // 「戻る」ボタンを有効にするためのおまじない。
 		});
 	}
 
