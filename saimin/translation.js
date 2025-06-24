@@ -1294,6 +1294,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': '機械音',
 		'TEXT_SOUND_PSYCHO': '猟奇',
 		'TEXT_SOUND_MYANMYAN': 'みゃんみゃん',
+		'TEXT_SOUND_VOLUME': '音量:',
+		'TEXT_SOUND_AUTO_PLAY': '音声の自動再生:',
+		'TEXT_SOUND_AUTO_REPEAT': '音声の自動繰り返し:',
+		'TEXT_SOUND_SWITCH': '切り替え音:',
+		'TEXT_BRIGHTNESS': '画面の明るさ:',
+		'TEXT_BRIGHTNESS_NORMAL': '普通',
+		'TEXT_BRIGHTNESS_BRIGHTER': '明るくする',
+		'TEXT_CLOCKWISE': '時計回り',
+		'TEXT_COUNTERCLOCKWISE': '反時計回り',
+		'TEXT_CONFIG': '設定',
+		'TEXT_MESSAGE_TEXT': 'メッセージ テキスト:',
+		'TEXT_MESSAGE_BUTTON': 'メッセージ...',
 	},
 	'zh-CN': { // Chinese (Simplified)
 		'TEXT_OK': '確定',
@@ -1397,6 +1409,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': '机械声',
 		'TEXT_SOUND_PSYCHO': '惊魂记',
 		'TEXT_SOUND_MYANMYAN': '缅缅',
+		'TEXT_SOUND_VOLUME': '音量：',
+		'TEXT_SOUND_AUTO_PLAY': '自动播放音频：',
+		'TEXT_SOUND_AUTO_REPEAT': '自动重复音频：',
+		'TEXT_SOUND_SWITCH': '切换声音：',
+		'TEXT_BRIGHTNESS': '屏幕亮度：',
+		'TEXT_BRIGHTNESS_NORMAL': '通常',
+		'TEXT_BRIGHTNESS_BRIGHTER': '明亮',
+		'TEXT_CLOCKWISE': '顺时针',
+		'TEXT_COUNTERCLOCKWISE': '逆时针',
+		'TEXT_CONFIG': '配置',
+		'TEXT_MESSAGE_TEXT': '留言内容：',
+		'TEXT_MESSAGE_BUTTON': '信息...',
 	},
 	'zh-TW': { // Chinese (Traditional)
 		'TEXT_OK': '確定',
@@ -1500,6 +1524,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': '機械聲',
 		'TEXT_SOUND_PSYCHO': '驚魂記',
 		'TEXT_SOUND_MYANMYAN': '緬緬',
+		'TEXT_SOUND_VOLUME': '音量：',
+		'TEXT_SOUND_AUTO_PLAY': '自動播放音訊：',
+		'TEXT_SOUND_AUTO_REPEAT': '自動重複音訊：',
+		'TEXT_SOUND_SWITCH': '切換聲音：',
+		'TEXT_BRIGHTNESS': '屏幕亮度：',
+		'TEXT_BRIGHTNESS_NORMAL': '正常亮度',
+		'TEXT_BRIGHTNESS_BRIGHTER': '提亮',
+		'TEXT_CLOCKWISE': '順時針',
+		'TEXT_COUNTERCLOCKWISE': '逆時針',
+		'TEXT_CONFIG': '配置',
+		'TEXT_MESSAGE_TEXT': '留言內容：',
+		'TEXT_MESSAGE_BUTTON': '訊息...',
 	},
 	'ko-KR': { // Korean
 		'TEXT_OK': 'OK',
@@ -1603,6 +1639,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': '기계음',
 		'TEXT_SOUND_PSYCHO': '사이코',
 		'TEXT_SOUND_MYANMYAN': '미안',
+		'TEXT_SOUND_VOLUME': '사운드 볼륨:',
+		'TEXT_SOUND_AUTO_PLAY': '오디오 자동 재생:',
+		'TEXT_SOUND_AUTO_REPEAT': '음성 자동 반복:',
+		'TEXT_SOUND_SWITCH': '전환음:',
+		'TEXT_BRIGHTNESS': '화면 밝기:',
+		'TEXT_BRIGHTNESS_NORMAL': '일반 밝기',
+		'TEXT_BRIGHTNESS_BRIGHTER': '밝게 하다',
+		'TEXT_CLOCKWISE': '시계 방향',
+		'TEXT_COUNTERCLOCKWISE': '반시계 방향',
+		'TEXT_CONFIG': '구성',
+		'TEXT_MESSAGE_TEXT': '메시지 텍스트:',
+		'TEXT_MESSAGE_BUTTON': '메시지...',
 	},
 	'it-IT': { // Italian
 		'TEXT_OK': 'OK',
@@ -1706,6 +1754,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': 'Meccanico',
 		'TEXT_SOUND_PSYCHO': 'Psicopatico',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
+		'TEXT_SOUND_VOLUME': 'Volume del suono:',
+		'TEXT_SOUND_AUTO_PLAY': 'Riproduzione automatica dell\'audio:',
+		'TEXT_SOUND_AUTO_REPEAT': 'Ripetere l\'audio:',
+		'TEXT_SOUND_SWITCH': 'Suono di commutazione:',
+		'TEXT_BRIGHTNESS': 'Luminosità:',
+		'TEXT_BRIGHTNESS_NORMAL': 'Normale',
+		'TEXT_BRIGHTNESS_BRIGHTER': 'Più luminoso',
+		'TEXT_CLOCKWISE': 'Senso Orario',
+		'TEXT_COUNTERCLOCKWISE': 'Antiorario',
+		'TEXT_CONFIG': 'Configurazione',
+		'TEXT_MESSAGE_TEXT': 'Messaggio di testo:',
+		'TEXT_MESSAGE_BUTTON': 'Messaggio...',
 	},
 	'de-DE': { // German
 		'TEXT_OK': 'OK',
@@ -1809,6 +1869,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': 'Mechanischer',
 		'TEXT_SOUND_PSYCHO': 'Psycho',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
+		'TEXT_SOUND_VOLUME': 'Lautstärke:',
+		'TEXT_SOUND_AUTO_PLAY': 'Audio automatisch abspielen:',
+		'TEXT_SOUND_AUTO_REPEAT': 'Sich Wiederholender Ton:',
+		'TEXT_SOUND_SWITCH': 'Schaltgeräusch:',
+		'TEXT_BRIGHTNESS': 'Helligkeit:',
+		'TEXT_BRIGHTNESS_NORMAL': 'Normal',
+		'TEXT_BRIGHTNESS_BRIGHTER': 'Heller',
+		'TEXT_CLOCKWISE': 'im Uhrzeigersinn',
+		'TEXT_COUNTERCLOCKWISE': 'Gegen den Uhrzeigersinn',
+		'TEXT_CONFIG': 'Aufbau',
+		'TEXT_MESSAGE_TEXT': 'Nachrichtentext:',
+		'TEXT_MESSAGE_BUTTON': 'Nachricht...',
 	},
 	'es-ES': { // Spanish
 		'TEXT_OK': 'OK',
@@ -1912,6 +1984,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': 'Mecánico',
 		'TEXT_SOUND_PSYCHO': 'Psicópata',
 		'TEXT_SOUND_MYANMYAN': 'Myanmar Myanmar',
+		'TEXT_SOUND_VOLUME': 'Volumen:',
+		'TEXT_SOUND_AUTO_PLAY': 'Reproducción automática de audio:',
+		'TEXT_SOUND_AUTO_REPEAT': 'Audio de repetición automática:',
+		'TEXT_SOUND_SWITCH': 'Sonido de conmutación:',
+		'TEXT_BRIGHTNESS': 'Brillo de la pantalla:',
+		'TEXT_BRIGHTNESS_NORMAL': 'Brillo normal',
+		'TEXT_BRIGHTNESS_BRIGHTER': 'Aclarar',
+		'TEXT_CLOCKWISE': 'Agujas del reloj',
+		'TEXT_COUNTERCLOCKWISE': 'Sinistrórsum',
+		'TEXT_CONFIG': 'Configuración',
+		'TEXT_MESSAGE_TEXT': 'Mensaje de texto:',
+		'TEXT_MESSAGE_BUTTON': 'Mensaje...',
 	},
 	'ru-RU': {
 		'TEXT_OK': 'Хорошо',
@@ -2015,6 +2099,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': 'Механический',
 		'TEXT_SOUND_PSYCHO': 'Психо',
 		'TEXT_SOUND_MYANMYAN': 'Мьян Мьян',
+		'TEXT_SOUND_VOLUME': 'Объем:',
+		'TEXT_SOUND_AUTO_PLAY': 'Автовоспроизведение звука:',
+		'TEXT_SOUND_AUTO_REPEAT': 'Автоповтор аудио:',
+		'TEXT_SOUND_SWITCH': 'Переключение звука:',
+		'TEXT_BRIGHTNESS': 'Яркость экрана:',
+		'TEXT_BRIGHTNESS_NORMAL': 'Нормальная яркость',
+		'TEXT_BRIGHTNESS_BRIGHTER': 'Украсить',
+		'TEXT_CLOCKWISE': 'По часовой стрелке',
+		'TEXT_COUNTERCLOCKWISE': 'Против часовой',
+		'TEXT_CONFIG': 'Параметр',
+		'TEXT_MESSAGE_TEXT': 'Текст сообщения:',
+		'TEXT_MESSAGE_BUTTON': 'Сообщение...',
 	},
 	'en-US': {
 		'TEXT_OK': 'OK',
@@ -2118,6 +2214,18 @@ trans_trans = {
 		'TEXT_SOUND_MECHANICAL': 'Mechanical',
 		'TEXT_SOUND_PSYCHO': 'Psycho',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
+		'TEXT_SOUND_VOLUME': 'Sound volume:',
+		'TEXT_SOUND_AUTO_PLAY': 'Auto-play audio:',
+		'TEXT_SOUND_AUTO_REPEAT': 'Repeating audio:',
+		'TEXT_SOUND_SWITCH': 'Switching sound:',
+		'TEXT_BRIGHTNESS': 'Brightness:',
+		'TEXT_BRIGHTNESS_NORMAL': 'Normal',
+		'TEXT_BRIGHTNESS_BRIGHTER': 'Brighter',
+		'TEXT_CLOCKWISE': 'Clockwise',
+		'TEXT_COUNTERCLOCKWISE': 'Counterclockwise',
+		'TEXT_CONFIG': 'Configuration',
+		'TEXT_MESSAGE_TEXT': 'Message Text:',
+		'TEXT_MESSAGE_BUTTON': 'Message...',
 	},
 };
 
@@ -2254,23 +2362,24 @@ const trans_localize = function(lang){
 	trans_setSelectOptionText(sai_id_select_sound, 'Psycho', trans_getText('TEXT_SOUND_PSYCHO'));
 	trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', trans_getText('TEXT_SOUND_MYANMYAN'));
 
+	trans_setHtmlText(sai_id_text_sound_volume, trans_getText('TEXT_SOUND_VOLUME'));
+	trans_setHtmlText(sai_id_text_auto_play_sound, trans_getText('TEXT_SOUND_AUTO_PLAY'));
+	trans_setHtmlText(sai_id_text_auto_repeat_sound, trans_getText('TEXT_SOUND_AUTO_REPEAT'));
+	trans_setHtmlText(sai_id_text_switch_sound, trans_getText('TEXT_SOUND_SWITCH'));
+	trans_setHtmlText(sai_id_text_brightness, trans_getText('TEXT_BRIGHTNESS'));
+	trans_setSelectOptionText(sai_id_select_brightness, 'normal', trans_getText('TEXT_BRIGHTNESS_NORMAL'));
+	trans_setSelectOptionText(sai_id_select_brightness, 'brighter', trans_getText('TEXT_BRIGHTNESS_BRIGHTER'));
+	trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', trans_getText('TEXT_CLOCKWISE'));
+	trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', trans_getText('TEXT_COUNTERCLOCKWISE'));
+	trans_setHtmlText(sai_id_page_config_header, trans_getText('TEXT_CONFIG'));
+	trans_setHtmlText(sai_id_text_label_message_text, trans_getText('TEXT_MESSAGE_TEXT'));
+	trans_setHtmlText(sai_id_button_message, trans_getText('TEXT_MESSAGE_BUTTON'));
+
 	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
 	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
 
 	switch(trans_currentLanguage){
 	case 'ja-JP':
-		trans_setHtmlText(sai_id_text_sound_volume, '音量:');
-		trans_setHtmlText(sai_id_text_auto_play_sound, '音声の自動再生:');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, '音声の自動繰り返し:');
-		trans_setHtmlText(sai_id_text_switch_sound, '切り替え音:');
-		trans_setHtmlText(sai_id_text_brightness, '画面の明るさ:');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '普通');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '明るくする');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', '時計回り');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', '反時計回り');
-		trans_setHtmlText(sai_id_page_config_header, '設定');
-		trans_setHtmlText(sai_id_text_label_message_text, 'メッセージ テキスト:');
-		trans_setHtmlText(sai_id_button_message, 'メッセージ...');
 		sai_id_button_start_hypnosis.innerHTML = '<nobr>催眠</nobr><nobr>スタート</nobr>';
 		trans_setHtmlText(sai_id_button_release_hypnosis, '催眠解除');
 		trans_setHtmlText(sai_id_text_count_down, 'カウントダウン:');
@@ -2294,18 +2403,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色');
 		break;
 	case 'zh-CN': // Chinese (Simplified)
-		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
-		trans_setHtmlText(sai_id_text_auto_play_sound, '自动播放音频：');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自动重复音频：');
-		trans_setHtmlText(sai_id_text_switch_sound, '切换声音');
-		trans_setHtmlText(sai_id_text_brightness, '屏幕亮度：');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '通常');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '明亮');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', '顺时针');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', '逆时针');
-		trans_setHtmlText(sai_id_page_config_header, '配置');
-		trans_setHtmlText(sai_id_text_label_message_text, '留言内容：');
-		trans_setHtmlText(sai_id_button_message, '信息...');
 		sai_id_button_start_hypnosis.innerHTML = '<nobr>开始</nobr><nobr>催眠</nobr>';
 		trans_setHtmlText(sai_id_button_release_hypnosis, '释放催眠');
 		trans_setHtmlText(sai_id_text_count_down, '倒数：');
@@ -2329,18 +2426,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'zh-TW': // Chinese (Traditional)
-		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
-		trans_setHtmlText(sai_id_text_auto_play_sound, '自動播放音訊：');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自動重複音訊：');
-		trans_setHtmlText(sai_id_text_switch_sound, '切換聲音：');
-		trans_setHtmlText(sai_id_text_brightness, '屏幕亮度：');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '正常亮度');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '提亮');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', '順時針');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', '逆時針');
-		trans_setHtmlText(sai_id_page_config_header, '配置');
-		trans_setHtmlText(sai_id_text_label_message_text, '留言內容：');
-		trans_setHtmlText(sai_id_button_message, '訊息...');
 		sai_id_button_start_hypnosis.innerHTML = '<nobr>開始</nobr><nobr>催眠</nobr>';
 		trans_setHtmlText(sai_id_button_release_hypnosis, '釋放催眠');
 		trans_setHtmlText(sai_id_text_count_down, '倒數：');
@@ -2364,18 +2449,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'ko-KR': // Korean
-		trans_setHtmlText(sai_id_text_sound_volume, '사운드 볼륨:');
-		trans_setHtmlText(sai_id_text_auto_play_sound, '오디오 자동 재생:');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, '음성 자동 반복:');
-		trans_setHtmlText(sai_id_text_switch_sound, '전환음:');
-		trans_setHtmlText(sai_id_text_brightness, '화면 밝기:');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', '일반 밝기');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', '밝게 하다');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', '시계 방향');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', '반시계 방향');
-		trans_setHtmlText(sai_id_page_config_header, '구성');
-		trans_setHtmlText(sai_id_text_label_message_text, '메시지 텍스트:');
-		trans_setHtmlText(sai_id_button_message, '메시지...');
 		sai_id_button_start_hypnosis.innerHTML = '<nobr>최면</nobr> <nobr>시작</nobr>';
 		trans_setHtmlText(sai_id_button_release_hypnosis, '최면 해제');
 		trans_setHtmlText(sai_id_text_count_down, '카운트다운:');
@@ -2399,18 +2472,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '백색');
 		break;
 	case 'it-IT': // Italian
-		trans_setHtmlText(sai_id_text_sound_volume, 'Volume del suono:');
-		trans_setHtmlText(sai_id_text_auto_play_sound, 'Riproduzione automatica dell\'audio:');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Ripetere l\'audio:');
-		trans_setHtmlText(sai_id_text_switch_sound, 'Suono di commutazione:');
-		trans_setHtmlText(sai_id_text_brightness, 'Luminosità:');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Normale');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Più luminoso');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', 'Senso Orario');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', 'Antiorario');
-		trans_setHtmlText(sai_id_page_config_header, 'Configurazione');
-		trans_setHtmlText(sai_id_text_label_message_text, 'Messaggio di testo:');
-		trans_setHtmlText(sai_id_button_message, 'Messaggio...');
 		sai_id_button_start_hypnosis.innerHTML = 'Inizia l\'ipnosi';
 		trans_setHtmlText(sai_id_button_release_hypnosis, 'Rilascia l\'ipnosi');
 		trans_setHtmlText(sai_id_text_count_down, 'Conto alla rovescia:');
@@ -2434,18 +2495,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Bianco');
 		break;
 	case 'de-DE': // German
-		trans_setHtmlText(sai_id_text_sound_volume, 'Lautstärke:');
-		trans_setHtmlText(sai_id_text_auto_play_sound, 'Audio automatisch abspielen:');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Sich Wiederholender Ton:');
-		trans_setHtmlText(sai_id_text_switch_sound, 'Schaltgeräusch:');
-		trans_setHtmlText(sai_id_text_brightness, 'Helligkeit:');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Normal');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Heller');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', 'im Uhrzeigersinn');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', '反時計回り');
-		trans_setHtmlText(sai_id_page_config_header, 'Aufbau');
-		trans_setHtmlText(sai_id_text_label_message_text, 'Nachrichtentext:');
-		trans_setHtmlText(sai_id_button_message, 'Nachricht...');
 		sai_id_button_start_hypnosis.innerHTML = 'Hypnose beginnen';
 		trans_setHtmlText(sai_id_button_release_hypnosis, 'Hypnose loslassen');
 		trans_setHtmlText(sai_id_text_count_down, 'Countdown:');
@@ -2469,18 +2518,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Weiß');
 		break;
 	case 'es-ES': // Spanish
-		trans_setHtmlText(sai_id_text_sound_volume, 'Volumen:');
-		trans_setHtmlText(sai_id_text_auto_play_sound, 'Reproducción automática de audio:');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Audio de repetición automática:');
-		trans_setHtmlText(sai_id_text_switch_sound, 'Sonido de conmutación:');
-		trans_setHtmlText(sai_id_text_brightness, 'Brillo de la pantalla:');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Brillo normal');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Aclarar');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', 'Agujas del reloj');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', 'Gegen den Uhrzeigersinn');
-		trans_setHtmlText(sai_id_page_config_header, 'Configuración');
-		trans_setHtmlText(sai_id_text_label_message_text, 'Mensaje de texto:');
-		trans_setHtmlText(sai_id_button_message, 'Mensaje...');
 		sai_id_button_start_hypnosis.innerHTML = 'Iniciar la hipnosis';
 		trans_setHtmlText(sai_id_button_release_hypnosis, 'Iiberar hipnosis');
 		trans_setHtmlText(sai_id_text_count_down, 'Cuenta regresiva:');
@@ -2504,18 +2541,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Blanco');
 		break;
 	case 'ru-RU': // Russian
-		trans_setHtmlText(sai_id_text_sound_volume, 'Объем:');
-		trans_setHtmlText(sai_id_text_auto_play_sound, 'Автовоспроизведение звука:');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Автоповтор аудио:');
-		trans_setHtmlText(sai_id_text_switch_sound, 'Переключение звука:');
-		trans_setHtmlText(sai_id_text_brightness, 'Яркость экрана:');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Нормальная яркость');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Украсить');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', 'По часовой стрелке');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', 'Против часовой');
-		trans_setHtmlText(sai_id_page_config_header, 'Параметр');
-		trans_setHtmlText(sai_id_text_label_message_text, 'Текст сообщения:');
-		trans_setHtmlText(sai_id_button_message, 'Сообщение...');
 		sai_id_button_start_hypnosis.innerHTML = 'Начать гипноз';
 		trans_setHtmlText(sai_id_button_release_hypnosis, 'Освободиться от гипноза');
 		trans_setHtmlText(sai_id_text_count_down, 'Обратный отсчет:');
@@ -2540,18 +2565,6 @@ const trans_localize = function(lang){
 		break;
 	case 'en-US':
 	default:
-		trans_setHtmlText(sai_id_text_sound_volume, 'Sound volume:');
-		trans_setHtmlText(sai_id_text_auto_play_sound, 'Auto-play audio:');
-		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Repeating audio:');
-		trans_setHtmlText(sai_id_text_switch_sound, 'Switching sound:');
-		trans_setHtmlText(sai_id_text_brightness, 'Brightness:');
-		trans_setSelectOptionText(sai_id_select_brightness, 'normal', 'Normal');
-		trans_setSelectOptionText(sai_id_select_brightness, 'brighter', 'Brighter');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'clockwise', 'Clockwise');
-		trans_setSelectOptionText(sai_id_select_vortex_direction, 'counterclockwise', 'Counterclockwise');
-		trans_setHtmlText(sai_id_page_config_header, 'Configuration');
-		trans_setHtmlText(sai_id_text_label_message_text, 'Message Text:');
-		trans_setHtmlText(sai_id_button_message, 'Message...');
 		sai_id_button_start_hypnosis.innerHTML = 'Start Hypnosis';
 		trans_setHtmlText(sai_id_button_release_hypnosis, 'Release Hypnosis');
 		trans_setHtmlText(sai_id_text_count_down, 'Count Down:');
