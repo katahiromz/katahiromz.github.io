@@ -1306,6 +1306,19 @@ trans_trans = {
 		'TEXT_CONFIG': '設定',
 		'TEXT_MESSAGE_TEXT': 'メッセージ テキスト:',
 		'TEXT_MESSAGE_BUTTON': 'メッセージ...',
+		'TEXT_START_HYPNOSIS': '<nobr>催眠</nobr><nobr>スタート</nobr>',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': '催眠解除',
+		'TEXT_COUNT_DOWN': 'カウントダウン:',
+		'TEXT_ARROWS': '矢印:',
+		'TEXT_MESSAGE_SPEECH_LABEL': 'メッセージをしゃべる:',
+		'TEXT_MESSAGE_SPEECH': 'メッセージをしゃべる',
+		'TEXT_COLOR_1ST': "1番目の色:",
+		'TEXT_COLOR_2ND': "2番目の色:",
+		'TEXT_INIT_APP_BUTTON': "初期化",
+		'TEXT_MESSAGE_VOLUME': "メッセージボイスの音量:",
+		'TEXT_MESSAGE_SKIN': "スキン:",
+		'TEXT_VIBRATOR': "振動:",
+		'TEXT_VIBRATOR_START_STOP': "開始 / 停止",
 	},
 	'zh-CN': { // Chinese (Simplified)
 		'TEXT_OK': '確定',
@@ -1421,6 +1434,19 @@ trans_trans = {
 		'TEXT_CONFIG': '配置',
 		'TEXT_MESSAGE_TEXT': '留言内容：',
 		'TEXT_MESSAGE_BUTTON': '信息...',
+		'TEXT_START_HYPNOSIS': '<nobr>开始</nobr><nobr>催眠</nobr>',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': '释放催眠',
+		'TEXT_COUNT_DOWN': '倒数：',
+		'TEXT_ARROWS': '箭：',
+		'TEXT_MESSAGE_SPEECH_LABEL': '留言演讲：',
+		'TEXT_MESSAGE_SPEECH': '留言演讲',
+		'TEXT_COLOR_1ST': "第一种颜色：",
+		'TEXT_COLOR_2ND': "第二种颜色：",
+		'TEXT_INIT_APP_BUTTON': "初始化",
+		'TEXT_MESSAGE_VOLUME': "留言音量：",
+		'TEXT_MESSAGE_SKIN': "皮肤：",
+		'TEXT_VIBRATOR': "振动器：",
+		'TEXT_VIBRATOR_START_STOP': "开始 / 停止",
 	},
 	'zh-TW': { // Chinese (Traditional)
 		'TEXT_OK': '確定',
@@ -1536,6 +1562,19 @@ trans_trans = {
 		'TEXT_CONFIG': '配置',
 		'TEXT_MESSAGE_TEXT': '留言內容：',
 		'TEXT_MESSAGE_BUTTON': '訊息...',
+		'TEXT_START_HYPNOSIS': '<nobr>開始</nobr><nobr>催眠</nobr>',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': '釋放催眠',
+		'TEXT_COUNT_DOWN': '倒數：',
+		'TEXT_ARROWS': '箭頭：',
+		'TEXT_MESSAGE_SPEECH_LABEL': '留言演講：',
+		'TEXT_MESSAGE_SPEECH': '留言演講',
+		'TEXT_COLOR_1ST': "第一種顏色：",
+		'TEXT_COLOR_2ND': "第二種顏色：",
+		'TEXT_INIT_APP_BUTTON': "初始化",
+		'TEXT_MESSAGE_VOLUME': "留言音量：",
+		'TEXT_MESSAGE_SKIN': "皮膚：",
+		'TEXT_VIBRATOR': "振動器：",
+		'TEXT_VIBRATOR_START_STOP': "開始 / 停止",
 	},
 	'ko-KR': { // Korean
 		'TEXT_OK': 'OK',
@@ -1651,6 +1690,19 @@ trans_trans = {
 		'TEXT_CONFIG': '구성',
 		'TEXT_MESSAGE_TEXT': '메시지 텍스트:',
 		'TEXT_MESSAGE_BUTTON': '메시지...',
+		'TEXT_START_HYPNOSIS': '<nobr>최면</nobr><nobr>시작</nobr>',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': '최면 해제',
+		'TEXT_COUNT_DOWN': '카운트다운:',
+		'TEXT_ARROWS': '화살표:',
+		'TEXT_MESSAGE_SPEECH_LABEL': '메시지 연설:',
+		'TEXT_MESSAGE_SPEECH': '메시지 연설',
+		'TEXT_COLOR_1ST': "첫 번째 색상:",
+		'TEXT_COLOR_2ND': "두 번째 색상:",
+		'TEXT_INIT_APP_BUTTON': "앱 재설정",
+		'TEXT_MESSAGE_VOLUME': "메시지 음성 음량:",
+		'TEXT_MESSAGE_SKIN': "스킨:",
+		'TEXT_VIBRATOR': "진동기:",
+		'TEXT_VIBRATOR_START_STOP': "시작 / 정지",
 	},
 	'it-IT': { // Italian
 		'TEXT_OK': 'OK',
@@ -1766,6 +1818,19 @@ trans_trans = {
 		'TEXT_CONFIG': 'Configurazione',
 		'TEXT_MESSAGE_TEXT': 'Messaggio di testo:',
 		'TEXT_MESSAGE_BUTTON': 'Messaggio...',
+		'TEXT_START_HYPNOSIS': 'Inizia l\'ipnosi',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': 'Rilascia l\'ipnosi',
+		'TEXT_COUNT_DOWN': 'Conto alla rovescia:',
+		'TEXT_ARROWS': 'Frecce:',
+		'TEXT_MESSAGE_SPEECH_LABEL': 'Discorso del messaggio:',
+		'TEXT_MESSAGE_SPEECH': 'Discorso del messaggio',
+		'TEXT_COLOR_1ST': "1° colore:",
+		'TEXT_COLOR_2ND': "2° colore:",
+		'TEXT_INIT_APP_BUTTON': "Inizializzare",
+		'TEXT_MESSAGE_VOLUME': "Volume della voce:",
+		'TEXT_MESSAGE_SKIN': "Pelle:",
+		'TEXT_VIBRATOR': "Vibratore:",
+		'TEXT_VIBRATOR_START_STOP': "Avvio / Arresto",
 	},
 	'de-DE': { // German
 		'TEXT_OK': 'OK',
@@ -1881,6 +1946,19 @@ trans_trans = {
 		'TEXT_CONFIG': 'Aufbau',
 		'TEXT_MESSAGE_TEXT': 'Nachrichtentext:',
 		'TEXT_MESSAGE_BUTTON': 'Nachricht...',
+		'TEXT_START_HYPNOSIS': 'Hypnose beginnen',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': 'Hypnose loslassen',
+		'TEXT_COUNT_DOWN': 'Countdown:',
+		'TEXT_ARROWS': 'Pfeile:',
+		'TEXT_MESSAGE_SPEECH_LABEL': 'Nachrichtenansprache:',
+		'TEXT_MESSAGE_SPEECH': 'Nachrichtenansprache',
+		'TEXT_COLOR_1ST': "1. Farbe:",
+		'TEXT_COLOR_2ND': "2. Farbe:",
+		'TEXT_INIT_APP_BUTTON': "Initialisieren",
+		'TEXT_MESSAGE_VOLUME': "Stimmen Lautstärke:",
+		'TEXT_MESSAGE_SKIN': "Haut:",
+		'TEXT_VIBRATOR': "Vibrator:",
+		'TEXT_VIBRATOR_START_STOP': "Start / Stop",
 	},
 	'es-ES': { // Spanish
 		'TEXT_OK': 'OK',
@@ -1996,6 +2074,19 @@ trans_trans = {
 		'TEXT_CONFIG': 'Configuración',
 		'TEXT_MESSAGE_TEXT': 'Mensaje de texto:',
 		'TEXT_MESSAGE_BUTTON': 'Mensaje...',
+		'TEXT_START_HYPNOSIS': 'Iniciar la hipnosis',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': 'Iiberar hipnosis',
+		'TEXT_COUNT_DOWN': 'Cuenta regresiva:',
+		'TEXT_ARROWS': 'Flechas:',
+		'TEXT_MESSAGE_SPEECH_LABEL': 'Di el mensaje:',
+		'TEXT_MESSAGE_SPEECH': 'Di el mensaje',
+		'TEXT_COLOR_1ST': "1er color:",
+		'TEXT_COLOR_2ND': "Segundo color:",
+		'TEXT_INIT_APP_BUTTON': "Inicialización",
+		'TEXT_MESSAGE_VOLUME': "Volumen de voz del mensaje:",
+		'TEXT_MESSAGE_SKIN': "Piel:",
+		'TEXT_VIBRATOR': "Vibrador:",
+		'TEXT_VIBRATOR_START_STOP': "Iniciar / Detener",
 	},
 	'ru-RU': {
 		'TEXT_OK': 'Хорошо',
@@ -2111,6 +2202,19 @@ trans_trans = {
 		'TEXT_CONFIG': 'Параметр',
 		'TEXT_MESSAGE_TEXT': 'Текст сообщения:',
 		'TEXT_MESSAGE_BUTTON': 'Сообщение...',
+		'TEXT_START_HYPNOSIS': 'Начать гипноз',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': 'Освободиться от гипноза',
+		'TEXT_COUNT_DOWN': 'Обратный отсчет:',
+		'TEXT_ARROWS': 'Стрелки:',
+		'TEXT_MESSAGE_SPEECH_LABEL': 'Произнесите сообщение:',
+		'TEXT_MESSAGE_SPEECH': 'Произнесите сообщение',
+		'TEXT_COLOR_1ST': "1-й цвет:",
+		'TEXT_COLOR_2ND': "Второй цвет:",
+		'TEXT_INIT_APP_BUTTON': "Инициализация",
+		'TEXT_MESSAGE_VOLUME': "Громкость голоса сообщения:",
+		'TEXT_MESSAGE_SKIN': "Кожа:",
+		'TEXT_VIBRATOR': "Вибратор:",
+		'TEXT_VIBRATOR_START_STOP': "Старт / Стоп",
 	},
 	'en-US': {
 		'TEXT_OK': 'OK',
@@ -2226,6 +2330,19 @@ trans_trans = {
 		'TEXT_CONFIG': 'Configuration',
 		'TEXT_MESSAGE_TEXT': 'Message Text:',
 		'TEXT_MESSAGE_BUTTON': 'Message...',
+		'TEXT_START_HYPNOSIS': 'Start Hypnosis',
+		'TEXT_RELEASE_HYPNOSIS_BUTTON': 'Release Hypnosis',
+		'TEXT_COUNT_DOWN': 'Count Down:',
+		'TEXT_ARROWS': 'Arrows:',
+		'TEXT_MESSAGE_SPEECH_LABEL': 'Message Speech:',
+		'TEXT_MESSAGE_SPEECH': 'Message Speech',
+		'TEXT_COLOR_1ST': "1st color:",
+		'TEXT_COLOR_2ND': "2nd color:",
+		'TEXT_INIT_APP_BUTTON': "Initialize",
+		'TEXT_MESSAGE_VOLUME': "Message voice volume:",
+		'TEXT_MESSAGE_SKIN': "Skin:",
+		'TEXT_VIBRATOR': "Vibrator:",
+		'TEXT_VIBRATOR_START_STOP': "Start / Stop",
 	},
 };
 
@@ -2375,24 +2492,25 @@ const trans_localize = function(lang){
 	trans_setHtmlText(sai_id_text_label_message_text, trans_getText('TEXT_MESSAGE_TEXT'));
 	trans_setHtmlText(sai_id_button_message, trans_getText('TEXT_MESSAGE_BUTTON'));
 
+	sai_id_button_start_hypnosis.innerHTML = trans_getText('TEXT_START_HYPNOSIS');
+	trans_setHtmlText(sai_id_button_release_hypnosis, trans_getText('TEXT_RELEASE_HYPNOSIS_BUTTON'));
+	trans_setHtmlText(sai_id_text_count_down, trans_getText('TEXT_COUNT_DOWN'));
+	trans_setHtmlText(sai_id_text_arrows, trans_getText('TEXT_ARROWS'));
+	trans_setHtmlText(sai_id_text_label_message_speech, trans_getText('TEXT_MESSAGE_SPEECH_LABEL'));
+	trans_setHtmlText(sai_id_text_message_speech, trans_getText('TEXT_MESSAGE_SPEECH'));
+	trans_setHtmlText(sai_id_text_color_1st, trans_getText('TEXT_COLOR_1ST'));
+	trans_setHtmlText(sai_id_text_color_2nd, trans_getText('TEXT_COLOR_2ND'));
+	trans_setHtmlText(sai_id_button_init_app, trans_getText('TEXT_INIT_APP_BUTTON'));
+	trans_setHtmlText(sai_id_text_label_message_volume, trans_getText('TEXT_MESSAGE_VOLUME'));
+	trans_setHtmlText(sai_id_text_skin, trans_getText('TEXT_MESSAGE_SKIN'));
+	trans_setHtmlText(sai_id_text_vibrator, trans_getText('TEXT_VIBRATOR'));
+	trans_setHtmlText(sai_id_button_vibrator_start_stop, trans_getText('TEXT_VIBRATOR_START_STOP'));
+
 	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
 	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
 
 	switch(trans_currentLanguage){
 	case 'ja-JP':
-		sai_id_button_start_hypnosis.innerHTML = '<nobr>催眠</nobr><nobr>スタート</nobr>';
-		trans_setHtmlText(sai_id_button_release_hypnosis, '催眠解除');
-		trans_setHtmlText(sai_id_text_count_down, 'カウントダウン:');
-		trans_setHtmlText(sai_id_text_arrows, '矢印:');
-		trans_setHtmlText(sai_id_text_label_message_speech, 'メッセージをしゃべる:');
-		trans_setHtmlText(sai_id_text_message_speech, 'メッセージをしゃべる');
-		trans_setHtmlText(sai_id_text_color_1st, "1番目の色:");
-		trans_setHtmlText(sai_id_text_color_2nd, "2番目の色:");
-		trans_setHtmlText(sai_id_button_init_app, "初期化");
-		trans_setHtmlText(sai_id_text_label_message_volume, "メッセージボイスの音量:");
-		trans_setHtmlText(sai_id_text_skin, "スキン:");
-		trans_setHtmlText(sai_id_text_vibrator, "振動:");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "開始 / 停止");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金色');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', '青色');
@@ -2403,19 +2521,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色');
 		break;
 	case 'zh-CN': // Chinese (Simplified)
-		sai_id_button_start_hypnosis.innerHTML = '<nobr>开始</nobr><nobr>催眠</nobr>';
-		trans_setHtmlText(sai_id_button_release_hypnosis, '释放催眠');
-		trans_setHtmlText(sai_id_text_count_down, '倒数：');
-		trans_setHtmlText(sai_id_text_arrows, '箭：');
-		trans_setHtmlText(sai_id_text_label_message_speech, '留言演讲：');
-		trans_setHtmlText(sai_id_text_message_speech, '留言演讲');
-		trans_setHtmlText(sai_id_text_color_1st, "第一种颜色：");
-		trans_setHtmlText(sai_id_text_color_2nd, "第二种颜色：");
-		trans_setHtmlText(sai_id_button_init_app, "初始化");
-		trans_setHtmlText(sai_id_text_label_message_volume, "留言音量：");
-		trans_setHtmlText(sai_id_text_skin, "皮肤：");
-		trans_setHtmlText(sai_id_text_vibrator, "振动器：");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "开始 / 停止");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金的');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色的');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', '蓝色的');
@@ -2426,19 +2531,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'zh-TW': // Chinese (Traditional)
-		sai_id_button_start_hypnosis.innerHTML = '<nobr>開始</nobr><nobr>催眠</nobr>';
-		trans_setHtmlText(sai_id_button_release_hypnosis, '釋放催眠');
-		trans_setHtmlText(sai_id_text_count_down, '倒數：');
-		trans_setHtmlText(sai_id_text_arrows, '箭頭：');
-		trans_setHtmlText(sai_id_text_label_message_speech, '留言演講：');
-		trans_setHtmlText(sai_id_text_message_speech, '留言演講');
-		trans_setHtmlText(sai_id_text_color_1st, "第一種顏色：");
-		trans_setHtmlText(sai_id_text_color_2nd, "第二種顏色：");
-		trans_setHtmlText(sai_id_button_init_app, "初始化");
-		trans_setHtmlText(sai_id_text_label_message_volume, "留言音量：");
-		trans_setHtmlText(sai_id_text_skin, "皮膚：");
-		trans_setHtmlText(sai_id_text_vibrator, "振動器：");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "開始 / 停止");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金的');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色的');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', '藍色的');
@@ -2449,19 +2541,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'ko-KR': // Korean
-		sai_id_button_start_hypnosis.innerHTML = '<nobr>최면</nobr> <nobr>시작</nobr>';
-		trans_setHtmlText(sai_id_button_release_hypnosis, '최면 해제');
-		trans_setHtmlText(sai_id_text_count_down, '카운트다운:');
-		trans_setHtmlText(sai_id_text_arrows, '화살표:');
-		trans_setHtmlText(sai_id_text_label_message_speech, '메시지 연설:');
-		trans_setHtmlText(sai_id_text_message_speech, '메시지 연설');
-		trans_setHtmlText(sai_id_text_color_1st, "첫 번째 색상:");
-		trans_setHtmlText(sai_id_text_color_2nd, "두 번째 색상:");
-		trans_setHtmlText(sai_id_button_init_app, "앱 재설정");
-		trans_setHtmlText(sai_id_text_label_message_volume, "메시지 음성 음량:");
-		trans_setHtmlText(sai_id_text_skin, "스킨:");
-		trans_setHtmlText(sai_id_text_vibrator, "진동기:");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "시작 / 정지");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', '황금');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', '보라색');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', '청색');
@@ -2472,19 +2551,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '백색');
 		break;
 	case 'it-IT': // Italian
-		sai_id_button_start_hypnosis.innerHTML = 'Inizia l\'ipnosi';
-		trans_setHtmlText(sai_id_button_release_hypnosis, 'Rilascia l\'ipnosi');
-		trans_setHtmlText(sai_id_text_count_down, 'Conto alla rovescia:');
-		trans_setHtmlText(sai_id_text_arrows, 'Frecce:');
-		trans_setHtmlText(sai_id_text_label_message_speech, 'Discorso del messaggio:');
-		trans_setHtmlText(sai_id_text_message_speech, 'Discorso del messaggio');
-		trans_setHtmlText(sai_id_text_color_1st, "1° colore:");
-		trans_setHtmlText(sai_id_text_color_2nd, "2° colore:");
-		trans_setHtmlText(sai_id_button_init_app, "Inizializzare");
-		trans_setHtmlText(sai_id_text_label_message_volume, "Volume della voce:");
-		trans_setHtmlText(sai_id_text_skin, "Pelle:");
-		trans_setHtmlText(sai_id_text_vibrator, "Vibratore:");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "Avvio / Arresto");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'd\'Oro');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Viola');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blu');
@@ -2495,19 +2561,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Bianco');
 		break;
 	case 'de-DE': // German
-		sai_id_button_start_hypnosis.innerHTML = 'Hypnose beginnen';
-		trans_setHtmlText(sai_id_button_release_hypnosis, 'Hypnose loslassen');
-		trans_setHtmlText(sai_id_text_count_down, 'Countdown:');
-		trans_setHtmlText(sai_id_text_arrows, 'Pfeile:');
-		trans_setHtmlText(sai_id_text_label_message_speech, 'Nachrichtenansprache:');
-		trans_setHtmlText(sai_id_text_message_speech, 'Nachrichtenansprache');
-		trans_setHtmlText(sai_id_text_color_1st, "1. Farbe:");
-		trans_setHtmlText(sai_id_text_color_2nd, "2. Farbe:");
-		trans_setHtmlText(sai_id_button_init_app, "Initialisieren");
-		trans_setHtmlText(sai_id_text_label_message_volume, "Stimmen Lautstärke:");
-		trans_setHtmlText(sai_id_text_skin, "Haut:");
-		trans_setHtmlText(sai_id_text_vibrator, "Vibrator:");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "Start / Stop");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Golden');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Lila');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blau');
@@ -2518,19 +2571,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Weiß');
 		break;
 	case 'es-ES': // Spanish
-		sai_id_button_start_hypnosis.innerHTML = 'Iniciar la hipnosis';
-		trans_setHtmlText(sai_id_button_release_hypnosis, 'Iiberar hipnosis');
-		trans_setHtmlText(sai_id_text_count_down, 'Cuenta regresiva:');
-		trans_setHtmlText(sai_id_text_arrows, 'Flechas:');
-		trans_setHtmlText(sai_id_text_label_message_speech, 'Di el mensaje:');
-		trans_setHtmlText(sai_id_text_message_speech, 'Di el mensaje');
-		trans_setHtmlText(sai_id_text_color_1st, "1er color:");
-		trans_setHtmlText(sai_id_text_color_2nd, "Segundo color:");
-		trans_setHtmlText(sai_id_button_init_app, "Inicialización");
-		trans_setHtmlText(sai_id_text_label_message_volume, "Volumen de voz del mensaje:");
-		trans_setHtmlText(sai_id_text_skin, "Piel:");
-		trans_setHtmlText(sai_id_text_vibrator, "Vibrador:");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "Iniciar / Detener");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Dorado');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Púrpura');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Azul');
@@ -2541,19 +2581,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Blanco');
 		break;
 	case 'ru-RU': // Russian
-		sai_id_button_start_hypnosis.innerHTML = 'Начать гипноз';
-		trans_setHtmlText(sai_id_button_release_hypnosis, 'Освободиться от гипноза');
-		trans_setHtmlText(sai_id_text_count_down, 'Обратный отсчет:');
-		trans_setHtmlText(sai_id_text_arrows, 'Стрелки:');
-		trans_setHtmlText(sai_id_text_label_message_speech, 'Произнесите сообщение:');
-		trans_setHtmlText(sai_id_text_message_speech, 'Произнесите сообщение');
-		trans_setHtmlText(sai_id_text_color_1st, "1-й цвет:");
-		trans_setHtmlText(sai_id_text_color_2nd, "Второй цвет:");
-		trans_setHtmlText(sai_id_button_init_app, "Инициализация");
-		trans_setHtmlText(sai_id_text_label_message_volume, "Громкость голоса сообщения:");
-		trans_setHtmlText(sai_id_text_skin, "Кожа:");
-		trans_setHtmlText(sai_id_text_vibrator, "Вибратор:");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "Старт / Стоп");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Золотой');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Фиолетовый');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Синий');
@@ -2565,19 +2592,6 @@ const trans_localize = function(lang){
 		break;
 	case 'en-US':
 	default:
-		sai_id_button_start_hypnosis.innerHTML = 'Start Hypnosis';
-		trans_setHtmlText(sai_id_button_release_hypnosis, 'Release Hypnosis');
-		trans_setHtmlText(sai_id_text_count_down, 'Count Down:');
-		trans_setHtmlText(sai_id_text_arrows, 'Arrows:');
-		trans_setHtmlText(sai_id_text_label_message_speech, 'Message Speech:');
-		trans_setHtmlText(sai_id_text_message_speech, 'Message Speech');
-		trans_setHtmlText(sai_id_text_color_1st, "1st color:");
-		trans_setHtmlText(sai_id_text_color_2nd, "2nd color:");
-		trans_setHtmlText(sai_id_button_init_app, "Initialize");
-		trans_setHtmlText(sai_id_text_label_message_volume, "Message voice volume:");
-		trans_setHtmlText(sai_id_text_skin, "Skin:");
-		trans_setHtmlText(sai_id_text_vibrator, "Vibrator:");
-		trans_setHtmlText(sai_id_button_vibrator_start_stop, "Start / Stop");
 		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Golden');
 		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Purple');
 		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blue');
