@@ -1267,6 +1267,17 @@ trans_trans = {
 		'TEXT_PIC_17': '動画 17：ヘビの回転',
 		'TEXT_PIC_18': '動画 18：ひずみ放射',
 		'TEXT_PIC_19': '動画 19：ランダムな波',
+		'TEXT_SPLIT': '画面分割:',
+		'TEXT_SPEED': 'スピード:',
+		'TEXT_ROTATION': '逆再生:',
+		'TEXT_VORTEX_DIRECTION': '渦の向き:',
+		'TEXT_BLINKING': '画面点滅:',
+		'TEXT_FULLSCREN_MODE': 'フルスクリーン モード:',
+		'TEXT_MESSAGE': 'メッセージ',
+		'TEXT_RESET': 'リセット',
+		'TEXT_MESSAGE_SIZE': 'メッセージの大きさ:',
+		'TEXT_NOTE': '音符ボタン:',
+		'TEXT_MOTION_BLUR': 'モーション ブラー:',
 	},
 	'zh-CN': { // Chinese (Simplified)
 		'TEXT_OK': '確定',
@@ -1343,6 +1354,17 @@ trans_trans = {
 		'TEXT_PIC_17': '电影17：旋转蛇',
 		'TEXT_PIC_18': '电影18：畸变辐射',
 		'TEXT_PIC_19': '电影19：随机波',
+		'TEXT_SPLIT': '分屏：',
+		'TEXT_SPEED': '速度：',
+		'TEXT_ROTATION': '倒放：',
+		'TEXT_VORTEX_DIRECTION': '涡流方向：',
+		'TEXT_BLINKING': '屏幕闪烁：',
+		'TEXT_FULLSCREN_MODE': '全屏模式：',
+		'TEXT_MESSAGE': '信息',
+		'TEXT_RESET': '重置',
+		'TEXT_MESSAGE_SIZE': '消息大小：',
+		'TEXT_NOTE': '声音按钮：',
+		'TEXT_MOTION_BLUR': '运动模糊：',
 	},
 	'zh-TW': { // Chinese (Traditional)
 		'TEXT_OK': '確定',
@@ -1419,6 +1441,17 @@ trans_trans = {
 		'TEXT_PIC_17': '電影17：旋轉蛇',
 		'TEXT_PIC_18': '電影18：畸變輻射',
 		'TEXT_PIC_19': '電影19：隨機波',
+		'TEXT_SPLIT': '分屏：',
+		'TEXT_SPEED': '速度：',
+		'TEXT_ROTATION': '倒放：',
+		'TEXT_VORTEX_DIRECTION': '渦流方向：',
+		'TEXT_BLINKING': '螢幕閃爍：',
+		'TEXT_FULLSCREN_MODE': '全螢幕模式：',
+		'TEXT_MESSAGE': '資訊',
+		'TEXT_RESET': '重置',
+		'TEXT_MESSAGE_SIZE': '消息大小：',
+		'TEXT_NOTE': '聲音按鈕：',
+		'TEXT_MOTION_BLUR': '運動模糊：',
 	},
 	'ko-KR': { // Korean
 		'TEXT_OK': 'OK',
@@ -1495,6 +1528,17 @@ trans_trans = {
 		'TEXT_PIC_17': '동영상 17：뱀 회전',
 		'TEXT_PIC_18': '동영상 18：스트레인 방사',
 		'TEXT_PIC_19': '동영상 19：무작위 파동',
+		'TEXT_SPLIT': '화면 분할:',
+		'TEXT_SPEED': '속도:',
+		'TEXT_ROTATION': '역 재생:',
+		'TEXT_VORTEX_DIRECTION': '소용돌이 방향:',
+		'TEXT_BLINKING': '화면 깜박임:',
+		'TEXT_FULLSCREN_MODE': '전체 화면 모드:',
+		'TEXT_MESSAGE': '메시지',
+		'TEXT_RESET': '초기화',
+		'TEXT_MESSAGE_SIZE': '메시지 크기:',
+		'TEXT_NOTE': '사운드 버튼:',
+		'TEXT_MOTION_BLUR': '모션 블러:',
 	},
 	'it-IT': { // Italian
 		'TEXT_OK': 'OK',
@@ -1571,6 +1615,17 @@ trans_trans = {
 		'TEXT_PIC_17': 'Film 17: Serpente rotante',
 		'TEXT_PIC_18': 'Film 18: Radiazione di distorsione',
 		'TEXT_PIC_19': 'Film 19：Onde Casuali',
+		'TEXT_SPLIT': 'Divisione dello schermo:',
+		'TEXT_SPEED': 'Velocità:',
+		'TEXT_ROTATION': 'Riproduzione inversa:',
+		'TEXT_VORTEX_DIRECTION': 'Direzione del vortice:',
+		'TEXT_BLINKING': 'Schermo lampeggiante:',
+		'TEXT_FULLSCREN_MODE': 'Modalità schermo intero:',
+		'TEXT_MESSAGE': 'Messaggio',
+		'TEXT_RESET': 'Ripristina',
+		'TEXT_MESSAGE_SIZE': 'Dimensione del messaggio:',
+		'TEXT_NOTE': 'Pulsante audio:',
+		'TEXT_MOTION_BLUR': 'Sfocatura movimento:',
 	},
 	'de-DE': { // German
 		'TEXT_OK': 'OK',
@@ -1647,6 +1702,17 @@ trans_trans = {
 		'TEXT_PIC_17': 'Film 17: Rotierende Schlange',
 		'TEXT_PIC_18': 'Film 18: Verzerrungsstrahlung',
 		'TEXT_PIC_19': 'Film 19：Zufällige Wellen',
+		'TEXT_SPLIT': 'Bildschirmaufteilung:',
+		'TEXT_SPEED': 'Geschwindigkeit:',
+		'TEXT_ROTATION': 'Rückwärtswiedergabe:',
+		'TEXT_VORTEX_DIRECTION': 'Wirbelrichtung:',
+		'TEXT_BLINKING': 'Bildschirm blinkt:',
+		'TEXT_FULLSCREN_MODE': 'Vollbildmodus:',
+		'TEXT_MESSAGE': 'Nachricht',
+		'TEXT_RESET': 'Zurücksetzen',
+		'TEXT_MESSAGE_SIZE': 'Größe der Nachricht:',
+		'TEXT_NOTE': 'Sound-Taste:',
+		'TEXT_MOTION_BLUR': 'Bewegungsunschärfe:',
 	},
 	'es-ES': { // Spanish
 		'TEXT_OK': 'OK',
@@ -1723,6 +1789,17 @@ trans_trans = {
 		'TEXT_PIC_17': 'Película 17: Serpiente giratoria',
 		'TEXT_PIC_18': 'Película 18: Radiación de distorsión',
 		'TEXT_PIC_19': 'Película 19：Ondas Aleatorias',
+		'TEXT_SPLIT': 'Pantalla dividida:',
+		'TEXT_SPEED': 'Velocidad:',
+		'TEXT_ROTATION': 'Reproducción inversa:',
+		'TEXT_VORTEX_DIRECTION': 'Dirección del vórtice:',
+		'TEXT_BLINKING': 'Pantalla parpadeando:',
+		'TEXT_FULLSCREN_MODE': 'Modo de pantalla completa:',
+		'TEXT_MESSAGE': 'Mensaje',
+		'TEXT_RESET': 'Reiniciar',
+		'TEXT_MESSAGE_SIZE': 'Tamaño del mensaje:',
+		'TEXT_NOTE': 'Botón de nota musical:',
+		'TEXT_MOTION_BLUR': 'Desenfoque de movimiento:',
 	},
 	'ru-RU': {
 		'TEXT_OK': 'Хорошо',
@@ -1799,6 +1876,17 @@ trans_trans = {
 		'TEXT_PIC_17': 'Фильм 17: Вращающаяся змея',
 		'TEXT_PIC_18': 'Фильм 18: Искажающее излучение',
 		'TEXT_PIC_19': 'Фильм 19：Случайные Волны',
+		'TEXT_SPLIT': 'Разделенный экран:',
+		'TEXT_SPEED': 'Скорость:',
+		'TEXT_ROTATION': 'Обратное воспроизведение:',
+		'TEXT_VORTEX_DIRECTION': 'Направление вихря:',
+		'TEXT_BLINKING': 'Мигание экрана:',
+		'TEXT_FULLSCREN_MODE': 'Полноэкранный режим:',
+		'TEXT_MESSAGE': 'Сообщение',
+		'TEXT_RESET': 'Перезагрузить',
+		'TEXT_MESSAGE_SIZE': 'Размер сообщения:',
+		'TEXT_NOTE': 'Кнопка музыкальной ноты:',
+		'TEXT_MOTION_BLUR': 'Размытость:',
 	},
 	'en-US': {
 		'TEXT_OK': 'OK',
@@ -1875,6 +1963,17 @@ trans_trans = {
 		'TEXT_PIC_17': 'Movie 17: Rotating snake',
 		'TEXT_PIC_18': 'Movie 18: Distortion Radiation',
 		'TEXT_PIC_19': 'Movie 19：Random Waves',
+		'TEXT_SPLIT': 'Screen splitting:',
+		'TEXT_SPEED': 'Speed:',
+		'TEXT_ROTATION': 'Reverse playback:',
+		'TEXT_VORTEX_DIRECTION': 'Direction of vortex:',
+		'TEXT_BLINKING': 'Screen flashing:',
+		'TEXT_FULLSCREN_MODE': 'Fullscreen mode:',
+		'TEXT_MESSAGE': 'Message',
+		'TEXT_RESET': 'Reset',
+		'TEXT_MESSAGE_SIZE': 'Size of message:',
+		'TEXT_NOTE': 'Sound button:',
+		'TEXT_MOTION_BLUR': 'Motion Blur:',
 	},
 };
 
@@ -1937,23 +2036,23 @@ const trans_localize = function(lang){
 
 	trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', trans_getText('TEXT_LANGUAGE_ZH_CN'));
 	trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', trans_getText('TEXT_LANGUAGE_ZH_TW'));
-	trans_setSelectOptionText(sai_id_select_language_1, 'en', trans_getText('TEXT_LANGUAGE_EN'));
-	trans_setSelectOptionText(sai_id_select_language_1, 'es', trans_getText('TEXT_LANGUAGE_ES'));
-	trans_setSelectOptionText(sai_id_select_language_1, 'de', trans_getText('TEXT_LANGUAGE_DE'));
-	trans_setSelectOptionText(sai_id_select_language_1, 'it', trans_getText('TEXT_LANGUAGE_IT'));
-	trans_setSelectOptionText(sai_id_select_language_1, 'ja', trans_getText('TEXT_LANGUAGE_JA_JP'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'en-US', trans_getText('TEXT_LANGUAGE_EN'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'es-ES', trans_getText('TEXT_LANGUAGE_ES'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'de-DE', trans_getText('TEXT_LANGUAGE_DE'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'it-IT', trans_getText('TEXT_LANGUAGE_IT'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'ja-JP', trans_getText('TEXT_LANGUAGE_JA_JP'));
 	trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', trans_getText('TEXT_LANGUAGE_KO_KR'));
-	trans_setSelectOptionText(sai_id_select_language_1, 'ru', trans_getText('TEXT_LANGUAGE_RU'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'ru-RU', trans_getText('TEXT_LANGUAGE_RU'));
 
 	trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', trans_getText('TEXT_LANGUAGE_ZH_CN'));
 	trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', trans_getText('TEXT_LANGUAGE_ZH_TW'));
-	trans_setSelectOptionText(sai_id_select_language_2, 'en', trans_getText('TEXT_LANGUAGE_EN'));
-	trans_setSelectOptionText(sai_id_select_language_2, 'es', trans_getText('TEXT_LANGUAGE_ES'));
-	trans_setSelectOptionText(sai_id_select_language_2, 'de', trans_getText('TEXT_LANGUAGE_DE'));
-	trans_setSelectOptionText(sai_id_select_language_2, 'it', trans_getText('TEXT_LANGUAGE_IT'));
-	trans_setSelectOptionText(sai_id_select_language_2, 'ja', trans_getText('TEXT_LANGUAGE_JA_JP'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'en-US', trans_getText('TEXT_LANGUAGE_EN'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'es-ES', trans_getText('TEXT_LANGUAGE_ES'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'de-DE', trans_getText('TEXT_LANGUAGE_DE'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'it-IT', trans_getText('TEXT_LANGUAGE_IT'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'ja-JP', trans_getText('TEXT_LANGUAGE_JA_JP'));
 	trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', trans_getText('TEXT_LANGUAGE_KO_KR'));
-	trans_setSelectOptionText(sai_id_select_language_2, 'ru', trans_getText('TEXT_LANGUAGE_RU'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'ru-RU', trans_getText('TEXT_LANGUAGE_RU'));
 
 	trans_setHtmlText(sai_id_pic_type, trans_getText('TEXT_PIC_TYPE'));
 	trans_setSelectOptionText(sai_id_select_pic_type, '0', trans_getText('TEXT_PIC_0'));
@@ -1977,27 +2076,28 @@ const trans_localize = function(lang){
 	trans_setSelectOptionText(sai_id_select_pic_type, '18', trans_getText('TEXT_PIC_18'));
 	trans_setSelectOptionText(sai_id_select_pic_type, '19', trans_getText('TEXT_PIC_19'));
 
+	trans_setHtmlText(sai_id_text_split, trans_getText('TEXT_SPLIT'));
+	trans_setHtmlText(sai_id_text_speed, trans_getText('TEXT_SPEED'));
+	trans_setHtmlText(speed_irregular_label, trans_getText('TEXT_SPEED_IRREGULAR'));
+	trans_setHtmlText(sai_id_text_rotation, trans_getText('TEXT_ROTATION'));
+	trans_setHtmlText(sai_id_text_vortex_direction, trans_getText('TEXT_VORTEX_DIRECTION'));
+	trans_setHtmlText(sai_id_text_blinking, trans_getText('TEXT_BLINKING'));
+	trans_setHtmlText(sai_id_text_fullscreen_mode, trans_getText('TEXT_FULLSCREN_MODE'));
+	trans_setHtmlText(sai_id_page_message_header, trans_getText('TEXT_MESSAGE'));
+	trans_setHtmlText(sai_id_button_mesage_reset, trans_getText('TEXT_RESET'));
+	trans_setHtmlText(sai_id_color_1st_reset, trans_getText('TEXT_RESET'));
+	trans_setHtmlText(sai_id_color_2nd_reset, trans_getText('TEXT_RESET'));
+	trans_setHtmlText(sai_id_button_mesage_cancel, trans_getText('TEXT_CANCEL'));
+	trans_setHtmlText(sai_id_button_mesage_ok, trans_getText('TEXT_OK'));
+	trans_setHtmlText(sai_id_text_message_size, trans_getText('TEXT_MESSAGE_SIZE'));
+	trans_setHtmlText(sai_id_text_note, trans_getText('TEXT_NOTE'));
+	trans_setHtmlText(sai_id_text_motion_blur, trans_getText('TEXT_MOTION_BLUR'));
+
 	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
 	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
 
 	switch(trans_currentLanguage){
 	case 'ja-JP':
-		trans_setHtmlText(sai_id_text_split, '画面分割:');
-		trans_setHtmlText(sai_id_text_speed, 'スピード:');
-		trans_setHtmlText(speed_irregular_label, '不規則');
-		trans_setHtmlText(sai_id_text_rotation, '逆再生:');
-		trans_setHtmlText(sai_id_text_vortex_direction, '渦の向き:');
-		trans_setHtmlText(sai_id_text_blinking, '画面点滅:');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, 'フルスクリーン モード:');
-		trans_setHtmlText(sai_id_page_message_header, 'メッセージ');
-		trans_setHtmlText(sai_id_button_mesage_reset, 'リセット');
-		trans_setHtmlText(sai_id_color_1st_reset, 'リセット');
-		trans_setHtmlText(sai_id_color_2nd_reset, 'リセット');
-		trans_setHtmlText(sai_id_button_mesage_cancel, 'キャンセル');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, 'メッセージの大きさ:');
-		trans_setHtmlText(sai_id_text_note, '音符ボタン:');
-		trans_setHtmlText(sai_id_text_motion_blur, 'モーション ブラー:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(なし)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'ネコっぽい');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '恐怖');
@@ -2049,22 +2149,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色');
 		break;
 	case 'zh-CN': // Chinese (Simplified)
-		trans_setHtmlText(sai_id_text_split, '分屏：');
-		trans_setHtmlText(sai_id_text_speed, '速度：');
-		trans_setHtmlText(speed_irregular_label, '不规律的');
-		trans_setHtmlText(sai_id_text_rotation, '倒放：');
-		trans_setHtmlText(sai_id_text_vortex_direction, '涡流方向：');
-		trans_setHtmlText(sai_id_text_blinking, '屏幕闪烁：');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, '全屏模式：');
-		trans_setHtmlText(sai_id_page_message_header, '信息');
-		trans_setHtmlText(sai_id_button_mesage_reset, '重置');
-		trans_setHtmlText(sai_id_color_1st_reset, '重置');
-		trans_setHtmlText(sai_id_color_2nd_reset, '重置');
-		trans_setHtmlText(sai_id_button_mesage_cancel, '取消');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, '消息大小：');
-		trans_setHtmlText(sai_id_text_note, '声音按钮：');
-		trans_setHtmlText(sai_id_text_motion_blur, '运动模糊：');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(无)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像猫一样');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
@@ -2116,22 +2200,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'zh-TW': // Chinese (Traditional)
-		trans_setHtmlText(sai_id_text_split, '分屏：');
-		trans_setHtmlText(sai_id_text_speed, '速度：');
-		trans_setHtmlText(speed_irregular_label, '不規律的');
-		trans_setHtmlText(sai_id_text_rotation, '倒放：');
-		trans_setHtmlText(sai_id_text_vortex_direction, '渦流方向：');
-		trans_setHtmlText(sai_id_text_blinking, '螢幕閃爍：');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, '全螢幕模式：');
-		trans_setHtmlText(sai_id_page_message_header, '資訊');
-		trans_setHtmlText(sai_id_button_mesage_reset, '重置');
-		trans_setHtmlText(sai_id_color_1st_reset, '重置');
-		trans_setHtmlText(sai_id_color_2nd_reset, '重置');
-		trans_setHtmlText(sai_id_button_mesage_cancel, '取消');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, '消息大小：');
-		trans_setHtmlText(sai_id_text_note, '聲音按鈕：');
-		trans_setHtmlText(sai_id_text_motion_blur, '運動模糊：');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(無)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像貓一樣');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
@@ -2183,22 +2251,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'ko-KR': // Korean
-		trans_setHtmlText(sai_id_text_split, '화면 분할:');
-		trans_setHtmlText(sai_id_text_speed, '속도:');
-		trans_setHtmlText(speed_irregular_label, '불규칙');
-		trans_setHtmlText(sai_id_text_rotation, '역 재생:');
-		trans_setHtmlText(sai_id_text_vortex_direction, '소용돌이 방향:');
-		trans_setHtmlText(sai_id_text_blinking, '화면 깜박임:');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, '전체 화면 모드:');
-		trans_setHtmlText(sai_id_page_message_header, '메시지');
-		trans_setHtmlText(sai_id_button_mesage_reset, '초기화');
-		trans_setHtmlText(sai_id_color_1st_reset, '초기화');
-		trans_setHtmlText(sai_id_color_2nd_reset, '초기화');
-		trans_setHtmlText(sai_id_button_mesage_cancel, '취소');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, '메시지 크기:');
-		trans_setHtmlText(sai_id_text_note, '사운드 버튼:');
-		trans_setHtmlText(sai_id_text_motion_blur, '모션 블러:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(없음)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '고양이 같은');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '공포');
@@ -2250,22 +2302,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '백색');
 		break;
 	case 'it-IT': // Italian
-		trans_setHtmlText(sai_id_text_split, 'Divisione dello schermo:');
-		trans_setHtmlText(sai_id_text_speed, 'Velocità:');
-		trans_setHtmlText(speed_irregular_label, 'Irregolare');
-		trans_setHtmlText(sai_id_text_rotation, 'Riproduzione inversa:');
-		trans_setHtmlText(sai_id_text_vortex_direction, 'Direzione del vortice:');
-		trans_setHtmlText(sai_id_text_blinking, 'Schermo lampeggiante:');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, 'Modalità schermo intero:');
-		trans_setHtmlText(sai_id_page_message_header, 'Messaggio');
-		trans_setHtmlText(sai_id_button_mesage_reset, 'Ripristina');
-		trans_setHtmlText(sai_id_color_1st_reset, 'Ripristina');
-		trans_setHtmlText(sai_id_color_2nd_reset, 'Ripristina');
-		trans_setHtmlText(sai_id_button_mesage_cancel, 'Annulla');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, 'Dimensione del messaggio:');
-		trans_setHtmlText(sai_id_text_note, 'Pulsante audio:');
-		trans_setHtmlText(sai_id_text_motion_blur, 'Sfocatura movimento:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Nessuno)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Simile a un gatto');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Paura');
@@ -2317,22 +2353,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Bianco');
 		break;
 	case 'de-DE': // German
-		trans_setHtmlText(sai_id_text_split, 'Bildschirmaufteilung:');
-		trans_setHtmlText(sai_id_text_speed, 'Geschwindigkeit:');
-		trans_setHtmlText(speed_irregular_label, 'Irregulär');
-		trans_setHtmlText(sai_id_text_rotation, 'Rückwärtswiedergabe:');
-		trans_setHtmlText(sai_id_text_vortex_direction, 'Wirbelrichtung:');
-		trans_setHtmlText(sai_id_text_blinking, 'Bildschirm blinkt:');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, 'Vollbildmodus:');
-		trans_setHtmlText(sai_id_page_message_header, 'Nachricht');
-		trans_setHtmlText(sai_id_button_mesage_reset, 'Zurücksetzen');
-		trans_setHtmlText(sai_id_color_1st_reset, 'Zurücksetzen');
-		trans_setHtmlText(sai_id_color_2nd_reset, 'Zurücksetzen');
-		trans_setHtmlText(sai_id_button_mesage_cancel, 'Stornieren');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, 'Größe der Nachricht:');
-		trans_setHtmlText(sai_id_text_note, 'Sound-Taste:');
-		trans_setHtmlText(sai_id_text_motion_blur, 'Bewegungsunschärfe:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Kein)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Katzenartig');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Furcht');
@@ -2384,22 +2404,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Weiß');
 		break;
 	case 'es-ES': // Spanish
-		trans_setHtmlText(sai_id_text_split, 'Pantalla dividida:');
-		trans_setHtmlText(sai_id_text_speed, 'Velocidad:');
-		trans_setHtmlText(speed_irregular_label, 'Irregular');
-		trans_setHtmlText(sai_id_text_rotation, 'Reproducción inversa:');
-		trans_setHtmlText(sai_id_text_vortex_direction, 'Dirección del vórtice:');
-		trans_setHtmlText(sai_id_text_blinking, 'Pantalla parpadeando:');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, 'Modo de pantalla completa:');
-		trans_setHtmlText(sai_id_page_message_header, 'Mensaje');
-		trans_setHtmlText(sai_id_button_mesage_reset, 'Reiniciar');
-		trans_setHtmlText(sai_id_color_1st_reset, 'Reiniciar');
-		trans_setHtmlText(sai_id_color_2nd_reset, 'Reiniciar');
-		trans_setHtmlText(sai_id_button_mesage_cancel, 'Cancelar');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, 'Tamaño del mensaje:');
-		trans_setHtmlText(sai_id_text_note, 'Botón de nota musical:');
-		trans_setHtmlText(sai_id_text_motion_blur, 'Desenfoque de movimiento:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Ninguno)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Felino');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Miedo');
@@ -2451,22 +2455,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Blanco');
 		break;
 	case 'ru-RU': // Russian
-		trans_setHtmlText(sai_id_text_split, 'Разделенный экран:');
-		trans_setHtmlText(sai_id_text_speed, 'Скорость:');
-		trans_setHtmlText(speed_irregular_label, 'Нерегулярный');
-		trans_setHtmlText(sai_id_text_rotation, 'Обратное воспроизведение:');
-		trans_setHtmlText(sai_id_text_vortex_direction, 'Направление вихря:');
-		trans_setHtmlText(sai_id_text_blinking, 'Мигание экрана:');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, 'Полноэкранный режим:');
-		trans_setHtmlText(sai_id_page_message_header, 'Сообщение');
-		trans_setHtmlText(sai_id_button_mesage_reset, 'Перезагрузить');
-		trans_setHtmlText(sai_id_color_1st_reset, 'Перезагрузить');
-		trans_setHtmlText(sai_id_color_2nd_reset, 'Перезагрузить');
-		trans_setHtmlText(sai_id_button_mesage_cancel, 'Отмена');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'Хорошо');
-		trans_setHtmlText(sai_id_text_message_size, 'Размер сообщения:');
-		trans_setHtmlText(sai_id_text_note, 'Кнопка музыкальной ноты:');
-		trans_setHtmlText(sai_id_text_motion_blur, 'Размытость:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(Никто)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Кошачий');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Страх');
@@ -2519,22 +2507,6 @@ const trans_localize = function(lang){
 		break;
 	case 'en-US':
 	default:
-		trans_setHtmlText(sai_id_text_split, 'Screen splitting:');
-		trans_setHtmlText(sai_id_text_speed, 'Speed:');
-		trans_setHtmlText(speed_irregular_label, 'Irregular');
-		trans_setHtmlText(sai_id_text_rotation, 'Reverse playback:');
-		trans_setHtmlText(sai_id_text_vortex_direction, 'Direction of vortex:');
-		trans_setHtmlText(sai_id_text_blinking, 'Screen flashing:');
-		trans_setHtmlText(sai_id_text_fullscreen_mode, 'Fullscreen mode:');
-		trans_setHtmlText(sai_id_page_message_header, 'Message');
-		trans_setHtmlText(sai_id_button_mesage_reset, 'Reset');
-		trans_setHtmlText(sai_id_color_1st_reset, 'Reset');
-		trans_setHtmlText(sai_id_color_2nd_reset, 'Reset');
-		trans_setHtmlText(sai_id_button_mesage_cancel, 'Cancel');
-		trans_setHtmlText(sai_id_button_mesage_ok, 'OK');
-		trans_setHtmlText(sai_id_text_message_size, 'Size of message:');
-		trans_setHtmlText(sai_id_text_note, 'Sound button:');
-		trans_setHtmlText(sai_id_text_motion_blur, 'Motion Blur:');
 		trans_setSelectOptionText(sai_id_select_sound, '', '(None)');
 		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Cattish');
 		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Horror');
