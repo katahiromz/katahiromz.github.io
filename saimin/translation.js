@@ -1278,6 +1278,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': 'メッセージの大きさ:',
 		'TEXT_NOTE': '音符ボタン:',
 		'TEXT_MOTION_BLUR': 'モーション ブラー:',
+		'TEXT_NONE': '(なし)',
+		'TEXT_SOUND_CATTISH': 'ネコっぽい',
+		'TEXT_SOUND_HORROR': '恐怖',
+		'TEXT_SOUND_HUNTING': '狩人',
+		'TEXT_SOUND_LONGING': 'あこがれ',
+		'TEXT_SOUND_LOVELY': '愛らしい',
+		'TEXT_SOUND_MAGIC': '魔術',
+		'TEXT_SOUND_ORA_SAIMIN': 'おら! 催眠!',
+		'TEXT_SOUND_NOISE': '雑音',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': 'ヘリコプター',
+		'TEXT_SOUND_PACHI': 'パチ',
+		'TEXT_SOUND_WAHWAH': 'ワウワウ',
+		'TEXT_SOUND_MECHANICAL': '機械音',
+		'TEXT_SOUND_PSYCHO': '猟奇',
+		'TEXT_SOUND_MYANMYAN': 'みゃんみゃん',
 	},
 	'zh-CN': { // Chinese (Simplified)
 		'TEXT_OK': '確定',
@@ -1365,6 +1381,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': '消息大小：',
 		'TEXT_NOTE': '声音按钮：',
 		'TEXT_MOTION_BLUR': '运动模糊：',
+		'TEXT_NONE': '(无)',
+		'TEXT_SOUND_CATTISH': '像猫一样',
+		'TEXT_SOUND_HORROR': '害怕',
+		'TEXT_SOUND_HUNTING': '猎人',
+		'TEXT_SOUND_LONGING': '渴望',
+		'TEXT_SOUND_LOVELY': '可爱的',
+		'TEXT_SOUND_MAGIC': '巫术',
+		'TEXT_SOUND_ORA_SAIMIN': '天啊！ 催眠！',
+		'TEXT_SOUND_NOISE': '噪音',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': '直升机',
+		'TEXT_SOUND_PACHI': '弹珠',
+		'TEXT_SOUND_WAHWAH': '哇哇',
+		'TEXT_SOUND_MECHANICAL': '机械声',
+		'TEXT_SOUND_PSYCHO': '惊魂记',
+		'TEXT_SOUND_MYANMYAN': '缅缅',
 	},
 	'zh-TW': { // Chinese (Traditional)
 		'TEXT_OK': '確定',
@@ -1452,6 +1484,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': '消息大小：',
 		'TEXT_NOTE': '聲音按鈕：',
 		'TEXT_MOTION_BLUR': '運動模糊：',
+		'TEXT_NONE': '(無)',
+		'TEXT_SOUND_CATTISH': '像貓一樣',
+		'TEXT_SOUND_HORROR': '害怕',
+		'TEXT_SOUND_HUNTING': '獵人',
+		'TEXT_SOUND_LONGING': '渴望',
+		'TEXT_SOUND_LOVELY': '可愛的',
+		'TEXT_SOUND_MAGIC': '巫術',
+		'TEXT_SOUND_ORA_SAIMIN': '天啊！ 催眠！',
+		'TEXT_SOUND_NOISE': '噪音',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': '直升機',
+		'TEXT_SOUND_PACHI': '彈珠',
+		'TEXT_SOUND_WAHWAH': '哇哇',
+		'TEXT_SOUND_MECHANICAL': '機械聲',
+		'TEXT_SOUND_PSYCHO': '驚魂記',
+		'TEXT_SOUND_MYANMYAN': '緬緬',
 	},
 	'ko-KR': { // Korean
 		'TEXT_OK': 'OK',
@@ -1539,6 +1587,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': '메시지 크기:',
 		'TEXT_NOTE': '사운드 버튼:',
 		'TEXT_MOTION_BLUR': '모션 블러:',
+		'TEXT_NONE': '(없음)',
+		'TEXT_SOUND_CATTISH': '고양이 같은',
+		'TEXT_SOUND_HORROR': '공포',
+		'TEXT_SOUND_HUNTING': '사냥꾼',
+		'TEXT_SOUND_LONGING': '동경',
+		'TEXT_SOUND_LOVELY': '사랑스러운',
+		'TEXT_SOUND_MAGIC': '마술',
+		'TEXT_SOUND_ORA_SAIMIN': '오! 최면!',
+		'TEXT_SOUND_NOISE': '소음',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': '헬리콥터',
+		'TEXT_SOUND_PACHI': '파칭',
+		'TEXT_SOUND_WAHWAH': '와와',
+		'TEXT_SOUND_MECHANICAL': '기계음',
+		'TEXT_SOUND_PSYCHO': '사이코',
+		'TEXT_SOUND_MYANMYAN': '미안',
 	},
 	'it-IT': { // Italian
 		'TEXT_OK': 'OK',
@@ -1626,6 +1690,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': 'Dimensione del messaggio:',
 		'TEXT_NOTE': 'Pulsante audio:',
 		'TEXT_MOTION_BLUR': 'Sfocatura movimento:',
+		'TEXT_NONE': '(Nessuno)',
+		'TEXT_SOUND_CATTISH': 'Simile a un gatto',
+		'TEXT_SOUND_HORROR': 'Paura',
+		'TEXT_SOUND_HUNTING': 'A caccia',
+		'TEXT_SOUND_LONGING': 'Desiderio',
+		'TEXT_SOUND_LOVELY': 'Adorabile',
+		'TEXT_SOUND_MAGIC': 'Stregoneria',
+		'TEXT_SOUND_ORA_SAIMIN': 'Ora! Saimin!',
+		'TEXT_SOUND_NOISE': 'Rumore',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': 'Elicottero',
+		'TEXT_SOUND_PACHI': 'Pachi',
+		'TEXT_SOUND_WAHWAH': 'WahWah',
+		'TEXT_SOUND_MECHANICAL': 'Meccanico',
+		'TEXT_SOUND_PSYCHO': 'Psicopatico',
+		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
 	},
 	'de-DE': { // German
 		'TEXT_OK': 'OK',
@@ -1713,6 +1793,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': 'Größe der Nachricht:',
 		'TEXT_NOTE': 'Sound-Taste:',
 		'TEXT_MOTION_BLUR': 'Bewegungsunschärfe:',
+		'TEXT_NONE': '(Kein)',
+		'TEXT_SOUND_CATTISH': 'Katzenartig',
+		'TEXT_SOUND_HORROR': 'Furcht',
+		'TEXT_SOUND_HUNTING': 'Jagd',
+		'TEXT_SOUND_LONGING': 'Sehnsucht',
+		'TEXT_SOUND_LOVELY': 'Liebenswert',
+		'TEXT_SOUND_MAGIC': 'Hexerei',
+		'TEXT_SOUND_ORA_SAIMIN': 'Ora! Saimin!',
+		'TEXT_SOUND_NOISE': 'Lärm',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': 'Hubschrauber',
+		'TEXT_SOUND_PACHI': 'Pachi',
+		'TEXT_SOUND_WAHWAH': 'WahWah',
+		'TEXT_SOUND_MECHANICAL': 'Mechanischer',
+		'TEXT_SOUND_PSYCHO': 'Psycho',
+		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
 	},
 	'es-ES': { // Spanish
 		'TEXT_OK': 'OK',
@@ -1800,6 +1896,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': 'Tamaño del mensaje:',
 		'TEXT_NOTE': 'Botón de nota musical:',
 		'TEXT_MOTION_BLUR': 'Desenfoque de movimiento:',
+		'TEXT_NONE': '(Ninguno)',
+		'TEXT_SOUND_CATTISH': 'Felino',
+		'TEXT_SOUND_HORROR': 'Miedo',
+		'TEXT_SOUND_HUNTING': 'Cazador',
+		'TEXT_SOUND_LONGING': 'Anhelar',
+		'TEXT_SOUND_LOVELY': 'Adorable',
+		'TEXT_SOUND_MAGIC': 'Magia',
+		'TEXT_SOUND_ORA_SAIMIN': 'Ora! Saimin!',
+		'TEXT_SOUND_NOISE': 'Ruido',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': 'Helicóptero',
+		'TEXT_SOUND_PACHI': 'Pachi',
+		'TEXT_SOUND_WAHWAH': 'Wah Wah',
+		'TEXT_SOUND_MECHANICAL': 'Mecánico',
+		'TEXT_SOUND_PSYCHO': 'Psicópata',
+		'TEXT_SOUND_MYANMYAN': 'Myanmar Myanmar',
 	},
 	'ru-RU': {
 		'TEXT_OK': 'Хорошо',
@@ -1887,6 +1999,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': 'Размер сообщения:',
 		'TEXT_NOTE': 'Кнопка музыкальной ноты:',
 		'TEXT_MOTION_BLUR': 'Размытость:',
+		'TEXT_NONE': '(Никто)',
+		'TEXT_SOUND_CATTISH': 'Кошачий',
+		'TEXT_SOUND_HORROR': 'Страх',
+		'TEXT_SOUND_HUNTING': 'Охотник',
+		'TEXT_SOUND_LONGING': 'Стремятся к',
+		'TEXT_SOUND_LOVELY': 'Восхитительный',
+		'TEXT_SOUND_MAGIC': 'Магия',
+		'TEXT_SOUND_ORA_SAIMIN': 'Ora! Saimin!',
+		'TEXT_SOUND_NOISE': 'Шум',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': 'Вертолет',
+		'TEXT_SOUND_PACHI': 'Пачи',
+		'TEXT_SOUND_WAHWAH': 'ВахВах',
+		'TEXT_SOUND_MECHANICAL': 'Механический',
+		'TEXT_SOUND_PSYCHO': 'Психо',
+		'TEXT_SOUND_MYANMYAN': 'Мьян Мьян',
 	},
 	'en-US': {
 		'TEXT_OK': 'OK',
@@ -1974,6 +2102,22 @@ trans_trans = {
 		'TEXT_MESSAGE_SIZE': 'Size of message:',
 		'TEXT_NOTE': 'Sound button:',
 		'TEXT_MOTION_BLUR': 'Motion Blur:',
+		'TEXT_NONE': '(None)',
+		'TEXT_SOUND_CATTISH': 'Cattish',
+		'TEXT_SOUND_HORROR': 'Horror',
+		'TEXT_SOUND_HUNTING': 'Hunting',
+		'TEXT_SOUND_LONGING': 'Longing',
+		'TEXT_SOUND_LOVELY': 'Lovely',
+		'TEXT_SOUND_MAGIC': 'Magic',
+		'TEXT_SOUND_ORA_SAIMIN': 'Ora! Saimin!',
+		'TEXT_SOUND_NOISE': 'Noise',
+		'TEXT_SOUND_432HZ': '432Hz',
+		'TEXT_SOUND_HELI': 'Helicopter',
+		'TEXT_SOUND_PACHI': 'Pachi',
+		'TEXT_SOUND_WAHWAH': 'WahWah',
+		'TEXT_SOUND_MECHANICAL': 'Mechanical',
+		'TEXT_SOUND_PSYCHO': 'Psycho',
+		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
 	},
 };
 
@@ -2093,27 +2237,28 @@ const trans_localize = function(lang){
 	trans_setHtmlText(sai_id_text_note, trans_getText('TEXT_NOTE'));
 	trans_setHtmlText(sai_id_text_motion_blur, trans_getText('TEXT_MOTION_BLUR'));
 
+	trans_setSelectOptionText(sai_id_select_sound, '', trans_getText('TEXT_NONE'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Cattish', trans_getText('TEXT_SOUND_CATTISH'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Horror', trans_getText('TEXT_SOUND_HORROR'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Hunting', trans_getText('TEXT_SOUND_HUNTING'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Longing', trans_getText('TEXT_SOUND_LONGING'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Lovely', trans_getText('TEXT_SOUND_LOVELY'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Magic', trans_getText('TEXT_SOUND_MAGIC'));
+	trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', trans_getText('TEXT_SOUND_ORA_SAIMIN'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Noise', trans_getText('TEXT_SOUND_NOISE'));
+	trans_setSelectOptionText(sai_id_select_sound, '432Hz', trans_getText('TEXT_SOUND_432HZ'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Heli', trans_getText('TEXT_SOUND_HELI'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Pachi', trans_getText('TEXT_SOUND_PACHI'));
+	trans_setSelectOptionText(sai_id_select_sound, 'WahWah', trans_getText('TEXT_SOUND_WAHWAH'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', trans_getText('TEXT_SOUND_MECHANICAL'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Psycho', trans_getText('TEXT_SOUND_PSYCHO'));
+	trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', trans_getText('TEXT_SOUND_MYANMYAN'));
+
 	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
 	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
 
 	switch(trans_currentLanguage){
 	case 'ja-JP':
-		trans_setSelectOptionText(sai_id_select_sound, '', '(なし)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'ネコっぽい');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '恐怖');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '狩人');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'あこがれ');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '愛らしい');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '魔術');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'おら! 催眠!');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', '雑音');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'ヘリコプター');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'パチ');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'ワウワウ');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '機械音');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'サイコ');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'みゃんみゃん');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '音声の自動再生:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '音声の自動繰り返し:');
@@ -2149,22 +2294,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色');
 		break;
 	case 'zh-CN': // Chinese (Simplified)
-		trans_setSelectOptionText(sai_id_select_sound, '', '(无)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像猫一样');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '猎人');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '渴望');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '可爱的');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '巫术');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', '天啊！ 催眠！');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', '噪音');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', '直升机');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', '弹珠');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', '哇哇');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '机械声');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', '惊魂记');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', '缅缅');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '自动播放音频：');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自动重复音频：');
@@ -2200,22 +2329,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'zh-TW': // Chinese (Traditional)
-		trans_setSelectOptionText(sai_id_select_sound, '', '(無)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '像貓一樣');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '害怕');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '獵人');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '渴望');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '可愛的');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '巫術');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', '天啊！ 催眠！');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', '噪音');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', '直升機');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', '彈珠');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', '哇哇');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '機械聲');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', '驚魂記');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', '緬緬');
 		trans_setHtmlText(sai_id_text_sound_volume, '音量：');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '自動播放音訊：');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '自動重複音訊：');
@@ -2251,22 +2364,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
 		break;
 	case 'ko-KR': // Korean
-		trans_setSelectOptionText(sai_id_select_sound, '', '(없음)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', '고양이 같은');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', '공포');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', '사냥꾼');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', '동경');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', '사랑스러운');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', '마술');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', '오! 최면!');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', '소음');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', '헬리콥터');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', '파칭');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', '와와');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', '기계음');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', '사이코');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', '미안');
 		trans_setHtmlText(sai_id_text_sound_volume, '사운드 볼륨:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, '오디오 자동 재생:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, '음성 자동 반복:');
@@ -2302,22 +2399,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '백색');
 		break;
 	case 'it-IT': // Italian
-		trans_setSelectOptionText(sai_id_select_sound, '', '(Nessuno)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Simile a un gatto');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Paura');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'A caccia');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Desiderio');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Adorabile');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Stregoneria');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', 'Rumore');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Elicottero');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'WahWah');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Meccanico');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psicopatico');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myan Myan');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Volume del suono:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Riproduzione automatica dell\'audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Ripetere l\'audio:');
@@ -2353,22 +2434,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Bianco');
 		break;
 	case 'de-DE': // German
-		trans_setSelectOptionText(sai_id_select_sound, '', '(Kein)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Katzenartig');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Furcht');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Jagd');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Sehnsucht');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Liebenswert');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Hexerei');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', 'Lärm');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Hubschrauber');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'WahWah');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Mechanischer');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psycho');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myan Myan');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Lautstärke:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Audio automatisch abspielen:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Sich Wiederholender Ton:');
@@ -2404,22 +2469,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Weiß');
 		break;
 	case 'es-ES': // Spanish
-		trans_setSelectOptionText(sai_id_select_sound, '', '(Ninguno)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Felino');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Miedo');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Cazador');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Anhelar');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Adorable');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Magia');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', 'Ruido');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Helicóptero');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'Wah Wah');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Mecánico');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psicópata');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myanmar Myanmar');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Volumen:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Reproducción automática de audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Audio de repetición automática:');
@@ -2455,22 +2504,6 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Blanco');
 		break;
 	case 'ru-RU': // Russian
-		trans_setSelectOptionText(sai_id_select_sound, '', '(Никто)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Кошачий');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Страх');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Охотник');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Стремятся к');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Восхитительный');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Магия');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', 'Шум');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Вертолет');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Пачи');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'ВахВах');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Механический');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Психо');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Мьян Мьян');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Объем:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Автовоспроизведение звука:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Автоповтор аудио:');
@@ -2507,22 +2540,6 @@ const trans_localize = function(lang){
 		break;
 	case 'en-US':
 	default:
-		trans_setSelectOptionText(sai_id_select_sound, '', '(None)');
-		trans_setSelectOptionText(sai_id_select_sound, 'Cattish', 'Cattish');
-		trans_setSelectOptionText(sai_id_select_sound, 'Horror', 'Horror');
-		trans_setSelectOptionText(sai_id_select_sound, 'Hunting', 'Hunting');
-		trans_setSelectOptionText(sai_id_select_sound, 'Longing', 'Longing');
-		trans_setSelectOptionText(sai_id_select_sound, 'Lovely', 'Lovely');
-		trans_setSelectOptionText(sai_id_select_sound, 'Magic', 'Magic');
-		trans_setSelectOptionText(sai_id_select_sound, 'OraSaimin', 'Ora! Saimin!');
-		trans_setSelectOptionText(sai_id_select_sound, 'Noise', 'Noise');
-		trans_setSelectOptionText(sai_id_select_sound, '432Hz', '432Hz');
-		trans_setSelectOptionText(sai_id_select_sound, 'Heli', 'Helicopter');
-		trans_setSelectOptionText(sai_id_select_sound, 'Pachi', 'Pachi');
-		trans_setSelectOptionText(sai_id_select_sound, 'WahWah', 'WahWah');
-		trans_setSelectOptionText(sai_id_select_sound, 'Mechanical', 'Mechanical');
-		trans_setSelectOptionText(sai_id_select_sound, 'Psycho', 'Psycho');
-		trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', 'Myan Myan');
 		trans_setHtmlText(sai_id_text_sound_volume, 'Sound volume:');
 		trans_setHtmlText(sai_id_text_auto_play_sound, 'Auto-play audio:');
 		trans_setHtmlText(sai_id_text_auto_repeat_sound, 'Repeating audio:');
