@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	const SAI_set_language = function(lang){
 		// 言語が指定されてなければとりあえず英語。
 		if(!lang)
-			lang = 'en';
+			lang = 'en-US';
 
 		// ローカライズ。translation.jsを参照。
 		trans_localize(lang);
@@ -4586,7 +4586,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			}
 			// {{LANGUAGE_SPECIFIC}}
 			if(e.key == 'e' || e.key == 'E'){ // English
-				SAI_set_language('en');
+				SAI_set_language('en-US');
 				return;
 			}
 			if(e.key == 'z' || e.key == 'Z'){ // Chinese (Simplified)
@@ -4594,7 +4594,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				return;
 			}
 			if(e.key == 'j' || e.key == 'J'){ // Japanese
-				SAI_set_language('ja');
+				SAI_set_language('ja-JP');
 				return;
 			}
 			//alert(e.key);

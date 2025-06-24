@@ -1,7 +1,33 @@
 // translation.js --- Hypnosis KraKra tranlation
 
-let trans_currentLanguage = 'en';
+let trans_currentLanguage = 'en-US';
 let trans_skin = 'purple';
+
+// {{LANGUAGE_SPECIFIC}}
+const trans_standardizeLanguage = function(language){
+	switch (language){
+	case 'zh': case 'zh-CN': case 'zh-SG': case 'zh-cn': case 'zh-sg':
+		return 'zh-CN'; // Chinese (Simplified)
+	case 'zh-TW': case 'zh-HK': case 'zh-MO': case 'zh-tw': case 'zh-hk': case 'zh-mo':
+		return 'zh-TW'; // Chinese (Traditional)
+	case 'de': case 'de-DE': case 'de-de':
+		return 'de-DE'; // German
+	case 'it': case 'it-IT': case 'it-it':
+		return 'it-IT'; // Italian
+	case 'ja': case 'ja-JP': case 'ja-jp':
+		return 'ja-JP'; // Japanese
+	case 'ko': case 'kr': case 'ko-KR': case 'ko-kr':
+		return 'ko-KR'; // Korean
+	case 'es': case 'es-ES': case 'es-es':
+		return 'es-ES'; // Spanish
+	case 'ru': case 'ru-RU': case 'ru-ru': case 'os-RU': case 'os-ru': case 'ru-KZ':
+	case 'ru-kz': case 'ru-UA': case 'ru-ua': case 'ru-BY': case 'ru-by': case 'ru-KG':
+	case 'ru-kg': case 'ru-MD': case 'ru-md':
+		return 'ru-RU'; // Russian
+	default:
+		return 'en-US'; // English
+	}
+};
 
 // {{LANGUAGE_SPECIFIC}} {{COLOR_SPECIFIC}}
 const trans_getDefaultSkin = function(){
@@ -9,18 +35,18 @@ const trans_getDefaultSkin = function(){
 	case 'zh-CN':
 	case 'zh-TW':
 		return 'golden';
-	case 'en':
+	case 'en-US':
 		return 'blue';
-	case 'de':
-	case 'ru':
+	case 'de-DE':
+	case 'ru-RU':
 	default:
 		return 'purple';
-	case 'it':
+	case 'it-IT':
 	case 'ko-KR':
 		return 'red';
-	case 'ja':
+	case 'ja-JP':
 		return 'pink';
-	case 'es':
+	case 'es-ES':
 		return 'darkgreen';
 	}
 };
@@ -692,24 +718,26 @@ const trans_DEFAULT_MESSAGE_LIST_RU = [
 
 const trans_message_list = function(){
 	// {{LANGUAGE_SPECIFIC}}
-	if(trans_currentLanguage == 'ja' || trans_currentLanguage == 'ja-JP') // Japanese
+	switch (trans_currentLanguage){
+	case 'ja-JP': // Japanese
 		return trans_DEFAULT_MESSAGE_LIST_JA;
-	else if(trans_currentLanguage == 'zh-CN') // Chinese (Simplified)
+	case 'zh-CN': // Chinese (Simplified)
 		return trans_DEFAULT_MESSAGE_LIST_ZH_CN;
-	else if(trans_currentLanguage == 'zh-TW') // Chinese (Traditional)
+	case 'zh-TW': // Chinese (Traditional)
 		return trans_DEFAULT_MESSAGE_LIST_ZH_TW;
-	else if(trans_currentLanguage == 'ko-KR') // Korean
+	case 'ko-KR': // Korean
 		return trans_DEFAULT_MESSAGE_LIST_KO_KR;
-	else if(trans_currentLanguage == 'it' || trans_currentLanguage == 'it-IT') // Italian
+	case 'it-IT': // Italian
 		return trans_DEFAULT_MESSAGE_LIST_IT;
-	else if(trans_currentLanguage == 'de' || trans_currentLanguage == 'de-DE') // German
+	case 'de-DE': // German
 		return trans_DEFAULT_MESSAGE_LIST_DE;
-	else if(trans_currentLanguage == 'es' || trans_currentLanguage == 'es-ES') // Spanish
+	case 'es-ES': // Spanish
 		return trans_DEFAULT_MESSAGE_LIST_ES;
-	else if(trans_currentLanguage == 'ru' || trans_currentLanguage == 'ru-RU') // Russian
+	case 'ru-RU': // Russian
 		return trans_DEFAULT_MESSAGE_LIST_RU;
-	else // English is default
+	default: // English is default
 		return trans_DEFAULT_MESSAGE_LIST_EN;
+	}
 }
 
 // {{LANGUAGE_SPECIFIC}}
@@ -1162,418 +1190,699 @@ Copyright (c) 2023 TT
 Copyright (c) 2021 Nenad Markuš
 Copyright (c) 2018 Robert Eisele
 `
-
 // {{LANGUAGE_SPECIFIC}}
+trans_trans = {
+	'ja-JP': { // Japanese
+		'TEXT_OK': 'OK',
+		'TEXT_CANCEL': 'キャンセル',
+		'TEXT_YES': 'はい',
+		'TEXT_NO': 'いいえ',
+		'TEXT_CHOOSE_LANGUAGE': '言語選択 (Choose a language)',
+		'TEXT_ABOUT_APP': 'バージョン情報',
+		'TEXT_INIT_APP': 'このアプリを初期化しますか？',
+		'TEXT_INITTED_APP': 'アプリを初期化しました。',
+		'TEXT_INPUT_MESSAGE': 'メッセージ文字列を入力してください。',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '。',
+		'TEXT_PERIOD_SPACE': '。',
+		'TEXT_RELEASE_HYPNOSIS': '催眠解除',
+		'TEXT_HYPNOSIS_RELEASED': '催眠解除。',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_ja.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_ja.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_ja.svg',
+		'TEXT_NO_BLINKING': '点滅なし',
+		'TEXT_LOGO': 'img/logo_ja.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_ja.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_ja.mp3',
+		'TEXT_I_AGREE': '私は同意します',
+		'TEXT_SIZE_SMALL': '小さい',
+		'TEXT_SIZE_NORMAL': '普通',
+		'TEXT_SIZE_LARGE': '大きい',
+		'TEXT_SIZE_HUGE': '巨大',
+		'TEXT_SPEED_ZERO': '停止',
+		'TEXT_SPEED_SLOW': '遅い',
+		'TEXT_SPEED_NORMAL': '普通',
+		'TEXT_SPEED_FAST': '速い',
+		'TEXT_SPEED_SUPER_FAST': '超速い',
+		'TEXT_SPEED_IRREGULAR': '不規則',
+		'TEXT_RAINBOW': '虹色',
+		'TEXT_FACE_GETTER': '顔認識',
+		'TEXT_TAP_ON_TARGET': 'ターゲットをタップしてください',
+		'TEXT_CAN_LOCK_ON': 'ロックオンできます',
+		'TEXT_CANT_FIND_FACE': '顔が見つかりません',
+		'TEXT_LOCK_ON': 'ロックオン',
+		'TEXT_UNLOCK': 'ロック解除',
+		'TEXT_GO_BACK': '戻る',
+		'TEXT_NO_WEBCONNECT': 'ネット接続が利用できません',
+		'TEXT_INPUTMESSAGE': 'メッセージを入力',
+		'TEXT_NOTICE': trans_NOTICE_JA,
+		'TEXT_LANGUAGE': '言語 (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (英語)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': '映像の種類:',
+		'TEXT_PIC_0': '動画 0：ダミー画面（練習用）',
+		'TEXT_PIC_1': '動画 1：対数らせん',
+		'TEXT_PIC_2': '動画 2：同心円状',
+		'TEXT_PIC_3': '動画 3：目が回る',
+		'TEXT_PIC_4': '動画 4：アルキメデスのらせん',
+		'TEXT_PIC_5': '動画 5：広がるハート',
+		'TEXT_PIC_6': '動画 6：五円玉',
+		'TEXT_PIC_7': '動画 7：奇妙な渦巻き',
+		'TEXT_PIC_8': '動画 8：クレージーな色',
+		'TEXT_PIC_9': '動画 9：対数らせん 2',
+		'TEXT_PIC_10': '動画 10：アナログディスク',
+		'TEXT_PIC_11': '動画 11：奇妙な渦巻き 2',
+		'TEXT_PIC_12': '動画 12：万華鏡',
+		'TEXT_PIC_13': '動画 13：1番目の色の画面',
+		'TEXT_PIC_14': '動画 14：2番目の色の画面',
+		'TEXT_PIC_15': '動画 15：ただの黒い画面',
+		'TEXT_PIC_16': '動画 16：ただの白い画面',
+		'TEXT_PIC_17': '動画 17：ヘビの回転',
+		'TEXT_PIC_18': '動画 18：ひずみ放射',
+		'TEXT_PIC_19': '動画 19：ランダムな波',
+	},
+	'zh-CN': { // Chinese (Simplified)
+		'TEXT_OK': '確定',
+		'TEXT_CANCEL': '取消',
+		'TEXT_YES': '是',
+		'TEXT_NO': '否',
+		'TEXT_CHOOSE_LANGUAGE': '语言选择 (Choose a language)',
+		'TEXT_ABOUT_APP': '关于这个应用程序',
+		'TEXT_INIT_APP': '您想初始化这个应用程序吗？',
+		'TEXT_INITTED_APP': '初始化了应用程序。',
+		'TEXT_INPUT_MESSAGE': '请输入消息文本。',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '。',
+		'TEXT_PERIOD_SPACE': '。',
+		'TEXT_RELEASE_HYPNOSIS': '去催眠',
+		'TEXT_HYPNOSIS_RELEASED': '我取消了催眠。',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_zh-CN.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_zh-CN.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_zh-CN.svg',
+		'TEXT_NO_BLINKING': '无闪光灯',
+		'TEXT_LOGO': 'img/logo_zh-CN.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_zh-CN.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_zh-CN.mp3',
+		'TEXT_I_AGREE': '我同意',
+		'TEXT_SIZE_SMALL': '小的',
+		'TEXT_SIZE_NORMAL': '普通的',
+		'TEXT_SIZE_LARGE': '大的',
+		'TEXT_SIZE_HUGE': '巨大的',
+		'TEXT_SPEED_ZERO': '停止',
+		'TEXT_SPEED_SLOW': '慢的',
+		'TEXT_SPEED_NORMAL': '普通的',
+		'TEXT_SPEED_FAST': '快速地',
+		'TEXT_SPEED_SUPER_FAST': '超级快',
+		'TEXT_SPEED_IRREGULAR': '不规律的',
+		'TEXT_RAINBOW': '彩虹色',
+		'TEXT_FACE_GETTER': '人脸识别',
+		'TEXT_TAP_ON_TARGET': '请点击目标',
+		'TEXT_CAN_LOCK_ON': '可以锁定',
+		'TEXT_CANT_FIND_FACE': '未找到面孔',
+		'TEXT_LOCK_ON': '锁上',
+		'TEXT_UNLOCK': '开锁',
+		'TEXT_GO_BACK': '返回',
+		'TEXT_NO_WEBCONNECT': '无法连接互联网。',
+		'TEXT_INPUTMESSAGE': '输入您的留言',
+		'TEXT_NOTICE': trans_NOTICE_ZH_CN,
+		'TEXT_LANGUAGE': '语言 (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (英语)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': '视频类型：',
+		'TEXT_PIC_0': '电影0：虚拟屏幕（用于练习）',
+		'TEXT_PIC_1': '电影1：对数螺线',
+		'TEXT_PIC_2': '电影2：同心圆',
+		'TEXT_PIC_3': '电影3：旋转的眼',
+		'TEXT_PIC_4': '电影4：阿基米德螺旋线',
+		'TEXT_PIC_5': '电影5：扩展的心',
+		'TEXT_PIC_6': '电影6：5日元硬币',
+		'TEXT_PIC_7': '电影7：奇怪的漩涡',
+		'TEXT_PIC_8': '电影8：疯狂的颜色',
+		'TEXT_PIC_9': '电影9：对数螺线 2',
+		'TEXT_PIC_10': '电影10：模拟光盘',
+		'TEXT_PIC_11': '电影11：奇怪的漩涡 2',
+		'TEXT_PIC_12': '电影12：万花筒',
+		'TEXT_PIC_13': '电影13：第一个彩色屏幕',
+		'TEXT_PIC_14': '电影14：第二个彩色屏幕',
+		'TEXT_PIC_15': '电影15：只是黑屏',
+		'TEXT_PIC_16': '电影16：只是白屏',
+		'TEXT_PIC_17': '电影17：旋转蛇',
+		'TEXT_PIC_18': '电影18：畸变辐射',
+		'TEXT_PIC_19': '电影19：随机波',
+	},
+	'zh-TW': { // Chinese (Traditional)
+		'TEXT_OK': '確定',
+		'TEXT_CANCEL': '取消',
+		'TEXT_YES': '是',
+		'TEXT_NO': '否',
+		'TEXT_CHOOSE_LANGUAGE': '語言選擇 (Choose a language)',
+		'TEXT_ABOUT_APP': '版本信息',
+		'TEXT_INIT_APP': '您想初始化這個應用程式嗎？',
+		'TEXT_INITTED_APP': '初始化了應用程序。',
+		'TEXT_INPUT_MESSAGE': '請輸入消息字符串。',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '。',
+		'TEXT_PERIOD_SPACE': '。',
+		'TEXT_RELEASE_HYPNOSIS': '催眠釋放',
+		'TEXT_HYPNOSIS_RELEASED': '催眠釋放。',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_zh-TW.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_zh-TW.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_zh-TW.svg',
+		'TEXT_NO_BLINKING': '無閃光燈',
+		'TEXT_LOGO': 'img/logo_zh-TW.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_zh-TW.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_zh-TW.mp3',
+		'TEXT_I_AGREE': '我同意',
+		'TEXT_SIZE_SMALL': '小的',
+		'TEXT_SIZE_NORMAL': '普通的',
+		'TEXT_SIZE_LARGE': '大的',
+		'TEXT_SIZE_HUGE': '巨大的',
+		'TEXT_SPEED_ZERO': '停止',
+		'TEXT_SPEED_SLOW': '慢的',
+		'TEXT_SPEED_NORMAL': '普通的',
+		'TEXT_SPEED_FAST': '快速地',
+		'TEXT_SPEED_SUPER_FAST': '超快',
+		'TEXT_SPEED_IRREGULAR': '不規律的',
+		'TEXT_RAINBOW': '彩虹色',
+		'TEXT_FACE_GETTER': '人臉辨識',
+		'TEXT_TAP_ON_TARGET': '請點選目標',
+		'TEXT_CAN_LOCK_ON': '可以鎖定',
+		'TEXT_CANT_FIND_FACE': '未找到臉孔',
+		'TEXT_LOCK_ON': '鎖上',
+		'TEXT_UNLOCK': '開鎖',
+		'TEXT_GO_BACK': '返回',
+		'TEXT_NO_WEBCONNECT': '無法連接網路。',
+		'TEXT_INPUTMESSAGE': '輸入您的留言',
+		'TEXT_NOTICE': trans_NOTICE_ZH_TW,
+		'TEXT_LANGUAGE': '語言 (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (英語)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': '視頻類型：',
+		'TEXT_PIC_0': '電影0：虛擬螢幕（用於練習）',
+		'TEXT_PIC_1': '電影1：對數螺線',
+		'TEXT_PIC_2': '電影2：同心圆',
+		'TEXT_PIC_3': '電影3：旋轉的眼',
+		'TEXT_PIC_4': '電影4：阿基米德螺旋線',
+		'TEXT_PIC_5': '電影5：擴展的心',
+		'TEXT_PIC_6': '電影6：5日元硬幣',
+		'TEXT_PIC_7': '電影7：奇怪的漩渦',
+		'TEXT_PIC_8': '電影8：瘋狂的顏色',
+		'TEXT_PIC_9': '電影9：對數螺線 2',
+		'TEXT_PIC_10': '電影10：類比光碟',
+		'TEXT_PIC_11': '電影11：奇怪的漩渦 2',
+		'TEXT_PIC_12': '電影12：萬花筒',
+		'TEXT_PIC_13': '電影13：第一个彩色屏幕',
+		'TEXT_PIC_14': '電影14：第二个彩色屏幕',
+		'TEXT_PIC_15': '電影15：只是黑屏',
+		'TEXT_PIC_16': '電影16：只是白屏',
+		'TEXT_PIC_17': '電影17：旋轉蛇',
+		'TEXT_PIC_18': '電影18：畸變輻射',
+		'TEXT_PIC_19': '電影19：隨機波',
+	},
+	'ko-KR': { // Korean
+		'TEXT_OK': 'OK',
+		'TEXT_CANCEL': '취소',
+		'TEXT_YES': '예',
+		'TEXT_NO': '아니오',
+		'TEXT_CHOOSE_LANGUAGE': '언어 선택 (Choose a language)',
+		'TEXT_ABOUT_APP': '버전 정보',
+		'TEXT_INIT_APP': '이 앱을 초기화하시겠습니까?',
+		'TEXT_INITTED_APP': '앱을 초기화했습니다.',
+		'TEXT_INPUT_MESSAGE': '메시지 문자열을 입력하십시오.',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '. ',
+		'TEXT_PERIOD_SPACE': '. ',
+		'TEXT_RELEASE_HYPNOSIS': '최면 해제',
+		'TEXT_HYPNOSIS_RELEASED': '최면 해제.',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_ko-KR.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_ko-KR.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_ko-KR.svg',
+		'TEXT_NO_BLINKING': '깜박임 없음',
+		'TEXT_LOGO': 'img/logo_ko-KR.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_ko-KR.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_ko-KR.mp3',
+		'TEXT_I_AGREE': '동의합니다',
+		'TEXT_SIZE_SMALL': '작은',
+		'TEXT_SIZE_NORMAL': '정상',
+		'TEXT_SIZE_LARGE': '크기가 큰',
+		'TEXT_SIZE_HUGE': '거대한',
+		'TEXT_SPEED_ZERO': '정지중',
+		'TEXT_SPEED_SLOW': '느린',
+		'TEXT_SPEED_NORMAL': '정상',
+		'TEXT_SPEED_FAST': '빠른',
+		'TEXT_SPEED_SUPER_FAST': '매우 빠른',
+		'TEXT_SPEED_IRREGULAR': '불규칙한',
+		'TEXT_RAINBOW': '무지개 색',
+		'TEXT_FACE_GETTER': '얼굴 인식',
+		'TEXT_TAP_ON_TARGET': '타겟을 탭해주세요',
+		'TEXT_CAN_LOCK_ON': '잠글 수 있습니다',
+		'TEXT_CANT_FIND_FACE': '얼굴을 찾을 수 없음',
+		'TEXT_LOCK_ON': '잠금',
+		'TEXT_UNLOCK': '잠금 해제',
+		'TEXT_GO_BACK': '뒤로',
+		'TEXT_NO_WEBCONNECT': '인터넷 연결을 사용할 수 없습니다.',
+		'TEXT_INPUTMESSAGE': '메시지 입력',
+		'TEXT_NOTICE': trans_NOTICE_KO_KR,
+		'TEXT_LANGUAGE': '언어 (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (영어)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': '그림 유형:',
+		'TEXT_PIC_0': '동영상 0：더미 화면 (연습용)',
+		'TEXT_PIC_1': '동영상 1：로그 나선',
+		'TEXT_PIC_2': '동영상 2：동심원형',
+		'TEXT_PIC_3': '동영상 3：회전하는 눈',
+		'TEXT_PIC_4': '동영상 4：아르키메데스의 나선',
+		'TEXT_PIC_5': '동영상 5：퍼지는 하트들',
+		'TEXT_PIC_6': '동영상 6：오엔 구슬',
+		'TEXT_PIC_7': '동영상 7：이상한 소용돌이',
+		'TEXT_PIC_8': '동영상 8：미친 색',
+		'TEXT_PIC_9': '동영상 9：로그 나선 2',
+		'TEXT_PIC_10': '동영상 10：아날로그 디스크',
+		'TEXT_PIC_11': '동영상 11：이상한 소용돌이 2',
+		'TEXT_PIC_12': '동영상 12：만화경',
+		'TEXT_PIC_13': '동영상 13：첫 번째 컬러 화면',
+		'TEXT_PIC_14': '동영상 14：두 번째 색상 화면',
+		'TEXT_PIC_15': '동영상 15：그냥 검은 화면',
+		'TEXT_PIC_16': '동영상 16：그냥 흰색 화면',
+		'TEXT_PIC_17': '동영상 17：뱀 회전',
+		'TEXT_PIC_18': '동영상 18：스트레인 방사',
+		'TEXT_PIC_19': '동영상 19：무작위 파동',
+	},
+	'it-IT': { // Italian
+		'TEXT_OK': 'OK',
+		'TEXT_CANCEL': 'Annulla',
+		'TEXT_YES': 'SÌ',
+		'TEXT_NO': 'No',
+		'TEXT_CHOOSE_LANGUAGE': 'Scegli una lingua (Choose a language)',
+		'TEXT_ABOUT_APP': 'Informazioni sull\'app',
+		'TEXT_INIT_APP': 'Vuoi inizializzare questa app?',
+		'TEXT_INITTED_APP': 'Inizializzata l\'app.',
+		'TEXT_INPUT_MESSAGE': 'Inserisci il testo del messaggio.',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '.',
+		'TEXT_PERIOD_SPACE': '. ',
+		'TEXT_RELEASE_HYPNOSIS': 'Uccidi l\'ipnosi',
+		'TEXT_HYPNOSIS_RELEASED': 'Ipnosi liberata.',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_it.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_it.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_it.svg',
+		'TEXT_NO_BLINKING': 'Senza il flash',
+		'TEXT_LOGO': 'img/logo_it.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_it.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_it.mp3',
+		'TEXT_I_AGREE': 'Sono d\'accordo',
+		'TEXT_SIZE_SMALL': 'Piccola',
+		'TEXT_SIZE_NORMAL': 'Normale',
+		'TEXT_SIZE_LARGE': 'Grande',
+		'TEXT_SIZE_HUGE': 'Enorme',
+		'TEXT_SPEED_ZERO': 'Fermato',
+		'TEXT_SPEED_SLOW': 'Lento',
+		'TEXT_SPEED_NORMAL': 'Normale',
+		'TEXT_SPEED_FAST': 'Veloce',
+		'TEXT_SPEED_SUPER_FAST': 'Super Veloce',
+		'TEXT_SPEED_IRREGULAR': 'Irregolare',
+		'TEXT_RAINBOW': 'Arcobaleno',
+		'TEXT_FACE_GETTER': 'Riconoscimento Facciale',
+		'TEXT_TAP_ON_TARGET': 'Per favore tocca il bersaglio',
+		'TEXT_CAN_LOCK_ON': 'Può essere bloccato',
+		'TEXT_CANT_FIND_FACE': 'Volto non trovato',
+		'TEXT_LOCK_ON': 'Blocco su',
+		'TEXT_UNLOCK': 'Sbloccare',
+		'TEXT_GO_BACK': 'Ritorno',
+		'TEXT_NO_WEBCONNECT': 'La connessione Internet non è disponibile.',
+		'TEXT_INPUTMESSAGE': 'Inserisci il tuo messaggio',
+		'TEXT_NOTICE': trans_NOTICE_IT,
+		'TEXT_LANGUAGE': 'Lingua (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (Inglese)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': 'Il tipo di immagine:',
+		'TEXT_PIC_0': 'Film 0: Schermata fittizia (per esercitarsi)',
+		'TEXT_PIC_1': 'Film 1: Spirale Logaritmica',
+		'TEXT_PIC_2': 'Film 2: Cerchi concentrici',
+		'TEXT_PIC_3': 'Film 3: Gli occhi',
+		'TEXT_PIC_4': 'Film 4: Spirale di Archimede',
+		'TEXT_PIC_5': 'Film 5: Cuori che si diffondono',
+		'TEXT_PIC_6': 'Film 6: Moneta da 5 Yen',
+		'TEXT_PIC_7': 'Film 7: Strano Turbinio',
+		'TEXT_PIC_8': 'Film 8: Colori Pazzi',
+		'TEXT_PIC_9': 'Film 9: Spirale Logaritmica 2',
+		'TEXT_PIC_10': 'Film 10: Disco Analogico',
+		'TEXT_PIC_11': 'Film 11: Strano Turbinio 2',
+		'TEXT_PIC_12': 'Film 12: Caleidoscopio',
+		'TEXT_PIC_13': 'Film 13: 1° schermo a colori',
+		'TEXT_PIC_14': 'Film 14: 2° schermo a colori',
+		'TEXT_PIC_15': 'Film 15: Solo uno schermo nero',
+		'TEXT_PIC_16': 'Film 16: Solo uno schermo bianco',
+		'TEXT_PIC_17': 'Film 17: Serpente rotante',
+		'TEXT_PIC_18': 'Film 18: Radiazione di distorsione',
+		'TEXT_PIC_19': 'Film 19：Onde Casuali',
+	},
+	'de-DE': { // German
+		'TEXT_OK': 'OK',
+		'TEXT_CANCEL': 'Abbrechen',
+		'TEXT_YES': 'Ja',
+		'TEXT_NO': 'Nein',
+		'TEXT_CHOOSE_LANGUAGE': 'Wähle eine Sprache (Choose a language)',
+		'TEXT_ABOUT_APP': 'Über diese App',
+		'TEXT_INIT_APP': 'Möchten Sie diese App initialisieren?',
+		'TEXT_INITTED_APP': 'Initialisierte die App.',
+		'TEXT_INPUT_MESSAGE': 'Bitte geben Sie einen Nachrichtentext ein.',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '.',
+		'TEXT_PERIOD_SPACE': '. ',
+		'TEXT_RELEASE_HYPNOSIS': 'Töte Hypnose',
+		'TEXT_HYPNOSIS_RELEASED': 'Hypnose freigegeben.',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_de.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_de.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_de.svg',
+		'TEXT_NO_BLINKING': 'Kein Blitz',
+		'TEXT_LOGO': 'img/logo_de.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_de.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_de.mp3',
+		'TEXT_I_AGREE': 'Ich stimme zu',
+		'TEXT_SIZE_SMALL': 'Klein',
+		'TEXT_SIZE_NORMAL': 'Normal',
+		'TEXT_SIZE_LARGE': 'Groß',
+		'TEXT_SIZE_HUGE': 'Riesig',
+		'TEXT_SPEED_ZERO': 'Gestoppt',
+		'TEXT_SPEED_SLOW': 'Langsam',
+		'TEXT_SPEED_NORMAL': 'Normal',
+		'TEXT_SPEED_FAST': 'Schnell',
+		'TEXT_SPEED_SUPER_FAST': 'Super Schnell',
+		'TEXT_SPEED_IRREGULAR': 'Irregulär',
+		'TEXT_RAINBOW': 'Regenbogen',
+		'TEXT_FACE_GETTER': 'Gesichtserkennung',
+		'TEXT_TAP_ON_TARGET': 'Bitte tippen Sie auf das Ziel',
+		'TEXT_CAN_LOCK_ON': 'Abschließbar',
+		'TEXT_CANT_FIND_FACE': 'Gesicht nicht gefunden',
+		'TEXT_LOCK_ON': 'Sperren',
+		'TEXT_UNLOCK': 'Freischalten',
+		'TEXT_GO_BACK': 'Zurückkehren',
+		'TEXT_NO_WEBCONNECT': 'Die Internetverbindung ist nicht verfügbar.',
+		'TEXT_INPUTMESSAGE': 'Gib deine Nachricht ein',
+		'TEXT_NOTICE': trans_NOTICE_DE,
+		'TEXT_LANGUAGE': 'Sprache (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (Englisch)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': 'Die Art des Bildes:',
+		'TEXT_PIC_0': 'Film 0: Dummy-Bildschirm (zum Üben)',
+		'TEXT_PIC_1': 'Film 1: Logarithmische Spirale',
+		'TEXT_PIC_2': 'Film 2: Konzentrische Kreise',
+		'TEXT_PIC_3': 'Film 3: Die Augen',
+		'TEXT_PIC_4': 'Film 4: Die Spirale des Archimedes',
+		'TEXT_PIC_5': 'Film 5: Herzen verbreiten',
+		'TEXT_PIC_6': 'Film 6: 5-Yen-Münze',
+		'TEXT_PIC_7': 'Film 7: Seltsamer Wirbel',
+		'TEXT_PIC_8': 'Film 8: Verrückte Farben',
+		'TEXT_PIC_9': 'Film 9: Logarithmische Spirale 2',
+		'TEXT_PIC_10': 'Film 10: Analoge Scheibe',
+		'TEXT_PIC_11': 'Film 11: Seltsamer Wirbel 2',
+		'TEXT_PIC_12': 'Film 12: Kaleidoskop',
+		'TEXT_PIC_13': 'Film 13: Erster Farbbildschirm',
+		'TEXT_PIC_14': 'Film 14: Zweiter Farbbildschirm',
+		'TEXT_PIC_15': 'Film 15: Nur ein schwarzer Bildschirm',
+		'TEXT_PIC_16': 'Film 16: Nur ein weißer Bildschirm',
+		'TEXT_PIC_17': 'Film 17: Rotierende Schlange',
+		'TEXT_PIC_18': 'Film 18: Verzerrungsstrahlung',
+		'TEXT_PIC_19': 'Film 19：Zufällige Wellen',
+	},
+	'es-ES': { // Spanish
+		'TEXT_OK': 'OK',
+		'TEXT_CANCEL': 'Cancelar',
+		'TEXT_YES': 'Sí',
+		'TEXT_NO': 'No',
+		'TEXT_CHOOSE_LANGUAGE': 'Elige un idioma (Choose a language)',
+		'TEXT_ABOUT_APP': 'Información de versión',
+		'TEXT_INIT_APP': '¿Quieres inicializar esta aplicación?',
+		'TEXT_INITTED_APP': 'La aplicación se ha inicializado.',
+		'TEXT_INPUT_MESSAGE': 'Por favor ingrese la cadena del mensaje.',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '. ',
+		'TEXT_PERIOD_SPACE': '。',
+		'TEXT_RELEASE_HYPNOSIS': 'Dehipnosis',
+		'TEXT_HYPNOSIS_RELEASED': 'Liberé la hipnosis.',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_es.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_es.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_es.svg',
+		'TEXT_NO_BLINKING': 'Sin parpadeo',
+		'TEXT_LOGO': 'img/logo_es.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_es.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_es.mp3',
+		'TEXT_I_AGREE': 'Estoy de acuerdo',
+		'TEXT_SIZE_SMALL': 'Pequeño',
+		'TEXT_SIZE_NORMAL': 'Talla normal',
+		'TEXT_SIZE_LARGE': 'Grande',
+		'TEXT_SIZE_HUGE': 'Enorme',
+		'TEXT_SPEED_ZERO': 'Detener',
+		'TEXT_SPEED_SLOW': 'Lento',
+		'TEXT_SPEED_NORMAL': 'Velocidad normal',
+		'TEXT_SPEED_FAST': 'Rápido',
+		'TEXT_SPEED_SUPER_FAST': 'Súper rápido',
+		'TEXT_SPEED_IRREGULAR': 'Irregular',
+		'TEXT_RAINBOW': 'Color del arco iris',
+		'TEXT_FACE_GETTER': 'Reconocimiento facial',
+		'TEXT_TAP_ON_TARGET': 'Toca el objetivo',
+		'TEXT_CAN_LOCK_ON': 'Se puede bloquear',
+		'TEXT_CANT_FIND_FACE': 'Cara no encontrada',
+		'TEXT_LOCK_ON': 'Bloqueo',
+		'TEXT_UNLOCK': 'Desbloquear',
+		'TEXT_GO_BACK': 'Devolver',
+		'TEXT_NO_WEBCONNECT': 'La conexión a Internet no está disponible.',
+		'TEXT_INPUTMESSAGE': 'Ingrese su mensaje',
+		'TEXT_NOTICE': trans_NOTICE_ES,
+		'TEXT_LANGUAGE': '言語 (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'Inglés (English)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': 'Tipo de vídeo:',
+		'TEXT_PIC_0': 'Película 0: Pantalla ficticia (para practicar)',
+		'TEXT_PIC_1': 'Película 1: Espiral logarítmica',
+		'TEXT_PIC_2': 'Película 2: Círculos concéntricos',
+		'TEXT_PIC_3': 'Película 3: Ojos giratorios',
+		'TEXT_PIC_4': 'Película 4: Espiral de Arquímedes',
+		'TEXT_PIC_5': 'Película 5: Corazón en expansión',
+		'TEXT_PIC_6': 'Película 6: Moneda de cinco yenes',
+		'TEXT_PIC_7': 'Película 7: Extraño Remolino',
+		'TEXT_PIC_8': 'Película 8: Colores locos',
+		'TEXT_PIC_9': 'Película 9: Espiral logarítmica 2',
+		'TEXT_PIC_10': 'Película 10: Disco analógico',
+		'TEXT_PIC_11': 'Película 11: Extraño Remolino 2',
+		'TEXT_PIC_12': 'Película 12: Caleidoscopio',
+		'TEXT_PIC_13': 'Película 13: Primera pantalla a color',
+		'TEXT_PIC_14': 'Película 14: Segunda pantalla a color',
+		'TEXT_PIC_15': 'Película 15: Sólo una pantalla negra',
+		'TEXT_PIC_16': 'Película 16: Sólo una pantalla blanca',
+		'TEXT_PIC_17': 'Película 17: Serpiente giratoria',
+		'TEXT_PIC_18': 'Película 18: Radiación de distorsión',
+		'TEXT_PIC_19': 'Película 19：Ondas Aleatorias',
+	},
+	'ru-RU': {
+		'TEXT_OK': 'Хорошо',
+		'TEXT_CANCEL': 'Отмена',
+		'TEXT_YES': 'Да',
+		'TEXT_NO': 'Нет',
+		'TEXT_CHOOSE_LANGUAGE': '言語選択 (Choose a language)',
+		'TEXT_ABOUT_APP': 'Информация о версии',
+		'TEXT_INIT_APP': 'Вы хотите инициализировать это приложение?',
+		'TEXT_INITTED_APP': 'Приложение инициализировано.',
+		'TEXT_INPUT_MESSAGE': 'Пожалуйста, введите строку сообщения.',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '.',
+		'TEXT_PERIOD_SPACE': '. ',
+		'TEXT_RELEASE_HYPNOSIS': 'Освободиться от гипноза',
+		'TEXT_HYPNOSIS_RELEASED': 'Я выпустил гипноз.',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_ru.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_ru.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_ru.svg',
+		'TEXT_NO_BLINKING': 'Нет мигания',
+		'TEXT_LOGO': 'img/logo_ru.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_ru.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_ru.mp3',
+		'TEXT_I_AGREE': 'Я согласен',
+		'TEXT_SIZE_SMALL': 'Маленький',
+		'TEXT_SIZE_NORMAL': 'Нормальный размер',
+		'TEXT_SIZE_LARGE': 'Большой',
+		'TEXT_SIZE_HUGE': 'Огромный',
+		'TEXT_SPEED_ZERO': 'Остановлено',
+		'TEXT_SPEED_SLOW': 'Медленный',
+		'TEXT_SPEED_NORMAL': 'Нормальная скорость',
+		'TEXT_SPEED_FAST': 'Быстрый',
+		'TEXT_SPEED_SUPER_FAST': 'Сверх быстрый',
+		'TEXT_SPEED_IRREGULAR': 'Нерегулярный',
+		'TEXT_RAINBOW': 'Радужный',
+		'TEXT_FACE_GETTER': 'Распознавание лица',
+		'TEXT_TAP_ON_TARGET': 'Коснитесь цели',
+		'TEXT_CAN_LOCK_ON': 'Можно заблокировать',
+		'TEXT_CANT_FIND_FACE': 'Лицо не найдено',
+		'TEXT_LOCK_ON': 'Блокировка',
+		'TEXT_UNLOCK': 'Разблокировать',
+		'TEXT_GO_BACK': 'Возвращаться',
+		'TEXT_NO_WEBCONNECT': 'Подключение к Интернету недоступно.',
+		'TEXT_INPUTMESSAGE': 'Введите ваше сообщение',
+		'TEXT_NOTICE': trans_NOTICE_RU,
+		'TEXT_LANGUAGE': '言語 (Language):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (英語)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': 'Тип видео:',
+		'TEXT_PIC_0': 'Фильм 0: Пустой экран (для практики)',
+		'TEXT_PIC_1': 'Фильм 1: Логарифмическая спираль',
+		'TEXT_PIC_2': 'Фильм 2: Концентрические круги',
+		'TEXT_PIC_3': 'Фильм 3: Вращающиеся глаза',
+		'TEXT_PIC_4': 'Фильм 4: Спираль Архимеда',
+		'TEXT_PIC_5': 'Фильм 5: Расширяющееся сердце',
+		'TEXT_PIC_6': 'Фильм 6: Монета пять иен',
+		'TEXT_PIC_7': 'Фильм 7: Странный Водоворот',
+		'TEXT_PIC_8': 'Фильм 8: Сумасшедшие цвета',
+		'TEXT_PIC_9': 'Фильм 9: Логарифмическая спираль 2',
+		'TEXT_PIC_10': 'Фильм 10: Аналоговый диск',
+		'TEXT_PIC_11': 'Фильм 11: Странный Водоворот 2',
+		'TEXT_PIC_12': 'Фильм 12: Калейдоскоп',
+		'TEXT_PIC_13': 'Фильм 13: Первый цветной экран',
+		'TEXT_PIC_14': 'Фильм 14: Второй цветной экран',
+		'TEXT_PIC_15': 'Фильм 15: Просто черный экран',
+		'TEXT_PIC_16': 'Фильм 16: Просто белый экран',
+		'TEXT_PIC_17': 'Фильм 17: Вращающаяся змея',
+		'TEXT_PIC_18': 'Фильм 18: Искажающее излучение',
+		'TEXT_PIC_19': 'Фильм 19：Случайные Волны',
+	},
+	'en-US': {
+		'TEXT_OK': 'OK',
+		'TEXT_CANCEL': 'Cancel',
+		'TEXT_YES': 'Yes',
+		'TEXT_NO': 'No',
+		'TEXT_CHOOSE_LANGUAGE': 'Choose a language (言語選択)',
+		'TEXT_ABOUT_APP': 'About this app',
+		'TEXT_INIT_APP': 'Do you want to initialize this app?',
+		'TEXT_INITTED_APP': 'Initialized the app.',
+		'TEXT_INPUT_MESSAGE': 'Please enter a message text.',
+		'TEXT_FULLWIDTH_SPACE': '　',
+		'TEXT_PERIOD': '.',
+		'TEXT_PERIOD_SPACE': '. ',
+		'TEXT_RELEASE_HYPNOSIS': 'Kill hypnosis',
+		'TEXT_HYPNOSIS_RELEASED': 'Hypnosis released.',
+		'TEXT_KILLING_HYPNOSIS_IMG': 'img/killing-hypnosis_en.svg',
+		'TEXT_HYPNOSIS_RELEASED_IMG': 'img/hypnosis-released_en.svg',
+		'TEXT_ALL_RELEASED_IMG': 'img/all-released_en.svg',
+		'TEXT_NO_BLINKING': 'No blinking',
+		'TEXT_LOGO': 'img/logo_en.svg',
+		'TEXT_TAP_HERE': 'img/please-tap-here_en.svg',
+		'TEXT_MP3_RELEASED_HYPNOSIS': 'sn/ReleasedHypnosis_en.mp3',
+		'TEXT_I_AGREE': 'I agree',
+		'TEXT_SIZE_SMALL': 'Small',
+		'TEXT_SIZE_NORMAL': 'Normal',
+		'TEXT_SIZE_LARGE': 'Large',
+		'TEXT_SIZE_HUGE': 'Huge',
+		'TEXT_SPEED_ZERO': 'Stopped',
+		'TEXT_SPEED_SLOW': 'Slow',
+		'TEXT_SPEED_NORMAL': 'Normal',
+		'TEXT_SPEED_FAST': 'Fast',
+		'TEXT_SPEED_SUPER_FAST': 'Super Fast',
+		'TEXT_SPEED_IRREGULAR': 'Irregular',
+		'TEXT_RAINBOW': 'Rainbow',
+		'TEXT_FACE_GETTER': 'Face Recognition',
+		'TEXT_TAP_ON_TARGET': 'Please tap on the target',
+		'TEXT_CAN_LOCK_ON': 'Ready to lock on',
+		'TEXT_CANT_FIND_FACE': 'Face not found',
+		'TEXT_LOCK_ON': 'Lock on',
+		'TEXT_UNLOCK': 'Unlock',
+		'TEXT_GO_BACK': 'Go back',
+		'TEXT_NO_WEBCONNECT': 'Internet connection is unavailable.',
+		'TEXT_INPUTMESSAGE': 'Input message',
+		'TEXT_NOTICE': trans_NOTICE_EN,
+		'TEXT_LANGUAGE': 'Language (言語):',
+		'TEXT_LANGUAGE_ZH_CN': 'Chinese (Simplified) (简体中文)',
+		'TEXT_LANGUAGE_ZH_TW': 'Chinese (Traditional) (繁體中文)',
+		'TEXT_LANGUAGE_EN': 'English (英語)',
+		'TEXT_LANGUAGE_ES': 'Spanish (Español)',
+		'TEXT_LANGUAGE_DE': 'German (Deutsch)',
+		'TEXT_LANGUAGE_IT': 'Italian (Italiano)',
+		'TEXT_LANGUAGE_JA_JP': 'Japanese (日本語)',
+		'TEXT_LANGUAGE_KO_KR': 'Korean (한국어)',
+		'TEXT_LANGUAGE_RU': 'Russian (Русский)',
+		'TEXT_PIC_TYPE': 'The type of picture:',
+		'TEXT_PIC_0': 'Movie 0: Dummy Screen (for practice)',
+		'TEXT_PIC_1': 'Movie 1: Logarithmic Spiral',
+		'TEXT_PIC_2': 'Movie 2: Concentric Circles',
+		'TEXT_PIC_3': 'Movie 3: The Eyes',
+		'TEXT_PIC_4': 'Movie 4: Archimedes\' Spiral',
+		'TEXT_PIC_5': 'Movie 5: Spreading Hearts',
+		'TEXT_PIC_6': 'Movie 6: 5-Yen Coin',
+		'TEXT_PIC_7': 'Movie 7: Strange Swirl',
+		'TEXT_PIC_8': 'Movie 8: Crazy Colors',
+		'TEXT_PIC_9': 'Movie 9: Logarithmic Spiral 2',
+		'TEXT_PIC_10': 'Movie 10: Analog Disc',
+		'TEXT_PIC_11': 'Movie 11: Strange Swirl 2',
+		'TEXT_PIC_12': 'Movie 12: Kaleidoscope',
+		'TEXT_PIC_13': 'Movie 13: 1st color screen',
+		'TEXT_PIC_14': 'Movie 14: 2st color screen',
+		'TEXT_PIC_15': 'Movie 15: Just a black screen',
+		'TEXT_PIC_16': 'Movie 16: Just a white screen',
+		'TEXT_PIC_17': 'Movie 17: Rotating snake',
+		'TEXT_PIC_18': 'Movie 18: Distortion Radiation',
+		'TEXT_PIC_19': 'Movie 19：Random Waves',
+	},
+};
+
 const trans_getText = function(str_id){
 	let lang = localStorage.getItem('saiminLanguage3');
-	if(!lang)
-		lang = 'en';
-	if(lang == 'ja' || lang == 'jp'){ // Japanese
-		switch(str_id){
-		case 'TEXT_OK': return 'OK';
-		case 'TEXT_CANCEL': return 'キャンセル';
-		case 'TEXT_YES': return 'はい';
-		case 'TEXT_NO': return 'いいえ';
-		case 'TEXT_CHOOSE_LANGUAGE': return '言語選択 (Choose a language)';
-		case 'TEXT_ABOUT_APP': return 'バージョン情報';
-		case 'TEXT_INIT_APP': return 'このアプリを初期化しますか？';
-		case 'TEXT_INITTED_APP': return 'アプリを初期化しました。';
-		case 'TEXT_INPUT_MESSAGE': return 'メッセージ文字列を入力してください。';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '。';
-		case 'TEXT_PERIOD_SPACE': return '。';
-		case 'TEXT_RELEASE_HYPNOSIS': return '催眠解除';
-		case 'TEXT_HYPNOSIS_RELEASED': return '催眠解除。';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_ja.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_ja.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_ja.svg';
-		case 'TEXT_NO_BLINKING': return '点滅なし';
-		case 'TEXT_LOGO': return 'img/logo_ja.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_ja.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_ja.mp3';
-		case 'TEXT_I_AGREE': return '私は同意します';
-		case 'TEXT_SIZE_SMALL': return '小さい';
-		case 'TEXT_SIZE_NORMAL': return '普通';
-		case 'TEXT_SIZE_LARGE': return '大きい';
-		case 'TEXT_SIZE_HUGE': return '巨大';
-		case 'TEXT_SPEED_ZERO': return '停止';
-		case 'TEXT_SPEED_SLOW': return '遅い';
-		case 'TEXT_SPEED_NORMAL': return '普通';
-		case 'TEXT_SPEED_FAST': return '速い';
-		case 'TEXT_SPEED_SUPER_FAST': return '超速い';
-		case 'TEXT_SPEED_IRREGULAR': return '不規則';
-		case 'TEXT_RAINBOW': return '虹色';
-		case 'TEXT_FACE_GETTER': return '顔認識';
-		case 'TEXT_TAP_ON_TARGET': return 'ターゲットをタップしてください';
-		case 'TEXT_CAN_LOCK_ON': return 'ロックオンできます';
-		case 'TEXT_CANT_FIND_FACE': return '顔が見つかりません';
-		case 'TEXT_LOCK_ON': return 'ロックオン';
-		case 'TEXT_UNLOCK': return 'ロック解除';
-		case 'TEXT_GO_BACK': return '戻る';
-		case 'TEXT_NO_WEBCONNECT': return 'ネット接続が利用できません';
-		case 'TEXT_INPUTMESSAGE': return "メッセージを入力";
-		}
-	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
-		switch(str_id){
-		case 'TEXT_OK': return '確定';
-		case 'TEXT_CANCEL': return '取消';
-		case 'TEXT_YES': return '是';
-		case 'TEXT_NO': return '否';
-		case 'TEXT_CHOOSE_LANGUAGE': return '语言选择 (Choose a language)';
-		case 'TEXT_ABOUT_APP': return '关于这个应用程序';
-		case 'TEXT_INIT_APP': return '您想初始化这个应用程序吗？';
-		case 'TEXT_INITTED_APP': return '初始化了应用程序。';
-		case 'TEXT_INPUT_MESSAGE': return '请输入消息文本。';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '。';
-		case 'TEXT_PERIOD_SPACE': return '。';
-		case 'TEXT_RELEASE_HYPNOSIS': return '去催眠';
-		case 'TEXT_HYPNOSIS_RELEASED': return '我取消了催眠。';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_zh-CN.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_zh-CN.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_zh-CN.svg';
-		case 'TEXT_NO_BLINKING': return '无闪光灯';
-		case 'TEXT_LOGO': return 'img/logo_zh-CN.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_zh-CN.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_zh-CN.mp3';
-		case 'TEXT_I_AGREE': return '我同意';
-		case 'TEXT_SIZE_SMALL': return '小的';
-		case 'TEXT_SIZE_NORMAL': return '普通的';
-		case 'TEXT_SIZE_LARGE': return '大的';
-		case 'TEXT_SIZE_HUGE': return '巨大的';
-		case 'TEXT_SPEED_ZERO': return '停止';
-		case 'TEXT_SPEED_SLOW': return '慢的';
-		case 'TEXT_SPEED_NORMAL': return '普通的';
-		case 'TEXT_SPEED_FAST': return '快速地';
-		case 'TEXT_SPEED_SUPER_FAST': return '超级快';
-		case 'TEXT_SPEED_IRREGULAR': return '不规律的';
-		case 'TEXT_RAINBOW': return '彩虹色';
-		case 'TEXT_FACE_GETTER': return '人脸识别';
-		case 'TEXT_TAP_ON_TARGET': return '请点击目标';
-		case 'TEXT_CAN_LOCK_ON': return '可以锁定';
-		case 'TEXT_CANT_FIND_FACE': return '未找到面孔';
-		case 'TEXT_LOCK_ON': return '锁上';
-		case 'TEXT_UNLOCK': return '开锁';
-		case 'TEXT_GO_BACK': return '返回';
-		case 'TEXT_NO_WEBCONNECT': return '无法连接互联网。';
-		case 'TEXT_INPUTMESSAGE': return "输入您的留言";
-		}
-	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
-		switch(str_id){
-		case 'TEXT_OK': return '確定';
-		case 'TEXT_CANCEL': return '取消';
-		case 'TEXT_YES': return '是';
-		case 'TEXT_NO': return '否';
-		case 'TEXT_CHOOSE_LANGUAGE': return '語言選擇 (Choose a language)';
-		case 'TEXT_ABOUT_APP': return '版本信息';
-		case 'TEXT_INIT_APP': return '您想初始化這個應用程式嗎？';
-		case 'TEXT_INITTED_APP': return '初始化了應用程序。';
-		case 'TEXT_INPUT_MESSAGE': return '請輸入消息字符串。';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '。';
-		case 'TEXT_PERIOD_SPACE': return '。';
-		case 'TEXT_RELEASE_HYPNOSIS': return '催眠釋放';
-		case 'TEXT_HYPNOSIS_RELEASED': return '催眠釋放。';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_zh-TW.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_zh-TW.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_zh-TW.svg';
-		case 'TEXT_NO_BLINKING': return '無閃光燈';
-		case 'TEXT_LOGO': return 'img/logo_zh-TW.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_zh-TW.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_zh-TW.mp3';
-		case 'TEXT_I_AGREE': return '我同意';
-		case 'TEXT_SIZE_SMALL': return '小的';
-		case 'TEXT_SIZE_NORMAL': return '普通的';
-		case 'TEXT_SIZE_LARGE': return '大的';
-		case 'TEXT_SIZE_HUGE': return '巨大的';
-		case 'TEXT_SPEED_ZERO': return '停止';
-		case 'TEXT_SPEED_SLOW': return '慢的';
-		case 'TEXT_SPEED_NORMAL': return '普通的';
-		case 'TEXT_SPEED_FAST': return '快速地';
-		case 'TEXT_SPEED_SUPER_FAST': return '超快';
-		case 'TEXT_SPEED_IRREGULAR': return '不規律的';
-		case 'TEXT_RAINBOW': return '彩虹色';
-		case 'TEXT_FACE_GETTER': return '人臉辨識';
-		case 'TEXT_TAP_ON_TARGET': return '請點選目標';
-		case 'TEXT_CAN_LOCK_ON': return '可以鎖定';
-		case 'TEXT_CANT_FIND_FACE': return '未找到臉孔';
-		case 'TEXT_LOCK_ON': return '鎖上';
-		case 'TEXT_UNLOCK': return '開鎖';
-		case 'TEXT_GO_BACK': return '返回';
-		case 'TEXT_NO_WEBCONNECT': return '無法連接網路。';
-		case 'TEXT_INPUTMESSAGE': return "輸入您的留言";
-		}
-	}else if(lang == 'ko' || lang == 'kr' || lang == 'ko-KR'){ // Korean
-		switch(str_id){
-		case 'TEXT_OK': return 'OK';
-		case 'TEXT_CANCEL': return '취소';
-		case 'TEXT_YES': return '예';
-		case 'TEXT_NO': return '아니오';
-		case 'TEXT_CHOOSE_LANGUAGE': return '언어 선택 (Choose a language)';
-		case 'TEXT_ABOUT_APP': return '버전 정보';
-		case 'TEXT_INIT_APP': return '이 앱을 초기화하시겠습니까?';
-		case 'TEXT_INITTED_APP': return '앱을 초기화했습니다.';
-		case 'TEXT_INPUT_MESSAGE': return '메시지 문자열을 입력하십시오.';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '. ';
-		case 'TEXT_PERIOD_SPACE': return '. ';
-		case 'TEXT_RELEASE_HYPNOSIS': return '최면 해제';
-		case 'TEXT_HYPNOSIS_RELEASED': return '최면 해제.';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_ko-KR.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_ko-KR.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_ko-KR.svg';
-		case 'TEXT_NO_BLINKING': return '깜박임 없음';
-		case 'TEXT_LOGO': return 'img/logo_ko-KR.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_ko-KR.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_ko-KR.mp3';
-		case 'TEXT_I_AGREE': return '동의합니다';
-		case 'TEXT_SIZE_SMALL': return '작은';
-		case 'TEXT_SIZE_NORMAL': return '정상';
-		case 'TEXT_SIZE_LARGE': return '크기가 큰';
-		case 'TEXT_SIZE_HUGE': return '거대한';
-		case 'TEXT_SPEED_ZERO': return '정지중';
-		case 'TEXT_SPEED_SLOW': return '느린';
-		case 'TEXT_SPEED_NORMAL': return '정상';
-		case 'TEXT_SPEED_FAST': return '빠른';
-		case 'TEXT_SPEED_SUPER_FAST': return '매우 빠른';
-		case 'TEXT_SPEED_IRREGULAR': return '불규칙한';
-		case 'TEXT_RAINBOW': return '무지개 색';
-		case 'TEXT_FACE_GETTER': return '얼굴 인식';
-		case 'TEXT_TAP_ON_TARGET': return '타겟을 탭해주세요';
-		case 'TEXT_CAN_LOCK_ON': return '잠글 수 있습니다';
-		case 'TEXT_CANT_FIND_FACE': return '얼굴을 찾을 수 없음';
-		case 'TEXT_LOCK_ON': return '잠금';
-		case 'TEXT_UNLOCK': return '잠금 해제';
-		case 'TEXT_GO_BACK': return '뒤로';
-		case 'TEXT_NO_WEBCONNECT': return '인터넷 연결을 사용할 수 없습니다.';
-		case 'TEXT_INPUTMESSAGE': return "메시지 입력";
-		}
-	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
-		switch(str_id){
-		case 'TEXT_OK': return 'OK';
-		case 'TEXT_CANCEL': return 'Annulla';
-		case 'TEXT_YES': return 'SÌ';
-		case 'TEXT_NO': return 'No';
-		case 'TEXT_CHOOSE_LANGUAGE': return 'Scegli una lingua (Choose a language)';
-		case 'TEXT_ABOUT_APP': return 'Informazioni sull\'app';
-		case 'TEXT_INIT_APP': return 'Vuoi inizializzare questa app?';
-		case 'TEXT_INITTED_APP': return 'Inizializzata l\'app.';
-		case 'TEXT_INPUT_MESSAGE': return 'Inserisci il testo del messaggio.';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '.';
-		case 'TEXT_PERIOD_SPACE': return '. ';
-		case 'TEXT_RELEASE_HYPNOSIS': return 'Uccidi l\'ipnosi';
-		case 'TEXT_HYPNOSIS_RELEASED': return 'Ipnosi liberata.';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_it.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_it.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_it.svg';
-		case 'TEXT_NO_BLINKING': return 'Senza il flash';
-		case 'TEXT_LOGO': return 'img/logo_it.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_it.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_it.mp3';
-		case 'TEXT_I_AGREE': return 'Sono d\'accordo';
-		case 'TEXT_SIZE_SMALL': return 'Piccola';
-		case 'TEXT_SIZE_NORMAL': return 'Normale';
-		case 'TEXT_SIZE_LARGE': return 'Grande';
-		case 'TEXT_SIZE_HUGE': return 'Enorme';
-		case 'TEXT_SPEED_ZERO': return 'Fermato';
-		case 'TEXT_SPEED_SLOW': return 'Lento';
-		case 'TEXT_SPEED_NORMAL': return 'Normale';
-		case 'TEXT_SPEED_FAST': return 'Veloce';
-		case 'TEXT_SPEED_SUPER_FAST': return 'Super Veloce';
-		case 'TEXT_SPEED_IRREGULAR': return 'Irregolare';
-		case 'TEXT_RAINBOW': return 'Arcobaleno';
-		case 'TEXT_FACE_GETTER': return 'Riconoscimento Facciale';
-		case 'TEXT_TAP_ON_TARGET': return 'Per favore tocca il bersaglio';
-		case 'TEXT_CAN_LOCK_ON': return 'Può essere bloccato';
-		case 'TEXT_CANT_FIND_FACE': return 'Volto non trovato';
-		case 'TEXT_LOCK_ON': return 'Blocco su';
-		case 'TEXT_UNLOCK': return 'Sbloccare';
-		case 'TEXT_GO_BACK': return 'Ritorno';
-		case 'TEXT_NO_WEBCONNECT': return 'La connessione Internet non è disponibile.';
-		case 'TEXT_INPUTMESSAGE': return "Inserisci il tuo messaggio";
-		}
-	}else if(lang == 'de' || lang == 'de-DE'){ // German
-		switch(str_id){
-		case 'TEXT_OK': return 'OK';
-		case 'TEXT_CANCEL': return 'Abbrechen';
-		case 'TEXT_YES': return 'Ja';
-		case 'TEXT_NO': return 'Nein';
-		case 'TEXT_CHOOSE_LANGUAGE': return 'Wähle eine Sprache (Choose a language)';
-		case 'TEXT_ABOUT_APP': return 'Über diese App';
-		case 'TEXT_INIT_APP': return 'Möchten Sie diese App initialisieren?';
-		case 'TEXT_INITTED_APP': return 'Initialisierte die App.';
-		case 'TEXT_INPUT_MESSAGE': return 'Bitte geben Sie einen Nachrichtentext ein.';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '.';
-		case 'TEXT_PERIOD_SPACE': return '. ';
-		case 'TEXT_RELEASE_HYPNOSIS': return 'Töte Hypnose';
-		case 'TEXT_HYPNOSIS_RELEASED': return 'Hypnose freigegeben.';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_de.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_de.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_de.svg';
-		case 'TEXT_NO_BLINKING': return 'Kein Blitz';
-		case 'TEXT_LOGO': return 'img/logo_de.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_de.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_de.mp3';
-		case 'TEXT_I_AGREE': return 'Ich stimme zu';
-		case 'TEXT_SIZE_SMALL': return 'Klein';
-		case 'TEXT_SIZE_NORMAL': return 'Normal';
-		case 'TEXT_SIZE_LARGE': return 'Groß';
-		case 'TEXT_SIZE_HUGE': return 'Riesig';
-		case 'TEXT_SPEED_ZERO': return 'Gestoppt';
-		case 'TEXT_SPEED_SLOW': return 'Langsam';
-		case 'TEXT_SPEED_NORMAL': return 'Normal';
-		case 'TEXT_SPEED_FAST': return 'Schnell';
-		case 'TEXT_SPEED_SUPER_FAST': return 'Super Schnell';
-		case 'TEXT_SPEED_IRREGULAR': return 'Irregulär';
-		case 'TEXT_RAINBOW': return 'Regenbogen';
-		case 'TEXT_FACE_GETTER': return 'Gesichtserkennung';
-		case 'TEXT_TAP_ON_TARGET': return 'Bitte tippen Sie auf das Ziel';
-		case 'TEXT_CAN_LOCK_ON': return 'Abschließbar';
-		case 'TEXT_CANT_FIND_FACE': return 'Gesicht nicht gefunden';
-		case 'TEXT_LOCK_ON': return 'Sperren';
-		case 'TEXT_UNLOCK': return 'Freischalten';
-		case 'TEXT_GO_BACK': return 'Zurückkehren';
-		case 'TEXT_NO_WEBCONNECT': return 'Die Internetverbindung ist nicht verfügbar.';
-		case 'TEXT_INPUTMESSAGE': return "Gib deine Nachricht ein";
-		}
-	}else if(lang == 'es' || lang == 'es-ES'){ // Spanish
-		switch(str_id){
-		case 'TEXT_OK': return 'OK';
-		case 'TEXT_CANCEL': return 'Cancelar';
-		case 'TEXT_YES': return 'Sí';
-		case 'TEXT_NO': return 'No';
-		case 'TEXT_CHOOSE_LANGUAGE': return 'Elige un idioma (Choose a language)';
-		case 'TEXT_ABOUT_APP': return 'Información de versión';
-		case 'TEXT_INIT_APP': return '¿Quieres inicializar esta aplicación?';
-		case 'TEXT_INITTED_APP': return 'La aplicación se ha inicializado.';
-		case 'TEXT_INPUT_MESSAGE': return 'Por favor ingrese la cadena del mensaje.';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '. ';
-		case 'TEXT_PERIOD_SPACE': return '。';
-		case 'TEXT_RELEASE_HYPNOSIS': return 'Dehipnosis';
-		case 'TEXT_HYPNOSIS_RELEASED': return 'Liberé la hipnosis.';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_es.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_es.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_es.svg';
-		case 'TEXT_NO_BLINKING': return 'Sin parpadeo';
-		case 'TEXT_LOGO': return 'img/logo_es.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_es.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_es.mp3';
-		case 'TEXT_I_AGREE': return 'Estoy de acuerdo';
-		case 'TEXT_SIZE_SMALL': return 'Pequeño';
-		case 'TEXT_SIZE_NORMAL': return 'Talla normal';
-		case 'TEXT_SIZE_LARGE': return 'Grande';
-		case 'TEXT_SIZE_HUGE': return 'Enorme';
-		case 'TEXT_SPEED_ZERO': return 'Detener';
-		case 'TEXT_SPEED_SLOW': return 'Lento';
-		case 'TEXT_SPEED_NORMAL': return 'Velocidad normal';
-		case 'TEXT_SPEED_FAST': return 'Rápido';
-		case 'TEXT_SPEED_SUPER_FAST': return 'Súper rápido';
-		case 'TEXT_SPEED_IRREGULAR': return 'Irregular';
-		case 'TEXT_RAINBOW': return 'Color del arco iris';
-		case 'TEXT_FACE_GETTER': return 'Reconocimiento facial';
-		case 'TEXT_TAP_ON_TARGET': return 'Toca el objetivo';
-		case 'TEXT_CAN_LOCK_ON': return 'Se puede bloquear';
-		case 'TEXT_CANT_FIND_FACE': return 'Cara no encontrada';
-		case 'TEXT_LOCK_ON': return 'Bloqueo';
-		case 'TEXT_UNLOCK': return 'Desbloquear';
-		case 'TEXT_GO_BACK': return 'Devolver';
-		case 'TEXT_NO_WEBCONNECT': return 'La conexión a Internet no está disponible.';
-		case 'TEXT_INPUTMESSAGE': return "Ingrese su mensaje";
-		}
-	}else if(lang == 'ru' || lang == 'ru-RU'){ // Russian
-		switch(str_id){
-		case 'TEXT_OK': return 'Хорошо';
-		case 'TEXT_CANCEL': return 'Отмена';
-		case 'TEXT_YES': return 'Да';
-		case 'TEXT_NO': return 'Нет';
-		case 'TEXT_CHOOSE_LANGUAGE': return '言語選択 (Choose a language)';
-		case 'TEXT_ABOUT_APP': return 'Информация о версии';
-		case 'TEXT_INIT_APP': return 'Вы хотите инициализировать это приложение?';
-		case 'TEXT_INITTED_APP': return 'Приложение инициализировано.';
-		case 'TEXT_INPUT_MESSAGE': return 'Пожалуйста, введите строку сообщения.';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '.';
-		case 'TEXT_PERIOD_SPACE': return '. ';
-		case 'TEXT_RELEASE_HYPNOSIS': return 'Освободиться от гипноза';
-		case 'TEXT_HYPNOSIS_RELEASED': return 'Я выпустил гипноз.';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_ru.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_ru.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_ru.svg';
-		case 'TEXT_NO_BLINKING': return 'Нет мигания';
-		case 'TEXT_LOGO': return 'img/logo_ru.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_ru.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_ru.mp3';
-		case 'TEXT_I_AGREE': return 'Я согласен';
-		case 'TEXT_SIZE_SMALL': return 'Маленький';
-		case 'TEXT_SIZE_NORMAL': return 'Нормальный размер';
-		case 'TEXT_SIZE_LARGE': return 'Большой';
-		case 'TEXT_SIZE_HUGE': return 'Огромный';
-		case 'TEXT_SPEED_ZERO': return 'Остановлено';
-		case 'TEXT_SPEED_SLOW': return 'Медленный';
-		case 'TEXT_SPEED_NORMAL': return 'Нормальная скорость';
-		case 'TEXT_SPEED_FAST': return 'Быстрый';
-		case 'TEXT_SPEED_SUPER_FAST': return 'Сверх быстрый';
-		case 'TEXT_SPEED_IRREGULAR': return 'Нерегулярный';
-		case 'TEXT_RAINBOW': return 'Радужный';
-		case 'TEXT_FACE_GETTER': return 'Распознавание лица';
-		case 'TEXT_TAP_ON_TARGET': return 'Коснитесь цели';
-		case 'TEXT_CAN_LOCK_ON': return 'Можно заблокировать';
-		case 'TEXT_CANT_FIND_FACE': return 'Лицо не найдено';
-		case 'TEXT_LOCK_ON': return 'Блокировка';
-		case 'TEXT_UNLOCK': return 'Разблокировать';
-		case 'TEXT_GO_BACK': return 'Возвращаться';
-		case 'TEXT_NO_WEBCONNECT': return 'Подключение к Интернету недоступно.';
-		case 'TEXT_INPUTMESSAGE': return "Введите ваше сообщение";
-		}
-	}else{ // English is default
-		switch(str_id){
-		case 'TEXT_OK': return 'OK';
-		case 'TEXT_CANCEL': return 'Cancel';
-		case 'TEXT_YES': return 'Yes';
-		case 'TEXT_NO': return 'No';
-		case 'TEXT_CHOOSE_LANGUAGE': return 'Choose a language (言語選択)';
-		case 'TEXT_ABOUT_APP': return 'About this app';
-		case 'TEXT_INIT_APP': return 'Do you want to initialize this app?';
-		case 'TEXT_INITTED_APP': return 'Initialized the app.';
-		case 'TEXT_INPUT_MESSAGE': return 'Please enter a message text.';
-		case 'TEXT_FULLWIDTH_SPACE': return '　';
-		case 'TEXT_PERIOD': return '.';
-		case 'TEXT_PERIOD_SPACE': return '. ';
-		case 'TEXT_RELEASE_HYPNOSIS': return 'Kill hypnosis';
-		case 'TEXT_HYPNOSIS_RELEASED': return 'Hypnosis released.';
-		case 'TEXT_KILLING_HYPNOSIS_IMG': return 'img/killing-hypnosis_en.svg';
-		case 'TEXT_HYPNOSIS_RELEASED_IMG': return 'img/hypnosis-released_en.svg';
-		case 'TEXT_ALL_RELEASED_IMG': return 'img/all-released_en.svg';
-		case 'TEXT_NO_BLINKING': return 'No blinking';
-		case 'TEXT_LOGO': return 'img/logo_en.svg';
-		case 'TEXT_TAP_HERE': return 'img/please-tap-here_en.svg';
-		case 'TEXT_MP3_RELEASED_HYPNOSIS': return 'sn/ReleasedHypnosis_en.mp3';
-		case 'TEXT_I_AGREE': return 'I agree';
-		case 'TEXT_SIZE_SMALL': return 'Small';
-		case 'TEXT_SIZE_NORMAL': return 'Normal';
-		case 'TEXT_SIZE_LARGE': return 'Large';
-		case 'TEXT_SIZE_HUGE': return 'Huge';
-		case 'TEXT_SPEED_ZERO': return 'Stopped';
-		case 'TEXT_SPEED_SLOW': return 'Slow';
-		case 'TEXT_SPEED_NORMAL': return 'Normal';
-		case 'TEXT_SPEED_FAST': return 'Fast';
-		case 'TEXT_SPEED_SUPER_FAST': return 'Super Fast';
-		case 'TEXT_SPEED_IRREGULAR': return 'Irregular';
-		case 'TEXT_RAINBOW': return 'Rainbow';
-		case 'TEXT_FACE_GETTER': return 'Face Recognition';
-		case 'TEXT_TAP_ON_TARGET': return 'Please tap on the target';
-		case 'TEXT_CAN_LOCK_ON': return 'Ready to lock on';
-		case 'TEXT_CANT_FIND_FACE': return 'Face not found';
-		case 'TEXT_LOCK_ON': return 'Lock on';
-		case 'TEXT_UNLOCK': return 'Unlock';
-		case 'TEXT_GO_BACK': return 'Go back';
-		case 'TEXT_NO_WEBCONNECT': return 'Internet connection is unavailable.';
-		case 'TEXT_INPUTMESSAGE': return "Input message";
-		}
-	}
+	if(!lang || !trans_trans[lang])
+		lang = 'en-US';
+	return trans_trans[lang][str_id] || trans_trans['en-US'][str_id];
 }
 
 const trans_setHtmlText = function(id, text){
@@ -1614,110 +1923,65 @@ const trans_setImageSrc = function(id, src){
 	id.src = src;
 }
 
-// {{LANGUAGE_SPECIFIC}}
 const trans_getDefaultLanguage = function(){
-	switch (navigator.language){
-	case 'zh':
-	case 'zh-CN':
-	case 'zh-SG':
-	case 'zh-cn':
-	case 'zh-sg':
-		return 'zh-CN'; // Chinese (Simplified)
-	case 'zh-TW':
-	case 'zh-HK':
-	case 'zh-MO':
-	case 'zh-tw':
-	case 'zh-hk':
-	case 'zh-mo':
-		return 'zh-TW'; // Chinese (Traditional)
-	case 'de':
-	case 'de-DE':
-	case 'de-de':
-		return 'de-DE'; // German
-	case 'it':
-	case 'it-IT':
-	case 'it-it':
-		return 'it-IT'; // Italian
-	case 'ja':
-	case 'ja-JP':
-	case 'ja-jp':
-		return 'ja'; // Japanese
-	case 'ko':
-	case 'kr':
-	case 'ko-KR':
-	case 'ko-kr':
-		return 'ko-KR'; // Korean
-	case 'es':
-	case 'es-ES':
-	case 'es-es':
-		return 'es'; // Spanish
-	case 'ru':
-	case 'ru-RU':
-	case 'ru-ru':
-	case 'os-RU':
-	case 'os-ru':
-	case 'ru-KZ':
-	case 'ru-kz':
-	case 'ru-UA':
-	case 'ru-ua':
-	case 'ru-BY':
-	case 'ru-by':
-	case 'ru-KG':
-	case 'ru-kg':
-	case 'ru-MD':
-	case 'ru-md':
-		return 'ru'; // Russian
-	default:
-		return 'en'; // English
-	}
+	return trans_standardizeLanguage(navigator.language);
 }
 
 // {{LANGUAGE_SPECIFIC}}
 const trans_localize = function(lang){
-	localStorage.setItem('saiminLanguage3', lang);
-	trans_currentLanguage = lang;
-	if(lang == 'ja' || lang == 'jp'){ // Japanese
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_JA);
-		trans_setHtmlText(sai_id_text_language, '言語 (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (英語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, '映像の種類:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', '動画 0：ダミー画面（練習用）');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', '動画 1：対数らせん');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', '動画 2：同心円状');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', '動画 3：目が回る');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', '動画 4：アルキメデスのらせん');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', '動画 5：広がるハート');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', '動画 6：五円玉');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', '動画 7：奇妙な渦巻き');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', '動画 8：クレージーな色');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', '動画 9：対数らせん 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', '動画 10：アナログディスク');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', '動画 11：奇妙な渦巻き 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', '動画 12：万華鏡');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', '動画 13：1番目の色の画面');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', '動画 14：2番目の色の画面');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', '動画 15：ただの黒い画面');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', '動画 16：ただの白い画面');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', '動画 17：ヘビの回転');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', '動画 18：ひずみ放射');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', '動画 19：ランダムな波');
+	trans_currentLanguage = trans_standardizeLanguage(lang);
+	localStorage.setItem('saiminLanguage3', trans_currentLanguage);
+
+	trans_setHtmlText(sai_id_text_notice, trans_getText('TEXT_NOTICE'));
+	trans_setHtmlText(sai_id_text_language, trans_getText('TEXT_LANGUAGE'));
+
+	trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', trans_getText('TEXT_LANGUAGE_ZH_CN'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', trans_getText('TEXT_LANGUAGE_ZH_TW'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'en', trans_getText('TEXT_LANGUAGE_EN'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'es', trans_getText('TEXT_LANGUAGE_ES'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'de', trans_getText('TEXT_LANGUAGE_DE'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'it', trans_getText('TEXT_LANGUAGE_IT'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'ja', trans_getText('TEXT_LANGUAGE_JA_JP'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', trans_getText('TEXT_LANGUAGE_KO_KR'));
+	trans_setSelectOptionText(sai_id_select_language_1, 'ru', trans_getText('TEXT_LANGUAGE_RU'));
+
+	trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', trans_getText('TEXT_LANGUAGE_ZH_CN'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', trans_getText('TEXT_LANGUAGE_ZH_TW'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'en', trans_getText('TEXT_LANGUAGE_EN'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'es', trans_getText('TEXT_LANGUAGE_ES'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'de', trans_getText('TEXT_LANGUAGE_DE'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'it', trans_getText('TEXT_LANGUAGE_IT'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'ja', trans_getText('TEXT_LANGUAGE_JA_JP'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', trans_getText('TEXT_LANGUAGE_KO_KR'));
+	trans_setSelectOptionText(sai_id_select_language_2, 'ru', trans_getText('TEXT_LANGUAGE_RU'));
+
+	trans_setHtmlText(sai_id_pic_type, trans_getText('TEXT_PIC_TYPE'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '0', trans_getText('TEXT_PIC_0'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '1', trans_getText('TEXT_PIC_1'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '2', trans_getText('TEXT_PIC_2'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '3', trans_getText('TEXT_PIC_3'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '4', trans_getText('TEXT_PIC_4'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '5', trans_getText('TEXT_PIC_5'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '6', trans_getText('TEXT_PIC_6'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '7', trans_getText('TEXT_PIC_7'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '8', trans_getText('TEXT_PIC_8'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '9', trans_getText('TEXT_PIC_9'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '10', trans_getText('TEXT_PIC_10'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '11', trans_getText('TEXT_PIC_11'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '12', trans_getText('TEXT_PIC_12'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '13', trans_getText('TEXT_PIC_13'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '14', trans_getText('TEXT_PIC_14'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '15', trans_getText('TEXT_PIC_15'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '16', trans_getText('TEXT_PIC_16'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '17', trans_getText('TEXT_PIC_17'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '18', trans_getText('TEXT_PIC_18'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '19', trans_getText('TEXT_PIC_19'));
+
+	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
+	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
+
+	switch(trans_currentLanguage){
+	case 'ja-JP':
 		trans_setHtmlText(sai_id_text_split, '画面分割:');
 		trans_setHtmlText(sai_id_text_speed, 'スピード:');
 		trans_setHtmlText(speed_irregular_label, '不規則');
@@ -1783,48 +2047,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', '赤色');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', '黒色');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色');
-	}else if(lang == 'zh-CN' || lang == 'cn'){ // Chinese (Simplified)
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ZH_CN);
-		trans_setHtmlText(sai_id_text_language, '语言 (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英语)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (英语)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, '视频类型：');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', '电影0：虚拟屏幕（用于练习）');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', '电影1：对数螺线');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', '电影2：同心圆');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', '电影3：旋转的眼');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', '电影4：阿基米德螺旋线');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', '电影5：扩展的心');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', '电影6：5日元硬币');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', '电影7：奇怪的漩涡');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', '电影8：疯狂的颜色');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', '电影9：对数螺线 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', '电影10：模拟光盘');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', '电影11：奇怪的漩涡 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', '电影12：万花筒');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', '电影13：第一个彩色屏幕');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', '电影14：第二个彩色屏幕');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', '电影15：只是黑屏');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', '电影16：只是白屏');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', '电影17：旋转蛇');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', '电影18：畸变辐射');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', '电影19：随机波');
+		break;
+	case 'zh-CN': // Chinese (Simplified)
 		trans_setHtmlText(sai_id_text_split, '分屏：');
 		trans_setHtmlText(sai_id_text_speed, '速度：');
 		trans_setHtmlText(speed_irregular_label, '不规律的');
@@ -1890,48 +2114,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', '红色的');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', '黑色');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
-	}else if(lang == 'zh-TW'){ // Chinese (Traditional)
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ZH_TW);
-		trans_setHtmlText(sai_id_text_language, '語言 (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (英語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, '視頻類型：');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', '電影0：虛擬螢幕（用於練習）');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', '電影1：對數螺線');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', '電影2：同心圆');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', '電影3：旋轉的眼');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', '電影4：阿基米德螺旋線');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', '電影5：擴展的心');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', '電影6：5日元硬幣');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', '電影7：奇怪的漩渦');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', '電影8：瘋狂的顏色');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', '電影9：對數螺線 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', '電影10：類比光碟');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', '電影11：奇怪的漩渦 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', '電影12：萬花筒');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', '電影13：第一个彩色屏幕');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', '電影14：第二个彩色屏幕');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', '電影15：只是黑屏');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', '電影16：只是白屏');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', '電影17：旋轉蛇');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', '電影18：畸變輻射');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', '電影19：隨機波');
+		break;
+	case 'zh-TW': // Chinese (Traditional)
 		trans_setHtmlText(sai_id_text_split, '分屏：');
 		trans_setHtmlText(sai_id_text_speed, '速度：');
 		trans_setHtmlText(speed_irregular_label, '不規律的');
@@ -1997,48 +2181,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', '紅色的');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', '黑色');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
-	}else if(lang == 'kr' || lang == 'ko' || lang == 'ko-KR'){ // Korean
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_KO_KR);
-		trans_setHtmlText(sai_id_text_language, '언어 (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (영어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (영어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, '그림 유형:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', '동영상 0：더미 화면 (연습용)');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', '동영상 1：로그 나선');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', '동영상 2：동심원형');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', '동영상 3：회전하는 눈');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', '동영상 4：아르키메데스의 나선');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', '동영상 5：퍼지는 하트들');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', '동영상 6：오엔 구슬');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', '동영상 7：이상한 소용돌이');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', '동영상 8：미친 색');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', '동영상 9：로그 나선 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', '동영상 10：아날로그 디스크');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', '동영상 11：이상한 소용돌이 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', '동영상 12：만화경');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', '동영상 13：첫 번째 컬러 화면');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', '동영상 14：두 번째 색상 화면');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', '동영상 15：그냥 검은 화면');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', '동영상 16：그냥 흰색 화면');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', '동영상 17：뱀 회전');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', '동영상 18：스트레인 방사');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', '동영상 19：무작위 파동');
+		break;
+	case 'ko-KR': // Korean
 		trans_setHtmlText(sai_id_text_split, '화면 분할:');
 		trans_setHtmlText(sai_id_text_speed, '속도:');
 		trans_setHtmlText(speed_irregular_label, '불규칙');
@@ -2104,48 +2248,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', '빨간색');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', '검은색');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', '백색');
-	}else if(lang == 'it' || lang == 'it-IT'){ // Italian
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_IT);
-		trans_setHtmlText(sai_id_text_language, 'Lingua (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (Inglese)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (Inglese)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, 'Il tipo di immagine:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'Film 0: Schermata fittizia (per esercitarsi)');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'Film 1: Spirale Logaritmica');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'Film 2: Cerchi concentrici');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'Film 3: Gli occhi');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'Film 4: Spirale di Archimede');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'Film 5: Cuori che si diffondono');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'Film 6: Moneta da 5 Yen');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'Film 7: Strano Turbinio');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'Film 8: Colori Pazzi');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'Film 9: Spirale Logaritmica 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', 'Film 10: Disco Analogico');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', 'Film 11: Strano Turbinio 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', 'Film 12: Caleidoscopio');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', 'Film 13: 1° schermo a colori');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', 'Film 14: 2° schermo a colori');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'Film 15: Solo uno schermo nero');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'Film 16: Solo uno schermo bianco');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'Film 17: Serpente rotante');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'Film 18: Radiazione di distorsione');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', 'Film 19：Onde Casuali');
+		break;
+	case 'it-IT': // Italian
 		trans_setHtmlText(sai_id_text_split, 'Divisione dello schermo:');
 		trans_setHtmlText(sai_id_text_speed, 'Velocità:');
 		trans_setHtmlText(speed_irregular_label, 'Irregolare');
@@ -2211,48 +2315,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Rosso');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Colore nero');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Bianco');
-	}else if(lang == 'de' || lang == 'de-DE'){ // German
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_DE);
-		trans_setHtmlText(sai_id_text_language, 'Sprache (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (Englisch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (Englisch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, 'Die Art des Bildes:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'Film 0: Dummy-Bildschirm (zum Üben)');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'Film 1: Logarithmische Spirale');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'Film 2: Konzentrische Kreise');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'Film 3: Die Augen');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'Film 4: Die Spirale des Archimedes');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'Film 5: Herzen verbreiten');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'Film 6: 5-Yen-Münze');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'Film 7: Seltsamer Wirbel');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'Film 8: Verrückte Farben');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'Film 9: Logarithmische Spirale 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', 'Film 10: Analoge Scheibe');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', 'Film 11: Seltsamer Wirbel 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', 'Film 12: Kaleidoskop');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', 'Film 13: Erster Farbbildschirm');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', 'Film 14: Zweiter Farbbildschirm');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'Film 15: Nur ein schwarzer Bildschirm');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'Film 16: Nur ein weißer Bildschirm');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'Film 17: Rotierende Schlange');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'Film 18: Verzerrungsstrahlung');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', 'Film 19：Zufällige Wellen');
+		break;
+	case 'de-DE': // German
 		trans_setHtmlText(sai_id_text_split, 'Bildschirmaufteilung:');
 		trans_setHtmlText(sai_id_text_speed, 'Geschwindigkeit:');
 		trans_setHtmlText(speed_irregular_label, 'Irregulär');
@@ -2318,48 +2382,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Rot');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Schwarz');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Weiß');
-	}else if(lang == 'es' || lang == 'es-ES'){ // Spanish
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_ES);
-		trans_setHtmlText(sai_id_text_language, '言語 (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chino (Simplificado) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chino (Tradicional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'Inglés (English)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'Alemán (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italiano (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japonés (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Coreano (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chino (Simplificado) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chino (Tradicional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'Inglés (英語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'Alemán (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italiano (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japonés (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Coreano (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, 'Tipo de vídeo:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'Película 0: Pantalla ficticia (para practicar)');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'Película 1: Espiral logarítmica');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'Película 2: Círculos concéntricos');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'Película 3: Ojos giratorios');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'Película 4: Espiral de Arquímedes');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'Película 5: Corazón en expansión');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'Película 6: Moneda de cinco yenes');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'Película 7: Extraño Remolino');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'Película 8: Colores locos');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'Película 9: Espiral logarítmica 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', 'Película 10: Disco analógico');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', 'Película 11: Extraño Remolino 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', 'Película 12: Caleidoscopio');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', 'Película 13: Primera pantalla a color');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', 'Película 14: Segunda pantalla a color');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'Película 15: Sólo una pantalla negra');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'Película 16: Sólo una pantalla blanca');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'Película 17: Serpiente giratoria');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'Película 18: Radiación de distorsión');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', 'Película 19：Ondas Aleatorias');
+		break;
+	case 'es-ES': // Spanish
 		trans_setHtmlText(sai_id_text_split, 'Pantalla dividida:');
 		trans_setHtmlText(sai_id_text_speed, 'Velocidad:');
 		trans_setHtmlText(speed_irregular_label, 'Irregular');
@@ -2425,48 +2449,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Rojo');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Negro');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Blanco');
-	}else if(lang == 'ru' || lang == 'RU'){ // Russian
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_RU);
-		trans_setHtmlText(sai_id_text_language, '言語 (Language):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English (英語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, 'Тип видео:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'Фильм 0: Пустой экран (для практики)');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'Фильм 1: Логарифмическая спираль');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'Фильм 2: Концентрические круги');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'Фильм 3: Вращающиеся глаза');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'Фильм 4: Спираль Архимеда');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'Фильм 5: Расширяющееся сердце');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'Фильм 6: Монета пять иен');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'Фильм 7: Странный Водоворот');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'Фильм 8: Сумасшедшие цвета');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'Фильм 9: Логарифмическая спираль 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', 'Фильм 10: Аналоговый диск');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', 'Фильм 11: Странный Водоворот 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', 'Фильм 12: Калейдоскоп');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', 'Фильм 13: Первый цветной экран');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', 'Фильм 14: Второй цветной экран');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'Фильм 15: Просто черный экран');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'Фильм 16: Просто белый экран');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'Фильм 17: Вращающаяся змея');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'Фильм 18: Искажающее излучение');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', 'Фильм 19：Случайные Волны');
+		break;
+	case 'ru-RU': // Russian
 		trans_setHtmlText(sai_id_text_split, 'Разделенный экран:');
 		trans_setHtmlText(sai_id_text_speed, 'Скорость:');
 		trans_setHtmlText(speed_irregular_label, 'Нерегулярный');
@@ -2532,48 +2516,9 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Красный');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Черный');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Белый');
-	}else{ // English is default
-		trans_setHtmlText(sai_id_text_notice, trans_NOTICE_EN);
-		trans_setHtmlText(sai_id_text_language, 'Language (言語):');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'en', 'English (英語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_1, 'ru', 'Russian (Русский)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-CN', 'Chinese (Simplified) (简体中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'zh-TW', 'Chinese (Traditional) (繁體中文)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'en', 'English');
-		trans_setSelectOptionText(sai_id_select_language_2, 'es', 'Spanish (Español)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'de', 'German (Deutsch)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'it', 'Italian (Italiano)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ja', 'Japanese (日本語)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ko-KR', 'Korean (한국어)');
-		trans_setSelectOptionText(sai_id_select_language_2, 'ru', 'Russian (Русский)');
-		trans_setHtmlText(sai_id_pic_type, 'The type of picture:');
-		trans_setSelectOptionText(sai_id_select_pic_type, '0', 'Movie 0: Dummy Screen (for practice)');
-		trans_setSelectOptionText(sai_id_select_pic_type, '1', 'Movie 1: Logarithmic Spiral');
-		trans_setSelectOptionText(sai_id_select_pic_type, '2', 'Movie 2: Concentric Circles');
-		trans_setSelectOptionText(sai_id_select_pic_type, '3', 'Movie 3: The Eyes');
-		trans_setSelectOptionText(sai_id_select_pic_type, '4', 'Movie 4: Archimedes\' Spiral');
-		trans_setSelectOptionText(sai_id_select_pic_type, '5', 'Movie 5: Spreading Hearts');
-		trans_setSelectOptionText(sai_id_select_pic_type, '6', 'Movie 6: 5-Yen Coin');
-		trans_setSelectOptionText(sai_id_select_pic_type, '7', 'Movie 7: Strange Swirl');
-		trans_setSelectOptionText(sai_id_select_pic_type, '8', 'Movie 8: Crazy Colors');
-		trans_setSelectOptionText(sai_id_select_pic_type, '9', 'Movie 9: Logarithmic Spiral 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '10', 'Movie 10: Analog Disc');
-		trans_setSelectOptionText(sai_id_select_pic_type, '11', 'Movie 11: Strange Swirl 2');
-		trans_setSelectOptionText(sai_id_select_pic_type, '12', 'Movie 12: Kaleidoscope');
-		trans_setSelectOptionText(sai_id_select_pic_type, '13', 'Movie 13: 1st color screen');
-		trans_setSelectOptionText(sai_id_select_pic_type, '14', 'Movie 14: 2st color screen');
-		trans_setSelectOptionText(sai_id_select_pic_type, '15', 'Movie 15: Just a black screen');
-		trans_setSelectOptionText(sai_id_select_pic_type, '16', 'Movie 16: Just a white screen');
-		trans_setSelectOptionText(sai_id_select_pic_type, '17', 'Movie 17: Rotating snake');
-		trans_setSelectOptionText(sai_id_select_pic_type, '18', 'Movie 18: Distortion Radiation');
-		trans_setSelectOptionText(sai_id_select_pic_type, '19', 'Movie 19：Random Waves');
+		break;
+	case 'en-US':
+	default:
 		trans_setHtmlText(sai_id_text_split, 'Screen splitting:');
 		trans_setHtmlText(sai_id_text_speed, 'Speed:');
 		trans_setHtmlText(speed_irregular_label, 'Irregular');
@@ -2639,10 +2584,8 @@ const trans_localize = function(lang){
 		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Red');
 		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Black');
 		trans_setSelectOptionText(sai_id_select_skin, 'white', 'White');
+		break;
 	}
-
-	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
-	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
 
 	// 設定画面のロゴ画像をセットする。
 	let logo_imgs = document.getElementsByClassName('sai_class_img_config_logo');
