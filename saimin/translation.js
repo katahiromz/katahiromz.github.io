@@ -1312,13 +1312,21 @@ trans_trans = {
 		'TEXT_ARROWS': '矢印:',
 		'TEXT_MESSAGE_SPEECH_LABEL': 'メッセージをしゃべる:',
 		'TEXT_MESSAGE_SPEECH': 'メッセージをしゃべる',
-		'TEXT_COLOR_1ST': "1番目の色:",
-		'TEXT_COLOR_2ND': "2番目の色:",
-		'TEXT_INIT_APP_BUTTON': "初期化",
-		'TEXT_MESSAGE_VOLUME': "メッセージボイスの音量:",
-		'TEXT_MESSAGE_SKIN': "スキン:",
-		'TEXT_VIBRATOR': "振動:",
-		'TEXT_VIBRATOR_START_STOP': "開始 / 停止",
+		'TEXT_COLOR_1ST': '1番目の色:',
+		'TEXT_COLOR_2ND': '2番目の色:',
+		'TEXT_INIT_APP_BUTTON': '初期化',
+		'TEXT_MESSAGE_VOLUME': 'メッセージボイスの音量:',
+		'TEXT_MESSAGE_SKIN': 'スキン:',
+		'TEXT_VIBRATOR': '振動:',
+		'TEXT_VIBRATOR_START_STOP': '開始 / 停止',
+		'TEXT_GOLDEN': '金色',
+		'TEXT_PURPLE': '紫色',
+		'TEXT_BLUE': '青色',
+		'TEXT_PINK': 'ピンク色',
+		'TEXT_DARKGREEN': '深緑色',
+		'TEXT_RED': '赤色',
+		'TEXT_BLACK': '黒色',
+		'TEXT_WHITE': '白色',
 	},
 	'zh-CN': { // Chinese (Simplified)
 		'TEXT_OK': '確定',
@@ -1440,13 +1448,21 @@ trans_trans = {
 		'TEXT_ARROWS': '箭：',
 		'TEXT_MESSAGE_SPEECH_LABEL': '留言演讲：',
 		'TEXT_MESSAGE_SPEECH': '留言演讲',
-		'TEXT_COLOR_1ST': "第一种颜色：",
-		'TEXT_COLOR_2ND': "第二种颜色：",
-		'TEXT_INIT_APP_BUTTON': "初始化",
-		'TEXT_MESSAGE_VOLUME': "留言音量：",
-		'TEXT_MESSAGE_SKIN': "皮肤：",
-		'TEXT_VIBRATOR': "振动器：",
-		'TEXT_VIBRATOR_START_STOP': "开始 / 停止",
+		'TEXT_COLOR_1ST': '第一种颜色：',
+		'TEXT_COLOR_2ND': '第二种颜色：',
+		'TEXT_INIT_APP_BUTTON': '初始化',
+		'TEXT_MESSAGE_VOLUME': '留言音量：',
+		'TEXT_MESSAGE_SKIN': '皮肤：',
+		'TEXT_VIBRATOR': '振动器：',
+		'TEXT_VIBRATOR_START_STOP': '开始 / 停止',
+		'TEXT_GOLDEN': '金的',
+		'TEXT_PURPLE': '紫色的',
+		'TEXT_BLUE': '蓝色的',
+		'TEXT_PINK': '粉色',
+		'TEXT_DARKGREEN': '深绿色',
+		'TEXT_RED': '红色的',
+		'TEXT_BLACK': '黑色',
+		'TEXT_WHITE': '白色的',
 	},
 	'zh-TW': { // Chinese (Traditional)
 		'TEXT_OK': '確定',
@@ -1568,13 +1584,21 @@ trans_trans = {
 		'TEXT_ARROWS': '箭頭：',
 		'TEXT_MESSAGE_SPEECH_LABEL': '留言演講：',
 		'TEXT_MESSAGE_SPEECH': '留言演講',
-		'TEXT_COLOR_1ST': "第一種顏色：",
-		'TEXT_COLOR_2ND': "第二種顏色：",
-		'TEXT_INIT_APP_BUTTON': "初始化",
-		'TEXT_MESSAGE_VOLUME': "留言音量：",
-		'TEXT_MESSAGE_SKIN': "皮膚：",
-		'TEXT_VIBRATOR': "振動器：",
-		'TEXT_VIBRATOR_START_STOP': "開始 / 停止",
+		'TEXT_COLOR_1ST': '第一種顏色：',
+		'TEXT_COLOR_2ND': '第二種顏色：',
+		'TEXT_INIT_APP_BUTTON': '初始化',
+		'TEXT_MESSAGE_VOLUME': '留言音量：',
+		'TEXT_MESSAGE_SKIN': '皮膚：',
+		'TEXT_VIBRATOR': '振動器：',
+		'TEXT_VIBRATOR_START_STOP': '開始 / 停止',
+		'TEXT_GOLDEN': '金的',
+		'TEXT_PURPLE': '紫色的',
+		'TEXT_BLUE': '藍色的',
+		'TEXT_PINK': '粉紅色',
+		'TEXT_DARKGREEN': '深綠色',
+		'TEXT_RED': '紅色的',
+		'TEXT_BLACK': '黑色',
+		'TEXT_WHITE': '白色的',
 	},
 	'ko-KR': { // Korean
 		'TEXT_OK': 'OK',
@@ -1696,13 +1720,21 @@ trans_trans = {
 		'TEXT_ARROWS': '화살표:',
 		'TEXT_MESSAGE_SPEECH_LABEL': '메시지 연설:',
 		'TEXT_MESSAGE_SPEECH': '메시지 연설',
-		'TEXT_COLOR_1ST': "첫 번째 색상:",
-		'TEXT_COLOR_2ND': "두 번째 색상:",
-		'TEXT_INIT_APP_BUTTON': "앱 재설정",
-		'TEXT_MESSAGE_VOLUME': "메시지 음성 음량:",
-		'TEXT_MESSAGE_SKIN': "스킨:",
-		'TEXT_VIBRATOR': "진동기:",
-		'TEXT_VIBRATOR_START_STOP': "시작 / 정지",
+		'TEXT_COLOR_1ST': '첫 번째 색상:',
+		'TEXT_COLOR_2ND': '두 번째 색상:',
+		'TEXT_INIT_APP_BUTTON': '앱 재설정',
+		'TEXT_MESSAGE_VOLUME': '메시지 음성 음량:',
+		'TEXT_MESSAGE_SKIN': '스킨:',
+		'TEXT_VIBRATOR': '진동기:',
+		'TEXT_VIBRATOR_START_STOP': '시작 / 정지',
+		'TEXT_GOLDEN': '황금',
+		'TEXT_PURPLE': '보라색',
+		'TEXT_BLUE': '청색',
+		'TEXT_PINK': '핑크색',
+		'TEXT_DARKGREEN': '다크 그린',
+		'TEXT_RED': '빨간색',
+		'TEXT_BLACK': '검은색',
+		'TEXT_WHITE': '백색',
 	},
 	'it-IT': { // Italian
 		'TEXT_OK': 'OK',
@@ -1824,13 +1856,21 @@ trans_trans = {
 		'TEXT_ARROWS': 'Frecce:',
 		'TEXT_MESSAGE_SPEECH_LABEL': 'Discorso del messaggio:',
 		'TEXT_MESSAGE_SPEECH': 'Discorso del messaggio',
-		'TEXT_COLOR_1ST': "1° colore:",
-		'TEXT_COLOR_2ND': "2° colore:",
-		'TEXT_INIT_APP_BUTTON': "Inizializzare",
-		'TEXT_MESSAGE_VOLUME': "Volume della voce:",
-		'TEXT_MESSAGE_SKIN': "Pelle:",
-		'TEXT_VIBRATOR': "Vibratore:",
-		'TEXT_VIBRATOR_START_STOP': "Avvio / Arresto",
+		'TEXT_COLOR_1ST': '1° colore:',
+		'TEXT_COLOR_2ND': '2° colore:',
+		'TEXT_INIT_APP_BUTTON': 'Inizializzare',
+		'TEXT_MESSAGE_VOLUME': 'Volume della voce:',
+		'TEXT_MESSAGE_SKIN': 'Pelle:',
+		'TEXT_VIBRATOR': 'Vibratore:',
+		'TEXT_VIBRATOR_START_STOP': 'Avvio / Arresto',
+		'TEXT_GOLDEN': 'd\'Oro',
+		'TEXT_PURPLE': 'Viola',
+		'TEXT_BLUE': 'Blu',
+		'TEXT_PINK': 'Colore Rosa',
+		'TEXT_DARKGREEN': 'Verde Scuro',
+		'TEXT_RED': 'Rosso',
+		'TEXT_BLACK': 'Colore nero',
+		'TEXT_WHITE': 'Bianco',
 	},
 	'de-DE': { // German
 		'TEXT_OK': 'OK',
@@ -1952,13 +1992,21 @@ trans_trans = {
 		'TEXT_ARROWS': 'Pfeile:',
 		'TEXT_MESSAGE_SPEECH_LABEL': 'Nachrichtenansprache:',
 		'TEXT_MESSAGE_SPEECH': 'Nachrichtenansprache',
-		'TEXT_COLOR_1ST': "1. Farbe:",
-		'TEXT_COLOR_2ND': "2. Farbe:",
-		'TEXT_INIT_APP_BUTTON': "Initialisieren",
-		'TEXT_MESSAGE_VOLUME': "Stimmen Lautstärke:",
-		'TEXT_MESSAGE_SKIN': "Haut:",
-		'TEXT_VIBRATOR': "Vibrator:",
-		'TEXT_VIBRATOR_START_STOP': "Start / Stop",
+		'TEXT_COLOR_1ST': '1. Farbe:',
+		'TEXT_COLOR_2ND': '2. Farbe:',
+		'TEXT_INIT_APP_BUTTON': 'Initialisieren',
+		'TEXT_MESSAGE_VOLUME': 'Stimmen Lautstärke:',
+		'TEXT_MESSAGE_SKIN': 'Haut:',
+		'TEXT_VIBRATOR': 'Vibrator:',
+		'TEXT_VIBRATOR_START_STOP': 'Start / Stop',
+		'TEXT_GOLDEN': 'Golden',
+		'TEXT_PURPLE': 'Lila',
+		'TEXT_BLUE': 'Blau',
+		'TEXT_PINK': 'Pinke Farbe',
+		'TEXT_DARKGREEN': 'Dunkelgrün',
+		'TEXT_RED': 'Rot',
+		'TEXT_BLACK': 'Schwarz',
+		'TEXT_WHITE': 'Weiß',
 	},
 	'es-ES': { // Spanish
 		'TEXT_OK': 'OK',
@@ -2080,13 +2128,21 @@ trans_trans = {
 		'TEXT_ARROWS': 'Flechas:',
 		'TEXT_MESSAGE_SPEECH_LABEL': 'Di el mensaje:',
 		'TEXT_MESSAGE_SPEECH': 'Di el mensaje',
-		'TEXT_COLOR_1ST': "1er color:",
-		'TEXT_COLOR_2ND': "Segundo color:",
-		'TEXT_INIT_APP_BUTTON': "Inicialización",
-		'TEXT_MESSAGE_VOLUME': "Volumen de voz del mensaje:",
-		'TEXT_MESSAGE_SKIN': "Piel:",
-		'TEXT_VIBRATOR': "Vibrador:",
-		'TEXT_VIBRATOR_START_STOP': "Iniciar / Detener",
+		'TEXT_COLOR_1ST': '1er color:',
+		'TEXT_COLOR_2ND': 'Segundo color:',
+		'TEXT_INIT_APP_BUTTON': 'Inicialización',
+		'TEXT_MESSAGE_VOLUME': 'Volumen de voz del mensaje:',
+		'TEXT_MESSAGE_SKIN': 'Piel:',
+		'TEXT_VIBRATOR': 'Vibrador:',
+		'TEXT_VIBRATOR_START_STOP': 'Iniciar / Detener',
+		'TEXT_GOLDEN': 'Dorado',
+		'TEXT_PURPLE': 'Púrpura',
+		'TEXT_BLUE': 'Azul',
+		'TEXT_PINK': 'Color rosa',
+		'TEXT_DARKGREEN': 'Verde oscuro',
+		'TEXT_RED': 'Rojo',
+		'TEXT_BLACK': 'Negro',
+		'TEXT_WHITE': 'Blanco',
 	},
 	'ru-RU': {
 		'TEXT_OK': 'Хорошо',
@@ -2208,13 +2264,21 @@ trans_trans = {
 		'TEXT_ARROWS': 'Стрелки:',
 		'TEXT_MESSAGE_SPEECH_LABEL': 'Произнесите сообщение:',
 		'TEXT_MESSAGE_SPEECH': 'Произнесите сообщение',
-		'TEXT_COLOR_1ST': "1-й цвет:",
-		'TEXT_COLOR_2ND': "Второй цвет:",
-		'TEXT_INIT_APP_BUTTON': "Инициализация",
-		'TEXT_MESSAGE_VOLUME': "Громкость голоса сообщения:",
-		'TEXT_MESSAGE_SKIN': "Кожа:",
-		'TEXT_VIBRATOR': "Вибратор:",
-		'TEXT_VIBRATOR_START_STOP': "Старт / Стоп",
+		'TEXT_COLOR_1ST': '1-й цвет:',
+		'TEXT_COLOR_2ND': 'Второй цвет:',
+		'TEXT_INIT_APP_BUTTON': 'Инициализация',
+		'TEXT_MESSAGE_VOLUME': 'Громкость голоса сообщения:',
+		'TEXT_MESSAGE_SKIN': 'Кожа:',
+		'TEXT_VIBRATOR': 'Вибратор:',
+		'TEXT_VIBRATOR_START_STOP': 'Старт / Стоп',
+		'TEXT_GOLDEN': 'Золотой',
+		'TEXT_PURPLE': 'Фиолетовый',
+		'TEXT_BLUE': 'Синий',
+		'TEXT_PINK': 'Розовый цвет',
+		'TEXT_DARKGREEN': 'Темно-зеленый',
+		'TEXT_RED': 'Красный',
+		'TEXT_BLACK': 'Черный',
+		'TEXT_WHITE': 'Blanco',
 	},
 	'en-US': {
 		'TEXT_OK': 'OK',
@@ -2336,13 +2400,21 @@ trans_trans = {
 		'TEXT_ARROWS': 'Arrows:',
 		'TEXT_MESSAGE_SPEECH_LABEL': 'Message Speech:',
 		'TEXT_MESSAGE_SPEECH': 'Message Speech',
-		'TEXT_COLOR_1ST': "1st color:",
-		'TEXT_COLOR_2ND': "2nd color:",
-		'TEXT_INIT_APP_BUTTON': "Initialize",
-		'TEXT_MESSAGE_VOLUME': "Message voice volume:",
-		'TEXT_MESSAGE_SKIN': "Skin:",
-		'TEXT_VIBRATOR': "Vibrator:",
-		'TEXT_VIBRATOR_START_STOP': "Start / Stop",
+		'TEXT_COLOR_1ST': '1st color:',
+		'TEXT_COLOR_2ND': '2nd color:',
+		'TEXT_INIT_APP_BUTTON': 'Initialize',
+		'TEXT_MESSAGE_VOLUME': 'Message voice volume:',
+		'TEXT_MESSAGE_SKIN': 'Skin:',
+		'TEXT_VIBRATOR': 'Vibrator:',
+		'TEXT_VIBRATOR_START_STOP': 'Start / Stop',
+		'TEXT_GOLDEN': 'Golden',
+		'TEXT_PURPLE': 'Purple',
+		'TEXT_BLUE': 'Blue',
+		'TEXT_PINK': 'Pink',
+		'TEXT_DARKGREEN': 'Darkgreen',
+		'TEXT_RED': 'Red',
+		'TEXT_BLACK': 'Black',
+		'TEXT_WHITE': 'White',
 	},
 };
 
@@ -2382,7 +2454,7 @@ const trans_getSelectOptionText = function(id, value){
 			return options[i].text;
 		}
 	}
-	return "";
+	return '';
 }
 
 const trans_setImageSrc = function(id, src){
@@ -2506,102 +2578,17 @@ const trans_localize = function(lang){
 	trans_setHtmlText(sai_id_text_vibrator, trans_getText('TEXT_VIBRATOR'));
 	trans_setHtmlText(sai_id_button_vibrator_start_stop, trans_getText('TEXT_VIBRATOR_START_STOP'));
 
+	trans_setSelectOptionText(sai_id_select_skin, 'golden', trans_getText('TEXT_GOLDEN'));
+	trans_setSelectOptionText(sai_id_select_skin, 'purple', trans_getText('TEXT_PURPLE'));
+	trans_setSelectOptionText(sai_id_select_skin, 'blue', trans_getText('TEXT_BLUE'));
+	trans_setSelectOptionText(sai_id_select_skin, 'pink', trans_getText('TEXT_PINK'));
+	trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', trans_getText('TEXT_DARKGREEN'));
+	trans_setSelectOptionText(sai_id_select_skin, 'red', trans_getText('TEXT_RED'));
+	trans_setSelectOptionText(sai_id_select_skin, 'black', trans_getText('TEXT_BLACK'));
+	trans_setSelectOptionText(sai_id_select_skin, 'white', trans_getText('TEXT_WHITE'));
+
 	trans_setHtmlText(sai_id_page_agreement_header_1, trans_getText('TEXT_ABOUT_APP'));
 	trans_setHtmlText(sai_id_button_agree, trans_getText('TEXT_I_AGREE'));
-
-	switch(trans_currentLanguage){
-	case 'ja-JP':
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金色');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', '青色');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'ピンク色');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '深緑色');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', '赤色');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', '黒色');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色');
-		break;
-	case 'zh-CN': // Chinese (Simplified)
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金的');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色的');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', '蓝色的');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', '粉色');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '深绿色');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', '红色的');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', '黑色');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
-		break;
-	case 'zh-TW': // Chinese (Traditional)
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', '金的');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', '紫色的');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', '藍色的');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', '粉紅色');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '深綠色');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', '紅色的');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', '黑色');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', '白色的');
-		break;
-	case 'ko-KR': // Korean
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', '황금');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', '보라색');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', '청색');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', '핑크색');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', '다크 그린');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', '빨간색');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', '검은색');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', '백색');
-		break;
-	case 'it-IT': // Italian
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'd\'Oro');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Viola');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blu');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Colore Rosa');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Verde Scuro');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Rosso');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Colore nero');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Bianco');
-		break;
-	case 'de-DE': // German
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Golden');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Lila');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blau');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Pinke Farbe');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Dunkelgrün');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Rot');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Schwarz');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Weiß');
-		break;
-	case 'es-ES': // Spanish
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Dorado');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Púrpura');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Azul');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Color rosa');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Verde oscuro');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Rojo');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Negro');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Blanco');
-		break;
-	case 'ru-RU': // Russian
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Золотой');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Фиолетовый');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Синий');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Розовый цвет');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Темно-зеленый');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Красный');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Черный');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', 'Белый');
-		break;
-	case 'en-US':
-	default:
-		trans_setSelectOptionText(sai_id_select_skin, 'golden', 'Golden');
-		trans_setSelectOptionText(sai_id_select_skin, 'purple', 'Purple');
-		trans_setSelectOptionText(sai_id_select_skin, 'blue', 'Blue');
-		trans_setSelectOptionText(sai_id_select_skin, 'pink', 'Pink');
-		trans_setSelectOptionText(sai_id_select_skin, 'darkgreen', 'Darkgreen');
-		trans_setSelectOptionText(sai_id_select_skin, 'red', 'Red');
-		trans_setSelectOptionText(sai_id_select_skin, 'black', 'Black');
-		trans_setSelectOptionText(sai_id_select_skin, 'white', 'White');
-		break;
-	}
 
 	// 設定画面のロゴ画像をセットする。
 	let logo_imgs = document.getElementsByClassName('sai_class_img_config_logo');
