@@ -535,23 +535,8 @@ document.addEventListener('DOMContentLoaded', function(){
 				speech.pitch = 0.6; // 音声の高さ。
 				speech.rate = 0.4; // 音声の速さ。
 				speech.volume = voice_volume; // 音量。
-				// {{LANGUAGE_SPECIFIC}}: スピーチの言語をセットする。
-				if(trans_currentLanguage == 'ja' || trans_currentLanguage == 'ja-JP') // Japanese
-					speech.lang = 'ja-JP';
-				else if(trans_currentLanguage == 'zh-CN') // Chinese (Simplified)
-					speech.lang = 'zh-CN';
-				else if(trans_currentLanguage == 'zh-TW') // Chinese (Traditional)
-					speech.lang = 'zh-TW';
-				else if(trans_currentLanguage == 'ko-KR') // Korean
-					speech.lang = 'ko-KR';
-				else if(trans_currentLanguage == 'it' || trans_currentLanguage == 'it-IT') // Italian
-					speech.lang = 'it-IT';
-				else if(trans_currentLanguage == 'de' || trans_currentLanguage == 'de-DE') // German
-					speech.lang = 'de-DE';
-				else if(trans_currentLanguage == 'es' || trans_currentLanguage == 'es-ES') // Spanish
-					speech.lang = 'es-ES';
-				else // English is default
-					speech.lang = 'en-US';
+				let lang = trans_standardizeLanguage(trans_currentLanguage);
+				speech.lang = lang;
 				// 実際にスピーチを開始する。
 				window.speechSynthesis.speak(speech);
 				console.log('speech');
