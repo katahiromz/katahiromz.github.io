@@ -2038,7 +2038,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// ハート型を描画する。外側から順番に。
 		let isLarge = SAI_screen_is_large(ctx);
-		for(let radius = isLarge ? ((dx + dy) * 0.2) : ((dx + dy) * 0.4); radius >= 10; radius *= 0.92){
+		for(let radius = isLarge ? ((dx + dy) * 0.3) : ((dx + dy) * 0.5); radius >= 10; radius *= 0.90){
 			// 虹色の指定はHSL色空間で。
 			let color = `hsl(${((dxy + factor * 0.3 - radius * 0.015) * 360) % 360}deg, 100%, 50%)`;
 			// ハート形を描画する。
