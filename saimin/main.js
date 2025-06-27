@@ -2083,10 +2083,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		SAI_draw_pic_05_sub(ctx2, 0, 0, dx, dy);
 		ctx2.restore();
 
-		// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
-		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
-		ctx.drawImage(sai_id_canvas_02, 0, 0, dx, dy, px, py, dx, dy);
-		ctx.globalAlpha = 1; // 元に戻す。
+		if(0){ // 画5にはモーションブラーを適用しない。
+			// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
+			ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
+			ctx.drawImage(sai_id_canvas_02, 0, 0, dx, dy, px, py, dx, dy);
+			ctx.globalAlpha = 1; // 元に戻す。
+		}else{
+			ctx.drawImage(sai_id_canvas_02, 0, 0, dx, dy, px, py, dx, dy);
+		}
 
 		// フォーカス矢印を描画する。
 		let count2 = SAI_get_tick_count();
