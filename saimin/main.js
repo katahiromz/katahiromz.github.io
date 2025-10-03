@@ -2848,13 +2848,14 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	// ヘビを描画する。
-	const SAI_draw_snake = function(ctx, qx, qy, mxy, maxxy, counter, N, colors){
-		const dr = mxy / 100; // 半径の変分。
+	const SAI_draw_snake = function(ctx, k, qx, qy, mxy, maxxy, counter, N, colors){
+		const dr = mxy / 10; // 半径の変分。
 		const M = 3 * N;
 		const da = 360 / M;
-		const cnt = counter * 3;
+		let cnt = counter * 5;
+		if (k % 2 == 0) cnt = -cnt;
 		let j = 1;
-		for (let radius = maxxy * 0.75 + 3 * dr * Math.sin(8 * counter); radius >= 0; radius -= dr){
+		for (let radius = maxxy + 3 * dr * Math.abs(Math.sin(4 * counter)); radius >= 0; radius -= dr){
 			let i = (j++ % 3);
 			for (let angle = 0; angle < 360; angle += da){
 				let angle1 = angle, angle2 = angle + da;
@@ -2887,15 +2888,23 @@ document.addEventListener('DOMContentLoaded', function(){
 		const colors = [SAI_color_get_2nd(), "gray", SAI_color_get_1st()];
 
 		// ヘビを描画する。
-		let delta = mxy * 0.70;
-		let r1 = delta * 3;
-		let r2 = delta;
-		let r3 = r2 * 0.75;
-		SAI_draw_snake(ctx, qx, qy, r1, r2, counter, 5, colors);
-		SAI_draw_snake(ctx, px + dx, py, r1, r3, counter, 12, colors);
-		SAI_draw_snake(ctx, px, py + dy, r1, r3, counter, 12, colors);
-		SAI_draw_snake(ctx, px + dx, py + dy, r1, r3, counter, 12, colors);
-		SAI_draw_snake(ctx, px, py, r1, r3, counter, 12, colors);
+		let delta = mxy * 0.2;
+		let radius = mxy * 0.25;
+		let IX = Math.floor(dx / radius), IY = Math.floor(dy / radius);
+		let m = 0;
+		for (let iy = 0; iy <= IY + 1; ++iy){
+			let k = (m % 2) != 0;
+			for (let ix = 0; ix <= IX + 1; ++ix){
+				ctx.save();
+				ctx.beginPath();
+				ctx.rect(px + ix * radius - radius / 2, py + iy * radius - radius / 2, radius, radius);
+				ctx.clip();
+				SAI_draw_snake(ctx, k, px + ix * radius, py + iy * radius, delta, delta, counter, 4, colors);
+				ctx.restore();
+				++k;
+			}
+			++m;
+		}
 
 		// フォーカス矢印を描画する。
 		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
