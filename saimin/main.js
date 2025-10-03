@@ -2847,7 +2847,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(px, py, dx, dy);
 	}
 
-	function SAI_draw_snake_wheel(ctx, centerX, centerY, radius, numSegments, counter, startAngleOffset) {
+	function SAI_draw_snake_wheel(ctx, centerX, centerY, radius, numSegments, counter, startAngleOffset){
 		// 描画するセクターの角度 (ラジアン)
 		const segmentAngle = (Math.PI * 2) / numSegments;
 		// 錯視の核となる色パターン
@@ -2857,7 +2857,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		let cnt = counter * 0.5;
 
 		// 各セクターを描画
-		for (let i = 0; i < numSegments; ++i) {
+		for (let i = 0; i < numSegments; ++i){
 			// 現在のセクターの色を非対称なパターンから取得
 			ctx.fillStyle = colors[i % colors.length];
 			// 描画するセクターの開始角度と終了角度
