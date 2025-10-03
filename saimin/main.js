@@ -2876,6 +2876,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 	}
 
+	// 動画17用のキャンバスとコンテキスト。
 	let sai_pic_17_canvas = null;
 	let sai_pic_17_ctx = null;
 
@@ -2893,6 +2894,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		let dr = mxy * 0.015;
 		const S = 4 * 12; // セクターの数 (4色の4倍)
 
+		// キャンバスを用意する。
 		if(!sai_pic_17_canvas || sai_pic_17_canvas.width < radius || sai_pic_17_canvas.height < radius){
 			sai_pic_17_canvas = document.createElement('canvas');
 			sai_pic_17_canvas.width = parseInt(radius) + 1;
@@ -2903,6 +2905,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		const offsetCW = 0; // 順方向のオフセット（時計回り）
 		const offsetCCW = 4 * Math.PI / S; // 逆方向のオフセット（反時計回り）
 
+		// キャンバス上でヘビを描画する。
 		let ctx2 = sai_pic_17_ctx;
 		let i = 0;
 		for (let r = radius; r >= 0; r -= dr){
@@ -2915,7 +2918,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			++i;
 		}
 
-		// ヘビを描画する。
+		// キャンバスのイメージをタイル状にならべる。
 		let IX = Math.floor(dx / radius), IY = Math.floor(dy / radius);
 		let m = 0;
 		let cnt = counter * 0.1;
