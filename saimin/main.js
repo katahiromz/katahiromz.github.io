@@ -2847,61 +2847,76 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(px, py, dx, dy);
 	}
 
-	// ヘビを描画する。
-	const SAI_draw_snake = function(ctx, k, qx, qy, mxy, maxxy, counter, N, colors){
-		const dr = mxy / 10; // 半径の変分。
-		const M = 3 * N;
-		const da = 360 / M;
-		let cnt = counter * 5;
-		if (k % 2 == 0) cnt = -cnt;
-		let j = 1;
-		for (let radius = maxxy + 3 * dr * Math.abs(Math.sin(4 * counter)); radius >= 0; radius -= dr){
-			let i = (j++ % 3);
-			for (let angle = 0; angle < 360; angle += da){
-				let angle1 = angle, angle2 = angle + da;
-				ctx.beginPath();
-				ctx.moveTo(qx, qy);
-				ctx.arc(qx, qy, radius, angle1 * (Math.PI / 180) + cnt, angle2 * (Math.PI / 180) + cnt);
-				ctx.closePath();
-				ctx.fillStyle = colors[i % 3];
-				ctx.fill();
-				++i;
-			}
+	function SAI_draw_snake_wheel(ctx, centerX, centerY, radius, numSegments, counter, startAngleOffset) {
+		// 描画するセクターの角度 (ラジアン)
+		const segmentAngle = (Math.PI * 2) / numSegments;
+		// 錯視の核となる色パターン
+		// 「黒 - 黄 - 白 - 青」などの非対称な輝度ステップが回転錯視を生む
+		const colors = ['#000000', '#FFD700', '#FFFFFF', '#1E90FF']; // 黒, 金/黄, 白, 青
+
+		let cnt = counter * 0.5;
+
+		// 各セクターを描画
+		for (let i = 0; i < numSegments; ++i) {
+			// 現在のセクターの色を非対称なパターンから取得
+			ctx.fillStyle = colors[i % colors.length];
+			// 描画するセクターの開始角度と終了角度
+			const startAngle = i * segmentAngle + startAngleOffset;
+			const endAngle = (i + 1) * segmentAngle + startAngleOffset;
+			// パスを開始
+			ctx.beginPath();
+			// 円の中心に移動
+			ctx.moveTo(centerX, centerY);
+			// 弧を描く
+			ctx.arc(centerX, centerY, radius, startAngle + cnt, endAngle + cnt);
+			// パスを閉じる（中心と弧の端点を結ぶ）
+			ctx.closePath();
+			// 塗りつぶし
+			ctx.fill();
 		}
-	};
+	}
+
+	let sai_pic_17_canvas = null;
+	let sai_pic_17_ctx = null;
 
 	// 映像「動画17: ヘビの回転」の描画。
 	const SAI_draw_pic_17 = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
-		// 黒で長方形領域を塗りつぶす。
-		ctx.clearRect(px, py, dx, dy);
-
 		// 映像の進行をつかさどる変数。
-		const counter = SAI_get_tick_count() * 0.01;
+		const counter = SAI_get_tick_count() * 0.04;
 
 		let qx = px + dx / 2, qy = py + dy / 2;
 		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
 		let mxy = (maxxy + minxy) * 0.5;
+		let radius = mxy * 0.2;
+		let dr = mxy * 0.015;
+		const S = 4 * 15; // セクターの数 (4色の4倍)
 
-		// 色。
-		const colors = [SAI_color_get_2nd(), "gray", SAI_color_get_1st()];
+		if(!sai_pic_17_canvas || sai_pic_17_canvas.width < radius || sai_pic_17_canvas.height < radius){
+			sai_pic_17_canvas = document.createElement('canvas');
+			sai_pic_17_canvas.width = parseInt(radius) + 1;
+			sai_pic_17_canvas.height = parseInt(radius) + 1;
+			sai_pic_17_ctx = sai_pic_17_canvas.getContext('2d', { alpha: false });
+		}
+
+		const offsetCW = 0; // 順方向のオフセット（時計回り）
+		const offsetCCW = 4 * Math.PI / S; // 逆方向のオフセット（反時計回り）
+
+		let ctx2 = sai_pic_17_ctx;
+		let i = 0;
+		for (let r = radius; r >= 0; r -= dr){
+			SAI_draw_snake_wheel(ctx2, radius / 2, radius / 2, r, S, counter, (i % 2) ? offsetCW : offsetCCW);
+			++i;
+		}
 
 		// ヘビを描画する。
-		let delta = mxy * 0.2;
-		let radius = mxy * 0.25;
 		let IX = Math.floor(dx / radius), IY = Math.floor(dy / radius);
 		let m = 0;
 		for (let iy = 0; iy <= IY + 1; ++iy){
-			let k = (m % 2) != 0;
 			for (let ix = 0; ix <= IX + 1; ++ix){
-				ctx.save();
-				ctx.beginPath();
-				ctx.rect(px + ix * radius - radius / 2, py + iy * radius - radius / 2, radius, radius);
-				ctx.clip();
-				SAI_draw_snake(ctx, k, px + ix * radius, py + iy * radius, delta, delta, counter, 4, colors);
-				ctx.restore();
-				++k;
+				let x = ix * radius, y = iy * radius;
+				ctx.drawImage(sai_pic_17_canvas, 0, 0, radius, radius, x, y, radius, radius);
 			}
 			++m;
 		}
