@@ -2850,9 +2850,8 @@ document.addEventListener('DOMContentLoaded', function(){
 	function SAI_draw_snake_wheel(ctx, centerX, centerY, radius, numSegments, counter, startAngleOffset){
 		// 描画するセクターの角度 (ラジアン)
 		const segmentAngle = (Math.PI * 2) / numSegments;
-		// 錯視の核となる色パターン
-		// 「黒 - 黄 - 白 - 青」などの非対称な輝度ステップが回転錯視を生む
-		const colors = ['#000000', '#FFD700', '#FFFFFF', '#1E90FF']; // 黒, 金/黄, 白, 青
+		// 錯視の核となる色パターン。「黒 - 黄 - 白 - 青」などの非対称な輝度ステップが回転錯視を生む。
+		const colors = ['#000000', '#FFFF00', '#FFFFFF', '#0000FF'];
 
 		let cnt = counter * 0.5;
 
