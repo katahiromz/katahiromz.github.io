@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		// 顔認識のページか？
 		if(page_id == sai_id_page_face_getter){
-			if (!sai_face_getter) {
+			if (!sai_face_getter){
 				sai_face_getter = new facelocker(sai_id_canvas_face, function(status){
 					face_update_status(status);
 				});
@@ -1277,7 +1277,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	}
 
 	// ハート形の描画。
-	const SAI_draw_heart_0 = function(ctx, cx, cy, size, color = 'red') {
+	const SAI_draw_heart_0 = function(ctx, cx, cy, size, color = 'red'){
 		ctx.beginPath();
 		cy -= size * 0.15;
 		size *= 0.007;
@@ -2847,128 +2847,59 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(px, py, dx, dy);
 	}
 
-	// ヘビの描画。
-	const SAI_draw_snake = function(ctx, px, py, dx, dy, radius, radius2, direction, di, ei){
-		// 画面の寸法を使って計算する。
-		let qx = px + dx / 2, qy = py + dy / 2;
-		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
-		let mxy = (maxxy + minxy) * 0.5;
-
-		// 映像の進行を表す変数。
-		let count2 = -SAI_get_tick_count() * 0.09 * (direction ? -1 : 1);
-
-		const num_colors = 3;
-		let i, ci = Math.ceil(radius / num_colors * 0.15) * num_colors * 2;
-		let count3 = -count2 * 0.25 * Math.pow(1.02, di);
-		const ratio = 1.5;
-		const value1 = SAI_mod(SAI_get_tick_count() * 0.005, 1);
-		const value2 = SAI_mod(SAI_get_tick_count() * 0.005 + 0.5, 1);
-		const color1 = SAI_color_get_1st();
-		const color2 = SAI_color_get_2nd();
-		let cnt1 = -SAI_get_tick_count() * 0.02;
-		let cnt2 = Math.sin(cnt1 * 4.0) * 0.3;
-		let cnt3 = Math.sin(cnt1 * 8.0) * 0.3;
-		for(let i = 0; i < ci; ++i){
-			ctx.save(); // 現在の座標系やクリッピングなどを保存する。
-			let old_x, old_y, old_radian;
-			{
-				let radian = 2 * Math.PI * i / ci;
-				let x = radius * Math.cos(radian + count3);
-				let y = radius * Math.sin(radian + count3);
-				// パスの開始。
+	// ヘビを描画する。
+	const SAI_draw_snake = function(ctx, qx, qy, mxy, maxxy, counter, N, colors){
+		let dr = mxy / 100;
+		const M = 3 * N;
+		let da = 360 / M;
+		let j = 1;
+		let cnt = counter * 3;
+		for (let radius = maxxy * 0.75 + 3 * dr * Math.sin(8 * counter); radius >= 0; radius -= dr){
+			let i = (j++ % 3);
+			for (let angle = 0; angle < 360; angle += da){
 				ctx.beginPath();
-				// 座標変換。
-				ctx.translate((ei - di) * cnt2 * mxy * 0.1, (ei - di) * cnt3 * mxy * 0.02);
-				ctx.translate(qx, qy);
-				ctx.translate(x, y);
-				ctx.rotate(radian + count3);
-				ctx.scale(1, ratio);
-				// 円弧を描画。
-				ctx.arc(0, 0, radius2, 0, 1 * Math.PI, true);
-				old_x = x;
-				old_y = y;
-				old_radian = radian;
-			}
-			{
-				let radian = 2 * Math.PI * (i + (direction ? +1 : -1)) / ci;
-				let x = radius * Math.cos(radian + count3);
-				let y = radius * Math.sin(radian + count3);
-				// 一部、変換を元に戻すため、一部逆変換。
-				ctx.scale(1, 1/ratio);
-				ctx.rotate(-(old_radian + count3));
-				ctx.translate(-old_x, -old_y);
-				// さらに変換。
-				ctx.translate(x, y);
-				ctx.rotate(radian + count3);
-				ctx.scale(1, ratio);
-				// 円弧を描画。
-				ctx.arc(0, 0, radius2, 1 * Math.PI, 0);
-				// 色を選んで塗りつぶし。
-				switch(i % num_colors){
-				case 0: ctx.fillStyle = color1; break;
-				case 1: ctx.fillStyle = color2; break;
-				case 2: ctx.fillStyle = "black"; break;
-				}
+				let angle1 = angle, angle2 = angle + da;
+				ctx.moveTo(qx, qy);
+				ctx.arc(qx, qy, radius, angle1 * (Math.PI / 180) + cnt, angle2 * (Math.PI / 180) + cnt);
+				ctx.closePath();
+				ctx.fillStyle = colors[i % 3];
 				ctx.fill();
+				++i;
 			}
-			ctx.restore(); // ctx.saveで保存した情報で元に戻す。
 		}
-	}
+	};
 
 	// 映像「動画17: ヘビの回転」の描画。
-	const SAI_draw_pic_17_sub = function(ctx, px, py, dx, dy){
+	const SAI_draw_pic_17 = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		// 黒で長方形領域を塗りつぶす。
 		ctx.clearRect(px, py, dx, dy);
 
+		// 映像の進行をつかさどる変数。
+		const counter = SAI_get_tick_count() * 0.01;
+
 		let qx = px + dx / 2, qy = py + dy / 2;
 		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
 		let mxy = (maxxy + minxy) * 0.5;
 
-		// ヘビを描画。
-		let flag = sai_id_select_vortex_direction.value == "counterclockwise";
-		let unit = mxy * 0.05;
-		let factor = 0.8;
-		let ei = 8;
-		for(let i = 0; i < 20; ++i){
-			SAI_draw_snake(ctx, px, py, dx, dy, unit * (i - 0.25), unit * factor / 2, flag, i, ei);
-		}
+		const colors = [SAI_color_get_2nd(), "gray", SAI_color_get_1st()];
 
-		// 真ん中に赤い円盤をいくつか描く。
-		ctx.fillStyle = "red";
-		let cnt = SAI_get_tick_count() * 0.02;
-		unit *= (3 + Math.sin(cnt * 4.0)) * 0.2;
-		let cnt1 = SAI_get_tick_count() * 0.02;
-		let cnt2 = Math.sin(cnt1 * 4.0) * 0.3;
-		let cnt3 = Math.sin(cnt1 * 8.0) * 0.3;
-		ctx.translate(ei * cnt2 * mxy * 0.1, ei * cnt3 * mxy * 0.02);
-		ctx.lineWidth = unit * 0.5;
-		ctx.strokeStyle = "red";
-		SAI_draw_circle(ctx, qx - mxy * 0.1, qy, mxy * 0.08, false);
-		SAI_draw_circle(ctx, qx + mxy * 0.1, qy, mxy * 0.08, false);
-		SAI_draw_circle(ctx, qx, qy - mxy * 0.1, mxy * 0.08, false);
-		SAI_draw_circle(ctx, qx, qy + mxy * 0.1, mxy * 0.08, false);
+		let delta = mxy * 0.70;
+		// ヘビを描画する。
+		let r1 = delta * 3;
+		let r2 = delta;
+		let r3 = r2 * 0.75;
+		SAI_draw_snake(ctx, qx, qy, r1, r2, counter, 5, colors);
+		SAI_draw_snake(ctx, px + dx, py, r1, r3, counter, 12, colors);
+		SAI_draw_snake(ctx, px, py + dy, r1, r3, counter, 12, colors);
+		SAI_draw_snake(ctx, px + dx, py + dy, r1, r3, counter, 12, colors);
+		SAI_draw_snake(ctx, px, py, r1, r3, counter, 12, colors);
 
 		// フォーカス矢印を描画する。
 		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
 
 		ctx.restore(); // ctx.saveで保存した情報で元に戻す。
-	}
-
-	// 映像「動画17: ヘビの回転」の描画。
-	const SAI_draw_pic_17 = function(ctx, px, py, dx, dy){
-		// 別のキャンバスに普通に描画する。
-		let ctx2 = sai_id_canvas_02.getContext('2d', { alpha: false });
-		ctx2.save();
-		let dx3 = dx, dy3 = dy;
-		SAI_draw_pic_17_sub(ctx2, 0, 0, dx3, dy3);
-		ctx2.restore();
-
-		// 透明度を適用したイメージを転送する。これでモーションブラーが適用される。
-		ctx.globalAlpha = 1 - sai_id_range_motion_blur.value * 0.1; // モーションブラーを掛ける。
-		ctx.drawImage(sai_id_canvas_02, 0, 0, dx3, dy3, px, py, dx, dy);
-		ctx.globalAlpha = 1; // 元に戻す。
 	}
 
 	const SAI_strained_line = function(ctx, x0, y0, x1, y1){
@@ -3837,7 +3768,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		if (!localStorage.getItem('saiminUserAccepted'))
 			return; // 合意が取れていない場合は何もしない。
 		if (SAI_is_android_native_app()){ // Androidネイティブアプリの場合
-			if (sai_current_page === sai_id_page_main) {
+			if (sai_current_page === sai_id_page_main){
 				if (!sai_stopping){
 					SAI_canvas_click(); // キャンバスクリック。
 				}else{
