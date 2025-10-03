@@ -2884,14 +2884,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		// 映像の進行をつかさどる変数。
-		const counter = SAI_get_tick_count() * 0.07;
+		const counter = SAI_get_tick_count() * 0.08;
 
 		let qx = px + dx / 2, qy = py + dy / 2;
 		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
 		let mxy = (maxxy + minxy) * 0.6;
 		let radius = mxy * 0.2;
 		let dr = mxy * 0.015;
-		const S = 4 * 15; // セクターの数 (4色の4倍)
+		const S = 4 * 12; // セクターの数 (4色の4倍)
 
 		if(!sai_pic_17_canvas || sai_pic_17_canvas.width < radius || sai_pic_17_canvas.height < radius){
 			sai_pic_17_canvas = document.createElement('canvas');
@@ -2908,18 +2908,20 @@ document.addEventListener('DOMContentLoaded', function(){
 		for (let r = radius; r >= 0; r -= dr){
 			let offset = (i % 2) ? offsetCW : offsetCCW;
 			SAI_draw_snake_wheel(ctx2, radius / 2, radius / 2, r, S, counter, offset);
-			SAI_draw_snake_wheel(ctx2, 0, 0, r * 0.5, S / 3, -counter * 3, offset);
-			SAI_draw_snake_wheel(ctx2, radius, 0, r * 0.5, S / 3, -counter * 3, offset);
-			SAI_draw_snake_wheel(ctx2, radius, radius, r * 0.5, S / 3, -counter * 3, offset);
-			SAI_draw_snake_wheel(ctx2, 0, radius, r * 0.5, S / 3, -counter * 3, offset);
+			SAI_draw_snake_wheel(ctx2, 0, 0, r * 0.75, S, -counter * 0.7, offset);
+			SAI_draw_snake_wheel(ctx2, radius, 0, r * 0.75, S, -counter * 0.7, offset);
+			SAI_draw_snake_wheel(ctx2, radius, radius, r * 0.75, S, -counter * 0.7, offset);
+			SAI_draw_snake_wheel(ctx2, 0, radius, r * 0.75, S, -counter * 0.7, offset);
 			++i;
 		}
 
 		// ヘビを描画する。
 		let IX = Math.floor(dx / radius), IY = Math.floor(dy / radius);
 		let m = 0;
-		for (let iy = 0; iy <= IY + 1; ++iy){
-			for (let ix = 0; ix <= IX + 1; ++ix){
+		let cnt = counter * 0.1;
+		let ix0 = (Math.floor(cnt) - cnt), iy0 = (Math.floor(cnt) - cnt);
+		for (let iy = iy0; iy <= IY + 1; ++iy){
+			for (let ix = ix0; ix <= IX + 1; ++ix){
 				let x = ix * radius, y = iy * radius;
 				ctx.drawImage(sai_pic_17_canvas, 0, 0, radius, radius, x, y, radius, radius);
 			}
