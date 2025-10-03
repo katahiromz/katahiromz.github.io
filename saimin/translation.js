@@ -1358,6 +1358,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': '水の音',
 		'TEXT_SOUND_PSYCHO': '猟奇',
 		'TEXT_SOUND_MYANMYAN': 'みゃんみゃん',
+		'TEXT_SOUND_PATROL': 'パトロール',
 		'TEXT_SOUND_VOLUME': '音量:',
 		'TEXT_SOUND_AUTO_PLAY': '音声の自動再生:',
 		'TEXT_SOUND_AUTO_REPEAT': '音声の自動繰り返し:',
@@ -1495,6 +1496,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': '水声',
 		'TEXT_SOUND_PSYCHO': '惊魂记',
 		'TEXT_SOUND_MYANMYAN': '缅缅',
+		'TEXT_SOUND_PATROL': '巡逻',
 		'TEXT_SOUND_VOLUME': '音量：',
 		'TEXT_SOUND_AUTO_PLAY': '自动播放音频：',
 		'TEXT_SOUND_AUTO_REPEAT': '自动重复音频：',
@@ -1632,6 +1634,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': '水聲',
 		'TEXT_SOUND_PSYCHO': '驚魂記',
 		'TEXT_SOUND_MYANMYAN': '緬緬',
+		'TEXT_SOUND_PATROL': '巡邏',
 		'TEXT_SOUND_VOLUME': '音量：',
 		'TEXT_SOUND_AUTO_PLAY': '自動播放音訊：',
 		'TEXT_SOUND_AUTO_REPEAT': '自動重複音訊：',
@@ -1769,6 +1772,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': '물 소리',
 		'TEXT_SOUND_PSYCHO': '사이코',
 		'TEXT_SOUND_MYANMYAN': '미안',
+		'TEXT_SOUND_PATROL': '순찰',
 		'TEXT_SOUND_VOLUME': '사운드 볼륨:',
 		'TEXT_SOUND_AUTO_PLAY': '오디오 자동 재생:',
 		'TEXT_SOUND_AUTO_REPEAT': '음성 자동 반복:',
@@ -1906,6 +1910,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': '水の音',
 		'TEXT_SOUND_PSYCHO': 'Psicopatico',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
+		'TEXT_SOUND_PATROL': 'Pattuglia',
 		'TEXT_SOUND_VOLUME': 'Volume del suono:',
 		'TEXT_SOUND_AUTO_PLAY': 'Riproduzione automatica dell\'audio:',
 		'TEXT_SOUND_AUTO_REPEAT': 'Ripetere l\'audio:',
@@ -2043,6 +2048,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': 'Il suono dell\'acqua',
 		'TEXT_SOUND_PSYCHO': 'Psycho',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
+		'TEXT_SOUND_PATROL': 'Patrouillieren',
 		'TEXT_SOUND_VOLUME': 'Lautstärke:',
 		'TEXT_SOUND_AUTO_PLAY': 'Audio automatisch abspielen:',
 		'TEXT_SOUND_AUTO_REPEAT': 'Sich Wiederholender Ton:',
@@ -2180,6 +2186,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': 'El sonido del agua',
 		'TEXT_SOUND_PSYCHO': 'Psicópata',
 		'TEXT_SOUND_MYANMYAN': 'Myanmar Myanmar',
+		'TEXT_SOUND_PATROL': 'Patrulla',
 		'TEXT_SOUND_VOLUME': 'Volumen:',
 		'TEXT_SOUND_AUTO_PLAY': 'Reproducción automática de audio:',
 		'TEXT_SOUND_AUTO_REPEAT': 'Audio de repetición automática:',
@@ -2317,6 +2324,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': 'Шум воды',
 		'TEXT_SOUND_PSYCHO': 'Психо',
 		'TEXT_SOUND_MYANMYAN': 'Мьян Мьян',
+		'TEXT_SOUND_PATROL': 'Патруль',
 		'TEXT_SOUND_VOLUME': 'Объем:',
 		'TEXT_SOUND_AUTO_PLAY': 'Автовоспроизведение звука:',
 		'TEXT_SOUND_AUTO_REPEAT': 'Автоповтор аудио:',
@@ -2454,6 +2462,7 @@ trans_trans = {
 		'TEXT_SOUND_WATER_DROP': 'The sound of water',
 		'TEXT_SOUND_PSYCHO': 'Psycho',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
+		'TEXT_SOUND_PATROL': 'Patrol',
 		'TEXT_SOUND_VOLUME': 'Sound volume:',
 		'TEXT_SOUND_AUTO_PLAY': 'Auto-play audio:',
 		'TEXT_SOUND_AUTO_REPEAT': 'Repeating audio:',
@@ -2623,6 +2632,7 @@ const trans_localize = function(lang){
 	trans_setSelectOptionText(sai_id_select_sound, 'WaterDrop', trans_getText('TEXT_SOUND_WATER_DROP'));
 	trans_setSelectOptionText(sai_id_select_sound, 'Psycho', trans_getText('TEXT_SOUND_PSYCHO'));
 	trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', trans_getText('TEXT_SOUND_MYANMYAN'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Patrol', trans_getText('TEXT_SOUND_PATROL'));
 
 	trans_setHtmlText(sai_id_text_sound_volume, trans_getText('TEXT_SOUND_VOLUME'));
 	trans_setHtmlText(sai_id_text_auto_play_sound, trans_getText('TEXT_SOUND_AUTO_PLAY'));
