@@ -2849,16 +2849,16 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	// ヘビを描画する。
 	const SAI_draw_snake = function(ctx, qx, qy, mxy, maxxy, counter, N, colors){
-		let dr = mxy / 100;
+		const dr = mxy / 100; // 半径の変分。
 		const M = 3 * N;
-		let da = 360 / M;
+		const da = 360 / M;
+		const cnt = counter * 3;
 		let j = 1;
-		let cnt = counter * 3;
 		for (let radius = maxxy * 0.75 + 3 * dr * Math.sin(8 * counter); radius >= 0; radius -= dr){
 			let i = (j++ % 3);
 			for (let angle = 0; angle < 360; angle += da){
-				ctx.beginPath();
 				let angle1 = angle, angle2 = angle + da;
+				ctx.beginPath();
 				ctx.moveTo(qx, qy);
 				ctx.arc(qx, qy, radius, angle1 * (Math.PI / 180) + cnt, angle2 * (Math.PI / 180) + cnt);
 				ctx.closePath();
@@ -2883,10 +2883,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
 		let mxy = (maxxy + minxy) * 0.5;
 
+		// 色。
 		const colors = [SAI_color_get_2nd(), "gray", SAI_color_get_1st()];
 
-		let delta = mxy * 0.70;
 		// ヘビを描画する。
+		let delta = mxy * 0.70;
 		let r1 = delta * 3;
 		let r2 = delta;
 		let r3 = r2 * 0.75;
