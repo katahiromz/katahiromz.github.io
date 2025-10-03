@@ -2847,37 +2847,38 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.fillRect(px, py, dx, dy);
 	}
 
-	function SAI_draw_snake_wheel(ctx, centerX, centerY, radius, numSegments, counter, startAngleOffset){
-		// 描画するセクターの角度 (ラジアン)
-		const segmentAngle = (Math.PI * 2) / numSegments;
-		// 錯視の核となる色パターン。「黒 - 黄 - 白 - 青」などの非対称な輝度ステップが回転錯視を生む。
-		const colors = ['#000000', '#FFFF00', '#FFFFFF', '#0000FF'];
+	// 錯視の核となる色パターン。「黒 - 黄 - 白 - 青」などの非対称な輝度ステップが回転錯視を生む。
+	const sai_snake_colors = ['#000000', '#FFFF00', '#FFFFFF', '#0000FF'];
 
+	// ヘビの回転錯視を描画する。
+	function SAI_draw_snake(ctx, centerX, centerY, radius, numSegments, counter, startAngleOffset){
+		// 描画するセクターの角度 (ラジアン)。
+		const segmentAngle = (Math.PI * 2) / numSegments;
+		// 回転速度。
 		let cnt = counter * 0.5;
 
-		// 各セクターを描画
+		// 各セクターを描画。
 		for (let i = 0; i < numSegments; ++i){
-			// 現在のセクターの色を非対称なパターンから取得
-			ctx.fillStyle = colors[i % colors.length];
-			// 描画するセクターの開始角度と終了角度
+			// 現在のセクターの色をパターンから取得。
+			ctx.fillStyle = sai_snake_colors[i % sai_snake_colors.length];
+			// 描画するセクターの開始角度と終了角度。
 			const startAngle = i * segmentAngle + startAngleOffset;
 			const endAngle = (i + 1) * segmentAngle + startAngleOffset;
-			// パスを開始
+			// パスを開始。
 			ctx.beginPath();
-			// 円の中心に移動
+			// 円の中心に移動。
 			ctx.moveTo(centerX, centerY);
-			// 弧を描く
+			// 弧を描く。
 			ctx.arc(centerX, centerY, radius, startAngle + cnt, endAngle + cnt);
-			// パスを閉じる（中心と弧の端点を結ぶ）
+			// パスを閉じる（中心と弧の端点を結ぶ）。
 			ctx.closePath();
-			// 塗りつぶし
+			// 塗りつぶし。
 			ctx.fill();
 		}
 	}
 
 	// 動画17用のキャンバスとコンテキスト。
-	let sai_pic_17_canvas = null;
-	let sai_pic_17_ctx = null;
+	let sai_pic_17_canvas = null, sai_pic_17_ctx = null;
 
 	// 映像「動画17: ヘビの回転」の描画。
 	const SAI_draw_pic_17 = function(ctx, px, py, dx, dy){
@@ -2909,11 +2910,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		let i = 0;
 		for (let r = radius; r >= 0; r -= dr){
 			let offset = (i % 2) ? offsetCW : offsetCCW;
-			SAI_draw_snake_wheel(ctx2, radius / 2, radius / 2, r, S, counter, offset);
-			SAI_draw_snake_wheel(ctx2, 0, 0, r * 0.75, S, -counter * 0.7, offset);
-			SAI_draw_snake_wheel(ctx2, radius, 0, r * 0.75, S, -counter * 0.7, offset);
-			SAI_draw_snake_wheel(ctx2, radius, radius, r * 0.75, S, -counter * 0.7, offset);
-			SAI_draw_snake_wheel(ctx2, 0, radius, r * 0.75, S, -counter * 0.7, offset);
+			SAI_draw_snake(ctx2, radius / 2, radius / 2, r, S, counter, offset);
+			SAI_draw_snake(ctx2, 0, 0, r * 0.75, S, -counter * 0.7, offset);
+			SAI_draw_snake(ctx2, radius, 0, r * 0.75, S, -counter * 0.7, offset);
+			SAI_draw_snake(ctx2, radius, radius, r * 0.75, S, -counter * 0.7, offset);
+			SAI_draw_snake(ctx2, 0, radius, r * 0.75, S, -counter * 0.7, offset);
 			++i;
 		}
 
