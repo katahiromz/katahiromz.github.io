@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.8.7'; // KraKraバージョン番号。
+const sai_VERSION = '3.8.8'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 let sai_vibrating = false; // 振動中か？
@@ -2884,11 +2884,11 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
 
 		// 映像の進行をつかさどる変数。
-		const counter = SAI_get_tick_count() * 0.04;
+		const counter = SAI_get_tick_count() * 0.07;
 
 		let qx = px + dx / 2, qy = py + dy / 2;
 		let maxxy = Math.max(dx, dy), minxy = Math.min(dx, dy);
-		let mxy = (maxxy + minxy) * 0.5;
+		let mxy = (maxxy + minxy) * 0.6;
 		let radius = mxy * 0.2;
 		let dr = mxy * 0.015;
 		const S = 4 * 15; // セクターの数 (4色の4倍)
@@ -2906,7 +2906,12 @@ document.addEventListener('DOMContentLoaded', function(){
 		let ctx2 = sai_pic_17_ctx;
 		let i = 0;
 		for (let r = radius; r >= 0; r -= dr){
-			SAI_draw_snake_wheel(ctx2, radius / 2, radius / 2, r, S, counter, (i % 2) ? offsetCW : offsetCCW);
+			let offset = (i % 2) ? offsetCW : offsetCCW;
+			SAI_draw_snake_wheel(ctx2, radius / 2, radius / 2, r, S, counter, offset);
+			SAI_draw_snake_wheel(ctx2, 0, 0, r * 0.5, S / 3, -counter * 3, offset);
+			SAI_draw_snake_wheel(ctx2, radius, 0, r * 0.5, S / 3, -counter * 3, offset);
+			SAI_draw_snake_wheel(ctx2, radius, radius, r * 0.5, S / 3, -counter * 3, offset);
+			SAI_draw_snake_wheel(ctx2, 0, radius, r * 0.5, S / 3, -counter * 3, offset);
 			++i;
 		}
 
