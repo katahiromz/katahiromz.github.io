@@ -1,6 +1,6 @@
 {
   "camera_app": "Camera app",
-  "camera_app_info": "Simple Camera Version 1.0.5 by katahiromz",
+  "camera_app_info": "Privacy Camera Version 1.0.3 by katahiromz",
   "camera_text_photo": "Photo",
   "camera_text_video": "Video",
   "camera_start_recording": "Start recording",
@@ -32,5 +32,13 @@
   "camera_copy": "Copy",
   "camera_cancel": "Cancel",
   "camera_url_access": "Refer to URL",
-  "camera_code_reader_starting": "Starting QR code reader..."
+  "camera_code_reader_starting": "Starting QR code reader...",
+  "settings_page": "Settings",
+  "privacy_mode": "Privacy Mode",
+  "eye_mask": "Eye Mask",
+  "face_blur": "Face Blur",
+  "black_out": "Blackout",
+  "mosaic": "Mosaic",
+  "back": "Back",
+  "face": "Face"
 }
