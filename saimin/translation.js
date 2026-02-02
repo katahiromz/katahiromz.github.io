@@ -1339,6 +1339,7 @@ trans_trans = {
 		'TEXT_PIC_17': '動画 17：ヘビの回転',
 		'TEXT_PIC_18': '動画 18：ひずみ放射',
 		'TEXT_PIC_19': '動画 19：ランダムな波',
+		'TEXT_PIC_20': '動画 20：二重らせん',
 		'TEXT_SPLIT': '画面分割:',
 		'TEXT_SPEED': 'スピード:',
 		'TEXT_ROTATION': '逆再生:',
@@ -1368,6 +1369,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': '猟奇',
 		'TEXT_SOUND_MYANMYAN': 'みゃんみゃん',
 		'TEXT_SOUND_PATROL': 'パトロール',
+		'TEXT_SOUND_KEEEE': 'キーーー',
+		'TEXT_SOUND_CLICK40HZ': 'クリック音 40Hz',
 		'TEXT_SOUND_SPIRAL': 'スパイラル',
 		'TEXT_SOUND_VOLUME': '音量:',
 		'TEXT_SOUND_AUTO_PLAY': '音声の自動再生:',
@@ -1478,6 +1481,7 @@ trans_trans = {
 		'TEXT_PIC_17': '电影17：旋转蛇',
 		'TEXT_PIC_18': '电影18：畸变辐射',
 		'TEXT_PIC_19': '电影19：随机波',
+		'TEXT_PIC_20': '电影20：双螺旋',
 		'TEXT_SPLIT': '分屏：',
 		'TEXT_SPEED': '速度：',
 		'TEXT_ROTATION': '倒放：',
@@ -1507,6 +1511,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': '惊魂记',
 		'TEXT_SOUND_MYANMYAN': '缅缅',
 		'TEXT_SOUND_PATROL': '巡逻',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': '点击声 40Hz',
 		'TEXT_SOUND_SPIRAL': '螺旋',
 		'TEXT_SOUND_VOLUME': '音量：',
 		'TEXT_SOUND_AUTO_PLAY': '自动播放音频：',
@@ -1617,6 +1623,7 @@ trans_trans = {
 		'TEXT_PIC_17': '電影17：旋轉蛇',
 		'TEXT_PIC_18': '電影18：畸變輻射',
 		'TEXT_PIC_19': '電影19：隨機波',
+		'TEXT_PIC_20': '電影20：雙螺旋',
 		'TEXT_SPLIT': '分屏：',
 		'TEXT_SPEED': '速度：',
 		'TEXT_ROTATION': '倒放：',
@@ -1646,6 +1653,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': '驚魂記',
 		'TEXT_SOUND_MYANMYAN': '緬緬',
 		'TEXT_SOUND_PATROL': '巡邏',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': '點擊聲 40Hz',
 		'TEXT_SOUND_SPIRAL': '螺旋',
 		'TEXT_SOUND_VOLUME': '音量：',
 		'TEXT_SOUND_AUTO_PLAY': '自動播放音訊：',
@@ -1756,6 +1765,7 @@ trans_trans = {
 		'TEXT_PIC_17': '동영상 17：뱀 회전',
 		'TEXT_PIC_18': '동영상 18：스트레인 방사',
 		'TEXT_PIC_19': '동영상 19：무작위 파동',
+		'TEXT_PIC_20': '동영상 20：이중 나선',
 		'TEXT_SPLIT': '화면 분할:',
 		'TEXT_SPEED': '속도:',
 		'TEXT_ROTATION': '역 재생:',
@@ -1785,6 +1795,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': '사이코',
 		'TEXT_SOUND_MYANMYAN': '미안',
 		'TEXT_SOUND_PATROL': '순찰',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': '클릭음 40Hz',
 		'TEXT_SOUND_SPIRAL': '나선형',
 		'TEXT_SOUND_VOLUME': '사운드 볼륨:',
 		'TEXT_SOUND_AUTO_PLAY': '오디오 자동 재생:',
@@ -1895,6 +1907,7 @@ trans_trans = {
 		'TEXT_PIC_17': 'Film 17: Serpente rotante',
 		'TEXT_PIC_18': 'Film 18: Radiazione di distorsione',
 		'TEXT_PIC_19': 'Film 19：Onde Casuali',
+		'TEXT_PIC_20': 'Film 20：Doppia elica',
 		'TEXT_SPLIT': 'Divisione dello schermo:',
 		'TEXT_SPEED': 'Velocità:',
 		'TEXT_ROTATION': 'Riproduzione inversa:',
@@ -1920,10 +1933,12 @@ trans_trans = {
 		'TEXT_SOUND_PACHI': 'Pachi',
 		'TEXT_SOUND_WAHWAH': 'WahWah',
 		'TEXT_SOUND_MECHANICAL': 'Meccanico',
-		'TEXT_SOUND_WATER_DROP': '水の音',
+		'TEXT_SOUND_WATER_DROP': 'Il suono dell\'acqua',
 		'TEXT_SOUND_PSYCHO': 'Psicopatico',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
 		'TEXT_SOUND_PATROL': 'Pattuglia',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': 'Clic Suono 40Hz',
 		'TEXT_SOUND_SPIRAL': 'Spirale',
 		'TEXT_SOUND_VOLUME': 'Volume del suono:',
 		'TEXT_SOUND_AUTO_PLAY': 'Riproduzione automatica dell\'audio:',
@@ -2034,6 +2049,7 @@ trans_trans = {
 		'TEXT_PIC_17': 'Film 17: Rotierende Schlange',
 		'TEXT_PIC_18': 'Film 18: Verzerrungsstrahlung',
 		'TEXT_PIC_19': 'Film 19：Zufällige Wellen',
+		'TEXT_PIC_20': 'Film 20：Doppelhelix',
 		'TEXT_SPLIT': 'Bildschirmaufteilung:',
 		'TEXT_SPEED': 'Geschwindigkeit:',
 		'TEXT_ROTATION': 'Rückwärtswiedergabe:',
@@ -2063,6 +2079,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': 'Psycho',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
 		'TEXT_SOUND_PATROL': 'Patrouillieren',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': 'Klickgeräusch 40 Hz',
 		'TEXT_SOUND_SPIRAL': 'Spiral',
 		'TEXT_SOUND_VOLUME': 'Lautstärke:',
 		'TEXT_SOUND_AUTO_PLAY': 'Audio automatisch abspielen:',
@@ -2173,6 +2191,7 @@ trans_trans = {
 		'TEXT_PIC_17': 'Película 17: Serpiente giratoria',
 		'TEXT_PIC_18': 'Película 18: Radiación de distorsión',
 		'TEXT_PIC_19': 'Película 19：Ondas Aleatorias',
+		'TEXT_PIC_20': 'Película 20：Doble hélice',
 		'TEXT_SPLIT': 'Pantalla dividida:',
 		'TEXT_SPEED': 'Velocidad:',
 		'TEXT_ROTATION': 'Reproducción inversa:',
@@ -2202,6 +2221,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': 'Psicópata',
 		'TEXT_SOUND_MYANMYAN': 'Myanmar Myanmar',
 		'TEXT_SOUND_PATROL': 'Patrulla',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': 'Sonido de clic de 40 Hz',
 		'TEXT_SOUND_SPIRAL': 'Espiral',
 		'TEXT_SOUND_VOLUME': 'Volumen:',
 		'TEXT_SOUND_AUTO_PLAY': 'Reproducción automática de audio:',
@@ -2312,6 +2333,7 @@ trans_trans = {
 		'TEXT_PIC_17': 'Фильм 17: Вращающаяся змея',
 		'TEXT_PIC_18': 'Фильм 18: Искажающее излучение',
 		'TEXT_PIC_19': 'Фильм 19：Случайные Волны',
+		'TEXT_PIC_20': 'Фильм 20：Двойная спираль',
 		'TEXT_SPLIT': 'Разделенный экран:',
 		'TEXT_SPEED': 'Скорость:',
 		'TEXT_ROTATION': 'Обратное воспроизведение:',
@@ -2341,6 +2363,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': 'Психо',
 		'TEXT_SOUND_MYANMYAN': 'Мьян Мьян',
 		'TEXT_SOUND_PATROL': 'Патруль',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': 'Звук щелчка 40 Гц',
 		'TEXT_SOUND_SPIRAL': 'Спираль',
 		'TEXT_SOUND_VOLUME': 'Объем:',
 		'TEXT_SOUND_AUTO_PLAY': 'Автовоспроизведение звука:',
@@ -2451,6 +2475,7 @@ trans_trans = {
 		'TEXT_PIC_17': 'Movie 17: Rotating snake',
 		'TEXT_PIC_18': 'Movie 18: Distortion Radiation',
 		'TEXT_PIC_19': 'Movie 19：Random Waves',
+		'TEXT_PIC_20': 'Movie 20：Double helix',
 		'TEXT_SPLIT': 'Screen splitting:',
 		'TEXT_SPEED': 'Speed:',
 		'TEXT_ROTATION': 'Reverse playback:',
@@ -2480,6 +2505,8 @@ trans_trans = {
 		'TEXT_SOUND_PSYCHO': 'Psycho',
 		'TEXT_SOUND_MYANMYAN': 'Myan Myan',
 		'TEXT_SOUND_PATROL': 'Patrol',
+		'TEXT_SOUND_KEEEE': 'Keeee',
+		'TEXT_SOUND_CLICK40HZ': 'Click Sound 40Hz',
 		'TEXT_SOUND_SPIRAL': 'Spiral',
 		'TEXT_SOUND_VOLUME': 'Sound volume:',
 		'TEXT_SOUND_AUTO_PLAY': 'Auto-play audio:',
@@ -2615,6 +2642,7 @@ const trans_localize = function(lang){
 	trans_setSelectOptionText(sai_id_select_pic_type, '17', trans_getText('TEXT_PIC_17'));
 	trans_setSelectOptionText(sai_id_select_pic_type, '18', trans_getText('TEXT_PIC_18'));
 	trans_setSelectOptionText(sai_id_select_pic_type, '19', trans_getText('TEXT_PIC_19'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '20', trans_getText('TEXT_PIC_20'));
 
 	trans_setHtmlText(sai_id_text_split, trans_getText('TEXT_SPLIT'));
 	trans_setHtmlText(sai_id_text_speed, trans_getText('TEXT_SPEED'));
@@ -2652,6 +2680,8 @@ const trans_localize = function(lang){
 	trans_setSelectOptionText(sai_id_select_sound, 'MyanMyan', trans_getText('TEXT_SOUND_MYANMYAN'));
 	trans_setSelectOptionText(sai_id_select_sound, 'Patrol', trans_getText('TEXT_SOUND_PATROL'));
 	trans_setSelectOptionText(sai_id_select_sound, 'Spiral', trans_getText('TEXT_SOUND_SPIRAL'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Keeee', trans_getText('TEXT_SOUND_KEEEE'));
+	trans_setSelectOptionText(sai_id_select_sound, 'Click40Hz', trans_getText('TEXT_SOUND_CLICK40HZ'));
 
 	trans_setHtmlText(sai_id_text_sound_volume, trans_getText('TEXT_SOUND_VOLUME'));
 	trans_setHtmlText(sai_id_text_auto_play_sound, trans_getText('TEXT_SOUND_AUTO_PLAY'));
