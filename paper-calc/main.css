@@ -1,0 +1,124 @@
+/* main.css */
+
+body {
+  font-size: 1rem;
+  background-color: #060;
+  color: white;
+}
+footer {
+  font-size: 0.8rem;
+}
+
+select, input[type=text], input[type=number], button {
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  padding: 4px;
+  border: 2px solid #33f;
+}
+select:hover, input[type=text]:hover, input[type=number]:hover, button:hover {
+  color: #111;
+  background-color: #ff9;
+}
+select:disabled, input[type=text]:disabled, input[type=number]:disabled, button:disabled {
+  color: #333;
+  background-color: #ccc;
+}
+input[type=range] {
+  cursor: pointer;
+}
+
+/* ボタンのスタイルを明確にする */
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+#my-container {
+}
+#my-canvas {
+  max-height: 60vh;
+  max-height: 60dvh;
+  overflow-y: auto; /* スクロール可能に */
+}
+#my-control-panel {
+  background-color: #9cc;
+  color: black;
+  border: solid #00c 2px;
+  padding: 4px;
+  border-radius: 5px;
+  text-align: center;
+}
+#my-canvas-space {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto; /* 横長になってもスクロール可能に */
+  background-color: #f9f9f9;
+}
+#my-textarea {
+  border-radius: 5px;
+  background-color: #fff;
+  border: 2px solid #f3f;
+  height: 50vh;
+  height: 50dvh;
+  overflow-y: auto; /* スクロール可能に */
+  text-align: left;
+  padding: 10px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column-reverse; /* 新しいログを上にする場合に便利 */
+  font-size: 1rem;
+  min-width: 80vw;
+  height: 6rem;
+  background-color: #eee;
+}
+
+/* 各ログの1行 */
+.log-item {
+  border-bottom: 1px dotted #eee;
+  padding: 4px 0;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+/* 最新（現在実行中）のログを強調 */
+.log-item.active {
+  background-color: #fff9c4; /* 薄い黄色 */
+  color: #000;
+  font-weight: bold;
+  border-left: 4px solid #fbc02d;
+  padding-left: 8px;
+  transform: scale(1.02);
+}
+
+#my-text-a {
+  text-align: right;
+}
+#my-text-b {
+  text-align: right;
+}
+#my-text-c {
+  text-align: right;
+}
+.no-wrap {
+  white-space: nowrap; /* 折り返しなし */
+}
+.input-error {
+  background-color: #f99 !important;
+  border: 2px solid red;
+}
+#input-error-message {
+  color: red;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.hidden {
+  display: none;
+}
+.center {
+  text-align: center;
+}
