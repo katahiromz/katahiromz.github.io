@@ -43,6 +43,10 @@ button:disabled {
   max-height: 60vh;
   max-height: 60dvh;
   overflow-y: auto; /* スクロール可能に */
+  /* Android Chrome ではポインターイベントの受け取り要素自体に touch-action: none が必要。
+     これがないとピンチズーム中にブラウザがジェスチャーを横取りし、少し動いただけで止まる。 */
+  touch-action: none;
+  -ms-touch-action: none;
 }
 #my-control-panel {
   background-color: #9cc;
@@ -58,6 +62,7 @@ button:disabled {
   align-items: center;
   overflow-x: auto; /* 横長になってもスクロール可能に */
   background-color: #f9f9f9;
+  touch-action: none; /* ピンチ操作をブラウザに奪われないようにする */
 }
 #my-textarea {
   border-radius: 5px;
@@ -121,4 +126,15 @@ button:disabled {
 }
 .center {
   text-align: center;
+}
+
+/* タッチデバイス（スマホ・タブレット）向けのタップターゲットを大きくする */
+@media (pointer: coarse) {
+  select, input[type=text], input[type=number], button {
+    padding: 8px;
+    min-height: 44px;
+  }
+  input[type=range] {
+    min-height: 44px;
+  }
 }
