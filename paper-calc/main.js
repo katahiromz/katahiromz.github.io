@@ -2,7 +2,7 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '0.0.4'; // バージョン
+const VERSION = '0.0.5'; // バージョン
 const DEBUGGING = true; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
@@ -174,6 +174,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const onCanvasPointerDown = (e) => {
         // タッチポインターはピンチズーム用に追跡
         if (e.pointerType === 'touch') {
+            // canvas_space 内のタッチのみ処理する。
+            // input/button など他の要素へのタッチで preventDefault を呼ぶと
+            // スマホでキーボードが開かなくなるため、必ずターゲットを確認する。
+            if (!canvas_space.contains(e.target))
+                return;
             // ブラウザのスクロール・ジェスチャーを最優先で止める
             e.preventDefault();
             touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
@@ -204,12 +209,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const onCanvasPointerMove = (e) => {
         // タッチポインター: 2本指ならピンチズーム、1本指ならパン
         if (e.pointerType === 'touch') {
-            // 追跡中のポインターかどうかに関わらず、タッチ中は必ず最初にpreventDefaultを呼ぶ
-            // これをしないとAndroid Chromeがpointermoveの途中でジェスチャーを横取りする
-            e.preventDefault();
+            // 追跡中のポインターのみ処理する（canvas_space 外のタッチは追跡していない）。
+            // Android Chrome はpointermoveの途中でジェスチャーを横取りすることがあるが、
+            // canvas_space 内のタッチのみ preventDefault を呼ぶことでキーボード入力を妨げない。
             if (!touchPointers.has(e.pointerId)) {
                 return;
             }
+            e.preventDefault();
             if (touchPointers.size === 1) {
                 // 1本指パン: 前回位置との差分を panState に加算
                 const prev = touchPointers.get(e.pointerId);
