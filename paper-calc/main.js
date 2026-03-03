@@ -2,7 +2,7 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '0.0.1'; // バージョン
+const VERSION = '0.0.2'; // バージョン
 const DEBUGGING = true; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
@@ -253,10 +253,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (panState.dragging)
             e.preventDefault();
     });
-    canvas_space.addEventListener('pointerdown', onCanvasPointerDown, { passive: false });
-    canvas_space.addEventListener('pointermove', onCanvasPointerMove, { passive: false });
-    canvas_space.addEventListener('pointerup', endPanDrag, { passive: false });
-    canvas_space.addEventListener('pointercancel', endPanDrag, { passive: false });
+    window.addEventListener('pointerdown', onCanvasPointerDown, { passive: false });
+    window.addEventListener('pointermove', onCanvasPointerMove, { passive: false });
+    window.addEventListener('pointerup', endPanDrag, { passive: false });
+    window.addEventListener('pointercancel', endPanDrag, { passive: false });
     window.addEventListener('wheel', onCanvasWheel, { passive: false });
     // ビューポートリサイズ時に中央寄せ/クランプを再計算する
     new ResizeObserver(() => applyCanvasTransform()).observe(canvas_space);
