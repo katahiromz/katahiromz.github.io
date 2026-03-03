@@ -2,13 +2,12 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '0.0.2'; // バージョン
+const VERSION = '0.0.3'; // バージョン
 const DEBUGGING = true; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
     let canvas = document.getElementById('my-canvas');
     let canvas_space = document.getElementById('my-canvas-space');
-    ;
     let start_button = document.getElementById('my-start-button');
     let stop_button = document.getElementById('my-stop-button');
     let reset_button = document.getElementById('my-reset-button');
@@ -177,6 +176,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.pointerType === 'touch') {
             e.preventDefault();
             touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
+            // setPointerCapture で指が要素外に出てもイベントを受け取り続ける
+            if (e.pointerId != null && canvas_space.setPointerCapture) {
+                try {
+                    canvas_space.setPointerCapture(e.pointerId);
+                }
+                catch (_) { }
+            }
             return;
         }
         if (e.button !== 1)
@@ -196,25 +202,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const onCanvasPointerMove = (e) => {
         // タッチポインター: 2本指ならピンチズーム、1本指ならパン
         if (e.pointerType === 'touch') {
-            if (touchPointers.has(e.pointerId) && touchPointers.size === 1) {
+            if (!touchPointers.has(e.pointerId)) {
+                e.preventDefault();
+                return;
+            }
+            if (touchPointers.size === 1) {
                 // 1本指パン: 前回位置との差分を panState に加算
                 const prev = touchPointers.get(e.pointerId);
                 panState.x += Math.round(e.clientX - prev.clientX);
                 panState.y += Math.round(e.clientY - prev.clientY);
+                // 位置を更新してから transform を適用
+                touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
                 applyCanvasTransform();
             }
-            else if (touchPointers.has(e.pointerId) && touchPointers.size === 2) {
+            else if (touchPointers.size === 2) {
                 const ids = Array.from(touchPointers.keys());
                 const otherId = ids.find(id => id !== e.pointerId);
+                // prev: 動いた指の前フレーム位置, other: もう一方の指の現在位置
                 const prev = touchPointers.get(e.pointerId);
                 const other = touchPointers.get(otherId);
                 const prevDist = Math.hypot(prev.clientX - other.clientX, prev.clientY - other.clientY);
                 const newDist = Math.hypot(e.clientX - other.clientX, e.clientY - other.clientY);
-                if (prevDist > 0) {
+                // 位置を先に更新（ズーム計算後に古い値が残らないようにする）
+                touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
+                if (prevDist > 1) { // 極端に近い場合はスキップして誤動作防止
                     const factor = newDist / prevDist;
                     const prevScale = zoomState.scale;
                     const nextScale = clamp(prevScale * factor, zoomState.minScale, zoomState.maxScale);
-                    // ピンチ中心を canvas_space 座標系で取得（scrollLeft/scrollTop 考慮）
+                    // ピンチ中心を canvas_space 座標系で取得（2本指の中点）
+                    // other はすでに最新位置（pointerdown/前フレームのmove で更新済み）
                     const centerClientX = (e.clientX + other.clientX) / 2;
                     const centerClientY = (e.clientY + other.clientY) / 2;
                     const sp = getZoomPivot(centerClientX, centerClientY);
@@ -223,7 +239,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     applyCanvasTransform();
                 }
             }
-            touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
+            else {
+                // 3本指以上: 追跡位置だけ更新してズームはスキップ
+                touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
+            }
             e.preventDefault();
             return;
         }
