@@ -2,7 +2,7 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '0.0.0'; // バージョン
+const VERSION = '0.0.1'; // バージョン
 const DEBUGGING = true; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const onCanvasPointerDown = (e) => {
         // タッチポインターはピンチズーム用に追跡
         if (e.pointerType === 'touch') {
+            e.preventDefault();
             touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
             return;
         }
