@@ -2,7 +2,7 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '0.0.3'; // バージョン
+const VERSION = '0.0.4'; // バージョン
 const DEBUGGING = true; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
@@ -174,12 +174,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const onCanvasPointerDown = (e) => {
         // タッチポインターはピンチズーム用に追跡
         if (e.pointerType === 'touch') {
+            // ブラウザのスクロール・ジェスチャーを最優先で止める
             e.preventDefault();
             touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
             // setPointerCapture で指が要素外に出てもイベントを受け取り続ける
-            if (e.pointerId != null && canvas_space.setPointerCapture) {
+            // canvas_space ではなく window に登録しているため window でキャプチャする
+            if (e.pointerId != null) {
                 try {
-                    canvas_space.setPointerCapture(e.pointerId);
+                    e.target.setPointerCapture(e.pointerId);
                 }
                 catch (_) { }
             }
@@ -202,8 +204,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const onCanvasPointerMove = (e) => {
         // タッチポインター: 2本指ならピンチズーム、1本指ならパン
         if (e.pointerType === 'touch') {
+            // 追跡中のポインターかどうかに関わらず、タッチ中は必ず最初にpreventDefaultを呼ぶ
+            // これをしないとAndroid Chromeがpointermoveの途中でジェスチャーを横取りする
+            e.preventDefault();
             if (!touchPointers.has(e.pointerId)) {
-                e.preventDefault();
                 return;
             }
             if (touchPointers.size === 1) {
@@ -243,7 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 3本指以上: 追跡位置だけ更新してズームはスキップ
                 touchPointers.set(e.pointerId, { clientX: e.clientX, clientY: e.clientY });
             }
-            e.preventDefault();
             return;
         }
         if (!panState.dragging)
@@ -259,6 +262,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // タッチポインターの追跡を終了
         if (e && e.pointerType === 'touch') {
             touchPointers.delete(e.pointerId);
+            // pointercancelの場合(ブラウザにジェスチャーを奪われた等)は全ポインターをクリア
+            if (e.type === 'pointercancel') {
+                touchPointers.clear();
+            }
             return;
         }
         if (!panState.dragging)
@@ -290,6 +297,10 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('pointerup', endPanDrag, { passive: false });
     window.addEventListener('pointercancel', endPanDrag, { passive: false });
     window.addEventListener('wheel', onCanvasWheel, { passive: false });
+    // Android Chrome はtouchstartをpassive:trueで先取りしてピンチを横取りすることがある。
+    // canvas_space に passive:false で登録してpreventDefaultを呼べるようにしておく。
+    canvas_space.addEventListener('touchstart', (e) => { e.preventDefault(); }, { passive: false });
+    canvas_space.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
     // ビューポートリサイズ時に中央寄せ/クランプを再計算する
     new ResizeObserver(() => applyCanvasTransform()).observe(canvas_space);
     // 設定を読み込む
