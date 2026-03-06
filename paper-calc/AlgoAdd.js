@@ -17,10 +17,10 @@ class AlgoAdd extends AlgoBase {
         this.autoPutDigits(a, origin_iy);
         this.addCommand(['step']);
         if (this.a_info.fraction || this.b_info.fraction) {
-            this.addCommand(['output', `その下に ${b} を書きますが、小数点の位置と桁(けた)をそろえてください。`]);
+            this.addCommand(['output', `その下に ${b} を書きますが、小数点の位置と位(くらい)をそろえてください。`]);
         }
         else {
-            this.addCommand(['output', `その下に ${b} を書きますが、一の位と桁(けた)をそろえてください。`]);
+            this.addCommand(['output', `その下に ${b} を書きますが、一の位をそろえてください。`]);
         }
         // 加数(B)を置く
         this.autoPutDigits(b, origin_iy + 1);
@@ -47,7 +47,7 @@ class AlgoAdd extends AlgoBase {
         let fracMax = Math.max(this.getFracLen(a), this.getFracLen(b));
         {
             if (fracMax > 0) {
-                this.addCommand(['output', `小数部があるときは、小数点を付けます。`]);
+                this.addCommand(['output', `小数があるときは、小数点を付けます。`]);
                 this.addCommand(['drawDot', 0, origin_iy + 2]);
                 this.setMapDot(0, origin_iy + 2);
                 this.addCommand(['step']);
@@ -61,7 +61,7 @@ class AlgoAdd extends AlgoBase {
             this.addCommand(['drawCenterText', y, text]);
         }
         this.answer = answer;
-        this.addCommand(['output', `答え: ${answer}`]);
+        this.addCommand(['output', `こたえ: ${answer}`]);
         return answer;
     }
     // コマンドの構築
@@ -88,6 +88,7 @@ class AlgoAdd extends AlgoBase {
     }
     // 単体テスト
     unitTest() {
+        console.assert(this.testEntryEx('3.15', '1.85', '5'));
         console.assert(this.testEntryEx('0', '0', '0'));
         console.assert(this.testEntryEx('0', '1', '1'));
         console.assert(this.testEntryEx('1', '0', '1'));

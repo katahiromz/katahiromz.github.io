@@ -1,140 +1,322 @@
-/* main.css */
-
+/* --- 全体設定 --- */
 body {
-  font-size: 1rem;
-  background-color: #060;
-  color: white;
+  font-size: 1.1rem;
+  background-color: #e0f7fa;
+  background-image: radial-gradient(#b2ebf2 10%, transparent 10%);
+  background-size: 20px 20px;
+  color: #333;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  overflow-x: hidden;
 }
+
+/* ヘッダー・フッター */
+header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00796b;
+  text-shadow: 2px 2px 0px #fff;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-bottom: 4px dotted #00796b;
+  flex: 0 0 auto;
+}
+
 footer {
   font-size: 0.8rem;
+  margin-top: 10px;
+  color: #666;
+  flex: 0 0 auto;
 }
 
-select, input[type=text], input[type=number], button {
-  color: black;
-  background-color: white;
-  border-radius: 5px;
-  padding: 4px;
-  border: 2px solid #33f;
-}
-select:hover, input[type=text]:hover, input[type=number]:hover, button:hover {
-  color: #111;
-  background-color: #ff9;
-}
-select:disabled, input[type=text]:disabled, input[type=number]:disabled, button:disabled {
-  color: #333;
-  background-color: #ccc;
-}
-input[type=range] {
-  cursor: pointer;
-}
-
-/* ボタンのスタイルを明確にする */
-button {
-  cursor: pointer;
-}
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
+/* --- メインコンテナ --- */
 #my-container {
+  max-width: 950px; 
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 15px;
+  min-height: 0;
 }
-#my-canvas {
-  max-height: 60vh;
-  max-height: 60dvh;
-  overflow-y: auto; /* スクロール可能に */
-  /* Android Chrome ではポインターイベントの受け取り要素自体に touch-action: none が必要。
-     これがないとピンチズーム中にブラウザがジェスチャーを横取りし、少し動いただけで止まる。 */
-  touch-action: none;
-  -ms-touch-action: none;
-}
+
+/* --- 左側 全体：操作パネル --- */
 #my-control-panel {
-  background-color: #9cc;
-  color: black;
-  border: solid #00c 2px;
-  padding: 4px;
-  border-radius: 5px;
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+  background-color: #ffffff;
+  color: #333;
+  border: solid #4fc3f7 4px;
+  padding: 15px 10px;
+  border-radius: 15px;
   text-align: center;
+  box-shadow: 0 4px 0 #b3e5fc;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
 }
+
+/* --- 右側 上段：キャンバス (黒板画像) --- */
 #my-canvas-space {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  background-color: #004d40; 
+  background-image: url('kokuban2-1280x720.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  padding: 5% 4% 8% 4%; 
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: auto; /* 横長になってもスクロール可能に */
-  background-color: #f9f9f9;
-  touch-action: none; /* ピンチ操作をブラウザに奪われないようにする */
-}
-#my-textarea {
-  border-radius: 5px;
-  background-color: #fff;
-  border: 2px solid #f3f;
-  height: 50vh;
-  height: 50dvh;
-  overflow-y: auto; /* スクロール可能に */
-  text-align: left;
-  padding: 10px;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column-reverse; /* 新しいログを上にする場合に便利 */
-  font-size: 1rem;
-  min-width: 80vw;
-  height: 6rem;
-  background-color: #eee;
+  overflow: auto;
+  
+  aspect-ratio: 4 / 3;
+  align-self: start; 
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* 各ログの1行 */
+#my-canvas {
+  max-width: 100%;
+  max-height: 100%;
+  filter: invert(100%);
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  touch-action: none;
+  -ms-touch-action: none;
+}
+
+/* --- 右側 下段：ログ (教科書) --- */
+/* ★修正ポイント1：テキストエリアを包んでいる親のdivを「固定枠」にする */
+#my-container > div:last-child {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  position: relative; /* 子要素(#my-textarea)を貼り付けるための基準にする */
+  min-height: 150px;  /* 教科書の高さを最低限確保 */
+}
+
+/* ★修正ポイント2：テキストエリアを固定枠にピタッと貼り付ける */
+#my-textarea {
+  position: absolute; /* 絶対配置にして親の枠からはみ出さないようにする */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-top: 6px solid #4fc3f7;
+  overflow-y: auto; /* ★これで確実にスクロールするようになります */
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-family: "UD デジタル 教科書体 NK-R", "BIZ UDP明朝 Medium", "Yu Mincho", "MS PMincho", "Hiragino Mincho ProN", serif;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column-reverse;
+  line-height: 1.5;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* --- ログの中身 --- */
 .log-item {
-  border-bottom: 1px dotted #eee;
-  padding: 4px 0;
-  color: #666;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px 0;
+  color: #444;
   transition: all 0.3s ease;
 }
-
-/* 最新（現在実行中）のログを強調 */
 .log-item.active {
-  background-color: #fff9c4; /* 薄い黄色 */
-  color: #000;
+  background-color: #e3f2fd;
+  color: #0d47a1;
   font-weight: bold;
-  border-left: 4px solid #fbc02d;
-  padding-left: 8px;
-  transform: scale(1.02);
+  border-left: 6px solid #1976d2;
+  padding-left: 12px;
+  border-radius: 2px;
+  transform: scale(1.01);
 }
 
-#my-text-a {
+/* --- フォーム部品 --- */
+select, input[type=text], input[type=number] {
+  color: #333;
+  background-color: #f0f4f8;
+  border-radius: 10px;
+  padding: 6px;
+  border: 2px solid #90caf9;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+  width: 65%;
+  box-sizing: border-box;
+}
+
+input[type=text], input[type=number] {
   text-align: right;
 }
-#my-text-b {
-  text-align: right;
+
+select:focus, input:focus {
+  border-color: #0288d1;
+  background-color: #fff;
 }
-#my-text-c {
-  text-align: right;
+
+/* --- ボタンの基本設定 --- */
+button {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 50px;
+  padding: 8px 15px;
+  margin: 3px;
+  border: none;
+  background-color: #ffb74d;
+  color: white;
+  box-shadow: 0 4px 0 #e65100;
+  transition: all 0.1s;
+  width: 90%;
+
+  /* ★追加：スマホでのダブルタップズームを防止し、反応を速くする */
+  touch-action: manipulation; 
 }
+button:hover { background-color: #ff9800; transform: translateY(2px); box-shadow: 0 2px 0 #e65100; }
+button:active { transform: translateY(4px); box-shadow: none; }
+
+/* =======================================================
+   ★修正：無効化された(押せない)ボタンのデザイン
+   ======================================================= */
+button:disabled {
+  background-color: #e0e0e0 !important; /* 背景を完全な灰色に */
+  color: #a0a0a0 !important; /* 文字色も薄い灰色にして目立たなくする */
+  box-shadow: none !important; /* 影を消して立体感をなくす */
+  transform: translateY(4px) !important; /* 影がない分、ボタンを下げて「ペタンコに潰れた」状態にする */
+  cursor: not-allowed !important; /* マウスを乗せても禁止マークにする */
+  opacity: 1 !important; 
+}
+/* ======================================================= */
+
+/* 個別ボタンの色設定 */
+#my-start-button { background-color: #81c784; box-shadow: 0 4px 0 #388e3c; }
+#my-start-button:hover { background-color: #66bb6a; }
+#my-stop-button { background-color: #ef5350; box-shadow: 0 4px 0 #c62828; }
+
 .no-wrap {
-  white-space: nowrap; /* 折り返しなし */
-}
-.input-error {
-  background-color: #f99 !important;
-  border: 2px solid red;
-}
-#input-error-message {
-  color: red;
-  font-size: 0.8em;
-  font-weight: bold;
-}
-.hidden {
-  display: none;
-}
-.center {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  width: 100%;
 }
 
-/* タッチデバイス（スマホ・タブレット）向けのタップターゲットを大きくする */
-@media (pointer: coarse) {
-  select, input[type=text], input[type=number], button {
-    padding: 8px;
-    min-height: 44px;
+.input-error { background-color: #ffcdd2 !important; border: 2px solid #f44336; }
+#input-error-message { color: red; font-size: 0.9em; font-weight: bold; margin: 0; }
+.hidden { display: none !important; }
+
+/* --- ボタンを下にまとめる専用グループ --- */
+.button-group {
+  width: 100%; /* 常に横幅いっぱいを確保し、他の要素と混ざらないようにする */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* スマホなどの狭い画面では綺麗に折り返す */
+  margin-top: 5px; /* 上の入力欄と少しだけ隙間を空ける */
+  gap: 10px;
+}
+
+/* =======================================================
+   タブレット・折りたたみ端末(Fold5)・スマホ横向き 用
+   （iPhone SE横向きと同じ：上段にパネル、下段を左右分割）
+   ======================================================= */
+@media (max-width: 1024px) {
+  #my-container {
+    display: grid;
+    /* 下段を「左(黒板)」と「右(教科書)」で半分ずつに分割 */
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: auto 1fr;
+    gap: 10px;
   }
-  input[type=range] {
-    min-height: 44px;
+  
+  #my-control-panel {
+    grid-column: 1 / 3; /* 上段を横いっぱいに広げる */
+    grid-row: 1 / 2;
+    flex-direction: row; /* 要素を横に並べる */
+    flex-wrap: wrap;     /* はみ出たら折り返す */
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 10px;
   }
+  
+  /* 入力欄やボタンが横に広がりすぎるのを防ぐ */
+  .no-wrap {
+    width: auto;
+  }
+  
+  button, select, input[type=text], input[type=number] {
+    width: auto;
+    padding: 10px 15px;
+    min-height: 44px;
+    margin: 0;
+  }
+  
+  #my-canvas-space {
+    grid-column: 1 / 2; /* 下段の左側に配置 */
+    grid-row: 2 / 3;
+    aspect-ratio: auto; /* 黒板の比率固定を解除して枠に合わせる */
+    width: 100%;
+    min-height: 35vh;   /* 潰れないように高さを確保 */
+    margin: 0;
+  }
+  
+  #my-container > div:last-child {
+    grid-column: 2 / 3; /* 下段の右側に配置 */
+    grid-row: 2 / 3;
+    min-height: 35vh;   /* 教科書も黒板と同じ高さを確保 */
+  }
+}
+
+/* =======================================================
+   スマホ（縦置き・狭い画面）用レスポンシブ 
+   （Fold5を閉じた時など：すべて縦1列に並べる）
+   ======================================================= */
+@media (max-width: 600px) {
+  #my-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #my-canvas-space {
+    width: 100%; 
+    aspect-ratio: 4 / 3; 
+    margin: 0 auto;
+    min-height: auto;
+  }
+  
+  #my-container > div:last-child {
+    /* 縦並びの時も教科書の高さをしっかり確保 */
+    min-height: 250px; 
+    height: auto;
+  }
+}
+
+select:disabled, input[type=text]:disabled, input[type=number]:disabled {
+  background-color: #ccc;
+}
+
+/* 文字数が変わっても幅を固定して、周りの要素を動かさない */
+#speed-label {
+  display: inline-block; /* 幅を指定できるようにする */
+  width: 6.5rem;         /* 「大変おそい」が入る十分な幅を確保 */
+  text-align: left;      /* ラベル内の文字は左寄せ（または center） */
+  margin-left: 5px;      /* スライダーとの隙間 */
+  vertical-align: middle;
 }

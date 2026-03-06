@@ -3,7 +3,7 @@
 // License: MIT
 "use strict";
 const VERSION = '0.0.5'; // バージョン
-const DEBUGGING = true; // デバッグ中か？
+const DEBUGGING = false; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
     let canvas = document.getElementById('my-canvas');
@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
     let algorithm = null;
     let op = null;
     let speedInfo = {
-        1: { text: '超遅い', delay: 900 },
-        2: { text: 'すごく遅い', delay: 800 },
-        3: { text: '少し遅い', delay: 700 },
-        4: { text: '普通', delay: 500 },
-        5: { text: '少し速い', delay: 300 },
-        6: { text: 'すごく速い', delay: 200 },
-        7: { text: '超速い', delay: 100 },
+        1: { text: '大変おそい', delay: 900 },
+        2: { text: 'すごくおそい', delay: 800 },
+        3: { text: '少しおそい', delay: 700 },
+        4: { text: 'ふつう', delay: 500 },
+        5: { text: '少しはやい', delay: 300 },
+        6: { text: 'すごくはやい', delay: 200 },
+        7: { text: '大変はやい', delay: 100 },
     };
     // Ctrl + マウスホイール回転でキャンバスをズーム
     // - Ctrl+Wheel はブラウザのページズームに奪われがちなので、passive:false で preventDefault する
@@ -367,17 +367,17 @@ document.addEventListener('DOMContentLoaded', function () {
         let isAValid = true, isBValid = true, isCValid = true;
         // 数Aのチェック (getNumberInfoを使用)
         if (a !== "" && !getNumberInfo(a)) {
-            message = "数が正しくありません（符号なし実数のみ）";
+            message = "正しく数を入力してください";
             isAValid = false;
         }
         // 数Bのチェック
         if (b !== "" && !getNumberInfo(b)) {
-            message = "数が正しくありません（符号なし実数のみ）";
+            message = "正しく数を入力してください";
             isBValid = false;
         }
         // 数Cのチェック
         if (c !== "" && !getNumberInfo(c)) {
-            message = "数が正しくありません（符号なし実数のみ）";
+            message = "正しく数を入力してください";
             isCValid = false;
         }
         if (isAValid && isBValid) {
@@ -462,6 +462,7 @@ document.addEventListener('DOMContentLoaded', function () {
         text_c.disabled = true;
         next_step_button.disabled = true;
         reset_button.disabled = false;
+        select.disabled = true;
         op = select.value;
         algorithm.autoPlay = true;
         textarea.innerText = '';
@@ -477,6 +478,7 @@ document.addEventListener('DOMContentLoaded', function () {
         start_button.disabled = false;
         stop_button.disabled = true;
         reset_button.disabled = false;
+        select.disabled = false;
         text_a.disabled = false;
         text_b.disabled = false;
         text_c.disabled = false;
@@ -528,6 +530,7 @@ document.addEventListener('DOMContentLoaded', function () {
         text_a.disabled = true;
         text_b.disabled = true;
         text_c.disabled = true;
+        select.disabled = true;
         reset_button.disabled = false;
         // 次の 'step' まで実行
         algorithm.nextStep();
@@ -545,6 +548,7 @@ document.addEventListener('DOMContentLoaded', function () {
         text_b.disabled = false;
         text_c.disabled = false;
         reset_button.disabled = false;
+        select.disabled = false;
         textarea.innerHTML = '';
         zoomState.scale = 1.0;
         panState.x = 0;
@@ -569,26 +573,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const updateLabels = () => {
         switch (select.value) {
             case 'add':
-                label_a.innerText = "足される数"; // 被加数
-                label_b.innerText = "足す数"; // 加数
+                label_a.innerText = "たされる数"; // 被加数
+                label_b.innerText = "たす数"; // 加数
                 accuracy.classList.add('hidden');
                 text_c.value = '0';
                 break;
             case 'sub':
-                label_a.innerText = "引かれる数"; // 被減数
-                label_b.innerText = "引く数"; // 減数
+                label_a.innerText = "ひかれる数"; // 被減数
+                label_b.innerText = "ひく数"; // 減数
                 accuracy.classList.add('hidden');
                 text_c.value = '0';
                 break;
             case 'mul':
-                label_a.innerText = "掛けられる数"; // 被乗数
-                label_b.innerText = "掛ける数"; // 乗数
+                label_a.innerText = "かけられる数"; // 被乗数
+                label_b.innerText = "かける数"; // 乗数
                 accuracy.classList.add('hidden');
                 text_c.value = '0';
                 break;
             case 'div':
-                label_a.innerText = "割られる数"; // 被除数
-                label_b.innerText = "割る数"; // 除数
+                label_a.innerText = "わられる数"; // 被除数
+                label_b.innerText = "わる数"; // 除数
                 accuracy.classList.remove('hidden');
                 break;
             case 'test':

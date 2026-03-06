@@ -35,7 +35,7 @@
 <body>
   <!-- ページ ヘッダー -->
   <header class="center">
-    自動筆算プログラム PaperCalc
+    ひっ算プログラム PaperCalc
   </header>
   <!-- コンテナ -->
   <div id="my-container">
@@ -44,38 +44,40 @@
       <!-- 計算の種類 -->
       <span class="no-wrap">
         <select id="my-select" disabled>
-          <option value="add">足し算</option>
-          <option value="sub">引き算</option>
-          <option value="mul">掛け算</option>
-          <option value="div">割り算</option>
+          <option value="add">たし算</option>
+          <option value="sub">ひき算</option>
+          <option value="mul">かけ算</option>
+          <option value="div">わり算</option>
           <!-- <option value="test">テスト</option> -->
         </select>
       </span>
       <!-- 速度 -->
       <span class="no-wrap">
-        速度: <input type="range" id="my-speed-range" min="1" max="7" step="1" value="4" style="vertical-align: middle;" disabled />
+        はやさ: <input type="range" id="my-speed-range" min="1" max="7" step="1" value="4" style="vertical-align: middle;" disabled />
         <span id="speed-label">5</span>
       </span>
       <br />
       <!-- 計算対象の数 -->
       <span class="no-wrap">
-        <span id="label-a">数A</span>: <input type="text" id="my-text-a" value="111" size="4" maxlength="20" disabled />
+        <span id="label-a">数A</span>: <input type="text" id="my-text-a" value="12345" size="4" maxlength="20" disabled />
       </span>
       <span class="no-wrap">
-        <span id="label-b">数B</span>: <input type="text" id="my-text-b" value="99.1" size="4" maxlength="20" disabled />
+        <span id="label-b">数B</span>: <input type="text" id="my-text-b" value="6789" size="4" maxlength="20" disabled />
       </span>
       <!-- 精度 -->
       <span id="my-accuracy" class="no-wrap hidden">
-        <span id="label-c">小数点以下</span>: <input type="number" id="my-text-c" value="0" min="0" max="10" disabled />桁まで
+        <span id="label-c">小数点以下</span>: <input type="number" id="my-text-c" value="0" min="0" max="10" disabled />けた まで
       </span>
       <br />
       <!-- 計算対象の数に対するエラーメッセージ -->
       <div id="input-error-message"></div>
-      <!-- ボタン群 -->
-      <button id="my-start-button" disabled>再生 ▶</button>
-      <button id="my-stop-button" disabled>停止 ■</button>
-      <button id="my-next-step-button" disabled>1歩進む ＞</button>
-      <button id="my-reset-button" disabled>リセット</button>
+      <div class="button-group">
+        <!-- ボタン群 -->
+        <button id="my-start-button" disabled>さいせい ▶</button>
+        <button id="my-stop-button" disabled>とめる ■</button>
+        <button id="my-next-step-button" disabled>1歩すすむ ＞</button>
+        <button id="my-reset-button" disabled>リセット</button>
+      </div>
     </div>
     <div id="my-canvas-space">
       <!-- メイン キャンバス -->
@@ -88,6 +90,6 @@
   </div>
   <!-- ページ フッター -->
   <footer class="center">
-    &copy; 2026 katahiromz 制作、○○ 監修
+    &copy; 2026 katahiromz 制作、山口@Webぐち 監修
   </footer>
 </body></html>

@@ -36,7 +36,7 @@ class AlgoDiv extends AlgoBase {
         const aDigits = workA.replace('.', '');
         const aDotIdx = workA.includes('.') ? workA.indexOf('.') : workA.length;
         // 2. 割られる数(A)と割る数(B)を元の値でそのまま配置する
-        this.addCommand(['output', `割られる数 ${a} と割る数 ${b} を図のように配置してください。`]);
+        this.addCommand(['output', `わられる数 ${a} とわる数 ${b} を図のように書いてください。`]);
         // 除数(B)を元の値で配置
         this.autoPutDigitsEx(b, origin_iy + 1);
         const bMaxX = this.max_x(origin_iy + 1);
@@ -61,8 +61,8 @@ class AlgoDiv extends AlgoBase {
         this.addCommand(['step']);
         // 3. 小数点がある場合、slashDotで消す演出をする
         if (bFracLen > 0) {
-            this.addCommand(['output', `割る数 ${b} を整数にするため、小数点を ${bFracLen} 桁右に動かします。`]);
-            this.addCommand(['output', `割られる数 ${a} も同じだけ小数点を動かします。`]);
+            this.addCommand(['output', `わる数 ${b} を整数にするため、小数点を ${bFracLen} 桁右に動かします。`]);
+            this.addCommand(['output', `わられる数 ${a} も同じだけ小数点を動かします。`]);
             // 除数(B)の小数点を消す
             // autoPutDigitsExはBの小数点を -bFracLen に置き、bMaxX = -1 なので
             // 小数点のix = bMaxX - bFracLen + 1
@@ -80,13 +80,13 @@ class AlgoDiv extends AlgoBase {
             }
             // 新しい小数点をAに描画する（シフト後も小数点が残る場合）
             if (aDotIdx < aDigits.length) {
-                this.addCommand(['output', `小数点を ${bFracLen} 桁右に移動します。`]);
+                this.addCommand(['output', `小数点を ${bFracLen} 桁右に動かします。`]);
                 this.addCommand(['drawDot', aStartIx + aDotIdx, origin_iy + 1]);
                 this.setMapDot(aStartIx + aDotIdx, origin_iy + 1);
             }
             // bFracLen > aFracLen のとき、桁数を合わせるため被除数の右側に赤色の0を追加する
             if (extraZeros > 0) {
-                this.addCommand(['output', `小数点の桁数を合わせるため、被除数の右側に 0 を補います。`]);
+                this.addCommand(['output', `小数点の桁(けた)を合わせるため、わられる数の右がわに 0 をかきたします。`]);
                 for (let i = 0; i < extraZeros; i++) {
                     this.addCommand(['drawDigit', aStartIx + aRaw.length + i, origin_iy + 1, '0', true]); // 赤色
                     this.setMapDigit(aStartIx + aRaw.length + i, origin_iy + 1, '0');
@@ -161,10 +161,10 @@ class AlgoDiv extends AlgoBase {
                 isFirstDigit = false;
                 // 掛け算
                 iy++;
-                this.addCommand(['output', `商の ${q} と割る数 ${bVal} を掛けます。`]);
+                this.addCommand(['output', `商の ${q} とわる数 ${bVal} をかけます。`]);
                 this.autoDigitMul(workB, qChar, ix, iy);
                 // 引き算の線
-                this.addCommand(['output', `下に引き算の線を描きます。`]);
+                this.addCommand(['output', `下に、ひき算の線を描きます。`]);
                 const productLen = (BigInt(q) * bVal).toString().length;
                 this.addCommand(['drawLine', ix - productLen + 1, iy + 1, aStartIx + Math.max(totalDigits, i + 1), iy + 1]);
                 this.addCommand(['step']);
@@ -172,7 +172,7 @@ class AlgoDiv extends AlgoBase {
                 iy++;
                 const remainder = currentVal - BigInt(q) * bVal;
                 const remStr = remainder.toString();
-                this.addCommand(['output', `${currentVal} から積 ${BigInt(q) * bVal} を引きます。`]);
+                this.addCommand(['output', `${currentVal} から、かけ算の答え ${BigInt(q) * bVal} を引きます。`]);
                 for (let j = remStr.length - 1; j >= 0; --j) {
                     const targetIx = ix - (remStr.length - 1 - j);
                     this.addCommand(['drawDigit', targetIx, iy, remStr[j]]);
@@ -273,7 +273,7 @@ class AlgoDiv extends AlgoBase {
         let answer;
         if (finalRemainderStr === '' || finalRemainderStr === '0') {
             answer = quotient;
-            this.addCommand(['output', `答えは ${quotient} です。あまりはありません。`]);
+            this.addCommand(['output', `こたえは ${quotient} です。あまりはありません。`]);
         }
         else {
             answer = `${quotient} … ${finalRemainderStr}`;
@@ -310,6 +310,7 @@ class AlgoDiv extends AlgoBase {
     }
     // 単体テスト
     unitTest() {
+        console.assert(this.testEntryEx('612', '3', '204'));
         console.assert(this.testEntryEx('100', '5', '20'));
         console.assert(this.testEntryEx('100', '20', '5'));
         console.assert(this.testEntryEx('100', '25', '4'));

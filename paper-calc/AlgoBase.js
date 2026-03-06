@@ -20,6 +20,7 @@ class AlgoBase {
         this.dotWidth = this.digitWidth * 0.2;
         this.a = null;
         this.b = null;
+        this.c = null;
         this.end_fn = end_fn;
         this.stepInterval = 200; // 時間間隔(ミリ秒)
         this.reset();
@@ -232,7 +233,6 @@ class AlgoBase {
                     ret = true;
                     break;
                 }
-                // コマンドを実行
                 ret = this.executeCommand(command);
             }
             if (this.iCommand === this.commands.length && this.end_fn) {
@@ -480,7 +480,7 @@ class AlgoBase {
             }
             else {
                 this.addCommand(['output', `${x} は ${y} より小さいので、くり下がりがあります。` +
-                        `上の位の 1 を借りて、現在の位に10を足します。${x} + ${10} = ${x + 10} です。`]);
+                        `上の位から 1 を借りて、今の位に10を足します。${x} + ${10} = ${x + 10} です。`]);
                 let i = 1;
                 do {
                     let num1 = parseInt(this.mapDigit(ix - i, iy0));
@@ -664,18 +664,18 @@ class AlgoBase {
     fixAndReadRowNumber(iy, ignoreDot = false, dontFixTrailZeros = false) {
         // 小数点の左側に数字がないとき、ゼロを追加
         if (this.addMissingZero(iy, true)) {
-            this.addCommand(['output', `小数点の左側に数字がないのでゼロを追加します。`]);
+            this.addCommand(['output', `小数点の左がわに数字がないのでゼロを追加します。`]);
             this.addMissingZero(iy, false);
             this.addCommand(['step']);
         }
         // 余分なゼロを消す
         if (this.fixLeadZeros(iy, true)) {
-            this.addCommand(['output', `整数部の左側の余分なゼロ（一の位以外）を消します。`]);
+            this.addCommand(['output', `整数の左がわにある、いらないゼロ（一の位以外）を消します。`]);
             this.fixLeadZeros(iy, false);
             this.addCommand(['step']);
         }
         if (!dontFixTrailZeros && this.fixTrailingZeros(iy, true)) {
-            this.addCommand(['output', `小数部の右側の余分なゼロを消します。`]);
+            this.addCommand(['output', `小数の右がわにある、いらないゼロを消します。`]);
             this.fixTrailingZeros(iy, false);
             this.addCommand(['step']);
         }
@@ -747,7 +747,7 @@ class AlgoBase {
         let img = digitInfo[prefix + ')'].img;
         this.paper.drawImage(img, x0, y0 - img.height * 0.15, img.width, img.height * 1.3);
     }
-    // 数字や記号を
+    // 数字や記号をバックスラッシュで打ち消す
     backslashDigit(ix, iy, is_red = false) {
         is_red = true;
         let digit = '\\';

@@ -21,7 +21,7 @@ class AlgoMul extends AlgoBase {
         this.autoPutDigitsEx(a_str, origin_iy);
         this.addCommand(['step']);
         // 乗数(B)をセット (iy = origin_iy + 1)
-        this.addCommand(['output', `その下に ${b} を書きますが、桁(けた)の右はしをそろえてください。`]);
+        this.addCommand(['output', `その下に ${b} を書きますが、位(くらい)の右はしをそろえてください。`]);
         this.autoPutDigitsEx(b_str, origin_iy + 1);
         this.addCommand(['step']);
         // '×'を描画
@@ -47,7 +47,7 @@ class AlgoMul extends AlgoBase {
             // 掛け算の各行は、右端（一の位）が左に level 分だけズレる
             // 基本の右端を -1 とすると、level0は -1, level1は -2 ...
             let target_origin_ix = -1 - level;
-            this.addCommand(['output', `${digitY} を掛けます。`]);
+            this.addCommand(['output', `${digitY} をかけます。`]);
             // 再定義した autoDigitMul を呼び出し
             this.autoDigitMul(x_digits, digitY, target_origin_ix, iy_sub_product);
         }
@@ -58,7 +58,7 @@ class AlgoMul extends AlgoBase {
             let min_ix = this.min_x(result_iy_end) - 1;
             this.addCommand(['output', `下に定規で線を引きます。`]);
             this.addCommand(['drawLine', min_ix, answer_iy, 0, answer_iy]);
-            this.addCommand(['output', `掛け合わせた結果を合計します。`]);
+            this.addCommand(['output', `かけ合わせた結果を合計します。`]);
             // 合計処理: 2番目の線の直上の行までを足す
             this.autoDigitAdd(result_iy_start, result_iy_end);
         }
@@ -85,7 +85,7 @@ class AlgoMul extends AlgoBase {
             this.addCommand(['drawCenterText', y, text]);
         }
         this.answer = answer;
-        this.addCommand(['output', `答え: ${this.answer}`]);
+        this.addCommand(['output', `こたえ: ${this.answer}`]);
         return answer;
     }
     // コマンドの構築
@@ -110,6 +110,7 @@ class AlgoMul extends AlgoBase {
     }
     unitTest() {
         console.log("AlgoMul unit testing...");
+        console.assert(this.testEntryEx('304', '2', '608'));
         console.assert(this.testEntryEx('0', '0', '0'));
         console.assert(this.testEntryEx('2', '3', '6'));
         console.assert(this.testEntryEx('111', '111', '12321'));
