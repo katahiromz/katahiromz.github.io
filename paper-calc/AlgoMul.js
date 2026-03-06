@@ -21,7 +21,7 @@ class AlgoMul extends AlgoBase {
         this.autoPutDigitsEx(a_str, origin_iy);
         this.addCommand(['step']);
         // 乗数(B)をセット (iy = origin_iy + 1)
-        this.addCommand(['output', `その下に ${b} を書きますが、位(くらい)の右はしをそろえてください。`]);
+        this.addCommand(['output', `その下に ${b} を書きますが、右はしの数字をそろえてください。`]);
         this.autoPutDigitsEx(b_str, origin_iy + 1);
         this.addCommand(['step']);
         // '×'を描画
