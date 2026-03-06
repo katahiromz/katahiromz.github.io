@@ -5,7 +5,7 @@ body {
   background-image: radial-gradient(#b2ebf2 10%, transparent 10%);
   background-size: 20px 20px;
   color: #333;
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  font-family: "UD デジタル 教科書体 NK-R", "BIZ UDPゴシック", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   margin: 0;
   padding: 10px;
   box-sizing: border-box;
@@ -24,6 +24,8 @@ header {
   text-shadow: 2px 2px 0px #fff;
   margin: 0;
   padding: 0;
+  margin-bottom: 2px;
+  padding-bottom: 0px;
   border-bottom: 4px dotted #00796b;
   flex: 0 0 auto;
 }
