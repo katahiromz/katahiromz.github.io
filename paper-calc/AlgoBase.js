@@ -105,8 +105,8 @@ class AlgoBase {
         console.assert(typeof a === 'string');
         console.assert(typeof b === 'string');
         console.assert(typeof c === 'string');
-        this.a = a;
-        this.b = b;
+        this.a = normalizeUnsignedNumber(a);
+        this.b = normalizeUnsignedNumber(b);
         this.c = c;
         this.a_info = getNumberInfo(a);
         this.b_info = getNumberInfo(b);
