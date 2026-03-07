@@ -238,10 +238,11 @@ class AlgoDiv extends AlgoBase {
             quotientStr = `${intPart}.${fracPart}`;
         }
         const quotient = quotientStr;
-        // 指定桁(c)で打ち切った際に余りが残っており、かつ被除数(aDigits)にまだ処理していない桁がある場合、
+        // 指定桁(c)で打ち切った際に被除数(aDigits)にまだ処理していない桁がある場合、
         // 余りを確定するため残りの桁を全部下ろしてから小数点を描画する
+        // （currentVal が 0 でも、未処理桁がある場合は余りを構成するため条件から除外）
         let remainderDotFixed = false;
-        if (lastRemIy !== null && currentVal > 0n && totalDigits < aDigits.length) {
+        if (lastRemIy !== null && totalDigits < aDigits.length) {
             this.addCommand(['output', `ここで計算を打ち切ります。あまりをぜんぶ下ろします。`]);
             for (let j = totalDigits; j < aDigits.length; j++) {
                 const digitChar = aDigits[j];
@@ -253,6 +254,14 @@ class AlgoDiv extends AlgoBase {
             this.addCommand(['step']);
             // 余りの行に小数点を描画する（被除数の小数点位置と同じ列）
             if (aDotIdx < aDigits.length) {
+                // 小数点位置と打ち切り位置の間に空欄がある場合、0 を埋める（readRowNumber の桁抜けを防ぐ）
+                for (let j = aDotIdx; j < totalDigits; j++) {
+                    const fillIx = aStartIx + j;
+                    if (this.getMapDigit(fillIx, lastRemIy) === undefined) {
+                        this.addCommand(['drawDigit', fillIx, lastRemIy, '0']);
+                        this.setMapDigit(fillIx, lastRemIy, '0');
+                    }
+                }
                 const dotIx = aStartIx + aDotIdx;
                 this.addCommand(['drawDot', dotIx, lastRemIy]);
                 this.setMapDot(dotIx, lastRemIy);
@@ -352,6 +361,7 @@ class AlgoDiv extends AlgoBase {
         console.assert(this.testEntryEx('99999999999999999999', '99999999999999999999', '1.0', '1'));
         console.assert(this.testEntryEx('99.90', '990.0', '0 … 99.9', '0'));
         console.assert(this.testEntryEx('123.55', '789', '0.1 … 44.65', '1'));
+        console.assert(this.testEntryEx('12.345', '1', '12.34 … 0.005', '2')); // FIXME
         // 【ちびむすより引用】ここから
         console.assert(this.testEntryEx('63', '2', '31 … 1'));
         console.assert(this.testEntryEx('88', '4', '22'));

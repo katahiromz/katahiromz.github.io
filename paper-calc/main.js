@@ -2,8 +2,8 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '1.0.7'; // バージョン
-const DEBUGGING = true; // デバッグ中か？
+const VERSION = '1.0.8'; // バージョン
+const DEBUGGING = false; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
     let canvas = document.getElementById('my-canvas');
