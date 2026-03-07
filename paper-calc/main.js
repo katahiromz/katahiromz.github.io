@@ -2,8 +2,8 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '1.0.6'; // バージョン
-const DEBUGGING = false; // デバッグ中か？
+const VERSION = '1.0.7'; // バージョン
+const DEBUGGING = true; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
     let canvas = document.getElementById('my-canvas');
@@ -361,17 +361,17 @@ document.addEventListener('DOMContentLoaded', function () {
         speedChanged();
     });
     // 入力内容を検証する
-    const validateInput = () => {
+    const validateInput = (emptyIsOK = true) => {
         let message = "";
         const a = text_a.value, b = text_b.value, c = text_c.value;
         let isAValid = true, isBValid = true, isCValid = true;
         // 数Aのチェック (getNumberInfoを使用)
-        if (a !== "" && !getNumberInfo(a)) {
+        if ((a !== "" && !getNumberInfo(a)) || (!emptyIsOK && a === "")) {
             message = "正しく数を入力してください";
             isAValid = false;
         }
         // 数Bのチェック
-        if (b !== "" && !getNumberInfo(b)) {
+        if ((b !== "" && !getNumberInfo(b)) || (!emptyIsOK && b === "")) {
             message = "正しく数を入力してください";
             isBValid = false;
         }
@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let b = text_b.value;
         let c = text_c.value;
         console.log(a, b, c);
-        if (!validateInput())
+        if (!validateInput(false))
             return;
         if (algorithm) {
             algorithm.stop();
@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let a = text_a.value;
             let b = text_b.value;
             let c = text_c.value;
-            if (!validateInput())
+            if (!validateInput(false))
                 return;
             // 既存のインスタンスがあれば停止
             if (algorithm)
@@ -561,17 +561,17 @@ document.addEventListener('DOMContentLoaded', function () {
         applyCanvasTransform();
     });
     text_a.addEventListener('input', () => {
-        if (!validateInput())
+        if (!validateInput(true) || text_a.value === '')
             return;
         localStorage.setItem('PenCalc_textA', text_a.value);
     });
     text_b.addEventListener('input', () => {
-        if (!validateInput())
+        if (!validateInput(true) || text_b.value === '')
             return;
         localStorage.setItem('PenCalc_textB', text_b.value);
     });
     text_c.addEventListener('input', () => {
-        if (!validateInput())
+        if (!validateInput(true) || text_c.value === '')
             return;
         localStorage.setItem('PenCalc_textC', text_c.value);
     });
@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!updateLabels())
             return;
         localStorage.setItem('PenCalc_select', select.value);
-        validateInput();
+        validateInput(false);
     });
     const ready = () => {
         select.disabled = false;

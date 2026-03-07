@@ -238,9 +238,31 @@ class AlgoDiv extends AlgoBase {
             quotientStr = `${intPart}.${fracPart}`;
         }
         const quotient = quotientStr;
+        // 指定桁(c)で打ち切った際に余りが残っており、かつ被除数(aDigits)にまだ処理していない桁がある場合、
+        // 余りを確定するため残りの桁を全部下ろしてから小数点を描画する
+        let remainderDotFixed = false;
+        if (lastRemIy !== null && currentVal > 0n && totalDigits < aDigits.length) {
+            this.addCommand(['output', `ここで計算を打ち切ります。あまりをぜんぶ下ろします。`]);
+            for (let j = totalDigits; j < aDigits.length; j++) {
+                const digitChar = aDigits[j];
+                const ix = aStartIx + j;
+                currentVal = currentVal * 10n + BigInt(digitChar);
+                this.addCommand(['drawDigit', ix, lastRemIy, digitChar]);
+                this.setMapDigit(ix, lastRemIy, digitChar);
+            }
+            this.addCommand(['step']);
+            // 余りの行に小数点を描画する（被除数の小数点位置と同じ列）
+            if (aDotIdx < aDigits.length) {
+                const dotIx = aStartIx + aDotIdx;
+                this.addCommand(['drawDot', dotIx, lastRemIy]);
+                this.setMapDot(dotIx, lastRemIy);
+                this.addCommand(['step']);
+            }
+            remainderDotFixed = true;
+        }
         // あまり（表示用に元スケールへ戻す）
-        // 条件: 除数が小数(bFracLen>0)かつ余りが非ゼロかつ余り行が描画済みの場合のみ、余り行に小数点を描画する
-        if (bFracLen > 0 && currentVal > 0n && lastRemIy !== null) {
+        // 条件: 除数が小数(bFracLen>0)かつ余りが非ゼロかつ余り行が描画済みで、かつ上記の処理がまだの場合
+        if (bFracLen > 0 && currentVal > 0n && lastRemIy !== null && !remainderDotFixed) {
             const dotIx = lastRemIx - bFracLen + 1;
             this.addCommand(['drawDot', dotIx, lastRemIy]);
             this.setMapDot(dotIx, lastRemIy);
@@ -329,6 +351,7 @@ class AlgoDiv extends AlgoBase {
         console.assert(this.testEntryEx('999', '0.1', '9990.00', '2'));
         console.assert(this.testEntryEx('99999999999999999999', '99999999999999999999', '1.0', '1'));
         console.assert(this.testEntryEx('99.90', '990.0', '0 … 99.9', '0'));
+        console.assert(this.testEntryEx('123.55', '789', '0.1 … 44.65', '1'));
         // 【ちびむすより引用】ここから
         console.assert(this.testEntryEx('63', '2', '31 … 1'));
         console.assert(this.testEntryEx('88', '4', '22'));
