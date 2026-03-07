@@ -2,7 +2,7 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '1.0.5'; // バージョン
+const VERSION = '1.0.6'; // バージョン
 const DEBUGGING = false; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
@@ -379,6 +379,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (c !== "" && !getNumberInfo(c)) {
             message = "正しく数を入力してください";
             isCValid = false;
+        }
+        else {
+            if (parseInt(text_c.value) > 9) {
+                text_c.value = '9';
+            }
         }
         if (isAValid && isBValid) {
             // 引き算の制約チェック

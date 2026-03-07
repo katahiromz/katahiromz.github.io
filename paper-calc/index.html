@@ -59,14 +59,14 @@
       <br />
       <!-- 計算対象の数 -->
       <span class="no-wrap">
-        <span id="label-a">数A</span>: <input type="text" id="my-text-a" value="12345" size="4" maxlength="20" disabled />
+        <span id="label-a">数A</span>: <input type="text" id="my-text-a" value="12345" size="4" maxlength="20" inputmode="decimal" disabled />
       </span>
       <span class="no-wrap">
-        <span id="label-b">数B</span>: <input type="text" id="my-text-b" value="6789" size="4" maxlength="20" disabled />
+        <span id="label-b">数B</span>: <input type="text" id="my-text-b" value="6789" size="4" maxlength="20" inputmode="decimal" disabled />
       </span>
       <!-- 精度 -->
       <span id="my-accuracy" class="no-wrap hidden">
-        <span id="label-c">小数点以下</span>: <input type="number" id="my-text-c" value="0" min="0" max="10" disabled />けた まで
+        <span id="label-c">小数点以下</span>: <input type="number" id="my-text-c" value="0" min="0" max="9" pattern="\d" inputmode="numeric" step="1" disabled />けた まで
       </span>
       <br />
       <!-- 計算対象の数に対するエラーメッセージ -->
@@ -90,6 +90,6 @@
   </div>
   <!-- ページ フッター -->
   <footer class="center">
-    Ver.1.0.5 &copy; 2026&nbsp;katahiromz&nbsp;制作、山口@Webぐち&nbsp;監修
+    Ver.1.0.6 &copy; 2026&nbsp;katahiromz&nbsp;制作、山口@Webぐち&nbsp;監修
   </footer>
 </body></html>
