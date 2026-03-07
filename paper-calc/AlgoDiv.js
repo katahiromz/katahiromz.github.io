@@ -284,6 +284,17 @@ class AlgoDiv extends AlgoBase {
             this.setMapDot(dotIx, lastRemIy);
             this.addCommand(['step']);
         }
+        // 条件: 除数が整数(bFracLen===0)かつ小数桁指定あり(extraDigits>0)かつ余りが非ゼロかつ余り行が描画済み
+        // この場合、余りの数値はextraDigits桁分スケールアップされた状態で描かれているため、
+        // 商の小数点位置(dotPos)に小数点を追加して元のスケールに戻す
+        const shouldAddDecimalPointToRemainder = extraDigits > 0 && bFracLen === 0 && dotPos !== null &&
+            currentVal > 0n && lastRemIy !== null && !remainderDotFixed;
+        if (shouldAddDecimalPointToRemainder) {
+            const dotIx = aStartIx + dotPos;
+            this.addCommand(['drawDot', dotIx, lastRemIy]);
+            this.setMapDot(dotIx, lastRemIy);
+            this.addCommand(['step']);
+        }
         // 浮動小数点誤差を避けるため、あまりは文字列として扱う
         let finalRemainderStr;
         if (lastRemIy !== null) {
@@ -360,7 +371,7 @@ class AlgoDiv extends AlgoBase {
         console.assert(this.testEntryEx('10', '40', '0 … 10'));
         console.assert(this.testEntryEx('10', '40', '0.25', "2"));
         console.assert(this.testEntryEx('10', '40', '0.250', "3"));
-        console.assert(this.testEntryEx('10', '40', '0.2 … 20', "1"));
+        console.assert(this.testEntryEx('10', '40', '0.2 … 2', "1"));
         console.assert(this.testEntryEx('0.1', '0.4', '0.2 … 0.2', "1"));
         console.assert(this.testEntryEx('0.1', '2', '0.0500', '4'));
         console.assert(this.testEntryEx('999', '0.1', '9990', '0'));
@@ -372,6 +383,7 @@ class AlgoDiv extends AlgoBase {
         console.assert(this.testEntryEx('12.355', '789', '0.0 … 12.355', '1'));
         console.assert(this.testEntryEx('12.355', '78', '0.1 … 4.555', '1'));
         console.assert(this.testEntryEx('12.355', '7', '1.7 … 0.455', '1'));
+        console.assert(this.testEntryEx('12345', '67', '184.25 … 0.25', '2'));
         // 【ちびむすより引用】ここから
         console.assert(this.testEntryEx('63', '2', '31 … 1'));
         console.assert(this.testEntryEx('88', '4', '22'));
