@@ -47,16 +47,10 @@
           <option value="add">たし算</option>
           <option value="sub">ひき算</option>
           <option value="mul">かけ算</option>
-          <!-- <option value="div">わり算</option> --> <!-- 2026-03-08 katahiromz 小数の割り算にバグがあるので無効化 -->
+          <option value="div">わり算</option>
           <!-- <option value="test">テスト</option> -->
         </select>
       </span>
-      <!-- 速度 -->
-      <span class="no-wrap">
-        はやさ: <input type="range" id="my-speed-range" min="1" max="7" step="1" value="4" style="vertical-align: middle;" disabled />
-        <span id="speed-label">5</span>
-      </span>
-      <br />
       <!-- 計算対象の数 -->
       <span class="no-wrap">
         <span id="label-a">数A</span>: <input type="text" id="my-text-a" value="12345" size="4" maxlength="20" inputmode="decimal" disabled />
@@ -68,7 +62,11 @@
       <span id="my-accuracy" class="no-wrap hidden">
         <span id="label-c">小数点以下</span>: <input type="number" id="my-text-c" value="0" min="0" max="9" pattern="\d" inputmode="numeric" step="1" disabled />けた まで
       </span>
-      <br />
+      <!-- 速度 -->
+      <span class="no-wrap">
+        はやさ: <input type="range" id="my-speed-range" min="1" max="7" step="1" value="4" style="vertical-align: middle;" disabled />
+        <span id="speed-label">5</span>
+      </span>
       <!-- 計算対象の数に対するエラーメッセージ -->
       <div id="input-error-message"></div>
       <div class="button-group">
@@ -90,6 +88,6 @@
   </div>
   <!-- ページ フッター -->
   <footer class="center">
-    Ver.1.1.1 &copy; 2026&nbsp;katahiromz&nbsp;制作、山口@Webぐち&nbsp;監修
+    Ver.<span id="my-version-span">?.?.?</span> &copy; 2026&nbsp;katahiromz&nbsp;制作、山口@Webぐち&nbsp;監修
   </footer>
 </body></html>

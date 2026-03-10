@@ -44,7 +44,7 @@ class AlgoAdd extends AlgoBase {
         this.addCommand(['output', `一番右の位から足し算をしていきます。`]);
         this.autoDigitAdd(0, origin_iy + 1);
         // 答えの小数点
-        let fracMax = Math.max(this.getFracLen(a), this.getFracLen(b));
+        let fracMax = Math.max(getFracLen(a), getFracLen(b));
         {
             if (fracMax > 0) {
                 this.addCommand(['output', `小数があるときは、小数点を付けます。`]);
@@ -57,8 +57,7 @@ class AlgoAdd extends AlgoBase {
         let answer = this.fixAndReadRowNumber(origin_iy + 2);
         {
             const text = `${a} + ${b} = ${answer}`;
-            let { x, y } = this.convert3(0, origin_iy + 4);
-            this.addCommand(['drawCenterText', y, text]);
+            this.addCommand(['drawCenterText', origin_iy + 4, text]);
         }
         this.answer = answer;
         this.addCommand(['output', `こたえ: ${answer}`]);

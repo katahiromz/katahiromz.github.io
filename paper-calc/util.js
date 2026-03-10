@@ -6,6 +6,7 @@
 function isDigit(ch) {
     return ch.length == 1 && '0' <= ch && ch <= '9';
 }
+// 文字と画像の対応表
 const digitInfo = {
     '0': { img: null, src: 'img/0.svg' },
     '1': { img: null, src: 'img/1.svg' },
@@ -60,6 +61,10 @@ function loadImage(key) {
         digitInfo[key].img = img;
     });
 }
+// digitInfoに当てはまるかどうか、文字列を検査する
+function validateImageChar(str) {
+    return str.match(/^[\d\+\-×÷=\/\\\(\)\.… ]*$/i) !== null;
+}
 const replaceJapaneseNumericChars = (numStr) => {
     numStr = numStr.replaceAll('　', ' '); // U+3000
     numStr = numStr.replaceAll('０', '0');
@@ -97,7 +102,8 @@ const getNumberInfo = (numStr) => {
         integer = '0';
     let fraction = found[2] ? found[2].substr(1) : '';
     let numeric = parseInt(numStr);
-    return { numeric, numStr, integer, int_len: integer.length, fraction, frac_len: fraction.length };
+    let digits = numStr.replaceAll('.', '');
+    return { numeric, numStr, integer, int_len: integer.length, fraction, frac_len: fraction.length, digits, digits_len: digits.length };
 };
 // 数値文字列の整形。今回は筆算なので、符号付きの数値は扱わない。
 const normalizeUnsignedNumber = (numStr) => {
@@ -195,4 +201,11 @@ function comparePositiveNumbers(a, b) {
     if (paddedFracA < paddedFracB)
         return -1;
     return 0;
+}
+// 小数部の長さ
+function getFracLen(str) {
+    let index = str.indexOf('.');
+    if (index == -1)
+        return 0;
+    return str.length - index - 1;
 }

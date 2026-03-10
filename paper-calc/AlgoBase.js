@@ -141,10 +141,26 @@ class AlgoBase {
             this.timerId = null;
         }
     }
+    // コマンドの検査
+    checkCommand(command) {
+        switch (command[0]) {
+            case 'drawDigit':
+                return (command[3].length == 1 && validateImageChar(command[3]));
+                break;
+            case 'drawCenterText':
+                return (validateImageChar(command[2]));
+                break;
+        }
+        return true;
+    }
     // コマンドの追加
     addCommand(command) {
         if (!this.commands)
             this.commands = [];
+        if (!this.checkCommand(command)) {
+            console.log(command);
+            console.assert(false);
+        }
         this.commands.push(command);
     }
     // コマンドの構築
@@ -158,45 +174,49 @@ class AlgoBase {
         Paper.g_sizingOnly = false;
     }
     // コマンドの実行
-    executeCommand(op) {
-        switch (op[0]) {
+    executeCommand(cmd) {
+        if (!this.checkCommand(cmd)) {
+            console.log(cmd);
+            console.assert(false);
+        }
+        switch (cmd[0]) {
             case 'output':
-                this.output(op[1]);
+                this.output(cmd[1]);
                 break;
             case 'drawDigit':
-                this.drawDigit(...op.slice(1));
+                this.drawDigit(...cmd.slice(1));
                 break;
             case 'drawCenterText':
-                this.drawCenterText(...op.slice(1));
+                this.drawCenterText(...cmd.slice(1));
                 break;
             case 'drawDivCurve':
-                this.drawDivCurve(...op.slice(1));
+                this.drawDivCurve(...cmd.slice(1));
                 break;
             case 'backslashDigit':
-                this.backslashDigit(...op.slice(1));
+                this.backslashDigit(...cmd.slice(1));
                 break;
             case 'drawCarry':
-                this.drawCarry(...op.slice(1));
+                this.drawCarry(...cmd.slice(1));
                 break;
             case 'drawSmallChars':
-                this.drawSmallChars(...op.slice(1));
+                this.drawSmallChars(...cmd.slice(1));
                 break;
             case 'drawLine':
-                this.drawLine(...op.slice(1));
+                this.drawLine(...cmd.slice(1));
                 break;
             case 'drawStrike':
-                this.drawStrike(...op.slice(1));
+                this.drawStrike(...cmd.slice(1));
                 break;
             case 'drawDot':
-                this.drawDot(...op.slice(1));
+                this.drawDot(...cmd.slice(1));
                 break;
             case 'slashDot':
-                this.slashDot(...op.slice(1));
+                this.slashDot(...cmd.slice(1));
                 break;
             case 'step':
                 break;
             default:
-                console.log("Unknown command:", op[0]);
+                console.log("Unknown command:", cmd[0]);
                 console.assert(false);
                 return false;
         }
@@ -309,13 +329,6 @@ class AlgoBase {
             return undefined;
         return this.max_x_by_ix(columns[iColumn]);
     }
-    // 小数部の長さ
-    getFracLen(str) {
-        let index = str.indexOf('.');
-        if (index == -1)
-            return 0;
-        return str.length - index - 1;
-    }
     // 数字を置く
     autoPutDigits(numStr, iy) {
         console.assert(typeof numStr === 'string');
@@ -348,7 +361,7 @@ class AlgoBase {
         }
     }
     // 数字を置く
-    autoPutDigitsEx(numStr, iy0) {
+    autoPutDigitsEx(numStr, ix0, iy0) {
         console.assert(typeof numStr === 'string');
         const info = getNumberInfo(numStr);
         if (!info) {
@@ -364,17 +377,17 @@ class AlgoBase {
         let kDot = numStr.length - m;
         // 整数部
         for (let k = 0; k < m; ++k) {
-            let ix = -numStr.length + k;
+            let ix = ix0 - numStr.length + k;
             this.addCommand(['drawDigit', ix, iy0, numStr[k]]);
             this.mapDigit(ix, iy0, numStr[k]);
         }
         if (iDot != -1) {
             // 小数点を描画
-            this.addCommand(['drawDot', -kDot, iy0]);
-            this.setMapDot(-kDot, iy0);
+            this.addCommand(['drawDot', ix0 - kDot, iy0]);
+            this.setMapDot(ix0 - kDot, iy0);
             // 小数部
             for (let k = m; k < numStr.length; ++k) {
-                let ix = -numStr.length + k;
+                let ix = ix0 - numStr.length + k;
                 this.addCommand(['drawDigit', ix, iy0, numStr[k]]);
                 this.mapDigit(ix, iy0, numStr[k]);
             }
@@ -549,12 +562,12 @@ class AlgoBase {
             this.addCommand(['step']);
         }
     }
-    // 小数点の左に数字がなかった場合、左側にゼロを追加する
+    // 小数点にゼロが足りない場合、ゼロを追加
     addMissingZero(iy, test = false) {
         let iDot = this.getMapDot(iy);
         if (iDot === undefined)
             return false; // 小数点がなければ何もしない
-        let ix0 = this.min_x(iy);
+        let ix0 = this.min_x(iy), ix1 = this.max_x(iy), found = false;
         // min_x が iDot 以上、つまり小数点より左に数字がない場合にゼロを追加
         if (ix0 === undefined || ix0 >= iDot) {
             if (test)
@@ -562,9 +575,20 @@ class AlgoBase {
             let zeroIx = iDot - 1;
             this.addCommand(['drawDigit', zeroIx, iy, '0']);
             this.mapDigit(zeroIx, iy, '0');
-            return true;
+            found = true;
+            ix0 = this.min_x(iy);
         }
-        return false;
+        // 小数点とix1の間に空白があるとき、ゼロで埋める
+        for (let ix = ix0; ix <= ix1; ++ix) {
+            if (this.getMapDigit(ix, iy) === undefined) {
+                if (test)
+                    return true;
+                this.addCommand(['drawDigit', ix, iy, '0']);
+                this.mapDigit(ix, iy, '0');
+                found = true;
+            }
+        }
+        return found;
     }
     // 先行するゼロを修正する
     fixLeadZeros(iy, test = false) {
@@ -664,7 +688,7 @@ class AlgoBase {
     fixAndReadRowNumber(iy, ignoreDot = false, dontFixTrailZeros = false) {
         // 小数点の左側に数字がないとき、ゼロを追加
         if (this.addMissingZero(iy, true)) {
-            this.addCommand(['output', `小数点の左がわに数字がないのでゼロを追加します。`]);
+            this.addCommand(['output', `小数点の位置にゼロが足りないのでゼロを追加します。`]);
             this.addMissingZero(iy, false);
             this.addCommand(['step']);
         }
@@ -722,11 +746,12 @@ class AlgoBase {
         this.paper.drawImage(img, x0, y0);
     }
     // テキストを描画(左右中央そろえ)
-    drawCenterText(y, text, is_red = false) {
+    drawCenterText(iy, text, is_red = false) {
         let prefix = (is_red ? 'red-' : '');
         let cx = this.paper.cx;
         let textWidth = this.getTextWidth(text);
         let x = this.paper.originX + (cx - textWidth) / 2;
+        let { x0, y } = this.convert3(0, iy);
         for (let ich = 0; ich < text.length; ++ich) {
             let digit = text[ich];
             if (digit !== ' ') {
@@ -807,8 +832,9 @@ class AlgoBase {
     // 小数点を描画する
     drawDot(ix, iy, is_red = false) {
         let { x: x0, y: y0 } = this.convert(ix - 0.1, iy + 0.8);
+        let cxy = LINE_WIDTH * 0.8;
         this.paper.fillStyle = is_red ? 'red' : 'black';
-        this.paper.fillCircle(x0, y0, LINE_WIDTH);
+        this.paper.fillRect(x0 - cxy, y0 - cxy, 2 * cxy, 2 * cxy);
     }
     // 小数点を消す
     slashDot(ix, iy, is_red = false) {

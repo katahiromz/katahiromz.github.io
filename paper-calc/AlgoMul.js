@@ -18,11 +18,11 @@ class AlgoMul extends AlgoBase {
         let b_digits = b_str.replaceAll('.', '');
         // 被乗数(A)をセット (iy = origin_iy)
         this.addCommand(['output', `まず、上の方に ${a} を書きます。`]);
-        this.autoPutDigitsEx(a_str, origin_iy);
+        this.autoPutDigitsEx(a_str, 0, origin_iy);
         this.addCommand(['step']);
         // 乗数(B)をセット (iy = origin_iy + 1)
         this.addCommand(['output', `その下に ${b} を書きますが、右はしの数字をそろえてください。`]);
-        this.autoPutDigitsEx(b_str, origin_iy + 1);
+        this.autoPutDigitsEx(b_str, 0, origin_iy + 1);
         this.addCommand(['step']);
         // '×'を描画
         this.addCommand(['output', `２番目の数の左にバツ印(×)を書きます。`]);
@@ -67,8 +67,8 @@ class AlgoMul extends AlgoBase {
             answer_iy = result_iy_start;
         }
         // 小数点の処理
-        let a_frac_len = this.getFracLen(a_str);
-        let b_frac_len = this.getFracLen(b_str);
+        let a_frac_len = getFracLen(a_str);
+        let b_frac_len = getFracLen(b_str);
         let frac_len_sum = a_frac_len + b_frac_len;
         if (frac_len_sum > 0) {
             this.addCommand(['output', `二つの数の小数点以下の桁数(けたすう)を足し合わせた位置に小数点を付けます。`]);
@@ -81,8 +81,7 @@ class AlgoMul extends AlgoBase {
         let answer = this.fixAndReadRowNumber(answer_iy);
         {
             const text = `${a} × ${b} = ${answer}`;
-            let { x, y } = this.convert3(0, answer_iy + 2);
-            this.addCommand(['drawCenterText', y, text]);
+            this.addCommand(['drawCenterText', answer_iy + 2, text]);
         }
         this.answer = answer;
         this.addCommand(['output', `こたえ: ${this.answer}`]);

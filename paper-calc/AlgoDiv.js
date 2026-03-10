@@ -13,384 +13,248 @@ class AlgoDiv extends AlgoBase {
         // 長除法で割り算を行う
         this.clearMapping();
         this.addCommand(['output', `これから ${a} ÷ ${b} を計算します。`]);
-        // 1. 小数点の調整（除数を整数にする）―― 計算値を求める
-        const bFracLen = this.getFracLen(b);
-        const aFracLen = this.getFracLen(a);
-        // workB: bの小数点を除去して整数文字列化（誤差なし）
-        const workB = bFracLen > 0 ? b.replace('.', '').replace(/^0+/, '') || '0' : b;
-        const bVal = BigInt(workB);
-        // workA: aの小数点をbFracLen桁右にずらした文字列（aDigits・aDotIdx算出用）
-        let workA = a;
-        if (bFracLen > 0) {
-            let rawA = a.replace('.', '');
-            let newDotPos = (a.includes('.') ? a.indexOf('.') : a.length) + bFracLen;
-            while (rawA.length < newDotPos)
-                rawA += '0';
-            workA = newDotPos < rawA.length
-                ? rawA.substring(0, newDotPos) + '.' + rawA.substring(newDotPos)
-                : rawA;
-            workA = workA.replace(/^0+/, '') || '0';
-            if (workA.startsWith('.'))
-                workA = '0' + workA;
-        }
-        const aDigits = workA.replace('.', '');
-        const aDotIdx = workA.includes('.') ? workA.indexOf('.') : workA.length;
-        // 2. 割られる数(A)と割る数(B)を元の値でそのまま配置する
-        this.addCommand(['output', `わられる数 ${a} とわる数 ${b} を図のように書いてください。`]);
-        // 除数(B)を元の値で配置
-        this.autoPutDigitsEx(b, origin_iy + 1);
-        const bMaxX = this.max_x(origin_iy + 1);
-        const aStartIx = bMaxX + 2;
-        // 被除数(A)を元の値で配置（小数点含む）
-        const aRaw = a.replace('.', '');
-        const aOrigDotIdx = a.includes('.') ? a.indexOf('.') : a.length;
-        for (let i = 0; i < aRaw.length; i++) {
-            this.addCommand(['drawDigit', aStartIx + i, origin_iy + 1, aRaw[i]]);
-            this.setMapDigit(aStartIx + i, origin_iy + 1, aRaw[i]);
-        }
-        if (a.includes('.')) {
-            this.addCommand(['drawDot', aStartIx + aOrigDotIdx, origin_iy + 1]);
-            this.setMapDot(aStartIx + aOrigDotIdx, origin_iy + 1);
-        }
+        // 数の情報を取得
+        let a_info = getNumberInfo(a), b_info = getNumberInfo(b);
+        // 小数点なし
+        let a_digits = a_info.digits, b_digits = b_info.digits;
+        // 小数点の位置
+        let a_fracLen = a_info.frac_len, b_fracLen = b_info.frac_len;
+        // 精度
+        let accuracy = parseInt(c);
+        // 修正された小数点の位置
+        let fixedDotPos = b_fracLen - a_fracLen;
+        // 右端の位置
+        let ix1 = accuracy + b_fracLen - a_fracLen;
+        // 被除数(A)を配置
+        this.addCommand(['output', `わられる数 ${a} を書いてください。`]);
+        this.autoPutDigitsEx(a, 0, origin_iy + 1);
         this.addCommand(['step']);
-        const extraDigits = parseInt(c) || 0; // 仕様A: 小数点以下ちょうど c 桁
-        const totalDigits = Math.min(aDotIdx, aDigits.length) + extraDigits;
+        // 線を描く
         this.addCommand(['output', `図のように線を描いてください。`]);
-        this.addCommand(['drawDivCurve', aStartIx - 1, origin_iy + 1]);
-        this.addCommand(['drawLine', aStartIx - 0.7, origin_iy + 1, aStartIx + aDigits.length + extraDigits, origin_iy + 1]);
+        this.addCommand(['drawDivCurve', -a_digits.length - 1, origin_iy + 1]);
+        this.addCommand(['drawLine', -a_digits.length - 0.7, origin_iy + 1, Math.max(ix1, 0), origin_iy + 1]);
         this.addCommand(['step']);
-        // 3. 小数点がある場合、slashDotで消す演出をする
-        if (bFracLen > 0) {
-            this.addCommand(['output', `わる数 ${b} を整数にするため、小数点を ${bFracLen} 桁右に動かします。`]);
-            this.addCommand(['output', `わられる数 ${a} も同じだけ小数点を動かします。`]);
-            // 除数(B)の小数点を消す
-            // autoPutDigitsExはBの小数点を -bFracLen に置き、bMaxX = -1 なので
-            // 小数点のix = bMaxX - bFracLen + 1
-            this.addCommand(['slashDot', bMaxX - bFracLen + 1, origin_iy + 1]);
-            this.clearMapDot(origin_iy + 1);
-            // 被除数(A)の小数点を消す
-            const extraZeros = bFracLen - aFracLen;
-            if (a.includes('.')) {
-                this.addCommand(['slashDot', aStartIx + aOrigDotIdx, origin_iy + 1]);
+        // 除数(B)を配置
+        this.addCommand(['output', `左にわる数 ${b} を書いてください。`]);
+        this.autoPutDigitsEx(b, -a_digits.length - 1, origin_iy + 1);
+        this.addCommand(['step']);
+        // 除数に小数点がある場合の処理
+        if (b_fracLen > 0) {
+            this.addCommand(['output', `わる数に小数点がありますので、わられる数とわる数を ${Math.pow(10, b_fracLen)} 倍して、わる数の小数点を消します。`]);
+            // わる数の小数点を消す
+            this.addCommand(['slashDot', -(a_digits.length + b_fracLen + 1), origin_iy + 1]);
+            // わられる数の小数点を消す。わられる数に小数点がなかった場合は、小数点の位置を強調するために小数点を書いてから消すようにする
+            if (a_fracLen == 0)
+                this.addCommand(['drawDot', -a_fracLen, origin_iy + 1]);
+            if (a_fracLen >= 0)
+                this.addCommand(['slashDot', -a_fracLen, origin_iy + 1]);
+            // 小数点以下の桁数により場合分け
+            if (a_fracLen > b_fracLen) {
+                // 小数点の位置をずらす
+                this.addCommand(['drawDot', -(a_fracLen - b_fracLen), origin_iy + 1]);
+                this.setMapDot(-(a_fracLen - b_fracLen), origin_iy + 1);
+            }
+            else if (a_fracLen < b_fracLen) {
+                // ゼロを追加
+                for (let i = 0; i < (b_fracLen - a_fracLen); ++i) {
+                    this.addCommand(['drawDigit', i, origin_iy + 1, '0', true]);
+                    this.mapDigit(i, origin_iy + 1, '0');
+                }
                 this.clearMapDot(origin_iy + 1);
             }
-            else if (extraZeros > 0) {
-                this.addCommand(['drawDot', aStartIx + aOrigDotIdx, origin_iy + 1]);
-                this.addCommand(['slashDot', aStartIx + aOrigDotIdx, origin_iy + 1]);
-            }
-            // 新しい小数点をAに描画する（シフト後も小数点が残る場合）
-            if (aDotIdx < aDigits.length) {
-                this.addCommand(['output', `小数点を ${bFracLen} 桁右に動かします。`]);
-                this.addCommand(['drawDot', aStartIx + aDotIdx, origin_iy + 1]);
-                this.setMapDot(aStartIx + aDotIdx, origin_iy + 1);
-            }
-            // bFracLen > aFracLen のとき、桁数を合わせるため被除数の右側に赤色の0を追加する
-            if (extraZeros > 0) {
-                this.addCommand(['output', `小数点の桁(けた)を合わせるため、わられる数の右がわに 0 をかきたします。`]);
-                for (let i = 0; i < extraZeros; i++) {
-                    this.addCommand(['drawDigit', aStartIx + aRaw.length + i, origin_iy + 1, '0', true]); // 赤色
-                    this.setMapDigit(aStartIx + aRaw.length + i, origin_iy + 1, '0');
-                }
+            // わる数の先行するゼロを消す
+            let ix = this.min_x(origin_iy + 1);
+            while (this.mapDigit(ix, origin_iy + 1) === '0') {
+                let digit = this.mapDigit(ix + 1, origin_iy + 1);
+                if (digit === undefined)
+                    break;
+                this.setMapDigit(ix, origin_iy + 1, undefined);
+                this.addCommand(['backslashDigit', ix, origin_iy + 1]);
+                ++ix;
+                b_digits = b_digits.replace(/^0/, ''); // ついでに b_digitsも修正
             }
             this.addCommand(['step']);
         }
-        // 4. 割り算のメインループ
-        let currentVal = 0n;
-        let iy = origin_iy + 1;
-        let isFirstDigit = true;
-        let lastRemIy = null; // 最後の余り行のiy
-        let lastRemIx = null; // 最後の余り行の右端ix（ループ時のix）
-        let quotientDotDrawn = false;
-        // --- 商は i(処理回数)ベースで記録する（答え文字列生成用） ---
-        const quotientDigits = new Array(totalDigits).fill(null); // '0'..'9' or null
-        // 商の小数点位置（i基準。dotPos の前に '.' を入れる）
-        const dotPos = aDotIdx < aDigits.length ? aDotIdx
-            : extraDigits > 0 ? aDigits.length
-                : null;
-        const putQuotientDigit = (i, ix, digitChar) => {
-            this.addCommand(['drawDigit', ix, origin_iy, digitChar]);
-            this.setMapDigit(ix, origin_iy, digitChar);
-            quotientDigits[i] = digitChar;
-        };
-        const putQuotientDotIfNeeded = () => {
-            if (dotPos === null || quotientDotDrawn)
-                return;
-            const dotIx = aStartIx + dotPos;
-            this.addCommand(['drawDot', dotIx, origin_iy]);
-            this.setMapDot(dotIx, origin_iy);
-            quotientDotDrawn = true;
-            this.addCommand(['step']);
-        };
-        for (let i = 0; i < totalDigits; i++) {
-            const ix = aStartIx + i;
-            const digitChar = (i < aDigits.length) ? aDigits[i] : '0';
-            const digit = parseInt(digitChar);
-            currentVal = currentVal * 10n + BigInt(digit);
-            // 数字を下ろす処理
-            if (i > 0 && iy != origin_iy + 1) {
-                if (i < aDigits.length) {
-                    this.addCommand(['output', `右の桁(けた)から ${digit} を下ろします。`]);
-                    this.addCommand(['drawDigit', ix, iy, digitChar]);
-                    this.setMapDigit(ix, iy, digitChar);
+        // 左の桁から見ていく
+        let iy = origin_iy + 2;
+        let foundDot = false; // 小数点を見つけた？フラグ変数
+        let tateta = false; // 立てた？フラグ変数
+        for (let i = -a_digits.length; i < ix1; ++i) {
+            // 小数点を確認
+            if (!foundDot && i === fixedDotPos) { // 小数点を見つけた？
+                // 小数点の前のゼロを書く
+                if (!tateta) {
+                    this.addCommand(['output', `小数点があったので、ゼロと小数点を書きます。`]);
+                    this.addCommand(['drawDigit', i - 1, origin_iy, '0']);
+                    this.mapDigit(i - 1, origin_iy, '0');
                 }
                 else {
-                    this.addCommand(['output', `あまりの右に 0 を書いて計算を続けます。`]);
-                    this.addCommand(['drawDigit', ix, iy, '0']);
-                    this.setMapDigit(ix, iy, '0');
+                    this.addCommand(['output', `小数点があったので、同じ位置に小数点を書きます。`]);
                 }
+                // 小数点を書く
+                this.addCommand(['drawDot', fixedDotPos, origin_iy]);
+                this.setMapDot(fixedDotPos, origin_iy);
                 this.addCommand(['step']);
+                foundDot = true; // 覚えておく
             }
-            // 商の小数点描画（必要な位置で描く）
-            if (!quotientDotDrawn && dotPos !== null && i === dotPos) {
-                putQuotientDotIfNeeded();
-            }
-            if (currentVal >= bVal) {
-                const q = Number(currentVal / bVal);
-                const qChar = q.toString();
-                const productBig = BigInt(q) * bVal;
-                // autoDigitMul は「1桁×多桁」なので q は 0..9 のはず
-                console.assert(qChar.length === 1);
-                this.addCommand(['output', `${currentVal} の中に ${bVal} は ${q} 個あります。`]);
-                // 商をセット
-                putQuotientDigit(i, ix, qChar);
-                isFirstDigit = false;
-                // 掛け算
-                iy++;
-                this.addCommand(['output', `商の ${q} とわる数 ${bVal} をかけます。`]);
-                this.autoDigitMul(workB, qChar, ix, iy);
-                // 引き算の線
-                this.addCommand(['output', `下に、ひき算の線を描きます。`]);
-                this.addCommand(['drawLine', ix - productBig.toString().length + 1, iy + 1, aStartIx + Math.max(totalDigits, i + 1), iy + 1]);
+            if (tateta) { // 立てた？
+                // 数を下ろす
+                let digit = this.mapDigit(i, origin_iy + 1);
+                this.addCommand(['output', `わられる数から ${digit} を下ろします。`]);
+                this.addCommand(['drawDigit', i, iy, digit]);
+                this.mapDigit(i, iy, digit);
                 this.addCommand(['step']);
-                // 引き算の結果（あまり）
-                iy++;
-                const remainder = currentVal - productBig;
-                const remStr = remainder.toString();
-                this.addCommand(['output', `${currentVal} から、かけ算の答え ${productBig} を引きます。`]);
-                for (let j = remStr.length - 1; j >= 0; --j) {
-                    const targetIx = ix - (remStr.length - 1 - j);
-                    this.addCommand(['drawDigit', targetIx, iy, remStr[j]]);
-                    this.setMapDigit(targetIx, iy, remStr[j]);
+                // 行iyから数を読み込む
+                let digits = normalizeUnsignedNumber(this.readRowNumber(iy, true));
+                if (comparePositiveNumbers(digits, b_digits) < 0) {
+                    this.addCommand(['output', `${digits} は ${b_digits} より小さいので 0 を立てます。`]);
+                    this.addCommand(['drawDigit', i, origin_iy, '0']);
+                    this.mapDigit(i, origin_iy, '0');
                     this.addCommand(['step']);
+                    continue;
                 }
-                this.addCommand(['output', `${currentVal} 引く ${productBig} で ${remainder} あまりました。`]);
+                ++iy;
+                // 立てる数を求める
+                let num1 = BigInt(digits), num2 = BigInt(b_digits);
+                let count = BigInt(0);
+                while (num1 >= num2) {
+                    num1 -= num2;
+                    ++count;
+                }
+                // 数を立てる
+                this.addCommand(['output', `${digits} の中に ${b_digits} が ${count} 個ありますので、${count} を立てます。`]);
+                this.addCommand(['drawDigit', i, origin_iy, count.toString()]);
+                this.mapDigit(i, origin_iy, count.toString());
                 this.addCommand(['step']);
-                lastRemIy = iy;
-                lastRemIx = ix;
-                // --- 重要: remainder を次のループの currentVal に反映 ---
-                currentVal = remainder;
-                // currentVal が 0 になっても、被除数(aDigits)の残り桁がある間は打ち切らない
-                if (currentVal === 0n && extraDigits > 0 && i >= aDigits.length) {
-                    break;
+                // 掛け算を計算する
+                this.addCommand(['output', `${b_digits} × ${count} を計算します。`]);
+                this.autoDigitMul(b_digits, count.toString(), i, iy);
+                // 引き算の線を引く
+                let ix0 = this.min_x(iy);
+                ++iy;
+                this.addCommand(['output', `引き算の線を描きます。`]);
+                if (Math.abs(ix0, Math.max(ix1, 0)) == 1)
+                    this.addCommand(['drawLine', ix0 - 1, iy, Math.max(ix1, 0), iy]);
+                else
+                    this.addCommand(['drawLine', ix0, iy, Math.max(ix1, 0), iy]);
+                this.addCommand(['step']);
+                this.addCommand(['output', `${digits} - ${BigInt(b_digits) * count} = ${num1.toString()}`]);
+                this.autoPutDigitsEx(num1.toString(), i + 1, iy);
+                this.addCommand(['step']);
+            }
+            else { // 非ゼロを見つけてない
+                // 行(origin_iy + 1)から数を読み込む
+                let digits = '';
+                for (let k = -a_digits.length; k <= i; ++k) {
+                    digits += this.mapDigit(k, origin_iy + 1);
                 }
-            }
-            else {
-                // 0 を商に書くかどうかの条件は元コード踏襲
-                if (!isFirstDigit || i >= aDotIdx - 1) {
-                    putQuotientDigit(i, ix, '0');
-                    if (isFirstDigit)
-                        isFirstDigit = false;
-                }
-            }
-        }
-        // 商の小数点の処理（まだ描かれていない場合）
-        if (!quotientDotDrawn) {
-            putQuotientDotIfNeeded();
-        }
-        // --- 商文字列を quotientDigits + dotPos から構築する ---
-        // 商の表示開始位置（整数部の先頭の不要な0を避ける）
-        let first = 0;
-        for (let i = 0; i < totalDigits; i++) {
-            if (quotientDigits[i] !== null) {
-                first = i;
-                break;
-            }
-            if (i === totalDigits - 1)
-                first = totalDigits - 1;
-        }
-        // dot があるなら、dotの左に最低1桁必要
-        if (dotPos !== null)
-            first = Math.min(first, Math.max(0, dotPos - 1));
-        // null は「その桁は書かなかった」だが、答えとしては 0 扱いにする
-        const filled = quotientDigits.map(d => (d === null ? '0' : d));
-        let quotient;
-        if (dotPos === null || dotPos >= totalDigits) {
-            quotient = filled.slice(first).join('').replace(/^0+(?=\d)/, '') || '0';
-        }
-        else {
-            // 整数部（dotより左）
-            const intPart = (filled.slice(first, dotPos).join('').replace(/^0+(?=\d)/, '') || '0');
-            // 小数部（dotより右）は仕様Aで必ず extraDigits 桁
-            const fracPart = filled.slice(dotPos, dotPos + extraDigits).join('').padEnd(extraDigits, '0');
-            quotient = `${intPart}.${fracPart}`;
-        }
-        // 指定桁(c)で打ち切った際に被除数(aDigits)にまだ処理していない桁がある場合、
-        // 余りを確定するため残りの桁を全部下ろしてから小数点を描画する
-        // （currentVal が 0 でも、未処理桁がある場合は余りを構成するため条件から除外）
-        let remainderDotFixed = false;
-        let elseIfExtraLen = 0; // else if ブランチで蓄積した追加桁数（remScale補正用）
-        if (lastRemIy !== null && totalDigits < aDigits.length) {
-            this.addCommand(['output', `ここで計算を打ち切ります。あまりをぜんぶ下ろします。`]);
-            for (let j = totalDigits; j < aDigits.length; j++) {
-                const digitChar = aDigits[j];
-                const ix = aStartIx + j;
-                currentVal = currentVal * 10n + BigInt(digitChar);
-                this.addCommand(['drawDigit', ix, lastRemIy, digitChar]);
-                this.setMapDigit(ix, lastRemIy, digitChar);
-            }
-            this.addCommand(['step']);
-            // 余りの行に小数点を描画する（被除数の小数点位置と同じ列）
-            if (aDotIdx < aDigits.length) {
-                // 小数点位置と打ち切り位置の間に空欄がある場合、0 を埋める（readRowNumber の桁抜けを防ぐ）
-                for (let j = aDotIdx; j < totalDigits; j++) {
-                    const fillIx = aStartIx + j;
-                    if (this.getMapDigit(fillIx, lastRemIy) === undefined) {
-                        this.addCommand(['drawDigit', fillIx, lastRemIy, '0']);
-                        this.setMapDigit(fillIx, lastRemIy, '0');
+                digits = normalizeUnsignedNumber(digits);
+                if (comparePositiveNumbers(digits, b_digits) < 0) {
+                    if (foundDot) {
+                        this.addCommand(['output', `${digits} は ${b_digits} より小さいので数を立てられませんが、小数点を過ぎているので 0 を立てます。`]);
+                        this.addCommand(['drawDigit', i, origin_iy, '0']);
+                        this.mapDigit(i, origin_iy, '0');
                     }
+                    else {
+                        this.addCommand(['output', `${digits} は ${b_digits} より小さいので数を立てられません。`]);
+                    }
+                    this.addCommand(['step']);
+                    continue;
                 }
-                const dotIx = aStartIx + aDotIdx;
-                this.addCommand(['drawDot', dotIx, lastRemIy]);
-                this.setMapDot(dotIx, lastRemIy);
+                // 立てる数を求める
+                let num1 = BigInt(digits), num2 = BigInt(b_digits);
+                let count = BigInt(0);
+                while (num1 >= num2) {
+                    num1 -= num2;
+                    ++count;
+                }
+                // 立てる
+                this.addCommand(['output', `${digits} の中に ${b_digits} が ${count} 個ありますので、${count} を立てます。`]);
+                this.addCommand(['drawDigit', i, origin_iy, count.toString()]);
+                this.mapDigit(i, origin_iy, count.toString());
+                this.addCommand(['step']);
+                tateta = true; // 立てた
+                // 掛け算を計算する
+                this.addCommand(['output', `${b_digits} × ${count} を計算します。`]);
+                this.autoDigitMul(b_digits, count.toString(), i, iy);
+                // 引き算の線を引く
+                let ix0 = this.min_x(iy);
+                ++iy;
+                this.addCommand(['output', `引き算の線を描きます。`]);
+                if (Math.abs(ix0, Math.max(ix1, 0)) == 1)
+                    this.addCommand(['drawLine', ix0 - 1, iy, Math.max(ix1, 0), iy]);
+                else
+                    this.addCommand(['drawLine', ix0, iy, Math.max(ix1, 0), iy]);
+                this.addCommand(['step']);
+                // 引き算を計算する
+                this.addCommand(['output', `${digits} - ${BigInt(b_digits) * count} = ${num1.toString()}`]);
+                this.autoPutDigitsEx(num1.toString(), i + 1, iy);
                 this.addCommand(['step']);
             }
-            remainderDotFixed = true;
         }
-        else if (lastRemIy === null && totalDigits < aDigits.length) {
-            // 商がすべて 0 で割り算ステップが発生せず、かつ未処理の桁がある場合：
-            // あまりとして被除数全体を新しい行に表示する
-            iy++;
-            this.addCommand(['output', `ここで計算を打ち切ります。あまりをぜんぶ下ろします。`]);
-            // 処理済みの先頭 totalDigits 桁と残りの桁をまとめて描画する
-            for (let j = 0; j < aDigits.length; j++) {
-                this.addCommand(['drawDigit', aStartIx + j, iy, aDigits[j]]);
-                this.setMapDigit(aStartIx + j, iy, aDigits[j]);
-            }
-            this.addCommand(['step']);
-            // 小数点を描画する
-            if (aDotIdx < aDigits.length) {
-                const dotIx = aStartIx + aDotIdx;
-                this.addCommand(['drawDot', dotIx, iy]);
-                this.setMapDot(dotIx, iy);
-                this.addCommand(['step']);
-            }
-            // 余りを BigInt で正確に求めるため、未処理の桁を currentVal に蓄積し
-            // remScale の補正量として elseIfExtraLen に記録する
-            for (let j = totalDigits; j < aDigits.length; j++) {
-                currentVal = currentVal * 10n + BigInt(aDigits[j]);
-            }
-            elseIfExtraLen = aDigits.length - totalDigits;
-            lastRemIy = iy;
-            remainderDotFixed = true;
-        }
-        // あまり（表示用に元スケールへ戻す）
-        // 条件: 除数が小数(bFracLen>0)かつ余りが非ゼロかつ余り行が描画済みで、
-        //       extraDigits==0 の場合のみ（extraDigits>0 は後述の BigInt 計算で処理）
-        if (bFracLen > 0 && extraDigits === 0 && currentVal > 0n && lastRemIy !== null && !remainderDotFixed) {
-            // dotIx: 余り R の小数点位置は、右端(lastRemIx)から bFracLen 桁分左
-            // 例: bFracLen=2, R=5 → 小数部2桁('05')が右端から並ぶ → dotIx = lastRemIx - bFracLen
-            const dotIx = lastRemIx - bFracLen;
-            this.addCommand(['drawDot', dotIx, lastRemIy]);
-            this.setMapDot(dotIx, lastRemIy);
+        // 数が立てられなかったときにゼロを追加
+        if (!tateta) {
+            this.addCommand(['output', `数を立てられなかったので、ゼロを立てます。`]);
+            this.addCommand(['drawDigit', fixedDotPos - 1, origin_iy, '0']);
+            this.mapDigit(fixedDotPos - 1, origin_iy, '0');
             this.addCommand(['step']);
         }
-        // 条件: 除数が整数(bFracLen===0)かつ小数桁指定あり(extraDigits>0)かつ余りが非ゼロかつ余り行が描画済み
-        // この場合、余りの数値はextraDigits桁分スケールアップされた状態で描かれているため、
-        // 商の小数点位置(dotPos)に小数点を追加して元のスケールに戻す
-        const shouldAddDecimalPointToRemainder = extraDigits > 0 && bFracLen === 0 && dotPos !== null &&
-            currentVal > 0n && lastRemIy !== null && !remainderDotFixed;
-        if (shouldAddDecimalPointToRemainder) {
-            const dotIx = aStartIx + dotPos;
-            this.addCommand(['drawDot', dotIx, lastRemIy]);
-            this.setMapDot(dotIx, lastRemIy);
+        // 必要ならば余りの行に小数点を打つ
+        else if (a_fracLen > 0 || b_fracLen > 0 || accuracy > 0) {
+            if (b_fracLen > 0)
+                this.addCommand(['output', `前の小数点の位置で、あまりに小数点を打ちます。`]);
+            else
+                this.addCommand(['output', `あまりに小数点を打ちます。`]);
+            this.addCommand(['drawDot', -a_fracLen, iy]);
+            this.setMapDot(-a_fracLen, iy);
             this.addCommand(['step']);
         }
-        // bFracLen>0 かつ extraDigits>0 の場合、ループ後の currentVal は
-        // 最後に商が立った余りからさらに (totalDigits - lastQuotientI - 1) 回 ×10 されている。
-        // 余り行の描画内容は途中経過のものなので、BigInt から正確な余りを再計算して
-        // 余り行を上書き描画し直す。
-        // スケール: currentVal = 実際の余り × 10^(bFracLen + extraDigits)
-        // workA = a×10^bFracLen, bVal = b×10^bFracLen で割り算を行い、
-        // さらに extraDigits 桁分の小数を処理したため、
-        // スケールは 10^(bFracLen + extraDigits) となる。
-        if (bFracLen > 0 && extraDigits > 0 && currentVal > 0n && lastRemIy !== null && !remainderDotFixed) {
-            // 正しいスケール: currentVal = 実際の余り × 10^(bFracLen + extraDigits)
-            const remScale = bFracLen + extraDigits;
-            // BigInt で正確な余りを文字列化
-            let remPower = 1n;
-            for (let i = 0; i < remScale; ++i)
-                remPower *= 10n;
-            const remWhole = currentVal / remPower;
-            const remFrac = currentVal % remPower;
-            let remStr;
-            if (remFrac === 0n) {
-                remStr = remWhole.toString();
+        // 計算打ち切り後、被除数(origin_iy+1)にまだ下ろしていない桁が残っていれば
+        // 余りの行(iy)に全て追記する（ix1はループ未処理の先頭）
+        if (tateta && ix1 < 0) {
+            this.addCommand(['output', `計算を打ち切ったので、あまりを全部下ろします。`]);
+            let appended = false;
+            for (let i = ix1; i < 0; ++i) {
+                // getMapDigit で実際にマップに存在する桁のみ取得
+                let digit = this.getMapDigit(i, origin_iy + 1);
+                if (digit === undefined)
+                    continue;
+                // 既に余りの行に書かれていない座標だけ追記
+                if (this.getMapDigit(i, iy) === undefined) {
+                    this.addCommand(['drawDigit', i, iy, digit]);
+                    this.mapDigit(i, iy, digit);
+                    appended = true;
+                }
             }
-            else {
-                const fracStr = remFrac.toString().padStart(remScale, '0').replace(/0+$/, '');
-                remStr = `${remWhole}.${fracStr}`;
-            }
-            // 余り行を remStr で上書き描画する
-            this.addCommand(['output', `あまりを元のスケールに直します。`]);
-            // 既存の余り行をクリアして remStr を再描画
-            const remDigits = remStr.replace('.', '');
-            const remDotIdx = remStr.includes('.') ? remStr.indexOf('.') : remStr.length;
-            // 余り行の右端 ix を基準に左から描画（右揃え）
-            const remStartIx = lastRemIx - remDigits.length + 1;
-            for (let j = 0; j < remDigits.length; j++) {
-                const tIx = remStartIx + j;
-                this.addCommand(['drawDigit', tIx, lastRemIy, remDigits[j]]);
-                this.setMapDigit(tIx, lastRemIy, remDigits[j]);
-            }
-            if (remStr.includes('.')) {
-                const dotIx = remStartIx + remDotIdx;
-                this.addCommand(['drawDot', dotIx, lastRemIy]);
-                this.setMapDot(dotIx, lastRemIy);
+            // 残り桁を追記した場合、余りの行の小数点位置を設定する
+            if (appended && a_fracLen > 0 && this.getMapDot(iy) === undefined) {
+                this.addCommand(['drawDot', -a_fracLen, iy]);
+                this.setMapDot(-a_fracLen, iy);
             }
             this.addCommand(['step']);
         }
-        // 浮動小数点誤差を避けるため、あまりは BigInt から文字列化する
-        // 特に b が小数(bFracLen>0)のときは、最後まで「整数化されたスケール」の currentVal を持っているため、
-        // 余り行の表示(map)を読まず、必ずスケール補正して元の値に戻す。
-        let finalRemainderStr;
-        if (bFracLen > 0) {
-            // currentVal = 実際の余り × 10^(bFracLen + extraDigits + elseIfExtraLen)
-            const remScale = bFracLen + extraDigits + elseIfExtraLen;
-            let remPower = 1n;
-            for (let i = 0; i < remScale; ++i)
-                remPower *= 10n;
-            const remWhole = currentVal / remPower;
-            const remFrac = currentVal % remPower;
-            if (remFrac === 0n) {
-                finalRemainderStr = remWhole.toString();
-            }
-            else {
-                const fracStr = remFrac.toString().padStart(remScale, '0').replace(/0+$/, '');
-                finalRemainderStr = `${remWhole}.${fracStr}`;
-            }
-        }
-        else if (lastRemIy !== null) {
-            // b が整数のときは、余り行(map)から読み取った値でよい
-            finalRemainderStr = this.fixAndReadRowNumber(lastRemIy);
+        // 答えを求める
+        let shou = this.fixAndReadRowNumber(origin_iy, false, true); // 商
+        let amari;
+        if (comparePositiveNumbers(shou, '0') == 0) { // 商がゼロの場合
+            amari = a; // 余り
         }
         else {
-            finalRemainderStr = currentVal.toString();
+            amari = this.fixAndReadRowNumber(iy); // 余り
         }
-        let answer;
-        if (finalRemainderStr === '' || finalRemainderStr === '0') {
-            answer = quotient;
-            this.addCommand(['output', `こたえは ${quotient} です。あまりはありません。`]);
+        if (comparePositiveNumbers(amari, '0') == 0) { // 余りがゼロの場合
+            this.addCommand(['output', `商は ${shou}です。あまりはありません。`]);
+            this.addCommand(['output', `こたえ: ${shou}`]);
+            this.answer = shou;
         }
         else {
-            answer = `${quotient} … ${finalRemainderStr}`;
-            this.addCommand(['output', `商は ${quotient} 、あまりは ${finalRemainderStr} です。`]);
+            this.addCommand(['output', `商は ${shou}、あまりは ${amari} です。`]);
+            this.addCommand(['output', `こたえ: ${shou} … ${amari}`]);
+            this.answer = `${shou} … ${amari}`;
         }
-        this.answer = answer;
-        {
-            const text = `${a} ÷ ${b} = ${answer}`;
-            const { x, y } = this.convert3(0, iy + 2);
-            this.addCommand(['drawCenterText', y, text]);
-        }
+        // 答えを表示する
+        this.addCommand(['drawCenterText', iy + 2, `${a} ÷ ${b} = ${this.answer}`]);
+        return this.answer;
     }
     // コマンドの構築
     buildCommands() {
@@ -416,37 +280,20 @@ class AlgoDiv extends AlgoBase {
     }
     // 単体テスト
     unitTest() {
-        console.assert(this.testEntryEx('612', '3', '204'));
-        console.assert(this.testEntryEx('100', '5', '20'));
-        console.assert(this.testEntryEx('100', '20', '5'));
-        console.assert(this.testEntryEx('100', '25', '4'));
-        console.assert(this.testEntryEx('100', '4', '25'));
-        console.assert(this.testEntryEx('10', '0.5', '20'));
-        console.assert(this.testEntryEx('10', '2', '5'));
-        console.assert(this.testEntryEx('10', '2.5', '4'));
-        console.assert(this.testEntryEx('10', '0.4', '25'));
-        console.assert(this.testEntryEx('10', '40', '0 … 10'));
-        console.assert(this.testEntryEx('10', '40', '0.25', "2"));
-        console.assert(this.testEntryEx('10', '40', '0.250', "3"));
-        console.assert(this.testEntryEx('10', '40', '0.2 … 2', "1"));
-        console.assert(this.testEntryEx('0.1', '0.4', '0.2 … 0.02', "1"));
-        console.assert(this.testEntryEx('0.1', '2', '0.0500', '4'));
-        console.assert(this.testEntryEx('999', '0.1', '9990', '0'));
-        console.assert(this.testEntryEx('999', '0.1', '9990.00', '2'));
-        console.assert(this.testEntryEx('99999999999999999999', '99999999999999999999', '1.0', '1'));
-        console.assert(this.testEntryEx('99.90', '990.0', '0 … 99.9', '0'));
-        console.assert(this.testEntryEx('123.55', '789', '0.1 … 44.65', '1'));
-        console.assert(this.testEntryEx('12.345', '1', '12.34 … 0.005', '2'));
-        console.assert(this.testEntryEx('12.355', '789', '0.0 … 12.355', '1'));
-        console.assert(this.testEntryEx('12.355', '78', '0.1 … 4.555', '1'));
-        console.assert(this.testEntryEx('12.355', '7', '1.7 … 0.455', '1'));
-        console.assert(this.testEntryEx('12345', '67', '184.25 … 0.25', '2'));
-        console.assert(this.testEntryEx('7.955', '7.89', '1.00 … 0.065', '2'));
-        console.assert(this.testEntryEx('0.3', '0.25', '1 … 0.05'));
-        console.assert(this.testEntryEx('1.3', '0.25', '5 … 0.05'));
-        console.assert(this.testEntryEx('0.01', '0.1', '0 … 0.01'));
-        console.assert(this.testEntryEx('0.25', '0.3', '0 … 0.25'));
-        console.assert(this.testEntryEx('1', '0.3', '3.3 … 0.01', '1'));
+        // 【ちびむすより引用】ここから
+        console.assert(this.testEntryEx('13', '2', '6 … 1'));
+        console.assert(this.testEntryEx('73', '8', '9 … 1'));
+        console.assert(this.testEntryEx('62', '8', '7 … 6'));
+        console.assert(this.testEntryEx('50', '7', '7 … 1'));
+        console.assert(this.testEntryEx('33', '4', '8 … 1'));
+        console.assert(this.testEntryEx('43', '6', '7 … 1'));
+        console.assert(this.testEntryEx('29', '5', '5 … 4'));
+        console.assert(this.testEntryEx('57', '6', '9 … 3'));
+        console.assert(this.testEntryEx('32', '5', '6 … 2'));
+        console.assert(this.testEntryEx('19', '5', '3 … 4'));
+        console.assert(this.testEntryEx('78', '9', '8 … 6'));
+        console.assert(this.testEntryEx('19', '2', '9 … 1'));
+        // 【ちびむすより引用】ここまで
         // 【ちびむすより引用】ここから
         console.assert(this.testEntryEx('63', '2', '31 … 1'));
         console.assert(this.testEntryEx('88', '4', '22'));
@@ -483,6 +330,113 @@ class AlgoDiv extends AlgoBase {
         console.assert(this.testEntryEx('163', '26', '6 … 7'));
         console.assert(this.testEntryEx('380', '85', '4 … 40'));
         // 【ちびむすより引用】ここまで
+        // 【ちびむすより引用】ここから
+        console.assert(this.testEntryEx('2.4', '4.8', '0.5', '1'));
+        console.assert(this.testEntryEx('5.16', '8.6', '0.6', '1'));
+        console.assert(this.testEntryEx('3.4', '8.5', '0.4', '1'));
+        console.assert(this.testEntryEx('1.29', '4.3', '0.3', '1'));
+        console.assert(this.testEntryEx('6.2', '15.5', '0.4', '1'));
+        console.assert(this.testEntryEx('8.33', '9.8', '0.85', '2'));
+        console.assert(this.testEntryEx('8.6', '21.5', '0.4', '1'));
+        console.assert(this.testEntryEx('2.87', '8.2', '0.35', '2'));
+        console.assert(this.testEntryEx('0.26', '6.5', '0.04', '2'));
+        console.assert(this.testEntryEx('2.52', '5.6', '0.45', '2'));
+        console.assert(this.testEntryEx('0.21', '4.2', '0.05', '2'));
+        console.assert(this.testEntryEx('2.07', '4.6', '0.45', '2'));
+        console.assert(this.testEntryEx('0.26', '5.2', '0.05', '2'));
+        console.assert(this.testEntryEx('0.14', '0.4', '0.35', '2'));
+        console.assert(this.testEntryEx('0.23', '4.6', '0.05', '2'));
+        console.assert(this.testEntryEx('0.28', '0.8', '0.35', '2'));
+        // 【ちびむすより引用】ここまで
+        // 【ちびむすより引用】ここから
+        console.assert(this.testEntryEx('3.2', '0.5', '6 … 0.2'));
+        console.assert(this.testEntryEx('3.6', '1.5', '2 … 0.6'));
+        console.assert(this.testEntryEx('3.9', '0.6', '6 … 0.3'));
+        console.assert(this.testEntryEx('5.5', '2.5', '2 … 0.5'));
+        console.assert(this.testEntryEx('5.4', '4.5', '1 … 0.9'));
+        console.assert(this.testEntryEx('2.8', '0.8', '3 … 0.4'));
+        console.assert(this.testEntryEx('6.3', '1.5', '4 … 0.3'));
+        console.assert(this.testEntryEx('5.6', '1.6', '3 … 0.8'));
+        console.assert(this.testEntryEx('39.6', '12.3', '3 … 2.7'));
+        console.assert(this.testEntryEx('38.6', '31.5', '1 … 7.1'));
+        console.assert(this.testEntryEx('73.4', '35.6', '2 … 2.2'));
+        console.assert(this.testEntryEx('63.4', '15.2', '4 … 2.6'));
+        console.assert(this.testEntryEx('63.5', '14.2', '4 … 6.7'));
+        console.assert(this.testEntryEx('83.5', '41.2', '2 … 1.1'));
+        console.assert(this.testEntryEx('64.7', '15.2', '4 … 3.9'));
+        console.assert(this.testEntryEx('45.3', '12.3', '3 … 8.4'));
+        // 【ちびむすより引用】ここまで
+        // 【ちびむすより引用】ここから
+        console.assert(this.testEntryEx('3.9', '1.9', '2 … 0.1'));
+        console.assert(this.testEntryEx('7.6', '2.3', '3 … 0.7'));
+        console.assert(this.testEntryEx('2.9', '0.4', '7 … 0.1'));
+        console.assert(this.testEntryEx('2.7', '1.1', '2 … 0.5'));
+        console.assert(this.testEntryEx('7.6', '0.9', '8 … 0.4'));
+        console.assert(this.testEntryEx('3.5', '1.4', '2 … 0.7'));
+        console.assert(this.testEntryEx('5.8', '0.7', '8 … 0.2'));
+        console.assert(this.testEntryEx('6.1', '5.3', '1 … 0.8'));
+        console.assert(this.testEntryEx('62.8', '18.9', '3 … 6.1'));
+        console.assert(this.testEntryEx('67.3', '19.4', '3 … 9.1'));
+        console.assert(this.testEntryEx('38.6', '11.7', '3 … 3.5'));
+        console.assert(this.testEntryEx('46.8', '18.6', '2 … 9.6'));
+        console.assert(this.testEntryEx('62.4', '19.3', '3 … 4.5'));
+        console.assert(this.testEntryEx('82.5', '11.6', '7 … 1.3'));
+        console.assert(this.testEntryEx('46.7', '12.3', '3 … 9.8'));
+        console.assert(this.testEntryEx('67.2', '16.5', '4 … 1.2'));
+        // 【ちびむすより引用】ここまで
+        // 【ちびむすより引用】ここから
+        console.assert(this.testEntryEx('3.64', '1.4', '2.6', '1'));
+        console.assert(this.testEntryEx('3.22', '2.3', '1.4', '1'));
+        console.assert(this.testEntryEx('8.82', '4.2', '2.1', '1'));
+        console.assert(this.testEntryEx('3.72', '3.1', '1.2', '1'));
+        console.assert(this.testEntryEx('1.44', '0.6', '2.4', '1'));
+        console.assert(this.testEntryEx('5.76', '1.8', '3.2', '1'));
+        console.assert(this.testEntryEx('2.88', '0.8', '3.6', '1'));
+        console.assert(this.testEntryEx('3.22', '2.3', '1.4', '1'));
+        console.assert(this.testEntryEx('3.68', '1.6', '2.3', '1'));
+        console.assert(this.testEntryEx('7.26', '3.3', '2.2', '1'));
+        console.assert(this.testEntryEx('1.68', '0.7', '2.4', '1'));
+        console.assert(this.testEntryEx('2.88', '0.9', '3.2', '1'));
+        console.assert(this.testEntryEx('3.15', '1.5', '2.1', '1'));
+        console.assert(this.testEntryEx('7.68', '2.4', '3.2', '1'));
+        console.assert(this.testEntryEx('1.92', '0.8', '2.4', '1'));
+        console.assert(this.testEntryEx('1.77', '0.3', '5.9', '1'));
+        // 【ちびむすより引用】ここまで
+        console.assert(this.testEntryEx('0', '1', '0'));
+        console.assert(this.testEntryEx('1', '1', '1'));
+        console.assert(this.testEntryEx('999', '999', '1'));
+        console.assert(this.testEntryEx('612', '3', '204'));
+        console.assert(this.testEntryEx('100', '5', '20'));
+        console.assert(this.testEntryEx('100', '20', '5'));
+        console.assert(this.testEntryEx('100', '25', '4'));
+        console.assert(this.testEntryEx('100', '4', '25'));
+        console.assert(this.testEntryEx('10', '0.5', '20'));
+        console.assert(this.testEntryEx('10', '2', '5'));
+        console.assert(this.testEntryEx('10', '2.5', '4'));
+        console.assert(this.testEntryEx('10', '0.4', '25'));
+        console.assert(this.testEntryEx('10', '40', '0 … 10'));
+        console.assert(this.testEntryEx('10', '40', '0.25', '2'));
+        console.assert(this.testEntryEx('10', '40', '0.250', '3'));
+        console.assert(this.testEntryEx('0.1', '0.4', '0.2 … 0.02', '1'));
+        console.assert(this.testEntryEx('0.1', '2', '0.0500', '4'));
+        console.assert(this.testEntryEx('999', '0.1', '9990', '0'));
+        console.assert(this.testEntryEx('999', '0.1', '9990.00', '2'));
+        console.assert(this.testEntryEx('99999999999999999999', '99999999999999999999', '1.0', '1'));
+        console.assert(this.testEntryEx('99.9', '990', '0 … 99.9', '0'));
+        console.assert(this.testEntryEx('12.355', '789', '0.0 … 12.355', '1'));
+        console.assert(this.testEntryEx('7.955', '7.89', '1.00 … 0.065', '2'));
+        console.assert(this.testEntryEx('0.3', '0.25', '1 … 0.05'));
+        console.assert(this.testEntryEx('1.3', '0.25', '5 … 0.05'));
+        console.assert(this.testEntryEx('0.01', '0.1', '0 … 0.01'));
+        console.assert(this.testEntryEx('0.25', '0.3', '0 … 0.25'));
+        console.assert(this.testEntryEx('10', '40', '0.2 … 2', '1'));
+        console.assert(this.testEntryEx('12345', '67', '184.25 … 0.25', '2'));
+        console.assert(this.testEntryEx('1', '0.3', '3.3 … 0.01', '1'));
+        console.assert(this.testEntryEx('123.55', '789', '0.1 … 44.65', '1'));
+        console.assert(this.testEntryEx('12.345', '1', '12.34 … 0.005', '2'));
+        console.assert(this.testEntryEx('12.355', '78', '0.1 … 4.555', '1'));
+        console.assert(this.testEntryEx('12.355', '7', '1.7 … 0.455', '1'));
+        console.assert(this.testEntryEx('100', '20.1', '4 … 19.6'));
         this.reset();
     }
 }

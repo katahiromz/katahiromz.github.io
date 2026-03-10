@@ -127,7 +127,7 @@ class AlgoTest extends AlgoBase {
     }
     doTest4() {
         for (let iy = 0; iy < 12; ++iy) {
-            this.autoPutDigitsEx('99', iy);
+            this.autoPutDigitsEx('99', 0, iy);
         }
         this.autoDigitAdd(0, 11);
         let numStr = this.readRowNumber(12);
