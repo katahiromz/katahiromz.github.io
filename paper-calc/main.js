@@ -2,7 +2,7 @@
 // Author: katahiromz
 // License: MIT
 "use strict";
-const VERSION = '1.1.2'; // バージョン
+const VERSION = '1.1.3'; // バージョン
 const DEBUGGING = false; // デバッグ中か？
 document.addEventListener('DOMContentLoaded', function () {
     Paper.g_minimal = true; // 紙の拡張を最小限にする
@@ -546,7 +546,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (algorithm) {
             algorithm.stop();
             algorithm.clearPaper();
+            algorithm = null;
         }
+        if (!validateInput(true))
+            return;
         start_button.disabled = false;
         stop_button.disabled = true;
         next_step_button.disabled = false;

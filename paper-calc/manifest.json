@@ -1,0 +1,21 @@
+{
+  "short_name": "PaperCalc",
+  "name": "自動筆算プログラム PaperCalc",
+  "description": "筆算計算を行う教材＆ツールです",
+  "icons": [
+    {
+      "src": "./img/mainicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/mainicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "https://katahiromz.github.io/paper-calc/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
