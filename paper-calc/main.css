@@ -46,6 +46,7 @@
 
   --font-ui: "UD デジタル 教科書体 NK-R", "BIZ UDPゴシック", "Helvetica Neue",
              Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  --font-ui-2: Tahoma, monospace;
   --font-log: "UD デジタル 教科書体 NK-R", "BIZ UDP明朝 Medium", "Yu Mincho",
               "MS PMincho", "Hiragino Mincho ProN", serif;
 
@@ -219,7 +220,7 @@ input[type="number"] {
   padding: 6px 10px;
   border: 2px solid var(--color-input-border);
   font-size: 0.95rem;
-  font-family: var(--font-ui);
+  font-family: var(--font-ui-2);
   outline: none;
   transition: border-color 0.2s, background-color 0.2s;
   min-height: var(--touch-min);
