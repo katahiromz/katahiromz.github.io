@@ -1,5 +1,5 @@
 // main.mjs -- Karasunpo Online (Japanese)
-// Copyright (C) 2021-2024 Katayama Hirofumi MZ. All Rights Reserved.
+// Copyright (C) 2021-2026 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
 const KARASUNPO_VERSION = "0.9.8"; // カラスンポのバージョン番号。
