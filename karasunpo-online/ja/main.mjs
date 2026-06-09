@@ -2,7 +2,7 @@
 // Copyright (C) 2021-2024 Katayama Hirofumi MZ. All Rights Reserved.
 // License: MIT
 
-const KARASUNPO_VERSION = "0.9.7"; // カラスンポのバージョン番号。
+const KARASUNPO_VERSION = "0.9.8"; // カラスンポのバージョン番号。
 
 import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.mjs';
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.mjs';
@@ -648,11 +648,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs
 			$("#mode" + mode).show();
 
 			// ページ番号の有効・無効を切り替える。
-			if (mode == 1 || mode == 2) {
-				$(".config-dialog-page-number").prop('disabled', false);
-			}else{
-				$(".config-dialog-page-number").prop('disabled', true);
-			}
+			//$(".config-dialog-page-number").prop('disabled', true);
 
 			switch (mode) {
 			case 1: // モード１：初期画面。
