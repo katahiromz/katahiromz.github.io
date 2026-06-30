@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>輪唱メーカー</title>
 <style>
   :root{
@@ -14,6 +15,10 @@
     --border:#e2dfd6;
   }
   *{box-sizing:border-box;}
+  html{
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
   body{
     margin:0;
     font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
@@ -22,6 +27,8 @@
     display:flex;
     justify-content:center;
     padding:40px 16px;
+    min-height:100vh;
+    min-height:100dvh;
   }
   .card{
     background:var(--panel);
@@ -31,6 +38,24 @@
     max-width:520px;
     width:100%;
     box-shadow:0 4px 18px rgba(0,0,0,0.05);
+  }
+  @media (max-width:600px){
+    body{
+      padding:20px 12px;
+      align-items:flex-start;
+    }
+    .card{
+      padding:22px 18px;
+      border-radius:12px;
+    }
+    h1{
+      font-size:19px;
+    }
+  }
+  @media (max-width:380px){
+    .card{
+      padding:18px 14px;
+    }
   }
   h1{
     font-size:22px;
@@ -52,10 +77,10 @@
   }
   input[type=number]{
     width:100%;
-    padding:8px 10px;
+    padding:10px 10px;
     border:1px solid var(--border);
     border-radius:8px;
-    font-size:14px;
+    font-size:16px;
   }
   input[type=file]{
     width:100%;
@@ -63,12 +88,14 @@
   }
   select{
     width:100%;
-    padding:8px 10px;
+    padding:10px 10px;
     border:1px solid var(--border);
     border-radius:8px;
-    font-size:14px;
+    font-size:16px;
     background:#fff;
     color:var(--text);
+    -webkit-appearance:none;
+    appearance:none;
   }
   .checkbox-row{
     display:flex;
@@ -83,6 +110,10 @@
     text-align:center;
     font-size:13px;
     color:var(--muted);
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
   .drop.has-file{
     border-color:var(--accent);
@@ -99,13 +130,15 @@
   }
   button{
     width:100%;
-    padding:11px;
+    padding:12px;
     border:none;
     border-radius:9px;
-    font-size:14px;
+    font-size:15px;
     font-weight:600;
     cursor:pointer;
     margin-top:4px;
+    min-height:46px;
+    -webkit-tap-highlight-color:transparent;
   }
   .btn-primary{
     background:var(--accent);
@@ -169,6 +202,15 @@
     font-size:18px;
     font-weight:600;
     color:var(--accent-dark);
+    max-width:90vw;
+    text-align:center;
+  }
+  @media (max-width:600px){
+    .drop-overlay-box{
+      padding:28px 24px;
+      font-size:15px;
+      border-radius:14px;
+    }
   }
 </style>
 </head>
