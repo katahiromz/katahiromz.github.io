@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>輪唱メーカー</title>
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --panel:#ffffff;
+    --accent:#5b6ee1;
+    --accent-dark:#3f4fb0;
+    --text:#2b2b33;
+    --muted:#7a7a85;
+    --border:#e2dfd6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    display:flex;
+    justify-content:center;
+    padding:40px 16px;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:32px;
+    max-width:520px;
+    width:100%;
+    box-shadow:0 4px 18px rgba(0,0,0,0.05);
+  }
+  h1{
+    font-size:22px;
+    margin:0 0 4px;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:24px;
+  }
+  .field{
+    margin-bottom:18px;
+  }
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  input[type=number]{
+    width:100%;
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:14px;
+  }
+  input[type=file]{
+    width:100%;
+    font-size:13px;
+  }
+  select{
+    width:100%;
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:14px;
+    background:#fff;
+    color:var(--text);
+  }
+  .checkbox-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .checkbox-row label{margin:0;}
+  .drop{
+    border:1.5px dashed var(--border);
+    border-radius:10px;
+    padding:18px;
+    text-align:center;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .drop.has-file{
+    border-color:var(--accent);
+    color:var(--text);
+  }
+  .drop{
+    cursor:pointer;
+    transition:background 0.15s, border-color 0.15s;
+  }
+  .drop.dragover{
+    border-color:var(--accent);
+    background:#eef0fb;
+    color:var(--accent-dark);
+  }
+  button{
+    width:100%;
+    padding:11px;
+    border:none;
+    border-radius:9px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#fff;
+  }
+  .btn-primary:hover{background:var(--accent-dark);}
+  .btn-primary:disabled{
+    background:#c6c9e8;
+    cursor:not-allowed;
+  }
+  .result{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid var(--border);
+    display:none;
+  }
+  .result.show{display:block;}
+  .result-actions{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+  }
+  .btn-secondary{
+    background:#eef0fb;
+    color:var(--accent-dark);
+  }
+  .status{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:8px;
+    min-height:16px;
+  }
+  audio{
+    width:100%;
+    margin-top:8px;
+  }
+  .hint{
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  #dropOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(91,110,225,0.10);
+    backdrop-filter:blur(1px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+    pointer-events:none;
+  }
+  #dropOverlay.show{
+    display:flex;
+  }
+  .drop-overlay-box{
+    border:3px dashed var(--accent);
+    border-radius:18px;
+    background:#ffffffee;
+    padding:48px 64px;
+    font-size:18px;
+    font-weight:600;
+    color:var(--accent-dark);
+  }
+</style>
+</head>
+<body>
+<div id="dropOverlay"><div class="drop-overlay-box">ここに音声ファイル（WAV / MP3）をドロップ</div></div>
+<div class="card">
+  <h1>輪唱メーカー by katahiromz</h1>
+  <div class="sub">WAVまたはMP3ファイルを読み込み、ずらして重ねた輪唱(カノン)音源を作成します。</div>
+
+  <div class="field">
+    <label for="file">音声ファイル（WAV / MP3）</label>
+    <div class="drop" id="dropLabel">ファイルをドラッグ＆ドロップ、またはクリックして選択</div>
+    <input type="file" id="file" accept="audio/wav,audio/x-wav,.wav,audio/mpeg,audio/mp3,.mp3" style="display:none;">
+  </div>
+
+  <div class="field">
+    <label for="voices">コーラスの個数</label>
+    <input type="number" id="voices" value="3" min="2" max="12" step="1">
+  </div>
+
+  <div class="field">
+    <label for="offset">音ずれ(秒)</label>
+    <input type="number" id="offset" value="2" min="0.1" max="60" step="0.1">
+    <div class="hint">各コーラスが次に入るまでの間隔です</div>
+  </div>
+
+  <div class="field">
+    <label for="format">出力形式</label>
+    <select id="format">
+      <option value="wav">WAV</option>
+      <option value="mp3" selected>MP3</option>
+    </select>
+  </div>
+
+  <button class="btn-primary" id="genBtn" disabled>輪唱を作成</button>
+  <div class="status" id="status"></div>
+
+  <div class="result" id="result">
+    <label>結果</label>
+    <audio id="player" controls></audio>
+    <div class="result-actions">
+      <button class="btn-secondary" id="downloadBtn">ダウンロード</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js"></script>
+<script>
+let originalBuffer = null;
+let resultBlobUrl = null;
+let lastFormat = 'wav';
+
+const STORAGE_KEY = 'round_maker_settings';
+const voicesInput = document.getElementById('voices');
+const offsetInput = document.getElementById('offset');
+const formatSelect = document.getElementById('format');
+
+function saveSettings() {
+  try {
+    const settings = {
+      voices: voicesInput.value,
+      offset: offsetInput.value,
+      format: formatSelect.value
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  } catch (e) {
+    console.error('設定の保存に失敗しました', e);
+  }
+}
+
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const settings = JSON.parse(raw);
+    if (settings.voices) voicesInput.value = settings.voices;
+    if (settings.offset) offsetInput.value = settings.offset;
+    if (settings.format) formatSelect.value = settings.format;
+  } catch (e) {
+    console.error('設定の読み込みに失敗しました', e);
+  }
+}
+
+loadSettings();
+voicesInput.addEventListener('change', saveSettings);
+offsetInput.addEventListener('change', saveSettings);
+formatSelect.addEventListener('change', saveSettings);
+
+const fileInput = document.getElementById('file');
+const dropLabel = document.getElementById('dropLabel');
+const genBtn = document.getElementById('genBtn');
+const statusEl = document.getElementById('status');
+const resultEl = document.getElementById('result');
+const player = document.getElementById('player');
+const downloadBtn = document.getElementById('downloadBtn');
+
+async function handleFile(file) {
+  if (!file) return;
+  statusEl.textContent = '読み込み中...';
+  genBtn.disabled = true;
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    originalBuffer = await ctx.decodeAudioData(arrayBuffer);
+    await ctx.close();
+    dropLabel.textContent = `${file.name}（${originalBuffer.duration.toFixed(2)}秒 / ${originalBuffer.numberOfChannels}ch）`;
+    dropLabel.classList.add('has-file');
+    statusEl.textContent = '';
+    genBtn.disabled = false;
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = 'ファイルの読み込みに失敗しました。WAVまたはMP3形式か確認してください。';
+    originalBuffer = null;
+    genBtn.disabled = true;
+  }
+}
+
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  handleFile(file);
+});
+
+// クリックでファイル選択ダイアログを開く
+dropLabel.addEventListener('click', () => {
+  fileInput.click();
+});
+
+// ドラッグ＆ドロップ対応（ドキュメント全体で受け付ける）
+const dropOverlay = document.getElementById('dropOverlay');
+let dragCounter = 0;
+
+function isAudioFile(file) {
+  const t = file.type.toLowerCase();
+  const isWav = t === 'audio/wav' || t === 'audio/x-wav' || /\.wav$/i.test(file.name);
+  const isMp3 = t === 'audio/mpeg' || t === 'audio/mp3' || /\.mp3$/i.test(file.name);
+  return isWav || isMp3;
+}
+
+document.addEventListener('dragenter', (e) => {
+  e.preventDefault();
+  dragCounter++;
+  dropOverlay.classList.add('show');
+  dropLabel.classList.add('dragover');
+});
+
+document.addEventListener('dragover', (e) => {
+  e.preventDefault();
+});
+
+document.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  dragCounter--;
+  if (dragCounter <= 0) {
+    dragCounter = 0;
+    dropOverlay.classList.remove('show');
+    dropLabel.classList.remove('dragover');
+  }
+});
+
+document.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dragCounter = 0;
+  dropOverlay.classList.remove('show');
+  dropLabel.classList.remove('dragover');
+
+  const files = e.dataTransfer.files;
+  if (!files || files.length === 0) return;
+  const file = files[0];
+
+  if (!isAudioFile(file)) {
+    statusEl.textContent = 'WAVまたはMP3ファイルをドロップしてください。';
+    return;
+  }
+
+  // input[type=file] にも反映しておく（任意の再利用のため）
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  fileInput.files = dt.files;
+
+  handleFile(file);
+});
+
+genBtn.addEventListener('click', async () => {
+  if (!originalBuffer) return;
+
+  const voices = Math.max(2, Math.min(12, parseInt(voicesInput.value, 10) || 2));
+  const offset = Math.max(0.05, parseFloat(offsetInput.value) || 1);
+
+  saveSettings();
+
+  genBtn.disabled = true;
+  statusEl.textContent = '生成中...';
+
+  try {
+    const clipDuration = originalBuffer.duration;
+    const segmentDuration = clipDuration + 0;
+    const repeats = 1;//voices; // 各声部はコーラス数と同じ回数繰り返す
+    const totalDuration = (voices - 1) * offset + repeats * segmentDuration + 0.2; // 余白
+
+    const sampleRate = originalBuffer.sampleRate;
+    const numChannels = originalBuffer.numberOfChannels;
+    const offlineCtx = new OfflineAudioContext(
+      numChannels,
+      Math.ceil(totalDuration * sampleRate),
+      sampleRate
+    );
+
+    const gainPerVoice = 1 / Math.sqrt(voices); // 重ねた時の音割れ防止
+
+    for (let v = 0; v < voices; v++) {
+      const voiceStart = v * offset;
+      for (let r = 0; r < repeats; r++) {
+        const startTime = voiceStart + r * segmentDuration;
+        const src = offlineCtx.createBufferSource();
+        src.buffer = originalBuffer;
+        const gainNode = offlineCtx.createGain();
+        gainNode.gain.value = gainPerVoice;
+        src.connect(gainNode).connect(offlineCtx.destination);
+        src.start(startTime);
+      }
+    }
+
+    const renderedBuffer = await offlineCtx.startRendering();
+
+    const format = formatSelect.value;
+    let outBlob;
+    if (format === 'mp3') {
+      statusEl.textContent = 'MP3にエンコード中...';
+      outBlob = audioBufferToMp3(renderedBuffer);
+    } else {
+      outBlob = audioBufferToWav(renderedBuffer);
+    }
+    lastFormat = format;
+    downloadBtn.textContent = format === 'mp3' ? 'MP3をダウンロード' : 'WAVをダウンロード';
+
+    if (resultBlobUrl) URL.revokeObjectURL(resultBlobUrl);
+    resultBlobUrl = URL.createObjectURL(outBlob);
+    player.src = resultBlobUrl;
+    resultEl.classList.add('show');
+    statusEl.textContent = `完成しました（全長 約${renderedBuffer.duration.toFixed(1)}秒 / ${format.toUpperCase()}）`;
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = '生成中にエラーが発生しました。';
+  } finally {
+    genBtn.disabled = false;
+  }
+});
+
+downloadBtn.addEventListener('click', () => {
+  if (!resultBlobUrl) return;
+  const a = document.createElement('a');
+  a.href = resultBlobUrl;
+  a.download = lastFormat === 'mp3' ? 'round_canon.mp3' : 'round_canon.wav';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+});
+
+// AudioBuffer -> 16bit PCM WAV Blob への変換
+function audioBufferToWav(buffer) {
+  const numChannels = buffer.numberOfChannels;
+  const sampleRate = buffer.sampleRate;
+  const bytesPerSample = 2;
+  const blockAlign = numChannels * bytesPerSample;
+  const dataLength = buffer.length * blockAlign;
+  const bufferLength = 44 + dataLength;
+
+  const arrayBuffer = new ArrayBuffer(bufferLength);
+  const view = new DataView(arrayBuffer);
+
+  let pos = 0;
+  const writeString = (s) => {
+    for (let i = 0; i < s.length; i++) view.setUint8(pos++, s.charCodeAt(i));
+  };
+  const writeUint32 = (v) => { view.setUint32(pos, v, true); pos += 4; };
+  const writeUint16 = (v) => { view.setUint16(pos, v, true); pos += 2; };
+
+  writeString('RIFF');
+  writeUint32(36 + dataLength);
+  writeString('WAVE');
+  writeString('fmt ');
+  writeUint32(16);
+  writeUint16(1); // PCM
+  writeUint16(numChannels);
+  writeUint32(sampleRate);
+  writeUint32(sampleRate * blockAlign);
+  writeUint16(blockAlign);
+  writeUint16(bytesPerSample * 8);
+  writeString('data');
+  writeUint32(dataLength);
+
+  const channelData = [];
+  for (let ch = 0; ch < numChannels; ch++) {
+    channelData.push(buffer.getChannelData(ch));
+  }
+
+  let offset = 0;
+  for (let i = 0; i < buffer.length; i++) {
+    for (let ch = 0; ch < numChannels; ch++) {
+      let sample = channelData[ch][i];
+      sample = Math.max(-1, Math.min(1, sample));
+      const intSample = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
+      view.setInt16(pos, intSample, true);
+      pos += 2;
+    }
+    offset++;
+  }
+
+  return new Blob([arrayBuffer], { type: 'audio/wav' });
+}
+
+// AudioBuffer -> MP3 Blob への変換（lamejs使用）
+function floatTo16BitPCM(float32Array) {
+  const output = new Int16Array(float32Array.length);
+  for (let i = 0; i < float32Array.length; i++) {
+    let s = Math.max(-1, Math.min(1, float32Array[i]));
+    output[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+  }
+  return output;
+}
+
+function audioBufferToMp3(buffer) {
+  if (typeof lamejs === 'undefined') {
+    throw new Error('MP3エンコーダの読み込みに失敗しました。通信環境を確認してください。');
+  }
+
+  const numChannels = Math.min(2, buffer.numberOfChannels);
+  const sampleRate = buffer.sampleRate;
+  const kbps = 192;
+  const mp3encoder = new lamejs.Mp3Encoder(numChannels, sampleRate, kbps);
+  const mp3Chunks = [];
+
+  const left = floatTo16BitPCM(buffer.getChannelData(0));
+  const right = numChannels > 1 ? floatTo16BitPCM(buffer.getChannelData(1)) : null;
+
+  const sampleBlockSize = 1152;
+  for (let i = 0; i < left.length; i += sampleBlockSize) {
+    const leftChunk = left.subarray(i, i + sampleBlockSize);
+    let mp3buf;
+    if (right) {
+      const rightChunk = right.subarray(i, i + sampleBlockSize);
+      mp3buf = mp3encoder.encodeBuffer(leftChunk, rightChunk);
+    } else {
+      mp3buf = mp3encoder.encodeBuffer(leftChunk);
+    }
+    if (mp3buf.length > 0) mp3Chunks.push(mp3buf);
+  }
+  const finalBuf = mp3encoder.flush();
+  if (finalBuf.length > 0) mp3Chunks.push(finalBuf);
+
+  return new Blob(mp3Chunks, { type: 'audio/mp3' });
+}
+</script>
+</body>
+</html>
