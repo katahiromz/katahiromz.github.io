@@ -1,7 +1,7 @@
 // 催眠アプリ「催眠くらくら」のJavaScriptのメインコード。
 // 暗号名はKraKra。
 
-const sai_VERSION = '3.9.3'; // KraKraバージョン番号。
+const sai_VERSION = '3.9.4'; // KraKraバージョン番号。
 const sai_DEBUGGING = false; // デバッグ中か？
 let sai_FPS = 0; // 実測フレームレート。
 let sai_vibrating = false; // 振動中か？
@@ -35,7 +35,7 @@ const SAI_on_keydown_message = function(e){
 // ドキュメントの読み込みが完了（DOMContentLoaded）されたら無名関数が呼び出される。
 document.addEventListener('DOMContentLoaded', function(){
 	// 変数を保護するため、関数内部に閉じ込める。
-	const sai_NUM_TYPE = 22; // 「動画」の個数。
+	const sai_NUM_TYPE = 23; // 「動画」の個数。
 	let sai_screen_width = 0; // スクリーンの幅（ピクセル単位）を覚えておく。
 	let sai_screen_height = 0; // スクリーンの高さ（ピクセル単位）を覚えておく。
 	let sai_pic_type = 0; // 映像の種類を表す整数値。
@@ -3370,6 +3370,112 @@ document.addEventListener('DOMContentLoaded', function(){
 		ctx.restore();
 	};
 
+	// らせんを描く
+	const drawSpiral2 = (ctx, px, py, w, h, a, b, num_lines = 40, direction = +1, di = 0) => {
+		ctx.translate(w/2, h/2);
+
+		const count2 = SAI_get_tick_count() * 10;
+		const flag = (Math.sin(performance.now() * 0.001) > 0);
+
+		ctx.translate(+px, +py);
+		if (flag){
+			ctx.rotate(-((count2 * 0.0008 % 1) * 2 * Math.PI));
+		}else{
+			if (direction > 0)
+				ctx.rotate(-((count2 * 0.0008 % 1) * 2 * Math.PI));
+			else
+				ctx.rotate(+((count2 * 0.0008 % 1) * 2 * Math.PI));
+		}
+		ctx.translate(-px, -py);
+
+		// 発散する渦巻きを表す多角形の頂点を構築する。
+		let lines = [];
+		let flag2 = (sai_id_select_vortex_direction.value == 'counterclockwise');
+		for(let i = 0; i < num_lines; ++i){
+			let delta_theta = 2 * Math.PI * (i + di) / num_lines;
+			// 対数らせんの公式に従って頂点を追加していく。ただし偏角はdelta_thetaだけずらす。
+			let line = [[px, py]];
+			for(let theta = 0; theta <= 4.3 * Math.PI; theta += 0.2){
+				let r = a * Math.exp(b * theta);
+				let t = theta + delta_theta;
+				t *= direction;
+				if (flag2)
+					t = -t;
+				let x = px + r * Math.cos(t);
+				let y = py + r * Math.sin(t);
+				line.push([x, y]);
+			}
+			lines.push(line);
+		}
+
+		// 多角形を描画する。
+		let even = true;
+		ctx.beginPath();
+		ctx.moveTo(px, py);
+		for(let i = 0; i < num_lines; ++i){
+			let line = lines[i];
+			if(even){ // 偶数回目はそのままの向き。
+				for(let k = 0; k < line.length; ++k){
+					ctx.lineTo(line[k][0], line[k][1]);
+				}
+			}else{ // 奇数回目は逆向き。
+				for(let k = line.length - 1; k >= 0; --k)
+					ctx.lineTo(line[k][0], line[k][1]);
+			}
+			even = !even;
+		}
+		ctx.closePath();
+	};
+
+	// 映像「動画22: 錯乱らせん」の描画。
+	const SAI_draw_pic_22 = (ctx, px, py, dx, dy) => {
+		ctx.save();
+
+		// クリッピングする
+		ctx.beginPath();
+		ctx.rect(px, py, dx, dy);
+		ctx.clip();
+
+		// 背景をクリア
+		ctx.clearRect(px, py, dx, dy);
+
+		// 画面の大きさを考慮する。
+		let minxy = Math.min(dx, dy), maxxy = Math.max(dx, dy);
+
+		ctx.fillStyle = "#400";
+		ctx.fillRect(px, py, dx, dy);
+
+		const counter = SAI_get_tick_count() * 10;
+		const count1 = counter * 0.01;
+		const count2 = counter * 0.001;
+		const count3 = counter * 0.004;
+		let qx = minxy / 6 * Math.sin(count1 * 0.2);
+		let qy = minxy / 6 * Math.cos(count1 * 0.2);
+		const a = 1, b = 0.6; // らせんの係数。
+		const num_lines = 16;
+
+		for (let i = 0; i < 4; ++i){
+			const colors = [
+				`rgba(192, 0, 255, 50%)`,
+				`rgba(255, 0, 191, 30%)`,
+				`rgba(0, 191, 255, 30%)`,
+				`rgba(120, 0, 120, 20%)`,
+			];
+			ctx.save();
+			let direction = (i & 1) ? -1 : +1;
+			drawSpiral2(ctx, qx, qy, dx, dy, a, b, num_lines, direction, ((i >= 2) ? (count3) : (-count3)));
+			ctx.fillStyle = colors[i % colors.length];
+			ctx.fill();
+			ctx.restore();
+		}
+
+		// フォーカス矢印を描画する。
+		ctx.translate(dx / 2, dy / 2);
+		SAI_draw_focus_arrows(ctx, qx, qy, dx, dy);
+
+		ctx.restore();
+	};
+
 	// カウントダウン映像の描画。
 	const SAI_draw_pic_count_down = function(ctx, px, py, dx, dy){
 		ctx.save(); // 現在の座標系やクリッピングなどを保存する。
@@ -3505,6 +3611,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			break;
 		case 21:
 			SAI_draw_pic_21(ctx, px, py, dx, dy);
+			break;
+		case 22:
+			SAI_draw_pic_22(ctx, px, py, dx, dy);
 			break;
 		}
 	}

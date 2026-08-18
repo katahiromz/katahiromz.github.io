@@ -1341,6 +1341,7 @@ trans_trans = {
 		'TEXT_PIC_19': '動画 19：ランダムな波',
 		'TEXT_PIC_20': '動画 20：二重スパイラル',
 		'TEXT_PIC_21': '動画 21：サイケデリックな絞り染め',
+		'TEXT_PIC_22': '動画 22：錯乱らせん',
 		'TEXT_SPLIT': '画面分割:',
 		'TEXT_SPEED': 'スピード:',
 		'TEXT_ROTATION': '逆再生:',
@@ -1484,6 +1485,7 @@ trans_trans = {
 		'TEXT_PIC_19': '电影19：随机波',
 		'TEXT_PIC_20': '电影20：双螺旋',
 		'TEXT_PIC_21': '电影21：迷幻扎染',
+		'TEXT_PIC_22': '电影22：混乱螺旋',
 		'TEXT_SPLIT': '分屏：',
 		'TEXT_SPEED': '速度：',
 		'TEXT_ROTATION': '倒放：',
@@ -1627,6 +1629,7 @@ trans_trans = {
 		'TEXT_PIC_19': '電影19：隨機波',
 		'TEXT_PIC_20': '電影20：雙螺旋',
 		'TEXT_PIC_21': '電影21：迷幻紮染',
+		'TEXT_PIC_22': '電影22：混沌螺旋',
 		'TEXT_SPLIT': '分屏：',
 		'TEXT_SPEED': '速度：',
 		'TEXT_ROTATION': '倒放：',
@@ -1770,6 +1773,7 @@ trans_trans = {
 		'TEXT_PIC_19': '동영상 19：무작위 파동',
 		'TEXT_PIC_20': '동영상 20：이중 나선형',
 		'TEXT_PIC_21': '동영상 21：사이키델릭 타이다이',
+		'TEXT_PIC_22': '동영상 22：혼란 나선',
 		'TEXT_SPLIT': '화면 분할:',
 		'TEXT_SPEED': '속도:',
 		'TEXT_ROTATION': '역 재생:',
@@ -1910,9 +1914,10 @@ trans_trans = {
 		'TEXT_PIC_16': 'Film 16: Solo uno schermo bianco',
 		'TEXT_PIC_17': 'Film 17: Serpente rotante',
 		'TEXT_PIC_18': 'Film 18: Radiazione di distorsione',
-		'TEXT_PIC_19': 'Film 19：Onde Casuali',
-		'TEXT_PIC_20': 'Film 20：Doppia spirale',
-		'TEXT_PIC_21': 'Film 21：Tintura a riserva psichedelica',
+		'TEXT_PIC_19': 'Film 19: Onde Casuali',
+		'TEXT_PIC_20': 'Film 20: Doppia spirale',
+		'TEXT_PIC_21': 'Film 21: Tintura a riserva psichedelica',
+		'TEXT_PIC_22': 'Film 22: Spirale della confusione',
 		'TEXT_SPLIT': 'Divisione dello schermo:',
 		'TEXT_SPEED': 'Velocità:',
 		'TEXT_ROTATION': 'Riproduzione inversa:',
@@ -2056,6 +2061,7 @@ trans_trans = {
 		'TEXT_PIC_19': 'Film 19: Zufällige Wellen',
 		'TEXT_PIC_20': 'Film 20: Doppelspirale',
 		'TEXT_PIC_21': 'Film 21: Psychedelischer Batik-Look',
+		'TEXT_PIC_22': 'Film 22: Verwirrungsspirale',
 		'TEXT_SPLIT': 'Bildschirmaufteilung:',
 		'TEXT_SPEED': 'Geschwindigkeit:',
 		'TEXT_ROTATION': 'Rückwärtswiedergabe:',
@@ -2199,6 +2205,7 @@ trans_trans = {
 		'TEXT_PIC_19': 'Película 19: Ondas Aleatorias',
 		'TEXT_PIC_20': 'Película 20: Doble espiral',
 		'TEXT_PIC_21': 'Película 21: Teñido psicodélico',
+		'TEXT_PIC_22': 'Película 22: Espiral de confusión',
 		'TEXT_SPLIT': 'Pantalla dividida:',
 		'TEXT_SPEED': 'Velocidad:',
 		'TEXT_ROTATION': 'Reproducción inversa:',
@@ -2342,6 +2349,7 @@ trans_trans = {
 		'TEXT_PIC_19': 'Фильм 19: Случайные Волны',
 		'TEXT_PIC_20': 'Фильм 20: Двойная спираль',
 		'TEXT_PIC_21': 'Фильм 21: Психоделический тай-дай',
+		'TEXT_PIC_22': 'Фильм 22: Спираль путаницы',
 		'TEXT_SPLIT': 'Разделенный экран:',
 		'TEXT_SPEED': 'Скорость:',
 		'TEXT_ROTATION': 'Обратное воспроизведение:',
@@ -2485,6 +2493,7 @@ trans_trans = {
 		'TEXT_PIC_19': 'Movie 19: Random Waves',
 		'TEXT_PIC_20': 'Movie 20: Double Spiral',
 		'TEXT_PIC_21': 'Movie 21: Psychedelic tie-dye',
+		'TEXT_PIC_22': 'Movie 22: Spiral of Confusion',
 		'TEXT_SPLIT': 'Screen splitting:',
 		'TEXT_SPEED': 'Speed:',
 		'TEXT_ROTATION': 'Reverse playback:',
@@ -2653,6 +2662,7 @@ const trans_localize = function(lang){
 	trans_setSelectOptionText(sai_id_select_pic_type, '19', trans_getText('TEXT_PIC_19'));
 	trans_setSelectOptionText(sai_id_select_pic_type, '20', trans_getText('TEXT_PIC_20'));
 	trans_setSelectOptionText(sai_id_select_pic_type, '21', trans_getText('TEXT_PIC_21'));
+	trans_setSelectOptionText(sai_id_select_pic_type, '22', trans_getText('TEXT_PIC_22'));
 
 	trans_setHtmlText(sai_id_text_split, trans_getText('TEXT_SPLIT'));
 	trans_setHtmlText(sai_id_text_speed, trans_getText('TEXT_SPEED'));
